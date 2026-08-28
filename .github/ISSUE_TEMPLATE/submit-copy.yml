@@ -1,0 +1,72 @@
+name: "Submit a topper copy"
+description: "Add a missing UPSC Mains topper answer copy (GS, Essay or an optional subject)."
+title: "[copy] <topper> — <paper>"
+labels: ["submission", "copy"]
+body:
+  - type: input
+    id: topper
+    attributes:
+      label: Topper name
+      placeholder: e.g. Shakti Dubey
+    validations:
+      required: true
+  - type: input
+    id: air
+    attributes:
+      label: AIR (rank)
+      placeholder: e.g. 1
+  - type: input
+    id: year
+    attributes:
+      label: Exam year
+      placeholder: e.g. 2024
+  - type: dropdown
+    id: paper
+    attributes:
+      label: Paper / subject
+      options:
+        - GS1
+        - GS2
+        - GS3
+        - GS4
+        - Essay
+        - "Optional — Sociology"
+        - "Optional — Anthropology"
+        - "Optional — History"
+        - "Optional — PSIR"
+        - "Optional — Geography"
+        - "Optional — Public Administration"
+        - "Optional — Philosophy"
+        - "Optional — Economics"
+        - "Optional — Literature"
+        - "Optional — Other"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link to the answer copy
+      description: Direct PDF link if possible. The site only links to it — it never re-hosts the file.
+      placeholder: https://...
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source / coaching
+      placeholder: e.g. ForumIAS, Vision IAS, self-uploaded
+  - type: input
+    id: marks
+    attributes:
+      label: Marks in this paper
+      placeholder: e.g. 145
+  - type: textarea
+    id: note
+    attributes:
+      label: Verification note
+      description: Where did you find this? Anything that helps a maintainer confirm it.
+  - type: input
+    id: by
+    attributes:
+      label: Your name / handle (for credit)
+      placeholder: "@you"

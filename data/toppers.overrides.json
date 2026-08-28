@@ -1,0 +1,10 @@
+{
+  "_comment": "Maintainer-verified corrections merged on top of auto-parsed data by build.js. Example entry below (commented pattern — real entries are plain keys).",
+  "_example__Shakti Dubey": {
+    "air": 1,
+    "year": 2024,
+    "verified": true,
+    "marks": { "GS1": 0, "GS2": 0, "GS3": 0, "GS4": 0, "Essay": 0, "Total": 0 },
+    "sources": ["https://example.com/marksheet"]
+  }
+}

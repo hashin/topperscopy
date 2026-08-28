@@ -1,0 +1,16 @@
+{
+  "note": "Optional-subject topper answer copies. The upstream upsckata.com database is GS + Essay only, so every entry here is community-submitted and maintainer-verified. Add via the Submit form; a maintainer appends accepted entries below.",
+  "schema": {
+    "topper": "string (required)",
+    "subject": "one of the optional subjects (required)",
+    "url": "direct link to the copy, hosted elsewhere (required)",
+    "air": "integer rank (optional)",
+    "year": "exam year (optional)",
+    "marks": "marks in the optional (optional)",
+    "source": "coaching / self-uploaded (optional)",
+    "note": "one line about the copy (optional)",
+    "by": "submitter handle for credit (optional)",
+    "verified": "true once a maintainer checks it"
+  },
+  "entries": []
+}

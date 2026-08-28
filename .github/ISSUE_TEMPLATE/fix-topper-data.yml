@@ -1,0 +1,35 @@
+name: "Fix topper data (AIR / marks)"
+description: "Add or correct a topper's rank, exam year, or subject-wise marks."
+title: "[data] <topper>"
+labels: ["submission", "data"]
+body:
+  - type: input
+    id: topper
+    attributes:
+      label: Topper name (exactly as shown on the site)
+    validations:
+      required: true
+  - type: input
+    id: air
+    attributes:
+      label: AIR (rank)
+  - type: input
+    id: year
+    attributes:
+      label: Exam year
+  - type: textarea
+    id: allmarks
+    attributes:
+      label: Subject-wise marks
+      placeholder: "GS1: 112, GS2: 108, GS3: 121, GS4: 130, Essay: 148, Optional: 295, Total (written): 942, Interview: 193"
+  - type: textarea
+    id: note
+    attributes:
+      label: Source
+      description: Marksheet link, screenshot, official PDF, topper's post — anything verifiable.
+    validations:
+      required: true
+  - type: input
+    id: by
+    attributes:
+      label: Your name / handle (for credit)
