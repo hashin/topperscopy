@@ -61,6 +61,42 @@
   }
   function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'unknown'; } }
 
+  /* ---------- lazy full-text data ----------
+     boot loads data/index.json (copy metadata only, ~25 KB gz) for an instant first paint.
+     The full data/copies.json (question text, ~2 MB gz) is fetched in the background and
+     only blocks when the user actually searches or expands a copy. */
+  var FULL = false, fullState = 'idle', fullPromise = null, QBYID = null;
+
+  function saveData() {
+    var c = navigator.connection || {};
+    return !!c.saveData || c.effectiveType === 'slow-2g' || c.effectiveType === '2g';
+  }
+  function scheduleFull() {
+    if (saveData()) return;                 // wait for real intent on metered / very slow links
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1500); };
+    idle(function () { loadFull(); }, { timeout: 4000 });
+  }
+  function loadFull() {
+    if (fullPromise) return fullPromise;
+    fullState = 'loading';
+    fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
+      QBYID = {};
+      d.copies.forEach(function (c) { QBYID[c.i] = c.q; });
+      DB.copies.forEach(function (c) { c.q = QBYID[c.i] || []; });
+      FULL = true; fullState = 'ready';
+      var openIds = $$('#results .copy[open]').map(function (n) { return n.getAttribute('data-i'); });
+      if (state.view === 'browse') renderBrowse(openIds);
+      track('fulltext_loaded', {});
+      return d;
+    }).catch(function (e) {
+      fullState = 'error'; fullPromise = null;
+      track('data_error', { message: 'fulltext ' + String(e && e.message || e).slice(0, 100) });
+    });
+    return fullPromise;
+  }
+  // fetch now (not on idle) the moment the user shows intent to search or read
+  function ensureFull() { if (!FULL && fullState !== 'loading') loadFull(); }
+
   /* ---------- boot ---------- */
   function boot() {
     wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireSubmit();
@@ -72,7 +108,7 @@
     });
 
     Promise.all([
-      fetch('data/copies.json').then(function (r) { return r.json(); }),
+      fetch('data/index.json').then(function (r) { return r.json(); }),
       fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
       fetch('data/optionals.json').then(function (r) { return r.json(); }).catch(function () { return { entries: [] }; })
     ]).then(function (res) {
@@ -80,6 +116,7 @@
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       onData();
       track('data_loaded', { copies: DB.stats.copies, questions: DB.stats.questions });
+      scheduleFull();
     }).catch(function (e) {
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       $('#sub').textContent = 'Could not load the database — ' + e.message;
@@ -166,6 +203,7 @@
 
   /* ---------- browse ---------- */
   function wireBrowse() {
+    $('#q').addEventListener('focus', ensureFull, { once: true });
     $('#q').addEventListener('input', debounce(function (e) {
       state.q = e.target.value.trim(); state.shown = PAGE; renderBrowse();
     }, 160));
@@ -173,11 +211,11 @@
     $('#q').addEventListener('input', debounce(function (e) {
       var term = e.target.value.trim();
       if (term.length < 2) return;
-      var list = filteredCopies();
+      var res = filteredCopies();
       track('search', {
         search_term: term.toLowerCase().slice(0, 100),
         mode: state.mode, paper: state.paper,
-        results: list.length
+        results: (res && res.pending) ? -1 : res.length
       });
     }, 900));
     $$('#mode button').forEach(function (b) {
@@ -247,38 +285,55 @@
     return terms.every(function (w) { return t.indexOf(w) >= 0; });
   }
 
+  function qOf(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
+
   function filteredCopies() {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
-    return DB.copies.map(function (c) {
+    var needsText = terms.length > 0;
+    if (needsText && !FULL) { ensureFull(); return { pending: true }; }
+
+    var list = DB.copies.map(function (c) {
       if (state.paper !== 'all' && c.p !== state.paper) return null;
       if (state.topper && c.t !== state.topper) return null;
       if (state.source && c.c !== state.source) return null;
       if (state.year && String(c.y) !== state.year) return null;
-      var qs = c.q;
-      if (terms.length) {
-        qs = qs.filter(function (q) { return matchQ(q[1], terms, state.mode); });
-        if (!qs.length) return null;
-      }
-      return { c: c, qs: qs };
-    }).filter(Boolean).sort(function (a, b) {
+      var qs = needsText ? (qOf(c) || []).filter(function (q) { return matchQ(q[1], terms, state.mode); }) : [];
+      if (needsText && !qs.length) return null;
+      return { c: c, qs: qs, n: qs.length || c.n || (qOf(c) || []).length };
+    }).filter(Boolean);
+
+    list.sort(function (a, b) {
       if (state.sort === 'air') {
         var ra = (TOPPERS[a.c.t] && TOPPERS[a.c.t].air) || a.c.r || 1e9;
         var rb = (TOPPERS[b.c.t] && TOPPERS[b.c.t].air) || b.c.r || 1e9;
         return ra - rb || a.c.t.localeCompare(b.c.t);
       }
-      if (state.sort === 'qty') return b.qs.length - a.qs.length;
+      if (state.sort === 'qty') return b.n - a.n;
       return a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
     });
+    return list;
   }
 
-  function renderBrowse() {
+  function renderBrowse(reopen) {
     if (!DB) return;
-    var list = filteredCopies();
+    var res = filteredCopies();
+    var box = $('#results'); box.innerHTML = '';
+
+    if (res && res.pending) {
+      $('#resultmeta').textContent = 'searching “' + state.q + '” …';
+      box.appendChild(el('div', { class: 'empty' }, [
+        el('div', { class: 'big' }, ['Loading the full text of every copy…']),
+        el('div', {}, ['One-time ~2 MB download so search can look inside all ' + fmt(DB.stats.copies) + ' copies. Filters above work right away.'])
+      ]));
+      return;
+    }
+
+    var list = res;
     var totalQ = list.reduce(function (n, x) { return n + x.qs.length; }, 0);
     $('#resultmeta').textContent = fmt(list.length) + ' ' + (list.length === 1 ? 'copy' : 'copies') +
-      ' · ' + fmt(totalQ) + ' matching questions' + (state.q ? ' for “' + state.q + '”' : '');
+      (state.q ? ' · ' + fmt(totalQ) + ' matching questions for “' + state.q + '”'
+               : (FULL ? '' : ' · full-text search loads in the background'));
 
-    var box = $('#results'); box.innerHTML = '';
     if (!list.length) {
       box.appendChild(el('div', { class: 'empty' }, [
         el('div', { class: 'big' }, ['No matches']),
@@ -286,7 +341,11 @@
       ]));
       return;
     }
-    list.slice(0, state.shown).forEach(function (x) { box.appendChild(copyCard(x.c, x.qs)); });
+    list.slice(0, state.shown).forEach(function (x) {
+      var card = copyCard(x.c, x.qs, x.n);
+      if (reopen && reopen.indexOf(String(x.c.i)) >= 0) card.open = true;
+      box.appendChild(card);
+    });
     if (list.length > state.shown) {
       var n = Math.min(PAGE, list.length - state.shown);
       var more = el('button', { class: 'more' }, ['Show ' + n + ' more  ·  ' + (list.length - state.shown) + ' hidden']);
@@ -305,21 +364,24 @@
     return out;
   }
 
-  function copyCard(c, qs) {
+  function copyCard(c, qs, count) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
     var openIt = terms.length > 0 || !!state.topper;
+    var n = count != null ? count : (qs ? qs.length : (c.n || 0));
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
       .concat(topperTags(c.t, c.p, c.y, c.r));
 
     var summary = el('summary', {}, [
       el('span', { class: 'name' }, [c.t]),
-      el('span', { class: 'qn' }, [qs.length + (qs.length === 1 ? ' question' : ' questions')]),
+      el('span', { class: 'qn' }, [n + (n === 1 ? ' question' : ' questions')]),
       el('span', { class: 'tags' }, tags)
     ]);
 
     var ql = el('div', { class: 'qlist' });
-    qs.forEach(function (q) {
+    var have = qs && qs.length ? qs : (terms.length ? [] : qOf(c));
+
+    function renderQ(q) {
       var txt = el('div', { class: 'txt' });
       txt.innerHTML = highlight(q[1], terms);
       var meta = [];
@@ -331,18 +393,38 @@
       a.addEventListener('click', function () {
         track('pdf_open', {
           topper: c.t, paper: c.p, source: c.c || 'unknown',
-          page: q[0] || 0, link_domain: hostOf(c.u),
-          outbound: true, transport_type: 'beacon'
+          page: q[0] || 0, link_domain: hostOf(c.u), outbound: true, transport_type: 'beacon'
         });
       });
-      ql.appendChild(el('div', { class: 'q' }, [txt, a]));
-    });
+      return el('div', { class: 'q' }, [txt, a]);
+    }
 
-    var d = el('details', { class: 'copy', open: openIt ? '' : null }, [summary, ql]);
+    if (have) {
+      have.forEach(function (q) { ql.appendChild(renderQ(q)); });
+    } else {
+      // metadata-only so far — fill the list when the full text arrives
+      ql.appendChild(el('div', { class: 'q loading' }, [
+        el('div', { class: 'txt' }, ['Loading questions…']),
+        el('a', { class: 'open', href: c.u, target: '_blank', rel: 'noopener' }, ['Open PDF'])
+      ]));
+    }
+
+    var d = el('details', { class: 'copy', 'data-i': c.i, open: openIt ? '' : null }, [summary, ql]);
+    var filled = have != null;
+    function fillQuestions() {
+      if (filled) return;
+      ensureFull();
+      (fullPromise || Promise.resolve()).then(function () {
+        var full = qOf(c);
+        if (!full || filled) return;
+        filled = true; ql.innerHTML = '';
+        full.forEach(function (q) { ql.appendChild(renderQ(q)); });
+      });
+    }
     summary.addEventListener('click', function () {
-      // fires before the open state flips — log only genuine user-initiated expands
-      if (!d.open) track('copy_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', questions: qs.length });
+      if (!d.open) { track('copy_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', questions: n }); fillQuestions(); }
     });
+    if (openIt && !filled) fillQuestions();
     return d;
   }
 

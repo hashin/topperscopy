@@ -453,7 +453,27 @@ footer.site a:hover { color: var(--ink); }
 footer.site .spacer { flex: 1; }
 
 .skeleton { color: var(--muted); font-size: 14px; padding: 48px 0; text-align: center; }
+.q.loading .txt { color: var(--muted); font-style: italic; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- phones: lighten the paint, stop iOS focus-zoom ---------- */
+@media (max-width: 680px) {
+  /* backdrop-filter on a sticky bar is a known scroll-jank source on mid Android — use a solid bar */
+  header.site { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .toolbar { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  /* the fixed radial wash repaints on every scroll frame; anchor it to the top instead */
+  body::before { position: absolute; inset: 0 0 auto 0; height: 340px; }
+
+  .hero { padding: 28px 0 8px; }
+  .view:not(#view-browse) .hero { padding: 22px 0 4px; }
+  .statline { margin-top: 18px; gap: 6px 16px; }
+
+  /* 16px keeps iOS Safari from zooming the viewport on field focus */
+  select, form input, form select, form textarea { font-size: 16px; }
+  .theme-toggle { width: 40px; height: 40px; }
+  .copy > summary { padding: 15px 16px; }
+  .q { padding: 13px 16px; }
 }

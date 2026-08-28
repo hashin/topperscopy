@@ -1,11 +1,11 @@
 /* Offline cache. Shell is precached; big data files are cached at runtime
    (stale-while-revalidate). Bump VERSION to force a refresh. */
-var VERSION = 'tc-v2';
+var VERSION = 'tc-v3';
 var SHELL = [
   './', './index.html', './toppers.html',
   './assets/style.css', './assets/app.js',
   './assets/fonts/inter-latin.woff2', './assets/fonts/fraunces-latin.woff2',
-  './data/toppers.json', './data/optionals.json'
+  './data/index.json', './data/toppers.json', './data/optionals.json'
 ];
 
 self.addEventListener('install', function (e) {

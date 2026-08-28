@@ -112,6 +112,10 @@ function build() {
 
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
+  // lightweight index — copy metadata without the question text, for instant first paint on mobile
+  const lite = copies.map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
+  fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
+
   // maintainer overrides
   const ovPath = path.join(DATA, 'toppers.overrides.json');
   if (fs.existsSync(ovPath)) {
@@ -135,6 +139,7 @@ function build() {
   writeRobots();
 
   const withAir = Object.values(toppers).filter(t => t.air).length;
+  console.log(`index.json   ${lite.length} copies (${(fs.statSync(path.join(DATA, 'index.json')).size / 1024).toFixed(0)} KB)`);
   console.log(`copies.json  ${copies.length} copies, ${qCount} questions`);
   console.log(`toppers.json ${Object.keys(toppers).length} toppers, ${withAir} with an auto-parsed AIR`);
   console.log(`toppers.html + sitemap.xml + llms.txt + robots.txt written; index.html markers filled`);

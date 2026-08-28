@@ -55,10 +55,17 @@ The GitHub Action in `.github/workflows/build.yml` does this automatically on pu
 
 ## Performance
 
+- **Split data load.** Boot fetches `data/index.json` — copy metadata only, ~26 KB gzipped — so the
+  card list paints in well under a second on mobile. The full `data/copies.json` (question text,
+  ~2 MB gzipped) loads in the background on `requestIdleCallback`, or immediately the moment the user
+  focuses the search box or expands a copy. On `Save-Data` / 2G it isn't fetched until actually needed.
 - Fonts (Inter + Fraunces) are self-hosted, latin-subset, variable, `font-display: swap` — no
-  third-party font request. Both are `<link rel=preload>`ed, as is `data/copies.json`.
-- `content-visibility: auto` on result cards; results are paginated (25 at a time).
-- Service worker (`sw.js`) precaches the shell + fonts and runtime-caches the data (stale-while-revalidate) for offline use.
+  third-party font request. Both are `<link rel=preload>`ed; `index.json` is preloaded, `copies.json` prefetched.
+- `content-visibility: auto` on result cards; results paginate 25 at a time.
+- On phones (`<=680px`): the sticky header/toolbar drop `backdrop-filter` for a solid bar (kills
+  scroll jank on mid Android), the colour wash is anchored instead of `fixed`, and all inputs are
+  16px so iOS Safari doesn't zoom on focus. Desktop keeps the blur and fixed wash.
+- Service worker (`sw.js`) precaches shell + fonts + `index.json`, runtime-caches `copies.json` (stale-while-revalidate).
 - GA loads `async` and never blocks render.
 
 ## Analytics
