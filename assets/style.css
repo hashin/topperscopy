@@ -3,6 +3,26 @@
             #D396A6 rose · #09A1A1 teal · #5484A4 steel
    Aesthetic: modern-minimal, warm paper, Fraunces + Inter, soft colour washes. */
 
+/* self-hosted, latin-subset variable fonts — no external font request */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("fonts/fraunces-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   color-scheme: light;
 
@@ -290,6 +310,8 @@ select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px v
   background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   margin-bottom: 14px; box-shadow: var(--shadow-sm);
   transition: box-shadow .18s, border-color .18s, transform .18s;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 84px;
 }
 .copy:hover { border-color: var(--border-2); }
 .copy[open] { box-shadow: var(--shadow); border-color: var(--teal-line); }

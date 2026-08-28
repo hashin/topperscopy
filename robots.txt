@@ -1,0 +1,30 @@
+# Toppers Copy — https://topperscopy.hashin.me
+# Search engines and AI agents are welcome to crawl and index this site and its data.
+User-agent: *
+Allow: /
+
+# Named AI / research crawlers — explicitly allowed
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+
+Sitemap: https://topperscopy.hashin.me/sitemap.xml

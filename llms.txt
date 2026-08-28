@@ -1,0 +1,37 @@
+# Toppers Copy
+
+> A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
+> **Mains topper answer copies**. It indexes 16,947 questions inside
+> 1,063 answer copies written by 340 rank-holders and links each
+> question to the exact page of the source PDF. Covers General Studies Paper 1, 2, 3 and 4, the Essay paper,
+> and a community-built section for optional subjects.
+
+Site: https://topperscopy.hashin.me
+Updated: 2026-08-28
+Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (https://toppercopies.upsckata.com/)
+
+## What it contains
+
+- Which UPSC Mains topper answered which question, in which paper, on which page of which PDF.
+- Per-topper All-India Rank (AIR), exam year and, where submitted, subject-wise marks.
+- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE and Rau's IAS.
+- Optional-subject copies: Sociology, Anthropology, History, PSIR, Geography, Public Administration,
+  Philosophy, Economics, Literature and more (community-submitted).
+
+## Machine-readable data
+
+- Full question index (JSON, grouped by copy): https://topperscopy.hashin.me/data/copies.json
+- Per-topper AIR / year / marks (JSON): https://topperscopy.hashin.me/data/toppers.json
+- Raw source table (CSV): https://topperscopy.hashin.me/data/questions.csv
+- Optional-subject submissions (JSON): https://topperscopy.hashin.me/data/optionals.json
+
+## Human-readable pages
+
+- Home / search: https://topperscopy.hashin.me/
+- Full static index of every topper and copy: https://topperscopy.hashin.me/toppers.html
+- Submit a copy or a correction: https://topperscopy.hashin.me/#submit
+
+## Notes for citation
+
+Attribute the question-level data collection to upsckata.com ("Topper Copies"). Answer-copy PDFs are the
+property of the institutes that published them. This site re-hosts no PDFs; it only links to them.

@@ -3,6 +3,7 @@
   'use strict';
 
   var REPO = 'hashin/topperscopy';
+  var GA_ID = 'G-VTL4V9JQBH'; // mirrored in index.html <head>
   var PAPERS = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Other'];
   var OPTIONALS = ['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
     'Public Administration', 'Philosophy', 'Economics', 'Mathematics', 'Physics',
@@ -37,10 +38,38 @@
 
   var BAR = ['#09A1A1', '#F6C992', '#D396A6', '#5484A4', '#ACC0D3', '#30525C'];
 
+  /* ---------- analytics ---------- */
+  var VIEW_TITLE = {
+    browse: 'Browse copies', optionals: 'Optional subjects', submit: 'Submit', about: 'About'
+  };
+  function ga() {
+    return (typeof window.gtag === 'function') ? window.gtag
+      : function () { (window.dataLayer = window.dataLayer || []).push(arguments); };
+  }
+  function track(name, params) {
+    try { ga()('event', name, params || {}); } catch (e) {}
+  }
+  function pageView(view) {
+    var path = '/' + (view === 'browse' ? '' : view);
+    try {
+      ga()('event', 'page_view', {
+        page_title: 'Toppers Copy — ' + (VIEW_TITLE[view] || view),
+        page_location: location.origin + path,
+        page_path: path
+      });
+    } catch (e) {}
+  }
+  function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'unknown'; } }
+
   /* ---------- boot ---------- */
   function boot() {
     wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireSubmit();
-    if (location.hash) setView(location.hash.replace('#', ''));
+    var initial = location.hash ? location.hash.replace('#', '') : 'browse';
+    if (location.hash) setView(initial); else pageView('browse');
+    track('app_ready', {
+      theme: document.documentElement.getAttribute('data-theme') || 'system',
+      entry_view: ['browse', 'optionals', 'submit', 'about'].indexOf(initial) < 0 ? 'browse' : initial
+    });
 
     Promise.all([
       fetch('data/copies.json').then(function (r) { return r.json(); }),
@@ -48,10 +77,23 @@
       fetch('data/optionals.json').then(function (r) { return r.json(); }).catch(function () { return { entries: [] }; })
     ]).then(function (res) {
       DB = res[0]; TOPPERS = res[1].toppers || {}; OPTS = res[2].entries || [];
+      var sk = $('#results-skeleton'); if (sk) sk.remove();
       onData();
+      track('data_loaded', { copies: DB.stats.copies, questions: DB.stats.questions });
     }).catch(function (e) {
+      var sk = $('#results-skeleton'); if (sk) sk.remove();
       $('#sub').textContent = 'Could not load the database — ' + e.message;
-      $('#results').innerHTML = '';
+      track('data_error', { message: String(e && e.message || e).slice(0, 120) });
+    });
+
+    // outbound-link tracking for static links (credit, footer, about)
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="http"]');
+      if (!a || a.classList.contains('open')) return;
+      var host = hostOf(a.href);
+      if (host && host !== location.hostname) {
+        track('click_outbound', { link_domain: host, link_url: a.href.slice(0, 200), transport_type: 'beacon' });
+      }
     });
 
     if ('serviceWorker' in navigator && location.protocol === 'https:') {
@@ -97,6 +139,7 @@
       try { localStorage.setItem('tc-theme', next); } catch (e) {}
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', next === 'dark' ? '#101C1D' : '#FBF9F5');
+      track('theme_change', { theme: next });
     });
   }
 
@@ -111,11 +154,14 @@
   }
   function setView(v) {
     if (['browse', 'optionals', 'submit', 'about'].indexOf(v) < 0) v = 'browse';
+    var changed = state.view !== v;
     state.view = v;
     $$('nav.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.view === v); });
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
     window.scrollTo({ top: 0, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' });
+    pageView(v);
+    if (changed) track('tab_view', { view: v });
   }
 
   /* ---------- browse ---------- */
@@ -123,15 +169,30 @@
     $('#q').addEventListener('input', debounce(function (e) {
       state.q = e.target.value.trim(); state.shown = PAGE; renderBrowse();
     }, 160));
+    // separate, slower debounce so we log the settled query, not every keystroke
+    $('#q').addEventListener('input', debounce(function (e) {
+      var term = e.target.value.trim();
+      if (term.length < 2) return;
+      var list = filteredCopies();
+      track('search', {
+        search_term: term.toLowerCase().slice(0, 100),
+        mode: state.mode, paper: state.paper,
+        results: list.length
+      });
+    }, 900));
     $$('#mode button').forEach(function (b) {
       b.addEventListener('click', function () {
         state.mode = b.dataset.mode;
         $$('#mode button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
         renderBrowse();
+        track('filter_change', { filter: 'mode', value: state.mode });
       });
     });
     ['topper', 'source', 'year', 'sort'].forEach(function (id) {
-      $('#' + id).addEventListener('change', function (e) { state[id] = e.target.value; state.shown = PAGE; renderBrowse(); });
+      $('#' + id).addEventListener('change', function (e) {
+        state[id] = e.target.value; state.shown = PAGE; renderBrowse();
+        track('filter_change', { filter: id, value: e.target.value || '(all)' });
+      });
     });
   }
 
@@ -146,6 +207,7 @@
         state.paper = d[0]; state.shown = PAGE;
         $$('#papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.paper === d[0])); });
         renderBrowse();
+        track('filter_change', { filter: 'paper', value: d[0] });
       });
       row.appendChild(b);
     });
@@ -265,14 +327,22 @@
       if (q[3]) meta.push(q[3] + (/\d$/.test(q[3]) ? ' words' : ''));
       if (meta.length) txt.appendChild(el('span', { class: 'qmeta' }, [meta.join('  ·  ')]));
       var href = c.u + (q[0] ? '#page=' + q[0] : '');
-      ql.appendChild(el('div', { class: 'q' }, [
-        txt,
-        el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [q[0] ? 'Open PDF · p.' + q[0] : 'Open PDF'])
-      ]));
+      var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [q[0] ? 'Open PDF · p.' + q[0] : 'Open PDF']);
+      a.addEventListener('click', function () {
+        track('pdf_open', {
+          topper: c.t, paper: c.p, source: c.c || 'unknown',
+          page: q[0] || 0, link_domain: hostOf(c.u),
+          outbound: true, transport_type: 'beacon'
+        });
+      });
+      ql.appendChild(el('div', { class: 'q' }, [txt, a]));
     });
 
-    var d = el('details', { class: 'copy' }, [summary, ql]);
-    if (openIt) d.open = true;
+    var d = el('details', { class: 'copy', open: openIt ? '' : null }, [summary, ql]);
+    summary.addEventListener('click', function () {
+      // fires before the open state flips — log only genuine user-initiated expands
+      if (!d.open) track('copy_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', questions: qs.length });
+    });
     return d;
   }
 
@@ -349,7 +419,10 @@
         el('div', { class: 'sname' }, [sub]),
         el('div', { class: 'scount' }, [n ? n + (n === 1 ? ' copy' : ' copies') : 'no copies yet'])
       ]);
-      card.addEventListener('click', function () { state.optSubject = sub; renderOptionals(); window.scrollTo(0, 0); });
+      card.addEventListener('click', function () {
+        state.optSubject = sub; renderOptionals(); window.scrollTo(0, 0);
+        track('optional_subject_view', { subject: sub, copies: n });
+      });
       grid.appendChild(card);
     });
     body.appendChild(grid);
@@ -375,11 +448,15 @@
       o.by ? el('span', { class: 'qn' }, ['via ' + o.by]) : null,
       el('span', { class: 'tags' }, tags)
     ]);
+    var link = el('a', { class: 'open', href: o.url, target: '_blank', rel: 'noopener' }, ['Open copy']);
+    link.addEventListener('click', function () {
+      track('pdf_open', {
+        topper: o.topper, paper: o.subject, source: o.source || 'unknown',
+        link_domain: hostOf(o.url), optional: true, outbound: true, transport_type: 'beacon'
+      });
+    });
     var body = el('div', { class: 'qlist' }, [
-      el('div', { class: 'q' }, [
-        el('div', { class: 'txt' }, [o.note || 'Optional subject answer copy.']),
-        el('a', { class: 'open', href: o.url, target: '_blank', rel: 'noopener' }, ['Open copy'])
-      ])
+      el('div', { class: 'q' }, [el('div', { class: 'txt' }, [o.note || 'Optional subject answer copy.']), link])
     ]);
     return el('details', { class: 'copy', open: 'open' }, [summary, body]);
   }
@@ -394,8 +471,8 @@
       $$('[data-only]').forEach(function (n) { n.style.display = n.dataset.only === k ? '' : 'none'; });
       $('#sform [name=url]').required = k === 'copy';
     }
-    $('#kind-copy').addEventListener('click', function () { setKind('copy'); });
-    $('#kind-data').addEventListener('click', function () { setKind('data'); });
+    $('#kind-copy').addEventListener('click', function () { setKind('copy'); track('submit_kind', { kind: 'copy' }); });
+    $('#kind-data').addEventListener('click', function () { setKind('data'); track('submit_kind', { kind: 'data' }); });
     setKind('copy');
 
     $('#sform').addEventListener('submit', function (e) {
@@ -437,6 +514,7 @@
       }
       window.open(url, '_blank', 'noopener');
       var alt = $('#sform-alt'); alt.hidden = false; alt.href = blank;
+      track('submit_issue_open', { kind: kind, paper: g('paper') || 'unknown', has_link: !!g('url') });
     });
   }
 
