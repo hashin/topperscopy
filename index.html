@@ -5,26 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Toppers Copy — UPSC Mains answer copies, searchable</title>
 <meta name="description" content="A free, community-maintained directory of UPSC Mains topper answer copies — GS1-4, Essay and optional subjects. Search 16,000+ questions and open the exact page of each copy. Question data credited to upsckata.com.">
+<meta name="theme-color" content="#faf9f7">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 <header class="site">
-  <div class="wrap">
-    <div class="brand"><span>Toppers Copy</span><span class="dot">▪</span></div>
-    <div class="tagline" id="tagline">loading the copy database…</div>
-    <p class="credit">
-      Question database sourced from <strong><a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com — Topper Copies</a></strong>.
-      This is a free, open, community-maintained mirror. Answer copies are hosted by the coaching
-      institutes that published them (ForumIAS, Vision IAS, NextIAS…) — every link here points to their file. Nothing is re-hosted.
-    </p>
+  <div class="wrap bar">
+    <div class="brand"><span class="mark">TC</span><span>Toppers Copy</span></div>
     <nav class="tabs" role="tablist">
-      <button role="tab" data-view="browse" aria-selected="true">browse</button>
-      <button role="tab" data-view="optionals" aria-selected="false">optionals</button>
-      <button role="tab" data-view="submit" aria-selected="false">submit</button>
-      <button role="tab" data-view="about" aria-selected="false">about</button>
+      <button role="tab" data-view="browse" aria-selected="true">Browse</button>
+      <button role="tab" data-view="optionals" aria-selected="false">Optionals</button>
+      <button role="tab" data-view="submit" aria-selected="false">Submit</button>
+      <button role="tab" data-view="about" aria-selected="false">About</button>
     </nav>
   </div>
 </header>
@@ -33,59 +28,77 @@
 
   <!-- BROWSE -->
   <section class="view" id="view-browse">
-    <div class="stats" id="stats"></div>
-    <div class="controls">
-      <div class="row">
-        <input type="search" id="q" placeholder="search questions — e.g. federalism, ethical dilemma, monetary policy" autocomplete="off">
-        <span class="toggle" id="mode" title="All = every word must appear · Exact = match the phrase">
-          <button data-mode="all" aria-pressed="true">All words</button>
-          <button data-mode="exact" aria-pressed="false">Exact</button>
-        </span>
+    <div class="hero">
+      <h1>UPSC Mains topper answer copies, searchable</h1>
+      <p class="sub" id="sub">loading the copy database…</p>
+      <div class="statline" id="statline"></div>
+      <p class="credit">
+        Question database sourced from <strong><a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com — Topper Copies</a></strong>.
+        A free, open mirror. Every copy is hosted by the institute that published it (ForumIAS, Vision IAS, NextIAS…) — links point there, nothing is re-hosted.
+      </p>
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="q" placeholder="Search inside the copies — federalism, ethical dilemma, monetary policy…" autocomplete="off">
       </div>
-      <div class="row" id="papers"></div>
-      <div class="row">
+      <div class="filters">
+        <div class="seg" id="papers"></div>
+        <div class="seg" id="mode">
+          <button data-mode="all" aria-pressed="true">All words</button>
+          <button data-mode="exact" aria-pressed="false">Exact phrase</button>
+        </div>
+      </div>
+      <div class="filters">
         <select id="topper"><option value="">All toppers</option></select>
         <select id="source"><option value="">All sources</option></select>
         <select id="year"><option value="">All years</option></select>
         <select id="sort">
-          <option value="name">Sort: topper A–Z</option>
-          <option value="air">Sort: AIR (best first)</option>
-          <option value="qty">Sort: most questions</option>
+          <option value="name">Topper A–Z</option>
+          <option value="air">Best AIR first</option>
+          <option value="qty">Most questions</option>
         </select>
       </div>
     </div>
-    <div class="count" id="count"></div>
-    <div id="results"></div>
+
+    <p class="resultmeta" id="resultmeta"></p>
+    <div id="results"><div class="skeleton">loading…</div></div>
   </section>
 
   <!-- OPTIONALS -->
   <section class="view" id="view-optionals" hidden>
-    <p class="prose" style="margin-top:0">
-      Optional-subject answer copies — Sociology, Anthropology, History, PSIR, Geography and the rest.
-      The source database is GS + Essay only, so this section is built entirely from community submissions.
-      <a href="#" data-goto="submit">Add one →</a>
-    </p>
-    <div class="controls">
-      <div class="row" id="opt-subjects"></div>
-      <div class="row">
-        <input type="search" id="opt-q" placeholder="search optional copies by topper or note" autocomplete="off">
+    <div class="hero">
+      <h1>Optional subject copies</h1>
+      <p class="lead" style="margin-top:8px">
+        Sociology, Anthropology, History, PSIR, Geography and the rest. The upstream database covers
+        only GS &amp; Essay, so this section is built entirely from what students send in —
+        <a href="#submit" data-goto="submit">add a copy&nbsp;→</a>
+      </p>
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="opt-q" placeholder="Search optional copies by topper, source or note…" autocomplete="off">
       </div>
     </div>
-    <div class="count" id="opt-count"></div>
-    <div id="opt-results"></div>
+    <div id="opt-body"></div>
   </section>
 
   <!-- SUBMIT -->
   <section class="view" id="view-submit" hidden>
-    <p class="prose" style="margin-top:0">
-      Found a topper's copy that's missing, or know a topper's AIR / subject-wise marks?
-      Send it in. The form opens a pre-filled GitHub issue — a maintainer verifies it and merges it into the site.
-      No account data is collected here; you'll just need a free GitHub login to post the issue.
-    </p>
+    <div class="hero">
+      <h1>Submit a copy or a correction</h1>
+      <p class="lead" style="margin-top:8px">
+        Missing a topper's copy? Know a topper's AIR or subject-wise marks? Send it in. The form opens a
+        pre-filled GitHub issue — a maintainer verifies it, then it goes live. Nothing is collected here;
+        you just need a free GitHub login to post.
+      </p>
+    </div>
 
-    <div class="row" style="display:flex;gap:8px;margin-bottom:16px">
-      <button class="chip" id="kind-copy" aria-pressed="true">Add a copy</button>
-      <button class="chip" id="kind-data" aria-pressed="false">Fix topper data (AIR / marks)</button>
+    <div class="kindswitch">
+      <button id="kind-copy" aria-pressed="true">Add a copy</button>
+      <button id="kind-data" aria-pressed="false">Fix topper data</button>
     </div>
 
     <form id="sform">
@@ -95,7 +108,7 @@
           <input name="topper" required placeholder="e.g. Shakti Dubey">
         </div>
         <div class="field">
-          <label>AIR (rank)</label>
+          <label>AIR / rank</label>
           <input name="air" inputmode="numeric" placeholder="e.g. 1">
         </div>
       </div>
@@ -112,8 +125,8 @@
 
       <div class="field" data-only="copy">
         <label>Link to the answer copy <span class="req">*</span></label>
-        <input name="url" type="url" placeholder="https://… (ForumIAS / Vision / Google Drive / topper's own upload)">
-        <div class="note">Direct link to the PDF is best. We only link to it — we never host the file.</div>
+        <input name="url" type="url" placeholder="https://… (ForumIAS / Vision / Google Drive / the topper's own upload)">
+        <p class="hint">A direct PDF link is best. We only link to it — the file is never re-hosted here.</p>
       </div>
       <div class="grid2" data-only="copy">
         <div class="field">
@@ -129,67 +142,67 @@
       <div class="field" data-only="data">
         <label>Subject-wise marks</label>
         <textarea name="allmarks" placeholder="GS1: 112, GS2: 108, GS3: 121, GS4: 130, Essay: 148, Optional: 295, Total (written): 942, Interview: 193"></textarea>
-        <div class="note">Whatever you know — even one paper helps. Cite a source below if you can.</div>
+        <p class="hint">Whatever you know — even one paper helps.</p>
       </div>
 
       <div class="field">
         <label>Source of this information / note</label>
-        <textarea name="note" placeholder="Where did you find this? Screenshot link, marksheet, topper's post, etc. Anything that helps verification."></textarea>
+        <textarea name="note" placeholder="Where did you find this? Screenshot link, marksheet, the topper's post — anything that helps verification."></textarea>
       </div>
       <div class="field">
-        <label>Your name or handle (optional — for credit)</label>
+        <label>Your name or handle <span style="font-weight:400;color:var(--muted)">(optional, for credit)</span></label>
         <input name="by" placeholder="@you">
       </div>
 
       <button type="submit" class="btn" id="sbtn">Open pre-filled GitHub issue</button>
-      <a class="btn ghost" id="sform-alt" href="#" target="_blank" rel="noopener" hidden>Open blank issue instead</a>
-      <div class="note" id="sform-note"></div>
+      <a class="btn ghost" id="sform-alt" href="#" target="_blank" rel="noopener" hidden style="margin-left:8px">Open blank issue instead</a>
+      <p class="formnote" id="sform-note"></p>
     </form>
   </section>
 
   <!-- ABOUT -->
-  <section class="view prose" id="view-about" hidden>
-    <h3>What this is</h3>
-    <p>A free, searchable directory of UPSC Civil Services Mains <strong>topper answer copies</strong>.
-      You can search across every question inside the copies and jump straight to the page where a
-      topper answered it.</p>
+  <section class="view" id="view-about" hidden>
+    <div class="hero"><h1>About</h1></div>
+    <div class="prose">
+      <h2>What this is</h2>
+      <p>A free, searchable directory of UPSC Civil Services Mains <strong>topper answer copies</strong>.
+        Search across every question inside the copies and jump straight to the page where a topper answered it.</p>
 
-    <h3>Credit</h3>
-    <p>The question-level database — which topper wrote which answer, on which page of which copy —
-      is the work of <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com's
-      "Topper Copies" project</a>. This site is an independent, non-commercial mirror that adds an
-      optional-subjects section, per-topper AIR / marks tags, and a community submission workflow.
-      All credit for the underlying data collection goes to upsckata.com. If the maintainers of that
-      project want changes to how it's credited or used here, <a href="https://github.com/hashin/topperscopy/issues">open an issue</a>.</p>
+      <h2>Credit</h2>
+      <p>The question-level database — which topper wrote which answer, on which page of which copy — is the work of
+        <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com's "Topper Copies" project</a>.
+        This site is an independent, non-commercial mirror that adds an optional-subjects section, per-topper AIR / marks
+        tags, and a community submission workflow. All credit for the underlying data collection goes to upsckata.com.
+        If its maintainers want changes to how it's used here, <a href="https://github.com/hashin/topperscopy/issues">open an issue</a>.</p>
 
-    <h3>Where the PDFs live</h3>
-    <p>Every "Open PDF" link points to a file hosted by the institute that originally published it —
-      ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS and others. No answer copy is
-      stored on this domain. If you are a rights holder and want a link removed,
-      <a href="https://github.com/hashin/topperscopy/issues">file an issue</a> and it will be taken down.</p>
+      <h2>Where the PDFs live</h2>
+      <p>Every "Open PDF" link points to a file hosted by the institute that originally published it — ForumIAS, Vision IAS,
+        NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS and others. No answer copy is stored on this domain. Rights holders who
+        want a link removed can <a href="https://github.com/hashin/topperscopy/issues">file an issue</a>.</p>
 
-    <h3>Contributing</h3>
-    <ul>
-      <li>Use the <a href="#" data-goto="submit">Submit</a> tab to add a missing copy or an optional-subject copy.</li>
-      <li>Use it also to fill in a topper's AIR, exam year, or subject-wise marks.</li>
-      <li>Every submission becomes a GitHub issue, is checked by a maintainer, then merged.</li>
-      <li>Code and data live at <a href="https://github.com/hashin/topperscopy">github.com/hashin/topperscopy</a> — PRs welcome.</li>
-    </ul>
+      <h2>Contributing</h2>
+      <ul>
+        <li>Use <a href="#submit" data-goto="submit">Submit</a> to add a missing copy or an optional-subject copy.</li>
+        <li>Use it also to fill in a topper's AIR, exam year, or subject-wise marks.</li>
+        <li>Every submission becomes a GitHub issue, is checked by a maintainer, then merged.</li>
+        <li>Code and data: <a href="https://github.com/hashin/topperscopy">github.com/hashin/topperscopy</a> — PRs welcome.</li>
+      </ul>
 
-    <h3>Disclaimer</h3>
-    <p>Marks and ranks are crowd-sourced and may be wrong until a maintainer marks them verified.
-      This site is not affiliated with UPSC or any coaching institute.</p>
-
-    <p class="note" id="about-gen"></p>
+      <h2>Disclaimer</h2>
+      <p>Marks and ranks are crowd-sourced and may be wrong until a maintainer marks them verified (shown with a ✓).
+        Not affiliated with UPSC or any coaching institute.</p>
+      <p class="hint" id="about-gen"></p>
+    </div>
   </section>
 
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>free &amp; open source</span>
-    <a href="https://github.com/hashin/topperscopy">github</a>
-    <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">data: upsckata.com</a>
+    <span>Free &amp; open source</span>
+    <a href="https://github.com/hashin/topperscopy">GitHub</a>
+    <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">Data: upsckata.com</a>
+    <span class="spacer"></span>
     <span id="foot-stats"></span>
   </div>
 </footer>
