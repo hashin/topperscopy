@@ -35,9 +35,11 @@
     optSubject: 'all', optQ: ''
   };
 
+  var BAR = ['#09A1A1', '#F6C992', '#D396A6', '#5484A4', '#ACC0D3', '#30525C'];
+
   /* ---------- boot ---------- */
   function boot() {
-    wireTabs(); wireBrowse(); wireOptionals(); wireSubmit();
+    wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireSubmit();
     if (location.hash) setView(location.hash.replace('#', ''));
 
     Promise.all([
@@ -81,6 +83,22 @@
 
   function chipStat(n, label) { return '<span class="s"><b>' + fmt(n) + '</b> ' + label + '</span>'; }
   function countSources() { var m = {}; DB.copies.forEach(function (c) { if (c.c) m[c.c] = 1; }); return Object.keys(m).length; }
+
+  /* ---------- theme ---------- */
+  function wireTheme() {
+    var btn = $('#theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-theme');
+      var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var isDark = cur ? cur === 'dark' : sysDark;
+      var next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('tc-theme', next); } catch (e) {}
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#101C1D' : '#FBF9F5');
+    });
+  }
 
   /* ---------- tabs / router ---------- */
   function wireTabs() {
@@ -219,7 +237,7 @@
     var T = TOPPERS[name] || {};
     var air = T.air || copyAir, year = T.year || copyYear, out = [];
     if (air) out.push(el('span', { class: 'tag air' }, ['AIR ' + air + (T.verified ? ' ✓' : '')]));
-    if (year) out.push(el('span', { class: 'tag' }, [String(year)]));
+    if (year) out.push(el('span', { class: 'tag year' }, [String(year)]));
     var mk = T.marks && T.marks[paper] != null ? T.marks[paper] : null;
     if (mk != null) out.push(el('span', { class: 'tag marks' }, [paper + ' ' + mk]));
     return out;
@@ -322,9 +340,12 @@
 
     // default -> subject grid
     var grid = el('div', { class: 'subject-grid' });
-    OPTIONALS.forEach(function (sub) {
+    OPTIONALS.forEach(function (sub, i) {
       var n = counts[sub] || 0;
-      var card = el('button', { class: 'subject-card', 'data-empty': n ? '0' : '1' }, [
+      var card = el('button', {
+        class: 'subject-card', 'data-has': n ? '1' : '0',
+        style: '--accent-bar:' + BAR[i % BAR.length]
+      }, [
         el('div', { class: 'sname' }, [sub]),
         el('div', { class: 'scount' }, [n ? n + (n === 1 ? ' copy' : ' copies') : 'no copies yet'])
       ]);
