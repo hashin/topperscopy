@@ -1,12 +1,12 @@
 {
   "generated": "2026-08-29",
-  "git_commit": "ea0e0da",
+  "git_commit": "2b7515f",
   "schema_version": 2,
   "counts": {
-    "toppers": 366,
-    "copies": 1111,
+    "toppers": 367,
+    "copies": 1121,
     "questions": 16947,
-    "submissions": 48
+    "submissions": 58
   },
   "files": {
     "questions.csv": {
@@ -15,18 +15,18 @@
       "rows": 29710
     },
     "copies.csv": {
-      "bytes": 173351,
-      "sha256": "762807ae5220cfc260a7dd6896349f8ded21f1df43bbf4ff3f1dba41d63faf8f",
-      "rows": 1111
+      "bytes": 174839,
+      "sha256": "9b76bd6c717395567118c4cffe9cb995b9e0fa24072efa5e71a67b01b5e0abd8",
+      "rows": 1121
     },
     "toppers.csv": {
-      "bytes": 17605,
-      "sha256": "6cebf8836e8fc1057a5c619a8a6b6e77307e98caf111f18a0f0ce76d3b466664",
-      "rows": 366
+      "bytes": 17659,
+      "sha256": "6cedd5c1eb586bcf23f62f82ae9b081402e07e6e218ba021f2562fcc304f5dfe",
+      "rows": 367
     },
     "dataset.json": {
-      "bytes": 7264058,
-      "sha256": "279ec06022248ad62c680fbf99f482b3eb0a0f61f0cd4fa4d9116af67656b995"
+      "bytes": 7266756,
+      "sha256": "391a77e2dae1062054e91338e358eddce5e66a2d4280f1dc0f6d7a6ecb47f01d"
     }
   }
 }
