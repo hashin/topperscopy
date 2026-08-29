@@ -1,0 +1,87 @@
+name: Moderate submissions
+
+# A moderator (any repo collaborator) reviews a submission issue, confirms the
+# copy is genuine, and adds the "approved" label. This workflow then applies it
+# to the data files, rebuilds, commits, and closes the issue.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  apply:
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the approver is a moderator
+        id: perm
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LEVEL=$(gh api "repos/${{ github.repository }}/collaborators/${{ github.event.sender.login }}/permission" --jq .permission 2>/dev/null || echo none)
+          echo "level=$LEVEL" >> "$GITHUB_OUTPUT"
+          echo "@${{ github.event.sender.login }} permission: $LEVEL"
+
+      - name: Stop if not a moderator
+        if: ${{ !contains(fromJSON('["admin","maintain","write","triage"]'), steps.perm.outputs.level) }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --remove-label approved || true
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} \
+            --body "@${{ github.event.sender.login }} — only repository collaborators (moderators) can approve submissions. Ask an admin to add you as a collaborator, or to approve this one."
+          exit 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Apply the submission
+        id: apply
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$BODY" > /tmp/issue-body.md
+          if node .github/scripts/apply-submission.mjs /tmp/issue-body.md > /tmp/out.txt 2> /tmp/err.txt; then
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=0" >> "$GITHUB_OUTPUT"
+          fi
+          echo "--- stdout ---"; cat /tmp/out.txt
+          echo "--- stderr ---"; cat /tmp/err.txt
+
+      - name: Rebuild and push
+        if: steps.apply.outputs.ok == '1'
+        run: |
+          node build.js
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add submission #${{ github.event.issue.number }} — approved by @${{ github.event.sender.login }} [skip ci]" || { echo "nothing changed"; exit 0; }
+          git push
+
+      - name: Close the issue
+        if: steps.apply.outputs.ok == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY=$'✅ Approved by @${{ github.event.sender.login }} and merged — live in ~1–2 min.\n\n'"$(cat /tmp/out.txt)"
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "$BODY"
+          gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-label merged || true
+          gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }}
+
+      - name: Report a problem
+        if: steps.apply.outputs.ok == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY=$'⚠️ Couldn'"'"'t apply this automatically:\n\n```\n'"$(cat /tmp/err.txt)"$'\n```\n\nFix the issue body (or add it by hand) and re-add the `approved` label.'
+          gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --remove-label approved || true
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "$BODY"
+          exit 1

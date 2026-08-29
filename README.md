@@ -111,15 +111,27 @@ loads it; it's an archive for reference and reuse (CC BY 4.0). `dataset/question
 flat file; `dataset/dataset.json` is everything nested; `dataset/manifest.json` carries SHA-256
 checksums and row counts. Full docs: [`dataset/README.md`](dataset/README.md).
 
-## Contributing
+## Submissions & moderation
 
-- **Add a copy / fix marks:** use the [Submit form](https://topperscopy.hashin.me/#submit) or open an
-  issue directly. A maintainer verifies each submission, then:
-  - GS/Essay copy → append its rows to `data/submissions.csv` (paste the analyser's CSV, or run
-    `node extract.js … --append`) — leave `data/questions.csv` untouched so it stays a clean upstream mirror;
-  - optional-subject copy → add an entry to `data/optionals.json` (with a `questions[]` array if available);
-  - topper data → add to `data/toppers.overrides.json` with `"verified": true`.
-- Run `node build.js` (refreshes the app files *and* `dataset/`), commit, done.
+Anyone submits via the [Submit form](https://topperscopy.hashin.me/#submit) (or an issue directly) —
+it opens a GitHub issue labelled `submission`.
+
+**Moderators** (repo collaborators — see [`MODERATORS.md`](MODERATORS.md)) review the copy, and if it's
+genuine add the **`approved`** label. `.github/workflows/moderate.yml` then:
+
+1. confirms the approver is a collaborator,
+2. runs `.github/scripts/apply-submission.mjs` — parses the issue and writes:
+   - optional-subject copy → entry in `data/optionals.json` (with `questions[]` if the issue carries them),
+   - GS/Essay copy → rows appended to `data/submissions.csv` (never `questions.csv`, the clean mirror),
+   - AIR / year / marks → `data/toppers.overrides.json`,
+3. runs `node build.js`, commits, pushes — live in ~1–2 min,
+4. comments a summary, labels the issue `merged`, closes it.
+
+If it can't apply cleanly (e.g. a GS copy with no extracted questions) it comments why and drops the
+label. To do it by hand: run `node extract.js "<url>" --topper "…" --paper GS1 --append`, then
+`node build.js`, commit.
+
+Appointing a moderator = adding a repo collaborator (Triage role is enough). Details in `MODERATORS.md`.
 
 ## Deploy (GitHub Pages + subdomain)
 
