@@ -1,0 +1,32 @@
+{
+  "generated": "2026-08-29",
+  "git_commit": "05c3d75",
+  "schema_version": 2,
+  "counts": {
+    "toppers": 339,
+    "copies": 1063,
+    "questions": 16947,
+    "submissions": 0
+  },
+  "files": {
+    "questions.csv": {
+      "bytes": 10690648,
+      "sha256": "312312f5a6daf66fa5ad3004242f10b77c3cfb5d6e96255493c1db872eaf4811",
+      "rows": 29710
+    },
+    "copies.csv": {
+      "bytes": 166041,
+      "sha256": "3bf8035a9b8a857d67b4671e0e2d3e798f260c2fb2d4342369379b17d527e64d",
+      "rows": 1063
+    },
+    "toppers.csv": {
+      "bytes": 15684,
+      "sha256": "c3ee0b71dcff82355c1de0efb3109444a66395dceeed60e1db0965a200aeb860",
+      "rows": 339
+    },
+    "dataset.json": {
+      "bytes": 7247132,
+      "sha256": "2ece9f419f8c20bb08b5eaded9c0ea546555cd878574f1cef3ad618dc1dad87a"
+    }
+  }
+}

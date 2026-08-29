@@ -24,13 +24,18 @@ No answer copy is hosted here. Every "Open PDF" link points to the file on the s
 Pure static — no runtime backend, no build step required to serve it.
 
 ```
-data/questions.csv          raw mirror of upsckata.com's questions.csv
-build.js                    csv -> data/copies.json + data/toppers.json
-                                +  toppers.html (static crawlable index)
-                                +  sitemap.xml, llms.txt, robots.txt
-                                +  fills <noscript> + JSON-LD in index.html
-data/optionals.json         community optional-subject copies (hand-merged)
-data/toppers.overrides.json maintainer-verified AIR/marks corrections
+data/questions.csv          pristine mirror of upsckata.com's questions.csv — never hand-edited
+data/submissions.csv        accepted GS/Essay copy submissions (same 7-col schema)
+data/optionals.json         accepted optional-subject copies
+data/toppers.overrides.json maintainer-verified AIR / marks corrections
+        |
+  build.js
+        |
+        +->  data/copies.json + data/index.json + data/toppers.json   (served by the app)
+        +->  toppers.html, sitemap.xml, llms.txt, robots.txt          (static / SEO)
+        +->  index.html  (<noscript> + JSON-LD between markers)
+        +->  dataset/    (complete consolidated backup — see dataset/README.md — not served)
+
 index.html, assets/, sw.js  the app (progressive enhancement over toppers.html)
 ```
 
@@ -97,15 +102,24 @@ to the exact PDF page — via a shared heuristic in `assets/extract.js` (pure, n
 It's a heuristic, not OCR — handwritten scans with no text layer yield nothing (fill the count by
 hand), and printed question headers extract with occasional misses. A maintainer always reviews.
 
+## Complete dataset (`dataset/`)
+
+`build.js` also writes a consolidated, self-contained backup under `dataset/` — every question from
+every copy (GS, Essay **and** optional subjects), plus per-topper AIR / year / marks, **including all
+accepted submissions**, with a `provenance` column (`upsckata` / `submission`). The website never
+loads it; it's an archive for reference and reuse (CC BY 4.0). `dataset/questions.csv` is the main
+flat file; `dataset/dataset.json` is everything nested; `dataset/manifest.json` carries SHA-256
+checksums and row counts. Full docs: [`dataset/README.md`](dataset/README.md).
+
 ## Contributing
 
 - **Add a copy / fix marks:** use the [Submit form](https://topperscopy.hashin.me/#submit) or open an
   issue directly. A maintainer verifies each submission, then:
-  - GS/Essay copy → append its rows to `data/questions.csv` (paste the analyser's CSV, or run
-    `node extract.js … --append`);
+  - GS/Essay copy → append its rows to `data/submissions.csv` (paste the analyser's CSV, or run
+    `node extract.js … --append`) — leave `data/questions.csv` untouched so it stays a clean upstream mirror;
   - optional-subject copy → add an entry to `data/optionals.json` (with a `questions[]` array if available);
   - topper data → add to `data/toppers.overrides.json` with `"verified": true`.
-- Run `node build.js`, commit, done.
+- Run `node build.js` (refreshes the app files *and* `dataset/`), commit, done.
 
 ## Deploy (GitHub Pages + subdomain)
 

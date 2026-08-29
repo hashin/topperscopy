@@ -1,20 +1,26 @@
 #!/usr/bin/env node
 /*
- * build.js — turns the raw questions.csv (mirrored from upsckata.com "Topper Copies")
- * into the compact JSON the app consumes, plus the static/SEO artefacts.
+ * build.js — turns the source data into the compact JSON the app consumes,
+ * the static/SEO artefacts, and the consolidated dataset/ backup.
  *
- *   data/questions.csv  ->  data/copies.json     (grouped by source PDF, for the app)
- *                           data/toppers.json    (per-topper AIR / year / marks)
- *                           toppers.html         (fully static, crawlable index of every copy)
- *                           sitemap.xml
- *                           llms.txt             (machine summary for AI agents)
- *                           index.html           (static <noscript> + JSON-LD injected between markers)
+ *   data/questions.csv    (pristine mirror of upsckata.com "Topper Copies")
+ *   data/submissions.csv  (accepted GS/Essay copy submissions, same schema)
+ *   data/optionals.json   (accepted optional-subject copies)
+ *   data/toppers.overrides.json  (maintainer-verified AIR / marks)
+ *        |
+ *        v
+ *   data/copies.json, data/index.json, data/toppers.json   (served by the app)
+ *   toppers.html, sitemap.xml, llms.txt, robots.txt        (static / SEO)
+ *   index.html                                             (<noscript> + JSON-LD markers)
+ *   dataset/questions.csv, copies.csv, toppers.csv,
+ *   dataset/dataset.json, manifest.json, README.md         (complete backup, not served by the app)
  *
  * Run:  node build.js
  */
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
@@ -58,18 +64,41 @@ function fromFilename(url) {
   return { air: air ? +air : null, year: year ? +year : null };
 }
 
+function loadCsv(file, prov) {
+  if (!fs.existsSync(file)) return [];
+  const rows = parseCSV(fs.readFileSync(file, 'utf8'));
+  if (!rows.length) return [];
+  const h = rows[0].map(x => x.trim());
+  const ix = { topper: h.indexOf('topper'), coaching: h.indexOf('coaching'), subject: h.indexOf('subject'), page: h.indexOf('page_number'), question: h.indexOf('question'), metadata: h.indexOf('metadata'), url: h.indexOf('url') };
+  return rows.slice(1)
+    .filter(r => r.length >= 7 && r.some(x => x !== ''))
+    .map(r => ({
+      topper: (r[ix.topper] || '').trim(),
+      coaching: (r[ix.coaching] || '').trim(),
+      subject: (r[ix.subject] || '').trim(),
+      page: parseInt(r[ix.page], 10) || null,
+      question: (r[ix.question] || '').trim(),
+      metadata: r[ix.metadata] || '',
+      url: (r[ix.url] || '').trim(),
+      prov
+    }));
+}
+
+function gitCommit() {
+  try { return require('child_process').execSync('git rev-parse --short HEAD', { cwd: ROOT }).toString().trim(); }
+  catch (e) { return null; }
+}
+
 function build() {
-  const raw = fs.readFileSync(SRC, 'utf8');
-  const rows = parseCSV(raw);
-  const header = rows[0].map(h => h.trim());
-  const H = k => header.indexOf(k);
-  const data = rows.slice(1).filter(r => r.length >= 7 && r.some(x => x !== ''));
+  const data = [
+    ...loadCsv(SRC, 'upsckata'),
+    ...loadCsv(path.join(DATA, 'submissions.csv'), 'submission')
+  ];
 
   const groups = new Map();
   for (const r of data) {
-    const url = (r[H('url')] || '').trim();
-    if (!url) continue;
-    const base = url.split('#')[0];
+    if (!r.url) continue;
+    const base = r.url.split('#')[0];
     if (!groups.has(base)) groups.set(base, []);
     groups.get(base).push(r);
   }
@@ -78,18 +107,19 @@ function build() {
   const toppers = {};
   let i = 0;
   for (const [base, rs] of groups) {
-    const topper = rs.map(r => r[H('topper')].trim()).find(Boolean) || 'Unknown';
-    const coaching = rs.map(r => r[H('coaching')].trim()).find(Boolean) || '';
-    const paper = rs.map(r => r[H('subject')].trim()).find(Boolean) || 'Other';
+    const topper = rs.map(r => r.topper).find(Boolean) || 'Unknown';
+    const coaching = rs.map(r => r.coaching).find(Boolean) || '';
+    const paper = rs.map(r => r.subject).find(Boolean) || 'Other';
     const { air, year } = fromFilename(base);
+    const provs = [...new Set(rs.map(r => r.prov))];
+    const prov = provs.length > 1 ? 'mixed' : provs[0];
 
     const qs = rs.map(r => {
-      const [marks, words] = parseMeta(r[H('metadata')] || '');
-      const page = parseInt(r[H('page_number')], 10) || null;
-      return [page, (r[H('question')] || '').trim(), marks, words];
+      const [marks, words] = parseMeta(r.metadata || '');
+      return [r.page, r.question, marks, words];
     }).sort((a, b) => (a[0] || 0) - (b[0] || 0));
 
-    copies.push({ i: i++, t: topper, c: coaching, p: paper, y: year, r: air, u: base, q: qs });
+    copies.push({ i: i++, t: topper, c: coaching, p: paper, y: year, r: air, u: base, q: qs, prov });
 
     if (topper !== 'Unknown') {
       const T = toppers[topper] || (toppers[topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
@@ -137,12 +167,172 @@ function build() {
   writeSitemap(generated);
   writeLlms(stats, generated);
   writeRobots();
+  const dsCounts = writeDataset(copies, toppers, generated, gitCommit());
 
   const withAir = Object.values(toppers).filter(t => t.air).length;
+  const subs = copies.filter(c => c.prov !== 'upsckata').length;
   console.log(`index.json   ${lite.length} copies (${(fs.statSync(path.join(DATA, 'index.json')).size / 1024).toFixed(0)} KB)`);
-  console.log(`copies.json  ${copies.length} copies, ${qCount} questions`);
+  console.log(`copies.json  ${copies.length} copies, ${qCount} questions (${subs} copies from submissions)`);
   console.log(`toppers.json ${Object.keys(toppers).length} toppers, ${withAir} with an auto-parsed AIR`);
   console.log(`toppers.html + sitemap.xml + llms.txt + robots.txt written; index.html markers filled`);
+  console.log(`dataset/     ${dsCounts.copies} copies, ${dsCounts.questions} questions, ${dsCounts.toppers} toppers, ${dsCounts.submissions} from submissions`);
+}
+
+/* ---- consolidated backup dataset (not served by the app) ---- */
+function writeDataset(copies, toppers, generated, commit) {
+  const DS = path.join(ROOT, 'dataset');
+  fs.mkdirSync(DS, { recursive: true });
+  const csv = v => { v = String(v == null ? '' : v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+
+  // fold optional-subject copies into the same shape as GS/Essay copies
+  const optPath = path.join(DATA, 'optionals.json');
+  const optIn = fs.existsSync(optPath) ? (JSON.parse(fs.readFileSync(optPath, 'utf8')).entries || []) : [];
+  let oid = copies.length;
+  const optCopies = optIn.map(o => ({
+    i: oid++, t: o.topper || 'Unknown', c: o.source || '', p: 'Optional — ' + o.subject, optional: true,
+    y: o.year || null, r: o.air || null, u: (o.url || '').split('#')[0], prov: 'submission',
+    verified: !!o.verified,
+    q: (Array.isArray(o.questions) ? o.questions : [])
+      .map(x => [x.page || null, x.question || '', x.marks || '', x.words || ''])
+      .sort((a, b) => (a[0] || 0) - (b[0] || 0))
+  }));
+
+  const all = copies.map(c => ({ ...c, optional: false })).concat(optCopies)
+    .sort((a, b) => a.t.localeCompare(b.t) || String(a.p).localeCompare(String(b.p)));
+
+  // per-topper aggregation across everything (incl. optionals)
+  const agg = {};
+  for (const c of all) {
+    if (!c.t || c.t === 'Unknown') continue;
+    const a = agg[c.t] || (agg[c.t] = { copies: 0, questions: 0, papers: new Set() });
+    a.copies++; a.questions += c.q.length; a.papers.add(c.p);
+  }
+  const names = [...new Set([...Object.keys(toppers), ...Object.keys(agg)])].sort();
+
+  // 1. questions.csv — the complete flat table
+  const qHead = ['copy_id', 'topper', 'air', 'year', 'paper', 'optional', 'source', 'provenance', 'page', 'marks', 'word_limit', 'question', 'pdf_url', 'pdf_page_url'];
+  const cHead = ['copy_id', 'topper', 'air', 'year', 'paper', 'optional', 'source', 'provenance', 'question_count', 'pdf_url'];
+  const qLines = [qHead.join(',')];
+  const cLines = [cHead.join(',')];
+  for (const c of all) {
+    cLines.push([c.i, csv(c.t), c.r || '', c.y || '', csv(c.p), c.optional ? 1 : 0, csv(c.c), c.prov, c.q.length, csv(c.u)].join(','));
+    for (const [page, question, marks, words] of c.q) {
+      qLines.push([
+        c.i, csv(c.t), c.r || '', c.y || '', csv(c.p), c.optional ? 1 : 0, csv(c.c), c.prov,
+        page || '', csv(marks), csv(words), csv(question), csv(c.u),
+        page && c.u ? c.u + '#page=' + page : csv(c.u)
+      ].join(','));
+    }
+  }
+  fs.writeFileSync(path.join(DS, 'questions.csv'), qLines.join('\n') + '\n');
+  fs.writeFileSync(path.join(DS, 'copies.csv'), cLines.join('\n') + '\n');
+
+  // 2. toppers.csv
+  const MK = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Optional', 'Total', 'Interview'];
+  const tHead = ['topper', 'air', 'year', 'verified', 'copies', 'questions', 'papers', ...MK.map(m => 'marks_' + m.toLowerCase()), 'sources'];
+  const tLines = [tHead.join(',')];
+  for (const name of names) {
+    const T = toppers[name] || {}; const a = agg[name] || { copies: 0, questions: 0, papers: new Set() };
+    tLines.push([
+      csv(name), T.air || '', T.year || '', T.verified ? 1 : 0, a.copies, a.questions,
+      csv([...a.papers].sort().join('; ')),
+      ...MK.map(m => (T.marks && T.marks[m] != null ? T.marks[m] : '')),
+      csv((T.sources || []).join('; '))
+    ].join(','));
+  }
+  fs.writeFileSync(path.join(DS, 'toppers.csv'), tLines.join('\n') + '\n');
+
+  // 3. dataset.json — single nested canonical dump
+  const counts = {
+    toppers: names.length,
+    copies: all.length,
+    questions: all.reduce((n, c) => n + c.q.length, 0),
+    submissions: all.filter(c => c.prov && c.prov !== 'upsckata').length
+  };
+  const json = {
+    meta: {
+      name: 'Toppers Copy — complete dataset',
+      description: 'Every question from every UPSC Civil Services Mains topper answer copy indexed by the Toppers Copy project, plus per-topper AIR / exam year / subject-wise marks. Consolidated backup — includes all accepted community submissions. No PDF files are included.',
+      site: SITE,
+      repository: 'https://github.com/hashin/topperscopy',
+      generated,
+      git_commit: commit || null,
+      attribution: 'Question-level data collection credited to upsckata.com "Topper Copies" (' + ATTRIBUTION + '). Answer-copy PDFs belong to the institutes that published them (ForumIAS, Vision IAS, NextIAS and others); this project links to them and re-hosts nothing.',
+      license: 'CC BY 4.0 for this compilation — see dataset/README.md',
+      schema_version: 2,
+      counts
+    },
+    toppers: names.map(name => {
+      const T = toppers[name] || {}; const a = agg[name] || { copies: 0, questions: 0, papers: new Set() };
+      return { name, air: T.air || null, year: T.year || null, verified: !!T.verified, marks: T.marks || {}, copies: a.copies, questions: a.questions, papers: [...a.papers].sort(), sources: T.sources || [] };
+    }),
+    copies: all.map(c => ({
+      id: c.i, topper: c.t, air: c.r || null, year: c.y || null, paper: c.p, optional: !!c.optional,
+      source: c.c || null, provenance: c.prov, pdf_url: c.u || null,
+      questions: c.q.map(([page, question, marks, words]) => ({ page: page || null, question, marks: marks || null, words: words || null }))
+    }))
+  };
+  fs.writeFileSync(path.join(DS, 'dataset.json'), JSON.stringify(json));
+
+  // 4. manifest.json — checksums so a copy can be verified later
+  const manifest = { generated, git_commit: commit || null, schema_version: 2, counts, files: {} };
+  for (const f of ['questions.csv', 'copies.csv', 'toppers.csv', 'dataset.json']) {
+    const buf = fs.readFileSync(path.join(DS, f));
+    manifest.files[f] = {
+      bytes: buf.length,
+      sha256: crypto.createHash('sha256').update(buf).digest('hex'),
+      rows: f.endsWith('.csv') ? buf.toString('utf8').trimEnd().split('\n').length - 1 : undefined
+    };
+  }
+  fs.writeFileSync(path.join(DS, 'manifest.json'), JSON.stringify(manifest, null, 2));
+
+  writeDatasetReadme(counts, generated);
+  return counts;
+}
+
+function writeDatasetReadme(counts, generated) {
+  const n = x => x.toLocaleString('en-IN');
+  const md = `# Toppers Copy — complete dataset
+
+A consolidated, self-contained backup of everything the [Toppers Copy](${SITE}) project has
+collected: every question from every UPSC Civil Services Mains topper answer copy, plus per-topper
+All-India Rank, exam year and subject-wise marks. **Accepted community submissions are included.**
+
+This directory is a reference archive — the website does not load it. Regenerate it with \`node build.js\`.
+
+- **Snapshot:** ${generated}
+- **${n(counts.questions)}** questions · **${n(counts.copies)}** answer copies · **${n(counts.toppers)}** toppers
+- **${n(counts.submissions)}** copies came from community submissions (the rest from the upstream mirror)
+
+## Files
+
+| File | What it is |
+| --- | --- |
+| \`questions.csv\` | The complete flat table — one row per question. The main reusable artefact. |
+| \`copies.csv\` | One row per answer copy (index / summary). |
+| \`toppers.csv\` | One row per topper — AIR, year, subject-wise marks, copy & question counts. |
+| \`dataset.json\` | The same data as a single nested JSON (\`meta\`, \`toppers[]\`, \`copies[]\` with \`questions[]\`). |
+| \`manifest.json\` | Generation date, source commit, and SHA-256 + row counts for each file. |
+
+### \`questions.csv\` columns
+
+\`copy_id\`, \`topper\`, \`air\`, \`year\`, \`paper\`, \`optional\` (0/1), \`source\`, \`provenance\`
+(\`upsckata\` \\| \`submission\` \\| \`mixed\`), \`page\`, \`marks\`, \`word_limit\`, \`question\`,
+\`pdf_url\` (the copy), \`pdf_page_url\` (deep link to the page).
+
+## Provenance & licence
+
+- The question-level data collection is credited to **[upsckata.com — "Topper Copies"](${ATTRIBUTION})**.
+- Answer-copy PDFs are the property of the institutes that published them (ForumIAS, Vision IAS,
+  NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS and others). **No PDF files are in this dataset** —
+  only links to them.
+- Questions are extracted from PDFs heuristically and may contain misreads, duplicates or gaps.
+  Always check \`pdf_page_url\` if something looks off.
+- This **compilation** is released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**:
+  reuse freely, credit "Toppers Copy (${SITE})" and upsckata.com.
+- A rights holder who wants a copy removed can [open an issue](https://github.com/hashin/topperscopy/issues).
+`;
+  fs.writeFileSync(path.join(ROOT, 'dataset', 'README.md'), md);
 }
 
 /* ---- names & tags shared by static outputs ---- */
@@ -230,8 +420,10 @@ function jsonLd(stats, generated) {
       creator: { '@id': SITE + '/#org' },
       dateModified: generated,
       distribution: [
-        { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: SITE + '/data/copies.json' },
-        { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: SITE + '/data/questions.csv' }
+        { '@type': 'DataDownload', name: 'Complete flat question table (CSV)', encodingFormat: 'text/csv', contentUrl: SITE + '/dataset/questions.csv' },
+        { '@type': 'DataDownload', name: 'Complete dataset (nested JSON)', encodingFormat: 'application/json', contentUrl: SITE + '/dataset/dataset.json' },
+        { '@type': 'DataDownload', name: 'Per-topper table (CSV)', encodingFormat: 'text/csv', contentUrl: SITE + '/dataset/toppers.csv' },
+        { '@type': 'DataDownload', name: 'App index, grouped by copy (JSON)', encodingFormat: 'application/json', contentUrl: SITE + '/data/copies.json' }
       ],
       citation: ATTRIBUTION
     },
@@ -428,6 +620,15 @@ Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (
 - Per-topper AIR / year / marks (JSON): https://topperscopy.hashin.me/data/toppers.json
 - Raw source table (CSV): https://topperscopy.hashin.me/data/questions.csv
 - Optional-subject submissions (JSON): https://topperscopy.hashin.me/data/optionals.json
+
+## Complete dataset (backup, includes all accepted submissions)
+
+- Flat table of every question (CSV): https://topperscopy.hashin.me/dataset/questions.csv
+- Per-topper table (CSV): https://topperscopy.hashin.me/dataset/toppers.csv
+- Per-copy index (CSV): https://topperscopy.hashin.me/dataset/copies.csv
+- Everything as one nested JSON: https://topperscopy.hashin.me/dataset/dataset.json
+- Checksums and counts: https://topperscopy.hashin.me/dataset/manifest.json
+- Documentation: https://github.com/hashin/topperscopy/blob/main/dataset/README.md
 
 ## Human-readable pages
 

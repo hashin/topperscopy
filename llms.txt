@@ -25,6 +25,15 @@ Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (
 - Raw source table (CSV): https://topperscopy.hashin.me/data/questions.csv
 - Optional-subject submissions (JSON): https://topperscopy.hashin.me/data/optionals.json
 
+## Complete dataset (backup, includes all accepted submissions)
+
+- Flat table of every question (CSV): https://topperscopy.hashin.me/dataset/questions.csv
+- Per-topper table (CSV): https://topperscopy.hashin.me/dataset/toppers.csv
+- Per-copy index (CSV): https://topperscopy.hashin.me/dataset/copies.csv
+- Everything as one nested JSON: https://topperscopy.hashin.me/dataset/dataset.json
+- Checksums and counts: https://topperscopy.hashin.me/dataset/manifest.json
+- Documentation: https://github.com/hashin/topperscopy/blob/main/dataset/README.md
+
 ## Human-readable pages
 
 - Home / search: https://topperscopy.hashin.me/

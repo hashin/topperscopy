@@ -9,7 +9,9 @@
  *        [--coaching ForumIAS] [--air 1] [--year 2024] [--append]
  *
  * Without --append it prints the CSV rows to stdout for review.
- * With --append it writes them to data/questions.csv — then run `node build.js`.
+ * With --append it writes them to data/submissions.csv (the accepted-submissions
+ * store, kept separate from the pristine data/questions.csv mirror) — then run
+ * `node build.js`, which also refreshes the dataset/ backup.
  *
  * For an optional-subject copy, use --json to emit a data/optionals.json entry
  * (with an embedded `questions` array) instead of CSV.
@@ -102,11 +104,14 @@ async function getPages(src) {
 
   const rows = toCsvRows(questions, meta);
   if (o.append) {
-    const csv = path.join(__dirname, 'data', 'questions.csv');
-    let body = fs.readFileSync(csv, 'utf8');
+    // accepted GS/Essay submissions go here, NOT into the pristine questions.csv mirror
+    const csv = path.join(__dirname, 'data', 'submissions.csv');
+    const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
+    let body = fs.existsSync(csv) ? fs.readFileSync(csv, 'utf8') : HEADER;
+    if (!body.trim()) body = HEADER;
     if (!body.endsWith('\n')) body += '\n';
     fs.writeFileSync(csv, body + rows.join('\n') + '\n');
-    console.error(`Appended ${rows.length} rows to data/questions.csv. Next: node build.js`);
+    console.error(`Appended ${rows.length} rows to data/submissions.csv. Next: node build.js`);
   } else {
     console.log('topper,coaching,subject,page_number,question,metadata,url');
     console.log(rows.join('\n'));
