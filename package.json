@@ -10,6 +10,6 @@
     "extract": "node extract.js"
   },
   "devDependencies": {
-    "pdfjs-dist": "^4.7.76"
+    "pdfjs-dist": "^4.10.38"
   }
 }
