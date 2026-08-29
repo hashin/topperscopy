@@ -10,7 +10,8 @@
     "source": "coaching / self-uploaded (optional)",
     "note": "one line about the copy (optional)",
     "by": "submitter handle for credit (optional)",
-    "verified": "true once a maintainer checks it"
+    "verified": "true once a maintainer checks it",
+    "questions": "optional array of { page, question, marks, words } — same shape as GS copies. Produced by the Submit-form analyser or `node extract.js <url> --paper 'Optional — Sociology' --json`. When present, the card shows each question with an Open-PDF-at-page link."
   },
   "entries": []
 }

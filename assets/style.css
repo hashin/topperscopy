@@ -426,6 +426,39 @@ form input:focus, form select:focus, form textarea:focus { outline: none; border
 }
 .kindswitch button[aria-pressed="true"] { background: var(--surface); color: var(--teal-text); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--teal-line); }
 
+/* PDF analyser (Submit tab) */
+.analyse {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px; margin-bottom: 20px;
+}
+.analyse-head strong { display: block; font-size: 14px; color: var(--ink); }
+.analyse-head span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+.analyse-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.filebtn {
+  display: inline-flex; align-items: center; font: inherit; font-size: 13.5px; font-weight: 600;
+  color: var(--teal-text); background: var(--teal-weak); border: 1px solid var(--teal-line);
+  border-radius: 10px; padding: 9px 14px; cursor: pointer;
+}
+.filebtn input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.filebtn:focus-within { outline: 2px solid var(--teal); outline-offset: 2px; }
+.an-or { font-size: 12.5px; color: var(--muted); }
+.an-status { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+.an-status.bad { color: #b4453b; }
+:root[data-theme="dark"] .an-status.bad, :root:not([data-theme="light"]) .an-status.bad { color: #e8918a; }
+.an-result { margin-top: 12px; }
+.an-count { font-size: 14px; color: var(--ink); margin: 0 0 10px; }
+.an-count .an-note, .an-note { font-size: 12px; color: var(--muted); font-weight: 400; }
+.an-note { display: block; margin-top: 8px; }
+.an-list {
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface);
+  max-height: 320px; overflow-y: auto;
+}
+.an-q { display: flex; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.an-q:last-child { border-bottom: 0; }
+.an-q.more { color: var(--muted); justify-content: center; }
+.an-pg { flex: none; color: var(--muted); font-variant-numeric: tabular-nums; }
+.an-qt { color: var(--body); }
+
 .btn {
   font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
   background: var(--ink); color: var(--paper); border: 1px solid transparent; border-radius: 11px;

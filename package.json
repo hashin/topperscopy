@@ -1,0 +1,15 @@
+{
+  "name": "topperscopy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free searchable directory of UPSC Mains topper answer copies.",
+  "homepage": "https://topperscopy.hashin.me",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js",
+    "extract": "node extract.js"
+  },
+  "devDependencies": {
+    "pdfjs-dist": "^4.7.76"
+  }
+}

@@ -60,6 +60,21 @@ body:
     attributes:
       label: Marks in this paper
       placeholder: e.g. 145
+  - type: input
+    id: qcount
+    attributes:
+      label: Approximate number of questions
+      description: The Submit form on the site can estimate this from the PDF. Otherwise, a rough count is fine.
+      placeholder: e.g. ~28
+  - type: textarea
+    id: questions_csv
+    attributes:
+      label: Extracted questions (CSV)
+      description: >
+        Optional. If you used the "Estimate the questions" tool on the Submit form, paste the CSV it
+        produced here (columns: topper,coaching,subject,page_number,question,metadata,url). A maintainer
+        will review it and append it to data/questions.csv.
+      render: csv
   - type: textarea
     id: note
     attributes:

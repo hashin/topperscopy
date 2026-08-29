@@ -76,11 +76,34 @@ events: `search`, `filter_change`, `copy_open`, `pdf_open` (outbound, with toppe
 `optional_subject_view`, `theme_change`, `tab_view`, `submit_kind`, `submit_issue_open`,
 `click_outbound`, `app_ready`, `data_loaded`.
 
+## Question extraction
+
+New copies get the same treatment as the seeded ones — a question count and per-question text linked
+to the exact PDF page — via a shared heuristic in `assets/extract.js` (pure, no deps).
+
+- **In the browser (Submit form).** The "Estimate the questions" panel lazy-loads `assets/analyse.js`,
+  which pulls `pdf.js` from a CDN on first use, reads the chosen PDF **locally** (the file is never
+  uploaded), reconstructs text lines from glyph positions, and runs `extract.js`. It shows an estimated
+  count + preview and attaches a ready-to-merge CSV block to the GitHub issue.
+- **For the maintainer (`extract.js` CLI).** Same heuristic, authoritative:
+  ```bash
+  npm install                                   # once — installs pdfjs-dist (dev only, not shipped, not in CI)
+  node extract.js <url|file.pdf> --topper "Shakti Dubey" --paper GS1 --coaching ForumIAS --append
+  node build.js
+  # optional subject → emit a data/optionals.json entry with an embedded questions[] array:
+  node extract.js <url> --topper "X" --paper "Optional — Sociology" --json
+  ```
+
+It's a heuristic, not OCR — handwritten scans with no text layer yield nothing (fill the count by
+hand), and printed question headers extract with occasional misses. A maintainer always reviews.
+
 ## Contributing
 
 - **Add a copy / fix marks:** use the [Submit form](https://topperscopy.hashin.me/#submit) or open an
   issue directly. A maintainer verifies each submission, then:
-  - copies → append to `data/optionals.json` (optionals) or add the PDF row to `data/questions.csv` (GS/Essay);
+  - GS/Essay copy → append its rows to `data/questions.csv` (paste the analyser's CSV, or run
+    `node extract.js … --append`);
+  - optional-subject copy → add an entry to `data/optionals.json` (with a `questions[]` array if available);
   - topper data → add to `data/toppers.overrides.json` with `"verified": true`.
 - Run `node build.js`, commit, done.
 

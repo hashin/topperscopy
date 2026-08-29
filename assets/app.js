@@ -472,8 +472,9 @@
       var list = OPTS.filter(function (o) {
         if (state.optSubject !== 'all' && o.subject !== state.optSubject) return false;
         if (state.optQ) {
-          var blob = (o.topper + ' ' + (o.note || '') + ' ' + (o.source || '')).toLowerCase();
-          if (blob.indexOf(state.optQ) < 0) return false;
+          var blob = (o.topper + ' ' + (o.note || '') + ' ' + (o.source || '') + ' ' +
+            (Array.isArray(o.questions) ? o.questions.map(function (q) { return q.question; }).join(' ') : '')).toLowerCase();
+          if (state.optQ.split(/\s+/).filter(Boolean).some(function (w) { return blob.indexOf(w) < 0; })) return false;
         }
         return true;
       });
@@ -519,32 +520,131 @@
   }
 
   function optCard(o) {
+    var qs = Array.isArray(o.questions) ? o.questions : [];
+    var terms = state.optQ ? state.optQ.split(/\s+/).filter(Boolean) : [];
     var tags = [el('span', { class: 'tag paper' }, [o.subject])];
     if (o.air) tags.push(el('span', { class: 'tag air' }, ['AIR ' + o.air + (o.verified ? ' ✓' : '')]));
-    if (o.year) tags.push(el('span', { class: 'tag' }, [String(o.year)]));
+    if (o.year) tags.push(el('span', { class: 'tag year' }, [String(o.year)]));
     if (o.marks) tags.push(el('span', { class: 'tag marks' }, [o.subject + ' ' + o.marks]));
     if (o.source) tags.push(el('span', { class: 'tag' }, [o.source]));
 
     var summary = el('summary', {}, [
       el('span', { class: 'name' }, [o.topper]),
-      o.by ? el('span', { class: 'qn' }, ['via ' + o.by]) : null,
+      el('span', { class: 'qn' }, [qs.length ? qs.length + (qs.length === 1 ? ' question' : ' questions') : (o.by ? 'via ' + o.by : 'copy')]),
       el('span', { class: 'tags' }, tags)
     ]);
-    var link = el('a', { class: 'open', href: o.url, target: '_blank', rel: 'noopener' }, ['Open copy']);
-    link.addEventListener('click', function () {
-      track('pdf_open', {
-        topper: o.topper, paper: o.subject, source: o.source || 'unknown',
-        link_domain: hostOf(o.url), optional: true, outbound: true, transport_type: 'beacon'
+
+    function pdfLink(page, txt) {
+      var href = o.url + (page ? '#page=' + page : '');
+      var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [txt]);
+      a.addEventListener('click', function () {
+        track('pdf_open', { topper: o.topper, paper: o.subject, source: o.source || 'unknown', page: page || 0, link_domain: hostOf(o.url), optional: true, outbound: true, transport_type: 'beacon' });
       });
-    });
-    var body = el('div', { class: 'qlist' }, [
-      el('div', { class: 'q' }, [el('div', { class: 'txt' }, [o.note || 'Optional subject answer copy.']), link])
-    ]);
+      return a;
+    }
+
+    var body = el('div', { class: 'qlist' });
+    if (qs.length) {
+      if (o.note) body.appendChild(el('div', { class: 'q' }, [el('div', { class: 'txt' }, [o.note])]));
+      qs.forEach(function (q) {
+        var txt = el('div', { class: 'txt' });
+        txt.innerHTML = highlight(q.question || '', terms);
+        var m = [];
+        if (q.marks) m.push(q.marks + ' marks');
+        if (q.words) m.push(q.words + ' words');
+        if (m.length) txt.appendChild(el('span', { class: 'qmeta' }, [m.join('  ·  ')]));
+        body.appendChild(el('div', { class: 'q' }, [txt, pdfLink(q.page, q.page ? 'Open PDF · p.' + q.page : 'Open PDF')]));
+      });
+    } else {
+      body.appendChild(el('div', { class: 'q' }, [el('div', { class: 'txt' }, [o.note || 'Optional subject answer copy.']), pdfLink(0, 'Open copy')]));
+    }
     return el('details', { class: 'copy', open: 'open' }, [summary, body]);
   }
 
   /* ---------- submit ---------- */
+  var analysis = null;          // { count, numPages, questions, method } from the PDF analyser
+  var analyseLoaded = null;     // promise for lazily loading assets/analyse.js
+
+  function loadAnalyser() {
+    if (analyseLoaded) return analyseLoaded;
+    analyseLoaded = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = 'assets/analyse.js'; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return analyseLoaded;
+  }
+
+  function wireAnalyse() {
+    var panel = $('#analyse'); if (!panel) return;
+    var statusEl = $('#an-status'), resultEl = $('#an-result');
+
+    function status(msg, kind) {
+      statusEl.hidden = false;
+      statusEl.textContent = msg;
+      statusEl.className = 'an-status' + (kind ? ' ' + kind : '');
+    }
+
+    function run(source, label) {
+      analysis = null; resultEl.hidden = true; resultEl.innerHTML = '';
+      status('Loading the PDF reader…');
+      track('analyse_start', { source: label });
+      loadAnalyser()
+        .then(function () { return self.TC.analyse(source, function (p) { status(p === 'parsing' ? 'Reading the pages…' : 'Fetching the PDF…'); }); })
+        .then(function (res) {
+          analysis = res;
+          track('analyse_done', { pages: res.numPages, count: res.count, method: res.method, source: label });
+          renderAnalysis(res);
+        })
+        .catch(function (e) {
+          status((e && e.message) || 'Could not read that PDF. Try downloading it and choosing the file.', 'bad');
+          track('analyse_error', { message: String(e && e.message || e).slice(0, 120), source: label });
+        });
+    }
+
+    function renderAnalysis(res) {
+      statusEl.hidden = true;
+      resultEl.hidden = false;
+      if (!res.count) {
+        resultEl.appendChild(el('p', { class: 'an-status bad' }, [
+          res.method === 'no-text'
+            ? 'No text layer in this PDF — it is probably a handwritten scan. The number of questions can be filled in by hand during review.'
+            : 'Read ' + res.numPages + ' pages but found nothing that looks like a question.'
+        ]));
+        return;
+      }
+      resultEl.appendChild(el('p', { class: 'an-count' }, [
+        '≈ ', el('strong', {}, [String(res.count)]), ' questions detected across ' + res.numPages + ' pages.',
+        el('span', { class: 'an-note' }, [' Heuristic — review against the PDF before it goes live.'])
+      ]));
+      var listWrap = el('div', { class: 'an-list' });
+      res.questions.slice(0, 14).forEach(function (q) {
+        var extra = (q.marks && !/marks?\b/i.test(q.question)) ? '  (' + q.marks + ' marks)' : '';
+        listWrap.appendChild(el('div', { class: 'an-q' }, [
+          el('span', { class: 'an-pg' }, ['p.' + q.page]),
+          el('span', { class: 'an-qt' }, [q.question + extra])
+        ]));
+      });
+      if (res.questions.length > 14) listWrap.appendChild(el('div', { class: 'an-q more' }, ['+ ' + (res.questions.length - 14) + ' more']));
+      resultEl.appendChild(listWrap);
+      resultEl.appendChild(el('p', { class: 'an-note' }, [
+        'These are attached to your GitHub issue automatically so a maintainer can drop them straight in.'
+      ]));
+    }
+
+    $('#an-file').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (f) run(f, 'file');
+    });
+    $('#an-url').addEventListener('click', function () {
+      var u = ($('#sform [name=url]').value || '').trim();
+      if (!/^https?:\/\//i.test(u)) { status('Paste the PDF link in the field below first.', 'bad'); return; }
+      run(u, 'url');
+    });
+  }
+
   function wireSubmit() {
+    wireAnalyse();
     var kind = 'copy';
     function setKind(k) {
       kind = k;
@@ -575,12 +675,26 @@
         L.push('| Copy link | ' + (g('url') || '—') + ' |');
         L.push('| Source / coaching | ' + (g('source') || '—') + ' |');
         L.push('| Marks in this paper | ' + (g('marks') || '—') + ' |');
+        if (analysis && analysis.count) L.push('| Questions (auto-estimated) | ~' + analysis.count + ' over ' + analysis.numPages + ' pages · ' + analysis.method + ' |');
       } else {
         L.push('| Subject-wise marks | ' + (g('allmarks') || '—') + ' |');
       }
       L.push('| Submitted by | ' + (g('by') || 'anonymous') + ' |', '',
-        '**Source / verification note**', '', g('note') || '_none provided_', '',
-        '---', '_Sent from the Submit form on topperscopy.hashin.me. Data concept credit: upsckata.com._');
+        '**Source / verification note**', '', g('note') || '_none provided_');
+
+      if (isCopy && analysis && analysis.count) {
+        var meta = { topper: g('topper'), coaching: g('source'), subject: g('paper'), url: g('url') };
+        var rows = (self.TC.extract).toCsvRows(analysis.questions, meta);
+        var csv = 'topper,coaching,subject,page_number,question,metadata,url\n' + rows.join('\n');
+        var block = ['', '<details><summary>Auto-extracted questions — ' + analysis.count +
+          ' rows for <code>data/questions.csv</code> (heuristic, please verify)</summary>', '',
+          '```csv', csv, '```', '</details>'].join('\n');
+        // keep the GitHub issue URL within its ~8 KB limit
+        if (encodeURIComponent(L.join('\n') + block).length < 6200) L.push(block);
+        else L.push('', '_' + analysis.count + ' questions were auto-extracted from the PDF; the CSV was too long for the pre-filled issue — the submitter can paste it in a comment._');
+      }
+
+      L.push('', '---', '_Sent from the Submit form on topperscopy.hashin.me. Data concept credit: upsckata.com._');
 
       var body = L.join('\n');
       var base = 'https://github.com/' + REPO + '/issues/new?';
@@ -588,15 +702,15 @@
         '&title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
       var blank = base + 'labels=submission&title=' + encodeURIComponent(title);
 
-      if (url.length > 7000) {
+      if (url.length > 7800) {
         url = blank;
-        $('#sform-note').textContent = 'Your note was long, so the issue opened without the pre-filled body — paste your details there.';
+        $('#sform-note').textContent = 'The pre-filled issue was too long, so it opened blank — paste your details there.';
       } else {
         $('#sform-note').textContent = 'Opened a GitHub issue in a new tab with everything filled in. Review it and hit “Submit new issue”.';
       }
       window.open(url, '_blank', 'noopener');
       var alt = $('#sform-alt'); alt.hidden = false; alt.href = blank;
-      track('submit_issue_open', { kind: kind, paper: g('paper') || 'unknown', has_link: !!g('url') });
+      track('submit_issue_open', { kind: kind, paper: g('paper') || 'unknown', has_link: !!g('url'), extracted: analysis ? analysis.count : 0 });
     });
   }
 
