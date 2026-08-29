@@ -1,6 +1,5 @@
 {
   "generated": "2026-08-29",
-  "git_commit": "24bf049",
   "schema_version": 2,
   "counts": {
     "toppers": 367,
@@ -25,8 +24,8 @@
       "rows": 367
     },
     "dataset.json": {
-      "bytes": 7266756,
-      "sha256": "a2327ee73acd470e31115fc121a1d45b3c37a1ce8f135032e4b7b88d22cfa15e"
+      "bytes": 7266733,
+      "sha256": "e055a189058f73a1d67c61b2ecca46231fca1b02910dd2e95b1331bf8e07ec1e"
     }
   }
 }

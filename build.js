@@ -256,7 +256,6 @@ function writeDataset(copies, toppers, generated, commit) {
       site: SITE,
       repository: 'https://github.com/hashin/topperscopy',
       generated,
-      git_commit: commit || null,
       attribution: 'Question-level data collection credited to upsckata.com "Topper Copies" (' + ATTRIBUTION + '). Answer-copy PDFs belong to the institutes that published them (ForumIAS, Vision IAS, NextIAS and others); this project links to them and re-hosts nothing.',
       license: 'CC BY 4.0 for this compilation — see dataset/README.md',
       schema_version: 2,
@@ -275,7 +274,7 @@ function writeDataset(copies, toppers, generated, commit) {
   fs.writeFileSync(path.join(DS, 'dataset.json'), JSON.stringify(json));
 
   // 4. manifest.json — checksums so a copy can be verified later
-  const manifest = { generated, git_commit: commit || null, schema_version: 2, counts, files: {} };
+  const manifest = { generated, schema_version: 2, counts, files: {} };
   for (const f of ['questions.csv', 'copies.csv', 'toppers.csv', 'dataset.json']) {
     const buf = fs.readFileSync(path.join(DS, f));
     manifest.files[f] = {
