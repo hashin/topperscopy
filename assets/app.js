@@ -578,6 +578,7 @@
   function wireAnalyse() {
     var panel = $('#analyse'); if (!panel) return;
     var statusEl = $('#an-status'), resultEl = $('#an-result');
+    var lastSource = null, lastLabel = '';
 
     function status(msg, kind) {
       statusEl.hidden = false;
@@ -585,37 +586,66 @@
       statusEl.className = 'an-status' + (kind ? ' ' + kind : '');
     }
 
-    function run(source, label) {
+    function progress(p, a, b) {
+      if (p === 'ocr-init') status('Loading the OCR engine (one-time ~13 MB)…');
+      else if (p === 'ocr') status('Reading printed text — page ' + a + ' of ' + b + '…');
+      else if (p === 'parsing') status('Reading the pages…');
+      else if (p === 'reading') status('Opening the PDF…');
+      else status('Working…');
+    }
+
+    function run(source, label, opts) {
+      opts = opts || {};
+      lastSource = source; lastLabel = label;
       analysis = null; resultEl.hidden = true; resultEl.innerHTML = '';
-      status('Loading the PDF reader…');
-      track('analyse_start', { source: label });
+      status(opts.ocr ? 'Starting OCR…' : 'Loading the PDF reader…');
+      track('analyse_start', { source: label, ocr: !!opts.ocr });
       loadAnalyser()
-        .then(function () { return self.TC.analyse(source, function (p) { status(p === 'parsing' ? 'Reading the pages…' : 'Fetching the PDF…'); }); })
+        .then(function () { return self.TC.analyse(source, progress, opts); })
         .then(function (res) {
-          analysis = res;
+          analysis = (res && res.count) ? res : null;
           track('analyse_done', { pages: res.numPages, count: res.count, method: res.method, source: label });
-          renderAnalysis(res);
+          renderAnalysis(res, opts);
         })
         .catch(function (e) {
           status((e && e.message) || 'Could not read that PDF. Try downloading it and choosing the file.', 'bad');
-          track('analyse_error', { message: String(e && e.message || e).slice(0, 120), source: label });
+          track('analyse_error', { message: String(e && e.message || e).slice(0, 120), source: label, ocr: !!opts.ocr });
         });
     }
 
-    function renderAnalysis(res) {
+    function renderAnalysis(res, opts) {
       statusEl.hidden = true;
       resultEl.hidden = false;
+
       if (!res.count) {
+        var canOcr = (res.method === 'no-text') && lastSource;
         resultEl.appendChild(el('p', { class: 'an-status bad' }, [
           res.method === 'no-text'
-            ? 'No text layer in this PDF — it is probably a handwritten scan. The number of questions can be filled in by hand during review.'
-            : 'Read ' + res.numPages + ' pages but found nothing that looks like a question.'
+            ? 'No text layer — this is a scanned PDF.'
+            : res.method === 'ocr-empty'
+              ? 'OCR read ' + res.numPages + ' pages but found no printed questions (the copy may have only handwriting).'
+              : 'Read ' + res.numPages + ' pages but found nothing that looks like a question.'
         ]));
+        if (canOcr) {
+          var btn = el('button', { type: 'button', class: 'btn ghost', style: 'margin-top:10px' },
+            ['OCR the printed questions  (slow — a few minutes)']);
+          btn.addEventListener('click', function () { btn.disabled = true; run(lastSource, lastLabel, { ocr: true }); });
+          resultEl.appendChild(btn);
+          resultEl.appendChild(el('p', { class: 'an-note' }, [
+            'Renders each page and reads only the printed question at the top (handwriting is ignored). Runs in your browser.'
+          ]));
+        }
         return;
       }
+
       resultEl.appendChild(el('p', { class: 'an-count' }, [
-        '≈ ', el('strong', {}, [String(res.count)]), ' questions detected across ' + res.numPages + ' pages.',
-        el('span', { class: 'an-note' }, [' Heuristic — review against the PDF before it goes live.'])
+        '≈ ', el('strong', {}, [String(res.count)]), ' questions detected across ' + res.numPages + ' pages',
+        res.method === 'ocr' ? ' (via OCR)' : '', res.skipped ? ' · ' + res.skipped + ' pages skipped' : '', '.',
+        el('span', { class: 'an-note' }, [
+          res.method === 'ocr'
+            ? ' OCR of scanned text — expect some errors. Review against the PDF before it goes live.'
+            : ' Heuristic — review against the PDF before it goes live.'
+        ])
       ]));
       var listWrap = el('div', { class: 'an-list' });
       res.questions.slice(0, 14).forEach(function (q) {
@@ -686,8 +716,9 @@
         var meta = { topper: g('topper'), coaching: g('source'), subject: g('paper'), url: g('url') };
         var rows = (self.TC.extract).toCsvRows(analysis.questions, meta);
         var csv = 'topper,coaching,subject,page_number,question,metadata,url\n' + rows.join('\n');
+        var how = analysis.method === 'ocr' ? 'OCR of a scanned PDF' : 'heuristic';
         var block = ['', '<details><summary>Auto-extracted questions — ' + analysis.count +
-          ' rows for <code>data/questions.csv</code> (heuristic, please verify)</summary>', '',
+          ' rows for <code>data/submissions.csv</code> (' + how + ', please verify)</summary>', '',
           '```csv', csv, '```', '</details>'].join('\n');
         // keep the GitHub issue URL within its ~8 KB limit
         if (encodeURIComponent(L.join('\n') + block).length < 6200) L.push(block);

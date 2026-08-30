@@ -90,7 +90,13 @@ to the exact PDF page — via a shared heuristic in `assets/extract.js` (pure, n
   which pulls `pdf.js` from a CDN on first use, reads the chosen PDF **locally** (the file is never
   uploaded), reconstructs text lines from glyph positions, and runs `extract.js`. It shows an estimated
   count + preview and attaches a ready-to-merge CSV block to the GitHub issue.
-- **For the maintainer (`extract.js` CLI).** Same heuristic, authoritative:
+- **OCR fallback (scanned PDFs).** When there's no text layer, an "OCR the printed questions" button
+  appears. It lazy-loads Tesseract.js (~13 MB, CDN, only on click), renders each page with pdf.js,
+  **crops the top ~42%** (where the printed question sits, above the handwriting), and OCRs just that
+  strip. ~2–5 s/page in a foreground tab; runs in a Web Worker so the tab stays responsive; per-page
+  30 s timeout so one bad page is skipped, not fatal. Result feeds the same `extract.js` heuristic.
+  Works on uploaded files; a pasted link only works if the host sends CORS headers (most don't).
+- **For the maintainer (`extract.js` CLI).** Same heuristic, authoritative (text layer only — no OCR):
   ```bash
   npm install                                   # once — installs pdfjs-dist (dev only, not shipped, not in CI)
   node extract.js <url|file.pdf> --topper "Shakti Dubey" --paper GS1 --coaching ForumIAS --append
@@ -99,8 +105,8 @@ to the exact PDF page — via a shared heuristic in `assets/extract.js` (pure, n
   node extract.js <url> --topper "X" --paper "Optional — Sociology" --json
   ```
 
-It's a heuristic, not OCR — handwritten scans with no text layer yield nothing (fill the count by
-hand), and printed question headers extract with occasional misses. A maintainer always reviews.
+It's a heuristic — printed question headers extract with occasional misses, OCR adds its own errors,
+and pure-handwriting pages yield nothing. A maintainer always reviews before it goes live.
 
 ## Complete dataset (`dataset/`)
 
