@@ -8,7 +8,7 @@
   var OPTIONALS = ['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
     'Public Administration', 'Philosophy', 'Economics', 'Mathematics', 'Physics',
     'Chemistry', 'Commerce & Accountancy', 'Law', 'Management', 'Medical Science',
-    'Agriculture', 'Statistics', 'Literature', 'Other'];
+    'Agriculture', 'Statistics', 'Literature', 'Forest Service (IFS)', 'Other'];
   var PAGE = 25;
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
