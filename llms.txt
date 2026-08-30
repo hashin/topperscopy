@@ -14,7 +14,7 @@ Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (
 
 - Which UPSC Mains topper answered which question, in which paper, on which page of which PDF.
 - Per-topper All-India Rank (AIR), exam year and, where submitted, subject-wise marks.
-- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE and Rau's IAS.
+- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others.
 - Optional-subject copies: Sociology, Anthropology, History, PSIR, Geography, Public Administration,
   Philosophy, Economics, Literature and more (community-submitted).
 

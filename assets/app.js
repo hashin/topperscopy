@@ -297,6 +297,7 @@
     if (needsText && !FULL) { ensureFull(); return { pending: true }; }
 
     var list = DB.copies.map(function (c) {
+      if (needsText && c.k) return null;         // link-only copies have no text to match
       if (state.paper !== 'all' && c.p !== state.paper) return null;
       if (state.topper && c.t !== state.topper) return null;
       if (state.source && c.c !== state.source) return null;
@@ -375,6 +376,22 @@
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
       .concat(topperTags(c.t, c.p, c.y, c.r));
+
+    if (c.k) {   // link-only copy — no question text
+      var lsum = el('summary', {}, [
+        el('span', { class: 'name' }, [c.t]),
+        el('span', { class: 'qn' }, ['link only']),
+        el('span', { class: 'tags' }, tags)
+      ]);
+      var la = el('a', { class: 'open', href: c.u, target: '_blank', rel: 'noopener' }, ['Open copy']);
+      la.addEventListener('click', function () {
+        track('pdf_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', link_domain: hostOf(c.u), link_only: true, outbound: true, transport_type: 'beacon' });
+      });
+      var lbody = el('div', { class: 'qlist' }, [
+        el('div', { class: 'q' }, [el('div', { class: 'txt' }, [c.note || 'Scanned answer copy — not text-searchable. Open it to read.']), la])
+      ]);
+      return el('details', { class: 'copy', 'data-i': c.i }, [lsum, lbody]);
+    }
 
     var summary = el('summary', {}, [
       el('span', { class: 'name' }, [c.t]),

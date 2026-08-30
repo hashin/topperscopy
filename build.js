@@ -131,16 +131,32 @@ function build() {
     }
   }
 
+  // GS/Essay copies that are only a link (no extractable question text)
+  const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
+    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
+  for (const e of linkRaw) {
+    if (!e.url || !e.topper || !e.paper) continue;
+    copies.push({ i: i++, t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: e.url.split('#')[0], q: [], prov: 'link', link: 1, note: e.note || '' });
+    const T = toppers[e.topper] || (toppers[e.topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
+    T.copies++;
+    if (e.air && !T.air) T.air = e.air;
+    if (e.year && !T.year) T.year = e.year;
+    if (e.source && !T.coaching.includes(e.source)) T.coaching.push(e.source);
+    if (e.paper && !T.papers.includes(e.paper)) T.papers.push(e.paper);
+  }
+
   copies.sort((a, b) => a.t.localeCompare(b.t) || a.p.localeCompare(b.p));
 
   const papers = {};
-  let qCount = 0;
-  for (const c of copies) { papers[c.p] = (papers[c.p] || 0) + c.q.length; qCount += c.q.length; }
+  let qCount = 0, linkCount = 0;
+  for (const c of copies) { papers[c.p] = (papers[c.p] || 0) + (c.q.length || (c.link ? 1 : 0)); qCount += c.q.length; if (c.link) linkCount++; }
 
   const generated = new Date().toISOString().slice(0, 10);
-  const stats = { questions: qCount, copies: copies.length, toppers: new Set(copies.map(c => c.t)).size, papers };
+  // stats = the searchable GS/Essay question index (used by JSON-LD, llms.txt, static index)
+  const searchable = copies.filter(c => !c.link);
+  const stats = { questions: qCount, copies: searchable.length, toppers: new Set(searchable.map(c => c.t)).size, papers };
 
-  // grand total across GS/Essay + optional-subject copies — for the homepage headline
+  // stats.all = grand total incl. link-only + optional-subject copies — for the homepage headline
   const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
     ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
   const optQ = optRaw.reduce((n, o) => n + (Array.isArray(o.questions) ? o.questions.length : 0), 0);
@@ -149,13 +165,18 @@ function build() {
     questions: qCount + optQ,
     copies: copies.length + optRaw.length,
     toppers: new Set(copies.map(c => c.t).concat(optRaw.map(o => o.topper))).size,
-    subjects: Object.keys(papers).filter(p => p !== 'Other').length + optSubjects.size
+    subjects: Object.keys(papers).filter(p => p !== 'Other').length + optSubjects.size,
+    linkOnly: linkCount + optRaw.length
   };
 
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
   // lightweight index — copy metadata without the question text, for instant first paint on mobile
-  const lite = copies.map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
+  const lite = copies.map(c => {
+    const o = { i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length };
+    if (c.link) { o.k = 1; if (c.note) o.note = c.note; }
+    return o;
+  });
   fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
 
   // maintainer overrides
@@ -443,7 +464,7 @@ function jsonLd(stats, generated) {
       '@id': SITE + '/#faq',
       mainEntity: [
         ['What is Toppers Copy?', `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${stats.questions.toLocaleString('en-IN')} questions inside ${stats.copies.toLocaleString('en-IN')} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
-        ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute that originally published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS and others. Toppers Copy only links to those files and never re-hosts them. The question-level data is credited to upsckata.com’s "Topper Copies" project.'],
+        ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. The GS question-level data is credited to upsckata.com’s "Topper Copies" project.'],
         ['Does it cover optional subjects?', 'Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more.'],
         ['Is it free?', 'Yes, completely free and open source. No login, no ads.'],
         ['How can I add a missing copy or a topper’s marks?', 'Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live.']
@@ -621,7 +642,7 @@ Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (
 
 - Which UPSC Mains topper answered which question, in which paper, on which page of which PDF.
 - Per-topper All-India Rank (AIR), exam year and, where submitted, subject-wise marks.
-- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE and Rau's IAS.
+- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others.
 - Optional-subject copies: Sociology, Anthropology, History, PSIR, Geography, Public Administration,
   Philosophy, Economics, Literature and more (community-submitted).
 
