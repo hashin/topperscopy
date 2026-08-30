@@ -140,11 +140,15 @@
 
   function onData() {
     var s = DB.stats;
-    $('#sub').textContent = fmt(s.questions) + ' questions across ' + fmt(s.copies) +
-      ' copies from ' + fmt(s.toppers) + ' toppers';
+    var g = s.all || s;   // grand total incl. optional-subject copies
+    var optCopies = OPTS.length;
+    $('#sub').textContent = fmt(g.questions) + ' searchable questions · ' +
+      fmt(g.copies) + ' answer copies · ' + fmt(g.toppers) + ' toppers' +
+      (optCopies ? ' · ' + fmt(optCopies) + ' optional-subject copies' : '');
     $('#statline').innerHTML =
-      chipStat(s.questions, 'questions') + chipStat(s.copies, 'copies') +
-      chipStat(s.toppers, 'toppers') + chipStat(countSources(), 'sources');
+      chipStat(g.questions, 'questions') + chipStat(g.copies, 'copies') +
+      chipStat(g.toppers, 'toppers') +
+      chipStat(g.subjects || countSources(), g.subjects ? 'subjects' : 'sources');
     $('#foot-stats').textContent = 'Data snapshot ' + DB.generated;
     $('#about-gen').textContent = 'Database snapshot: ' + DB.generated + ' · source: ' + DB.attribution;
 

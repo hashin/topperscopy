@@ -140,6 +140,18 @@ function build() {
   const generated = new Date().toISOString().slice(0, 10);
   const stats = { questions: qCount, copies: copies.length, toppers: new Set(copies.map(c => c.t)).size, papers };
 
+  // grand total across GS/Essay + optional-subject copies — for the homepage headline
+  const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
+    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
+  const optQ = optRaw.reduce((n, o) => n + (Array.isArray(o.questions) ? o.questions.length : 0), 0);
+  const optSubjects = new Set(optRaw.map(o => o.subject).filter(Boolean));
+  stats.all = {
+    questions: qCount + optQ,
+    copies: copies.length + optRaw.length,
+    toppers: new Set(copies.map(c => c.t).concat(optRaw.map(o => o.topper))).size,
+    subjects: Object.keys(papers).filter(p => p !== 'Other').length + optSubjects.size
+  };
+
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
   // lightweight index — copy metadata without the question text, for instant first paint on mobile
