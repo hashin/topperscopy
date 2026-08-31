@@ -9,8 +9,10 @@ link-only copies from other coaching sites, a submission workflow, dark mode, an
 
 ## ⚠️ Do not read these — they are large and generated
 
-`data/copies.json` (~6 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB),
-`toppers.html`, `dataset/*`. All produced by `build.js` from the sources below. Never hand-edit; never
+`data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB),
+`data/link-copies.json` (~1.6 MB, mostly VisionIAS), `toppers.html`, `dataset/*`. All produced/managed by
+`build.js` or bulk scripts. `link-copies.json` / `optionals.json` are hand-editable in principle but huge —
+edit via a script. Never open the generated ones to "understand the project"; this file is their shape. Never
 open them to "understand the project" — this file is the source of truth for their shape.
 
 ## Source-of-truth files (the only things you edit for data)
@@ -28,8 +30,8 @@ open them to "understand the project" — this file is the source of truth for t
 ## build.js  (`node build.js`, zero runtime deps)
 
 Reads the 5 source files → writes:
-- `data/copies.json` — `{generated, attribution, stats, copies:[{i,t,c,p,y,r,u,q:[[page,question,marks,words]],prov,link?,note?}]}`. GS/Essay + link-copies. App lazy-loads for full-text search.
-- `data/index.json` — same minus `q`, plus `n` (question count) and `k:1` on link-only copies. App loads on boot (fast paint).
+- `data/copies.json` — `{generated, attribution, stats, copies:[{i,t,c,p,y,r,u,q:[[page,question,marks,words]],prov,link?,note?}]}`. **Every** copy (searchable GS/Essay + link-only). App lazy-loads it on idle/search/expand.
+- `data/index.json` — boot payload: **only the text-searchable copies** (`!link`), minus `q`, plus `n`. Link-only copies are NOT here — they arrive with copies.json and app.js merges them into `DB.copies` + refreshes facets. Keeps boot ~26 KB gz regardless of link-only volume.
 - `data/toppers.json` — `{toppers:{<name>:{air,year,coaching,papers,copies,marks,verified,sources}}}`.
 - `toppers.html`, `sitemap.xml`, `robots.txt`, `llms.txt`; fills `<!-- STATIC:START/END -->` and `<!-- LD:START/END -->` markers in `index.html` (noscript index + JSON-LD).
 - `dataset/` — consolidated CC-BY-4.0 backup: `questions.csv` (flat, all copies, `provenance` col), `copies.csv`, `toppers.csv`, `dataset.json` (nested), `manifest.json` (sha256s), `README.md`.
@@ -41,10 +43,12 @@ incl. link-only + optionals (`{questions,copies,toppers,subjects,linkOnly}`) —
 
 - `index.html` — SPA shell. Tabs: browse / optionals / submit / about. Inline no-FOUC theme script.
   GA4 `G-VTL4V9JQBH` (mirrored as `GA_ID` in app.js). Self-hosted fonts. `<script src=assets/extract.js defer>` then `app.js defer`.
-- `assets/app.js` — the whole SPA (IIFE, no deps). Loads `index.json` → renders; lazy-fetches
-  `copies.json` on idle / search-focus / card-expand (skipped on Save-Data). Link-only copies render as
-  "link only" cards, excluded from text search. Theme toggle (`localStorage tc-theme`). GA custom
-  events. Submit form builds a prefilled GitHub issue; optional in-browser PDF analyser.
+- `assets/app.js` — the whole SPA (IIFE, no deps). Loads `index.json` → renders the searchable core;
+  `loadFull()` lazy-fetches `copies.json` on idle / search-focus / card-expand (Save-Data: deferred, not
+  skipped) → attaches `q`, **adds the link-only copies** into `DB.copies`, calls `refreshFacets()`, re-renders.
+  Browse default sort `year` = year-grouped, newest year first, best AIR first within a year (`yearOf`/`airOf`
+  use toppers.json then the copy's own value). Search box matches topper names immediately + question text once
+  loaded. Link-only copies render as "link only" cards. Theme toggle (`localStorage tc-theme`). GA custom events.
 - `assets/style.css` — design system. Palette from 6 user swatches on warm paper; Fraunces + Inter.
   Light/dark via 3-state pattern (`:root` / `@media prefers-color-scheme` / `:root[data-theme=dark]`).
   Phones ≤680px drop `backdrop-filter`, 16px inputs.
@@ -84,9 +88,9 @@ upsckata.com (GS/Essay searchable core — 1,063 copies / 16,947 questions), Lev
 (Anthropology/Sociology/PSIR/History optionals), Vishnu IAS (Nidhi Pai), UnlockIAS (GS/Essay + a few
 optionals, ~69 featured toppers), Sleepy Classes (GS/Essay + Sociology/PSIR), Vajiram & Ravi (181
 GS/Essay + IFS), LotusArise (Geography), De Facto Law (Law), IMS4Maths + SuccessClap (Mathematics),
-VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + GS/Essay 2024–25 only; direct
-`cdn.visionias.in` PDFs — full 4k-row API dump + `add-vision.js` were in a scratchpad, re-fetchable via
-`POST /student/module/ajax/resources.php?f=resources_data` while logged in). All non-upsckata copies
+VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + all 3,720 GS/Essay 2013–25; direct
+`cdn.visionias.in` PDFs — re-fetchable via `POST /student/module/ajax/resources.php?f=resources_data`
+body `type=toppers_answers` while logged in, `d.result` = 4k rows). All non-upsckata copies
 are **link-only** (scanned Drive/PDF, no question text yet).
 
 ## Open items
