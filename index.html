@@ -94,7 +94,7 @@
     <div class="toolbar">
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="search" id="q" placeholder="Search inside the copies — federalism, ethical dilemma, monetary policy…" autocomplete="off" aria-label="Search inside topper answer copies">
+        <input type="search" id="q" placeholder="Search a topper's name, or inside the copies — federalism, ethical dilemma…" autocomplete="off" aria-label="Search by topper name or inside topper answer copies">
       </div>
       <div class="filters">
         <div class="seg" id="papers" role="group" aria-label="Filter by paper"></div>
@@ -108,8 +108,9 @@
         <select id="source" aria-label="Filter by source"><option value="">All sources</option></select>
         <select id="year" aria-label="Filter by year"><option value="">All years</option></select>
         <select id="sort" aria-label="Sort order">
-          <option value="name">Topper A–Z</option>
+          <option value="year" selected>Newest year, best rank first</option>
           <option value="air">Best AIR first</option>
+          <option value="name">Topper A–Z</option>
           <option value="qty">Most questions</option>
         </select>
       </div>

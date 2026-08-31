@@ -32,7 +32,7 @@
   var DB = null, TOPPERS = {}, OPTS = [];
   var state = {
     view: 'browse', q: '', mode: 'all', paper: 'all',
-    topper: '', source: '', year: '', sort: 'name', shown: PAGE,
+    topper: '', source: '', year: '', sort: 'year', shown: PAGE,
     optSubject: 'all', optQ: ''
   };
 
@@ -270,7 +270,7 @@
   }
   function yearOptions() {
     var m = {};
-    DB.copies.forEach(function (c) { if (c.y) m[c.y] = (m[c.y] || 0) + 1; });
+    DB.copies.forEach(function (c) { var y = yearOf(c); if (y) m[y] = (m[y] || 0) + 1; });
     return Object.keys(m).sort().reverse().map(function (y) { return [y, y + ' (' + m[y] + ')']; });
   }
   function fillSelect(sel, pairs, keep) {
@@ -291,27 +291,45 @@
 
   function qOf(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
 
+  // A topper's year / rank: prefer the verified toppers.json value, fall back to the copy's own.
+  function yearOf(c) { var T = TOPPERS[c.t] || {}; return T.year || c.y || 0; }
+  function airOf(c) { var T = TOPPERS[c.t] || {}; return T.air || c.r || 0; }
+  function matchName(name, terms) { return matchQ(name, terms, 'all'); }
+
   function filteredCopies() {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
     var needsText = terms.length > 0;
-    if (needsText && !FULL) { ensureFull(); return { pending: true }; }
+    // A query matches a topper's name straight away (index.json is enough); matching the
+    // text *inside* copies needs the big file, so kick that off but never block the UI on it.
+    if (needsText && !FULL && fullState !== 'error') ensureFull();
 
     var list = DB.copies.map(function (c) {
-      if (needsText && c.k) return null;         // link-only copies have no text to match
       if (state.paper !== 'all' && c.p !== state.paper) return null;
       if (state.topper && c.t !== state.topper) return null;
       if (state.source && c.c !== state.source) return null;
-      if (state.year && String(c.y) !== state.year) return null;
-      var qs = needsText ? (qOf(c) || []).filter(function (q) { return matchQ(q[1], terms, state.mode); }) : [];
-      if (needsText && !qs.length) return null;
-      return { c: c, qs: qs, n: qs.length || c.n || (qOf(c) || []).length };
+      if (state.year && String(yearOf(c)) !== state.year) return null;
+
+      var nameHit = needsText && matchName(c.t, terms);
+      var qs = [];
+      if (needsText && !nameHit) {
+        if (c.k) return null;                    // link-only: only a name can match
+        var all = qOf(c);
+        if (!all) return null;                   // text not loaded yet — reappears after loadFull re-renders
+        qs = all.filter(function (q) { return matchQ(q[1], terms, state.mode); });
+        if (!qs.length) return null;
+      }
+      return { c: c, qs: qs, nameHit: !!nameHit, n: qs.length || c.n || (qOf(c) || []).length };
     }).filter(Boolean);
 
     list.sort(function (a, b) {
+      if (state.sort === 'year') {
+        var ya = yearOf(a.c), yb = yearOf(b.c);
+        if (ya !== yb) return (yb || 0) - (ya || 0);          // newest first, unknown-year last
+        return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) ||   // then best rank first
+          a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
+      }
       if (state.sort === 'air') {
-        var ra = (TOPPERS[a.c.t] && TOPPERS[a.c.t].air) || a.c.r || 1e9;
-        var rb = (TOPPERS[b.c.t] && TOPPERS[b.c.t].air) || b.c.r || 1e9;
-        return ra - rb || a.c.t.localeCompare(b.c.t);
+        return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) || a.c.t.localeCompare(b.c.t);
       }
       if (state.sort === 'qty') return b.n - a.n;
       return a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
@@ -321,36 +339,51 @@
 
   function renderBrowse(reopen) {
     if (!DB) return;
-    var res = filteredCopies();
+    var list = filteredCopies();
     var box = $('#results'); box.innerHTML = '';
 
-    if (res && res.pending) {
-      $('#resultmeta').textContent = 'searching “' + state.q + '” …';
-      box.appendChild(el('div', { class: 'empty' }, [
-        el('div', { class: 'big' }, ['Loading the full text of every copy…']),
-        el('div', {}, ['One-time ~2 MB download so search can look inside all ' + fmt(DB.stats.copies) + ' copies. Filters above work right away.'])
-      ]));
-      return;
-    }
-
-    var list = res;
-    var totalQ = list.reduce(function (n, x) { return n + x.qs.length; }, 0);
+    var nameHits = 0, totalQ = 0;
+    list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; });
+    var loading = state.q && !FULL && fullState !== 'error';
     $('#resultmeta').textContent = fmt(list.length) + ' ' + (list.length === 1 ? 'copy' : 'copies') +
-      (state.q ? ' · ' + fmt(totalQ) + ' matching questions for “' + state.q + '”'
-               : (FULL ? '' : ' · full-text search loads in the background'));
+      (state.q
+        ? ' for “' + state.q + '”' +
+          (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
+          (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
+          (loading ? ' · still scanning inside the copies…' : '')
+        : (FULL ? '' : ' · full-text search loads in the background'));
 
     if (!list.length) {
       box.appendChild(el('div', { class: 'empty' }, [
-        el('div', { class: 'big' }, ['No matches']),
-        el('div', {}, ['Try fewer words, switch to “All words”, or clear a filter.'])
+        el('div', { class: 'big' }, [loading ? 'Searching…' : 'No matches']),
+        el('div', {}, [loading
+          ? 'Loading the full text of every copy (one-time ~2 MB) so search can look inside them.'
+          : 'Try a topper name, fewer words, “All words”, or clear a filter.'])
       ]));
       return;
     }
+
+    var grouped = state.sort === 'year';
+    var counts = null;
+    if (grouped) { counts = {}; list.forEach(function (x) { var y = yearOf(x.c) || 0; counts[y] = (counts[y] || 0) + 1; }); }
+
+    var curY = null;
     list.slice(0, state.shown).forEach(function (x) {
-      var card = copyCard(x.c, x.qs, x.n);
+      if (grouped) {
+        var y = yearOf(x.c) || 0;
+        if (y !== curY) {
+          curY = y;
+          box.appendChild(el('div', { class: 'yeargroup' }, [
+            el('span', { class: 'yg-year' }, [y ? String(y) : 'Year not recorded']),
+            el('span', { class: 'yg-count' }, [fmt(counts[y]) + (counts[y] === 1 ? ' copy' : ' copies')])
+          ]));
+        }
+      }
+      var card = copyCard(x.c, x.qs, x.n, x.nameHit);
       if (reopen && reopen.indexOf(String(x.c.i)) >= 0) card.open = true;
       box.appendChild(card);
     });
+
     if (list.length > state.shown) {
       var n = Math.min(PAGE, list.length - state.shown);
       var more = el('button', { class: 'more' }, ['Show ' + n + ' more  ·  ' + (list.length - state.shown) + ' hidden']);
@@ -369,9 +402,9 @@
     return out;
   }
 
-  function copyCard(c, qs, count) {
+  function copyCard(c, qs, count, nameHit) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
-    var openIt = terms.length > 0 || !!state.topper;
+    var openIt = (terms.length > 0 && !nameHit) || !!state.topper;
     var n = count != null ? count : (qs ? qs.length : (c.n || 0));
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
