@@ -82,7 +82,11 @@ fenced ```csv / ```json) → writes to `optionals.json` / `submissions.csv` / `t
 
 upsckata.com (GS/Essay searchable core — 1,063 copies / 16,947 questions), Level Up IAS
 (Anthropology/Sociology/PSIR/History optionals), Vishnu IAS (Nidhi Pai), UnlockIAS (GS/Essay + a few
-optionals, ~69 featured toppers), Sleepy Classes (GS/Essay + Sociology/PSIR). All non-upsckata copies
+optionals, ~69 featured toppers), Sleepy Classes (GS/Essay + Sociology/PSIR), Vajiram & Ravi (181
+GS/Essay + IFS), LotusArise (Geography), De Facto Law (Law), IMS4Maths + SuccessClap (Mathematics),
+VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + GS/Essay 2024–25 only; direct
+`cdn.visionias.in` PDFs — full 4k-row API dump + `add-vision.js` were in a scratchpad, re-fetchable via
+`POST /student/module/ajax/resources.php?f=resources_data` while logged in). All non-upsckata copies
 are **link-only** (scanned Drive/PDF, no question text yet).
 
 ## Open items
