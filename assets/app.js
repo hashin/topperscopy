@@ -6,7 +6,7 @@
   var GA_ID = 'G-VTL4V9JQBH'; // mirrored in index.html <head>
   var PAPERS = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Other'];
   var OPTIONALS = ['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
-    'Public Administration', 'Philosophy', 'Economics', 'Mathematics', 'Physics',
+    'Public Administration', 'Philosophy', 'Psychology', 'Economics', 'Mathematics', 'Physics',
     'Chemistry', 'Commerce & Accountancy', 'Law', 'Management', 'Medical Science',
     'Agriculture', 'Statistics', 'Literature', 'Forest Service (IFS)', 'Other'];
   var PAGE = 25;

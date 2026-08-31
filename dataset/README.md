@@ -7,8 +7,8 @@ All-India Rank, exam year and subject-wise marks. **Accepted community submissio
 This directory is a reference archive — the website does not load it. Regenerate it with `node build.js`.
 
 - **Snapshot:** 2026-08-31
-- **16,947** questions · **1,841** answer copies · **547** toppers
-- **778** copies came from community submissions (the rest from the upstream mirror)
+- **16,947** questions · **2,948** answer copies · **746** toppers
+- **1,885** copies came from community submissions (the rest from the upstream mirror)
 
 ## Files
 
