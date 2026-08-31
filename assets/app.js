@@ -72,8 +72,10 @@
     return !!c.saveData || c.effectiveType === 'slow-2g' || c.effectiveType === '2g';
   }
   function scheduleFull() {
-    if (saveData()) return;                 // wait for real intent on metered / very slow links
+    // link-only copies live only in copies.json, so this is now core content, not just a search aid.
+    // On metered / very slow links, hold off a bit longer but still fetch it in the background.
     var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1500); };
+    if (saveData()) { setTimeout(function () { loadFull(); }, 6000); return; }
     idle(function () { loadFull(); }, { timeout: 4000 });
   }
   function loadFull() {
@@ -81,9 +83,23 @@
     fullState = 'loading';
     fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
       QBYID = {};
-      d.copies.forEach(function (c) { QBYID[c.i] = c.q; });
-      DB.copies.forEach(function (c) { c.q = QBYID[c.i] || []; });
+      var known = {};
+      DB.copies.forEach(function (c) { known[c.i] = c; });
+      d.copies.forEach(function (c) {
+        QBYID[c.i] = c.q || [];
+        if (known[c.i]) {
+          known[c.i].q = c.q || [];
+        } else {
+          // link-only copy — not in the lite boot index; add it in the same shape
+          DB.copies.push({
+            i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u,
+            n: (c.q ? c.q.length : 0), q: c.q || [],
+            k: c.link ? 1 : undefined, note: c.note || undefined
+          });
+        }
+      });
       FULL = true; fullState = 'ready';
+      refreshFacets();   // topper/source/year filters were built from the searchable core only
       var openIds = $$('#results .copy[open]').map(function (n) { return n.getAttribute('data-i'); });
       if (state.view === 'browse') renderBrowse(openIds);
       track('fulltext_loaded', {});
@@ -153,15 +169,21 @@
     $('#about-gen').textContent = 'Database snapshot: ' + DB.generated + ' · source: ' + DB.attribution;
 
     buildPaperSeg();
-    fillSelect($('#topper'), topperOptions(), state.topper);
-    fillSelect($('#source'), sourceOptions(), state.source);
-    fillSelect($('#year'), yearOptions(), state.year);
+    refreshFacets();
     fillSelect($('#sform select[name=paper]'), PAPERS.filter(function (p) { return p !== 'Other'; })
       .map(function (p) { return [p, p]; })
       .concat(OPTIONALS.map(function (o) { return ['Optional — ' + o, 'Optional — ' + o]; })));
 
     renderBrowse();
     renderOptionals();
+  }
+
+  // topper / source / year dropdowns — rebuilt from whatever is currently in DB.copies
+  // (the searchable core at boot, everything once data/copies.json has loaded)
+  function refreshFacets() {
+    fillSelect($('#topper'), topperOptions(), state.topper);
+    fillSelect($('#source'), sourceOptions(), state.source);
+    fillSelect($('#year'), yearOptions(), state.year);
   }
 
   function chipStat(n, label) { return '<span class="s"><b>' + fmt(n) + '</b> ' + label + '</span>'; }
@@ -344,14 +366,14 @@
 
     var nameHits = 0, totalQ = 0;
     list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; });
-    var loading = state.q && !FULL && fullState !== 'error';
+    var loading = !FULL && fullState !== 'error';
     $('#resultmeta').textContent = fmt(list.length) + ' ' + (list.length === 1 ? 'copy' : 'copies') +
       (state.q
         ? ' for “' + state.q + '”' +
           (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
           (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
           (loading ? ' · still scanning inside the copies…' : '')
-        : (FULL ? '' : ' · full-text search loads in the background'));
+        : (loading ? ' · more copies + full-text search loading…' : ''));
 
     if (!list.length) {
       box.appendChild(el('div', { class: 'empty' }, [

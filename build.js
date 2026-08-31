@@ -171,12 +171,11 @@ function build() {
 
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
-  // lightweight index — copy metadata without the question text, for instant first paint on mobile
-  const lite = copies.map(c => {
-    const o = { i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length };
-    if (c.link) { o.k = 1; if (c.note) o.note = c.note; }
-    return o;
-  });
+  // lightweight boot index — only the text-searchable copies, without the question text.
+  // Link-only copies (scanned, no text) are omitted here and arrive with the lazy data/copies.json,
+  // so the first paint stays tiny no matter how many link-only copies pile up.
+  const lite = copies.filter(c => !c.link)
+    .map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
   fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
 
   // maintainer overrides
@@ -384,7 +383,11 @@ function writeStaticIndex(copies, toppers, stats, generated) {
   let html = fs.readFileSync(idxPath, 'utf8');
 
   const names = Array.from(new Set(copies.map(c => c.t))).sort();
-  const topperLinks = names.map(n =>
+  // keep index.html itself lean — link the toppers who have a searchable copy here,
+  // the complete list (everyone, incl. link-only) lives in toppers.html
+  const searchableNames = new Set(copies.filter(c => !c.link).map(c => c.t));
+  const listed = names.filter(n => searchableNames.has(n));
+  const topperLinks = listed.map(n =>
     `<li><a href="toppers.html#${slug(n)}">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}</li>`
   ).join('\n');
 
@@ -396,10 +399,10 @@ function writeStaticIndex(copies, toppers, stats, generated) {
     copies by ${stats.toppers} rankers (GS Paper 1&ndash;4 and Essay), each linking to the exact page of the
     source PDF. Question data credited to <a href="${ATTRIBUTION}">upsckata.com — Topper Copies</a>.
     Optional-subject copies (Sociology, Anthropology, History, PSIR, Geography and more) are community-submitted.</p>
-    <p><strong><a href="toppers.html">Open the full static index of every topper and copy &rarr;</a></strong>
+    <p><strong><a href="toppers.html">Open the full static index of all ${names.length} toppers and every copy &rarr;</a></strong>
     &nbsp;·&nbsp; <a href="data/copies.json">machine-readable data (JSON)</a>
     &nbsp;·&nbsp; <a href="/llms.txt">llms.txt</a></p>
-    <h3>All ${stats.toppers} toppers</h3>
+    <h3>${stats.toppers} toppers with a text-searchable copy</h3>
     <ul>
 ${topperLinks}
     </ul>
