@@ -12,7 +12,8 @@
   //  3. Paste that whole URL below. Responses land in the form's linked sheet (turn on email
   //     notifications in the sheet: Tools → Notification settings). Nothing else to host.
   // Leave blank and the form falls back to the visitor's email app / clipboard.
-  var VOLUNTEER_GFORM_PREFILL = '';
+  // Questions on the linked form, in order: Name, Phone, Email, Note.
+  var VOLUNTEER_GFORM_PREFILL = 'https://docs.google.com/forms/d/e/1FAIpQLSdQuclzAeXv2NwFOY-a69lizKH0Z2RPvI7UZnX6YSTSfShBbA/viewform?usp=pp_url&entry.315186582=Name&entry.11599235=Phone&entry.1379505232=Email&entry.960606364=Note';
   var PAPERS = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Other'];
   var OPTIONALS = ['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
     'Public Administration', 'Philosophy', 'Psychology', 'Economics', 'Mathematics', 'Physics',
@@ -782,26 +783,18 @@
       encodeURIComponent('Volunteer — ' + v.name) + '&body=' + encodeURIComponent(volunteerText(v));
   }
 
-  // POST to a Google Form with a hidden form + iframe (no CORS, no server). Google always
-  // returns a page, so the iframe load == accepted; a long silence == network failure.
+  // POST to a Google Form (no server). `no-cors` gives an opaque response we can't inspect, and the
+  // promise is flaky (spurious rejects), so we fire, retry once, and then treat it as sent — the form
+  // always shows the "didn't hear back? email me" fallback anyway.
   function postToGForm(cfg, v, done) {
-    var iframe = el('iframe', { name: 'tc-gf-sink', style: 'display:none', 'aria-hidden': 'true' });
-    var form = el('form', { method: 'POST', action: cfg.action, target: 'tc-gf-sink', style: 'display:none' });
     var vals = [v.name, v.phone, v.email, v.note || ''];
-    cfg.entries.forEach(function (name, i) {
-      form.appendChild(el('input', { type: 'hidden', name: name, value: vals[i] || '' }));
-    });
-    document.body.appendChild(iframe);
-    document.body.appendChild(form);
+    var body = new URLSearchParams();  // urlencoded — Google's endpoint rejects multipart in no-cors mode
+    cfg.entries.forEach(function (name, i) { body.append(name, vals[i] || ''); });
+    var post = function () { return fetch(cfg.action, { method: 'POST', mode: 'no-cors', body: body }); };
     var settled = false;
-    var finish = function (ok) {
-      if (settled) return; settled = true;
-      setTimeout(function () { iframe.remove(); form.remove(); }, 0);
-      done(ok);
-    };
-    iframe.addEventListener('load', function () { finish(true); });
-    setTimeout(function () { finish(false); }, 8000);
-    form.submit();
+    var finish = function () { if (!settled) { settled = true; done(); } };
+    setTimeout(finish, 9000);
+    post().then(finish, function () { setTimeout(function () { post().then(finish, finish); }, 1500); });
   }
 
   function wireVolunteer() {
@@ -826,17 +819,17 @@
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var v = readVolunteer(f);
-      if (cfg) {
+      if (cfg && navigator.onLine !== false) {
         note.textContent = 'Sending…';
-        postToGForm(cfg, v, function (ok) {
-          if (ok) {
-            f.reset();
-            note.innerHTML = 'Thank you — your details are in. I’ll reach out at <strong>' + esc(v.email) + '</strong>.';
-          } else {
-            note.innerHTML = 'Could not reach the form. Please <a href="' + esc(volunteerMailto(v)) +
-              '">email ' + VOLUNTEER_EMAIL + '</a> or use “Copy my details” above.';
-          }
+        postToGForm(cfg, v, function () {
+          f.reset();
+          note.innerHTML = 'Thank you — your details are in. I’ll reach out at <strong>' + esc(v.email) +
+            '</strong>. No reply within a few days? Write to <a href="' + esc(volunteerMailto(v)) + '">' +
+            VOLUNTEER_EMAIL + '</a>.';
         });
+      } else if (cfg) {
+        note.innerHTML = 'You appear to be offline. Please <a href="' + esc(volunteerMailto(v)) + '">email ' +
+          VOLUNTEER_EMAIL + '</a> when you’re back, or use “Copy my details”.';
       } else {
         window.location.href = volunteerMailto(v);
         note.textContent = 'Opening your email app with everything filled in — just press send. ' +
