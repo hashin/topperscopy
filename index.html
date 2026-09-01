@@ -86,8 +86,10 @@
       <p class="sub" id="sub">loading the copy database…</p>
       <div class="statline" id="statline"></div>
       <p class="credit">
-        Question database sourced from <strong><a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com — Topper Copies</a></strong>.
-        A free, open mirror. Every copy is hosted by the institute that published it — ForumIAS, Vision IAS, NextIAS and others — links point there, nothing is re-hosted.
+        Question database sourced from the aspirant community — <strong>Topper Copies</strong>.
+        A free, easily accessible, open repository. Every copy is hosted by the institute that published it — ForumIAS, Vision IAS, NextIAS and others — the properties belong to them.
+        We are hosting them here in a single place for the benefit of the aspirant community.
+        To contribute, <a href="#submit" data-goto="submit">click here</a>.
       </p>
     </div>
 
@@ -501,17 +503,18 @@
   <!-- SUBMIT -->
   <section class="view" id="view-submit" hidden aria-label="Submit a copy or correction">
     <div class="hero">
-      <h1>Submit a copy or a correction</h1>
+      <h1>Submit a copy, a correction, or yourself</h1>
       <p class="lead">
-        Missing a topper's copy? Know a topper's AIR or subject-wise marks? Send it in. The form opens a
-        pre-filled GitHub issue — a maintainer verifies it, then it goes live. Nothing is collected here;
-        you just need a free GitHub login to post.
+        Missing a topper's copy? Know a topper's AIR or subject-wise marks? Want to help run this?
+        Add-a-copy and fix-data open a pre-filled GitHub issue that a maintainer verifies before it goes
+        live. The volunteer form goes straight to the site owner's inbox — nothing is stored on this site.
       </p>
     </div>
 
     <div class="kindswitch">
       <button id="kind-copy" aria-pressed="true">Add a copy</button>
       <button id="kind-data" aria-pressed="false">Fix topper data</button>
+      <button id="kind-volunteer" aria-pressed="false">Be a volunteer</button>
     </div>
 
     <div class="analyse" id="analyse" data-only="copy">
@@ -531,7 +534,7 @@
       <div class="an-result" id="an-result" hidden></div>
     </div>
 
-    <form id="sform">
+    <form id="sform" data-only="copy data">
       <div class="grid2">
         <div class="field">
           <label>Topper name <span class="req">*</span>
@@ -597,6 +600,41 @@
       <button type="submit" class="btn" id="sbtn">Open pre-filled GitHub issue</button>
       <a class="btn ghost" id="sform-alt" href="#" target="_blank" rel="noopener" hidden style="margin-left:8px">Open blank issue instead</a>
       <p class="formnote" id="sform-note"></p>
+    </form>
+
+    <form id="vform" data-only="volunteer" hidden>
+      <p class="lead" style="margin-top:0">
+        This is a one-person project. If you can spare a few hours a week — chasing down missing copies,
+        tidying topper data, light moderation, OCR clean-up — leave your details and I'll be in touch.
+      </p>
+      <div class="grid2">
+        <div class="field">
+          <label>Your name <span class="req">*</span>
+            <input name="vname" required autocomplete="name" placeholder="e.g. Aparna Nair">
+          </label>
+        </div>
+        <div class="field">
+          <label>Phone <span class="req">*</span>
+            <input name="vphone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="e.g. +91 98XXXXXXXX">
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email <span class="req">*</span>
+          <input name="vemail" type="email" required autocomplete="email" placeholder="you@example.com">
+        </label>
+      </div>
+      <div class="field">
+        <label>How would you like to help? <span style="font-weight:400;color:var(--muted)">(optional)</span>
+          <textarea name="vnote" placeholder="Areas you know well (an optional subject?), time you can give, anything relevant."></textarea>
+        </label>
+      </div>
+      <button type="submit" class="btn" id="vbtn">Send my details</button>
+      <p class="hint" style="margin-top:10px">
+        Opens your email app with everything filled in — you just hit send. No mail app?
+        Write to <a href="mailto:mail@hashin.me">mail@hashin.me</a> directly. Your details are not stored on this site.
+      </p>
+      <p class="formnote" id="vform-note"></p>
     </form>
   </section>
 
@@ -675,7 +713,7 @@
 
 <!-- LD:START -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-maintained mirror and index of UPSC Mains topper answer copies."},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-08-31","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. The GS question-level data is credited to upsckata.com’s \"Topper Copies\" project."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-maintained mirror and index of UPSC Mains topper answer copies."},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-09-01","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. The GS question-level data is credited to upsckata.com’s \"Topper Copies\" project."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
 </script>
 <!-- LD:END -->
 

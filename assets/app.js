@@ -752,16 +752,40 @@
   function wireSubmit() {
     wireAnalyse();
     var kind = 'copy';
+    var KINDS = ['copy', 'data', 'volunteer'];
     function setKind(k) {
       kind = k;
-      $('#kind-copy').setAttribute('aria-pressed', String(k === 'copy'));
-      $('#kind-data').setAttribute('aria-pressed', String(k === 'data'));
-      $$('[data-only]').forEach(function (n) { n.style.display = n.dataset.only === k ? '' : 'none'; });
+      KINDS.forEach(function (x) {
+        var b = $('#kind-' + x);
+        if (b) b.setAttribute('aria-pressed', String(x === k));
+      });
+      $$('[data-only]').forEach(function (n) {
+        var show = n.dataset.only.split(/\s+/).indexOf(k) >= 0;
+        n.style.display = show ? '' : 'none';
+        if (n.tagName === 'FORM') n.hidden = !show;
+      });
       $('#sform [name=url]').required = k === 'copy';
     }
-    $('#kind-copy').addEventListener('click', function () { setKind('copy'); track('submit_kind', { kind: 'copy' }); });
-    $('#kind-data').addEventListener('click', function () { setKind('data'); track('submit_kind', { kind: 'data' }); });
+    KINDS.forEach(function (k) {
+      var b = $('#kind-' + k);
+      if (b) b.addEventListener('click', function () { setKind(k); track('submit_kind', { kind: k }); });
+    });
     setKind('copy');
+
+    $('#vform').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = e.target;
+      var g = function (n) { return (f[n] && f[n].value || '').trim(); };
+      var name = g('vname'), note = g('vnote');
+      var lines = ['Name:  ' + name, 'Phone: ' + g('vphone'), 'Email: ' + g('vemail')];
+      if (note) lines.push('', 'How I can help:', note);
+      lines.push('', '— Sent from the Be-a-volunteer form on topperscopy.hashin.me');
+      window.location.href = 'mailto:mail@hashin.me?subject=' +
+        encodeURIComponent('Volunteer — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
+      $('#vform-note').textContent = 'Opening your email app with the details filled in — just press send. ' +
+        'If nothing opened, write to mail@hashin.me directly.';
+      track('volunteer_submit', {});
+    });
 
     $('#sform').addEventListener('submit', function (e) {
       e.preventDefault();
