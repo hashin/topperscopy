@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Toppers Copy — UPSC Mains topper answer copies, searchable</title>
-<meta name="description" content="Search 16,900+ questions inside 1,000+ UPSC Civil Services Mains topper answer copies — GS1-4, Essay and optional subjects — and open the exact page of each copy. Free and open. Question data credited to upsckata.com.">
+<meta name="description" content="Search 16,900+ questions inside 1,000+ UPSC Civil Services Mains topper answer copies — GS1-4, Essay and optional subjects — and open the exact page of each copy. Free, open and community-built.">
 <link rel="canonical" href="https://topperscopy.hashin.me/">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="keywords" content="UPSC toppers copy, UPSC Mains answer copy, IAS topper answer sheet, GS1 GS2 GS3 GS4 answer copy, UPSC essay copy, sociology anthropology history optional answer copy">
@@ -127,8 +127,9 @@
     <h2>UPSC Mains topper answer copies — full index</h2>
     <p>16,947 questions from 1,063 answer
     copies by 340 rankers (GS Paper 1&ndash;4 and Essay), each linking to the exact page of the
-    source PDF. Question data credited to <a href="https://toppercopies.upsckata.com/">upsckata.com — Topper Copies</a>.
-    Optional-subject copies (Sociology, Anthropology, History, PSIR, Geography and more) are community-submitted.</p>
+    source PDF. A free, open, community-built index; the GS &amp; Essay question data builds on open community
+    work including <a href="https://toppercopies.upsckata.com/">upsckata.com — Topper Copies</a>.
+    Optional-subject copies (Sociology, Anthropology, History, PSIR, Geography, Mathematics and more) are community-compiled.</p>
     <p><strong><a href="toppers.html">Open the full static index of all 1201 toppers and every copy &rarr;</a></strong>
     &nbsp;·&nbsp; <a href="data/copies.json">machine-readable data (JSON)</a>
     &nbsp;·&nbsp; <a href="/llms.txt">llms.txt</a></p>
@@ -630,9 +631,11 @@
         </label>
       </div>
       <button type="submit" class="btn" id="vbtn">Send my details</button>
+      <button type="button" class="btn ghost" id="vcopy" style="margin-left:8px">Copy my details</button>
       <p class="hint" style="margin-top:10px">
-        Opens your email app with everything filled in — you just hit send. No mail app?
-        Write to <a href="mailto:mail@hashin.me">mail@hashin.me</a> directly. Your details are not stored on this site.
+        Your details go straight to the site owner — nothing is stored on this page.
+        <span id="vhint-mail">If your device has no email app, use “Copy my details” and paste it into a message to
+        <a href="mailto:mail@hashin.me">mail@hashin.me</a>.</span>
       </p>
       <p class="formnote" id="vform-note"></p>
     </form>
@@ -651,14 +654,16 @@
         I built the Toppers Copy website as a small way of giving back to the aspirant community.
         You can find more of my writing at <a href="https://blog.hashin.me" target="_blank" rel="noopener">blog.hashin.me</a>.</p>
 
-      <h2>Credit</h2>
-      <p>The GS &amp; Essay question-level database — which topper wrote which answer, on which page of which copy —
-        is the work of <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com's "Topper Copies" project</a>.
-        This site is an independent, non-commercial mirror that adds an optional-subjects section, per-topper AIR / marks
-        tags, and a community submission workflow. All credit for the underlying GS data collection goes to upsckata.com.
-        Optional-subject copies are compiled from institute pages (e.g. <a href="https://www.levelupias.com/" target="_blank" rel="noopener">Level Up IAS</a>
-        for Anthropology) and community submissions. If any of these maintainers want changes to how their work is used
-        here, <a href="https://github.com/hashin/topperscopy/issues">open an issue</a>.</p>
+      <h2>Credit &amp; sources</h2>
+      <p>This is a community effort, non-commercial and open source. The answer copies are published by coaching
+        institutes and by the toppers themselves — they own them. This site only indexes them and links out, so
+        aspirants have one place to search instead of a dozen.</p>
+      <p>The GS &amp; Essay question-level index — which topper answered what, on which page — builds on open
+        community work, including <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com's
+        Topper Copies</a>. Optional-subject and newer copies are compiled from institute pages
+        (<a href="https://www.levelupias.com/" target="_blank" rel="noopener">Level Up IAS</a>, Vision IAS, IMS4Maths,
+        SuccessClap, LotusArise and others) and from what people send in. If anyone whose work is indexed here
+        wants a change, <a href="https://github.com/hashin/topperscopy/issues">open an issue</a>.</p>
 
       <h2>Where the PDFs live</h2>
       <p>Every "Open PDF" / "Open copy" link points to a file hosted elsewhere — the institute or compiler that published it
@@ -689,7 +694,7 @@
         and is downloadable directly: <a href="dataset/questions.csv">questions.csv</a> (flat table),
         <a href="dataset/toppers.csv">toppers.csv</a>, <a href="dataset/dataset.json">dataset.json</a>
         (everything nested), <a href="dataset/manifest.json">manifest.json</a> (checksums).
-        Released under CC BY 4.0 — reuse freely, credit Toppers Copy and upsckata.com. No PDF files are included.</p>
+        Released under CC BY 4.0 — reuse freely, with credit to Toppers Copy and the community sources it draws on. No PDF files are included.</p>
 
       <h2>Disclaimer</h2>
       <p>Marks and ranks are crowd-sourced and may be wrong until a maintainer marks them verified (shown with a ✓).
@@ -705,7 +710,7 @@
     <span>Free &amp; open source</span>
     <a href="toppers.html">Full index (all toppers)</a>
     <a href="https://github.com/hashin/topperscopy">GitHub</a>
-    <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">Data: upsckata.com</a>
+    <a href="#about" data-goto="about">Sources &amp; credit</a>
     <span class="spacer"></span>
     <span id="foot-stats"></span>
   </div>
@@ -713,7 +718,7 @@
 
 <!-- LD:START -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-maintained mirror and index of UPSC Mains topper answer copies."},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-09-01","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. The GS question-level data is credited to upsckata.com’s \"Topper Copies\" project."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-built index of UPSC Mains topper answer copies."},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-09-01","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. It is a community-built index; the GS & Essay question-level data builds on open community work, including upsckata.com’s \"Topper Copies\"."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
 </script>
 <!-- LD:END -->
 

@@ -8,7 +8,7 @@
 
 Site: https://topperscopy.hashin.me
 Updated: 2026-09-01
-Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (https://toppercopies.upsckata.com/)
+Licence: MIT (code). CC BY 4.0 (this compilation). GS & Essay question data builds on open community work including upsckata.com "Topper Copies" (https://toppercopies.upsckata.com/).
 
 ## What it contains
 
@@ -42,5 +42,6 @@ Licence: MIT (code) — question data credited to upsckata.com "Topper Copies" (
 
 ## Notes for citation
 
-Attribute the question-level data collection to upsckata.com ("Topper Copies"). Answer-copy PDFs are the
-property of the institutes that published them. This site re-hosts no PDFs; it only links to them.
+Cite as "Toppers Copy (https://topperscopy.hashin.me)", a community compilation. The GS & Essay question-level index builds on
+open community work, including upsckata.com's "Topper Copies". Answer-copy PDFs are the property of the
+institutes and toppers who published them. This site re-hosts no PDFs; it only links to them.

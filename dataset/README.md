@@ -28,12 +28,13 @@ This directory is a reference archive — the website does not load it. Regenera
 
 ## Provenance & licence
 
-- The question-level data collection is credited to **[upsckata.com — "Topper Copies"](https://toppercopies.upsckata.com/)**.
-- Answer-copy PDFs are the property of the institutes that published them (ForumIAS, Vision IAS,
-  NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS and others). **No PDF files are in this dataset** —
-  only links to them.
+- This is a **community compilation**. The GS & Essay question-level index builds on open community
+  work, including **[upsckata.com — "Topper Copies"](https://toppercopies.upsckata.com/)**.
+- Answer-copy PDFs are the property of the institutes and toppers who published them (ForumIAS, Vision IAS,
+  NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, IMS4Maths, Level Up IAS and others). **No PDF files are in this
+  dataset** — only links to them.
 - Questions are extracted from PDFs heuristically and may contain misreads, duplicates or gaps.
   Always check `pdf_page_url` if something looks off.
 - This **compilation** is released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**:
-  reuse freely, credit "Toppers Copy (https://topperscopy.hashin.me)" and upsckata.com.
+  reuse freely, with credit to "Toppers Copy (https://topperscopy.hashin.me)" and the community sources it draws on.
 - A rights holder who wants a copy removed can [open an issue](https://github.com/hashin/topperscopy/issues).

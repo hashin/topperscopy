@@ -1,9 +1,18 @@
-/* Toppers Copy — static client. Data credit: upsckata.com "Topper Copies". */
+/* Toppers Copy — static client. A community-built index; GS/Essay question data builds on open
+   community work including upsckata.com "Topper Copies". */
 (function () {
   'use strict';
 
   var REPO = 'hashin/topperscopy';
   var GA_ID = 'G-VTL4V9JQBH'; // mirrored in index.html <head>
+  var VOLUNTEER_EMAIL = 'mail@hashin.me';
+  // Free, no-server delivery for the "Be a volunteer" form, via a Google Form you own.
+  //  1. Make a Google Form with 4 short-answer questions IN THIS ORDER: Name, Phone, Email, Note
+  //  2. Top-right menu (⋮) → "Get pre-filled link" → put anything in each box → "Get link" → Copy link
+  //  3. Paste that whole URL below. Responses land in the form's linked sheet (turn on email
+  //     notifications in the sheet: Tools → Notification settings). Nothing else to host.
+  // Leave blank and the form falls back to the visitor's email app / clipboard.
+  var VOLUNTEER_GFORM_PREFILL = '';
   var PAPERS = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Other'];
   var OPTIONALS = ['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
     'Public Administration', 'Philosophy', 'Psychology', 'Economics', 'Mathematics', 'Physics',
@@ -749,6 +758,98 @@
     });
   }
 
+  // parse a Google Forms "pre-filled link" into { action, entries:[name,phone,email,note] }
+  function gformConfig() {
+    if (!VOLUNTEER_GFORM_PREFILL) return null;
+    try {
+      var u = new URL(VOLUNTEER_GFORM_PREFILL);
+      var id = (u.pathname.match(/\/forms\/d\/e\/([^/]+)/) || [])[1];
+      var entries = [];
+      u.searchParams.forEach(function (v, k) { if (/^entry\.\d+$/.test(k)) entries.push(k); });
+      if (!id || entries.length < 3) return null;
+      return { action: 'https://docs.google.com/forms/d/e/' + id + '/formResponse', entries: entries };
+    } catch (e) { return null; }
+  }
+
+  function volunteerText(v) {
+    var lines = ['Name:  ' + v.name, 'Phone: ' + v.phone, 'Email: ' + v.email];
+    if (v.note) lines.push('', 'How I can help:', v.note);
+    lines.push('', '— Be-a-volunteer form, topperscopy.hashin.me');
+    return lines.join('\n');
+  }
+  function volunteerMailto(v) {
+    return 'mailto:' + VOLUNTEER_EMAIL + '?subject=' +
+      encodeURIComponent('Volunteer — ' + v.name) + '&body=' + encodeURIComponent(volunteerText(v));
+  }
+
+  // POST to a Google Form with a hidden form + iframe (no CORS, no server). Google always
+  // returns a page, so the iframe load == accepted; a long silence == network failure.
+  function postToGForm(cfg, v, done) {
+    var iframe = el('iframe', { name: 'tc-gf-sink', style: 'display:none', 'aria-hidden': 'true' });
+    var form = el('form', { method: 'POST', action: cfg.action, target: 'tc-gf-sink', style: 'display:none' });
+    var vals = [v.name, v.phone, v.email, v.note || ''];
+    cfg.entries.forEach(function (name, i) {
+      form.appendChild(el('input', { type: 'hidden', name: name, value: vals[i] || '' }));
+    });
+    document.body.appendChild(iframe);
+    document.body.appendChild(form);
+    var settled = false;
+    var finish = function (ok) {
+      if (settled) return; settled = true;
+      setTimeout(function () { iframe.remove(); form.remove(); }, 0);
+      done(ok);
+    };
+    iframe.addEventListener('load', function () { finish(true); });
+    setTimeout(function () { finish(false); }, 8000);
+    form.submit();
+  }
+
+  function wireVolunteer() {
+    var cfg = gformConfig();
+    var f = $('#vform'), note = $('#vform-note');
+    if (!f) return;
+    if (cfg) {
+      var h = $('#vhint-mail');
+      if (h) h.textContent = 'No account or email app needed. Prefer to send it yourself? Use “Copy my details”.';
+    }
+
+    var copyBtn = $('#vcopy');
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      var v = readVolunteer(f);
+      var blob = 'To: ' + VOLUNTEER_EMAIL + '\nSubject: Volunteer — ' + v.name + '\n\n' + volunteerText(v);
+      var ok = function () { note.textContent = 'Copied. Paste it into an email to ' + VOLUNTEER_EMAIL + '.'; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(blob).then(ok, function () { prompt('Copy this and email it to ' + VOLUNTEER_EMAIL + ':', blob); });
+      else prompt('Copy this and email it to ' + VOLUNTEER_EMAIL + ':', blob);
+      track('volunteer_copy', {});
+    });
+
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = readVolunteer(f);
+      if (cfg) {
+        note.textContent = 'Sending…';
+        postToGForm(cfg, v, function (ok) {
+          if (ok) {
+            f.reset();
+            note.innerHTML = 'Thank you — your details are in. I’ll reach out at <strong>' + esc(v.email) + '</strong>.';
+          } else {
+            note.innerHTML = 'Could not reach the form. Please <a href="' + esc(volunteerMailto(v)) +
+              '">email ' + VOLUNTEER_EMAIL + '</a> or use “Copy my details” above.';
+          }
+        });
+      } else {
+        window.location.href = volunteerMailto(v);
+        note.textContent = 'Opening your email app with everything filled in — just press send. ' +
+          'No mail app? Use “Copy my details” and paste into ' + VOLUNTEER_EMAIL + '.';
+      }
+      track('volunteer_submit', { via: cfg ? 'gform' : 'mailto' });
+    });
+  }
+  function readVolunteer(f) {
+    var g = function (n) { return (f[n] && f[n].value || '').trim(); };
+    return { name: g('vname'), phone: g('vphone'), email: g('vemail'), note: g('vnote') };
+  }
+
   function wireSubmit() {
     wireAnalyse();
     var kind = 'copy';
@@ -772,20 +873,7 @@
     });
     setKind('copy');
 
-    $('#vform').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var f = e.target;
-      var g = function (n) { return (f[n] && f[n].value || '').trim(); };
-      var name = g('vname'), note = g('vnote');
-      var lines = ['Name:  ' + name, 'Phone: ' + g('vphone'), 'Email: ' + g('vemail')];
-      if (note) lines.push('', 'How I can help:', note);
-      lines.push('', '— Sent from the Be-a-volunteer form on topperscopy.hashin.me');
-      window.location.href = 'mailto:mail@hashin.me?subject=' +
-        encodeURIComponent('Volunteer — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
-      $('#vform-note').textContent = 'Opening your email app with the details filled in — just press send. ' +
-        'If nothing opened, write to mail@hashin.me directly.';
-      track('volunteer_submit', {});
-    });
+    wireVolunteer();
 
     $('#sform').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -825,7 +913,7 @@
         else L.push('', '_' + analysis.count + ' questions were auto-extracted from the PDF; the CSV was too long for the pre-filled issue — the submitter can paste it in a comment._');
       }
 
-      L.push('', '---', '_Sent from the Submit form on topperscopy.hashin.me. Data concept credit: upsckata.com._');
+      L.push('', '---', '_Sent from the Submit form on topperscopy.hashin.me._');
 
       var body = L.join('\n');
       var base = 'https://github.com/' + REPO + '/issues/new?';
