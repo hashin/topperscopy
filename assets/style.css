@@ -497,6 +497,8 @@ footer.site .spacer { flex: 1; }
 
 .skeleton { color: var(--muted); font-size: 14px; padding: 48px 0; text-align: center; }
 .q.loading .txt { color: var(--muted); font-style: italic; }
+.copy.stub { opacity: .62; pointer-events: none; }
+.copy.stub .qn { font-style: italic; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }

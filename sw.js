@@ -1,6 +1,6 @@
 /* Offline cache. Shell is precached; big data files are cached at runtime
    (stale-while-revalidate). Bump VERSION to force a refresh. */
-var VERSION = 'tc-v4';
+var VERSION = 'tc-v5';
 var SHELL = [
   './', './index.html', './toppers.html',
   './assets/style.css', './assets/app.js', './assets/extract.js',

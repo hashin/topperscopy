@@ -93,6 +93,7 @@
     fullState = 'loading';
     fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
       QBYID = {};
+      DB.copies = DB.copies.filter(function (c) { return !c.stub; });  // drop name-search placeholders
       var known = {};
       DB.copies.forEach(function (c) { known[c.i] = c; });
       d.copies.forEach(function (c) {
@@ -178,6 +179,7 @@
     $('#foot-stats').textContent = 'Data snapshot ' + DB.generated;
     $('#about-gen').textContent = 'Database snapshot: ' + DB.generated + ' · source: ' + DB.attribution;
 
+    seedStubs();
     buildPaperSeg();
     refreshFacets();
     fillSelect($('#sform select[name=paper]'), PAPERS.filter(function (p) { return p !== 'Other'; })
@@ -186,6 +188,23 @@
 
     renderBrowse();
     renderOptionals();
+  }
+
+  // toppers.json carries every ranker, but the boot index only has the text-searchable ones — so a
+  // name search right after load would miss everyone whose copies are still in the lazy copies.json.
+  // Seed a placeholder per missing GS/Essay topper so a name query matches immediately; loadFull()
+  // strips these and swaps in the real copies.
+  function seedStubs() {
+    var GS = { GS1: 1, GS2: 1, GS3: 1, GS4: 1, Essay: 1, Other: 1 };
+    var present = {};
+    DB.copies.forEach(function (c) { present[c.t] = 1; });
+    Object.keys(TOPPERS).forEach(function (name) {
+      if (present[name]) return;
+      var T = TOPPERS[name] || {};
+      var gsPaper = (T.papers || []).filter(function (p) { return GS[p]; })[0];
+      if (!gsPaper) return;   // optional-subject-only topper — lives on the Optionals tab
+      DB.copies.push({ i: 'stub:' + name, t: name, c: '', p: gsPaper, y: T.year || null, r: T.air || null, u: null, q: [], k: 1, stub: 1, n: 0 });
+    });
   }
 
   // topper / source / year dropdowns — rebuilt from whatever is currently in DB.copies
@@ -289,10 +308,11 @@
 
   function topperOptions() {
     var m = {};
-    DB.copies.forEach(function (c) { m[c.t] = (m[c.t] || 0) + 1; });
+    DB.copies.forEach(function (c) { m[c.t] = (m[c.t] || 0) + (c.stub ? 0 : 1); });
     return Object.keys(m).sort().map(function (t) {
-      var air = TOPPERS[t] && TOPPERS[t].air;
-      return [t, t + (air ? ' · AIR ' + air : '') + ' (' + m[t] + ')'];
+      var T = TOPPERS[t] || {};
+      var cnt = m[t] || T.copies || 0;
+      return [t, t + (T.air ? ' · AIR ' + T.air : '') + (cnt ? ' (' + cnt + ')' : '')];
     });
   }
   function sourceOptions() {
@@ -302,7 +322,7 @@
   }
   function yearOptions() {
     var m = {};
-    DB.copies.forEach(function (c) { var y = yearOf(c); if (y) m[y] = (m[y] || 0) + 1; });
+    DB.copies.forEach(function (c) { if (c.stub) return; var y = yearOf(c); if (y) m[y] = (m[y] || 0) + 1; });
     return Object.keys(m).sort().reverse().map(function (y) { return [y, y + ' (' + m[y] + ')']; });
   }
   function fillSelect(sel, pairs, keep) {
@@ -342,6 +362,8 @@
       if (state.year && String(yearOf(c)) !== state.year) return null;
 
       var nameHit = needsText && matchName(c.t, terms);
+      // placeholder for a not-yet-loaded topper — only ever shown for a matching name search
+      if (c.stub) return nameHit ? { c: c, qs: [], nameHit: true, n: 0 } : null;
       var qs = [];
       if (needsText && !nameHit) {
         if (c.k) return null;                    // link-only: only a name can match
@@ -374,15 +396,17 @@
     var list = filteredCopies();
     var box = $('#results'); box.innerHTML = '';
 
-    var nameHits = 0, totalQ = 0;
-    list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; });
+    var nameHits = 0, totalQ = 0, stubHits = 0;
+    list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; if (x.c.stub) stubHits++; });
     var loading = !FULL && fullState !== 'error';
-    $('#resultmeta').textContent = fmt(list.length) + ' ' + (list.length === 1 ? 'copy' : 'copies') +
+    var realN = list.length - stubHits;
+    $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') +
       (state.q
         ? ' for “' + state.q + '”' +
           (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
           (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
-          (loading ? ' · still scanning inside the copies…' : '')
+          (stubHits ? ' · fetching copies for ' + fmt(stubHits) + (stubHits === 1 ? ' more topper…' : ' more toppers…')
+            : (loading ? ' · still scanning inside the copies…' : ''))
         : (loading ? ' · more copies + full-text search loading…' : ''));
 
     if (!list.length) {
@@ -441,6 +465,19 @@
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
       .concat(topperTags(c.t, c.p, c.y, c.r));
+
+    if (c.stub) {   // topper matched by name; their copies are still downloading
+      return el('details', { class: 'copy stub', 'data-i': c.i }, [
+        el('summary', {}, [
+          el('span', { class: 'name' }, [c.t]),
+          el('span', { class: 'qn' }, ['loading…']),
+          el('span', { class: 'tags' }, tags)
+        ]),
+        el('div', { class: 'qlist' }, [
+          el('div', { class: 'q loading' }, [el('div', { class: 'txt' }, ['Fetching this topper’s copies — one moment…'])])
+        ])
+      ]);
+    }
 
     if (c.k) {   // link-only copy — no question text
       var lsum = el('summary', {}, [
