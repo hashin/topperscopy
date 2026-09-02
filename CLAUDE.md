@@ -90,7 +90,10 @@ optionals, ~69 featured toppers), Sleepy Classes (GS/Essay + Sociology/PSIR), Va
 GS/Essay + IFS), LotusArise (Geography), De Facto Law (Law), IMS4Maths + SuccessClap (Mathematics),
 VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + all 3,720 GS/Essay 2013–25; direct
 `cdn.visionias.in` PDFs — re-fetchable via `POST /student/module/ajax/resources.php?f=resources_data`
-body `type=toppers_answers` while logged in, `d.result` = 4k rows). All non-upsckata copies
+body `type=toppers_answers` while logged in, `d.result` = 4k rows),
+NextIAS (`nextias.com/toppers-answers-ias`, 2,020 GS/Essay + 138 optionals incl. new **Economics** bucket,
+255 toppers 2023–25; public S3/CDN PDFs, `<article>` per topper, year `<select id=yearSelect>`=all/2025/24/23;
+299 unlabelled "Analytics/AIM" booklets stored as paper `Other`). All non-upsckata copies
 are **link-only** (scanned Drive/PDF, no question text yet).
 
 ## Open items
