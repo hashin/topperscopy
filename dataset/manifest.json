@@ -2,10 +2,10 @@
   "generated": "2026-09-04",
   "schema_version": 2,
   "counts": {
-    "toppers": 1767,
-    "copies": 8947,
+    "toppers": 1768,
+    "copies": 9045,
     "questions": 16947,
-    "submissions": 7884
+    "submissions": 7982
   },
   "files": {
     "questions.csv": {
@@ -14,18 +14,18 @@
       "rows": 29710
     },
     "copies.csv": {
-      "bytes": 1415378,
-      "sha256": "249ea01757f695602a9cf49b5f2836516b97f8f9201cdfaa73dba590bf954918",
-      "rows": 8947
+      "bytes": 1434289,
+      "sha256": "c5a9c04ae321f204e5fbf59384fb19451a0a4a9454fdfc394366b7fde09fcddc",
+      "rows": 9045
     },
     "toppers.csv": {
-      "bytes": 94034,
-      "sha256": "4e1ba03316259a105165dec2fbbd32de827bbf40fbd8a473d270c44e211ac2cb",
-      "rows": 1767
+      "bytes": 94236,
+      "sha256": "9f2052b3f29bce73d415479b09f65aececeaedd1853ba1882e676465ce60e7f0",
+      "rows": 1768
     },
     "dataset.json": {
-      "bytes": 9546327,
-      "sha256": "09113937a85a7a902835c51cd84520e0a76cb0dc3c77bcdad41367fa0b8b018e"
+      "bytes": 9575752,
+      "sha256": "b3d7b55ce9988dd20e649e12115bf17f669a4feeb6ec28cc2c05293407bb146d"
     }
   }
 }
