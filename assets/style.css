@@ -349,6 +349,8 @@ select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px v
 .tag.marks { background: var(--rose-weak); color: #a85c74;          border-color: transparent; }
 :root[data-theme="dark"] .tag.year, :root:not([data-theme="light"]) .tag.year { color: var(--sand); }
 :root[data-theme="dark"] .tag.marks, :root:not([data-theme="light"]) .tag.marks { color: var(--rose); }
+a.tag.tg { background: var(--teal-weak); color: var(--teal-text); border-color: transparent; text-decoration: none; }
+a.tag.tg:hover { background: var(--teal-line); }
 
 .qlist { border-top: 1px solid var(--border); }
 .q { display: flex; gap: 16px; padding: 15px 20px; border-bottom: 1px solid var(--border); align-items: start; }

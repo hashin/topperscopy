@@ -713,6 +713,11 @@
     if (year) out.push(el('span', { class: 'tag year' }, [String(year)]));
     var mk = T.marks && T.marks[paper] != null ? T.marks[paper] : null;
     if (mk != null) out.push(el('span', { class: 'tag marks' }, [paper + ' ' + mk]));
+    if (T.telegram) {
+      var tgA = el('a', { class: 'tag tg', href: T.telegram, target: '_blank', rel: 'noopener' }, ['Telegram ↗']);
+      tgA.addEventListener('click', function (e) { e.stopPropagation(); });
+      out.push(tgA);
+    }
     return out;
   }
 

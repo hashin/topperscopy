@@ -191,6 +191,25 @@ function build() {
       Object.assign(T, patch, { marks: { ...T.marks, ...(patch.marks || {}) } });
     }
   }
+
+  // Telegram channels (community-compiled, keyed by an informal name) — fuzzy-matched onto our
+  // toppers by token, only when exactly one topper's name contains all of the raw name's tokens.
+  const tgPath = path.join(DATA, 'telegram.json');
+  if (fs.existsSync(tgPath)) {
+    const tgRaw = JSON.parse(fs.readFileSync(tgPath, 'utf8')).entries || {};
+    const normTok = s => String(s).toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+    const topperNames = Object.keys(toppers);
+    const withToks = topperNames.map(n => ({ n, toks: new Set(normTok(n)) }));
+    for (const [rawName, url] of Object.entries(tgRaw)) {
+      const exact = topperNames.find(n => n.toLowerCase() === rawName.toLowerCase());
+      if (exact) { toppers[exact].telegram = url; continue; }
+      const rawToks = normTok(rawName).filter(t => t.length >= 3);
+      if (!rawToks.length) continue;
+      const candidates = withToks.filter(({ toks }) => rawToks.every(t => toks.has(t)));
+      if (candidates.length === 1) toppers[candidates[0].n].telegram = url;
+    }
+  }
+
   fs.writeFileSync(path.join(DATA, 'toppers.json'), JSON.stringify({
     generated,
     note: 'AIR/year auto-parsed from source PDF file names where available; marks and missing ranks come from community submissions. verified=true means a maintainer checked it.',
@@ -474,6 +493,11 @@ function topperMeta(name, toppers) {
   if (mk.length) bits.push('marks — ' + mk.join(', '));
   return bits.join(' · ');
 }
+function telegramLink(name, toppers) {
+  const url = (toppers[name] || {}).telegram;
+  if (!url) return '';
+  return ` <a class="tg" href="${esc(url)}" target="_blank" rel="nofollow noopener">Telegram ↗</a>`;
+}
 
 /* ---- inject static content + JSON-LD into index.html between markers ---- */
 function writeStaticIndex(copies, toppers, stats, generated) {
@@ -486,7 +510,7 @@ function writeStaticIndex(copies, toppers, stats, generated) {
   const searchableNames = new Set(copies.filter(c => !c.link).map(c => c.t));
   const listed = names.filter(n => searchableNames.has(n));
   const topperLinks = listed.map(n =>
-    `<li><a href="toppers.html#${slug(n)}">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}</li>`
+    `<li><a href="toppers.html#${slug(n)}">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}${telegramLink(n, toppers)}</li>`
   ).join('\n');
 
   const noscript =
@@ -603,7 +627,7 @@ function writeToppersPage(copies, toppers, stats, generated) {
       return `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.q.length}</td><td><a href="${pdf}" rel="nofollow noopener">source PDF</a></td></tr>`;
     }).join('\n');
     return `  <section id="${slug(name)}">
-    <h2>${esc(name)}</h2>
+    <h2>${esc(name)}${telegramLink(name, toppers)}</h2>
     ${meta ? `<p class="meta">${esc(meta)}</p>` : ''}
     <table>
       <thead><tr><th>Paper</th><th>Source</th><th>Questions</th><th>Copy</th></tr></thead>
@@ -656,6 +680,7 @@ ${rows}
   section{border-top:1px solid var(--line);padding:18px 0}
   h2{font-size:1.15rem;margin:0 0 4px}
   .meta{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+  a.tg{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;background:var(--teal);color:var(--card);text-decoration:none;vertical-align:middle;margin-left:6px}
   table{border-collapse:collapse;width:100%;font-size:.92rem}
   th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
   th{color:var(--muted);font-weight:600}
