@@ -10,7 +10,7 @@ link-only copies from other coaching sites, a submission workflow, dark mode, an
 ## ⚠️ Do not read these — they are large and generated
 
 `data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB),
-`data/link-copies.json` (~1.6 MB, mostly VisionIAS), `toppers.html`, `dataset/*`. All produced/managed by
+`data/link-copies.json` (~1.6 MB, mostly VisionIAS), `data/questions.json` (deduped index), `toppers.html`, `dataset/*`. All produced/managed by
 `build.js` or bulk scripts. `link-copies.json` / `optionals.json` are hand-editable in principle but huge —
 edit via a script. Never open the generated ones to "understand the project"; this file is their shape. Never
 open them to "understand the project" — this file is the source of truth for their shape.
@@ -24,6 +24,8 @@ open them to "understand the project" — this file is the source of truth for t
 | `data/link-copies.json` | GS/Essay copies that are **only a link** (scanned, no text) | `{entries:[{topper,paper,url,air?,year?,source?,by?,note?,verified}]}` — `paper` = GS1..GS4/Essay |
 | `data/optionals.json` | optional-subject copies | `{entries:[{topper,subject,url,air?,year?,marks?,source?,by?,note?,verified,questions?}]}` — `questions` = `[{page,question,marks,words}]` when known |
 | `data/toppers.overrides.json` | maintainer AIR/year/marks corrections | `{"<name>":{air,year,verified,marks:{},sources:[]}}` — keys starting `_` ignored |
+| `data/syllabus.json` | **hand-authored** official UPSC syllabus, GS1–4 + Essay, 2 levels. `nodes[].kw` = lowercase phrases; build.js scores each question against its own paper's nodes | `{version, papers:{GS1:{name, nodes:[{id, t, kw:[]}]}, …}}` |
+| `data/syllabus-overrides.json` | *(optional)* pin a question to node(s); key = build.js `qKey()` of the text | `{"<qKey>": ["gs2.federalism", …]}` |
 
 **Dedupe rule:** by PDF URL (`.split('#')[0]`, strip `?…`). Same topper may have entries from multiple sources.
 
@@ -32,6 +34,11 @@ open them to "understand the project" — this file is the source of truth for t
 Reads the 5 source files → writes:
 - `data/copies.json` — `{generated, attribution, stats, copies:[{i,t,c,p,y,r,u,q:[[page,question,marks,words]],prov,link?,note?}]}`. **Every** copy (searchable GS/Essay + link-only). App lazy-loads it on idle/search/expand.
 - `data/index.json` — boot payload: **only the text-searchable copies** (`!link`), minus `q`, plus `n`. Link-only copies are NOT here — they arrive with copies.json and app.js merges them into `DB.copies` + refreshes facets. Keeps boot ~26 KB gz regardless of link-only volume.
+- `data/questions.json` — **deduped question index** (lazy, ~0.9 MB gz). `writeQuestions()` groups every
+  searchable copy's `q` rows by `qKey()` (strip "Q.3)" numbering, lowercase, keep letters/digits incl. Devanagari,
+  first 110 chars) + paper. Drops GS4 case-study sub-parts ("(a)…(b)…") and stray fragments. Each entry:
+  `{i, p, q(text), m, w, s:[syllabus node ids], yr:[years], a:[[copyId, page], …]}`. ~7.3k distinct, ~48% syllabus-mapped.
+  Powers question-first view + Practice. Shard by paper post-OCR.
 - `data/toppers.json` — `{toppers:{<name>:{air,year,coaching,papers,copies,marks,verified,sources}}}`.
 - `toppers.html`, `sitemap.xml`, `robots.txt`, `llms.txt`; fills `<!-- STATIC:START/END -->` and `<!-- LD:START/END -->` markers in `index.html` (noscript index + JSON-LD).
 - `dataset/` — consolidated CC-BY-4.0 backup: `questions.csv` (flat, all copies, `provenance` col), `copies.csv`, `toppers.csv`, `dataset.json` (nested), `manifest.json` (sha256s), `README.md`.
@@ -49,6 +56,14 @@ incl. link-only + optionals (`{questions,copies,toppers,subjects,linkOnly}`) —
   Browse default sort `year` = year-grouped, newest year first, best AIR first within a year (`yearOf`/`airOf`
   use toppers.json then the copy's own value). Search box matches topper names immediately + question text once
   loaded. Link-only copies render as "link only" cards. Theme toggle (`localStorage tc-theme`). GA custom events.
+  - **Question-first view** (`#qview` toggle): `loadQuestionIndex()` lazy-fetches `questions.json`+`syllabus.json`;
+    `renderQuestions()` shows deduped questions → expand for the topper answer list (resolved via `COPYBYID`,
+    built from `DB.copies`). `#syl` `<select>` (optgroups per paper) filters by syllabus node; picking one
+    auto-switches to question view. `dispQ()` strips leading "Q.12" for display.
+  - **Practice** (`#practice` `<dialog>`, opened by the `.practice-btn` in `.searchrow`): pick a paper (optionals
+    disabled till OCR) → random question (prefers ≥3 answers) + its topper answers. `localStorage tc-practice` =
+    `{seen:{<paper>:[qids capped 600]}, s:{d:date, n:streakDays, t:totalAttempted}}`. `.practice-btn.nudge` dot
+    shows until you practice that day.
 - `assets/style.css` — design system. Palette from 6 user swatches on warm paper; Fraunces + Inter.
   Light/dark via 3-state pattern (`:root` / `@media prefers-color-scheme` / `:root[data-theme=dark]`).
   Phones ≤680px drop `backdrop-filter`, 16px inputs.

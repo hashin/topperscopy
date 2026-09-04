@@ -40,9 +40,11 @@
   var SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 
   var DB = null, TOPPERS = {}, OPTS = [];
+  var QI = null, SYL = null, COPYBYID = {}, qiState = 'idle', qiPromise = null;
   var state = {
     view: 'browse', q: '', mode: 'all', paper: 'all',
     topper: '', source: '', year: '', sort: 'year', shown: PAGE,
+    qview: 'copies', syl: '', pp: '',
     optSubject: 'all', optQ: ''
   };
 
@@ -110,9 +112,11 @@
         }
       });
       FULL = true; fullState = 'ready';
+      indexCopies();
       refreshFacets();   // topper/source/year filters were built from the searchable core only
       var openIds = $$('#results .copy[open]').map(function (n) { return n.getAttribute('data-i'); });
       if (state.view === 'browse') renderBrowse(openIds);
+      if ($('#practice').open) renderPractice();
       track('fulltext_loaded', {});
       return d;
     }).catch(function (e) {
@@ -123,6 +127,58 @@
   }
   // fetch now (not on idle) the moment the user shows intent to search or read
   function ensureFull() { if (!FULL && fullState !== 'loading') loadFull(); }
+
+  /* ---------- deduped question index (question-first view + Practice) ---------- */
+  function indexCopies() { COPYBYID = {}; DB.copies.forEach(function (c) { COPYBYID[c.i] = c; }); }
+
+  function loadQuestionIndex() {
+    if (qiPromise) return qiPromise;
+    qiState = 'loading';
+    qiPromise = Promise.all([
+      fetch('data/questions.json').then(function (r) { return r.json(); }),
+      fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+    ]).then(function (res) {
+      QI = res[0].questions || [];
+      SYL = res[1];
+      qiState = 'ready';
+      fillSyllabus();
+      if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
+      if ($('#practice').open) renderPractice();
+      track('question_index_loaded', { count: QI.length });
+      return QI;
+    }).catch(function (e) {
+      qiState = 'error'; qiPromise = null;
+      track('data_error', { message: 'qindex ' + String(e && e.message || e).slice(0, 100) });
+    });
+    return qiPromise;
+  }
+  function ensureQI() { if (!QI && qiState !== 'loading') loadQuestionIndex(); }
+
+  // syllabus node id -> readable label ("GS2 · Federalism")
+  function sylLabel(id) {
+    if (!SYL) return id;
+    for (var p in SYL.papers) {
+      var hit = (SYL.papers[p].nodes || []).filter(function (n) { return n.id === id; })[0];
+      if (hit) return p + ' · ' + hit.t;
+    }
+    return id;
+  }
+  function fillSyllabus() {
+    var sel = $('#syl'); if (!sel || !SYL) return;
+    var keep = sel.value;
+    sel.innerHTML = '<option value="">Whole syllabus</option>';
+    var counts = {};
+    (QI || []).forEach(function (q) { (q.s || []).forEach(function (id) { counts[id] = (counts[id] || 0) + 1; }); });
+    Object.keys(SYL.papers).forEach(function (p) {
+      var og = el('optgroup', { label: p });
+      (SYL.papers[p].nodes || []).forEach(function (n) {
+        var c = counts[n.id] || 0;
+        og.appendChild(el('option', { value: n.id }, [n.t + (c ? ' (' + c + ')' : '')]));
+      });
+      sel.appendChild(og);
+    });
+    sel.value = keep;
+  }
 
   /* ---------- boot ---------- */
   function boot() {
@@ -166,6 +222,7 @@
   }
 
   function onData() {
+    indexCopies();
     var s = DB.stats;
     var g = s.all || s;   // grand total incl. optional-subject copies
     var optCopies = OPTS.length;
@@ -287,6 +344,27 @@
         track('filter_change', { filter: id, value: e.target.value || '(all)' });
       });
     });
+
+    $$('#qview button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        setQView(b.dataset.qview);
+        track('filter_change', { filter: 'qview', value: b.dataset.qview });
+      });
+    });
+    $('#syl').addEventListener('change', function (e) {
+      state.syl = e.target.value; state.shown = PAGE;
+      if (state.syl && state.qview !== 'questions') { setQView('questions'); return; }
+      renderBrowse();
+      track('filter_change', { filter: 'syllabus', value: e.target.value || '(all)' });
+    });
+    wirePractice();
+  }
+
+  function setQView(v) {
+    state.qview = v; state.shown = PAGE;
+    $$('#qview button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.qview === v)); });
+    if (v === 'questions') ensureQI();
+    renderBrowse();
   }
 
   function buildPaperSeg() {
@@ -393,6 +471,7 @@
 
   function renderBrowse(reopen) {
     if (!DB) return;
+    if (state.qview === 'questions') return renderQuestions();
     var list = filteredCopies();
     var box = $('#results'); box.innerHTML = '';
 
@@ -446,6 +525,185 @@
       more.addEventListener('click', function () { state.shown += PAGE; renderBrowse(); });
       box.appendChild(more);
     }
+  }
+
+  /* ---------- question-first view ---------- */
+  function dispQ(t) { return String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, ''); }
+
+  function filteredQuestions() {
+    var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    return (QI || []).filter(function (q) {
+      if (state.paper !== 'all' && q.p !== state.paper) return false;
+      if (state.syl && (q.s || []).indexOf(state.syl) < 0) return false;
+      if (terms.length && !matchQ(q.q, terms, state.mode)) return false;
+      return true;
+    }).sort(function (a, b) { return b.a.length - a.a.length || String(a.q).localeCompare(String(b.q)); });
+  }
+
+  function renderQuestions() {
+    var box = $('#results'); box.innerHTML = '';
+    if (!QI) {
+      $('#resultmeta').textContent = qiState === 'error' ? 'Could not load the question index.' : '';
+      box.appendChild(el('div', { class: 'empty' }, [
+        el('div', { class: 'big' }, [qiState === 'error' ? 'Question index unavailable' : 'Loading questions…']),
+        el('div', {}, ['Building the list of distinct Mains questions and their topper answers.'])
+      ]));
+      return;
+    }
+    var list = filteredQuestions();
+    var sylTxt = state.syl ? ' in ' + sylLabel(state.syl) : '';
+    $('#resultmeta').textContent = fmt(list.length) + (list.length === 1 ? ' question' : ' questions') +
+      (state.q ? ' for “' + state.q + '”' : '') + sylTxt;
+
+    if (!list.length) {
+      box.appendChild(el('div', { class: 'empty' }, [
+        el('div', { class: 'big' }, ['No questions']), el('div', {}, ['Clear a filter or try other words.'])
+      ]));
+      return;
+    }
+    list.slice(0, state.shown).forEach(function (q) { box.appendChild(questionCard(q)); });
+    if (list.length > state.shown) {
+      var n = Math.min(PAGE, list.length - state.shown);
+      var more = el('button', { class: 'more' }, ['Show ' + n + ' more  ·  ' + (list.length - state.shown) + ' hidden']);
+      more.addEventListener('click', function () { state.shown += PAGE; renderQuestions(); });
+      box.appendChild(more);
+    }
+  }
+
+  function answerRows(q) {
+    var rows = (q.a || []).map(function (pair) {
+      var c = COPYBYID[pair[0]]; if (!c) return null;
+      return { c: c, page: pair[1], air: airOf(c) || 1e9, year: yearOf(c) };
+    }).filter(Boolean).sort(function (a, b) { return a.air - b.air; });
+    return rows.map(function (r) {
+      var href = r.c.u + (r.page ? '#page=' + r.page : '');
+      var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [r.page ? 'Open · p.' + r.page : 'Open copy']);
+      a.addEventListener('click', function () {
+        track('pdf_open', { topper: r.c.t, paper: r.c.p, source: r.c.c || 'unknown', page: r.page || 0, link_domain: hostOf(r.c.u), outbound: true, transport_type: 'beacon', from: 'question' });
+      });
+      var meta = [r.c.t];
+      if (r.air < 1e9) meta.push('AIR ' + r.air);
+      if (r.c.c) meta.push(r.c.c);   // per-answer year omitted — the question card carries the exam year(s)
+      return el('div', { class: 'q' }, [el('div', { class: 'txt' }, [meta.join('  ·  ')]), a]);
+    });
+  }
+
+  function questionCard(q) {
+    var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    var tags = [el('span', { class: 'tag paper' }, [q.p])];
+    if (q.m) tags.push(el('span', { class: 'tag marks' }, [q.m + ' marks']));
+    var wn = q.w && (String(q.w).match(/\d+/) || [])[0];
+    if (wn) tags.push(el('span', { class: 'tag' }, [wn + ' words']));
+    if (q.yr && q.yr.length) tags.push(el('span', { class: 'tag year' }, [q.yr.join(', ')]));
+    (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
+
+    var head = el('div', { class: 'qhead' });
+    head.innerHTML = highlight(dispQ(q.q), terms);
+    var n = (q.a || []).length;
+    var summary = el('summary', {}, [
+      head,
+      el('span', { class: 'qn' }, [n + (n === 1 ? ' answer' : ' answers')]),
+      el('span', { class: 'tags' }, tags)
+    ]);
+    var body = el('div', { class: 'qlist' });
+    var d = el('details', { class: 'copy qcard' }, [summary, body]);
+    var filled = false;
+    d.addEventListener('toggle', function () {
+      if (!d.open || filled) return;
+      filled = true;
+      answerRows(q).forEach(function (r) { body.appendChild(r); });
+      if (!body.children.length) body.appendChild(el('div', { class: 'q loading' }, [el('div', { class: 'txt' }, ['Loading topper copies…'])]));
+      track('question_open', { paper: q.p, answers: n });
+    });
+    return d;
+  }
+
+  /* ---------- Practice ---------- */
+  function pStore() {
+    try { return JSON.parse(localStorage.getItem('tc-practice') || '{}'); } catch (e) { return {}; }
+  }
+  function pSave(o) { try { localStorage.setItem('tc-practice', JSON.stringify(o)); } catch (e) {} }
+  function pToday() { return new Date().toISOString().slice(0, 10); }
+  function pBumpStreak() {
+    var o = pStore(), s = o.s || { d: '', n: 0, t: 0 }, today = pToday();
+    if (s.d !== today) {
+      var y = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+      s.n = s.d === y ? s.n + 1 : 1;
+      s.d = today;
+    }
+    s.t = (s.t || 0) + 1;
+    o.s = s; pSave(o);
+    return s;
+  }
+  function practicedToday() { return (pStore().s || {}).d === pToday(); }
+
+  function wirePractice() {
+    var dlg = $('#practice');
+    $('#practice-open').addEventListener('click', function () {
+      ensureQI(); ensureFull();
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      renderPractice();
+      track('practice_open', {});
+    });
+    $('#practice-close').addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) (dlg.close ? dlg.close() : dlg.removeAttribute('open')); });
+    $$('#practice-papers button').forEach(function (b) {
+      if (b.disabled) return;
+      b.addEventListener('click', function () {
+        state.pp = b.dataset.pp;
+        $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === state.pp)); });
+      });
+    });
+    $('#practice-next').addEventListener('click', nextPracticeQ);
+    refreshPracticeDot();
+  }
+  function refreshPracticeDot() {
+    $('#practice-open').classList.toggle('nudge', !practicedToday());
+  }
+
+  function renderPractice() {
+    var s = pStore().s || {};
+    $('#practice-streak').textContent = s.n ? '🔥 ' + s.n + '-day streak · ' + (s.t || 0) + ' practised' : '';
+    var body = $('#practice-body');
+    if (!QI) { body.innerHTML = '<p class="hint">Loading questions…</p>'; return; }
+    if (!body.dataset.has) body.innerHTML = '<p class="hint">Pick a paper (or leave it on “Any”), then hit the button for a random Mains question and the toppers who answered it.</p>';
+  }
+
+  function nextPracticeQ() {
+    if (!QI) { renderPractice(); return; }
+    var pp = state.pp || '';
+    var base = QI.filter(function (q) { return (!pp || q.p === pp) && q.a && q.a.length; });
+    if (!base.length) { $('#practice-body').innerHTML = '<p class="hint">No indexed questions for that paper yet.</p>'; return; }
+    // prefer questions several toppers answered — more likely a genuine repeated PYQ, more to compare
+    var pool = base.filter(function (q) { return q.a.length >= 3; });
+    if (pool.length < 20) pool = base.filter(function (q) { return q.a.length >= 2; });
+    if (pool.length < 10) pool = base;
+    var o = pStore(); o.seen = o.seen || {};
+    var key = pp || 'any';
+    var seen = o.seen[key] || [];
+    var fresh = pool.filter(function (q) { return seen.indexOf(q.i) < 0; });
+    if (!fresh.length) { fresh = pool; seen = []; }
+    var q = fresh[Math.floor(Math.random() * fresh.length)];
+    seen.push(q.i); o.seen[key] = seen.slice(-600); pSave(o);
+    pBumpStreak(); refreshPracticeDot();
+
+    var body = $('#practice-body'); body.dataset.has = '1'; body.innerHTML = '';
+    var tags = [el('span', { class: 'tag paper' }, [q.p])];
+    if (q.m) tags.push(el('span', { class: 'tag marks' }, [q.m + ' marks']));
+    var wn = q.w && (String(q.w).match(/\d+/) || [])[0];
+    if (wn) tags.push(el('span', { class: 'tag' }, [wn + ' words']));
+    if (q.yr && q.yr.length) tags.push(el('span', { class: 'tag year' }, ['asked ' + q.yr.join(', ')]));
+    (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
+    body.appendChild(el('div', { class: 'pq' }, [dispQ(q.q)]));
+    body.appendChild(el('div', { class: 'tags' }, tags));
+    var rows = answerRows(q);
+    body.appendChild(el('div', { class: 'pans-h' }, [rows.length + (rows.length === 1 ? ' topper answered this' : ' toppers answered this') + (FULL ? '' : ' — links loading…')]));
+    var list = el('div', { class: 'qlist' });
+    rows.forEach(function (r) { list.appendChild(r); });
+    body.appendChild(list);
+    $('#practice-next').textContent = 'Another question';
+    renderPractice();
+    track('practice_question', { paper: q.p, answers: rows.length });
   }
 
   function topperTags(name, paper, copyYear, copyAir) {

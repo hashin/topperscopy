@@ -478,6 +478,62 @@ form input:focus, form select:focus, form textarea:focus { outline: none; border
 .btn.ghost { background: var(--surface); color: var(--teal-text); border-color: var(--border-2); }
 .formnote { font-size: 13px; color: var(--muted); margin-top: 12px; }
 
+/* ---------- search row + practice button ---------- */
+.searchrow { display: flex; gap: 10px; align-items: stretch; }
+.searchrow .search { flex: 1; }
+.practice-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  color: var(--teal-text); background: var(--teal-weak);
+  border: 1px solid var(--teal-line); border-radius: 14px; padding: 0 16px;
+  box-shadow: var(--shadow-sm); transition: background .14s, color .14s, transform .14s;
+}
+.practice-btn:hover { transform: translateY(-1px); background: var(--teal); color: #fff; border-color: transparent; }
+.practice-btn .pd { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .35; transition: opacity .2s; }
+.practice-btn.nudge .pd { opacity: 1; background: var(--sand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sand) 35%, transparent); animation: pnudge 2.6s ease-in-out infinite; }
+@keyframes pnudge { 0%,100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+@media (max-width: 560px) {
+  .searchrow { flex-direction: column; }
+  .practice-btn { padding: 11px 16px; justify-content: center; }
+}
+
+/* ---------- practice dialog ---------- */
+#practice {
+  width: min(680px, 94vw); max-height: 88vh; padding: 0; overflow: auto;
+  border: 1px solid var(--border-2); border-radius: 18px; background: var(--paper); color: var(--ink);
+  box-shadow: 0 24px 70px -20px rgba(0,0,0,.4);
+}
+#practice::backdrop { background: rgba(20,28,29,.42); backdrop-filter: blur(2px); }
+.practice-head { display: flex; align-items: center; gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--paper); z-index: 1; }
+.practice-head strong { font-family: var(--serif); font-weight: 500; font-size: 18px; }
+.pstreak { flex: 1; font-size: 12.5px; color: var(--muted); }
+#practice-close { border: 0; background: transparent; color: var(--muted); font-size: 15px; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+#practice-close:hover { background: var(--surface-2); color: var(--ink); }
+.practice-papers { display: flex; flex-wrap: wrap; gap: 6px; padding: 16px 20px 4px; }
+.practice-papers button {
+  font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+  color: var(--muted); background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 7px 14px; transition: color .12s, background .12s;
+}
+.practice-papers button:hover:not([disabled]) { color: var(--ink); }
+.practice-papers button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: transparent; }
+.practice-papers button[disabled] { opacity: .5; cursor: not-allowed; }
+#practice-body { padding: 12px 20px 4px; }
+#practice-body .hint { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.pq { font-family: var(--serif); font-size: 18px; line-height: 1.5; letter-spacing: -.01em; color: var(--ink); white-space: pre-wrap; margin: 8px 0 10px; }
+.pans-h { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 16px 0 6px; }
+.practice-foot { padding: 14px 20px 20px; position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--border); }
+.practice-foot .btn { width: 100%; }
+
+/* ---------- question-first cards ---------- */
+.copy.qcard > summary { grid-template-columns: 1fr auto; }
+.copy.qcard .qhead {
+  grid-column: 1; font-family: var(--serif); font-weight: 500; font-size: 16.5px;
+  line-height: 1.5; letter-spacing: -.005em; color: var(--ink); white-space: pre-wrap;
+}
+.copy.qcard > summary:hover .qhead { color: var(--teal-text); }
+.tag.syl { background: var(--teal-weak); color: var(--teal-text); border-color: var(--teal-line); text-transform: none; letter-spacing: 0; font-weight: 500; }
+
 /* ---------- prose ---------- */
 .prose { font-size: 16px; color: var(--body); max-width: 68ch; }
 .prose h2 { font-family: var(--serif); font-weight: 500; font-size: 20px; margin: 30px 0 10px; letter-spacing: -.01em; }

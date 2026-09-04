@@ -171,6 +171,9 @@ function build() {
 
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
+  // deduped question index — powers the question-first search view and Practice mode
+  writeQuestions(copies, generated);
+
   // lightweight boot index — only the text-searchable copies, without the question text.
   // Link-only copies (scanned, no text) are omitted here and arrive with the lazy data/copies.json,
   // so the first paint stays tiny no matter how many link-only copies pile up.
@@ -208,6 +211,100 @@ function build() {
   console.log(`toppers.json ${Object.keys(toppers).length} toppers, ${withAir} with an auto-parsed AIR`);
   console.log(`toppers.html + sitemap.xml + llms.txt + robots.txt written; index.html markers filled`);
   console.log(`dataset/     ${dsCounts.copies} copies, ${dsCounts.questions} questions, ${dsCounts.toppers} toppers, ${dsCounts.submissions} from submissions`);
+}
+
+/* ---- deduped question index: data/questions.json ---- */
+function qKey(text) {
+  return String(text || '')
+    .replace(/^\s*(?:Q\.?|Question)?\s*\d+\s*[\).:\-]+\s*/i, '')     // drop leading "Q.3)" / "12."
+    .replace(/^\s*\(?[a-e]\)?[\).:]\s+/i, '')                        // drop a leading "(a)"
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')                                // keep letters/digits (incl. Devanagari)
+    .trim()
+    .slice(0, 110);
+}
+
+function loadSyllabus() {
+  const p = path.join(DATA, 'syllabus.json');
+  if (!fs.existsSync(p)) return null;
+  const raw = JSON.parse(fs.readFileSync(p, 'utf8'));
+  const byPaper = {};
+  for (const [paper, def] of Object.entries(raw.papers || {})) {
+    byPaper[paper] = (def.nodes || []).map(n => ({ id: n.id, kw: (n.kw || []).map(k => k.toLowerCase()) }));
+  }
+  return { version: raw.version, byPaper };
+}
+
+function mapSyllabus(text, paper, syl, overrides) {
+  const t = String(text || '').toLowerCase();
+  const key = qKey(text);
+  if (overrides && overrides[key]) return overrides[key];
+  const nodes = (syl && syl.byPaper[paper]) || [];
+  const scored = [];
+  for (const n of nodes) {
+    let s = 0;
+    for (const kw of n.kw) if (t.indexOf(kw) >= 0) s += Math.min(kw.length, 24);   // longer phrase = stronger signal
+    if (s) scored.push([n.id, s]);
+  }
+  scored.sort((a, b) => b[1] - a[1]);
+  return scored.slice(0, 2).filter(x => x[1] >= 8).map(x => x[0]);
+}
+
+function writeQuestions(copies, generated) {
+  const syl = loadSyllabus();
+  const ovPath = path.join(DATA, 'syllabus-overrides.json');
+  const overrides = fs.existsSync(ovPath) ? JSON.parse(fs.readFileSync(ovPath, 'utf8')) : {};
+
+  const groups = new Map();
+  for (const c of copies) {
+    if (c.link || !c.q || !c.q.length) continue;
+    for (const [page, question, marks, words] of c.q) {
+      if (!question) continue;
+      // GS4 case studies are split as [scenario row] + [(a)(b) sub-parts row]; keep the scenario, drop the
+      // standalone sub-parts (the "(a) ethical issues (b) options" ask is generic without its case)
+      if (c.p === 'GS4' && /^\s*\(?[a-e][\).]/i.test(question)) continue;
+      if (/^\s*\(?[a-e][\).]/i.test(question) && question.length < 90) continue;   // orphan sub-part in other papers
+      if (question.replace(/[^\p{L}\p{N}]+/gu, '').length < 12) continue;          // stray fragment
+      const key = c.p + ' ' + qKey(question);
+      let g = groups.get(key);
+      if (!g) { g = { texts: [], p: c.p, m: '', w: '', a: [], yrs: new Set() }; groups.set(key, g); }
+      g.texts.push(question);
+      if (marks && !g.m) g.m = marks;
+      if (words && !g.w) g.w = words;
+      g.a.push([c.i, page || 0]);
+      if (c.y) g.yrs.add(c.y);
+    }
+  }
+
+  // longest text in a group is usually the most complete (multi-part questions, less truncation)
+  const list = [...groups.values()].map(g => {
+    const text = g.texts.sort((x, y) => y.length - x.length)[0];
+    return {
+      p: g.p, q: text, m: g.m || '', w: g.w || '',
+      s: mapSyllabus(text, g.p, syl, overrides),
+      yr: [...g.yrs].sort(),
+      a: g.a.sort((x, y) => x[0] - y[0])
+    };
+  });
+  list.sort((x, y) => x.p.localeCompare(y.p) || y.a.length - x.a.length || x.q.localeCompare(y.q));
+  list.forEach((q, i) => { q.i = i; });
+
+  const byPaper = {}, mapped = {};
+  for (const q of list) {
+    byPaper[q.p] = (byPaper[q.p] || 0) + 1;
+    if (q.s.length) mapped[q.p] = (mapped[q.p] || 0) + 1;
+  }
+
+  fs.writeFileSync(path.join(DATA, 'questions.json'), JSON.stringify({
+    generated,
+    syllabus_version: syl && syl.version || null,
+    count: list.length,
+    byPaper,
+    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
+  }));
+
+  const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
+  console.log(`questions.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);
 }
 
 /* ---- consolidated backup dataset (not served by the app) ---- */

@@ -7,6 +7,8 @@ on:
       - "data/submissions.csv"
       - "data/optionals.json"
       - "data/toppers.overrides.json"
+      - "data/syllabus.json"
+      - "data/syllabus-overrides.json"
       - "build.js"
   workflow_dispatch:
 
@@ -26,6 +28,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/copies.json data/index.json data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
+          git add data/copies.json data/index.json data/questions.json data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
           git diff --cached --quiet || git commit -m "chore: rebuild data + static/SEO artefacts + dataset backup [skip ci]"
           git push

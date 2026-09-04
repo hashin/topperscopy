@@ -94,11 +94,20 @@
     </div>
 
     <div class="toolbar">
-      <div class="search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="search" id="q" placeholder="Search a topper's name, or inside the copies — federalism, ethical dilemma…" autocomplete="off" aria-label="Search by topper name or inside topper answer copies">
+      <div class="searchrow">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" id="q" placeholder="Search a topper's name, or inside the copies — federalism, ethical dilemma…" autocomplete="off" aria-label="Search by topper name or inside topper answer copies">
+        </div>
+        <button type="button" id="practice-open" class="practice-btn" aria-haspopup="dialog">
+          <span class="pd" aria-hidden="true"></span>Practice a question
+        </button>
       </div>
       <div class="filters">
+        <div class="seg" id="qview" role="group" aria-label="Show">
+          <button data-qview="copies" aria-pressed="true">Copies</button>
+          <button data-qview="questions" aria-pressed="false">Questions</button>
+        </div>
         <div class="seg" id="papers" role="group" aria-label="Filter by paper"></div>
         <div class="seg" id="mode" role="group" aria-label="Search mode">
           <button data-mode="all" aria-pressed="true">All words</button>
@@ -106,6 +115,7 @@
         </div>
       </div>
       <div class="filters">
+        <select id="syl" aria-label="Filter by syllabus topic"><option value="">Whole syllabus</option></select>
         <select id="topper" aria-label="Filter by topper"><option value="">All toppers</option></select>
         <select id="source" aria-label="Filter by source"><option value="">All sources</option></select>
         <select id="year" aria-label="Filter by year"><option value="">All years</option></select>
@@ -117,6 +127,27 @@
         </select>
       </div>
     </div>
+
+    <dialog id="practice" aria-label="Practice a question">
+      <div class="practice-head">
+        <strong>Practice</strong>
+        <span id="practice-streak" class="pstreak"></span>
+        <button type="button" id="practice-close" aria-label="Close">✕</button>
+      </div>
+      <div class="practice-papers" id="practice-papers" role="group" aria-label="Pick a paper">
+        <button data-pp="" aria-pressed="true">Any</button>
+        <button data-pp="GS1">GS1</button>
+        <button data-pp="GS2">GS2</button>
+        <button data-pp="GS3">GS3</button>
+        <button data-pp="GS4">GS4</button>
+        <button data-pp="Essay">Essay</button>
+        <button data-pp="_opt" disabled title="Unlocks once optional copies are OCR-indexed">Optional ▸ after OCR</button>
+      </div>
+      <div id="practice-body"></div>
+      <div class="practice-foot">
+        <button type="button" id="practice-next" class="btn">Give me a question</button>
+      </div>
+    </dialog>
 
     <p class="resultmeta" id="resultmeta"></p>
     <div id="results">
@@ -718,7 +749,7 @@
 
 <!-- LD:START -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-built index of UPSC Mains topper answer copies.","founder":{"@id":"https://topperscopy.hashin.me/#hashin"}},{"@type":"Person","@id":"https://topperscopy.hashin.me/#hashin","name":"Hashin Jithu","url":"https://blog.hashin.me","description":"Creator and maintainer of Toppers Copy. Topper of the UPSC Civil Services Examination 2021 with an All India Rank of 553. Built Toppers Copy as a non-commercial way of giving back to the UPSC aspirant community.","knowsAbout":["UPSC Civil Services Examination","UPSC Mains answer writing","Public policy"],"award":"All India Rank 553, UPSC Civil Services Examination 2021"},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-09-02","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. It is a community-built index; the GS & Essay question-level data builds on open community work, including upsckata.com’s \"Topper Copies\"."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://topperscopy.hashin.me/#website","url":"https://topperscopy.hashin.me/","name":"Toppers Copy","description":"Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.","inLanguage":"en","publisher":{"@id":"https://topperscopy.hashin.me/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://topperscopy.hashin.me/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://topperscopy.hashin.me/#org","name":"Toppers Copy","url":"https://topperscopy.hashin.me/","description":"A free, open, community-built index of UPSC Mains topper answer copies.","founder":{"@id":"https://topperscopy.hashin.me/#hashin"}},{"@type":"Person","@id":"https://topperscopy.hashin.me/#hashin","name":"Hashin Jithu","url":"https://blog.hashin.me","description":"Creator and maintainer of Toppers Copy. Topper of the UPSC Civil Services Examination 2021 with an All India Rank of 553. Built Toppers Copy as a non-commercial way of giving back to the UPSC aspirant community.","knowsAbout":["UPSC Civil Services Examination","UPSC Mains answer writing","Public policy"],"award":"All India Rank 553, UPSC Civil Services Examination 2021"},{"@type":"Dataset","@id":"https://topperscopy.hashin.me/#dataset","name":"UPSC Mains Topper Answer Copies — question index","description":"A structured index of 16,947 questions across 1,063 UPSC Civil Services Mains answer copies written by 340 rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.","url":"https://topperscopy.hashin.me/","keywords":["UPSC","Civil Services Exam","Mains","answer copy","toppers","General Studies","Essay","IAS"],"license":"https://github.com/hashin/topperscopy/blob/main/LICENSE","isAccessibleForFree":true,"creator":{"@id":"https://topperscopy.hashin.me/#org"},"dateModified":"2026-09-04","distribution":[{"@type":"DataDownload","name":"Complete flat question table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/questions.csv"},{"@type":"DataDownload","name":"Complete dataset (nested JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/dataset/dataset.json"},{"@type":"DataDownload","name":"Per-topper table (CSV)","encodingFormat":"text/csv","contentUrl":"https://topperscopy.hashin.me/dataset/toppers.csv"},{"@type":"DataDownload","name":"App index, grouped by copy (JSON)","encodingFormat":"application/json","contentUrl":"https://topperscopy.hashin.me/data/copies.json"}],"citation":"https://toppercopies.upsckata.com/"},{"@type":"FAQPage","@id":"https://topperscopy.hashin.me/#faq","mainEntity":[{"@type":"Question","name":"What is Toppers Copy?","acceptedAnswer":{"@type":"Answer","text":"A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes 16,947 questions inside 1,063 answer copies by 340 rankers and links to the exact page of each source PDF."}},{"@type":"Question","name":"Where do the answer copies come from?","acceptedAnswer":{"@type":"Answer","text":"Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. It is a community-built index; the GS & Essay question-level data builds on open community work, including upsckata.com’s \"Topper Copies\"."}},{"@type":"Question","name":"Does it cover optional subjects?","acceptedAnswer":{"@type":"Answer","text":"Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No login, no ads."}},{"@type":"Question","name":"How can I add a missing copy or a topper’s marks?","acceptedAnswer":{"@type":"Answer","text":"Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live."}}]}]}
 </script>
 <!-- LD:END -->
 
