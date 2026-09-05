@@ -484,14 +484,14 @@ form input:focus, form select:focus, form textarea:focus { outline: none; border
 .searchrow { display: flex; gap: 10px; align-items: stretch; }
 .searchrow .search { flex: 1; }
 .practice-btn {
-  flex: none; display: inline-flex; align-items: center; gap: 8px;
-  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
-  color: var(--teal-text); background: var(--teal-weak);
-  border: 1px solid var(--teal-line); border-radius: 14px; padding: 0 16px;
-  box-shadow: var(--shadow-sm); transition: background .14s, color .14s, transform .14s;
+  flex: none; display: inline-flex; align-items: center; gap: 9px;
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  color: #fff; background: linear-gradient(135deg, var(--teal), var(--teal-text));
+  border: 1px solid transparent; border-radius: 14px; padding: 0 20px;
+  box-shadow: var(--shadow); transition: box-shadow .14s, transform .14s, filter .14s;
 }
-.practice-btn:hover { transform: translateY(-1px); background: var(--teal); color: #fff; border-color: transparent; }
-.practice-btn .pd { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .35; transition: opacity .2s; }
+.practice-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); filter: brightness(1.06); }
+.practice-btn .pd { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .5; transition: opacity .2s; }
 .practice-btn.nudge .pd { opacity: 1; background: var(--sand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sand) 35%, transparent); animation: pnudge 2.6s ease-in-out infinite; }
 @keyframes pnudge { 0%,100% { transform: scale(1); } 50% { transform: scale(1.35); } }
 @media (max-width: 560px) {
