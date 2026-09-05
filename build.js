@@ -131,12 +131,17 @@ function build() {
     }
   }
 
-  // GS/Essay copies that are only a link (no extractable question text)
+  // GS/Essay copies that are only a link (no extractable question text) — skip any whose PDF
+  // is already OCR'd and searchable via questions.csv/submissions.csv (same base URL), so a copy
+  // never shows up twice (once searchable, once as a redundant bare link).
   const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
     ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
+  let linkSkippedAsSearchable = 0;
   for (const e of linkRaw) {
     if (!e.url || !e.topper || !e.paper) continue;
-    copies.push({ i: i++, t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: e.url.split('#')[0], q: [], prov: 'link', link: 1, note: e.note || '' });
+    const base = e.url.split('#')[0];
+    if (groups.has(base)) { linkSkippedAsSearchable++; continue; }
+    copies.push({ i: i++, t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: base, q: [], prov: 'link', link: 1, note: e.note || '' });
     const T = toppers[e.topper] || (toppers[e.topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
     T.copies++;
     if (e.air && !T.air) T.air = e.air;
