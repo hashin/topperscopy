@@ -7,7 +7,7 @@
 > and a community-built section for optional subjects.
 
 Site: https://topperscopy.hashin.me
-Updated: 2026-09-04
+Updated: 2026-09-05
 Licence: MIT (code). CC BY 4.0 (this compilation). GS & Essay question data builds on open community work including upsckata.com "Topper Copies" (https://toppercopies.upsckata.com/).
 
 ## What it contains
