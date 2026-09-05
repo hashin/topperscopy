@@ -3,9 +3,9 @@
   "schema_version": 2,
   "counts": {
     "toppers": 1886,
-    "copies": 9493,
+    "copies": 9501,
     "questions": 16947,
-    "submissions": 8430
+    "submissions": 8438
   },
   "files": {
     "questions.csv": {
@@ -14,18 +14,18 @@
       "rows": 29710
     },
     "copies.csv": {
-      "bytes": 1498627,
-      "sha256": "bf7272cb63cfac98ddcc8bf08852abbdf6b9aaba6408f3ae49ae960493e45142",
-      "rows": 9493
+      "bytes": 1499844,
+      "sha256": "8e2897b712e002b01de7091ff3bb2fe6cb64695266a4f6357af71e9ed8c6dc6c",
+      "rows": 9501
     },
     "toppers.csv": {
-      "bytes": 101884,
-      "sha256": "d71ed1fc038ed152030d6d206cffda2590175fabdd73b75e1048f075f4fea832",
+      "bytes": 101928,
+      "sha256": "f1cdb9a221e32c060cc31773fa1faa59cccb0e3ec25289790116477e0d5b9d60",
       "rows": 1886
     },
     "dataset.json": {
-      "bytes": 9706271,
-      "sha256": "5945ada84f66135c944dee076c7efd522ed6f97f62692c55a88fa85e32c3bb6d"
+      "bytes": 9708387,
+      "sha256": "c2a4aa5c54d555ca3236202438fdc510207ffb48847bd480f8c2b1a544021e05"
     }
   }
 }
