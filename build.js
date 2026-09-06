@@ -92,7 +92,10 @@ function gitCommit() {
 function build() {
   const data = [
     ...loadCsv(SRC, 'upsckata'),
-    ...loadCsv(path.join(DATA, 'submissions.csv'), 'submission')
+    ...loadCsv(path.join(DATA, 'submissions.csv'), 'submission'),
+    // questions read off scanned copies by ocr-pipeline.mjs — own file so a bad
+    // batch can be reverted with one `git rm`, and so provenance stays visible
+    ...loadCsv(path.join(DATA, 'ocr-questions.csv'), 'ocr')
   ];
 
   const groups = new Map();

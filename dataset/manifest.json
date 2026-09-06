@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05",
+  "generated": "2026-09-06",
   "schema_version": 2,
   "counts": {
     "toppers": 1856,
@@ -25,7 +25,7 @@
     },
     "dataset.json": {
       "bytes": 9589591,
-      "sha256": "b043e1460e7cf10561488f3e81fedc79b007f92d8f725fe531022e11b391cc65"
+      "sha256": "8e4967098c704fd4fdf7d91d951a100072117dee4ccd45a2e80e028fe27a80be"
     }
   }
 }
