@@ -18,12 +18,18 @@
  *       reads costs $0 and is written straight to data/ocr-questions.csv.
  *       Marks the rest in .ocr/clusters.json as needing a vision call.
  *
- *   node ocr-pipeline.mjs status
- *       Prints where things stand: free-pass hits, clusters still needing OCR,
- *       estimated page count / cost for the vision step.
+ *   node ocr-pipeline.mjs gemini [--requests N] [--source X] [--limit N]
+ *       PRIMARY vision OCR. Renders the top strip of every page of every
+ *       not-yet-searchable booklet and asks gemini-3.5-flash-lite for the
+ *       printed English question. Free tier → $0. Page-by-page resumable, stops
+ *       clean on HTTP 429. Runs unattended via .github/workflows/ocr-gemini.yml
+ *       (nightly, gated on the OCR_GEMINI_ENABLED repo variable).
+ *       Tesseract (`ocr`) is kept as an offline fallback but yields little on
+ *       this bilingual + watermarked + handwriting-over-print corpus.
  *
- * Vision OCR itself (the paid step) is a separate command added once the plan
- * is approved for spend — it is intentionally not wired here yet.
+ *   node ocr-pipeline.mjs status
+ *       Prints where things stand: free-pass hits, booklets still needing OCR,
+ *       page count and estimated nightly-run days for the Gemini step.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -353,9 +359,9 @@ if (cmd === 'status') {
   for (const [s, v] of Object.entries(bySource).sort((a, b) => b[1].visionPages - a[1].visionPages)) {
     console.log(s.padEnd(26), String(v.units).padStart(6), String(v.freeHit).padStart(6), String(v.needVision).padStart(7), String(v.visionPages).padStart(8), String(v.pending).padStart(6), String(v.err).padStart(5));
   }
-  console.log(`\nvision step: ~${pages.toLocaleString()} pages`);
-  console.log(`  Claude Haiku 4.5 batch  ~$${(pages * 0.0013).toFixed(0)}`);
-  console.log(`  Gemini 2.5 Flash        ~$${(pages * 0.0004).toFixed(0)}`);
+  const reqs = Math.ceil(pages / 6);
+  console.log(`\nvision step: ~${pages.toLocaleString()} pages · ~${reqs.toLocaleString()} Gemini requests (6 pages/request)`);
+  console.log(`  gemini-3.5-flash-lite, free tier — $0. At ~800 requests/day that is ~${Math.ceil(reqs / 800)} days of the nightly ocr-gemini.yml run.`);
   process.exit(0);
 }
 
@@ -373,7 +379,8 @@ const FULL_PAGE_UNTIL = 3;     // pages 1..3 render whole (question-paper insert
 const RENDER_DPI = 150;
 const PAGEDIR = path.join(CACHE, 'pages');
 const OCRDIR = path.join(CACHE, 'ocr');
-for (const d of [PAGEDIR, OCRDIR]) fs.mkdirSync(d, { recursive: true });
+const RAWDIR = path.join(CACHE, 'raw');   // raw per-page tesseract text — lets `reclean` re-run the filter offline
+for (const d of [PAGEDIR, OCRDIR, RAWDIR]) fs.mkdirSync(d, { recursive: true });
 
 function sh(cmd, argv, opts = {}) {
   const r = spawnSync(cmd, argv, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
@@ -405,12 +412,306 @@ function tesseractText(imgPath) {
   return (r.stdout || '').replace(/\r/g, '');
 }
 
-/** Turn raw OCR text for one page into question rows, reusing the project heuristic. */
-function questionsFromOcr(text, pageNo) {
-  const lines = String(text || '').split('\n').map(s => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
-  if (!lines.length) return [];
-  const { questions } = extractQuestions([{ page: pageNo, lines }]);
-  return questions;
+/* ----------------------------------------------------------------------------
+ * Bilingual-booklet cleanup.
+ *
+ * Almost every VisionIAS / NextIAS / Drishti test copy prints the question
+ * TWICE at the top of the page — Hindi first, then English. Tesseract runs
+ * `-l eng`, so the Devanagari half comes back as a slab of short-token garble
+ * ("| der aa WH Gara ¢ wafh witaae ... 10 sia Constitution is a mere skeleton
+ * whereas constitutionalism is the soul of democracy. Discuss.").
+ *
+ * So questionsFromOcr() first drops every OCR line that isn't mostly real
+ * English words (englishishLine) — that removes the Devanagari half outright —
+ * then cleanOcrQuestion() trims what's left to a proper end (a '?', a
+ * "(… words)" limit, or a final sentence stop) and rejects anything that still
+ * starts lowercase, ends "..., and discuss" (a lost clause), carries a run of
+ * OCR garble, or isn't >=82% English. Rejects are left in residuePages for the
+ * Gemini pass — "a wrong question is worse than a missing one" (runbook §9).
+ * ------------------------------------------------------------------------- */
+/* An English word set big enough to tell a real UPSC sentence from
+ * romanised-Devanagari garble: ~1000 highest-frequency English words plus
+ * civil-services vocabulary. A line/question is "Englishish" when enough of its
+ * tokens land here (after light suffix stripping). */
+const EN_RAW = (
+  // ~1000 most common English words
+  'the of to and a in is it you that he was for on are with as i his they be at one have this from or had ' +
+  'by hot but some what there we can out other were all your when up use word how said an each she which do ' +
+  'their time if will way about many then them write would like so these her long make thing see him two has ' +
+  'look more day could go come did number sound no most people my over know water than call first who may ' +
+  'down side been now find any new work part take get place made live where after back little only round man ' +
+  'year came show every good me give our under name very through just form sentence great think say help low ' +
+  'line differ turn cause much mean before move right boy old too same tell does set three want air well also ' +
+  'play small end put home read hand port large spell add even land here must big high such follow act why ' +
+  'ask men change went light kind off need house picture try us again animal point mother world near build ' +
+  'self earth father head stand own page should country found answer school grow study still learn plant ' +
+  'cover food sun four thought let keep eye never last door between city tree cross since hard start might ' +
+  'story saw far sea draw left late run dont while press close night real life few north open seem together ' +
+  'next white children begin got walk example ease paper often always music those both mark book letter ' +
+  'until mile river car feet care second group carry took rain eat room friend began idea fish mountain stop ' +
+  'once base hear horse cut sure watch color face wood main enough plain girl usual young ready above ever ' +
+  'red list though feel talk bird soon body dog family direct pose leave song measure state product black ' +
+  'short numeral class wind question happen complete ship area half rock order fire south problem piece told ' +
+  'knew pass farm top whole king size heard best hour better true during hundred am remember step early hold ' +
+  'west ground interest reach fast five sing listen six table travel less morning ten simple several vowel ' +
+  'toward war lay against pattern slow center love person money serve appear road map science rule govern ' +
+  'pull cold notice voice fall power town fine certain fly unit lead cry dark machine note wait plan figure ' +
+  'star box noun field rest correct able pound done beauty drive stood contain front teach week final gave ' +
+  'green oh quick develop sleep warm free minute strong special mind behind clear tail produce fact street ' +
+  'inch lot nothing course stay wheel full force blue object decide surface deep moon island foot yet busy ' +
+  'test record boat common gold possible plane age dry wonder laugh thousand ago ran check game shape ' +
+  'yes hot miss brought heat snow bed bring sit perhaps fill east weight language among ' +
+  // civil-services / current-affairs vocabulary
+  'india indian bharat government governance state states central union centre federal federalism ' +
+  'constitution constitutional parliament parliamentary judiciary judicial executive legislature legislative ' +
+  'supreme court courts law laws legal rights fundamental directive principle principles duties citizen ' +
+  'citizens democracy democratic election elections electoral vote voting party parties politics political ' +
+  'policy policies scheme schemes programme programmes mission act bill amendment amendments reform reforms ' +
+  'economy economic economies growth development developmental sustainable sustainability poverty inequality ' +
+  'inclusive inclusion exclusion employment unemployment livelihood labour wages agriculture agricultural ' +
+  'farmer farmers farming crop crops irrigation industry industrial manufacturing infrastructure logistics ' +
+  'services sector sectors market markets trade tariff export exports import imports investment finance ' +
+  'financial fiscal monetary budget tax taxation revenue subsidy subsidies inflation deficit debt banking ' +
+  'bank banks credit lending transport transportation railway highway aviation port ports energy renewable ' +
+  'solar coal electricity grid water sanitation housing urban urbanisation rural migration urbanization ' +
+  'population demographic demographics health healthcare nutrition mortality education literacy learning ' +
+  'school schools college university universities skilling skill skills employment technology technological ' +
+  'digital digitalisation innovation research development scientific science satellite space nuclear ' +
+  'artificial intelligence data privacy cyber cybersecurity security defence military strategic border ' +
+  'borders maritime terrorism extremism radicalisation insurgency naxalism diplomacy foreign relations ' +
+  'bilateral multilateral plurilateral regional global international cooperation organisation organization ' +
+  'treaty convention protocol summit dialogue partnership alliance neighbourhood connectivity ' +
+  'china pakistan nepal bhutan bangladesh myanmar afghanistan russia america american europe european ' +
+  'african quad brics asean saarc bimstec united nations world bank climate change environment ' +
+  'environmental ecology ecological biodiversity ecosystem ecosystems forest forests wildlife conservation ' +
+  'pollution emission emissions carbon greenhouse renewable warming disaster disasters management mitigation ' +
+  'adaptation resilience vulnerability pandemic epidemic disease outbreak drought flood floods cyclone ' +
+  'earthquake landslide society social societal community communities cultural culture heritage tradition ' +
+  'history historical historiography ancient medieval modern colonial precolonial postcolonial ' +
+  'nationalism nationalist national movement movements freedom struggle independence partition revolution ' +
+  'revolt rebellion reformist renaissance gender women woman men child children marriage family caste ' +
+  'tribal tribe tribes adivasi dalit backward reservation religion religious secular secularism communal ' +
+  'communalism pluralism diversity identity language linguistic regionalism federal corruption transparency ' +
+  'accountability ethics ethical integrity probity morality moral values conscience empathy compassion ' +
+  'objectivity impartiality dedication administration administrative bureaucracy bureaucratic civil servant ' +
+  'servants service services welfare beneficiary beneficiaries entitlement empowerment participation ' +
+  'grievance panchayat panchayati municipality municipal local decentralisation decentralization devolution ' +
+  'cooperative federalism institution institutions institutional autonomy accountability mechanism mechanisms ' +
+  'framework frameworks role significance implication implications challenge challenges issue issues concern ' +
+  'concerns measure measures step steps initiative initiatives strategy strategies approach need needed ' +
+  'important critical crucial essential necessary vital various major minor key recent recently emerging ' +
+  'context light extent perspective dimension dimensions aspect aspects feature features increasing growing ' +
+  'rising declining shrinking widening changing evolving present current ongoing potential effective ' +
+  'efficient inefficient adequate inadequate across towards regarding despite although though however ' +
+  'therefore moreover furthermore further additionally consequently nevertheless meanwhile nature scope ' +
+  'factor factors reason reasons cause causes effect effects consequence consequences outcome outcomes ' +
+  'benefit benefits drawback limitation limitations problem problems prospect prospects opportunity threat ' +
+  'strength weakness solution solutions recommendation recommendations way ways manner methods method ' +
+  'system systems process processes structure structures function functions relationship relationships ' +
+  'balance imbalance tension conflict crisis stability instability transition transformation ' +
+  'evolution emergence expansion contraction shift decline revival recovery ' +
+  'analyse analyze examine discuss evaluate elucidate substantiate illustrate justify explain describe ' +
+  'elaborate assess highlight enumerate trace clarify comment critically account bring suggest argue ' +
+  'argument statement given whether agree extent light view point terms regard respect example ' +
+  'battle war victory defeat foundation empire emperor kingdom dynasty ruler rule reign conquest colonial ' +
+  'nationalism drain wealth exploitation agitation education congress league viceroy governor'
+);
+const suffixes = ['s', 'es', 'ed', 'd', 'ing', 'ly', 'er', 'or', 'ion', 'tion', 'sion', 'ment', 'ness', 'ity', 'al', 'ial', 'ic', 'ical', 'ive', 'ation', 'isation', 'ization'];
+const EN = new Set(EN_RAW.split(/\s+/).filter(Boolean));
+
+const DIRECTIVE_RX = /\b(discuss|examine|analyse|analyze|elucidate|evaluate|comment|critically|substantiate|illustrate|justify|explain|describe|elaborate|assess|highlight|enumerate|trace|clarify|suggest|comment upon|do you agree|to what extent|account for|bring out)\b/i;
+/** end of a question: a '?', a "(… words)" limit, or a bare directive verb + optional period. */
+const Q_END_RX = /(\?|\([^)]*\b\d{2,4}\s*words?\b[^)]*\)|\b(?:discuss|examine|analyse|analyze|elucidate|evaluate|comment(?:\s+upon)?|explain|describe|substantiate|illustrate|justify|elaborate|assess|clarify|highlight|enumerate|trace)\b\.?)(?!\w)/gi;
+/** ", and discuss" / "also examine" tails mean a clause was lost to OCR — the question is truncated. */
+const TRUNC_TAIL_RX = /(?:,\s*|\b(?:and|also|further|then|additionally|hence|thereby)\s+)(discuss|examine|analyse|analyze|explain|evaluate|comment|elaborate|assess|highlight|describe|elucidate|substantiate|illustrate)\b\.?\s*$/i;
+
+const bare = w => w.replace(/[^A-Za-z]/g, '').toLowerCase();
+function isEnglishWord(w) {
+  let a = bare(w);
+  if (a.length < 2) return false;
+  if (EN.has(a)) return true;
+  for (const suf of suffixes) {
+    if (a.length > suf.length + 2 && a.endsWith(suf)) {
+      const stem = a.slice(0, -suf.length);
+      if (EN.has(stem) || EN.has(stem + 'e') || EN.has(stem.replace(/i$/, 'y'))) return true;
+    }
+  }
+  return false;
+}
+
+/** enough real English in a line to keep it? (drops the romanised-Hindi lines) */
+function englishishLine(line) {
+  const long = line.split(/\s+/).filter(w => bare(w).length >= 3);
+  if (long.length < 3) return false;
+  return long.filter(isEnglishWord).length / long.length >= 0.5;
+}
+
+/** true when the string has a run of >=3 back-to-back non-English lowercase tokens (OCR garble). */
+function hasGarbleRun(s) {
+  let run = 0;
+  for (const w of s.split(/\s+/)) {
+    const a = bare(w);
+    if (a && a.length <= 7 && !EN.has(a) && !/^\d+$/.test(a) && !/^[A-Z]/.test(w)) { if (++run >= 3) return true; }
+    else run = 0;
+  }
+  return false;
+}
+
+/* The rotated "Candidates must not write on this margin" watermark and the
+ * handwriting under it come back from Tesseract as a handful of recurring junk
+ * fragments scattered mid-line and at line ends. */
+const WATERMARK_RX = /\b(?:candidat\w*|cantidet\w*|ca[ao]d\w*|caadd\w*|grusense|imag?[nt]{2,}\w*|mu[rs]t\s*n[eo]t\w*|must\s*not\w*|murtnot|mstn?et|msttst|o?asis|osis|baaiee|peabie|\bbea\b|\bace\b|gori\s+wnat\s+eck|(?:on\s+)?this\s+margin)\b/gi;
+
+/** Strip watermark fragments and page cruft that bleed into a scanned line. */
+function stripLineJunk(l) {
+  l = l
+    .replace(/\s*\([^)]*$/, '')                                  // an unclosed trailing "(" = watermark bleed
+    .replace(WATERMARK_RX, ' ')
+    .replace(/\s+\d{1,2}\s*[|)\]]+\s*$/, '')                     // trailing "10 |", "15]"
+    .replace(/^[\s|~=—–<>*.'"‘’]+/, '')                          // leading OCR speckle
+    .replace(/\s*[|~=—–<>*]+\s*$/, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  // chop a trailing run of >=2 obvious-garble tokens (no vowel, triple letter, or mid-word caps)
+  const t = l.split(' ');
+  const garbly = w => { const a = bare(w); return a.length >= 2 && a.length <= 7 && !EN.has(a) && (!/[aeiou]/i.test(a) || /(.)\1\1/i.test(a) || /[a-z][A-Z]/.test(w) || a.length <= 3); };
+  while (t.length > 6 && garbly(t[t.length - 1]) && garbly(t[t.length - 2])) t.pop();
+  return t.join(' ').trim();
+}
+
+/** A span that opens with a bare directive + "in the context/light of…" is
+ *  sentence 2 of a two-sentence question — sentence 1 was lost to OCR. */
+const TRUNC_LEAD_RX = /^(?:discuss|examine|analyse|analyze|evaluate|comment|elucidate|explain|elaborate|assess|substantiate|illustrate|critically)\b\s+(?:in |with (?:reference|regard)|critically|it |this |the (?:above|statement|context|light|backdrop))/i;
+
+/** rubric / instruction lines that sit on an essay question-paper page but aren't topics */
+const RUBRIC_RX = /^\s*(?:write|answer|attempt|section|instructions?|note|choose|candidates?|time allowed|maximum marks|word limit|marks?\b|q\.?\s*no\b|\d+\s*[x×]\s*\d+)/i;
+
+/** Validate + tidy one candidate question span. Returns the clean string or null.
+ *  `essay` mode relaxes the "must contain a directive verb or ?" rule — essay
+ *  topics are bare declarative statements — but keeps every noise guard. */
+function validateQ(q, essay) {
+  q = q.replace(/^[^A-Za-z"“]+/, '').replace(/\s+[''‘’|-]+\s*$/, '').replace(/\s*[-—–|]\s*$/, '').trim();
+  // drop up to two leading non-English tokens ("Fifa The recently concluded…")
+  let lead = q.split(' ');
+  let dropped = 0;
+  while (lead.length > 10 && dropped < 2 && !isEnglishWord(lead[0]) && !/^["“]/.test(lead[0]) &&
+         (isEnglishWord(lead[1]) || /^[A-Z]/.test(lead[1]))) { lead.shift(); dropped++; }
+  q = lead.join(' ').replace(/^[^A-Za-z"“]+/, '');
+  q = q.replace(/\s+([,.;:?])/g, '$1').replace(/\s{2,}/g, ' ').trim();
+  if (q.length < (essay ? 25 : 45) || q.length > 550) return null;
+  if (!/^[A-Z"“]/.test(q)) return null;                          // real questions open with a capital
+  if (/^[A-Za-z][A-Za-z-]*[),]/.test(q)) return null;            // "EAC-PM), there is…" — mid-sentence fragment
+  if (/^[^("]{0,35}\)/.test(q)) return null;                     // an early ")" with no "(" — spillover from a garbled clause
+  if (/\d\s+[A-Za-z]\s+[A-Za-z]{1,3}\s+[A-Za-z]{1,4}\)/.test(q.slice(0, 40))) return null;
+  if (RUBRIC_RX.test(q)) return null;                            // "Write two essays…", "Section A", "Maximum Marks"
+  if (TRUNC_LEAD_RX.test(q)) return null;                        // "Discuss in the context of…" — a clause was lost
+  if (!essay && !DIRECTIVE_RX.test(q) && !/\?/.test(q)) return null;
+  if (TRUNC_TAIL_RX.test(q)) return null;                        // "..., and discuss" → a clause was lost
+  if (hasGarbleRun(q)) return null;                              // mid-sentence OCR garble
+  const toks = q.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (toks.length < (essay ? 5 : 9)) return null;
+  // proper nouns (Capitalised, not sentence-initial) count as good — Plassey, Bengal, MGNREGA…
+  const good = toks.filter((w, i) => bare(w).length < 3 || isEnglishWord(w) || (i > 0 && /^[A-Z]/.test(w)));
+  if (good.length / toks.length < (essay ? 0.88 : 0.84)) return null;
+  return q;
+}
+
+/** Pull the best-formed English question out of a (de-junked) blob of OCR text. */
+function cleanOcrQuestion(blob, essay) {
+  const s = String(blob || '').replace(WATERMARK_RX, ' ')
+    // drop parentheticals that are not real English (romanised-Hindi "(iso weal F oer aifery)"),
+    // but keep "(Answer in 150 words)", "(IMF)", "(150 words)", "(1757)"
+    .replace(/\(([^)]{2,40})\)/g, (mm, inner) => {
+      if (/^\s*(?:answer\s+in\s+)?\d{2,4}\s*(?:words?|marks?)\s*$/i.test(inner)) return mm; // "(150 words)"
+      if (/^\s*(?:1[6-9]|20)\d\d\s*$/.test(inner)) return mm;                               // a year "(1757)"
+      if (/^[A-Za-z][A-Za-z.&-]{1,7}$/.test(inner.trim())) return mm;                       // acronym "(IMF)"
+      const w = inner.split(/\s+/).filter(x => bare(x).length >= 2);
+      if (w.length >= 2 && w.filter(isEnglishWord).length / w.length >= 0.6) return mm;
+      return ' ';
+    })
+    .replace(/\s+/g, ' ').replace(/\s[''‘’;]\s/g, ' ').replace(/\s{2,}/g, ' ').trim();
+  Q_END_RX.lastIndex = 0;
+  const ends = [];
+  let m;
+  while ((m = Q_END_RX.exec(s))) ends.push(m.index + m[0].length);
+  ends.sort((a, b) => b - a);                        // try the longest anchored span first
+  ends.push(s.length);                               // …then the whole blob (clean Gemini output with no anchor)
+  // sentence starts: string start, or a capital following ". " / "? " / a quote
+  const starts = [0];
+  for (const sm of s.matchAll(/(?:[.?!]\s+|["“]\s*)([A-Z])/g)) starts.push(sm.index + sm[0].length - 1);
+  for (const end of ends) {
+    let st = 0;
+    for (const cand of starts) if (cand < end && end - cand >= 40) st = cand;
+    const q = validateQ(s.slice(st, end), essay);
+    if (q) return q;
+  }
+  return null;
+}
+
+/** Gemini already did the OCR *and* the cleanup — its output is clean English
+ *  prose. So we trust it: split on " || ", strip any leaked Devanagari and a
+ *  trailing marks number, sanity-check, keep. No span surgery. */
+function cleanGeminiQuestion(s, essay) {
+  s = String(s || '')
+    .replace(/\\n/g, ' ')                                    // literal escaped newline that slipped through JSON
+    .replace(/[ऀ-ॿ]+/g, ' ')                                // any leaked Devanagari
+    .replace(/```(?:json)?/gi, '')
+    .replace(/\s+/g, ' ')
+    .replace(/^Q\.?\s*\d{1,2}[.)]?\s*/i, '')                 // leading "Q.15 "
+    .replace(/^\s*\d{1,2}[.)]\s*/, '')                       // leading "15. "
+    .replace(/\(([^)]*)\)/g, (m, inr) =>                     // drop empty / "(250 )" parens, keep "(150 words)" & years
+      /[A-Za-z]/.test(inr) || /^\s*(?:1[6-9]|20)\d\d\s*$/.test(inr) ? m : ' ')
+    .replace(/^\s*[-–—?]+\s*/, '')
+    .replace(/^\s*\d{1,2}\s+(?=["“'A-Z])/, '')               // leading stray "15 " before the real start
+    .replace(/[\s(]*\d{1,2}\s*marks?\.?\)?\s*$/i, '')        // trailing "10 marks." / "(15 marks)"
+    .replace(/\s*\|\s*\d{1,2}\s*$/, '')                      // trailing "| 15"
+    .replace(/\s+\d{1,2}\s*$/, '')                           // trailing " 10"
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  if (/^none\b/i.test(s) || s.length < 20 || s.length > 700) return null;
+  if (RUBRIC_RX.test(s)) return null;                        // "Write two essays…", "Section A", "Maximum Marks"
+  if (!/^["“'']?[A-Z]/.test(s)) return null;
+  if ((s.match(/[A-Za-z]/g) || []).length / s.length < 0.55) return null;
+  const words = s.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (words.length < (essay ? 5 : 6)) return null;
+  if (!essay && !DIRECTIVE_RX.test(s) && !/\?/.test(s) &&
+      !/^["“'']?(?:how|why|what|which|do you|to what extent|should|can|is|are|in what)\b/i.test(s)) return null;
+  return s;
+}
+
+/** Turn one page's OCR text (tesseract raw, or one Gemini response entry) into
+ *  question rows. Tesseract path: bilingual booklets wrap the English question
+ *  over 2–3 lines with the Hindi version and a margin watermark around it, so we
+ *  de-junk each line, keep the English, glue it back, split multi-question
+ *  pages, and extract each span. Gemini path: trust it, light cleanup only.
+ *  `opts.paper` drives essay-mode leniency; `opts.engine` picks the path. */
+function questionsFromOcr(text, pageNo, opts = {}) {
+  const essay = /essay/i.test(opts.paper || '');
+  if (opts.engine === 'gemini') {
+    const out = [];
+    for (const chunk of String(text || '').split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
+      const q = cleanGeminiQuestion(chunk, essay);
+      if (q) out.push({ page: pageNo, question: q, marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '', words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
+    }
+    return out;
+  }
+  const chunks = String(text || '').split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/);  // tesseract path below
+  const out = [];
+  for (const chunk of chunks) {
+    let lines = chunk.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    lines = lines.map(stripLineJunk).filter(Boolean).filter(englishishLine);
+    if (!lines.length) continue;
+    const blob = lines.join(' ');
+    // still a multi-question blob? split on the numbering
+    const pieces = (blob.match(/\b\d{1,2}[.)]\s+["“A-Z]/g) || []).length >= 2
+      ? blob.split(/\s(?=\d{1,2}[.)]\s+["“A-Z])/)
+      : [blob];
+    for (const piece of pieces) {
+      const q = cleanOcrQuestion(piece, essay);
+      if (q) out.push({ page: pageNo, question: q, marks: (piece.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '', words: (piece.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
+    }
+  }
+  return out;
 }
 
 /** Cheap confidence signal: does this look like a real UPSC question? */
@@ -470,8 +771,11 @@ if (cmd === 'ocr') {
       let img = null;
       try { img = renderPage(pdfPath, p, heightPts, prefix); } catch { img = null; }
       if (!img) continue;
+      let raw = '';
+      try { raw = tesseractText(img); } catch { raw = ''; }
+      try { fs.writeFileSync(path.join(RAWDIR, `${sha1(c.representative)}_p${p}.txt`), raw); } catch {}
       let qs = [];
-      try { qs = questionsFromOcr(tesseractText(img), p); } catch { qs = []; }
+      try { qs = questionsFromOcr(raw, p, { paper: c.paper }); } catch { qs = []; }
       try { fs.unlinkSync(img); } catch {}
       pagesDone++;
       const good = qs.filter(q => questionConfidence(q) >= 3);
@@ -493,54 +797,128 @@ if (cmd === 'ocr') {
   process.exit(0);
 }
 
+if (cmd === 'reclean') {
+  // Re-run questionsFromOcr()/questionConfidence() over cached raw OCR text
+  // (.ocr/raw/ from tesseract, or .ocr/graw/ from gemini with --gemini) without
+  // any download or rasterisation — so the extraction filter can be tuned in
+  // seconds instead of a full OCR cycle. Rewrites .ocr/ocr/*.json.
+  const dir = args.includes('--gemini') ? path.join(CACHE, 'graw') : RAWDIR;
+  const engine = args.includes('--gemini') ? 'gemini' : 'tesseract';
+  const clusters = JSON.parse(fs.readFileSync(path.join(CACHE, 'clusters.json'), 'utf8'));
+  const bySha = new Map(clusters.map(c => [sha1(c.representative), c]));
+  const byUnit = new Map();
+  for (const f of fs.readdirSync(dir)) {
+    const m = f.match(/^([0-9a-f]{40})_p(\d+)\.txt$/);
+    if (!m) continue;
+    if (!byUnit.has(m[1])) byUnit.set(m[1], []);
+    byUnit.get(m[1]).push({ page: +m[2], file: f });
+  }
+  const verbose = args.includes('--verbose');
+  let units = 0, totalQ = 0, totalRej = 0;
+  for (const [sha, pages] of byUnit) {
+    const c = bySha.get(sha);
+    if (!c) continue;
+    if (getArg('source') && c.source !== getArg('source')) continue;
+    pages.sort((a, b) => a.page - b.page);
+    const found = [], residue = [];
+    const essay = /essay/i.test(c.paper || '');
+    for (const { page, file } of pages) {
+      const raw = fs.readFileSync(path.join(dir, file), 'utf8');
+      let qs = questionsFromOcr(raw, page, { paper: c.paper, engine });
+      if (engine !== 'gemini') qs = qs.filter(q => questionConfidence(q) >= 3 || essay);
+      if (qs.length) { found.push(...qs.map(q => ({ ...q, page, via: engine }))); totalQ += qs.length; }
+      else residue.push(page);
+    }
+    fs.writeFileSync(path.join(OCRDIR, sha + '.json'), JSON.stringify({
+      url: c.representative, key: c.key, source: c.source, numPages: c.numPages || null,
+      questions: found, residuePages: residue, engine
+    }));
+    units++;
+    if (verbose) {
+      console.log(`\n${c.source} · ${c.representative.slice(-48)} · ${found.length}q / ${residue.length} residue`);
+      for (const q of found) console.log(`   p${q.page} [${q.marks || '-'}/${q.words || '-'}] ${JSON.stringify(q.question)}`);
+    }
+  }
+  console.log(`\nreclean: ${units} units · ${totalQ} questions kept`);
+  process.exit(0);
+}
+
 if (cmd === 'gemini') {
   const KEY = process.env.GEMINI_API_KEY;
   if (!KEY) { console.error('set GEMINI_API_KEY'); process.exit(1); }
-  const MODEL = getArg('model') || 'gemini-2.5-flash-lite';
+  const MODEL = getArg('model') || 'gemini-3.5-flash-lite';          // 2.5-* is 404 for keys created after ~2025
   const maxReq = getArg('requests') ? +getArg('requests') : 900;     // stay under the free daily cap
   const perReq = 6;                                                  // page images per request
+  const only = getArg('source');
+  const unitLimit = getArg('limit') ? +getArg('limit') : Infinity;
+  const chunk = getArg('chunk') ? +getArg('chunk') : 0;
+  const of = getArg('of') ? +getArg('of') : 1;
   const clPath = path.join(CACHE, 'clusters.json');
   const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
-  const byUrl = new Map(clusters.map(c => [c.representative, c]));
 
-  // collect residue pages recorded by the tesseract pass
+  /* Gemini is the PRIMARY OCR engine for this corpus — Tesseract can't cope with
+   * the bilingual two-column header + rotated margin watermark + handwriting.
+   * A unit's page list is: the residue from a prior `ocr` (tesseract) pass if
+   * one ran, otherwise every page. Progress is recorded page-by-page so a killed
+   * run resumes where it stopped and never re-charges a page against the quota. */
+  let units = unitsNeedingOcr(clusters);
+  if (only) units = units.filter(c => c.source === only);
+  units = units.filter((_, i) => i % of === chunk);
   const jobs = [];
-  for (const f of fs.readdirSync(OCRDIR)) {
-    const r = JSON.parse(fs.readFileSync(path.join(OCRDIR, f), 'utf8'));
-    if (!r.residuePages || !r.residuePages.length || r.geminiDone) continue;
-    jobs.push({ file: f, rec: r });
+  for (const c of units) {
+    const sha = sha1(c.representative);
+    const outPath = path.join(OCRDIR, sha + '.json');
+    let rec = { url: c.representative, key: c.key, source: c.source, paper: c.paper || null, numPages: c.numPages || null, questions: [], residuePages: [], geminiPages: [], engine: "gemini" };
+    let pages = null;                                              // null → decide from numPages after download
+    if (fs.existsSync(outPath)) {
+      rec = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      if (rec.geminiDone || rec.error) continue;
+      if (rec.engine === 'tesseract' && rec.residuePages && rec.residuePages.length) pages = rec.residuePages.slice();
+      else if (rec.engine === 'tesseract') { pages = null; }       // tesseract found everything? still let gemini sweep
+    }
+    rec.geminiPages = rec.geminiPages || [];
+    jobs.push({ sha, c, rec, outPath, pages });
+    if (jobs.length >= unitLimit) break;
   }
-  console.log(`${jobs.length} units have residue pages; budget ${maxReq} requests`);
+  console.log(`gemini(${MODEL}) · ${jobs.length} units · budget ${maxReq} requests · shard ${chunk + 1}/${of}`);
 
   const PROMPT = [
     'Each image is the top strip of a page from a UPSC Mains answer booklet.',
     'The printed/typed text at the top is the exam QUESTION. Everything handwritten is the candidate\'s answer — ignore it completely.',
-    'For each image in order, return the printed question verbatim.',
-    'If an image shows several numbered questions (a question-paper page), return them all, separated by " || ".',
-    'If an image has no printed question (pure handwriting, or only a header/logo), return exactly: NONE',
-    'Reply as a JSON array of strings, one entry per image, no other text.'
+    'The question is usually printed in BOTH Hindi (Devanagari) and English. Return ONLY the English text. Do NOT include any Hindi/Devanagari characters. Keep any "(Answer in 150/250 words)" part.',
+    'If the image shows several numbered questions (a question-paper page), join them with " || " into one string.',
+    'If the image has no printed question (pure handwriting, a cover page, an instructions or marks page, evaluation indicators, or only a header/logo), use exactly: NONE',
+    'Output ONLY a raw JSON array of strings — one entry per image, in order. No markdown, no code fence, no commentary.'
   ].join(' ');
 
-  let used = 0;
+  const GRAW = path.join(CACHE, 'graw');
+  fs.mkdirSync(GRAW, { recursive: true });
+  let used = 0, unitsDone = 0;
   for (const job of jobs) {
     if (used >= maxReq) break;
-    const c = byUrl.get(job.rec.url);
-    if (!c) continue;
-    const { fetchUrl } = resolve(job.rec.url);
+    const { fetchUrl } = resolve(job.c.representative);
+    if (!fetchUrl) { continue; }
     KEEP_PDFS = true;
     const meta = await getPdf(fetchUrl, { needFile: true });
     const pdfPath = path.join(PDFDIR, sha1(fetchUrl) + '.pdf');
-    if (!fs.existsSync(pdfPath)) continue;
+    if (meta.error || !fs.existsSync(pdfPath)) {
+      fs.writeFileSync(job.outPath, JSON.stringify({ ...job.rec, error: meta.error || 'no-pdf' }));
+      continue;
+    }
     const heightPts = meta.pageHeightPts || 842;
+    job.rec.numPages = meta.numPages || job.rec.numPages;
+    let pages = job.pages || Array.from({ length: Math.min(meta.numPages || 0, 120) }, (_, i) => i + 1);
+    const doneSet = new Set(job.rec.geminiPages);
+    pages = pages.filter(p => !doneSet.has(p));
+    const qKey = t => t.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 64);
+    const seenQ = new Set((job.rec.questions || []).map(q => qKey(q.question)));
 
-    const pages = job.rec.residuePages.slice(0, 60);
-    const newQs = [];
     for (let i = 0; i < pages.length && used < maxReq; i += perReq) {
       const slice = pages.slice(i, i + perReq);
       const parts = [{ text: PROMPT }];
       const rendered = [];
       for (const p of slice) {
-        const prefix = path.join(PAGEDIR, `g_${sha1(job.rec.url)}_p${p}`);
+        const prefix = path.join(PAGEDIR, `g_${job.sha}_p${p}`);
         let img = null;
         try { img = renderPage(pdfPath, p, heightPts, prefix); } catch {}
         if (!img) continue;
@@ -549,41 +927,53 @@ if (cmd === 'gemini') {
       }
       if (!rendered.length) continue;
 
-      let texts = [];
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`, {
-          method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 2048 } })
-        });
-        used++;
-        if (res.status === 429) { console.log('  rate limited — stopping for today'); used = maxReq; }
-        else {
+      let texts = null, rateLimited = false;
+      for (let attempt = 0; attempt < 4 && texts === null && !rateLimited; attempt++) {
+        if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));   // 0, 3s, 6s, 9s
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`, {
+            method: 'POST', headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 8192 } })
+          });
+          if (res.status === 429) { rateLimited = true; break; }
+          if (res.status >= 500) { console.log(`  HTTP ${res.status}, retrying`); continue; }
+          if (!res.ok) { console.log(`  HTTP ${res.status}: ${(await res.text()).slice(0, 160)}`); texts = []; break; }
           const j = await res.json();
-          const out = j?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          const m = out.match(/\[[\s\S]*\]/);
-          if (m) texts = JSON.parse(m[0]);
-        }
-      } catch (e) { console.log('  request failed:', e.message); }
+          let out = (j?.candidates?.[0]?.content?.parts?.[0]?.text || '').replace(/```(?:json)?/gi, '').trim();
+          const mm = out.match(/\[[\s\S]*\]/);
+          let parsed = [];
+          if (mm) { try { parsed = JSON.parse(mm[0]); } catch {} }
+          if (!parsed.length && out) parsed = rendered.map((_, k) => k === 0 ? out : '');
+          texts = parsed;
+        } catch (e) { console.log(`  request failed (${attempt + 1}/4): ${e.message}`); }
+      }
+      if (rateLimited) { console.log('  rate limited — stopping for today'); used = maxReq; break; }
+      used++;
+      if (texts === null) { console.log('  giving up on this batch, will retry next run'); continue; }  // pages stay unmarked
 
       rendered.forEach((r, idx) => {
         try { fs.unlinkSync(r.img); } catch {}
         const t = String(texts[idx] || '').trim();
-        if (!t || /^none$/i.test(t)) return;
-        for (const piece of t.split('||')) {
-          const qs = questionsFromOcr(piece.trim(), r.p);
-          for (const q of qs) if (questionConfidence(q) >= 3) newQs.push({ ...q, page: r.p, via: 'gemini' });
+        try { fs.writeFileSync(path.join(GRAW, `${job.sha}_p${r.p}.txt`), t); } catch {}
+        job.rec.geminiPages.push(r.p);
+        if (!t || /^none$/i.test(t)) { return; }
+        for (const q of questionsFromOcr(t, r.p, { paper: job.c.paper, engine: 'gemini' })) {
+          const k = qKey(q.question);
+          if (seenQ.has(k)) continue;                          // same topic already caught on an earlier page
+          seenQ.add(k);
+          job.rec.questions.push({ ...q, page: r.p, via: 'gemini' });
         }
       });
-      await new Promise(r => setTimeout(r, 4200));              // ~14 req/min, under the 15 RPM free cap
+      job.rec.engine = 'gemini';
+      fs.writeFileSync(job.outPath, JSON.stringify(job.rec));       // checkpoint after every request
+      if (used < maxReq) await new Promise(r => setTimeout(r, 4200)); // ~14 req/min, under the 15 RPM free cap
     }
     try { fs.unlinkSync(pdfPath); } catch {}
-
-    job.rec.questions = [...(job.rec.questions || []), ...newQs];
-    job.rec.geminiDone = true;
-    fs.writeFileSync(path.join(OCRDIR, job.file), JSON.stringify(job.rec));
-    console.log(`  ${job.rec.key || job.rec.url.slice(-40)} · +${newQs.length} questions · ${used}/${maxReq} requests used`);
+    if (!pages.length || used < maxReq) { job.rec.geminiDone = true; unitsDone++; }
+    fs.writeFileSync(job.outPath, JSON.stringify(job.rec));
+    console.log(`  ${(job.c.key || job.c.representative.slice(-42))} · ${job.rec.questions.length} q · ${used}/${maxReq} req`);
   }
-  console.log(`\ndone. ${used} requests used.`);
+  console.log(`\ndone. ${used} requests used · ${unitsDone} units completed.`);
   process.exit(0);
 }
 
@@ -716,12 +1106,14 @@ if (cmd === 'audit-paper') {
 
 console.error(`usage: node ocr-pipeline.mjs <command> [options]
 
-  plan                      cluster the corpus by test paper           (free, offline)
-  freepass [--all]          download reps, harvest existing text layers (free)
-  ocr [--chunk N --of M]    pdftoppm + tesseract on the printed strip   (free)
-  gemini [--requests N]     second pass on residue pages, needs GEMINI_API_KEY
-  validate                  cross-check clusters, flag disagreements
-  emit                      write data/ocr-questions.csv
-  audit-paper               check GS1-4/Essay classification
-  status                    progress + remaining work`);
+  plan                          cluster the corpus by test paper           (free, offline)
+  freepass [--all]              download reps, harvest existing text layers (free)
+  gemini [--requests N]         PRIMARY vision OCR — every page, needs GEMINI_API_KEY (free tier)
+         [--source X --limit N --chunk N --of M --model M]
+  ocr [--chunk N --of M]        optional tesseract pass on the printed strip (free, low yield here)
+  reclean [--gemini] [--verbose] re-run the extraction filter over cached OCR text, no network
+  validate                      cross-check clusters, flag disagreements
+  emit                          write data/ocr-questions.csv
+  audit-paper                   check GS1-4/Essay classification
+  status                        progress + remaining work`);
 process.exit(1);

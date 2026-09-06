@@ -1,14 +1,17 @@
-name: OCR — Gemini residue pass
+name: OCR — Gemini vision pass
 
-# Drains the pages Tesseract couldn't read, against Gemini's FREE tier.
-# Runs daily and stops at the request budget, so it never leaves the free quota.
+# PRIMARY OCR for the link-only booklets: renders the printed-question strip of
+# every page and reads it with gemini-3.5-flash-lite on the FREE tier. Runs
+# nightly, stops at the request budget and on the first HTTP 429, so it never
+# leaves the free quota. Progress is cached in .ocr/ so each run resumes where
+# the last one stopped — expect the backlog to drain over ~4-6 weeks.
 on:
   schedule:
     - cron: "20 1 * * *"        # 01:20 UTC daily
   workflow_dispatch:
     inputs:
       requests:
-        description: "Max Gemini requests this run (free tier is ~1000-1500/day)"
+        description: "Max Gemini requests this run (free tier ~1000/day; 6 pages per request)"
         required: true
         default: "800"
 
@@ -48,6 +51,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           node ocr-pipeline.mjs plan
+          node ocr-pipeline.mjs freepass --concurrency 8
           node ocr-pipeline.mjs gemini --requests ${{ github.event.inputs.requests || '800' }}
 
       - name: Save OCR cache
@@ -66,6 +70,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ocr-questions.csv data/copies.json data/index.json data/questions.json \
                   data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
-          git diff --cached --quiet || git commit -m "ocr: gemini residue pass [skip ci]"
+          git diff --cached --quiet || git commit -m "ocr: gemini vision pass [skip ci]"
           git pull --rebase --autostash || true
           git push
