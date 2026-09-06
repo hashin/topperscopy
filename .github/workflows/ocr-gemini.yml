@@ -1,0 +1,71 @@
+name: OCR — Gemini residue pass
+
+# Drains the pages Tesseract couldn't read, against Gemini's FREE tier.
+# Runs daily and stops at the request budget, so it never leaves the free quota.
+on:
+  schedule:
+    - cron: "20 1 * * *"        # 01:20 UTC daily
+  workflow_dispatch:
+    inputs:
+      requests:
+        description: "Max Gemini requests this run (free tier is ~1000-1500/day)"
+        required: true
+        default: "800"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ocr-gemini
+  cancel-in-progress: false
+
+jobs:
+  gemini:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    if: ${{ vars.OCR_GEMINI_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Install poppler
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - run: npm install --omit=dev --silent
+
+      - name: Restore OCR cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .ocr
+          key: ocr-gemini-${{ github.run_id }}
+          restore-keys: |
+            ocr-gemini-
+            ocr-cache-
+
+      - name: Gemini pass
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          node ocr-pipeline.mjs plan
+          node ocr-pipeline.mjs gemini --requests ${{ github.event.inputs.requests || '800' }}
+
+      - name: Save OCR cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .ocr
+          key: ocr-gemini-${{ github.run_id }}
+
+      - name: Validate, emit, rebuild, commit
+        run: |
+          node ocr-pipeline.mjs validate || true
+          node ocr-pipeline.mjs emit
+          node build.js
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ocr-questions.csv data/copies.json data/index.json data/questions.json \
+                  data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
+          git diff --cached --quiet || git commit -m "ocr: gemini residue pass [skip ci]"
+          git pull --rebase --autostash || true
+          git push

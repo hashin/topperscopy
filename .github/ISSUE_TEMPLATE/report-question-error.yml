@@ -1,0 +1,57 @@
+name: "Report a wrong question or link"
+description: "A question's text is garbled, it's filed under the wrong paper, or the link opens the wrong page."
+title: "[fix] <what's wrong>"
+labels: ["fix", "ocr"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Most question text on this site is read automatically off scanned answer booklets, so some of it
+        will be wrong. Reporting it takes a minute and fixes it for everyone.
+
+        **Tip:** use the "Report a problem" link next to any question on the site — it fills most of this in for you.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong?
+      options:
+        - Question text is garbled or cut off
+        - Question is filed under the wrong paper (GS1/GS2/GS3/GS4/Essay)
+        - Link opens the wrong page of the PDF
+        - Question is mapped to the wrong syllabus topic
+        - This isn't a question at all (header, instructions, page number)
+        - Duplicate of another question
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: The question as the site currently shows it
+      description: Copy-paste it, or paste the link to it.
+    validations:
+      required: true
+
+  - type: input
+    id: copy
+    attributes:
+      label: Link to the answer copy (the PDF link the site opened)
+      placeholder: "https://…/something.pdf#page=14"
+
+  - type: textarea
+    id: correct
+    attributes:
+      label: What it should say instead
+      description: >
+        For garbled text, type the question as printed on the page.
+        For a wrong paper, say which paper it belongs to.
+        For a wrong page, say the correct page number.
+    validations:
+      required: true
+
+  - type: input
+    id: credit
+    attributes:
+      label: Your name or handle (for credit — optional)

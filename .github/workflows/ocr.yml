@@ -1,0 +1,127 @@
+name: OCR — Tesseract pass
+
+# Free on public repos: standard GitHub-hosted runners have no minute cap.
+# Sharded so each job stays well inside the 6-hour job limit.
+on:
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "How many parallel shards (1-20)"
+        required: true
+        default: "10"
+      limit_per_shard:
+        description: "Max units per shard (0 = no limit)"
+        required: true
+        default: "0"
+      source:
+        description: "Restrict to one source (blank = all). e.g. VisionIAS"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.mk.outputs.matrix }}
+    steps:
+      - id: mk
+        run: |
+          N=${{ github.event.inputs.shards }}
+          echo "matrix=$(python3 -c "import json;print(json.dumps(list(range($N))))")" >> "$GITHUB_OUTPUT"
+
+  ocr:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        shard: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install poppler + tesseract
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils tesseract-ocr
+
+      - run: npm install --omit=dev --silent
+
+      - name: Restore OCR cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .ocr
+          key: ocr-cache-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: |
+            ocr-cache-${{ matrix.shard }}-
+            ocr-cache-
+
+      - name: Plan + free pass
+        run: |
+          node ocr-pipeline.mjs plan
+          node ocr-pipeline.mjs freepass --concurrency 8
+
+      - name: Tesseract OCR (shard ${{ matrix.shard }})
+        run: |
+          ARGS="--chunk ${{ matrix.shard }} --of ${{ github.event.inputs.shards }}"
+          [ "${{ github.event.inputs.limit_per_shard }}" != "0" ] && ARGS="$ARGS --limit ${{ github.event.inputs.limit_per_shard }}"
+          [ -n "${{ github.event.inputs.source }}" ] && ARGS="$ARGS --source '${{ github.event.inputs.source }}'"
+          eval node ocr-pipeline.mjs ocr $ARGS
+
+      - name: Save OCR cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .ocr
+          key: ocr-cache-${{ matrix.shard }}-${{ github.run_id }}
+
+      - name: Upload shard results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ocr-results-${{ matrix.shard }}
+          path: .ocr/ocr/
+          retention-days: 7
+          if-no-files-found: warn
+
+  merge:
+    needs: ocr
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --omit=dev --silent
+
+      - name: Collect every shard's results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ocr-results-*
+          merge-multiple: true
+          path: .ocr/ocr
+
+      - name: Validate, emit, rebuild
+        run: |
+          node ocr-pipeline.mjs plan
+          node ocr-pipeline.mjs validate || true
+          node ocr-pipeline.mjs emit
+          node build.js
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ocr-questions.csv data/copies.json data/index.json data/questions.json \
+                  data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
+          git diff --cached --quiet || git commit -m "ocr: tesseract pass results [skip ci]"
+          git pull --rebase --autostash || true
+          git push
