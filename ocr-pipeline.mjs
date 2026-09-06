@@ -183,11 +183,27 @@ async function getPdf(url) {
     } else {
       meta.freepass = { count: 0, method: 'none' };
     }
+    if (!KEEP_PDFS) { try { fs.unlinkSync(pdfPath); } catch {} } // Phase 0 only needs the text result
   } catch (e) {
     meta.error = (e && e.message) || String(e);
+    try { fs.unlinkSync(pdfPath); } catch {}
   }
   fs.writeFileSync(metaPath, JSON.stringify(meta));
   return meta;
+}
+let KEEP_PDFS = false;
+
+// sources confirmed by sampling to be pure image scans (0 text layer) — no point
+// downloading them for the free text-layer pass; they go straight to "needs vision".
+const KNOWN_SCAN_SOURCES = new Set(['VisionIAS', 'NextIAS', 'Vajiram & Ravi', 'Shubhra Ranjan (PSIR)', 'IAS Exam Portal']);
+
+async function pool(items, n, fn) {
+  const q = items.slice();
+  let i = 0;
+  const workers = Array.from({ length: n }, async () => {
+    while (q.length) { const idx = i++; const it = q.shift(); await fn(it, idx); }
+  });
+  await Promise.all(workers);
 }
 
 /* ================= commands ================= */
@@ -241,42 +257,50 @@ if (cmd === 'plan') {
 if (cmd === 'freepass') {
   const clPath = path.join(CACHE, 'clusters.json');
   if (!fs.existsSync(clPath)) { console.error('run `node ocr-pipeline.mjs plan` first'); process.exit(1); }
-  let clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+  const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
   const only = getArg('source');
   const limit = getArg('limit') ? +getArg('limit') : Infinity;
-  if (only) clusters = clusters.filter(c => c.source === only);
+  const conc = getArg('concurrency') ? +getArg('concurrency') : 6;
+  KEEP_PDFS = args.includes('--keep-pdfs');
+  const allScans = args.includes('--all'); // also download known-scan sources (for page counts)
 
-  const rows = [];
-  let done = 0, hits = 0, hitDocs = 0, errs = 0, needVision = 0;
+  // decide the work list
+  const work = [];
   for (const c of clusters) {
-    if (done >= limit) break;
-    if (c.freepassDone) { if (c.freepassHit) { hits++; hitDocs += c.members.length; } else needVision++; continue; }
-    const rep = c.representative;
-    const { fetchUrl, note } = resolve(rep);
+    if (only && c.source !== only) continue;
+    if (c.freepassDone || c.error || c.needsManual) continue;
+    const { fetchUrl, note } = resolve(c.representative);
     if (!fetchUrl) { c.resolveNote = note; c.needsManual = true; continue; }
-    process.stdout.write(`[${done + 1}] ${c.source} ${c.key.slice(0, 40)} … `);
+    if (!allScans && KNOWN_SCAN_SOURCES.has(c.source)) {
+      c.freepassDone = true; c.freepassHit = false; c.knownScan = true; // no download, straight to vision
+      continue;
+    }
+    work.push({ c, fetchUrl });
+  }
+  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
+  console.log(`${work.length} units to download & test (concurrency ${conc}); ${clusters.filter(c => c.knownScan).length} known-scan units skipped straight to vision.`);
+
+  let done = 0, hits = 0, errs = 0;
+  const t0 = Date.now();
+  await pool(work.slice(0, limit === Infinity ? work.length : limit), conc, async ({ c, fetchUrl }) => {
     const meta = await getPdf(fetchUrl);
-    done++;
     c.freepassDone = true;
     c.numPages = meta.numPages || null;
     c.sizeKB = meta.sizeKB || null;
-    if (meta.error) { c.error = meta.error; errs++; console.log('ERR ' + meta.error); continue; }
-    const fp = meta.freepass || { count: 0 };
-    if (fp.count > 0) {
-      c.freepassHit = true; hits++; hitDocs += c.members.length;
-      // emit a row-set for every member of the cluster (same printed test → same questions),
-      // anchored to each member's own url + page number
-      for (const mem of c.members) {
-        const meta2 = { topper: mem.topper, coaching: mem.source, subject: mem.kind === 'opt' ? (mem.subject || 'Other') : mem.paper, url: mem.url };
-        for (const r of toCsvRows(fp.questions, meta2)) rows.push(r);
-      }
-      console.log(`FREE ${fp.count}q → ${c.members.length} members`);
-    } else {
-      c.freepassHit = false; needVision++;
-      console.log(`no text (${meta.textChars || 0} chars, ${meta.numPages || '?'}p) → vision`);
+    if (meta.error) { c.error = meta.error; errs++; }
+    else {
+      const fp = meta.freepass || { count: 0 };
+      c.freepassHit = fp.count > 0;
+      if (c.freepassHit) hits++;
     }
-    fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
-  }
+    done++;
+    if (done % 25 === 0 || done === work.length) {
+      const rate = done / ((Date.now() - t0) / 1000);
+      console.log(`  ${done}/${work.length}  hits ${hits}  errs ${errs}  (${rate.toFixed(1)}/s)`);
+      fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
+    }
+  });
+  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
 
   // (re)write data/ocr-questions.csv from every free-pass hit recorded in the cache
   const allRows = [];
@@ -296,8 +320,11 @@ if (cmd === 'freepass') {
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + allRows.join('\n') + (allRows.length ? '\n' : ''));
 
-  console.log(`\nprocessed ${done} units · free-pass hits ${hits} (covering ${hitDocs} docs) · need vision ${needVision} · errors ${errs}`);
-  console.log(`wrote data/ocr-questions.csv (${allRows.length} rows). next: node build.js, then review.`);
+  const fresh = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+  const hitDocs = fresh.filter(c => c.freepassHit).reduce((a, c) => a + c.members.length, 0);
+  const needVision = fresh.filter(c => c.freepassDone && !c.freepassHit && !c.error).length;
+  console.log(`\nprocessed ${done} downloads · free-pass hits ${hits} (covering ${hitDocs} docs) · units needing vision ${needVision} · errors ${errs}`);
+  console.log(`wrote data/ocr-questions.csv (${allRows.length} rows). next: node build.js, then review · node ocr-pipeline.mjs status`);
   process.exit(0);
 }
 
