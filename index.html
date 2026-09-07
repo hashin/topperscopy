@@ -99,38 +99,45 @@
       </p>
     </div>
 
+    <div class="toolbar-sentinel" aria-hidden="true"></div>
     <div class="toolbar">
       <div class="searchrow">
         <div class="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
           <input type="search" id="q" placeholder="Search a topper's name, or inside the copies — federalism, ethical dilemma…" autocomplete="off" aria-label="Search by topper name or inside topper answer copies">
         </div>
+        <button type="button" id="filters-toggle" class="filters-toggle" aria-expanded="false" aria-controls="toolbar-filters">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filters<span class="ft-count" hidden></span>
+        </button>
         <button type="button" id="practice-open" class="practice-btn" aria-haspopup="dialog">
           <span class="pd" aria-hidden="true"></span>Practice a question
         </button>
       </div>
-      <div class="filters">
-        <div class="seg" id="qview" role="group" aria-label="Show">
-          <button data-qview="copies" aria-pressed="true">Copies</button>
-          <button data-qview="questions" aria-pressed="false">Questions</button>
+      <div class="toolbar-filters" id="toolbar-filters">
+        <div class="filters">
+          <div class="seg" id="qview" role="group" aria-label="Show">
+            <button data-qview="copies" aria-pressed="true">Copies</button>
+            <button data-qview="questions" aria-pressed="false">Questions</button>
+          </div>
+          <div class="seg" id="papers" role="group" aria-label="Filter by paper"></div>
+          <div class="seg" id="mode" role="group" aria-label="Search mode">
+            <button data-mode="all" aria-pressed="true">All words</button>
+            <button data-mode="exact" aria-pressed="false">Exact phrase</button>
+          </div>
         </div>
-        <div class="seg" id="papers" role="group" aria-label="Filter by paper"></div>
-        <div class="seg" id="mode" role="group" aria-label="Search mode">
-          <button data-mode="all" aria-pressed="true">All words</button>
-          <button data-mode="exact" aria-pressed="false">Exact phrase</button>
+        <div class="filters">
+          <select id="syl" aria-label="Filter by syllabus topic"><option value="">Whole syllabus</option></select>
+          <select id="topper" aria-label="Filter by topper"><option value="">All toppers</option></select>
+          <select id="source" aria-label="Filter by source"><option value="">All sources</option></select>
+          <select id="year" aria-label="Filter by year"><option value="">All years</option></select>
+          <select id="sort" aria-label="Sort order">
+            <option value="year" selected>Newest year, best rank first</option>
+            <option value="air">Best AIR first</option>
+            <option value="name">Topper A–Z</option>
+            <option value="qty">Most questions</option>
+          </select>
         </div>
-      </div>
-      <div class="filters">
-        <select id="syl" aria-label="Filter by syllabus topic"><option value="">Whole syllabus</option></select>
-        <select id="topper" aria-label="Filter by topper"><option value="">All toppers</option></select>
-        <select id="source" aria-label="Filter by source"><option value="">All sources</option></select>
-        <select id="year" aria-label="Filter by year"><option value="">All years</option></select>
-        <select id="sort" aria-label="Sort order">
-          <option value="year" selected>Newest year, best rank first</option>
-          <option value="air">Best AIR first</option>
-          <option value="name">Topper A–Z</option>
-          <option value="qty">Most questions</option>
-        </select>
       </div>
     </div>
 

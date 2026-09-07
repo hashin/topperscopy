@@ -257,15 +257,49 @@ main { padding-bottom: 96px; }
 .view[hidden] { display: none; }
 
 /* ---------- toolbar ---------- */
+.toolbar-sentinel { height: 1px; margin-top: 22px; }
 .toolbar {
-  position: sticky; top: 67px; z-index: 20;
+  position: sticky; top: var(--hdr, 67px); z-index: 20;
   background: color-mix(in srgb, var(--paper) 90%, transparent);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  padding: 18px 0 12px; margin: 22px 0 4px;
+  padding: 18px 0 12px; margin: 0 0 4px;
   display: flex; flex-direction: column; gap: 12px;
   border-bottom: 1px solid var(--border);
+  transition: box-shadow .16s ease;
 }
 @media (max-width: 680px) { .toolbar { position: static; } }
+
+.toolbar-filters { display: flex; flex-direction: column; gap: 12px; }
+
+/* the "Filters" disclosure — only shown once the toolbar is collapsed */
+.filters-toggle {
+  display: none; align-items: center; gap: 7px; flex: none;
+  font: inherit; font-size: 13.5px; font-weight: 500; cursor: pointer;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: 12px; padding: 0 14px; box-shadow: var(--shadow-sm);
+}
+.filters-toggle svg { width: 16px; height: 16px; color: var(--muted); }
+.filters-toggle .ft-count {
+  min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px;
+  background: var(--teal); color: #fff; font-size: 11px; font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.filters-toggle .ft-count[hidden] { display: none; }
+
+/* collapsed state: the filter rows fold away, a slim search bar stays pinned */
+.toolbar.slim { padding: 7px 0; gap: 8px; box-shadow: 0 8px 20px -16px rgba(0,0,0,.35); }
+.toolbar.slim .toolbar-filters { display: none; }
+.toolbar.slim.open .toolbar-filters { display: flex; padding-top: 2px; max-height: 62vh; overflow-y: auto; }
+.toolbar.slim .filters-toggle { display: inline-flex; }
+.toolbar.slim .practice-btn { display: none; }
+.toolbar.slim .searchrow { flex-direction: row; align-items: stretch; gap: 8px; }
+.toolbar.slim .search input { padding-top: 11px; padding-bottom: 11px; }
+@media (max-width: 680px) {
+  .toolbar.slim { position: sticky; top: var(--hdr, 56px); background: var(--paper); }
+  .toolbar.slim .filters-toggle { padding: 0 12px; font-size: 13px; }
+  .toolbar.slim .filters-toggle svg { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .toolbar { transition: none; } }
 
 .search { position: relative; }
 .search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 19px; height: 19px; color: var(--muted); pointer-events: none; }

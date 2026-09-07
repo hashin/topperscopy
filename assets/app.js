@@ -179,9 +179,74 @@
     sel.value = keep;
   }
 
+  /* ---------- collapsing toolbar ---------- */
+  // once you scroll past the search box into the results, fold the search + filters
+  // into a slim sticky bar so the results have room; a "Filters" button re-opens them.
+  var TB = {};
+  function activeFilterCount() {
+    var n = 0;
+    if (state.paper !== 'all') n++;
+    if (state.mode !== 'all') n++;
+    if (state.qview !== 'copies') n++;
+    if (state.syl) n++;
+    if (state.topper) n++;
+    if (state.source) n++;
+    if (state.year) n++;
+    if (state.sort !== 'year') n++;
+    return n;
+  }
+  function updateFilterCount() {
+    var badge = $('.filters-toggle .ft-count');
+    if (!badge) return;
+    var c = activeFilterCount();
+    badge.textContent = String(c);
+    badge.hidden = c === 0;
+  }
+  function wireToolbarCollapse() {
+    var tb = $('.toolbar'), sentinel = $('.toolbar-sentinel'), toggle = $('#filters-toggle'),
+        header = document.querySelector('header.site');
+    if (!tb || !sentinel || !toggle || !header) return;
+    TB.el = tb;
+
+    var hdrPx = 0, io = null;
+    function unslim() { tb.classList.remove('slim', 'open'); toggle.setAttribute('aria-expanded', 'false'); }
+    TB.unslim = unslim;
+
+    // The header is sticky at top:0, so the toolbar must stick just below it and
+    // the "scrolled past" trigger line sits at the header's bottom edge. Header
+    // height changes on font load, resize and the mobile tab-wrap — track it live
+    // and re-arm the observer (its rootMargin can't be changed in place).
+    function sync() {
+      var v = Math.round(header.getBoundingClientRect().height);
+      if (!v || v > 240 || v === hdrPx) return;   // 0 = hidden tab; >240 = bogus reflow
+      hdrPx = v;
+      document.documentElement.style.setProperty('--hdr', v + 'px');
+      if (!('IntersectionObserver' in window)) return;
+      if (io) io.disconnect();
+      io = new IntersectionObserver(function (entries) {
+        var stuck = !entries[0].isIntersecting && state.view === 'browse';
+        if (stuck) tb.classList.add('slim'); else unslim();
+      }, { rootMargin: '-' + (v + 8) + 'px 0px 0px 0px', threshold: 0 });
+      io.observe(sentinel);
+    }
+    sync();
+    requestAnimationFrame(sync);
+    setTimeout(sync, 400);
+    if ('ResizeObserver' in window) new ResizeObserver(sync).observe(header);
+    else window.addEventListener('resize', debounce(sync, 150));
+    window.addEventListener('load', sync);
+
+    toggle.addEventListener('click', function () {
+      var open = tb.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      track('toolbar_filters', { open: open });
+    });
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireSubmit();
+    wireToolbarCollapse();
     var initial = location.hash ? location.hash.replace('#', '') : 'browse';
     if (location.hash) setView(initial); else pageView('browse');
     track('app_ready', {
@@ -233,7 +298,7 @@
       chipStat(g.toppers, 'toppers') +
       chipStat(g.subjects || countSources(), g.subjects ? 'subjects' : 'sources');
     $('#foot-stats').textContent = 'Data snapshot ' + DB.generated;
-    $('#about-gen').textContent = 'Database snapshot: ' + DB.generated + ' · source: ' + DB.attribution;
+    $('#about-gen').textContent = 'Database snapshot: ' + DB.generated;
 
     seedStubs();
     buildPaperSeg();
@@ -306,6 +371,7 @@
     state.view = v;
     $$('nav.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.view === v); });
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
+    if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
     window.scrollTo({ top: 0, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' });
     pageView(v);
@@ -470,6 +536,7 @@
 
   function renderBrowse(reopen) {
     if (!DB) return;
+    updateFilterCount();
     if (state.qview === 'questions') return renderQuestions();
     var list = filteredCopies();
     var box = $('#results'); box.innerHTML = '';
