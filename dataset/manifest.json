@@ -14,18 +14,18 @@
       "rows": 30965
     },
     "copies.csv": {
-      "bytes": 1432844,
-      "sha256": "e0040162868703b17e2f748651cffd730d5a6cc24f4c621a634d22e005575144",
+      "bytes": 1433420,
+      "sha256": "90dc93e79529027b684c1316cfaeb96b877e086d301a66194ab2026bebb61b1f",
       "rows": 9104
     },
     "toppers.csv": {
-      "bytes": 100188,
-      "sha256": "768f9178129d770fc799446eaebc88c1a8fb21b7b3f9972a783b51f1a23a69ba",
+      "bytes": 100333,
+      "sha256": "0d6402936b24a8a945b62be1c8db50f8e7b5843654f7233e3ec6889b0cccf76d",
       "rows": 1856
     },
     "dataset.json": {
-      "bytes": 9891564,
-      "sha256": "ae4237bf04fcd0503403cfc1cfbbd1aadfba5b2e0cbf9c32b2164684ce0f17e9"
+      "bytes": 9892311,
+      "sha256": "b6b109a96b5593f2b833bcf00ecefcc56591ffd9853663898ff16a4694fa6cd2"
     }
   }
 }
