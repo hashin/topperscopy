@@ -43,7 +43,7 @@
   var state = {
     view: 'browse', q: '', mode: 'all', paper: 'all',
     topper: '', source: '', year: '', sort: 'year', shown: PAGE,
-    qview: 'copies', syl: '', pp: '',
+    qview: 'copies', syl: '', pp: '', psyl: '',
     optSubject: 'all', optQ: ''
   };
 
@@ -142,7 +142,7 @@
       qiState = 'ready';
       fillSyllabus();
       if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
-      if ($('#practice').open) renderPractice();
+      if ($('#practice').open) { fillPracticeSyl(); renderPractice(); }
       track('question_index_loaded', { count: QI.length });
       return QI;
     }).catch(function (e) {
@@ -708,6 +708,7 @@
     $('#practice-open').addEventListener('click', function () {
       ensureQI(); ensureFull();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      fillPracticeSyl();
       renderPractice();
       track('practice_open', {});
     });
@@ -716,9 +717,14 @@
     $$('#practice-papers button').forEach(function (b) {
       if (b.disabled) return;
       b.addEventListener('click', function () {
-        state.pp = b.dataset.pp;
+        state.pp = b.dataset.pp; state.psyl = '';
         $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === state.pp)); });
+        fillPracticeSyl();
       });
+    });
+    $('#practice-syl').addEventListener('change', function (e) {
+      state.psyl = e.target.value;
+      track('practice_topic', { paper: state.pp, topic: e.target.value || '(any)' });
     });
     $('#practice-next').addEventListener('click', nextPracticeQ);
     refreshPracticeDot();
@@ -727,19 +733,45 @@
     $('#practice-open').classList.toggle('nudge', !practicedToday());
   }
 
+  // topic dropdown, scoped to the chosen paper — only topics that actually have
+  // answered questions mapped to them, with the count shown
+  function fillPracticeSyl() {
+    var wrap = $('#practice-syl-wrap'), sel = $('#practice-syl'), p = state.pp;
+    if (!p || !SYL || !SYL.papers[p] || !QI) { wrap.hidden = true; state.psyl = ''; return; }
+    var counts = {};
+    QI.forEach(function (q) {
+      if (q.p !== p || !q.a || !q.a.length) return;
+      (q.s || []).forEach(function (id) { counts[id] = (counts[id] || 0) + 1; });
+    });
+    sel.innerHTML = '<option value="">Any topic in ' + p + '</option>';
+    (SYL.papers[p].nodes || []).forEach(function (n) {
+      if (!counts[n.id]) return;
+      sel.appendChild(el('option', { value: n.id }, [n.t + ' · ' + counts[n.id]]));
+    });
+    if (!(state.psyl && counts[state.psyl])) state.psyl = '';
+    sel.value = state.psyl;
+    wrap.hidden = false;
+  }
+
   function renderPractice() {
     var s = pStore().s || {};
     $('#practice-streak').textContent = s.n ? '🔥 ' + s.n + '-day streak · ' + (s.t || 0) + ' practised' : '';
     var body = $('#practice-body');
     if (!QI) { body.innerHTML = '<p class="hint">Loading questions…</p>'; return; }
-    if (!body.dataset.has) body.innerHTML = '<p class="hint">Pick a paper (or leave it on “Any”), then hit the button for a random Mains question and the toppers who answered it.</p>';
+    if (!body.dataset.has) body.innerHTML = '<p class="hint">Pick a paper and, if you like, a syllabus topic — then hit the button for a random Mains question and the toppers who answered it.</p>';
   }
 
   function nextPracticeQ() {
     if (!QI) { renderPractice(); return; }
-    var pp = state.pp || '';
-    var base = QI.filter(function (q) { return (!pp || q.p === pp) && q.a && q.a.length; });
-    if (!base.length) { $('#practice-body').innerHTML = '<p class="hint">No indexed questions for that paper yet.</p>'; return; }
+    var pp = state.pp || '', psyl = state.psyl || '';
+    var base = QI.filter(function (q) {
+      return (!pp || q.p === pp) && q.a && q.a.length && (!psyl || (q.s || []).indexOf(psyl) >= 0);
+    });
+    if (!base.length) {
+      $('#practice-body').innerHTML = '<p class="hint">No indexed questions ' +
+        (psyl ? 'mapped to “' + sylLabel(psyl).split(' · ').pop() + '” yet — try “Any topic”.' : 'for that paper yet.') + '</p>';
+      return;
+    }
     // prefer questions several toppers answered — more likely a genuine repeated PYQ, more to compare
     var pool = base.filter(function (q) { return q.a.length >= 3; });
     if (pool.length < 20) pool = base.filter(function (q) { return q.a.length >= 2; });
