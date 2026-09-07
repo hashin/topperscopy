@@ -1,8 +1,8 @@
 # Toppers Copy
 
 > A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
-> **Mains topper answer copies**. It indexes 18,087 questions inside
-> 1,168 answer copies written by 393 rank-holders and links each
+> **Mains topper answer copies**. It indexes 18,080 questions inside
+> 1,167 answer copies written by 393 rank-holders and links each
 > question to the exact page of the source PDF. Covers General Studies Paper 1, 2, 3 and 4, the Essay paper,
 > and a community-built section for optional subjects.
 

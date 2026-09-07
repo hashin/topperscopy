@@ -591,6 +591,12 @@ const TRUNC_LEAD_RX = /^(?:discuss|examine|analyse|analyze|evaluate|comment|eluc
 /** rubric / instruction lines that sit on an essay question-paper page but aren't topics */
 const RUBRIC_RX = /^\s*(?:write|answer|attempt|section|instructions?|note|choose|candidates?|time allowed|maximum marks|word limit|marks?\b|q\.?\s*no\b|\d+\s*[x×]\s*\d+)/i;
 
+/** Backstop maths detector for a mislabelled subject — the real guard is the
+ *  Mathematics/Statistics subject exclusion in `emit`. Only unambiguous maths
+ *  terms here: common English words ("integral part", "policy convergence",
+ *  "decision matrix", "derivative of") must NOT trigger it. */
+const MATHS_RX = /\b(polynomial|eigen(?:value|vector)s?|homomorphism|isomorphism|abelian|coset|maclaurin|riemann integral|contour integral|residue theorem|cauchy'?s? (?:integral|theorem|residue)|fourier (?:series|transform)|laplace transform|characteristic (?:root|equation)|simplex method|transportation problem|assignment problem|null space of|cyclic group|normal subgroup|prove that (?:every|the group|G is)|show that (?:the (?:set|group|ring|map)|G|H is))\b|\bf\s*\(\s*x\s*\)\s*=|\b(?:∫|∑|√|∂)/i;
+
 /** Validate + tidy one candidate question span. Returns the clean string or null.
  *  `essay` mode relaxes the "must contain a directive verb or ?" rule — essay
  *  topics are bare declarative statements — but keeps every noise guard. */
@@ -690,21 +696,27 @@ function cleanGeminiQuestion(s, essay) {
  *  evaluation-rubric pages it emits notation dumps and score grids. This gate
  *  drops those before they reach data/ocr-questions.csv. */
 /** standard UPSC question-paper preamble / portal chrome that pdf.js hands back as "questions" */
-const INSTRUCTION_RX = /^(?:there (?:are|is)\b|candidates?\s*(?:has|have|should|must|are|will|may)\b|questions?\s+no|the number of marks|word li?\s?mit in|any page or portion|answers?\s+must be wr|please\s+(?:do\s+)?furnish|do furnish|write your name|write the appropriate|write \w+ essays?\b|choosing one topic|note\s*:|the medium (?:specified|authorized)|the candidate should|all questions carry|symbols?\s+\w+\s+carry|attempt (?:any |only )?\w+ questions?|one question in|maximum marks|time allowed|a consolidated question|question paper-?cum|legible scanning|please write|upload your|support\s*:|call \d{6}|evaluator code|s\s*&\s*f\s*=|marks? ?obtained|do not write|for office use|evaluation indicator|content competence|structure competence|language competence|immediately on receipt|evaluate the following integral|find the (?:unique )?polynomial)/i;
+const INSTRUCTION_RX = /^(?:there (?:are|is)\b|candidates?\s*(?:has|have|should|must|are|will|may)\b|questions?\s+no|the number of marks|word li?\s?mit in|any page or portion|answers?\s+must be wr|please\s+(?:do\s+)?furnish|do furnish|write your name|write the appropriate|write \w+ essays?\b|choosing one topic|note\s*:|the (?:above\s+)?question[_ -]?paper|this (?:question[_ -]?)?paper|.{0,20}\bmust be returned\b|the medium (?:specified|authorized)|the candidate should|all questions carry|symbols?\s+\w+\s+carry|attempt (?:any |only )?\w+ questions?|one question in|maximum marks|time allowed|a consolidated question|question[_ -]?paper[_ -]?cum|legible scanning|please write|upload your|support\s*:|call \d{6}|evaluator code|s\s*&\s*f\s*=|marks? ?obtained|do not write|for office use|evaluation indicator|content competence|structure competence|language competence|immediately on receipt|evaluate the following integral|find the (?:unique )?polynomial)/i;
 
 const TYPOGRAPHIC_OK = /[‘’“”–—… °•é−×]/g;  // curly quotes, dashes, ellipsis, °, é…
 
 function cleanTextLayerQuestion(text, essay) {
   let s = String(text || '').replace(/\s+/g, ' ')
+    .replace(/^\s*[IVX]{1,4}\s*[.)]?\s+(?=\(?[a-e]\)|\(?[ivx]+\)|\d|[A-Z])/, '')  // "I (d) …", "II. …", "IV a) …"
     .replace(/^\s*(?:Q\.?\s*)?\d{1,2}\s*[.)]\s*/i, '')       // "Q.5 " / "12. " / "5 ) "
     .replace(/^\s*\(\s*[a-e]\s*\)\s*/i, '')                  // "(a) " / "( a ) " sub-part marker
     .replace(/^\s*[a-e]\)\s*/i, '')                          // "a) "
+    .replace(/^\s*\(\s*[ivx]{1,3}\s*\)\s*/i, '')             // "(i) " roman sub-part
     .replace(/^(short note)s?\s*[:-]\s*/i, '$1 on ')         // "Short Note: X" → "Short note on X"
+    .replace(/\b([A-Za-z]{2,})\s+['’]\s+s\b/g, "$1's")       // "India ' s" → "India's" (OCR split the apostrophe)
     .replace(/\s+[^\x00-\x7F][^\x00-\x7F\s]*(?:\s+[^\x00-\x7F][^\x00-\x7F\s]*)*\s*$/, '')  // trailing romanised-Hindi garble
     .replace(/\s{2,}/g, ' ').trim();
   if (s.length < 35 || s.length > 900) return null;
   if (!/^["“'']?[A-Z]/.test(s)) return null;
   if (INSTRUCTION_RX.test(s)) return null;
+  if (MATHS_RX.test(s)) return null;                                        // Maths / Statistics — notation, not searchable text
+  // examiner feedback written in the margin, not a question
+  if (/^(?:points?\b|you (?:need|should|could|can|must|have)|good (?:attempt|effort|answer|point)|well (?:done|attempted|written|structured)|nice\b|try to\b|kindly\b|please (?:elaborate|add|include|improve|write|structure|mention|explain|note)|more (?:examples?|content|analysis|data|dimensions?)|introduction (?:is|needs|can|should)|conclusion (?:is|needs|can|should)|body (?:is|needs|can|should)|(?:add|use|draw) (?:a |more |diagram|fl?ow ?chart|map)|underline\b|handwriting\b|refer\b|see (?:the |above)|as (?:discussed|per (?:the )?(?:demand|rubric|guideline)))/i.test(s)) return null;
   if (/\bmarker\b|\bmerit\s*\d\b|destinations?\s+d\d|switching circuit|newton'?s?\s+(?:forward|backward) formula|orthogonal trajector/i.test(s)) return null;
   if (/^\W*\d[\d.\s<>+×x/-]{6,}/.test(s)) return null;                       // "0- 3.5 < 3.0 10 Marker …" score grid
   if (/[ऀ-ॿ]/.test(String(text))) return null;                              // bilingual line — usually preamble
@@ -716,6 +728,12 @@ function cleanTextLayerQuestion(text, essay) {
   if (toks.length < 7) return null;
   if (toks.filter(w => w.replace(/[^A-Za-z]/g, '').length <= 2).length / toks.length > 0.4) return null;   // garble = many tiny tokens
   if (toks.filter(w => /[bcdfghjklmnpqrstvwxz]{5}/i.test(w)).length >= 1) return null;   // "srn.r", "itreducible", "cnd", "Hunman"
+  var lone = toks.filter(w => /^[b-df-hj-np-tv-wyz]$/.test(w)).length;       // split-word fragments ("rul g", "Block s", "w as")
+  if (lone >= 2 || (lone >= 1 && s.length <= 130)) return null;
+  if (toks.filter(w => /[a-z][A-Z]/.test(w) && !/^["“'']?[A-Z]/.test(w)).length >= 1) return null;  // "prOVIded", "cJusess" intercaps garble
+  if (/[a-z]\([a-z]/i.test(s)) return null;                                  // "a(vook" — a paren jammed inside a word
+  if (/[A-Za-z]_|_[A-Za-z]/.test(s)) return null;                            // "the_ international" — underscores aren't in real questions
+  if (/[a-z][.,][a-z]{2,}/.test(s.replace(/\b(?:e\.g|i\.e|etc|viz|vs|govt|dept)\./gi, ''))) return null;  // "Ad.yham" — punctuation jammed inside a word
   // text-layer questions get no benefit of the doubt: needs a directive verb, a '?', or the essay/short-note shape
   if (!essay && !DIRECTIVE_RX.test(s) && !/\?/.test(s) && !/^short note on\b/i.test(s)) return null;
   if (essay && !/[.?][""'']?$/.test(s)) return null;                         // essay topic must be a complete sentence
@@ -1079,9 +1097,14 @@ if (cmd === 'emit') {
   const opByBase = new Map(opDoc.entries.map(e => [norm(e.url), e]));
   const optQ = new Map();                          // base url -> [{page,question,marks,words}]
   const rows = [];
-  let units = 0, skippedFlagged = 0, optUnits = 0, optOrphans = 0;
+  let units = 0, skippedFlagged = 0, optUnits = 0, optOrphans = 0, skippedMaths = 0;
+
+  // Mathematics / Statistics answer copies are pure notation — no useful searchable
+  // question text comes out of them by any OCR route. Don't extract questions for them.
+  const NO_QUESTION_SUBJECTS = new Set(['Mathematics', 'Statistics']);
 
   const take = (m, questions) => {
+    if (m.kind === 'opt' && NO_QUESTION_SUBJECTS.has(m.subject)) { skippedMaths++; return; }
     if (m.kind === 'opt') {
       const base = norm(m.url);
       if (!opByBase.has(base)) { optOrphans++; }   // not in optionals.json — fall through to CSV
@@ -1128,12 +1151,17 @@ if (cmd === 'emit') {
     });
     optMerged++;
   }
+  // strip any stale questions[] off subjects we no longer extract for
+  let optCleared = 0;
+  for (const e of opDoc.entries) {
+    if (NO_QUESTION_SUBJECTS.has(e.subject) && Array.isArray(e.questions) && e.questions.length) { delete e.questions; optCleared++; }
+  }
   fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
 
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
   console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back)`);
-  console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} optional units not in optionals.json → left in CSV)` : ''));
+  console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} not in optionals.json → CSV)` : '') + (skippedMaths ? ` · ${skippedMaths} Maths/Statistics units skipped` : '') + (optCleared ? ` · cleared ${optCleared} stale Maths entries` : ''));
   console.log('next: node build.js');
   process.exit(0);
 }

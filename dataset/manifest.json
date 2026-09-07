@@ -4,28 +4,28 @@
   "counts": {
     "toppers": 1856,
     "copies": 9082,
-    "questions": 18202,
+    "questions": 18180,
     "submissions": 8019
   },
   "files": {
     "questions.csv": {
-      "bytes": 11224784,
-      "sha256": "43134e1d186ff437011a83850ded8ab0a286c42ab7a20200fb5926e5cfd0c33a",
-      "rows": 30965
+      "bytes": 11215814,
+      "sha256": "7342c7d4ee111c3ac64c676522a16cc3902307d1af352f92cc7ea60e55900844",
+      "rows": 30943
     },
     "copies.csv": {
-      "bytes": 1430604,
-      "sha256": "b209ffff68f22a1d3091a7974399de6398a054d5d18da2da4935db13345717d3",
+      "bytes": 1430607,
+      "sha256": "13b4141201138a81e531b880e8d4442fb230797b078dfdde295781e296481403",
       "rows": 9082
     },
     "toppers.csv": {
       "bytes": 100109,
-      "sha256": "8de6e2ff653ea1d40144961bac85abc81da6c9669477153cbe417418f8a03fa5",
+      "sha256": "143caecafd7208548c00bc57e21f904f5eda75dec1b6c401ed3eb5efd5af7543",
       "rows": 1856
     },
     "dataset.json": {
-      "bytes": 9886729,
-      "sha256": "af0e8f966a7d28763301fbe5738bd76298f25bd7bb38fa6193b34dc8eeef8b34"
+      "bytes": 9882395,
+      "sha256": "49bfb3ee930daaf1e222b9e4674c9552463d9e7f4e671fe7f9fdfcb46b19327e"
     }
   }
 }
