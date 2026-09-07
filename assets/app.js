@@ -737,7 +737,11 @@
   // answered questions mapped to them, with the count shown
   function fillPracticeSyl() {
     var wrap = $('#practice-syl-wrap'), sel = $('#practice-syl'), p = state.pp;
-    if (!p || !SYL || !SYL.papers[p] || !QI) { wrap.hidden = true; state.psyl = ''; return; }
+    if (!p || !SYL || !SYL.papers[p] || !QI) {
+      wrap.hidden = true; state.psyl = '';
+      sel.innerHTML = '<option value="">Any topic</option>'; sel.value = '';
+      return;
+    }
     var counts = {};
     QI.forEach(function (q) {
       if (q.p !== p || !q.a || !q.a.length) return;
