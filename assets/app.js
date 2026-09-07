@@ -302,6 +302,7 @@
 
     seedStubs();
     buildPaperSeg();
+    buildOptPool();
     refreshFacets();
     fillSelect($('#sform select[name=paper]'), PAPERS.filter(function (p) { return p !== 'Other'; })
       .map(function (p) { return [p, p]; })
@@ -703,6 +704,40 @@
   }
   function practicedToday() { return (pStore().s || {}).d === pToday(); }
 
+  // Practice pool for optional subjects, from the OCR'd questions[] now in optionals.json.
+  // Each entry: { i, p:subject, q, m, w, yr:[years], a:[{t,air,url,page}] } — same shape the
+  // GS/Essay path (QI) uses, so nextPracticeQ can treat both the same way.
+  var OPTPOOL = [];
+  function optQKey(t) { return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64); }
+  function buildOptPool() {
+    var g = {};
+    OPTS.forEach(function (o) {
+      if (!Array.isArray(o.questions) || !o.questions.length) return;
+      o.questions.forEach(function (q) {
+        var text = String(q.question || '').trim();
+        if (text.replace(/[^a-z0-9]/gi, '').length < 12) return;
+        var k = o.subject + '|' + optQKey(text);
+        var e = g[k] || (g[k] = { p: o.subject, q: text, m: q.marks || '', w: q.words || '', a: [], _yr: {} });
+        if (text.length > e.q.length) e.q = text;
+        if (q.marks && !e.m) e.m = q.marks;
+        if (q.words && !e.w) e.w = q.words;
+        if (o.year) e._yr[o.year] = 1;
+        e.a.push({ t: o.topper, air: o.air || null, url: o.url, page: q.page || 0, src: o.source || '' });
+      });
+    });
+    OPTPOOL = Object.keys(g).map(function (k, i) {
+      var e = g[k]; e.i = 'opt' + i; e.yr = Object.keys(e._yr).sort(); delete e._yr; return e;
+    });
+    var has = OPTPOOL.length > 0;
+    var btn = $('#practice-papers button[data-pp="Optional"]');
+    if (btn) { btn.disabled = !has; btn.textContent = has ? 'Optional' : 'Optional ▸ after OCR'; }
+  }
+  function optPracticeSubjects() {
+    var m = {};
+    OPTPOOL.forEach(function (q) { m[q.p] = (m[q.p] || 0) + 1; });
+    return m;
+  }
+
   function wirePractice() {
     var dlg = $('#practice');
     $('#practice-open').addEventListener('click', function () {
@@ -715,8 +750,8 @@
     $('#practice-close').addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); });
     dlg.addEventListener('click', function (e) { if (e.target === dlg) (dlg.close ? dlg.close() : dlg.removeAttribute('open')); });
     $$('#practice-papers button').forEach(function (b) {
-      if (b.disabled) return;
       b.addEventListener('click', function () {
+        if (b.disabled) return;
         state.pp = b.dataset.pp; state.psyl = '';
         $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === state.pp)); });
         fillPracticeSyl();
@@ -733,10 +768,26 @@
     $('#practice-open').classList.toggle('nudge', !practicedToday());
   }
 
-  // topic dropdown, scoped to the chosen paper — only topics that actually have
-  // answered questions mapped to them, with the count shown
+  // second dropdown under the paper row: syllabus topics for a GS/Essay paper,
+  // or the list of optional subjects when the paper is "Optional". Only shows
+  // options that actually have practisable questions, with the count.
   function fillPracticeSyl() {
-    var wrap = $('#practice-syl-wrap'), sel = $('#practice-syl'), p = state.pp;
+    var wrap = $('#practice-syl-wrap'), sel = $('#practice-syl'), lbl = $('#practice-syl-label'), p = state.pp;
+
+    if (p === 'Optional') {
+      var subs = optPracticeSubjects();
+      lbl.textContent = 'Subject';
+      sel.innerHTML = '<option value="">Any optional subject</option>';
+      Object.keys(subs).sort().forEach(function (s) {
+        sel.appendChild(el('option', { value: s }, [s + ' · ' + subs[s]]));
+      });
+      if (!(state.psyl && subs[state.psyl])) state.psyl = '';
+      sel.value = state.psyl;
+      wrap.hidden = Object.keys(subs).length === 0;
+      return;
+    }
+
+    lbl.textContent = 'Topic';
     if (!p || !SYL || !SYL.papers[p] || !QI) {
       wrap.hidden = true; state.psyl = '';
       sel.innerHTML = '<option value="">Any topic</option>'; sel.value = '';
@@ -761,19 +812,35 @@
     var s = pStore().s || {};
     $('#practice-streak').textContent = s.n ? '🔥 ' + s.n + '-day streak · ' + (s.t || 0) + ' practised' : '';
     var body = $('#practice-body');
-    if (!QI) { body.innerHTML = '<p class="hint">Loading questions…</p>'; return; }
-    if (!body.dataset.has) body.innerHTML = '<p class="hint">Pick a paper and, if you like, a syllabus topic — then hit the button for a random Mains question and the toppers who answered it.</p>';
+    if (!QI && !OPTPOOL.length) { body.innerHTML = '<p class="hint">Loading questions…</p>'; return; }
+    if (!body.dataset.has) body.innerHTML = '<p class="hint">Pick a paper (GS, Essay or Optional) and, if you like, a topic — then hit the button for a random Mains question and the toppers who answered it.</p>';
+  }
+
+  function optAnswerRows(q) {
+    return q.a.slice().sort(function (a, b) { return (a.air || 1e9) - (b.air || 1e9); }).map(function (a) {
+      var href = a.url + (a.page ? '#page=' + a.page : '');
+      var link = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [a.page ? 'Open · p.' + a.page : 'Open copy']);
+      link.addEventListener('click', function () {
+        track('pdf_open', { topper: a.t, paper: q.p, source: a.src || 'unknown', page: a.page || 0, link_domain: hostOf(a.url), optional: true, outbound: true, transport_type: 'beacon', from: 'practice' });
+      });
+      var meta = [a.t];
+      if (a.air) meta.push('AIR ' + a.air);
+      if (a.src) meta.push(a.src);
+      return el('div', { class: 'q' }, [el('div', { class: 'txt' }, [meta.join('  ·  ')]), link]);
+    });
   }
 
   function nextPracticeQ() {
-    if (!QI) { renderPractice(); return; }
-    var pp = state.pp || '', psyl = state.psyl || '';
-    var base = QI.filter(function (q) {
-      return (!pp || q.p === pp) && q.a && q.a.length && (!psyl || (q.s || []).indexOf(psyl) >= 0);
-    });
+    var pp = state.pp || '', psyl = state.psyl || '', isOpt = pp === 'Optional';
+    if (!isOpt && !QI) { renderPractice(); return; }
+
+    var base = isOpt
+      ? OPTPOOL.filter(function (q) { return (!psyl || q.p === psyl) && q.a.length; })
+      : QI.filter(function (q) { return (!pp || q.p === pp) && q.a && q.a.length && (!psyl || (q.s || []).indexOf(psyl) >= 0); });
     if (!base.length) {
-      $('#practice-body').innerHTML = '<p class="hint">No indexed questions ' +
-        (psyl ? 'mapped to “' + sylLabel(psyl).split(' · ').pop() + '” yet — try “Any topic”.' : 'for that paper yet.') + '</p>';
+      var what = psyl ? '“' + (isOpt ? psyl : sylLabel(psyl).split(' · ').pop()) + '”' : '';
+      $('#practice-body').innerHTML = '<p class="hint">No questions ' +
+        (what ? 'for ' + what + ' yet — try ' + (isOpt ? '“Any optional subject”.' : '“Any topic”.') : (isOpt ? 'from OCR yet.' : 'for that paper yet.')) + '</p>';
       return;
     }
     // prefer questions several toppers answered — more likely a genuine repeated PYQ, more to compare
@@ -781,7 +848,7 @@
     if (pool.length < 20) pool = base.filter(function (q) { return q.a.length >= 2; });
     if (pool.length < 10) pool = base;
     var o = pStore(); o.seen = o.seen || {};
-    var key = pp || 'any';
+    var key = isOpt ? 'opt:' + (psyl || 'any') : (pp || 'any');
     var seen = o.seen[key] || [];
     var fresh = pool.filter(function (q) { return seen.indexOf(q.i) < 0; });
     if (!fresh.length) { fresh = pool; seen = []; }
@@ -795,11 +862,12 @@
     var wn = q.w && (String(q.w).match(/\d+/) || [])[0];
     if (wn) tags.push(el('span', { class: 'tag' }, [wn + ' words']));
     if (q.yr && q.yr.length) tags.push(el('span', { class: 'tag year' }, ['asked ' + q.yr.join(', ')]));
-    (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
+    if (!isOpt) (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
     body.appendChild(el('div', { class: 'pq' }, [dispQ(q.q)]));
     body.appendChild(el('div', { class: 'tags' }, tags));
-    var rows = answerRows(q);
-    body.appendChild(el('div', { class: 'pans-h' }, [rows.length + (rows.length === 1 ? ' topper answered this' : ' toppers answered this') + (FULL ? '' : ' — links loading…')]));
+
+    var rows = isOpt ? optAnswerRows(q) : answerRows(q);
+    body.appendChild(el('div', { class: 'pans-h' }, [rows.length + (rows.length === 1 ? ' topper answered this' : ' toppers answered this') + (!isOpt && !FULL ? ' — links loading…' : '')]));
     var list = el('div', { class: 'qlist' });
     rows.forEach(function (r) { list.appendChild(r); });
     body.appendChild(list);

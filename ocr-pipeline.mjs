@@ -1062,8 +1062,10 @@ if (cmd === 'validate') {
 }
 
 if (cmd === 'emit') {
-  // Write data/ocr-questions.csv. Page anchors come ONLY from the document actually read —
-  // never copied to another topper, because booklet pagination differs per candidate.
+  // GS/Essay questions → data/ocr-questions.csv. Optional-subject questions are folded
+  // into their entry's `questions[]` in data/optionals.json instead, so an optional copy
+  // shows once (in the Optionals section + Practice) and never as a parallel bare copy.
+  // Page anchors come ONLY from the document actually read — never copied to another topper.
   const clPath = path.join(CACHE, 'clusters.json');
   const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
   const flagged = new Set();
@@ -1073,34 +1075,65 @@ if (cmd === 'emit') {
   const memberOf = new Map();
   for (const c of clusters) for (const m of c.members) memberOf.set(m.url, { c, m });
 
+  const opDoc = JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8'));
+  const opByBase = new Map(opDoc.entries.map(e => [norm(e.url), e]));
+  const optQ = new Map();                          // base url -> [{page,question,marks,words}]
   const rows = [];
-  let units = 0, skippedFlagged = 0;
+  let units = 0, skippedFlagged = 0, optUnits = 0, optOrphans = 0;
+
+  const take = (m, questions) => {
+    if (m.kind === 'opt') {
+      const base = norm(m.url);
+      if (!opByBase.has(base)) { optOrphans++; }   // not in optionals.json — fall through to CSV
+      else {
+        const arr = optQ.get(base) || [];
+        for (const q of questions) arr.push({ page: q.page || null, question: q.question, marks: q.marks || '', words: q.words || '' });
+        optQ.set(base, arr);
+        optUnits++;
+        return;
+      }
+    }
+    const meta = { topper: m.topper, coaching: m.source, subject: m.kind === 'opt' ? (m.subject || 'Other') : m.paper, url: m.url };
+    for (const row of toCsvRows(questions, meta)) rows.push(row);
+  };
+
   for (const f of fs.readdirSync(OCRDIR)) {
     const r = JSON.parse(fs.readFileSync(path.join(OCRDIR, f), 'utf8'));
     if (!r.questions || !r.questions.length) continue;
     const hit = memberOf.get(r.url);
     if (!hit) continue;
     if (flagged.has(hit.c.key)) { skippedFlagged++; continue; }
-    const m = hit.m;
-    const meta = { topper: m.topper, coaching: m.source, subject: m.kind === 'opt' ? (m.subject || 'Other') : m.paper, url: m.url };
-    for (const row of toCsvRows(r.questions, meta)) rows.push(row);
+    take(hit.m, r.questions);
     units++;
   }
-  // free-pass hits too (text-layer PDFs)
   for (const c of clusters) {
     if (!c.freepassHit) continue;
     const mp = path.join(METADIR, sha1(resolve(c.representative).fetchUrl || c.representative) + '.json');
     if (!fs.existsSync(mp)) continue;
     const qs = filterFreepassQuestions(JSON.parse(fs.readFileSync(mp, 'utf8')).freepass?.questions, c.paper);
     if (!qs || !qs.length) continue;
-    const m = c.members.find(x => x.url === c.representative) || c.members[0];
-    const meta = { topper: m.topper, coaching: m.source, subject: m.kind === 'opt' ? (m.subject || 'Other') : m.paper, url: m.url };
-    for (const row of toCsvRows(qs, meta)) rows.push(row);
+    take(c.members.find(x => x.url === c.representative) || c.members[0], qs);
   }
+
+  // merge optional questions into optionals.json (dedupe by text, sort by page)
+  let optMerged = 0;
+  for (const [base, list] of optQ) {
+    const entry = opByBase.get(base);
+    if (!entry) continue;
+    const seen = new Set();
+    entry.questions = list.sort((a, b) => (a.page || 0) - (b.page || 0)).filter(q => {
+      const k = String(q.question).toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64);
+      if (!k || seen.has(k)) return false;
+      seen.add(k); return true;
+    });
+    optMerged++;
+  }
+  fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
 
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
-  console.log(`wrote data/ocr-questions.csv · ${rows.length} rows from ${units} OCR'd units (${skippedFlagged} units held back by validation)`);
+  console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back)`);
+  console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} optional units not in optionals.json → left in CSV)` : ''));
   console.log('next: node build.js');
   process.exit(0);
 }
