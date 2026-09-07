@@ -7,8 +7,8 @@ All-India Rank, exam year and subject-wise marks. **Accepted community submissio
 This directory is a reference archive — the website does not load it. Regenerate it with `node build.js`.
 
 - **Snapshot:** 2026-09-07
-- **19,496** questions · **9,170** answer copies · **1,856** toppers
-- **8,107** copies came from community submissions (the rest from the upstream mirror)
+- **18,202** questions · **9,104** answer copies · **1,856** toppers
+- **8,041** copies came from community submissions (the rest from the upstream mirror)
 
 ## Files
 
@@ -28,8 +28,8 @@ This directory is a reference archive — the website does not load it. Regenera
 
 ## Provenance & licence
 
-- This is a **community compilation**. The GS & Essay question-level index builds on open community
-  work, including **[upsckata.com — "Topper Copies"](https://toppercopies.upsckata.com/)**.
+- This is a **community compilation**. Part of the GS & Essay question text derives from earlier open
+  community compilations of the same public answer copies, including upsckata.com's "Topper Copies".
 - Answer-copy PDFs are the property of the institutes and toppers who published them (ForumIAS, Vision IAS,
   NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, IMS4Maths, Level Up IAS and others). **No PDF files are in this
   dataset** — only links to them.

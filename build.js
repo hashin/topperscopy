@@ -3,8 +3,9 @@
  * build.js — turns the source data into the compact JSON the app consumes,
  * the static/SEO artefacts, and the consolidated dataset/ backup.
  *
- *   data/questions.csv    (pristine mirror of upsckata.com "Topper Copies")
+ *   data/questions.csv    (GS/Essay core — public copies, some text from earlier community compilations)
  *   data/submissions.csv  (accepted GS/Essay copy submissions, same schema)
+ *   data/ocr-questions.csv (questions read off scanned copies by the nightly ocr-pipeline.mjs Gemini pass)
  *   data/optionals.json   (accepted optional-subject copies)
  *   data/toppers.overrides.json  (maintainer-verified AIR / marks)
  *        |
@@ -26,7 +27,8 @@ const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
 const SRC = path.join(DATA, 'questions.csv');
 const SITE = 'https://topperscopy.hashin.me';
-const ATTRIBUTION = 'https://toppercopies.upsckata.com/';
+// non-prominent provenance string embedded in the served JSON; the named acknowledgement lives in dataset/README.md
+const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. PDFs belong to their publishers; nothing is re-hosted. Some older GS/Essay text derives from earlier open community compilations.';
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -182,10 +184,13 @@ function build() {
   // deduped question index — powers the question-first search view and Practice mode
   writeQuestions(copies, generated);
 
-  // lightweight boot index — only the text-searchable copies, without the question text.
-  // Link-only copies (scanned, no text) are omitted here and arrive with the lazy data/copies.json,
-  // so the first paint stays tiny no matter how many link-only copies pile up.
-  const lite = copies.filter(c => !c.link)
+  // lightweight boot index — the hand-curated text-searchable core, without the question text.
+  // Omitted and lazy-loaded with data/copies.json (then merged into DB.copies + refreshFacets):
+  //   • link-only copies (scanned, no text)
+  //   • OCR-sourced copies (prov 'ocr') — the nightly Gemini pass adds thousands of these; keeping
+  //     them out of the boot payload is what stops first paint from degrading as OCR progresses.
+  // Everything here still counts in `stats`, so the SEO/headline numbers keep growing regardless.
+  const lite = copies.filter(c => !c.link && c.prov !== 'ocr')
     .map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
   fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
 
@@ -412,7 +417,7 @@ function writeDataset(copies, toppers, generated, commit) {
       site: SITE,
       repository: 'https://github.com/hashin/topperscopy',
       generated,
-      attribution: 'A community compilation. The GS & Essay question-level index builds on open community work, including upsckata.com "Topper Copies" (' + ATTRIBUTION + '). Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing.',
+      attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
       license: 'CC BY 4.0 for this compilation — see dataset/README.md',
       schema_version: 2,
       counts
@@ -477,8 +482,8 @@ This directory is a reference archive — the website does not load it. Regenera
 
 ## Provenance & licence
 
-- This is a **community compilation**. The GS & Essay question-level index builds on open community
-  work, including **[upsckata.com — "Topper Copies"](${ATTRIBUTION})**.
+- This is a **community compilation**. Part of the GS & Essay question text derives from earlier open
+  community compilations of the same public answer copies, including upsckata.com's "Topper Copies".
 - Answer-copy PDFs are the property of the institutes and toppers who published them (ForumIAS, Vision IAS,
   NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, IMS4Maths, Level Up IAS and others). **No PDF files are in this
   dataset** — only links to them.
@@ -513,10 +518,15 @@ function writeStaticIndex(copies, toppers, stats, generated) {
   let html = fs.readFileSync(idxPath, 'utf8');
 
   const names = Array.from(new Set(copies.map(c => c.t))).sort();
-  // keep index.html itself lean — link the toppers who have a searchable copy here,
-  // the complete list (everyone, incl. link-only) lives in toppers.html
+  // keep index.html itself lean and bounded — the nightly OCR pass keeps adding
+  // searchable toppers, so link only the ~150 best-ranked here (crawlers reach the
+  // rest via toppers.html, the canonical full static index).
   const searchableNames = new Set(copies.filter(c => !c.link).map(c => c.t));
-  const listed = names.filter(n => searchableNames.has(n));
+  const NOSCRIPT_CAP = 150;
+  const airOf = n => (toppers[n] && toppers[n].air) || 99999;
+  const listed = names.filter(n => searchableNames.has(n))
+    .sort((a, b) => airOf(a) - airOf(b) || a.localeCompare(b))
+    .slice(0, NOSCRIPT_CAP);
   const topperLinks = listed.map(n =>
     `<li><a href="toppers.html#${slug(n)}">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}${telegramLink(n, toppers)}</li>`
   ).join('\n');
@@ -527,13 +537,12 @@ function writeStaticIndex(copies, toppers, stats, generated) {
     <h2>UPSC Mains topper answer copies — full index</h2>
     <p>${stats.questions.toLocaleString('en-IN')} questions from ${stats.copies.toLocaleString('en-IN')} answer
     copies by ${stats.toppers} rankers (GS Paper 1&ndash;4 and Essay), each linking to the exact page of the
-    source PDF. A free, open, community-built index; the GS &amp; Essay question data builds on open community
-    work including <a href="${ATTRIBUTION}">upsckata.com — Topper Copies</a>.
-    Optional-subject copies (Sociology, Anthropology, History, PSIR, Geography, Mathematics and more) are community-compiled.</p>
+    source PDF. A free, open, community-built index. Optional-subject copies (Sociology, Anthropology,
+    History, PSIR, Geography, Mathematics and more) are community-compiled.</p>
     <p><strong><a href="toppers.html">Open the full static index of all ${names.length} toppers and every copy &rarr;</a></strong>
     &nbsp;·&nbsp; <a href="data/copies.json">machine-readable data (JSON)</a>
     &nbsp;·&nbsp; <a href="/llms.txt">llms.txt</a></p>
-    <h3>${stats.toppers} toppers with a text-searchable copy</h3>
+    <h3>Selected rankers${listed.length < stats.toppers ? ` (${listed.length} of ${stats.toppers} — full list in <a href="toppers.html">toppers.html</a>)` : ''}</h3>
     <ul>
 ${topperLinks}
     </ul>
@@ -542,6 +551,19 @@ ${topperLinks}
 
   html = replaceBlock(html, 'STATIC', noscript);
   html = replaceBlock(html, 'LD', jsonLd(stats, generated));
+
+  // keep the <head> social/description meta in step with the live totals (rounded so they
+  // read naturally and don't churn the file on every small daily delta)
+  const floor = (n, step) => Math.floor(n / step) * step;
+  const qN = floor(stats.all.questions, 500).toLocaleString('en-IN');
+  const cN = floor(stats.all.copies, 500).toLocaleString('en-IN');
+  html = replaceBlock(html, 'META',
+    `<meta name="description" content="Search ${qN}+ questions inside ${cN}+ UPSC Civil Services Mains topper answer copies — GS1-4, Essay and optional subjects — and open the exact page of each copy. Free, open and community-built.">`);
+  html = replaceBlock(html, 'OGDESC',
+    `<meta property="og:description" content="Search ${qN}+ questions inside ${cN}+ UPSC Mains topper answer copies and jump to the exact page. GS, Essay and optional subjects. Free and open.">`);
+  html = replaceBlock(html, 'TWDESC',
+    `<meta name="twitter:description" content="Search inside ${cN}+ UPSC Mains topper answer copies and jump to the exact page. GS, Essay and optionals. Free and open.">`);
+
   fs.writeFileSync(idxPath, html);
 }
 
@@ -600,15 +622,14 @@ function jsonLd(stats, generated) {
         { '@type': 'DataDownload', name: 'Complete dataset (nested JSON)', encodingFormat: 'application/json', contentUrl: SITE + '/dataset/dataset.json' },
         { '@type': 'DataDownload', name: 'Per-topper table (CSV)', encodingFormat: 'text/csv', contentUrl: SITE + '/dataset/toppers.csv' },
         { '@type': 'DataDownload', name: 'App index, grouped by copy (JSON)', encodingFormat: 'application/json', contentUrl: SITE + '/data/copies.json' }
-      ],
-      citation: ATTRIBUTION
+      ]
     },
     {
       '@type': 'FAQPage',
       '@id': SITE + '/#faq',
       mainEntity: [
         ['What is Toppers Copy?', `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${stats.questions.toLocaleString('en-IN')} questions inside ${stats.copies.toLocaleString('en-IN')} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
-        ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them. It is a community-built index; the GS & Essay question-level data builds on open community work, including upsckata.com’s "Topper Copies".'],
+        ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them; it is a free, open, community-built index.'],
         ['Does it cover optional subjects?', 'Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more.'],
         ['Is it free?', 'Yes, completely free and open source. No login, no ads.'],
         ['How can I add a missing copy or a topper’s marks?', 'Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live.']
@@ -705,9 +726,8 @@ ${JSON.stringify(itemList, null, 0)}
   <h1>Every UPSC Mains topper answer copy — full index</h1>
   <p class="lead">${stats.toppers} rankers · ${stats.copies} answer copies · ${stats.questions.toLocaleString('en-IN')} indexed questions · updated ${generated}</p>
   <p class="lead">This is the static, no-JavaScript index. The <a href="/">main site</a> lets you search inside every copy.
-  A free, open, community-built index; the GS &amp; Essay question data builds on open community work including
-  <a href="${ATTRIBUTION}" rel="nofollow">upsckata.com — Topper Copies</a>.
-  Answer-copy PDFs are hosted by the institutes and toppers who published them; nothing is re-hosted here.</p>
+  A free, open, community-built index. Answer-copy PDFs are hosted by the institutes and toppers who published
+  them; nothing is re-hosted here.</p>
   <details><summary>Jump to a topper</summary>
     <div class="toc">
 ${names.map(n => `      <a href="#${slug(n)}">${esc(n)}</a>`).join('\n')}
@@ -782,7 +802,7 @@ function writeLlms(stats, generated) {
 
 Site: https://topperscopy.hashin.me
 Updated: ${generated}
-Licence: MIT (code). CC BY 4.0 (this compilation). GS & Essay question data builds on open community work including upsckata.com "Topper Copies" (${ATTRIBUTION}).
+Licence: MIT (code). CC BY 4.0 (this compilation).
 
 ## What it contains
 
@@ -831,9 +851,9 @@ Toppers Copy is built and maintained by **Hashin Jithu**.
 
 ## Notes for citation
 
-Cite as "Toppers Copy (${SITE})", a community compilation. The GS & Essay question-level index builds on
-open community work, including upsckata.com's "Topper Copies". Answer-copy PDFs are the property of the
+Cite as "Toppers Copy (${SITE})", a community compilation. Answer-copy PDFs are the property of the
 institutes and toppers who published them. This site re-hosts no PDFs; it only links to them.
+Some GS & Essay question text derives from earlier open community compilations of the same public copies.
 `;
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), txt);
 }

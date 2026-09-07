@@ -1,14 +1,14 @@
 # Toppers Copy
 
 > A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
-> **Mains topper answer copies**. It indexes 19,496 questions inside
-> 1,317 answer copies written by 452 rank-holders and links each
+> **Mains topper answer copies**. It indexes 18,202 questions inside
+> 1,190 answer copies written by 408 rank-holders and links each
 > question to the exact page of the source PDF. Covers General Studies Paper 1, 2, 3 and 4, the Essay paper,
 > and a community-built section for optional subjects.
 
 Site: https://topperscopy.hashin.me
 Updated: 2026-09-07
-Licence: MIT (code). CC BY 4.0 (this compilation). GS & Essay question data builds on open community work including upsckata.com "Topper Copies" (https://toppercopies.upsckata.com/).
+Licence: MIT (code). CC BY 4.0 (this compilation).
 
 ## What it contains
 
@@ -57,6 +57,6 @@ Toppers Copy is built and maintained by **Hashin Jithu**.
 
 ## Notes for citation
 
-Cite as "Toppers Copy (https://topperscopy.hashin.me)", a community compilation. The GS & Essay question-level index builds on
-open community work, including upsckata.com's "Topper Copies". Answer-copy PDFs are the property of the
+Cite as "Toppers Copy (https://topperscopy.hashin.me)", a community compilation. Answer-copy PDFs are the property of the
 institutes and toppers who published them. This site re-hosts no PDFs; it only links to them.
+Some GS & Essay question text derives from earlier open community compilations of the same public copies.

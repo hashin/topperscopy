@@ -301,8 +301,13 @@ if (cmd === 'freepass') {
     c.sizeKB = meta.sizeKB || null;
     if (meta.error) { c.error = meta.error; errs++; }
     else {
+      // Only count it a free-pass hit if the text layer yields *clean* questions.
+      // A garbled text layer (scanned ForumIAS etc.) must fall through to the
+      // Gemini vision pass, not lock the booklet in with junk.
       const fp = meta.freepass || { count: 0 };
-      c.freepassHit = fp.count > 0;
+      const clean = filterFreepassQuestions(fp.questions, c.paper);
+      c.freepassHit = clean.length > 0;
+      c.freepassClean = clean.length;
       if (c.freepassHit) hits++;
     }
     done++;
@@ -322,7 +327,7 @@ if (cmd === 'freepass') {
     const metaPath = path.join(METADIR, key + '.json');
     if (!fs.existsSync(metaPath)) continue;
     const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-    const qs = meta.freepass && meta.freepass.questions;
+    const qs = filterFreepassQuestions(meta.freepass && meta.freepass.questions, c.paper);
     if (!qs || !qs.length) continue;
     for (const mem of c.members) {
       const m2 = { topper: mem.topper, coaching: mem.source, subject: mem.kind === 'opt' ? (mem.subject || 'Other') : mem.paper, url: mem.url };
@@ -677,6 +682,53 @@ function cleanGeminiQuestion(s, essay) {
   if (!essay && !DIRECTIVE_RX.test(s) && !/\?/.test(s) &&
       !/^["“'']?(?:how|why|what|which|do you|to what extent|should|can|is|are|in what)\b/i.test(s)) return null;
   return s;
+}
+
+/** `freepass` reads whatever pdf.js finds in a PDF text layer and runs the old
+ *  extractQuestions() heuristic — no quality gate. That is fine for GS/Essay
+ *  booklets but on optional-subject copies (Mathematics especially) and on
+ *  evaluation-rubric pages it emits notation dumps and score grids. This gate
+ *  drops those before they reach data/ocr-questions.csv. */
+/** standard UPSC question-paper preamble / portal chrome that pdf.js hands back as "questions" */
+const INSTRUCTION_RX = /^(?:there (?:are|is)\b|candidates?\s*(?:has|have|should|must|are|will|may)\b|questions?\s+no|the number of marks|word li?\s?mit in|any page or portion|answers?\s+must be wr|please\s+(?:do\s+)?furnish|do furnish|write your name|write the appropriate|write \w+ essays?\b|choosing one topic|note\s*:|the medium (?:specified|authorized)|the candidate should|all questions carry|symbols?\s+\w+\s+carry|attempt (?:any |only )?\w+ questions?|one question in|maximum marks|time allowed|a consolidated question|question paper-?cum|legible scanning|please write|upload your|support\s*:|call \d{6}|evaluator code|s\s*&\s*f\s*=|marks? ?obtained|do not write|for office use|evaluation indicator|content competence|structure competence|language competence|immediately on receipt|evaluate the following integral|find the (?:unique )?polynomial)/i;
+
+const TYPOGRAPHIC_OK = /[‘’“”–—… °•é−×]/g;  // curly quotes, dashes, ellipsis, °, é…
+
+function cleanTextLayerQuestion(text, essay) {
+  let s = String(text || '').replace(/\s+/g, ' ')
+    .replace(/^\s*(?:Q\.?\s*)?\d{1,2}\s*[.)]\s*/i, '')       // "Q.5 " / "12. " / "5 ) "
+    .replace(/^\s*\(\s*[a-e]\s*\)\s*/i, '')                  // "(a) " / "( a ) " sub-part marker
+    .replace(/^\s*[a-e]\)\s*/i, '')                          // "a) "
+    .replace(/^(short note)s?\s*[:-]\s*/i, '$1 on ')         // "Short Note: X" → "Short note on X"
+    .replace(/\s+[^\x00-\x7F][^\x00-\x7F\s]*(?:\s+[^\x00-\x7F][^\x00-\x7F\s]*)*\s*$/, '')  // trailing romanised-Hindi garble
+    .replace(/\s{2,}/g, ' ').trim();
+  if (s.length < 35 || s.length > 900) return null;
+  if (!/^["“'']?[A-Z]/.test(s)) return null;
+  if (INSTRUCTION_RX.test(s)) return null;
+  if (/\bmarker\b|\bmerit\s*\d\b|destinations?\s+d\d|switching circuit|newton'?s?\s+(?:forward|backward) formula|orthogonal trajector/i.test(s)) return null;
+  if (/^\W*\d[\d.\s<>+×x/-]{6,}/.test(s)) return null;                       // "0- 3.5 < 3.0 10 Marker …" score grid
+  if (/[ऀ-ॿ]/.test(String(text))) return null;                              // bilingual line — usually preamble
+  if (s.replace(TYPOGRAPHIC_OK, '').match(/[^\x00-\x7F]/)) return null;      // leftover non-Latin → transliteration junk
+  const letters = (s.match(/[A-Za-z]/g) || []).length;
+  if (letters / s.length < 0.62) return null;                                // digit / symbol soup
+  if (/[\\{}^|]|T\([a-z],|\bmod\s+\d\b|=\s*[a-z(]|∫|∑|√|\[1[0-9]\]|\bdxdy\b|\bflow chart\b/i.test(s)) return null;   // maths notation
+  const toks = s.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (toks.length < 7) return null;
+  if (toks.filter(w => w.replace(/[^A-Za-z]/g, '').length <= 2).length / toks.length > 0.4) return null;   // garble = many tiny tokens
+  if (toks.filter(w => /[bcdfghjklmnpqrstvwxz]{5}/i.test(w)).length >= 1) return null;   // "srn.r", "itreducible", "cnd", "Hunman"
+  // text-layer questions get no benefit of the doubt: needs a directive verb, a '?', or the essay/short-note shape
+  if (!essay && !DIRECTIVE_RX.test(s) && !/\?/.test(s) && !/^short note on\b/i.test(s)) return null;
+  if (essay && !/[.?][""'']?$/.test(s)) return null;                         // essay topic must be a complete sentence
+  return s;
+}
+function filterFreepassQuestions(qs, paper) {
+  const essay = /essay/i.test(paper || '');
+  const out = [];
+  for (const q of qs || []) {
+    const clean = cleanTextLayerQuestion(q.question, essay);
+    if (clean) out.push({ ...q, question: clean });
+  }
+  return out;
 }
 
 /** Turn one page's OCR text (tesseract raw, or one Gemini response entry) into
@@ -1039,7 +1091,7 @@ if (cmd === 'emit') {
     if (!c.freepassHit) continue;
     const mp = path.join(METADIR, sha1(resolve(c.representative).fetchUrl || c.representative) + '.json');
     if (!fs.existsSync(mp)) continue;
-    const qs = JSON.parse(fs.readFileSync(mp, 'utf8')).freepass?.questions;
+    const qs = filterFreepassQuestions(JSON.parse(fs.readFileSync(mp, 'utf8')).freepass?.questions, c.paper);
     if (!qs || !qs.length) continue;
     const m = c.members.find(x => x.url === c.representative) || c.members[0];
     const meta = { topper: m.topper, coaching: m.source, subject: m.kind === 'opt' ? (m.subject || 'Other') : m.paper, url: m.url };

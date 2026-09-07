@@ -1,5 +1,4 @@
-/* Toppers Copy — static client. A community-built index; GS/Essay question data builds on open
-   community work including upsckata.com "Topper Copies". */
+/* Toppers Copy — static client. A free, open, community-built index of UPSC Mains topper answer copies. */
 (function () {
   'use strict';
 
