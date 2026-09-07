@@ -136,16 +136,26 @@ function build() {
     }
   }
 
-  // GS/Essay copies that are only a link (no extractable question text) — skip any whose PDF
-  // is already OCR'd and searchable via questions.csv/submissions.csv (same base URL), so a copy
-  // never shows up twice (once searchable, once as a redundant bare link).
+  const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
+    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
+
+  // GS/Essay copies that are only a link (no extractable question text). A PDF must live in
+  // exactly ONE surface — skip any link-copies entry that is also (a) already OCR'd & searchable,
+  // (b) present in optionals.json, or (c) an Indian Forest Service (IFoS) paper mis-filed as a
+  // CSE GS/Essay paper (that's the 2026-09-05 dedup bug that deleted the IFS bucket — never again).
   const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
     ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
+  const optBaseUrls = new Set(optRaw.map(o => (o.url || '').split('#')[0]).filter(Boolean));
+  const IFOS_RX = /UPSC[_ -]?IF(?:o?S)[_ -]?20\d\d|\bIFoS\b|indian forest service/i;
+  const CSE_PAPER_RX = /^(?:GS[1-4]|Essay)$/i;
   let linkSkippedAsSearchable = 0;
+  const linkConflicts = [];
   for (const e of linkRaw) {
     if (!e.url || !e.topper || !e.paper) continue;
     const base = e.url.split('#')[0];
     if (groups.has(base)) { linkSkippedAsSearchable++; continue; }
+    if (optBaseUrls.has(base)) { linkConflicts.push(['also in optionals.json', e.paper, base]); continue; }
+    if (IFOS_RX.test(base) && CSE_PAPER_RX.test(e.paper)) { linkConflicts.push(['IFoS paper mis-filed as CSE ' + e.paper + ' — belongs in optionals.json as "Forest Service (IFS)"', e.paper, base]); continue; }
     copies.push({ i: i++, t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: base, q: [], prov: 'link', link: 1, note: e.note || '' });
     const T = toppers[e.topper] || (toppers[e.topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
     T.copies++;
@@ -153,6 +163,26 @@ function build() {
     if (e.year && !T.year) T.year = e.year;
     if (e.source && !T.coaching.includes(e.source)) T.coaching.push(e.source);
     if (e.paper && !T.papers.includes(e.paper)) T.papers.push(e.paper);
+  }
+  // audit the other overlap directions. Two severities so the real problems stay visible:
+  //   CONFLICT — always wrong, must be fixed by hand (a wrong dedup here is the IFS bug)
+  //   info     — expected churn (an optional copy the OCR pass has since made searchable)
+  const optSeen = new Set();
+  let optNowSearchable = 0;
+  for (const o of optRaw) {
+    const b = (o.url || '').split('#')[0];
+    if (!b) continue;
+    if (optSeen.has(b)) linkConflicts.push(['duplicated inside optionals.json', o.subject || '?', b]);
+    else optSeen.add(b);
+    if (groups.has(b)) optNowSearchable++;
+  }
+  if (linkConflicts.length) {
+    console.warn(`\n⚠  ${linkConflicts.length} DATA CONFLICT${linkConflicts.length === 1 ? '' : 'S'} — a PDF classified two different ways. Resolve by hand; do NOT just delete one side (that is how the IFS bucket got lost). Build kept the safer copy:`);
+    for (const [why, paper, url] of linkConflicts) console.warn(`   [${paper}] ${why}\n       ${url}`);
+    console.warn('');
+  }
+  if (optNowSearchable) {
+    console.log(`info: ${optNowSearchable} optionals.json PDFs are now also question-searchable via OCR — fine, but the OCR pipeline should fold their questions into optionals.json rather than leaving a parallel copy.`);
   }
 
   copies.sort((a, b) => a.t.localeCompare(b.t) || a.p.localeCompare(b.p));
@@ -167,8 +197,6 @@ function build() {
   const stats = { questions: qCount, copies: searchable.length, toppers: new Set(searchable.map(c => c.t)).size, papers };
 
   // stats.all = grand total incl. link-only + optional-subject copies — for the homepage headline
-  const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
-    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
   const optQ = optRaw.reduce((n, o) => n + (Array.isArray(o.questions) ? o.questions.length : 0), 0);
   const optSubjects = new Set(optRaw.map(o => o.subject).filter(Boolean));
   stats.all = {
