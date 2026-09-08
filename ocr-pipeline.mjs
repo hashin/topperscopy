@@ -690,6 +690,56 @@ function cleanGeminiQuestion(s, essay) {
   return s;
 }
 
+/** Second-chance pass for a Gemini chunk that `cleanGeminiQuestion` threw out.
+ *  Gemini was told to return ONLY printed question text (or "NONE"), so a
+ *  non-NONE chunk is its judgement that this IS a question — most rejects are a
+ *  light OCR wound we can dress, not garbage. Repair the recoverable ones,
+ *  still hard-drop instructions / rubric / notation / true letter-soup.
+ *  Anything this returns is tagged `salvaged` downstream. */
+function salvageGeminiQuestion(raw, essay) {
+  let s = String(raw || '')
+    .replace(/\\n/g, ' ').replace(/[ऀ-ॿ]+/g, ' ').replace(/```(?:json)?/gi, '')
+    .replace(/\s+/g, ' ')
+    .replace(/^\s*(?:Q\.?\s*)?\d{1,2}\s*[.)]\s*/i, '')          // "Q.15 " / "12. "
+    .replace(/^\s*\(\s*[a-e]\s*\)\s*/i, '').replace(/^\s*[a-e]\)\s*/i, '')   // "(a) " / "b) "
+    .replace(/^\s*\(\s*[ivx]{1,3}\s*\)\s*/i, '')                // "(ii) "
+    .replace(/\(([^)]*)\)/g, (m, inr) =>                        // drop non-English parens, keep "(150 words)"/years/acronyms
+      /[A-Za-z]/.test(inr) || /^\s*(?:1[6-9]|20)\d\d\s*$/.test(inr) ? m : ' ')
+    .replace(/[\s(]*\d{1,3}\s*marks?\.?\)?\s*$/i, '')           // trailing "10 marks."
+    .replace(/\s*\|\s*\d{1,3}\s*$/, '').replace(/\s+\d{1,2}\s*$/, '')
+    .replace(/^["“'\s.,;:–—\-*)\]]+/, '')                       // strip leading speckle / stray bracket
+    .replace(/\s+([,.;:?])/g, '$1').replace(/\s{2,}/g, ' ').trim();
+
+  if (/^[a-z]/.test(s)) s = s[0].toUpperCase() + s.slice(1);   // OCR ate the opening capital
+  s = s.replace(/[\s,;:–—-]+(?:and|or|but|the|a|an|of|in|to|with|for|which|that|as|by|on|from)\s*$/i, '').trim();
+
+  if (!s || s.length < 30 || s.length > 700) return null;
+  if (/^none\b/i.test(s)) return null;
+  if (RUBRIC_RX.test(s) || INSTRUCTION_RX.test(s) || TRUNC_LEAD_RX.test(s)) return null;
+  if (MATHS_RX.test(s)) return null;
+  if (/[ऀ-ॿ]/.test(String(raw))) return null;                  // a still-bilingual line → preamble, not the question
+  const letters = (s.match(/[A-Za-z]/g) || []).length;
+  if (letters / s.length < 0.6) return null;                   // digit / symbol soup
+  if (/[\\{}^|]|∫|∑|√|\bdxdy\b/.test(s)) return null;           // notation
+  const toks = s.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (toks.length < (essay ? 4 : 6)) return null;
+  if (hasGarbleRun(s)) return null;                            // 3+ consecutive non-word tokens
+  if (toks.filter(w => /[bcdfghjklmnpqrstvwxz]{5}/i.test(w)).length >= 1) return null;   // "itreducible", "cnd"
+  if (toks.filter(w => /[a-z][A-Z]/.test(w) && !/^["“'']?[A-Z]/.test(w)).length >= 1) return null;   // "prOVIded" intercaps
+  if (toks.filter(w => /^[b-df-hj-np-tv-wyz]$/i.test(w)).length >= 2) return null;       // split-word fragments
+  // real-English density — proper nouns (Capitalised, not sentence-initial) and short words count as good
+  const good = toks.filter((w, i) => bare(w).length < 3 || isEnglishWord(w) || (i > 0 && /^[A-Z0-9]/.test(w)));
+  if (good.length / toks.length < 0.82) return null;
+  // it has to read like a prompt: a directive verb, a question mark, an interrogative opener,
+  // or a self-contained statement that ends in a full stop (essay topic / "The role of X ..." stem)
+  const prompt = essay || DIRECTIVE_RX.test(s) || /\?/.test(s)
+    || /^["“'']?(?:how|why|what|which|whether|do you|to what extent|should|could|can|is|are|in what|in the light of|in the context of|given that)\b/i.test(s)
+    || /[.?]["'’”]?$/.test(s);
+  if (!prompt) return null;
+  if (/\b(?:i think|in my opinion|firstly,|secondly,|to conclude|as per me|according to me|the candidate (?:has|should|must|needs)|good attempt|well written)\b/i.test(s)) return null;
+  return s;
+}
+
 /** `freepass` reads whatever pdf.js finds in a PDF text layer and runs the old
  *  extractQuestions() heuristic — no quality gate. That is fine for GS/Essay
  *  booklets but on optional-subject copies (Mathematics especially) and on
@@ -760,8 +810,9 @@ function questionsFromOcr(text, pageNo, opts = {}) {
   if (opts.engine === 'gemini') {
     const out = [];
     for (const chunk of String(text || '').split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
-      const q = cleanGeminiQuestion(chunk, essay);
-      if (q) out.push({ page: pageNo, question: q, marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '', words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
+      let q = cleanGeminiQuestion(chunk, essay), salvaged = false;
+      if (!q && opts.salvage !== false) { q = salvageGeminiQuestion(chunk, essay); salvaged = !!q; }
+      if (q) out.push({ page: pageNo, question: q, salvaged, marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '', words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
     }
     return out;
   }
@@ -1079,6 +1130,78 @@ if (cmd === 'validate') {
   process.exit(0);
 }
 
+if (cmd === 'salvage') {
+  // Recover Gemini transcriptions that the extraction filter rejected. Re-walks
+  // every cached .ocr/graw/*.txt, re-runs questionsFromOcr() (which now falls
+  // back to salvageGeminiQuestion() on a reject) and merges anything new into
+  // the unit's .ocr/ocr/<sha>.json — geminiPages / geminiDone are left intact,
+  // so it is idempotent and safe to run every night before `emit`.
+  //   --dry      print what would be salvaged, write nothing
+  //   --verbose  also print the still-rejected chunks
+  const dry = args.includes('--dry'), verbose = args.includes('--verbose');
+  const GRAW = path.join(CACHE, 'graw');
+  if (!fs.existsSync(GRAW)) { console.log('no .ocr/graw cache — run `gemini` first'); process.exit(0); }
+  const clusters = JSON.parse(fs.readFileSync(path.join(CACHE, 'clusters.json'), 'utf8'));
+  const bySha = new Map(clusters.map(c => [sha1(c.representative), c]));
+  const qKey = t => String(t || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 64);
+
+  const byUnit = new Map();
+  for (const f of fs.readdirSync(GRAW)) {
+    const m = f.match(/^([0-9a-f]{40})_p(\d+)\.txt$/);
+    if (!m) continue;
+    if (!byUnit.has(m[1])) byUnit.set(m[1], []);
+    byUnit.get(m[1]).push({ page: +m[2], file: f });
+  }
+
+  let units = 0, salvagedTotal = 0, stillRejected = 0;
+  for (const [sha, pages] of byUnit) {
+    const c = bySha.get(sha);
+    if (!c) continue;
+    if (getArg('source') && c.source !== getArg('source')) continue;
+    const outPath = path.join(OCRDIR, sha + '.json');
+    if (!fs.existsSync(outPath)) continue;
+    const rec = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    const essay = /essay/i.test(c.paper || rec.paper || '');
+    const seen = new Set((rec.questions || []).map(q => qKey(q.question)));
+    const added = [];
+    pages.sort((a, b) => a.page - b.page);
+    for (const { page, file } of pages) {
+      const raw = fs.readFileSync(path.join(GRAW, file), 'utf8').trim();
+      if (!raw || /^none$/i.test(raw)) continue;
+      for (const chunk of raw.split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
+        if (cleanGeminiQuestion(chunk, essay)) continue;             // already extracted on the main pass
+        const q = salvageGeminiQuestion(chunk, essay);
+        if (q) {
+          const k = qKey(q);
+          if (k && !seen.has(k)) {
+            seen.add(k);
+            added.push({ page, question: q, salvaged: true, via: 'salvage',
+              marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '',
+              words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
+          }
+        } else if (chunk.trim().length > 25) {
+          stillRejected++;
+          if (verbose) console.log(`  ✗ ${c.source} p${page}: ${JSON.stringify(chunk.trim().slice(0, 140))}`);
+        }
+      }
+    }
+    if (added.length) {
+      salvagedTotal += added.length;
+      units++;
+      if (dry || verbose) {
+        console.log(`\n${c.source} · ${(c.key || c.representative.slice(-46))} · +${added.length} salvaged`);
+        for (const q of added) console.log(`   p${q.page} ${JSON.stringify(q.question)}`);
+      }
+      if (!dry) {
+        rec.questions = (rec.questions || []).concat(added);
+        fs.writeFileSync(outPath, JSON.stringify(rec));
+      }
+    }
+  }
+  console.log(`\nsalvage${dry ? ' (dry)' : ''}: +${salvagedTotal} questions across ${units} units · ${stillRejected} chunks still rejected`);
+  process.exit(0);
+}
+
 if (cmd === 'emit') {
   // GS/Essay questions → data/ocr-questions.csv. Optional-subject questions are folded
   // into their entry's `questions[]` in data/optionals.json instead, so an optional copy
@@ -1097,7 +1220,7 @@ if (cmd === 'emit') {
   const opByBase = new Map(opDoc.entries.map(e => [norm(e.url), e]));
   const optQ = new Map();                          // base url -> [{page,question,marks,words}]
   const rows = [];
-  let units = 0, skippedFlagged = 0, optUnits = 0, optOrphans = 0, skippedMaths = 0;
+  let units = 0, skippedFlagged = 0, optUnits = 0, optOrphans = 0, skippedMaths = 0, salvagedRows = 0;
 
   // Mathematics / Statistics answer copies are pure notation — no useful searchable
   // question text comes out of them by any OCR route. Don't extract questions for them.
@@ -1110,13 +1233,14 @@ if (cmd === 'emit') {
       if (!opByBase.has(base)) { optOrphans++; }   // not in optionals.json — fall through to CSV
       else {
         const arr = optQ.get(base) || [];
-        for (const q of questions) arr.push({ page: q.page || null, question: q.question, marks: q.marks || '', words: q.words || '' });
+        for (const q of questions) arr.push({ page: q.page || null, question: q.question, marks: q.marks || '', words: q.words || '', salvaged: !!q.salvaged });
         optQ.set(base, arr);
         optUnits++;
         return;
       }
     }
     const meta = { topper: m.topper, coaching: m.source, subject: m.kind === 'opt' ? (m.subject || 'Other') : m.paper, url: m.url };
+    for (const q of questions) if (q.salvaged) salvagedRows++;
     for (const row of toCsvRows(questions, meta)) rows.push(row);
   };
 
@@ -1160,7 +1284,7 @@ if (cmd === 'emit') {
 
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
-  console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back)`);
+  console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back` + (salvagedRows ? `, ${salvagedRows} salvaged` : '') + `)`);
   console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} not in optionals.json → CSV)` : '') + (skippedMaths ? ` · ${skippedMaths} Maths/Statistics units skipped` : '') + (optCleared ? ` · cleared ${optCleared} stale Maths entries` : ''));
   console.log('next: node build.js');
   process.exit(0);

@@ -64,6 +64,7 @@ jobs:
       - name: Validate, emit, rebuild, commit
         run: |
           node ocr-pipeline.mjs validate || true
+          node ocr-pipeline.mjs salvage --verbose || true
           node ocr-pipeline.mjs emit
           node build.js
           git config user.name  "github-actions[bot]"

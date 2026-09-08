@@ -98,7 +98,7 @@
     var esc = function (v) { v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     var base = meta.url ? String(meta.url).split('#')[0] : '';
     return (questions || []).map(function (r) {
-      var md = 'Type: question, Word limit: ' + (r.words || '') + ', Marks: ' + (r.marks || '');
+      var md = 'Type: question' + (r.salvaged ? ' (salvaged)' : '') + ', Word limit: ' + (r.words || '') + ', Marks: ' + (r.marks || '');
       return [esc(meta.topper || ''), esc(meta.coaching || meta.source || ''), esc(meta.subject || meta.paper || ''),
         r.page, esc(r.question), esc(md), base ? base + '#page=' + r.page : ''].join(',');
     });
