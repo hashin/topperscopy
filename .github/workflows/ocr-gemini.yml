@@ -2,17 +2,25 @@ name: OCR — Gemini vision pass
 
 # PRIMARY OCR for the link-only booklets: renders the printed-question strip of
 # every page and reads it with gemini-3.5-flash-lite on the FREE tier. Runs
-# nightly, stops at the request budget and on the first HTTP 429, so it never
-# leaves the free quota. Progress is cached in .ocr/ so each run resumes where
-# the last one stopped — expect the backlog to drain over ~4-6 weeks.
+# daily, stops at the request budget (500/day, verified) and on the first HTTP
+# 429, so it never leaves the free quota. Progress is cached in .ocr/ so each
+# run resumes where the last one stopped — backlog drains over ~6-8 weeks.
 #
-# 09:00 UTC: the Gemini free-tier request-per-day quota resets at midnight
-# US-Pacific (~08:00 UTC). Running just after that — and letting GitHub's
-# scheduler delay push it later, never earlier — gives each run a full fresh
-# day's quota and avoids colliding with the previous day's run.
+# Quota timing — the free-tier requests-per-day counter resets at midnight
+# US-Pacific: 07:00 UTC under PDT (Mar-Nov), 08:00 UTC under PST (Nov-Mar). A
+# run must START after that boundary to get a full fresh 500; GitHub only ever
+# delays a scheduled run, never fires it early. So:
+#   * 08:30 UTC primary — 30 min past the PST reset, 90 min past PDT. A GitHub
+#     delay of up to ~15 h still lands inside the same quota-day.
+#   * 16:30 UTC backup — catches the (rare) morning cron that GitHub skips
+#     entirely; same quota-day, so it only ever uses quota the morning run
+#     left on the table. If the morning run already spent all 500 it 429s on
+#     request 1 and exits clean.
+# The `concurrency` group below means the two never overlap.
 on:
   schedule:
-    - cron: "0 9 * * *"         # 09:00 UTC daily (just after the Pacific quota reset)
+    - cron: "30 8 * * *"        # 08:30 UTC — primary, just after the US-Pacific quota reset
+    - cron: "30 16 * * *"       # 16:30 UTC — backup for a skipped morning run, same quota-day
   workflow_dispatch:
     inputs:
       requests:
