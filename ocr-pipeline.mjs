@@ -1265,17 +1265,20 @@ if (cmd === 'emit') {
     take(c.members.find(x => x.url === c.representative) || c.members[0], qs);
   }
 
-  // merge optional questions into optionals.json (dedupe by text, sort by page)
+  // merge optional questions into optionals.json — UNION with what's already
+  // committed (dedupe by text, sort by page), so a cold or partial .ocr cache
+  // can only add optional questions, never drop a previously-published set.
+  // `emit --force` replaces instead.
+  const qk = t => String(t).toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64);
   let optMerged = 0;
   for (const [base, list] of optQ) {
     const entry = opByBase.get(base);
     if (!entry) continue;
+    const prior = (!args.includes('--force') && Array.isArray(entry.questions)) ? entry.questions : [];
     const seen = new Set();
-    entry.questions = list.sort((a, b) => (a.page || 0) - (b.page || 0)).filter(q => {
-      const k = String(q.question).toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64);
-      if (!k || seen.has(k)) return false;
-      seen.add(k); return true;
-    });
+    entry.questions = prior.concat(list)
+      .sort((a, b) => (a.page || 0) - (b.page || 0))
+      .filter(q => { const k = qk(q.question); if (!k || seen.has(k)) return false; seen.add(k); return true; });
     optMerged++;
   }
   // strip any stale questions[] off subjects we no longer extract for
@@ -1285,24 +1288,27 @@ if (cmd === 'emit') {
   }
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   const csvPath = path.join(DATA, 'ocr-questions.csv');
+  const rowBase = line => { const u = line.slice(line.lastIndexOf(',') + 1); return u.split('#')[0]; };
 
-  // Cold-cache guard: the GH Actions .ocr cache can come back empty (eviction,
-  // a key miss). Without this, `emit` would write ~0 rows over the real corpus
-  // and the workflow would commit the wipe. Refuse to shrink an established
-  // CSV by more than half; the run just skips the data update that night.
-  const prevRows = fs.existsSync(csvPath)
-    ? fs.readFileSync(csvPath, 'utf8').trim().split('\n').filter(Boolean).length - 1 : 0;
-  if (prevRows >= 100 && rows.length < prevRows * 0.5) {
-    console.error(`\n✗ ABORT: emit produced ${rows.length} rows but data/ocr-questions.csv already has ${prevRows}.`);
-    console.error(`  The .ocr cache is almost certainly cold — not overwriting. Nothing committed this run.`);
-    console.error(`  If the shrink is real (corpus pruned), run \`node ocr-pipeline.mjs emit --force\`.`);
-    if (!args.includes('--force')) process.exit(1);
-    console.error(`  --force given: writing anyway.`);
+  // Merge, never replace. The GH Actions .ocr cache can come back cold
+  // (eviction / key miss) and re-OCR only a slice of the corpus that night —
+  // a straight overwrite would drop every copy not in this run's cache. So:
+  // this run's rows win for the copies it actually read; every other copy
+  // keeps the rows already committed. `emit --force` writes only the fresh set
+  // (use it after a genuine corpus prune).
+  let finalRows = rows;
+  if (!args.includes('--force') && fs.existsSync(csvPath)) {
+    const freshBases = new Set(rows.map(rowBase));
+    const prev = fs.readFileSync(csvPath, 'utf8').trim().split('\n').slice(1).filter(Boolean);
+    const kept = prev.filter(l => !freshBases.has(rowBase(l)));
+    const keptUnits = new Set(kept.map(rowBase)).size;
+    finalRows = rows.concat(kept);
+    if (kept.length) console.log(`merge: kept ${kept.length} committed rows from ${keptUnits} copies not re-read this run`);
   }
 
   fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
-  fs.writeFileSync(csvPath, HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
-  console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back` + (salvagedRows ? `, ${salvagedRows} salvaged` : '') + `)`);
+  fs.writeFileSync(csvPath, HEADER + finalRows.join('\n') + (finalRows.length ? '\n' : ''));
+  console.log(`wrote data/ocr-questions.csv · ${finalRows.length} rows (${rows.length} fresh from ${units} units, ${skippedFlagged} held back` + (salvagedRows ? `, ${salvagedRows} salvaged` : '') + `)`);
   console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} not in optionals.json → CSV)` : '') + (skippedMaths ? ` · ${skippedMaths} Maths/Statistics units skipped` : '') + (optCleared ? ` · cleared ${optCleared} stale Maths entries` : ''));
   console.log('next: node build.js');
   process.exit(0);
