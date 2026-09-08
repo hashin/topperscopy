@@ -5,9 +5,14 @@ name: OCR — Gemini vision pass
 # nightly, stops at the request budget and on the first HTTP 429, so it never
 # leaves the free quota. Progress is cached in .ocr/ so each run resumes where
 # the last one stopped — expect the backlog to drain over ~4-6 weeks.
+#
+# 09:00 UTC: the Gemini free-tier request-per-day quota resets at midnight
+# US-Pacific (~08:00 UTC). Running just after that — and letting GitHub's
+# scheduler delay push it later, never earlier — gives each run a full fresh
+# day's quota and avoids colliding with the previous day's run.
 on:
   schedule:
-    - cron: "20 1 * * *"        # 01:20 UTC daily
+    - cron: "0 9 * * *"         # 09:00 UTC daily (just after the Pacific quota reset)
   workflow_dispatch:
     inputs:
       requests:

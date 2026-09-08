@@ -1283,10 +1283,25 @@ if (cmd === 'emit') {
   for (const e of opDoc.entries) {
     if (NO_QUESTION_SUBJECTS.has(e.subject) && Array.isArray(e.questions) && e.questions.length) { delete e.questions; optCleared++; }
   }
-  fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
-
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
-  fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
+  const csvPath = path.join(DATA, 'ocr-questions.csv');
+
+  // Cold-cache guard: the GH Actions .ocr cache can come back empty (eviction,
+  // a key miss). Without this, `emit` would write ~0 rows over the real corpus
+  // and the workflow would commit the wipe. Refuse to shrink an established
+  // CSV by more than half; the run just skips the data update that night.
+  const prevRows = fs.existsSync(csvPath)
+    ? fs.readFileSync(csvPath, 'utf8').trim().split('\n').filter(Boolean).length - 1 : 0;
+  if (prevRows >= 100 && rows.length < prevRows * 0.5) {
+    console.error(`\n✗ ABORT: emit produced ${rows.length} rows but data/ocr-questions.csv already has ${prevRows}.`);
+    console.error(`  The .ocr cache is almost certainly cold — not overwriting. Nothing committed this run.`);
+    console.error(`  If the shrink is real (corpus pruned), run \`node ocr-pipeline.mjs emit --force\`.`);
+    if (!args.includes('--force')) process.exit(1);
+    console.error(`  --force given: writing anyway.`);
+  }
+
+  fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
+  fs.writeFileSync(csvPath, HEADER + rows.join('\n') + (rows.length ? '\n' : ''));
   console.log(`wrote data/ocr-questions.csv · ${rows.length} GS/Essay rows from ${units} units (${skippedFlagged} held back` + (salvagedRows ? `, ${salvagedRows} salvaged` : '') + `)`);
   console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} not in optionals.json → CSV)` : '') + (skippedMaths ? ` · ${skippedMaths} Maths/Statistics units skipped` : '') + (optCleared ? ` · cleared ${optCleared} stale Maths entries` : ''));
   console.log('next: node build.js');
