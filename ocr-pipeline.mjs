@@ -231,7 +231,7 @@ async function pool(items, n, fn) {
 
 const STRIP_FRACTION = 0.38;   // top share of the page that holds the printed question
 const FULL_PAGE_UNTIL = 3;     // pages 1..3 render whole (question-paper inserts live here)
-const RENDER_DPI = 150;
+let RENDER_DPI = 150;          // pdftoppm raster resolution; --dpi overrides (image tokens ≈ 97% of the API bill)
 const PAGEDIR = path.join(CACHE, 'pages');
 const OCRDIR = path.join(CACHE, 'ocr');
 const RAWDIR = path.join(CACHE, 'raw');   // raw per-page tesseract text — lets `reclean` re-run the filter offline
@@ -244,11 +244,11 @@ function sh(cmd, argv, opts = {}) {
 }
 
 /** Render one page (or its top strip) to PNG. Returns the file path, or null. */
-function renderPage(pdfPath, pageNo, heightPts, outPrefix) {
+function renderPage(pdfPath, pageNo, heightPts, outPrefix, dpi = RENDER_DPI) {
   const full = pageNo <= FULL_PAGE_UNTIL;
-  const argv = ['-png', '-r', String(RENDER_DPI), '-f', String(pageNo), '-l', String(pageNo), '-aa', 'yes', '-aaVector', 'yes'];
+  const argv = ['-png', '-r', String(dpi), '-f', String(pageNo), '-l', String(pageNo), '-aa', 'yes', '-aaVector', 'yes'];
   if (!full && heightPts) {
-    const hPx = Math.round(heightPts * (RENDER_DPI / 72) * STRIP_FRACTION);
+    const hPx = Math.round(heightPts * (dpi / 72) * STRIP_FRACTION);
     argv.push('-x', '0', '-y', '0', '-W', '20000', '-H', String(hPx));
   }
   argv.push(pdfPath, outPrefix);
@@ -927,19 +927,29 @@ if (cmd === 'probe') {
 }
 
 if (cmd === 'bench') {
-  // A/B two (or more) models on the SAME rendered pages and diff the questions
-  // they yield, so we know whether a cheaper model keeps the accuracy before
-  // committing the backlog to it.
-  //   node ocr-pipeline.mjs bench --models gemini-3.5-flash-lite,gemini-2.5-flash-lite --limit 4
+  // Run a matrix of (model × render-DPI) variants over the SAME sample of
+  // booklets and measure each against the production baseline
+  // (gemini-3.5-flash-lite @ 150 DPI): question recall, reworded vs lost vs
+  // extra, tokens/request, and the projected backlog cost. Tells us exactly
+  // what a cheaper model or a lower resolution costs in accuracy.
+  //   node ocr-pipeline.mjs bench --models gemini-3.5-flash-lite,gemini-3.1-flash-lite --dpis 150,110,90 --limit 5
   const KEY = process.env.GEMINI_API_KEY;
   if (!KEY) { console.error('set GEMINI_API_KEY'); process.exit(1); }
-  const models = (getArg('models') || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite').split(',').map(s => s.trim()).filter(Boolean);
-  const limit = getArg('limit') ? +getArg('limit') : 4;
-  const pageCap = getArg('pages') ? +getArg('pages') : 24;
+  const models = (getArg('models') || 'gemini-3.5-flash-lite').split(',').map(s => s.trim()).filter(Boolean);
+  const dpis = (getArg('dpis') || '150,110,90').split(',').map(s => +s.trim()).filter(Boolean);
+  const limit = getArg('limit') ? +getArg('limit') : 5;
+  const pageCap = getArg('pages') ? +getArg('pages') : 30;
   const only = getArg('source');
+  const PRICE = {
+    'gemini-3.5-flash-lite': { in: 0.30, out: 2.50 }, 'gemini-3.1-flash-lite': { in: 0.25, out: 1.50 },
+    'gemini-flash-lite-latest': { in: 0.30, out: 2.50 }, 'gemini-3.5-flash': { in: 0.75, out: 3.75 },
+  };
   const clusters = JSON.parse(fs.readFileSync(path.join(CACHE, 'clusters.json'), 'utf8'));
+  const backlogUnits = clusters.filter(c => c.freepassDone ? (!c.freepassHit && !c.error) : true).length || 3600;
+  const REQ_PER_UNIT = 5.3;
   let units = unitsNeedingOcr(clusters);
   if (only) units = units.filter(c => c.source === only);
+  if (!units.length) units = clusters.slice();     // fall back to any clusters if freepass hasn't marked residue
   units = units.slice(0, limit);
   KEEP_PDFS = true;
 
@@ -958,9 +968,13 @@ if (cmd === 'bench') {
     }
     return { err: 'rate-limited' };
   };
-  const qkey = t => String(t).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 48);
+  // token-set signature so a reworded transcription still matches its baseline
+  const sig = t => new Set(String(t).toLowerCase().match(/[a-z]{4,}/g) || []);
+  const jac = (a, b) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
+  const variants = [];
+  for (const m of models) for (const d of dpis) variants.push({ m, d, key: `${m}@${d}`, q: [], inTok: 0, outTok: 0, reqs: 0, imgBytes: 0, err: null });
+  const baseKey = variants[0].key;
 
-  const perModel = Object.fromEntries(models.map(m => [m, { q: new Map(), inTok: 0, outTok: 0, reqs: 0, err: null }]));
   for (const c of units) {
     const { fetchUrl } = resolve(c.representative);
     if (!fetchUrl) continue;
@@ -969,53 +983,67 @@ if (cmd === 'bench') {
     if (meta.error || !fs.existsSync(pdfPath)) { console.log(`skip ${c.source}: ${meta.error || 'no pdf'}`); continue; }
     const H = meta.pageHeightPts || 842;
     const nPages = Math.min(meta.numPages || 0, pageCap);
-    console.log(`\n■ ${c.source} · ${(c.key || c.representative.slice(-46))} · ${nPages} pages`);
+    console.log(`■ ${c.source} · ${(c.key || c.representative.slice(-46))} · ${nPages}p`);
     for (let i = 1; i <= nPages; i += 6) {
       const slice = []; for (let p = i; p < i + 6 && p <= nPages; p++) slice.push(p);
-      const rendered = [];
-      for (const p of slice) { try { const img = renderPage(pdfPath, p, H, path.join(PAGEDIR, `b_${sha1(fetchUrl)}_p${p}`)); if (img) rendered.push({ p, img }); } catch {} }
-      if (!rendered.length) continue;
-      for (const model of models) {
-        if (perModel[model].err) continue;
+      for (const dpi of dpis) {
+        const rendered = [];
+        for (const p of slice) { try { const img = renderPage(pdfPath, p, H, path.join(PAGEDIR, `b_${dpi}_${sha1(fetchUrl)}_p${p}`), dpi); if (img) rendered.push({ p, img, bytes: fs.statSync(img).size }); } catch {} }
+        if (!rendered.length) continue;
         const parts = [{ text: GEMINI_PROMPT }, ...rendered.map(r => ({ inline_data: { mime_type: 'image/png', data: fs.readFileSync(r.img).toString('base64') } }))];
-        const res = await call(model, parts);
-        perModel[model].reqs++;
-        if (res.err) { perModel[model].err = res.err; console.log(`   ${model}: ${res.err}`); continue; }
-        perModel[model].inTok += res.usage.promptTokenCount || 0;
-        perModel[model].outTok += res.usage.candidatesTokenCount || 0;
-        rendered.forEach((r, idx) => {
-          for (const qq of questionsFromOcr(String(res.arr[idx] || ''), r.p, { paper: c.paper, engine: 'gemini' }))
-            perModel[model].q.set(qkey(qq.question) + ':' + r.p, { page: r.p, question: qq.question });
-        });
-        await new Promise(x => setTimeout(x, 1500));
+        for (const v of variants.filter(v => v.d === dpi)) {
+          if (v.err) continue;
+          const res = await call(v.m, parts);
+          v.reqs++; v.imgBytes += rendered.reduce((a, r) => a + r.bytes, 0);
+          if (res.err) { v.err = res.err; console.log(`   ${v.key}: ${res.err}`); continue; }
+          v.inTok += res.usage.promptTokenCount || 0;
+          v.outTok += res.usage.candidatesTokenCount || 0;
+          rendered.forEach((r, idx) => {
+            for (const qq of questionsFromOcr(String(res.arr[idx] || ''), r.p, { paper: c.paper, engine: 'gemini' }))
+              v.q.push({ page: r.p, text: qq.question, unit: c.key || fetchUrl, s: sig(qq.question) });
+          });
+          await new Promise(x => setTimeout(x, 1200));
+        }
+        for (const r of rendered) { try { fs.unlinkSync(r.img); } catch {} }
       }
-      for (const r of rendered) { try { fs.unlinkSync(r.img); } catch {} }
     }
     try { fs.unlinkSync(pdfPath); } catch {}
   }
 
-  const [A, B] = models;
-  const setA = perModel[A]?.q || new Map(), setB = perModel[B]?.q || new Map();
-  const keys = new Set([...setA.keys(), ...setB.keys()]);
-  let both = 0, onlyA = 0, onlyB = 0;
-  const exA = [], exB = [];
-  for (const k of keys) {
-    if (setA.has(k) && setB.has(k)) both++;
-    else if (setA.has(k)) { onlyA++; exA.push(setA.get(k)); }
-    else { onlyB++; exB.push(setB.get(k)); }
+  const base = variants[0];
+  const matched = (q, list) => list.some(o => o.page === q.page && jac(q.s, o.s) >= 0.6) || list.some(o => jac(q.s, o.s) >= 0.72);
+  console.log(`\n════════ BENCH: ${units.length} booklets · baseline = ${baseKey} ════════\n`);
+  const pad = (s, n) => String(s).padEnd(n);
+  console.log(pad('variant', 26), pad('Q', 5), pad('recall', 8), pad('lost', 6), pad('extra', 7), pad('tok/req', 9), pad('img KB', 8), 'backlog $ (sync / batch)');
+  const report = [];
+  for (const v of variants) {
+    if (v.err) { console.log(pad(v.key, 26), `— ${v.err}`); continue; }
+    const tokPerReq = v.reqs ? Math.round(v.inTok / v.reqs) : 0;
+    const kbPerReq = v.reqs ? Math.round(v.imgBytes / v.reqs / 1024) : 0;
+    const p = PRICE[v.m] || PRICE['gemini-3.5-flash-lite'];
+    const reqs = Math.round(backlogUnits * REQ_PER_UNIT);
+    const outPerReq = v.reqs ? v.outTok / v.reqs : 200;
+    const sync = (reqs * tokPerReq / 1e6) * p.in + (reqs * outPerReq / 1e6) * p.out;
+    let lost = 0, extra = 0; const lostEx = [], extraEx = [];
+    if (v.key === baseKey) {
+      console.log(pad(v.key + ' (base)', 26), pad(v.q.length, 5), pad('100%', 8), pad('—', 6), pad('—', 7), pad(tokPerReq, 9), pad(kbPerReq, 8), `$${sync.toFixed(0)} / $${(sync / 2).toFixed(0)}`);
+      report.push({ v, sync, recall: 1, lost: 0, extra: 0 }); continue;
+    }
+    for (const bq of base.q) if (!matched(bq, v.q)) { lost++; if (lostEx.length < 15) lostEx.push(bq); }
+    for (const vq of v.q) if (!matched(vq, base.q)) { extra++; if (extraEx.length < 15) extraEx.push(vq); }
+    const recall = base.q.length ? (base.q.length - lost) / base.q.length : 1;
+    console.log(pad(v.key, 26), pad(v.q.length, 5), pad((recall * 100).toFixed(0) + '%', 8), pad(lost, 6), pad(extra, 7), pad(tokPerReq, 9), pad(kbPerReq, 8), `$${sync.toFixed(0)} / $${(sync / 2).toFixed(0)}`);
+    report.push({ v, sync, recall, lost, extra, lostEx, extraEx });
   }
-  console.log('\n──────── RESULT ────────');
-  for (const m of models) {
-    const pm = perModel[m];
-    console.log(`${m}: ${pm.q.size} questions · ${pm.reqs} reqs · ${pm.inTok.toLocaleString()} in / ${pm.outTok.toLocaleString()} out tok` + (pm.err ? `  (stopped: ${pm.err})` : ''));
+
+  const b0 = report.find(r => r.v.key === baseKey);
+  for (const r of report) {
+    if (r.v.key === baseKey || r.v.err) continue;
+    console.log(`\n── ${r.v.key} vs ${baseKey} ──  recall ${(r.recall * 100).toFixed(0)}% · saves $${(b0.sync - r.sync).toFixed(0)} (${((1 - r.sync / b0.sync) * 100).toFixed(0)}%) on the backlog`);
+    if (r.lostEx?.length) { console.log(`  LOST (baseline had, this variant missed) — the accuracy cost:`); r.lostEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 120)}`)); }
+    if (r.extraEx?.length) { console.log(`  EXTRA (this variant produced, baseline didn't) — real catch or low-res garble, eyeball:`); r.extraEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 120)}`)); }
   }
-  if (models.length === 2 && !perModel[A].err && !perModel[B].err) {
-    const agree = keys.size ? (both / keys.size * 100).toFixed(0) : '—';
-    console.log(`\nagreement: ${both}/${keys.size} (${agree}%) · only ${A}: ${onlyA} · only ${B}: ${onlyB}`);
-    if (exA.length) { console.log(`\nonly ${A} caught:`); exA.slice(0, 12).forEach(q => console.log(`  p${q.page}  ${q.question.slice(0, 110)}`)); }
-    if (exB.length) { console.log(`\nonly ${B} caught:`); exB.slice(0, 12).forEach(q => console.log(`  p${q.page}  ${q.question.slice(0, 110)}`)); }
-    console.log(`\n→ eyeball the "only X" lists: a real accuracy gap shows as one model missing genuine questions or inventing garbled ones. Formatting-only diffs (punctuation, "Answer in 150 words") don't count.`);
-  }
+  console.log(`\nverdict guide: recall ≥ 97% + clean EXTRA list → the cheaper variant is safe. recall < 92% or garbled EXTRA → keep the baseline.`);
   process.exit(0);
 }
 
@@ -1138,6 +1166,7 @@ if (cmd === 'gemini') {
   // the 15 RPM free-tier limit no longer apply. Drop the throttle and let one
   // run clear the whole backlog. Costs real money — see `probe` for an estimate.
   const PAID = args.includes('--paid');
+  if (getArg('dpi')) RENDER_DPI = +getArg('dpi');                    // lower = fewer image tokens = cheaper; `bench --dpis` measures the accuracy cost
   const MODEL = getArg('model') || 'gemini-3.5-flash-lite';          // 2.x-lite are 404 on this key; --model gemini-3.1-flash-lite is the only cheaper option ($0.25/$1.50 vs $0.30/$2.50). run `bench` to check accuracy first.
   const maxReq = getArg('requests') ? +getArg('requests') : (PAID ? 100000 : 550);
   const gapMs = getArg('gap') ? +getArg('gap') : (PAID ? 250 : 4800); // ms between requests: paid ~240/min, free ~12.5/min
@@ -1173,7 +1202,7 @@ if (cmd === 'gemini') {
     jobs.push({ sha, c, rec, outPath, pages });
     if (jobs.length >= unitLimit) break;
   }
-  console.log(`gemini(${MODEL})${PAID ? ' [PAID]' : ''} · ${jobs.length} units · budget ${maxReq} requests · ${gapMs}ms gap · shard ${chunk + 1}/${of}`);
+  console.log(`gemini(${MODEL})${PAID ? ' [PAID]' : ''} · ${jobs.length} units · budget ${maxReq} req · ${gapMs}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
 
   const PROMPT = GEMINI_PROMPT;
 
