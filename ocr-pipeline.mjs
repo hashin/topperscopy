@@ -804,29 +804,17 @@ if (cmd === 'freepass') {
   });
   fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
 
-  // (re)write data/ocr-questions.csv from every free-pass hit recorded in the cache
-  const allRows = [];
-  for (const c of JSON.parse(fs.readFileSync(clPath, 'utf8'))) {
-    if (!c.freepassHit) continue;
-    const key = sha1(resolve(c.representative).fetchUrl || c.representative);
-    const metaPath = path.join(METADIR, key + '.json');
-    if (!fs.existsSync(metaPath)) continue;
-    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-    const qs = filterFreepassQuestions(meta.freepass && meta.freepass.questions, c.paper);
-    if (!qs || !qs.length) continue;
-    for (const mem of c.members) {
-      const m2 = { topper: mem.topper, coaching: mem.source, subject: mem.kind === 'opt' ? (mem.subject || 'Other') : mem.paper, url: mem.url };
-      for (const r of toCsvRows(qs, m2)) allRows.push(r);
-    }
-  }
-  const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
-  fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + allRows.join('\n') + (allRows.length ? '\n' : ''));
-
+  // NOTE: freepass only records hits in the .ocr cache — it does NOT write
+  // data/ocr-questions.csv. `emit` is the single writer of that file (it
+  // re-derives the free-pass rows from the same cache, attaches them to the
+  // cluster representative only, and merges with what's already committed).
+  // A direct write here would hand `emit` a near-empty merge baseline and
+  // silently drop every row from a copy not touched this run.
   const fresh = JSON.parse(fs.readFileSync(clPath, 'utf8'));
   const hitDocs = fresh.filter(c => c.freepassHit).reduce((a, c) => a + c.members.length, 0);
   const needVision = fresh.filter(c => c.freepassDone && !c.freepassHit && !c.error).length;
   console.log(`\nprocessed ${done} downloads · free-pass hits ${hits} (covering ${hitDocs} docs) · units needing vision ${needVision} · errors ${errs}`);
-  console.log(`wrote data/ocr-questions.csv (${allRows.length} rows). next: node build.js, then review · node ocr-pipeline.mjs status`);
+  console.log(`cache updated. next: node ocr-pipeline.mjs gemini → validate → emit`);
   process.exit(0);
 }
 
