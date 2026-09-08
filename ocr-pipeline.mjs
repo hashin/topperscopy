@@ -1287,7 +1287,7 @@ if (cmd === 'emit') {
   }
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   const csvPath = path.join(DATA, 'ocr-questions.csv');
-  const rowBase = line => { const u = line.slice(line.lastIndexOf(',') + 1); return u.split('#')[0]; };
+  const rowBase = line => norm(line.slice(line.lastIndexOf(',') + 1));
 
   // Merge, never replace. The GH Actions .ocr cache can come back cold
   // (eviction / key miss) and re-OCR only a slice of the corpus that night —
@@ -1299,10 +1299,19 @@ if (cmd === 'emit') {
   if (!args.includes('--force') && fs.existsSync(csvPath)) {
     const freshBases = new Set(rows.map(rowBase));
     const prev = fs.readFileSync(csvPath, 'utf8').trim().split('\n').slice(1).filter(Boolean);
-    const kept = prev.filter(l => !freshBases.has(rowBase(l)));
+    // keep a committed row only if this run didn't re-read that copy AND the
+    // copy isn't tracked in optionals.json (those are owned by optionals.json —
+    // a stale optional row here would show the copy twice).
+    let droppedOpt = 0;
+    const kept = prev.filter(l => {
+      const b = rowBase(l);
+      if (freshBases.has(b)) return false;
+      if (opByBase.has(b)) { droppedOpt++; return false; }
+      return true;
+    });
     const keptUnits = new Set(kept.map(rowBase)).size;
     finalRows = rows.concat(kept);
-    if (kept.length) console.log(`merge: kept ${kept.length} committed rows from ${keptUnits} copies not re-read this run`);
+    if (kept.length) console.log(`merge: kept ${kept.length} committed rows from ${keptUnits} copies not re-read this run` + (droppedOpt ? ` · dropped ${droppedOpt} stale optional-subject rows` : ''));
   }
 
   fs.writeFileSync(path.join(DATA, 'optionals.json'), JSON.stringify(opDoc, null, 2) + '\n');
