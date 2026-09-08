@@ -394,10 +394,10 @@ function build() {
 
   const nameToSlug = writeTopperPages(copies, optRaw, toppers, generated);
   writeStaticIndex(copies, toppers, stats, generated, nameToSlug);
-  writeToppersPage(copies, toppers, stats, generated, nameToSlug);
+  const topperIndexPages = writeToppersPage(copies, toppers, stats, generated, nameToSlug);
   const indexableQuestionSlugs = writeQuestionPages(qList, copies, nameToSlug, generated);
   writeHubPages(qList, copies, optRaw, nameToSlug, generated);
-  writeSitemaps(generated, indexableQuestionSlugs);
+  writeSitemaps(generated, indexableQuestionSlugs, topperIndexPages);
   writeLlms(stats, generated);
   writeRobots();
   const dsCounts = writeDataset(copies, toppers, generated, gitCommit());
@@ -831,15 +831,37 @@ function writeToppersPage(copies, toppers, stats, generated, nameToSlug) {
   }
   const names = Array.from(byTopper.keys()).sort();
 
-  const sections = names.map(name => {
-    const list = byTopper.get(name).slice().sort((a, b) => (a.p).localeCompare(b.p));
-    const meta = topperMeta(name, toppers);
-    const idSlug = (nameToSlug && nameToSlug.get(name)) || slug(name);
-    const rows = list.map(c => {
-      const pdf = esc(c.u);
-      return `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.q.length}</td><td><a href="${pdf}" rel="nofollow noopener">source PDF</a></td></tr>`;
-    }).join('\n');
-    return `  <section id="${idSlug}">
+  // One 2.4 MB page with 11k links spread link equity thinly and made the browser parse the
+  // whole corpus to show the first screen. Split alphabetically — the order it was already in,
+  // so every #slug anchor still resolves on the page that holds it. Page 1 keeps /toppers.html
+  // so the indexed URL, its canonical and the sitemap entry all survive.
+  const PER_PAGE = 200;
+  const chunks = [];
+  for (let i = 0; i < names.length; i += PER_PAGE) chunks.push(names.slice(i, i + PER_PAGE));
+  const totalPages = chunks.length;
+  const href = n => (n === 1 ? '/toppers.html' : `/toppers-${n}.html`);
+  const fileOf = n => (n === 1 ? 'toppers.html' : `toppers-${n}.html`);
+  const clip = (s, n) => (s.length > n ? s.slice(0, n - 1).trim() + '…' : s);
+  // titles get room to breathe; the nav chips have to stay on one line
+  const rangeOf = (ch, w) => `${clip(ch[0], w || 26)} – ${clip(ch[ch.length - 1], w || 26)}`;
+
+  const written = [];
+
+  chunks.forEach((pageNames, idx) => {
+    const num = idx + 1;
+    const offset = idx * PER_PAGE;
+    const range = rangeOf(pageNames);
+    const isFirst = num === 1;
+
+    const sections = pageNames.map(name => {
+      const list = byTopper.get(name).slice().sort((a, b) => (a.p).localeCompare(b.p));
+      const meta = topperMeta(name, toppers);
+      const idSlug = (nameToSlug && nameToSlug.get(name)) || slug(name);
+      const rows = list.map(c => {
+        const pdf = esc(c.u);
+        return `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.q.length}</td><td><a href="${pdf}" rel="nofollow noopener">source PDF</a></td></tr>`;
+      }).join('\n');
+      return `  <section id="${idSlug}">
     <h2><a href="/topper/${idSlug}/">${esc(name)}</a>${telegramLink(name, toppers)}</h2>
     ${meta ? `<p class="meta">${esc(meta)}</p>` : ''}
     <table>
@@ -849,31 +871,59 @@ ${rows}
       </tbody>
     </table>
   </section>`;
-  }).join('\n\n');
+    }).join('\n\n');
 
-  const itemList = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'UPSC Mains toppers with published answer copies',
-    numberOfItems: names.length,
-    itemListElement: names.map((n, idx) => ({
-      '@type': 'ListItem', position: idx + 1, name: n, url: SITE + '/topper/' + ((nameToSlug && nameToSlug.get(n)) || slug(n)) + '/'
-    }))
-  };
+    const itemList = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `UPSC Mains toppers with published answer copies — ${range}`,
+      numberOfItems: pageNames.length,
+      itemListElement: pageNames.map((n, i) => ({
+        '@type': 'ListItem', position: offset + i + 1, name: n,
+        url: SITE + '/topper/' + ((nameToSlug && nameToSlug.get(n)) || slug(n)) + '/'
+      }))
+    };
 
-  const html = `<!doctype html>
+    // Every page links to every other page, so a crawler reaching any one of them reaches all.
+    const pageLinks = chunks.map((ch, j) => {
+      const n = j + 1;
+      const label = `${n}. ${rangeOf(ch, 13)}`;
+      return n === num
+        ? `      <span aria-current="page">${esc(label)}</span>`
+        : `      <a href="${href(n)}">${esc(label)}</a>`;
+    }).join('\n');
+
+    const pager = `<nav class="pager" aria-label="Topper index pages">
+    <div class="nav">
+      ${num > 1 ? `<a href="${href(num - 1)}" rel="prev">← Previous</a>` : '<span class="off">← Previous</span>'}
+      <strong>Page ${num} of ${totalPages}</strong>
+      ${num < totalPages ? `<a href="${href(num + 1)}" rel="next">Next →</a>` : '<span class="off">Next →</span>'}
+    </div>
+    <div class="pages">
+${pageLinks}
+    </div>
+  </nav>`;
+
+    const title = isFirst
+      ? 'All UPSC Mains toppers &amp; answer copies — full index'
+      : `UPSC Mains toppers ${esc(range)} — index page ${num} of ${totalPages}`;
+    const desc = isFirst
+      ? `Complete static index of ${stats.toppers} UPSC Civil Services Mains rankers with published answer copies (GS1-4 and Essay), ${stats.copies} copies in total, each linking to its source PDF. Free, open and community-built.`
+      : `UPSC Civil Services Mains rankers ${range} with published answer copies (GS1-4 and Essay), each linking to its source PDF. Page ${num} of ${totalPages} of the full static index.`;
+
+    const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>All UPSC Mains toppers &amp; answer copies — full index | Toppers Copy</title>
-<meta name="description" content="Complete static index of ${stats.toppers} UPSC Civil Services Mains rankers with published answer copies (GS1-4 and Essay), ${stats.copies} copies in total, each linking to its source PDF. Free, open and community-built.">
-<link rel="canonical" href="${SITE}/toppers.html">
+<title>${title} | Toppers Copy</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${SITE}${href(num)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
-<meta property="og:title" content="All UPSC Mains toppers & answer copies — full index">
-<meta property="og:description" content="Static index of ${stats.toppers} rankers and ${stats.copies} answer copies, each linking to its source PDF.">
+${num > 1 ? `<link rel="prev" href="${SITE}${href(num - 1)}">\n` : ''}${num < totalPages ? `<link rel="next" href="${SITE}${href(num + 1)}">\n` : ''}<meta property="og:title" content="${esc(isFirst ? 'All UPSC Mains toppers & answer copies — full index' : `UPSC Mains toppers ${range} — page ${num} of ${totalPages}`)}">
+<meta property="og:description" content="${esc(isFirst ? `Static index of ${stats.toppers} rankers and ${stats.copies} answer copies, each linking to its source PDF.` : `Rankers ${range}, each linking to their source PDF.`)}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="${SITE}/toppers.html">
+<meta property="og:url" content="${SITE}${href(num)}">
 <meta property="og:image" content="${SITE}/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="675">
@@ -885,7 +935,7 @@ ${rows}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 20px 80px}
   main{max-width:900px;margin:0 auto}
-  header{max-width:900px;margin:0 auto;padding:32px 0 8px}
+  header,footer.pagefoot{max-width:900px;margin:0 auto;padding:32px 0 8px}
   h1{font-size:1.7rem;margin:0 0 6px}
   a{color:var(--teal)}
   .lead{color:var(--muted);margin:0 0 4px}
@@ -899,6 +949,12 @@ ${rows}
   th{color:var(--muted);font-weight:600}
   .toc{columns:220px;gap:24px;font-size:.92rem;margin:14px 0 0}
   .toc a{display:block;padding:2px 0}
+  nav.pager{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}
+  nav.pager .nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:.95rem}
+  nav.pager .off{color:var(--muted)}
+  nav.pager .pages{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  nav.pager .pages a,nav.pager .pages span{padding:4px 10px;border:1px solid var(--line);border-radius:7px;font-size:.8rem;text-decoration:none;white-space:nowrap}
+  nav.pager .pages span[aria-current]{background:var(--teal);color:var(--card);border-color:var(--teal);font-weight:600}
 </style>
 <script type="application/ld+json">
 ${JSON.stringify(itemList, null, 0)}
@@ -906,25 +962,35 @@ ${JSON.stringify(itemList, null, 0)}
 </head>
 <body>
 <header>
-  <nav class="crumb"><a href="/">Toppers Copy</a> / All toppers</nav>
+  <nav class="crumb"><a href="/">Toppers Copy</a> / <a href="/toppers.html">All toppers</a>${isFirst ? '' : ` / Page ${num}`}</nav>
   <h1>Every UPSC Mains topper answer copy — full index</h1>
   <p class="lead">${stats.toppers} rankers · ${stats.copies} answer copies · ${stats.questions.toLocaleString('en-IN')} indexed questions · updated ${generated}</p>
-  <p class="lead">This is the static, no-JavaScript index. The <a href="/">main site</a> lets you search inside every copy.
+  <p class="lead">This is the static, no-JavaScript index, split into ${totalPages} pages. The <a href="/">main site</a> lets you search inside every copy.
   A free, open, community-built index. Answer-copy PDFs are hosted by the institutes and toppers who published
   them; nothing is re-hosted here.</p>
-  <details><summary>Jump to a topper</summary>
+  <p class="lead"><strong>Page ${num} of ${totalPages}</strong> — ${esc(range)} (${pageNames.length} toppers)</p>
+  <details><summary>Jump to a topper on this page</summary>
     <div class="toc">
-${names.map(n => `      <a href="#${(nameToSlug && nameToSlug.get(n)) || slug(n)}">${esc(n)}</a>`).join('\n')}
+${pageNames.map(n => `      <a href="#${(nameToSlug && nameToSlug.get(n)) || slug(n)}">${esc(n)}</a>`).join('\n')}
     </div>
   </details>
+  ${pager}
 </header>
 <main>
 ${sections}
 </main>
+<footer class="pagefoot">
+  ${pager}
+</footer>
 </body>
 </html>
 `;
-  fs.writeFileSync(path.join(ROOT, 'toppers.html'), html);
+    fs.writeFileSync(path.join(ROOT, fileOf(num)), html);
+    written.push(href(num));
+  });
+
+  console.log(`toppers.html  ${totalPages} pages · ${names.length} toppers (${PER_PAGE}/page)`);
+  return written;
 }
 
 /* ---- static, indexable pages: one per topper / question / paper / optional subject ----
@@ -1251,11 +1317,12 @@ ${urls.map(u => `  <url><loc>${u}</loc><lastmod>${generated}</lastmod></url>`).j
 `;
 }
 
-function writeSitemaps(generated, indexableQuestionSlugs) {
-  const main = [
-    { loc: SITE + '/', priority: '1.0' },
-    { loc: SITE + '/toppers.html', priority: '0.8' }
-  ];
+function writeSitemaps(generated, indexableQuestionSlugs, topperIndexPages) {
+  // the alphabetical topper index is paginated — submit every page, not just the first
+  const main = [{ loc: SITE + '/', priority: '1.0' }].concat(
+    (topperIndexPages && topperIndexPages.length ? topperIndexPages : ['/toppers.html'])
+      .map((h, i) => ({ loc: SITE + h, priority: i === 0 ? '0.8' : '0.6' }))
+  );
   fs.writeFileSync(path.join(ROOT, 'sitemap-main.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${main.map(u => `  <url><loc>${u.loc}</loc><lastmod>${generated}</lastmod><changefreq>weekly</changefreq><priority>${u.priority}</priority></url>`).join('\n')}

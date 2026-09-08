@@ -11,6 +11,7 @@ _site/
 /data/questions.json
 /data/toppers.json
 /toppers.html
+/toppers-*.html
 /sitemap.xml
 /sitemap-main.xml
 /sitemap-toppers.xml
