@@ -77,6 +77,10 @@
      The full data/copies.json (question text, ~2 MB gz) is fetched in the background and
      only blocks when the user actually searches or expands a copy. */
   var FULL = false, fullState = 'idle', fullPromise = null, QBYID = null;
+  // copies.json (format 2) stores a question as an id into data/questions.json rather than
+  // repeating its text. QTEXT resolves those ids; QTEXTLC is the same text lowercased once
+  // at load, so searching never re-lowercases 5.5 MB of strings on every keystroke.
+  var QTEXT = null, QTEXTLC = null, QVAR = null, QVARLC = null;
 
   function saveData() {
     var c = navigator.connection || {};
@@ -139,9 +143,19 @@
     ]).then(function (res) {
       QI = res[0].questions || [];
       SYL = res[1];
+      QTEXT = []; QTEXTLC = [];
+      for (var qi = 0; qi < QI.length; qi++) {
+        var qq = QI[qi];
+        QTEXT[qq.i] = qq.q;
+        QTEXTLC[qq.i] = String(qq.q || '').toLowerCase();
+      }
+      // variant texts — a copy whose own wording the deduped entry doesn't faithfully contain
+      QVAR = res[0].variants || []; QVARLC = [];
+      for (var vi = 0; vi < QVAR.length; vi++) QVARLC[vi] = String(QVAR[vi] || '').toLowerCase();
       qiState = 'ready';
       fillSyllabus();
-      if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
+      // copy cards can now show their question text, so re-render an active text search too
+      if (state.view === 'browse' && (state.qview === 'questions' || state.q)) renderBrowse();
       if ($('#practice').open) { fillPracticeSyl(); renderPractice(); }
       track('question_index_loaded', { count: QI.length });
       return QI;
@@ -387,7 +401,7 @@
 
   /* ---------- browse ---------- */
   function wireBrowse() {
-    $('#q').addEventListener('focus', ensureFull, { once: true });
+    $('#q').addEventListener('focus', function () { ensureFull(); ensureQI(); }, { once: true });
     $('#q').addEventListener('input', debounce(function (e) {
       state.q = e.target.value.trim(); state.shown = PAGE; renderBrowse();
     }, 160));
@@ -491,7 +505,51 @@
     return terms.every(function (w) { return t.indexOf(w) >= 0; });
   }
 
-  function qOf(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
+  // raw row = [page, qid|text, marks, words] — qid for a question in data/questions.json,
+  // literal text for the rows writeQuestions() drops (sub-parts, fragments) and for a
+  // format-1 copies.json still sitting in a service-worker cache.
+  function rawQ(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
+
+  // positive id -> deduped question; negative -> this copy's own variant wording (1-based, negated)
+  function textOfId(v) { return v < 0 ? (QVAR[-v - 1] || '') : (QTEXT[v] || ''); }
+
+  // resolved rows, cached per copy. null means "ids present but the table isn't loaded yet",
+  // which every caller already treats as "not loaded" and re-renders after.
+  function qOf(c) {
+    if (c.qr) return c.qr;
+    var rows = rawQ(c);
+    if (!rows) return null;
+    var needsTable = false;
+    for (var i = 0; i < rows.length; i++) if (typeof rows[i][1] === 'number') { needsTable = true; break; }
+    if (!needsTable) { c.qr = rows; return rows; }
+    if (!QTEXT) return null;
+    var out = new Array(rows.length);
+    for (var j = 0; j < rows.length; j++) {
+      var r = rows[j];
+      out[j] = (typeof r[1] === 'number') ? [r[0], textOfId(r[1]), r[2], r[3]] : r;
+    }
+    c.qr = out;
+    return out;
+  }
+
+  // One pass over the ~9.9k deduped questions per query, instead of ~18k question instances
+  // per copy per keystroke. Returns a flag array indexed by question id.
+  function matchingQids(terms, mode) {
+    var joined = terms.join(' ');
+    function scan(src) {
+      var hit = new Uint8Array(src.length);
+      for (var i = 0; i < src.length; i++) {
+        var t = src[i];
+        if (!t) continue;
+        if (mode === 'exact') { if (t.indexOf(joined) >= 0) hit[i] = 1; continue; }
+        var ok = 1;
+        for (var w = 0; w < terms.length; w++) if (t.indexOf(terms[w]) < 0) { ok = 0; break; }
+        hit[i] = ok;
+      }
+      return hit;
+    }
+    return { q: scan(QTEXTLC), v: scan(QVARLC || []) };
+  }
 
   // A topper's year / rank: prefer the verified toppers.json value, fall back to the copy's own.
   function yearOf(c) { var T = TOPPERS[c.t] || {}; return T.year || c.y || 0; }
@@ -503,7 +561,11 @@
     var needsText = terms.length > 0;
     // A query matches a topper's name straight away (index.json is enough); matching the
     // text *inside* copies needs the big file, so kick that off but never block the UI on it.
-    if (needsText && !FULL && fullState !== 'error') ensureFull();
+    if (needsText) {
+      if (!FULL && fullState !== 'error') ensureFull();
+      if (!QTEXT && qiState !== 'error') ensureQI();   // the question text lives here now
+    }
+    var qhit = (needsText && QTEXTLC) ? matchingQids(terms, state.mode) : null;
 
     var list = DB.copies.map(function (c) {
       if (state.paper !== 'all' && c.p !== state.paper) return null;
@@ -517,9 +579,17 @@
       var qs = [];
       if (needsText && !nameHit) {
         if (c.k) return null;                    // link-only: only a name can match
-        var all = qOf(c);
-        if (!all) return null;                   // text not loaded yet — reappears after loadFull re-renders
-        qs = all.filter(function (q) { return matchQ(q[1], terms, state.mode); });
+        var raw = rawQ(c);
+        if (!raw || !raw.length) return null;
+        var res = qOf(c);
+        if (!res) return null;                   // question table not loaded yet — re-renders after
+        for (var qi2 = 0; qi2 < raw.length; qi2++) {
+          var v = raw[qi2][1];
+          var isHit = (typeof v === 'number')
+            ? !!(qhit && (v < 0 ? qhit.v[-v - 1] : qhit.q[v]))
+            : matchQ(v, terms, state.mode);      // inline text (dropped row, or format-1 cache)
+          if (isHit) qs.push(res[qi2]);
+        }
         if (!qs.length) return null;
       }
       return { c: c, qs: qs, nameHit: !!nameHit, n: qs.length || c.n || (qOf(c) || []).length };
@@ -550,7 +620,8 @@
 
     var nameHits = 0, totalQ = 0, stubHits = 0;
     list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; if (x.c.stub) stubHits++; });
-    var loading = !FULL && fullState !== 'error';
+    var loading = (!FULL && fullState !== 'error') ||
+      (!!state.q && !QTEXT && qiState !== 'error');
     var realN = list.length - stubHits;
     $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') +
       (state.q
@@ -565,7 +636,7 @@
       box.appendChild(el('div', { class: 'empty' }, [
         el('div', { class: 'big' }, [loading ? 'Searching…' : 'No matches']),
         el('div', {}, [loading
-          ? 'Loading the full text of every copy (one-time ~2 MB) so search can look inside them.'
+          ? 'Loading the question text so search can look inside the copies.'
           : 'Try a topper name, fewer words, “All words”, or clear a filter.'])
       ]));
       return;
@@ -941,7 +1012,10 @@
     ]);
 
     var ql = el('div', { class: 'qlist' });
-    var have = qs && qs.length ? qs : (terms.length ? [] : qOf(c));
+    // qs is only populated when the query matched *inside* this copy. A name-only hit
+    // (nameHit, qs empty) should still list every question on expand — same as browsing
+    // with no query — so fall through to qOf(c) rather than freezing an empty [] in.
+    var have = qs && qs.length ? qs : ((terms.length && !nameHit) ? [] : qOf(c));
 
     function renderQ(q) {
       var txt = el('div', { class: 'txt' });
@@ -975,8 +1049,8 @@
     var filled = have != null;
     function fillQuestions() {
       if (filled) return;
-      ensureFull();
-      (fullPromise || Promise.resolve()).then(function () {
+      ensureFull(); ensureQI();
+      Promise.all([fullPromise || Promise.resolve(), qiPromise || Promise.resolve()]).then(function () {
         var full = qOf(c);
         if (!full || filled) return;
         filled = true; ql.innerHTML = '';

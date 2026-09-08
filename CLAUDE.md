@@ -47,9 +47,28 @@ casing in the source files; a genuinely new spelling just needs to differ by mor
 ## build.js  (`node build.js`, zero runtime deps)
 
 Reads the 5 source files → writes:
-- `data/copies.json` — `{generated, attribution, stats, copies:[{i,t,c,p,y,r,u,q:[[page,question,marks,words]],prov,link?,note?}]}`. **Every** copy (searchable GS/Essay + link-only). App lazy-loads it on idle/search/expand.
+- `data/copies.json` — `{generated, attribution, format:2, stats, copies:[{i,t,c,p,y,r,u,q:[[page,qid,marks,words]],prov,link?,note?}]}`. **Every** copy (searchable GS/Essay + link-only). App lazy-loads it on idle/search/expand.
+  **`qid` is an index into `questions.json`, not the question text** (wire format 2). The same question
+  answered by nine toppers used to be stored nine times — question text was ~71% of this file's bytes.
+  **A qid is used only when the deduped entry's text faithfully *contains* this copy's own text.** The group
+  keeps its longest member, which usually recovers a truncated scrape (1,406 rows now read more completely
+  than before) — but `qKey()` only compares the first 110 normalised chars, so questions sharing a long
+  preamble (the GS4 "three quotations of great thinkers" sets) group together with genuinely different
+  wording, and a copy must never display another copy's question. Anything that is not a faithful superset
+  gets a **negative id** into `questions.json`'s `variants[]` (1-based, negated: `-1` = `variants[0]`), which
+  preserves the exact wording without putting long GS4/Essay texts back into the file every visitor
+  downloads on idle. Result: **every** row is an id, 0 inline strings, 92.2% byte-identical to the original
+  + 7.8% more complete, **0 divergent**, and search returns the same copies it did before (verified against
+  `dataset/questions.csv`, which still carries the original per-copy text). `app.js` also still accepts a
+  literal string in that slot, so a stale format-1 file in a service worker cache keeps working.
+  Net: 2,352 KB → 292 KB gzipped (179 KB brotli).
+  **Build order matters:** `writeQuestions()` runs *before* copies.json is written, because it produces the ids.
 - `data/index.json` — boot payload: **only the text-searchable copies** (`!link`), minus `q`, plus `n`. Link-only copies are NOT here — they arrive with copies.json and app.js merges them into `DB.copies` + refreshes facets. Keeps boot ~26 KB gz regardless of link-only volume.
-- `data/questions.json` — **deduped question index** (lazy, ~0.9 MB gz). `writeQuestions()` groups every
+- `data/questions.json` — **deduped question index** (lazy, ~1.4 MB gz). Since format 2 this is also the
+  **only** place question text lives, so it is required for full-text search and for showing questions on a
+  copy card — not just for the question-first view. Carries `variants[]` (see above) alongside `questions[]`.
+  It is deliberately the file that absorbed the variant text: it loads only on real search intent or a card
+  expand, whereas `copies.json` is fetched on idle by everyone. `writeQuestions()` groups every
   searchable copy's `q` rows by `qKey()` (strip "Q.3)" numbering, lowercase, keep letters/digits incl. Devanagari,
   first 110 chars) + paper. Drops GS4 case-study sub-parts ("(a)…(b)…") and stray fragments. Each entry:
   `{i, p, q(text), m, w, s:[syllabus node ids], yr:[years], a:[[copyId, page], …]}`. ~7.3k distinct, ~48% syllabus-mapped.
@@ -66,6 +85,14 @@ Reads the 5 source files → writes:
   to the source PDF page. This is the actual SEO surface — the SPA and `toppers.html` are one URL each and
   invisible to search engines; these ~8k pages are what shows up for "<topic> UPSC Mains answer". `q.sl` in
   `questions.json` is this slug.
+  **The question text is the `<h1>`** (the paper label is a `.kicker` eyebrow above it) —
+  it is the unique, high-value string on the page and the one people actually search for. Pages with a
+  **single answer get `noindex,follow`** and are left out of `sitemap-questions.xml`: they are ~2/3 of all
+  question pages and too thin to earn an index slot, but they keep every link, and the next build promotes
+  one automatically the moment a second topper's copy lands. `writeQuestionPages()` returns that set of
+  indexable slugs and `writeSitemaps()` filters on it. JSON-LD stays `WebPage` + `ItemList` (+ a
+  `BreadcrumbList`) — deliberately **not** `QAPage`, which requires answer *text* on the page, and every
+  answer here is a link to someone else's PDF.
 - **`writeHubPages()` → `paper/<gs1|gs2|gs3|gs4|essay|other>/index.html`** and **`optional/<subject-slug>/index.html`**
   — topic hub pages (top ~300 most-answered questions + full topper list per paper/subject).
 - **`writeSitemaps()`** — `sitemap.xml` is a `<sitemapindex>` referencing `sitemap-main.xml` (home + toppers.html),
@@ -87,6 +114,15 @@ locally whenever you need these files to inspect or test against.
 - `assets/app.js` — the whole SPA (IIFE, no deps). Loads `index.json` → renders the searchable core;
   `loadFull()` lazy-fetches `copies.json` on idle / search-focus / card-expand (Save-Data: deferred, not
   skipped) → attaches `q`, **adds the link-only copies** into `DB.copies`, calls `refreshFacets()`, re-renders.
+  - **Question text resolution (format 2).** `rawQ(c)` = the stored rows (`qid` or literal text); `qOf(c)` =
+    the same rows with ids resolved through `QTEXT`, cached on `c.qr`, and `null` while the table is still
+    loading (every caller already treats null as "not loaded" and re-renders after). `QTEXT`/`QTEXTLC` are
+    built from `questions.json` (plus `QVAR`/`QVARLC` for the variant table; `textOfId()` picks between them
+    on the sign of the id) — `QTEXTLC` is the text lowercased **once at load**, so a keystroke no
+    longer re-lowercases 5.5 MB of strings. `matchingQids()` scans those ~8.1k deduped strings once per
+    query and returns `{q, v}` — a `Uint8Array` flag per question id and per variant id; `filteredCopies()` tests raw rows against them
+    and renders the resolved ones. Searching therefore needs `questions.json`, so a text query fires both
+    `ensureFull()` and `ensureQI()` (and focusing the search box warms both).
   Browse default sort `year` = year-grouped, newest year first, best AIR first within a year (`yearOf`/`airOf`
   use toppers.json then the copy's own value). Search box matches topper names immediately + question text once
   loaded. Link-only copies render as "link only" cards. Theme toggle (`localStorage tc-theme`). GA custom events.
@@ -104,10 +140,13 @@ locally whenever you need these files to inspect or test against.
 - `assets/extract.js` — shared zero-dep question heuristic. `extractQuestions(pages)`, `toCsvRows()`. UMD (browser + node).
 - `assets/analyse.js` — lazy-loaded (Submit tab only). pdf.js from CDN for text-layer PDFs; Tesseract.js
   from CDN for OCR of scans (renders each page, crops top ~42%, per-page 30s timeout). Never bundled — zero cost unless used.
+- `manifest.webmanifest` + `favicon.ico` + `assets/icon.svg` / `icon-32|180|192|512.png` — hand-generated
+  (warm-paper "T" on the brand teal), committed **source** files, not build output. They make the site
+  installable — the service worker was already there, only the manifest was missing.
 - `assets/fonts/` — Inter + Fraunces, latin-subset woff2 (Fraunces is `font-display:optional`, not preloaded —
   headings only, never blocks or reflows). `assets/og.jpg` — social image, ~106 KB.
 - `sw.js` — service worker. Shell (`index.html`, CSS/JS, Inter, `index.json`/`toppers.json`/`optionals.json`)
-  is precached + stale-while-revalidate. The 3 heavy files (`copies.json`/`questions.json`/`link-copies.json`,
+  (plus the manifest + icons) is precached + stale-while-revalidate. The 3 heavy files (`copies.json`/`questions.json`/`link-copies.json`,
   multi-MB) use cache-first-with-TTL instead (`HEAVY_TTL_MS`, 12h) — a repeat visit serves them straight from
   cache with **no network request at all**, not just no re-render. Bump `VERSION` on shell changes.
 
@@ -168,10 +207,9 @@ are **link-only** (scanned Drive/PDF, no question text yet).
   automated by a resumable `ocr-pipeline/` script; output merges into `optionals.json` / `submissions.csv`.
 - UnlockIAS deep year-archive (~+400 PDFs) not scraped — only featured toppers done.
 - GS SCORE (`iasscore.in/toppers-copy`) is **login-gated** — no public URLs, can't add.
-- `.git` history still carries every pre-2026-09 generated-file commit (~280 MB total repo). Switching to
-  Actions-based deploy (done) stops it growing further; reclaiming the historical size needs a history
-  rewrite (`git filter-repo` or a squash) — destructive (rewrites every commit hash, breaks existing
-  clones/forks) and deliberately **not done automatically** — ask before doing it.
+- ~~`.git` history is ~280 MB~~ — **stale, resolved.** `git count-objects -vH` reports **16.7 MiB** in a
+  single pack, 0 loose objects, 0 garbage. Gitignoring the generated files + Actions-based deploy already
+  fixed it. There is **no history rewrite to consider** — do not run `git filter-repo` here.
 - Cloudflare DNS record for `topperscopy` is grey-cloud (DNS-only, `dig` resolves straight to
   `185.199.10x.153`/GitHub's IPs, no `cf-ray` header). Orange-clouding it (SSL/TLS mode **Full (strict)**)
   would add brotli (measured ~70% smaller than gzip on `copies.json`), real long-lived cache headers via a

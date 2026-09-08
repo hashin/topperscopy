@@ -284,10 +284,67 @@ function build() {
     linkOnly: linkCount + optRaw.length
   };
 
-  fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
-
-  // deduped question index — powers the question-first search view and Practice mode
+  // Deduped question index — powers the question-first view and Practice. Built BEFORE
+  // copies.json, because copies.json now references these questions by id instead of
+  // repeating their text: a question nine toppers answered used to be stored nine times,
+  // which was ~71% of that file's bytes.
   const qList = writeQuestions(copies, generated);
+
+  // A group's chosen text is one of its members, so qKey() of it is that group's key.
+  const qidByKey = new Map(), qTextById = new Map();
+  for (const q of qList) { qidByKey.set(q.p + ' ' + qKey(q.q), q.i); qTextById.set(q.i, q.q); }
+
+  // A group keeps its LONGEST member text, which is usually the least-truncated scrape of the
+  // question — swapping a copy's own text for it recovers real content. But qKey() only
+  // compares the first 110 normalised chars, so questions sharing a long preamble (the GS4
+  // "three quotations of great thinkers" sets) land in one group with genuinely different
+  // wording, and a copy must never display another copy's question. So: use the id only when
+  // the group's text *contains* this copy's own text — i.e. it is a faithful superset, not a
+  // substitute. Anything else keeps its literal text. Punctuation-only variance (smart quotes,
+  // en-dashes) is normalised away so it doesn't force needless inlining.
+  const normTxt = t => String(t || '').replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014\u2212]/g, '-').replace(/\s+/g, ' ').trim().toLowerCase();
+
+  // Rows writeQuestions() deliberately drops (GS4 sub-parts, orphan "(a)" fragments, stray
+  // text) have no deduped entry — those keep their literal text inline, so nothing is lost.
+  // Wire format 2: q row = [page, qid|text, marks, words]. assets/app.js resolves a numeric
+  // slot through data/questions.json and takes a string slot as-is (which also makes a
+  // stale format-1 copies.json in a service-worker cache keep working).
+  // A divergent row can't borrow the group's text, but inlining it would put long GS4 case
+  // studies and Essay quote-sets back into the file EVERY visitor downloads on idle. Instead
+  // they go in a variant table that rides along with questions.json — which is only fetched
+  // when someone actually searches inside the copies or opens a card. Negative id = variant.
+  const variants = [], variantId = new Map();
+  const variantRef = t => {
+    if (variantId.has(t)) return variantId.get(t);
+    const id = -(variants.push(t));      // 1-based, negated: first variant is -1
+    variantId.set(t, id);
+    return id;
+  };
+  let qRef = 0, qVar = 0;
+  const wireCopies = copies.map(c => {
+    if (!c.q || !c.q.length) return c;
+    return Object.assign({}, c, {
+      q: c.q.map(([page, question, marks, words]) => {
+        const id = qidByKey.get(c.p + ' ' + qKey(question));
+        const faithful = id !== undefined && normTxt(qTextById.get(id)).indexOf(normTxt(question)) >= 0;
+        if (!faithful) { qVar++; return [page || 0, variantRef(question), marks || '', words || '']; }
+        qRef++;
+        return [page || 0, id, marks || '', words || ''];
+      })
+    });
+  });
+
+  fs.writeFileSync(path.join(DATA, 'copies.json'),
+    JSON.stringify({ generated, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
+
+  // fold the variant table into questions.json (written just above by writeQuestions)
+  if (variants.length) {
+    const qp = path.join(DATA, 'questions.json');
+    const payload = JSON.parse(fs.readFileSync(qp, 'utf8'));
+    payload.variants = variants;
+    fs.writeFileSync(qp, JSON.stringify(payload));
+  }
 
   // lightweight boot index — the hand-curated text-searchable core, without the question text.
   // Omitted and lazy-loaded with data/copies.json (then merged into DB.copies + refreshFacets):
@@ -338,9 +395,9 @@ function build() {
   const nameToSlug = writeTopperPages(copies, optRaw, toppers, generated);
   writeStaticIndex(copies, toppers, stats, generated, nameToSlug);
   writeToppersPage(copies, toppers, stats, generated, nameToSlug);
-  writeQuestionPages(qList, copies, nameToSlug, generated);
+  const indexableQuestionSlugs = writeQuestionPages(qList, copies, nameToSlug, generated);
   writeHubPages(qList, copies, optRaw, nameToSlug, generated);
-  writeSitemaps(generated);
+  writeSitemaps(generated, indexableQuestionSlugs);
   writeLlms(stats, generated);
   writeRobots();
   const dsCounts = writeDataset(copies, toppers, generated, gitCommit());
@@ -348,7 +405,8 @@ function build() {
   const withAir = Object.values(toppers).filter(t => t.air).length;
   const subs = copies.filter(c => c.prov !== 'upsckata').length;
   console.log(`index.json   ${lite.length} copies (${(fs.statSync(path.join(DATA, 'index.json')).size / 1024).toFixed(0)} KB)`);
-  console.log(`copies.json  ${copies.length} copies, ${qCount} questions (${subs} copies from submissions)`);
+  console.log(`copies.json  ${copies.length} copies, ${qCount} questions (${subs} copies from submissions)` +
+    ` · ${(fs.statSync(path.join(DATA, 'copies.json')).size / 1048576).toFixed(2)} MB, ${qRef} question refs + ${qVar} variant refs (${variants.length} distinct)`);
   console.log(`toppers.json ${Object.keys(toppers).length} toppers, ${withAir} with an auto-parsed AIR`);
   console.log(`toppers.html + sitemap.xml + llms.txt + robots.txt written; index.html markers filled`);
   console.log(`dataset/     ${dsCounts.copies} copies, ${dsCounts.questions} questions, ${dsCounts.toppers} toppers, ${dsCounts.submissions} from submissions`);
@@ -894,6 +952,8 @@ const MINI_CSS = `
   th{color:var(--muted);font-weight:600}
   .tag{display:inline-block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:2px 8px;margin:0 6px 6px 0}
   .qtext{font-size:1.2rem;line-height:1.5;margin:10px 0 14px;font-weight:500}
+  .kicker{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin:0}
+  h1.qh{font-size:1.26rem;line-height:1.45;font-weight:500;margin:6px 0 14px}
   .cta{display:inline-block;margin-top:18px;padding:9px 16px;border-radius:9px;background:var(--teal);color:#fff;font-weight:600;font-size:.88rem}
   .cta:hover{text-decoration:none;filter:brightness(1.1)}
   ul{padding-left:20px}
@@ -901,7 +961,7 @@ const MINI_CSS = `
   footer.f{max-width:860px;margin:32px auto 0;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line);padding-top:16px}
 `;
 
-function pageShell({ title, description, canonical, jsonLd, crumbs, body }) {
+function pageShell({ title, description, canonical, jsonLd, crumbs, body, robots }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -910,7 +970,7 @@ function pageShell({ title, description, canonical, jsonLd, crumbs, body }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="robots" content="${robots || 'index,follow,max-image-preview:large,max-snippet:-1'}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -956,10 +1016,10 @@ function writeTopperPages(copies, optRaw, toppers, generated) {
     const total = list.length + opts.length;
 
     const rows = list.slice().sort((a, b) => a.p.localeCompare(b.p)).map(c =>
-      `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.link ? '—' : c.q.length}</td><td><a href="${esc(c.u)}" rel="nofollow noopener">${c.link ? 'Open copy' : 'source PDF'}</a></td></tr>`
+      `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.link ? '—' : c.q.length}</td><td><a href="${esc(c.u)}" target="_blank" rel="nofollow noopener">${c.link ? 'Open copy' : 'source PDF'}</a></td></tr>`
     ).join('\n');
     const optRows = opts.map(o =>
-      `      <tr><td>${esc(o.subject || '—')}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`
+      `      <tr><td>${esc(o.subject || '—')}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" target="_blank" rel="nofollow noopener">Open copy</a></td></tr>`
     ).join('\n');
 
     const samples = [];
@@ -972,7 +1032,7 @@ function writeTopperPages(copies, optRaw, toppers, generated) {
     const samplesHtml = samples.length ? `
   <h2>Sample questions answered</h2>
   <ul>
-${samples.map(s => `    <li><a href="${esc(s.url)}${s.page ? '#page=' + s.page : ''}" rel="nofollow noopener">${esc(dispQ(s.qtext))}</a> <span class="tag">${esc(s.p)}</span></li>`).join('\n')}
+${samples.map(s => `    <li><a href="${esc(s.url)}${s.page ? '#page=' + s.page : ''}" target="_blank" rel="nofollow noopener">${esc(dispQ(s.qtext))}</a> <span class="tag">${esc(s.p)}</span></li>`).join('\n')}
   </ul>` : '';
 
     const jsonLd = {
@@ -1010,6 +1070,7 @@ ${samples.map(s => `    <li><a href="${esc(s.url)}${s.page ? '#page=' + s.page :
 function writeQuestionPages(list, copies, nameToSlug, generated) {
   const dir = path.join(ROOT, 'question');
   fs.rmSync(dir, { recursive: true, force: true });
+  const indexableSlugs = new Set();
 
   const copyById = new Map(copies.map(c => [c.i, c]));
   const sylPath = path.join(DATA, 'syllabus.json');
@@ -1045,9 +1106,20 @@ function writeQuestionPages(list, copies, nameToSlug, generated) {
     if (q.yr.length) metaBits.push('seen ' + q.yr.join(', '));
 
     const dq = dispQ(q.q);
+    // Deliberately NOT schema.org/QAPage: that type requires answer *text* on the page, and
+    // every answer here is a link to someone else's PDF. WebPage + ItemList is what this
+    // page actually is. BreadcrumbList is added separately below.
     const jsonLd = {
       '@context': 'https://schema.org', '@type': 'WebPage',
       name: dq.slice(0, 110), url: `${SITE}/question/${q.slug}/`, about: q.p,
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Toppers Copy', item: SITE + '/' },
+          { '@type': 'ListItem', position: 2, name: q.p, item: `${SITE}/paper/${paperSlug(q.p)}/` },
+          { '@type': 'ListItem', position: 3, name: dq.slice(0, 80) }
+        ]
+      },
       mainEntity: {
         '@type': 'ItemList', numberOfItems: answers.length,
         itemListElement: answers.slice(0, 50).map((a, idx) => ({
@@ -1058,8 +1130,8 @@ function writeQuestionPages(list, copies, nameToSlug, generated) {
     };
 
     const body = `
-  <h1>${esc(q.p)} question — UPSC Mains</h1>
-  <p class="qtext">${esc(dq)}</p>
+  <p class="kicker">${esc(q.p)} · UPSC Mains</p>
+  <h1 class="qh">${esc(dq)}</h1>
   <p class="meta">${metaBits.join(' · ')}</p>
   ${tags ? `<p>${tags}</p>` : ''}
   <table><thead><tr><th>Topper</th><th>Rank</th><th>Source</th><th>Copy</th></tr></thead><tbody>
@@ -1068,7 +1140,15 @@ ${rows}
   <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(dq.slice(0, 60))}">See this question on Toppers Copy →</a></p>
   <p><a href="${SITE}/paper/${paperSlug(q.p)}/">More ${esc(q.p)} questions →</a></p>`;
 
+    // One answer = a question, one table row and boilerplate: too thin to earn an index
+    // slot, and ~2/3 of these pages. They keep every link (follow), so crawlers still reach
+    // the topper pages through them, and the next build promotes a page the moment a
+    // second topper's copy lands.
+    const indexable = answers.length > 1;
+    if (indexable) indexableSlugs.add(q.slug);
+
     const html = pageShell({
+      robots: indexable ? undefined : 'noindex,follow',
       title: `${dq.slice(0, 78)}${dq.length > 78 ? '…' : ''} | Toppers Copy`,
       description: `${dq.slice(0, 140)}${dq.length > 140 ? '…' : ''} — ${answers.length} UPSC Mains topper${answers.length === 1 ? '' : 's'} answered this ${q.p} question, each linking to the source PDF.`,
       canonical: `${SITE}/question/${q.slug}/`,
@@ -1080,7 +1160,9 @@ ${rows}
     fs.mkdirSync(outDir, { recursive: true });
     fs.writeFileSync(path.join(outDir, 'index.html'), html);
   }
-  console.log(`question/   ${list.length} pages written`);
+  const thin = list.length - indexableSlugs.size;
+  console.log(`question/   ${list.length} pages written · ${indexableSlugs.size} indexable, ${thin} noindex (single answer)`);
+  return indexableSlugs;
 }
 
 function writeHubPages(list, copies, optRaw, nameToSlug, generated) {
@@ -1169,7 +1251,7 @@ ${urls.map(u => `  <url><loc>${u}</loc><lastmod>${generated}</lastmod></url>`).j
 `;
 }
 
-function writeSitemaps(generated) {
+function writeSitemaps(generated, indexableQuestionSlugs) {
   const main = [
     { loc: SITE + '/', priority: '1.0' },
     { loc: SITE + '/toppers.html', priority: '0.8' }
@@ -1180,7 +1262,12 @@ ${main.map(u => `  <url><loc>${u.loc}</loc><lastmod>${generated}</lastmod><chang
 </urlset>
 `);
   const topperUrls = urlsFromDir('topper');
-  const questionUrls = urlsFromDir('question');
+  // a noindex page in a sitemap is a contradictory signal — only submit the indexable ones
+  const questionUrls = urlsFromDir('question').filter(u => {
+    if (!indexableQuestionSlugs) return true;
+    const m = u.match(/\/question\/([^/]+)\/$/);
+    return !m || indexableQuestionSlugs.has(m[1]);
+  });
   const hubUrls = [...urlsFromDir('paper'), ...urlsFromDir('optional')];
   fs.writeFileSync(path.join(ROOT, 'sitemap-toppers.xml'), urlsetXml(topperUrls, generated));
   fs.writeFileSync(path.join(ROOT, 'sitemap-questions.xml'), urlsetXml(questionUrls, generated));
