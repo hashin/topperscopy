@@ -832,7 +832,7 @@ ${rows}
   a{color:var(--teal)}
   .lead{color:var(--muted);margin:0 0 4px}
   nav.crumb{font-size:.9rem;color:var(--muted);margin:18px 0}
-  section{border-top:1px solid var(--line);padding:18px 0}
+  section{border-top:1px solid var(--line);padding:18px 0;content-visibility:auto;contain-intrinsic-size:auto 280px}
   h2{font-size:1.15rem;margin:0 0 4px}
   .meta{color:var(--muted);font-size:.9rem;margin:0 0 10px}
   a.tg{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;background:var(--teal);color:var(--card);text-decoration:none;vertical-align:middle;margin-left:6px}
