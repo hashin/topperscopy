@@ -254,6 +254,10 @@
       entry_view: ['browse', 'optionals', 'submit', 'about'].indexOf(initial) < 0 ? 'browse' : initial
     });
 
+    // honour the ?q= SearchAction URL (JSON-LD potentialAction + shared/bookmarked search links)
+    var qp = new URLSearchParams(location.search).get('q');
+    if (qp) { qp = qp.trim().slice(0, 200); state.q = qp; state.shown = PAGE; var qi = $('#q'); if (qi) qi.value = qp; }
+
     Promise.all([
       fetch('data/index.json').then(function (r) { return r.json(); }),
       fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
@@ -370,7 +374,9 @@
     if (['browse', 'optionals', 'submit', 'about'].indexOf(v) < 0) v = 'browse';
     var changed = state.view !== v;
     state.view = v;
-    $$('nav.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.view === v); });
+    $$('nav.tabs button').forEach(function (b) {
+      if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
     if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);

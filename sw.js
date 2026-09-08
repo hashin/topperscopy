@@ -1,12 +1,17 @@
-/* Offline cache. Shell is precached; big data files are cached at runtime
-   (stale-while-revalidate). Bump VERSION to force a refresh. */
-var VERSION = 'tc-v10';
+/* Offline cache. Shell is precached with stale-while-revalidate. The three heavy
+   data files (copies/questions/link-copies — multi-MB) use cache-first-with-TTL
+   instead: a repeat visit serves straight from cache with NO network request,
+   revalidating in the background at most once every HEAVY_TTL_MS. Bump VERSION
+   to force a full refresh of everything. */
+var VERSION = 'tc-v11';
 var SHELL = [
-  './', './index.html', './toppers.html',
+  './', './index.html',
   './assets/style.css', './assets/app.js', './assets/extract.js',
-  './assets/fonts/inter-latin.woff2', './assets/fonts/fraunces-latin.woff2',
+  './assets/fonts/inter-latin.woff2',
   './data/index.json', './data/toppers.json', './data/optionals.json'
 ];
+var DATA_HEAVY = /\/data\/(copies|questions|link-copies)\.json$/;
+var HEAVY_TTL_MS = 12 * 60 * 60 * 1000; // OCR/data rebuilds land at most a few times/day
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
@@ -26,6 +31,22 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(e.request.url);
   if (url.origin !== location.origin) return;              // never touch PDF / GA / font CDN
   if (url.pathname.indexOf('/gtag/') !== -1) return;
+
+  if (DATA_HEAVY.test(url.pathname)) {
+    e.respondWith(
+      caches.open(VERSION).then(function (c) {
+        return c.match(e.request).then(function (hit) {
+          var age = hit && hit.headers.get('date') ? Date.now() - new Date(hit.headers.get('date')).getTime() : Infinity;
+          if (hit && age < HEAVY_TTL_MS) return hit;         // fresh enough — no network call at all
+          return fetch(e.request).then(function (res) {
+            if (res && res.ok) c.put(e.request, res.clone());
+            return res;
+          }).catch(function () { return hit; });             // offline / stale-but-usable fallback
+        });
+      })
+    );
+    return;
+  }
 
   e.respondWith(
     caches.match(e.request).then(function (hit) {
