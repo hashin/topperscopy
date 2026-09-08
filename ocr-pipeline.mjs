@@ -703,6 +703,17 @@ function unitsNeedingOcr(clusters) {
   return clusters.filter(c => c.freepassDone && !c.freepassHit && !c.error && !c.needsManual);
 }
 
+/* The instruction sent with every batch of page images — shared by `gemini`
+ * (production) and `bench` (model A/B) so the comparison is honest. */
+const GEMINI_PROMPT = [
+  'Each image is the top strip of a page from a UPSC Mains answer booklet.',
+  'The printed/typed text at the top is the exam QUESTION. Everything handwritten is the candidate\'s answer — ignore it completely.',
+  'The question is usually printed in BOTH Hindi (Devanagari) and English. Return ONLY the English text. Do NOT include any Hindi/Devanagari characters. Keep any "(Answer in 150/250 words)" part.',
+  'If the image shows several numbered questions (a question-paper page), join them with " || " into one string.',
+  'If the image has no printed question (pure handwriting, a cover page, an instructions or marks page, evaluation indicators, or only a header/logo), use exactly: NONE',
+  'Output ONLY a raw JSON array of strings — one entry per image, in order. No markdown, no code fence, no commentary.'
+].join(' ');
+
 /* ================= commands ================= */
 const cmd = process.argv[2];
 const args = process.argv.slice(3);
@@ -843,6 +854,171 @@ if (cmd === 'status') {
   process.exit(0);
 }
 
+if (cmd === 'probe') {
+  // Is a given model reachable with this key, and what would the backlog cost?
+  //   node ocr-pipeline.mjs probe --model gemini-2.5-flash-lite
+  const KEY = process.env.GEMINI_API_KEY;
+  if (!KEY) { console.error('set GEMINI_API_KEY'); process.exit(1); }
+  const MODEL = getArg('model') || 'gemini-3.5-flash-lite';
+  // published paid-tier rates, USD per 1M tokens (verify at ai.google.dev/gemini-api/docs/pricing).
+  // 2.x-lite/flash are 404 "no longer available to new users" on keys made after ~2025 — the
+  // cheapest lite model this key can call is gemini-3.1-flash-lite.
+  const PRICE = {
+    'gemini-3.5-flash-lite':    { in: 0.30,  out: 2.50 },
+    'gemini-3.1-flash-lite':    { in: 0.25,  out: 1.50 },
+    'gemini-flash-lite-latest': { in: 0.30,  out: 2.50 },
+    'gemini-2.5-flash-lite':    { in: 0.10,  out: 0.40 },   // gated — kept for reference
+    'gemini-3.5-flash':         { in: 0.75,  out: 3.75 },
+  };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`;
+
+  // 1) text call — settles model access (the 404 is model-level, not modality-level)
+  const t = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: 'Reply with OK.' }] }], generationConfig: { maxOutputTokens: 5 } }) });
+  const tj = await t.json().catch(() => ({}));
+  console.log(`\nmodel:  ${MODEL}`);
+  console.log(`text call:  HTTP ${t.status}` + (t.ok ? '  → reachable ✓' : `  → ${(tj.error?.status || 'error')}: ${(tj.error?.message || '').slice(0, 120)}`));
+  if (!t.ok && t.status === 404) { console.log('\n→ not available to this key. Keep gemini-3.5-flash-lite, or try another model.'); process.exit(2); }
+  if (!t.ok && t.status === 429) console.log('  (429 = quota, not access — the model itself is fine)');
+
+  // 2) image call — real token counts, if we have cached page renders
+  let inTok = 6600, outTok = 200, measured = false;
+  const pagesDir = path.join(CACHE, 'pages');
+  const imgs = fs.existsSync(pagesDir) ? fs.readdirSync(pagesDir).filter(f => f.endsWith('.png')).slice(0, 6) : [];
+  if (imgs.length === 6 && t.status !== 429) {
+    const parts = [{ text: 'For each image return the printed English question or "NONE", as a JSON array.' }];
+    for (const f of imgs) parts.push({ inline_data: { mime_type: 'image/png', data: fs.readFileSync(path.join(pagesDir, f)).toString('base64') } });
+    const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 4096 } }) });
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.usageMetadata) {
+      inTok = j.usageMetadata.promptTokenCount;
+      outTok = j.usageMetadata.candidatesTokenCount || 200;
+      measured = true;
+      console.log(`image call: HTTP ${r.status}  → ${inTok} input tokens (6 images + prompt), ${outTok} output`);
+    } else {
+      console.log(`image call: HTTP ${r.status}` + (j.error ? `  ${j.error.message?.slice(0, 100)}` : '') + `  — using fallback estimate`);
+    }
+  } else {
+    console.log(`image call: skipped (no cached renders / quota) — using fallback estimate ${inTok} in / ${outTok} out`);
+  }
+
+  // 3) extrapolate to the backlog
+  const clp = path.join(CACHE, 'clusters.json');
+  let units = 0;
+  if (fs.existsSync(clp)) {
+    const cl = JSON.parse(fs.readFileSync(clp, 'utf8'));
+    units = (cl.filter(c => c.freepassDone ? (!c.freepassHit && !c.error) : true)).length || cl.length;
+  }
+  const reqPerUnit = 5.3;                       // weighted from run-2 CI logs
+  const reqs = Math.round((units || 3700) * reqPerUnit);
+  const inM = reqs * inTok / 1e6, outM = reqs * outTok / 1e6;
+  const p = PRICE[MODEL] || PRICE['gemini-3.5-flash-lite'];
+  const sync = inM * p.in + outM * p.out;
+  const batch = sync / 2;
+  console.log(`\nbacklog estimate  (${units || '~3700'} units × ${reqPerUnit} req ≈ ${reqs.toLocaleString()} requests${measured ? ', measured tokens' : ', estimated tokens'})`);
+  console.log(`  input   ${inM.toFixed(1)}M tok × $${p.in}/M   = $${(inM * p.in).toFixed(2)}`);
+  console.log(`  output  ${outM.toFixed(1)}M tok × $${p.out}/M  = $${(outM * p.out).toFixed(2)}`);
+  console.log(`  ─────────────────────────────────────`);
+  console.log(`  paid synchronous : ~$${sync.toFixed(0)}   (+18% GST ≈ $${(sync * 1.18).toFixed(0)})`);
+  console.log(`  batch (−50%)     : ~$${batch.toFixed(0)}`);
+  console.log(`\n  rates are the published paid-tier prices — confirm in your billing console before running.`);
+  process.exit(0);
+}
+
+if (cmd === 'bench') {
+  // A/B two (or more) models on the SAME rendered pages and diff the questions
+  // they yield, so we know whether a cheaper model keeps the accuracy before
+  // committing the backlog to it.
+  //   node ocr-pipeline.mjs bench --models gemini-3.5-flash-lite,gemini-2.5-flash-lite --limit 4
+  const KEY = process.env.GEMINI_API_KEY;
+  if (!KEY) { console.error('set GEMINI_API_KEY'); process.exit(1); }
+  const models = (getArg('models') || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite').split(',').map(s => s.trim()).filter(Boolean);
+  const limit = getArg('limit') ? +getArg('limit') : 4;
+  const pageCap = getArg('pages') ? +getArg('pages') : 24;
+  const only = getArg('source');
+  const clusters = JSON.parse(fs.readFileSync(path.join(CACHE, 'clusters.json'), 'utf8'));
+  let units = unitsNeedingOcr(clusters);
+  if (only) units = units.filter(c => c.source === only);
+  units = units.slice(0, limit);
+  KEEP_PDFS = true;
+
+  const call = async (model, parts) => {
+    for (let a = 0; a < 5; a++) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${KEY}`,
+        { method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 8192 } }) });
+      if (r.status === 429) { const b = await r.text(); if (/PerDay/i.test(b)) return { err: 'daily-quota' }; await new Promise(x => setTimeout(x, 32000)); continue; }
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) return { err: `HTTP ${r.status} ${(j.error?.message || '').slice(0, 80)}` };
+      let out = (j?.candidates?.[0]?.content?.parts?.[0]?.text || '').replace(/```(?:json)?/gi, '').trim();
+      const mm = out.match(/\[[\s\S]*\]/);
+      let arr = []; if (mm) { try { arr = JSON.parse(mm[0]); } catch {} }
+      return { arr, usage: j.usageMetadata || {} };
+    }
+    return { err: 'rate-limited' };
+  };
+  const qkey = t => String(t).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 48);
+
+  const perModel = Object.fromEntries(models.map(m => [m, { q: new Map(), inTok: 0, outTok: 0, reqs: 0, err: null }]));
+  for (const c of units) {
+    const { fetchUrl } = resolve(c.representative);
+    if (!fetchUrl) continue;
+    const meta = await getPdf(fetchUrl, { needFile: true });
+    const pdfPath = path.join(PDFDIR, sha1(fetchUrl) + '.pdf');
+    if (meta.error || !fs.existsSync(pdfPath)) { console.log(`skip ${c.source}: ${meta.error || 'no pdf'}`); continue; }
+    const H = meta.pageHeightPts || 842;
+    const nPages = Math.min(meta.numPages || 0, pageCap);
+    console.log(`\n■ ${c.source} · ${(c.key || c.representative.slice(-46))} · ${nPages} pages`);
+    for (let i = 1; i <= nPages; i += 6) {
+      const slice = []; for (let p = i; p < i + 6 && p <= nPages; p++) slice.push(p);
+      const rendered = [];
+      for (const p of slice) { try { const img = renderPage(pdfPath, p, H, path.join(PAGEDIR, `b_${sha1(fetchUrl)}_p${p}`)); if (img) rendered.push({ p, img }); } catch {} }
+      if (!rendered.length) continue;
+      for (const model of models) {
+        if (perModel[model].err) continue;
+        const parts = [{ text: GEMINI_PROMPT }, ...rendered.map(r => ({ inline_data: { mime_type: 'image/png', data: fs.readFileSync(r.img).toString('base64') } }))];
+        const res = await call(model, parts);
+        perModel[model].reqs++;
+        if (res.err) { perModel[model].err = res.err; console.log(`   ${model}: ${res.err}`); continue; }
+        perModel[model].inTok += res.usage.promptTokenCount || 0;
+        perModel[model].outTok += res.usage.candidatesTokenCount || 0;
+        rendered.forEach((r, idx) => {
+          for (const qq of questionsFromOcr(String(res.arr[idx] || ''), r.p, { paper: c.paper, engine: 'gemini' }))
+            perModel[model].q.set(qkey(qq.question) + ':' + r.p, { page: r.p, question: qq.question });
+        });
+        await new Promise(x => setTimeout(x, 1500));
+      }
+      for (const r of rendered) { try { fs.unlinkSync(r.img); } catch {} }
+    }
+    try { fs.unlinkSync(pdfPath); } catch {}
+  }
+
+  const [A, B] = models;
+  const setA = perModel[A]?.q || new Map(), setB = perModel[B]?.q || new Map();
+  const keys = new Set([...setA.keys(), ...setB.keys()]);
+  let both = 0, onlyA = 0, onlyB = 0;
+  const exA = [], exB = [];
+  for (const k of keys) {
+    if (setA.has(k) && setB.has(k)) both++;
+    else if (setA.has(k)) { onlyA++; exA.push(setA.get(k)); }
+    else { onlyB++; exB.push(setB.get(k)); }
+  }
+  console.log('\n──────── RESULT ────────');
+  for (const m of models) {
+    const pm = perModel[m];
+    console.log(`${m}: ${pm.q.size} questions · ${pm.reqs} reqs · ${pm.inTok.toLocaleString()} in / ${pm.outTok.toLocaleString()} out tok` + (pm.err ? `  (stopped: ${pm.err})` : ''));
+  }
+  if (models.length === 2 && !perModel[A].err && !perModel[B].err) {
+    const agree = keys.size ? (both / keys.size * 100).toFixed(0) : '—';
+    console.log(`\nagreement: ${both}/${keys.size} (${agree}%) · only ${A}: ${onlyA} · only ${B}: ${onlyB}`);
+    if (exA.length) { console.log(`\nonly ${A} caught:`); exA.slice(0, 12).forEach(q => console.log(`  p${q.page}  ${q.question.slice(0, 110)}`)); }
+    if (exB.length) { console.log(`\nonly ${B} caught:`); exB.slice(0, 12).forEach(q => console.log(`  p${q.page}  ${q.question.slice(0, 110)}`)); }
+    console.log(`\n→ eyeball the "only X" lists: a real accuracy gap shows as one model missing genuine questions or inventing garbled ones. Formatting-only diffs (punctuation, "Answer in 150 words") don't count.`);
+  }
+  process.exit(0);
+}
+
 
 if (cmd === 'ocr') {
   const clPath = path.join(CACHE, 'clusters.json');
@@ -958,8 +1134,13 @@ if (cmd === 'reclean') {
 if (cmd === 'gemini') {
   const KEY = process.env.GEMINI_API_KEY;
   if (!KEY) { console.error('set GEMINI_API_KEY'); process.exit(1); }
-  const MODEL = getArg('model') || 'gemini-3.5-flash-lite';          // 2.5-* is 404 for keys created after ~2025
-  const maxReq = getArg('requests') ? +getArg('requests') : 900;     // stay under the free daily cap
+  // --paid: billing is enabled on the project → the daily 500-request cap and
+  // the 15 RPM free-tier limit no longer apply. Drop the throttle and let one
+  // run clear the whole backlog. Costs real money — see `probe` for an estimate.
+  const PAID = args.includes('--paid');
+  const MODEL = getArg('model') || 'gemini-3.5-flash-lite';          // 2.x-lite are 404 on this key; --model gemini-3.1-flash-lite is the only cheaper option ($0.25/$1.50 vs $0.30/$2.50). run `bench` to check accuracy first.
+  const maxReq = getArg('requests') ? +getArg('requests') : (PAID ? 100000 : 550);
+  const gapMs = getArg('gap') ? +getArg('gap') : (PAID ? 250 : 4800); // ms between requests: paid ~240/min, free ~12.5/min
   const perReq = 6;                                                  // page images per request
   const only = getArg('source');
   const unitLimit = getArg('limit') ? +getArg('limit') : Infinity;
@@ -992,16 +1173,9 @@ if (cmd === 'gemini') {
     jobs.push({ sha, c, rec, outPath, pages });
     if (jobs.length >= unitLimit) break;
   }
-  console.log(`gemini(${MODEL}) · ${jobs.length} units · budget ${maxReq} requests · shard ${chunk + 1}/${of}`);
+  console.log(`gemini(${MODEL})${PAID ? ' [PAID]' : ''} · ${jobs.length} units · budget ${maxReq} requests · ${gapMs}ms gap · shard ${chunk + 1}/${of}`);
 
-  const PROMPT = [
-    'Each image is the top strip of a page from a UPSC Mains answer booklet.',
-    'The printed/typed text at the top is the exam QUESTION. Everything handwritten is the candidate\'s answer — ignore it completely.',
-    'The question is usually printed in BOTH Hindi (Devanagari) and English. Return ONLY the English text. Do NOT include any Hindi/Devanagari characters. Keep any "(Answer in 150/250 words)" part.',
-    'If the image shows several numbered questions (a question-paper page), join them with " || " into one string.',
-    'If the image has no printed question (pure handwriting, a cover page, an instructions or marks page, evaluation indicators, or only a header/logo), use exactly: NONE',
-    'Output ONLY a raw JSON array of strings — one entry per image, in order. No markdown, no code fence, no commentary.'
-  ].join(' ');
+  const PROMPT = GEMINI_PROMPT;
 
   const GRAW = path.join(CACHE, 'graw');
   fs.mkdirSync(GRAW, { recursive: true });
@@ -1070,7 +1244,7 @@ if (cmd === 'gemini') {
           texts = parsed;
         } catch (e) { console.log(`  request failed (${attempt + 1}/6): ${e.message}`); }
       }
-      if (dayDone) { console.log('  daily free-tier quota reached — stopping for today'); used = maxReq; break; }
+      if (dayDone) { console.log(`  daily ${PAID ? '' : 'free-tier '}request quota reached — stopping`); used = maxReq; break; }
       used++;
       if (texts === null) { console.log('  batch failed after retries, will retry next run'); continue; }  // pages stay unmarked
 
@@ -1089,7 +1263,7 @@ if (cmd === 'gemini') {
       });
       job.rec.engine = 'gemini';
       fs.writeFileSync(job.outPath, JSON.stringify(job.rec));       // checkpoint after every request
-      if (used < maxReq) await new Promise(r => setTimeout(r, 4800)); // ~12.5 req/min, margin under the 15 RPM free cap
+      if (used < maxReq) await new Promise(r => setTimeout(r, gapMs));
     }
     try { fs.unlinkSync(pdfPath); } catch {}
     if (!pages.length || used < maxReq) { job.rec.geminiDone = true; unitsDone++; }
