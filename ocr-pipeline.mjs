@@ -218,158 +218,8 @@ async function pool(items, n, fn) {
   await Promise.all(workers);
 }
 
-/* ================= commands ================= */
-const cmd = process.argv[2];
-const args = process.argv.slice(3);
-const getArg = k => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : undefined; };
-
-if (cmd === 'plan') {
-  const corpus = loadCorpus();
-  const already = searchableBaseUrls();
-  const todo = corpus.filter(e => !already.has(norm(e.url)));
-
-  const clusters = new Map(); // key -> {key, source, paper, members:[], singleton}
-  for (const e of todo) {
-    const k = testKey(e);
-    const ck = k || `SINGLETON:${sha1(norm(e.url)).slice(0, 12)}`;
-    if (!clusters.has(ck)) clusters.set(ck, { key: ck, real: !!k, source: e.source, paper: e.paper, subject: e.subject || null, members: [] });
-    clusters.get(ck).members.push({ url: norm(e.url), topper: e.topper, air: e.air || null, year: e.year || null, paper: e.paper, subject: e.subject || null, note: e.note || '', source: e.source, kind: e.kind });
-  }
-
-  const list = [...clusters.values()].sort((a, b) => b.members.length - a.members.length);
-  for (const c of list) {
-    c.members.sort((a, b) => decode(a.url).length - decode(b.url).length);
-    c.representative = c.members[0].url;
-    c.driveFolder = list.length && /drive\.google\.com\/(?:drive\/)?(?:u\/\d+\/)?folders\//.test(c.representative);
-  }
-
-  fs.writeFileSync(path.join(CACHE, 'clusters.json'), JSON.stringify(list, null, 2));
-
-  // summary
-  const bySource = {};
-  for (const c of list) {
-    const s = bySource[c.source] ||= { docs: 0, clusters: 0, realClusters: 0, singletons: 0, driveFolders: 0 };
-    s.docs += c.members.length;
-    s.clusters += 1;
-    if (c.real) s.realClusters += 1; else s.singletons += 1;
-    if (c.driveFolder) s.driveFolders += c.members.length;
-  }
-  console.log('corpus not yet searchable:', todo.length, 'docs');
-  console.log('distinct OCR units (clusters + singletons):', list.length);
-  console.log('\nsource'.padEnd(26), 'docs'.padStart(6), 'units'.padStart(7), 'real-clu'.padStart(9), 'singles'.padStart(8), 'drivefldr'.padStart(10));
-  for (const [s, v] of Object.entries(bySource).sort((a, b) => b[1].docs - a[1].docs)) {
-    console.log(s.padEnd(26), String(v.docs).padStart(6), String(v.clusters).padStart(7), String(v.realClusters).padStart(9), String(v.singletons).padStart(8), String(v.driveFolders).padStart(10));
-  }
-  const reduction = (todo.length / Math.max(1, list.length)).toFixed(1);
-  console.log(`\n→ clustering reduces ${todo.length} docs to ${list.length} OCR units (${reduction}x). Wrote .ocr/clusters.json`);
-  console.log('  next: node ocr-pipeline.mjs freepass');
-  process.exit(0);
-}
-
-if (cmd === 'freepass') {
-  const clPath = path.join(CACHE, 'clusters.json');
-  if (!fs.existsSync(clPath)) { console.error('run `node ocr-pipeline.mjs plan` first'); process.exit(1); }
-  const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
-  const only = getArg('source');
-  const limit = getArg('limit') ? +getArg('limit') : Infinity;
-  const conc = getArg('concurrency') ? +getArg('concurrency') : 6;
-  KEEP_PDFS = args.includes('--keep-pdfs');
-  const allScans = args.includes('--all'); // also download known-scan sources (for page counts)
-
-  // decide the work list
-  const work = [];
-  for (const c of clusters) {
-    if (only && c.source !== only) continue;
-    if (c.freepassDone || c.error || c.needsManual) continue;
-    const { fetchUrl, note } = resolve(c.representative);
-    if (!fetchUrl) { c.resolveNote = note; c.needsManual = true; continue; }
-    if (!allScans && KNOWN_SCAN_SOURCES.has(c.source)) {
-      c.freepassDone = true; c.freepassHit = false; c.knownScan = true; // no download, straight to vision
-      continue;
-    }
-    work.push({ c, fetchUrl });
-  }
-  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
-  console.log(`${work.length} units to download & test (concurrency ${conc}); ${clusters.filter(c => c.knownScan).length} known-scan units skipped straight to vision.`);
-
-  let done = 0, hits = 0, errs = 0;
-  const t0 = Date.now();
-  await pool(work.slice(0, limit === Infinity ? work.length : limit), conc, async ({ c, fetchUrl }) => {
-    const meta = await getPdf(fetchUrl);
-    c.freepassDone = true;
-    c.numPages = meta.numPages || null;
-    c.sizeKB = meta.sizeKB || null;
-    if (meta.error) { c.error = meta.error; errs++; }
-    else {
-      // Only count it a free-pass hit if the text layer yields *clean* questions.
-      // A garbled text layer (scanned ForumIAS etc.) must fall through to the
-      // Gemini vision pass, not lock the booklet in with junk.
-      const fp = meta.freepass || { count: 0 };
-      const clean = filterFreepassQuestions(fp.questions, c.paper);
-      c.freepassHit = clean.length > 0;
-      c.freepassClean = clean.length;
-      if (c.freepassHit) hits++;
-    }
-    done++;
-    if (done % 25 === 0 || done === work.length) {
-      const rate = done / ((Date.now() - t0) / 1000);
-      console.log(`  ${done}/${work.length}  hits ${hits}  errs ${errs}  (${rate.toFixed(1)}/s)`);
-      fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
-    }
-  });
-  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
-
-  // (re)write data/ocr-questions.csv from every free-pass hit recorded in the cache
-  const allRows = [];
-  for (const c of JSON.parse(fs.readFileSync(clPath, 'utf8'))) {
-    if (!c.freepassHit) continue;
-    const key = sha1(resolve(c.representative).fetchUrl || c.representative);
-    const metaPath = path.join(METADIR, key + '.json');
-    if (!fs.existsSync(metaPath)) continue;
-    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-    const qs = filterFreepassQuestions(meta.freepass && meta.freepass.questions, c.paper);
-    if (!qs || !qs.length) continue;
-    for (const mem of c.members) {
-      const m2 = { topper: mem.topper, coaching: mem.source, subject: mem.kind === 'opt' ? (mem.subject || 'Other') : mem.paper, url: mem.url };
-      for (const r of toCsvRows(qs, m2)) allRows.push(r);
-    }
-  }
-  const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
-  fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + allRows.join('\n') + (allRows.length ? '\n' : ''));
-
-  const fresh = JSON.parse(fs.readFileSync(clPath, 'utf8'));
-  const hitDocs = fresh.filter(c => c.freepassHit).reduce((a, c) => a + c.members.length, 0);
-  const needVision = fresh.filter(c => c.freepassDone && !c.freepassHit && !c.error).length;
-  console.log(`\nprocessed ${done} downloads · free-pass hits ${hits} (covering ${hitDocs} docs) · units needing vision ${needVision} · errors ${errs}`);
-  console.log(`wrote data/ocr-questions.csv (${allRows.length} rows). next: node build.js, then review · node ocr-pipeline.mjs status`);
-  process.exit(0);
-}
-
-if (cmd === 'status') {
-  const clPath = path.join(CACHE, 'clusters.json');
-  if (!fs.existsSync(clPath)) { console.error('run `node ocr-pipeline.mjs plan` first'); process.exit(1); }
-  const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
-  const need = clusters.filter(c => c.freepassDone && !c.freepassHit && !c.error);
-  const pages = need.reduce((a, c) => a + (c.numPages || 40), 0);
-  const bySource = {};
-  for (const c of clusters) {
-    const s = bySource[c.source] ||= { units: 0, freeHit: 0, needVision: 0, err: 0, pending: 0, visionPages: 0 };
-    s.units++;
-    if (c.error) s.err++;
-    else if (!c.freepassDone) s.pending++;
-    else if (c.freepassHit) s.freeHit++;
-    else { s.needVision++; s.visionPages += c.numPages || 40; }
-  }
-  console.log('source'.padEnd(26), 'units'.padStart(6), 'free'.padStart(6), 'vision'.padStart(7), 'vpages'.padStart(8), 'pend'.padStart(6), 'err'.padStart(5));
-  for (const [s, v] of Object.entries(bySource).sort((a, b) => b[1].visionPages - a[1].visionPages)) {
-    console.log(s.padEnd(26), String(v.units).padStart(6), String(v.freeHit).padStart(6), String(v.needVision).padStart(7), String(v.visionPages).padStart(8), String(v.pending).padStart(6), String(v.err).padStart(5));
-  }
-  const reqs = Math.ceil(pages / 6);
-  console.log(`\nvision step: ~${pages.toLocaleString()} pages · ~${reqs.toLocaleString()} Gemini requests (6 pages/request)`);
-  console.log(`  gemini-3.5-flash-lite, free tier — $0. At ~800 requests/day that is ~${Math.ceil(reqs / 800)} days of the nightly ocr-gemini.yml run.`);
-  process.exit(0);
-}
-
+/* ---- shared: rasterise + OCR + question extraction (defined before the command
+ * dispatch because `freepass` runs its filter during top-level await) ---- */
 /* ============================================================================
  * Stage 3 — vision OCR of the printed question header
  *
@@ -852,6 +702,159 @@ function questionConfidence(q) {
 function unitsNeedingOcr(clusters) {
   return clusters.filter(c => c.freepassDone && !c.freepassHit && !c.error && !c.needsManual);
 }
+
+/* ================= commands ================= */
+const cmd = process.argv[2];
+const args = process.argv.slice(3);
+const getArg = k => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : undefined; };
+
+if (cmd === 'plan') {
+  const corpus = loadCorpus();
+  const already = searchableBaseUrls();
+  const todo = corpus.filter(e => !already.has(norm(e.url)));
+
+  const clusters = new Map(); // key -> {key, source, paper, members:[], singleton}
+  for (const e of todo) {
+    const k = testKey(e);
+    const ck = k || `SINGLETON:${sha1(norm(e.url)).slice(0, 12)}`;
+    if (!clusters.has(ck)) clusters.set(ck, { key: ck, real: !!k, source: e.source, paper: e.paper, subject: e.subject || null, members: [] });
+    clusters.get(ck).members.push({ url: norm(e.url), topper: e.topper, air: e.air || null, year: e.year || null, paper: e.paper, subject: e.subject || null, note: e.note || '', source: e.source, kind: e.kind });
+  }
+
+  const list = [...clusters.values()].sort((a, b) => b.members.length - a.members.length);
+  for (const c of list) {
+    c.members.sort((a, b) => decode(a.url).length - decode(b.url).length);
+    c.representative = c.members[0].url;
+    c.driveFolder = list.length && /drive\.google\.com\/(?:drive\/)?(?:u\/\d+\/)?folders\//.test(c.representative);
+  }
+
+  fs.writeFileSync(path.join(CACHE, 'clusters.json'), JSON.stringify(list, null, 2));
+
+  // summary
+  const bySource = {};
+  for (const c of list) {
+    const s = bySource[c.source] ||= { docs: 0, clusters: 0, realClusters: 0, singletons: 0, driveFolders: 0 };
+    s.docs += c.members.length;
+    s.clusters += 1;
+    if (c.real) s.realClusters += 1; else s.singletons += 1;
+    if (c.driveFolder) s.driveFolders += c.members.length;
+  }
+  console.log('corpus not yet searchable:', todo.length, 'docs');
+  console.log('distinct OCR units (clusters + singletons):', list.length);
+  console.log('\nsource'.padEnd(26), 'docs'.padStart(6), 'units'.padStart(7), 'real-clu'.padStart(9), 'singles'.padStart(8), 'drivefldr'.padStart(10));
+  for (const [s, v] of Object.entries(bySource).sort((a, b) => b[1].docs - a[1].docs)) {
+    console.log(s.padEnd(26), String(v.docs).padStart(6), String(v.clusters).padStart(7), String(v.realClusters).padStart(9), String(v.singletons).padStart(8), String(v.driveFolders).padStart(10));
+  }
+  const reduction = (todo.length / Math.max(1, list.length)).toFixed(1);
+  console.log(`\n→ clustering reduces ${todo.length} docs to ${list.length} OCR units (${reduction}x). Wrote .ocr/clusters.json`);
+  console.log('  next: node ocr-pipeline.mjs freepass');
+  process.exit(0);
+}
+
+if (cmd === 'freepass') {
+  const clPath = path.join(CACHE, 'clusters.json');
+  if (!fs.existsSync(clPath)) { console.error('run `node ocr-pipeline.mjs plan` first'); process.exit(1); }
+  const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+  const only = getArg('source');
+  const limit = getArg('limit') ? +getArg('limit') : Infinity;
+  const conc = getArg('concurrency') ? +getArg('concurrency') : 6;
+  KEEP_PDFS = args.includes('--keep-pdfs');
+  const allScans = args.includes('--all'); // also download known-scan sources (for page counts)
+
+  // decide the work list
+  const work = [];
+  for (const c of clusters) {
+    if (only && c.source !== only) continue;
+    if (c.freepassDone || c.error || c.needsManual) continue;
+    const { fetchUrl, note } = resolve(c.representative);
+    if (!fetchUrl) { c.resolveNote = note; c.needsManual = true; continue; }
+    if (!allScans && KNOWN_SCAN_SOURCES.has(c.source)) {
+      c.freepassDone = true; c.freepassHit = false; c.knownScan = true; // no download, straight to vision
+      continue;
+    }
+    work.push({ c, fetchUrl });
+  }
+  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
+  console.log(`${work.length} units to download & test (concurrency ${conc}); ${clusters.filter(c => c.knownScan).length} known-scan units skipped straight to vision.`);
+
+  let done = 0, hits = 0, errs = 0;
+  const t0 = Date.now();
+  await pool(work.slice(0, limit === Infinity ? work.length : limit), conc, async ({ c, fetchUrl }) => {
+    const meta = await getPdf(fetchUrl);
+    c.freepassDone = true;
+    c.numPages = meta.numPages || null;
+    c.sizeKB = meta.sizeKB || null;
+    if (meta.error) { c.error = meta.error; errs++; }
+    else {
+      // Only count it a free-pass hit if the text layer yields *clean* questions.
+      // A garbled text layer (scanned ForumIAS etc.) must fall through to the
+      // Gemini vision pass, not lock the booklet in with junk.
+      const fp = meta.freepass || { count: 0 };
+      const clean = filterFreepassQuestions(fp.questions, c.paper);
+      c.freepassHit = clean.length > 0;
+      c.freepassClean = clean.length;
+      if (c.freepassHit) hits++;
+    }
+    done++;
+    if (done % 25 === 0 || done === work.length) {
+      const rate = done / ((Date.now() - t0) / 1000);
+      console.log(`  ${done}/${work.length}  hits ${hits}  errs ${errs}  (${rate.toFixed(1)}/s)`);
+      fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
+    }
+  });
+  fs.writeFileSync(clPath, JSON.stringify(clusters, null, 2));
+
+  // (re)write data/ocr-questions.csv from every free-pass hit recorded in the cache
+  const allRows = [];
+  for (const c of JSON.parse(fs.readFileSync(clPath, 'utf8'))) {
+    if (!c.freepassHit) continue;
+    const key = sha1(resolve(c.representative).fetchUrl || c.representative);
+    const metaPath = path.join(METADIR, key + '.json');
+    if (!fs.existsSync(metaPath)) continue;
+    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    const qs = filterFreepassQuestions(meta.freepass && meta.freepass.questions, c.paper);
+    if (!qs || !qs.length) continue;
+    for (const mem of c.members) {
+      const m2 = { topper: mem.topper, coaching: mem.source, subject: mem.kind === 'opt' ? (mem.subject || 'Other') : mem.paper, url: mem.url };
+      for (const r of toCsvRows(qs, m2)) allRows.push(r);
+    }
+  }
+  const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
+  fs.writeFileSync(path.join(DATA, 'ocr-questions.csv'), HEADER + allRows.join('\n') + (allRows.length ? '\n' : ''));
+
+  const fresh = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+  const hitDocs = fresh.filter(c => c.freepassHit).reduce((a, c) => a + c.members.length, 0);
+  const needVision = fresh.filter(c => c.freepassDone && !c.freepassHit && !c.error).length;
+  console.log(`\nprocessed ${done} downloads · free-pass hits ${hits} (covering ${hitDocs} docs) · units needing vision ${needVision} · errors ${errs}`);
+  console.log(`wrote data/ocr-questions.csv (${allRows.length} rows). next: node build.js, then review · node ocr-pipeline.mjs status`);
+  process.exit(0);
+}
+
+if (cmd === 'status') {
+  const clPath = path.join(CACHE, 'clusters.json');
+  if (!fs.existsSync(clPath)) { console.error('run `node ocr-pipeline.mjs plan` first'); process.exit(1); }
+  const clusters = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+  const need = clusters.filter(c => c.freepassDone && !c.freepassHit && !c.error);
+  const pages = need.reduce((a, c) => a + (c.numPages || 40), 0);
+  const bySource = {};
+  for (const c of clusters) {
+    const s = bySource[c.source] ||= { units: 0, freeHit: 0, needVision: 0, err: 0, pending: 0, visionPages: 0 };
+    s.units++;
+    if (c.error) s.err++;
+    else if (!c.freepassDone) s.pending++;
+    else if (c.freepassHit) s.freeHit++;
+    else { s.needVision++; s.visionPages += c.numPages || 40; }
+  }
+  console.log('source'.padEnd(26), 'units'.padStart(6), 'free'.padStart(6), 'vision'.padStart(7), 'vpages'.padStart(8), 'pend'.padStart(6), 'err'.padStart(5));
+  for (const [s, v] of Object.entries(bySource).sort((a, b) => b[1].visionPages - a[1].visionPages)) {
+    console.log(s.padEnd(26), String(v.units).padStart(6), String(v.freeHit).padStart(6), String(v.needVision).padStart(7), String(v.visionPages).padStart(8), String(v.pending).padStart(6), String(v.err).padStart(5));
+  }
+  const reqs = Math.ceil(pages / 6);
+  console.log(`\nvision step: ~${pages.toLocaleString()} pages · ~${reqs.toLocaleString()} Gemini requests (6 pages/request)`);
+  console.log(`  gemini-3.5-flash-lite, free tier — $0. At ~800 requests/day that is ~${Math.ceil(reqs / 800)} days of the nightly ocr-gemini.yml run.`);
+  process.exit(0);
+}
+
 
 if (cmd === 'ocr') {
   const clPath = path.join(CACHE, 'clusters.json');
