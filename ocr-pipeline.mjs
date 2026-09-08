@@ -1039,15 +1039,26 @@ if (cmd === 'gemini') {
       }
       if (!rendered.length) continue;
 
-      let texts = null, rateLimited = false;
-      for (let attempt = 0; attempt < 4 && texts === null && !rateLimited; attempt++) {
-        if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));   // 0, 3s, 6s, 9s
+      let texts = null, dayDone = false;
+      for (let attempt = 0; attempt < 6 && texts === null && !dayDone; attempt++) {
+        if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));   // 0, 3s, 6s, 9s, 12s, 15s
         try {
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`, {
             method: 'POST', headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 8192 } })
           });
-          if (res.status === 429) { rateLimited = true; break; }
+          if (res.status === 429) {
+            const body = await res.text();
+            // per-DAY quota → the day is over, stop. per-MINUTE (RPM/TPM) → back
+            // off for the advertised retryDelay and try again; don't burn the
+            // rest of the daily budget on one transient minute-limit hit.
+            const perDay = /PerDay|per day|GenerateRequestsPerDay/i.test(body);
+            const wait = Math.min(70, (+(body.match(/"retryDelay":\s*"(\d+(?:\.\d+)?)s"/) || [])[1] || 30) + 2);
+            if (perDay) { dayDone = true; break; }
+            console.log(`  minute-rate limited, waiting ${wait}s (attempt ${attempt + 1}/6)`);
+            await new Promise(r => setTimeout(r, wait * 1000));
+            continue;
+          }
           if (res.status >= 500) { console.log(`  HTTP ${res.status}, retrying`); continue; }
           if (!res.ok) { console.log(`  HTTP ${res.status}: ${(await res.text()).slice(0, 160)}`); texts = []; break; }
           const j = await res.json();
@@ -1057,11 +1068,11 @@ if (cmd === 'gemini') {
           if (mm) { try { parsed = JSON.parse(mm[0]); } catch {} }
           if (!parsed.length && out) parsed = rendered.map((_, k) => k === 0 ? out : '');
           texts = parsed;
-        } catch (e) { console.log(`  request failed (${attempt + 1}/4): ${e.message}`); }
+        } catch (e) { console.log(`  request failed (${attempt + 1}/6): ${e.message}`); }
       }
-      if (rateLimited) { console.log('  rate limited — stopping for today'); used = maxReq; break; }
+      if (dayDone) { console.log('  daily free-tier quota reached — stopping for today'); used = maxReq; break; }
       used++;
-      if (texts === null) { console.log('  giving up on this batch, will retry next run'); continue; }  // pages stay unmarked
+      if (texts === null) { console.log('  batch failed after retries, will retry next run'); continue; }  // pages stay unmarked
 
       rendered.forEach((r, idx) => {
         try { fs.unlinkSync(r.img); } catch {}
@@ -1078,7 +1089,7 @@ if (cmd === 'gemini') {
       });
       job.rec.engine = 'gemini';
       fs.writeFileSync(job.outPath, JSON.stringify(job.rec));       // checkpoint after every request
-      if (used < maxReq) await new Promise(r => setTimeout(r, 4200)); // ~14 req/min, under the 15 RPM free cap
+      if (used < maxReq) await new Promise(r => setTimeout(r, 4800)); // ~12.5 req/min, margin under the 15 RPM free cap
     }
     try { fs.unlinkSync(pdfPath); } catch {}
     if (!pages.length || used < maxReq) { job.rec.geminiDone = true; unitsDone++; }
