@@ -210,7 +210,7 @@ function build() {
   fs.writeFileSync(path.join(DATA, 'copies.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies }));
 
   // deduped question index — powers the question-first search view and Practice mode
-  writeQuestions(copies, generated);
+  const qList = writeQuestions(copies, generated);
 
   // lightweight boot index — the hand-curated text-searchable core, without the question text.
   // Omitted and lazy-loaded with data/copies.json (then merged into DB.copies + refreshFacets):
@@ -257,9 +257,12 @@ function build() {
     toppers
   }));
 
-  writeStaticIndex(copies, toppers, stats, generated);
-  writeToppersPage(copies, toppers, stats, generated);
-  writeSitemap(generated);
+  const nameToSlug = writeTopperPages(copies, optRaw, toppers, generated);
+  writeStaticIndex(copies, toppers, stats, generated, nameToSlug);
+  writeToppersPage(copies, toppers, stats, generated, nameToSlug);
+  writeQuestionPages(qList, copies, nameToSlug, generated);
+  writeHubPages(qList, copies, optRaw, nameToSlug, generated);
+  writeSitemaps(generated);
   writeLlms(stats, generated);
   writeRobots();
   const dsCounts = writeDataset(copies, toppers, generated, gitCommit());
@@ -274,6 +277,20 @@ function build() {
 }
 
 /* ---- deduped question index: data/questions.json ---- */
+// strip leading "Q.3)" / "12." numbering for display — mirrors assets/app.js dispQ()
+function dispQ(t) { return String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, ''); }
+
+// stable, unique URL slug — appends -2, -3… on collision (deterministic given insertion order)
+function dedupeSlug(base, used) {
+  let s = slug(base) || 'x';
+  if (!used.has(s)) { used.add(s); return s; }
+  let n = 2;
+  while (used.has(s + '-' + n)) n++;
+  s = s + '-' + n;
+  used.add(s);
+  return s;
+}
+
 function qKey(text) {
   return String(text || '')
     .replace(/^\s*(?:Q\.?|Question)?\s*\d+\s*[\).:\-]+\s*/i, '')     // drop leading "Q.3)" / "12."
@@ -347,7 +364,8 @@ function writeQuestions(copies, generated) {
     };
   });
   list.sort((x, y) => x.p.localeCompare(y.p) || y.a.length - x.a.length || x.q.localeCompare(y.q));
-  list.forEach((q, i) => { q.i = i; });
+  const usedQSlugs = new Set();
+  list.forEach((q, i) => { q.i = i; q.slug = dedupeSlug(q.p + '-' + dispQ(q.q).slice(0, 70), usedQSlugs); });
 
   const byPaper = {}, mapped = {};
   for (const q of list) {
@@ -360,11 +378,12 @@ function writeQuestions(copies, generated) {
     syllabus_version: syl && syl.version || null,
     count: list.length,
     byPaper,
-    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
+    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a, sl: q.slug }))
   }));
 
   const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
   console.log(`questions.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);
+  return list;
 }
 
 /* ---- consolidated backup dataset (not served by the app) ---- */
@@ -541,7 +560,7 @@ function telegramLink(name, toppers) {
 }
 
 /* ---- inject static content + JSON-LD into index.html between markers ---- */
-function writeStaticIndex(copies, toppers, stats, generated) {
+function writeStaticIndex(copies, toppers, stats, generated, nameToSlug) {
   const idxPath = path.join(ROOT, 'index.html');
   let html = fs.readFileSync(idxPath, 'utf8');
 
@@ -556,7 +575,7 @@ function writeStaticIndex(copies, toppers, stats, generated) {
     .sort((a, b) => airOf(a) - airOf(b) || a.localeCompare(b))
     .slice(0, NOSCRIPT_CAP);
   const topperLinks = listed.map(n =>
-    `<li><a href="toppers.html#${slug(n)}">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}${telegramLink(n, toppers)}</li>`
+    `<li><a href="/topper/${(nameToSlug && nameToSlug.get(n)) || slug(n)}/">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}${telegramLink(n, toppers)}</li>`
   ).join('\n');
 
   const noscript =
@@ -668,7 +687,7 @@ function jsonLd(stats, generated) {
 }
 
 /* ---- toppers.html : the fully static crawlable index ---- */
-function writeToppersPage(copies, toppers, stats, generated) {
+function writeToppersPage(copies, toppers, stats, generated, nameToSlug) {
   const byTopper = new Map();
   for (const c of copies) {
     if (!byTopper.has(c.t)) byTopper.set(c.t, []);
@@ -679,12 +698,13 @@ function writeToppersPage(copies, toppers, stats, generated) {
   const sections = names.map(name => {
     const list = byTopper.get(name).slice().sort((a, b) => (a.p).localeCompare(b.p));
     const meta = topperMeta(name, toppers);
+    const idSlug = (nameToSlug && nameToSlug.get(name)) || slug(name);
     const rows = list.map(c => {
       const pdf = esc(c.u);
       return `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.q.length}</td><td><a href="${pdf}" rel="nofollow noopener">source PDF</a></td></tr>`;
     }).join('\n');
-    return `  <section id="${slug(name)}">
-    <h2>${esc(name)}${telegramLink(name, toppers)}</h2>
+    return `  <section id="${idSlug}">
+    <h2><a href="/topper/${idSlug}/">${esc(name)}</a>${telegramLink(name, toppers)}</h2>
     ${meta ? `<p class="meta">${esc(meta)}</p>` : ''}
     <table>
       <thead><tr><th>Paper</th><th>Source</th><th>Questions</th><th>Copy</th></tr></thead>
@@ -701,7 +721,7 @@ ${rows}
     name: 'UPSC Mains toppers with published answer copies',
     numberOfItems: names.length,
     itemListElement: names.map((n, idx) => ({
-      '@type': 'ListItem', position: idx + 1, name: n, url: SITE + '/toppers.html#' + slug(n)
+      '@type': 'ListItem', position: idx + 1, name: n, url: SITE + '/topper/' + ((nameToSlug && nameToSlug.get(n)) || slug(n)) + '/'
     }))
   };
 
@@ -758,7 +778,7 @@ ${JSON.stringify(itemList, null, 0)}
   them; nothing is re-hosted here.</p>
   <details><summary>Jump to a topper</summary>
     <div class="toc">
-${names.map(n => `      <a href="#${slug(n)}">${esc(n)}</a>`).join('\n')}
+${names.map(n => `      <a href="#${(nameToSlug && nameToSlug.get(n)) || slug(n)}">${esc(n)}</a>`).join('\n')}
     </div>
   </details>
 </header>
@@ -771,17 +791,333 @@ ${sections}
   fs.writeFileSync(path.join(ROOT, 'toppers.html'), html);
 }
 
-function writeSitemap(generated) {
-  const urls = [
+/* ---- static, indexable pages: one per topper / question / paper / optional subject ----
+ * Not committed to git (see .gitignore) — generated fresh at deploy time by the
+ * Actions workflow. This is the primary SEO surface: toppers.html and the SPA are
+ * one URL each and invisible to search engines; these give each topper and each
+ * distinct question its own crawlable, linkable, indexable page. */
+const MINI_CSS = `
+  :root{color-scheme:light dark;--bg:#FBF9F5;--fg:#263A40;--muted:#5B6C70;--line:#E9E3D8;--teal:#0A7C7B;--card:#fff}
+  @media (prefers-color-scheme:dark){:root{--bg:#101C1D;--fg:#E9E2D5;--muted:#8AA0A0;--line:#2C4245;--teal:#55D6CF;--card:#172829}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 20px 80px}
+  main{max-width:860px;margin:0 auto}
+  header{max-width:860px;margin:0 auto;padding:28px 0 8px}
+  h1{font-size:1.5rem;margin:0 0 10px;line-height:1.32;font-weight:600}
+  h2{font-size:1.1rem;margin:22px 0 8px}
+  a{color:var(--teal)}
+  a:hover{text-decoration:underline}
+  .lead{color:var(--muted);margin:4px 0}
+  nav.crumb{font-size:.88rem;color:var(--muted);margin:16px 0;overflow-wrap:anywhere}
+  nav.crumb a{color:var(--muted)}
+  .meta{color:var(--muted);font-size:.88rem;margin:0 0 10px}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:6px}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:2px 8px;margin:0 6px 6px 0}
+  .qtext{font-size:1.2rem;line-height:1.5;margin:10px 0 14px;font-weight:500}
+  .cta{display:inline-block;margin-top:18px;padding:9px 16px;border-radius:9px;background:var(--teal);color:#fff;font-weight:600;font-size:.88rem}
+  .cta:hover{text-decoration:none;filter:brightness(1.1)}
+  ul{padding-left:20px}
+  li{margin:4px 0}
+  footer.f{max-width:860px;margin:32px auto 0;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line);padding-top:16px}
+`;
+
+function pageShell({ title, description, canonical, jsonLd, crumbs, body }) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${canonical}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${SITE}/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>${MINI_CSS}</style>
+${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
+</head>
+<body>
+<header><nav class="crumb">${crumbs}</nav></header>
+<main>
+${body}
+</main>
+<footer class="f"><p>Free, open, community-built. Answer-copy PDFs are hosted by the institutes and toppers who published them — nothing is re-hosted here. <a href="/">Search the full site →</a></p></footer>
+</body>
+</html>
+`;
+}
+
+function paperSlug(p) { return slug(p) || 'other'; }
+
+function writeTopperPages(copies, optRaw, toppers, generated) {
+  const dir = path.join(ROOT, 'topper');
+  fs.rmSync(dir, { recursive: true, force: true });
+
+  const byName = new Map();
+  for (const c of copies) { if (!byName.has(c.t)) byName.set(c.t, []); byName.get(c.t).push(c); }
+  const byNameOpt = new Map();
+  for (const o of optRaw) { if (!o.topper) continue; if (!byNameOpt.has(o.topper)) byNameOpt.set(o.topper, []); byNameOpt.get(o.topper).push(o); }
+
+  const names = [...new Set([...byName.keys(), ...byNameOpt.keys()])].sort();
+  const used = new Set();
+  const nameToSlug = new Map();
+
+  for (const name of names) {
+    const slugId = dedupeSlug(name, used);
+    nameToSlug.set(name, slugId);
+    const list = byName.get(name) || [];
+    const opts = byNameOpt.get(name) || [];
+    const T = toppers[name] || {};
+    const meta = topperMeta(name, toppers);
+    const total = list.length + opts.length;
+
+    const rows = list.slice().sort((a, b) => a.p.localeCompare(b.p)).map(c =>
+      `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.link ? '—' : c.q.length}</td><td><a href="${esc(c.u)}" rel="nofollow noopener">${c.link ? 'Open copy' : 'source PDF'}</a></td></tr>`
+    ).join('\n');
+    const optRows = opts.map(o =>
+      `      <tr><td>${esc(o.subject || '—')}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`
+    ).join('\n');
+
+    const samples = [];
+    for (const c of list) {
+      for (const [page, qtext] of c.q) {
+        if (qtext && samples.length < 8) samples.push({ p: c.p, page, qtext, url: c.u });
+      }
+      if (samples.length >= 8) break;
+    }
+    const samplesHtml = samples.length ? `
+  <h2>Sample questions answered</h2>
+  <ul>
+${samples.map(s => `    <li><a href="${esc(s.url)}${s.page ? '#page=' + s.page : ''}" rel="nofollow noopener">${esc(dispQ(s.qtext))}</a> <span class="tag">${esc(s.p)}</span></li>`).join('\n')}
+  </ul>` : '';
+
+    const jsonLd = {
+      '@context': 'https://schema.org', '@type': 'Person', name,
+      url: `${SITE}/topper/${slugId}/`,
+      knowsAbout: 'UPSC Civil Services Examination',
+      ...(T.air ? { award: `All India Rank ${T.air}, UPSC Civil Services Examination${T.year ? ' ' + T.year : ''}` } : {})
+    };
+
+    const body = `
+  <h1>${esc(name)}${telegramLink(name, toppers)}</h1>
+  ${meta ? `<p class="lead">${esc(meta)}</p>` : ''}
+  <p class="meta">${total} answer ${total === 1 ? 'copy' : 'copies'} indexed — part of the free, searchable Toppers Copy index.</p>
+  ${rows ? `<table><thead><tr><th>Paper</th><th>Source</th><th>Questions</th><th>Copy</th></tr></thead><tbody>\n${rows}\n    </tbody></table>` : ''}
+  ${optRows ? `<h2>Optional subject copies</h2><table><thead><tr><th>Subject</th><th>Source</th><th>Marks</th><th>Copy</th></tr></thead><tbody>\n${optRows}\n    </tbody></table>` : ''}
+  ${samplesHtml}
+  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(name)}">Search ${esc(name)}&rsquo;s answers on Toppers Copy →</a></p>`;
+
+    const html = pageShell({
+      title: `${name} — UPSC Mains answer copies | Toppers Copy`,
+      description: `${name}${meta ? ', ' + meta : ''} — ${total} UPSC Mains answer ${total === 1 ? 'copy' : 'copies'} indexed, each linking to the source PDF.`,
+      canonical: `${SITE}/topper/${slugId}/`,
+      jsonLd,
+      crumbs: `<a href="/">Toppers Copy</a> / <a href="/toppers.html">Toppers</a> / ${esc(name)}`,
+      body
+    });
+    const outDir = path.join(dir, slugId);
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  }
+  console.log(`topper/     ${names.length} pages written`);
+  return nameToSlug;
+}
+
+function writeQuestionPages(list, copies, nameToSlug, generated) {
+  const dir = path.join(ROOT, 'question');
+  fs.rmSync(dir, { recursive: true, force: true });
+
+  const copyById = new Map(copies.map(c => [c.i, c]));
+  const sylPath = path.join(DATA, 'syllabus.json');
+  const sylRaw = fs.existsSync(sylPath) ? JSON.parse(fs.readFileSync(sylPath, 'utf8')) : null;
+  function sylLabel(id) {
+    if (!sylRaw) return id;
+    for (const [paper, def] of Object.entries(sylRaw.papers || {})) {
+      const hit = (def.nodes || []).find(n => n.id === id);
+      if (hit) return `${paper} · ${hit.t}`;
+    }
+    return id;
+  }
+
+  for (const q of list) {
+    const answers = q.a
+      .map(([cid, page]) => { const c = copyById.get(cid); return c ? { c, page } : null; })
+      .filter(Boolean)
+      .sort((x, y) => (x.c.r || 1e9) - (y.c.r || 1e9))
+      .slice(0, 120);
+
+    const rows = answers.map(({ c, page }) => {
+      const tSlug = nameToSlug.get(c.t);
+      const tLink = tSlug ? `<a href="${SITE}/topper/${tSlug}/">${esc(c.t)}</a>` : esc(c.t);
+      const pdf = c.u + (page ? '#page=' + page : '');
+      return `      <tr><td>${tLink}</td><td>${c.r ? 'AIR ' + c.r : '—'}${c.y ? ' · ' + c.y : ''}</td><td>${esc(c.c || '—')}</td><td><a href="${esc(pdf)}" rel="nofollow noopener">${page ? 'p.' + page : 'Open PDF'}</a></td></tr>`;
+    }).join('\n');
+
+    const tags = (q.s || []).map(id => `<span class="tag">${esc(sylLabel(id))}</span>`).join(' ');
+    const metaBits = [];
+    if (q.m) metaBits.push(q.m + ' marks');
+    if (q.w) metaBits.push(q.w + ' words');
+    metaBits.push(`${answers.length} topper${answers.length === 1 ? '' : 's'} answered this`);
+    if (q.yr.length) metaBits.push('seen ' + q.yr.join(', '));
+
+    const dq = dispQ(q.q);
+    const jsonLd = {
+      '@context': 'https://schema.org', '@type': 'WebPage',
+      name: dq.slice(0, 110), url: `${SITE}/question/${q.slug}/`, about: q.p,
+      mainEntity: {
+        '@type': 'ItemList', numberOfItems: answers.length,
+        itemListElement: answers.slice(0, 50).map((a, idx) => ({
+          '@type': 'ListItem', position: idx + 1, name: a.c.t,
+          ...(nameToSlug.get(a.c.t) ? { url: `${SITE}/topper/${nameToSlug.get(a.c.t)}/` } : {})
+        }))
+      }
+    };
+
+    const body = `
+  <h1>${esc(q.p)} question — UPSC Mains</h1>
+  <p class="qtext">${esc(dq)}</p>
+  <p class="meta">${metaBits.join(' · ')}</p>
+  ${tags ? `<p>${tags}</p>` : ''}
+  <table><thead><tr><th>Topper</th><th>Rank</th><th>Source</th><th>Copy</th></tr></thead><tbody>
+${rows}
+    </tbody></table>
+  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(dq.slice(0, 60))}">See this question on Toppers Copy →</a></p>
+  <p><a href="${SITE}/paper/${paperSlug(q.p)}/">More ${esc(q.p)} questions →</a></p>`;
+
+    const html = pageShell({
+      title: `${dq.slice(0, 78)}${dq.length > 78 ? '…' : ''} | Toppers Copy`,
+      description: `${dq.slice(0, 140)}${dq.length > 140 ? '…' : ''} — ${answers.length} UPSC Mains topper${answers.length === 1 ? '' : 's'} answered this ${q.p} question, each linking to the source PDF.`,
+      canonical: `${SITE}/question/${q.slug}/`,
+      jsonLd,
+      crumbs: `<a href="/">Toppers Copy</a> / <a href="/paper/${paperSlug(q.p)}/">${esc(q.p)}</a> / Question`,
+      body
+    });
+    const outDir = path.join(dir, q.slug);
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  }
+  console.log(`question/   ${list.length} pages written`);
+}
+
+function writeHubPages(list, copies, optRaw, nameToSlug, generated) {
+  const paperDir = path.join(ROOT, 'paper');
+  const optDir = path.join(ROOT, 'optional');
+  fs.rmSync(paperDir, { recursive: true, force: true });
+  fs.rmSync(optDir, { recursive: true, force: true });
+
+  const papers = [...new Set(copies.map(c => c.p))].sort();
+  for (const paper of papers) {
+    const qs = list.filter(q => q.p === paper).slice(0, 300); // already sorted by #answers desc
+    const toppersInPaper = [...new Set(copies.filter(c => c.p === paper).map(c => c.t))].sort();
+    const qItems = qs.map(q => `    <li><a href="${SITE}/question/${q.slug}/">${esc(dispQ(q.q).slice(0, 140))}</a> <span class="tag">${q.a.length} answer${q.a.length === 1 ? '' : 's'}</span></li>`).join('\n');
+    const tItems = toppersInPaper.slice(0, 400).map(n => {
+      const s = nameToSlug.get(n);
+      return `<a href="${s ? SITE + '/topper/' + s + '/' : '#'}">${esc(n)}</a>`;
+    }).join(' · ');
+
+    const body = `
+  <h1>UPSC Mains ${esc(paper)} — topper answer copies &amp; questions</h1>
+  <p class="lead">${qs.length ? list.filter(q => q.p === paper).length : 0} distinct questions indexed from ${toppersInPaper.length} toppers' ${esc(paper)} copies, each linking to the exact page of the source PDF.</p>
+  <h2>Most-answered questions</h2>
+  <ul>
+${qItems || '    <li>Coming soon.</li>'}
+  </ul>
+  <h2>Toppers with a ${esc(paper)} copy</h2>
+  <p>${tItems}</p>
+  <p><a class="cta" href="${SITE}/?q=">Search all ${esc(paper)} copies on Toppers Copy →</a></p>`;
+
+    const html = pageShell({
+      title: `UPSC Mains ${paper} — topper answer copies & questions | Toppers Copy`,
+      description: `Browse ${esc(paper)} questions from UPSC Mains topper answer copies — ${toppersInPaper.length} rankers, each answer linking to the source PDF page.`,
+      canonical: `${SITE}/paper/${paperSlug(paper)}/`,
+      crumbs: `<a href="/">Toppers Copy</a> / ${esc(paper)}`,
+      body
+    });
+    const outDir = path.join(paperDir, paperSlug(paper));
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  }
+
+  const bySubject = new Map();
+  for (const o of optRaw) { if (!o.subject) continue; if (!bySubject.has(o.subject)) bySubject.set(o.subject, []); bySubject.get(o.subject).push(o); }
+  for (const [subject, entries] of bySubject) {
+    const toppersInSubject = [...new Set(entries.map(o => o.topper).filter(Boolean))].sort();
+    const rows = entries.slice(0, 400).map(o => {
+      const s = o.topper && nameToSlug.get(o.topper);
+      const tLink = s ? `<a href="${SITE}/topper/${s}/">${esc(o.topper)}</a>` : esc(o.topper || '—');
+      return `      <tr><td>${tLink}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`;
+    }).join('\n');
+
+    const body = `
+  <h1>UPSC Mains ${esc(subject)} optional — topper answer copies</h1>
+  <p class="lead">${entries.length} answer ${entries.length === 1 ? 'copy' : 'copies'} from ${toppersInSubject.length} toppers who took ${esc(subject)} as their optional subject.</p>
+  <table><thead><tr><th>Topper</th><th>Source</th><th>Marks</th><th>Copy</th></tr></thead><tbody>
+${rows}
+    </tbody></table>
+  <p><a class="cta" href="${SITE}/#optionals">Browse ${esc(subject)} on Toppers Copy →</a></p>`;
+
+    const html = pageShell({
+      title: `UPSC Mains ${subject} optional — topper answer copies | Toppers Copy`,
+      description: `${entries.length} UPSC Mains ${esc(subject)} optional-subject answer copies from ${toppersInSubject.length} rank-holders, each linking to the source PDF.`,
+      canonical: `${SITE}/optional/${slug(subject)}/`,
+      crumbs: `<a href="/">Toppers Copy</a> / Optionals / ${esc(subject)}`,
+      body
+    });
+    const outDir = path.join(optDir, slug(subject));
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  }
+  console.log(`paper/      ${papers.length} pages written`);
+  console.log(`optional/   ${bySubject.size} pages written`);
+}
+
+function urlsFromDir(rel) {
+  const dir = path.join(ROOT, rel);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => `${SITE}/${rel}/${d.name}/`);
+}
+
+function urlsetXml(urls, generated) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url><loc>${u}</loc><lastmod>${generated}</lastmod></url>`).join('\n')}
+</urlset>
+`;
+}
+
+function writeSitemaps(generated) {
+  const main = [
     { loc: SITE + '/', priority: '1.0' },
     { loc: SITE + '/toppers.html', priority: '0.8' }
   ];
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+  fs.writeFileSync(path.join(ROOT, 'sitemap-main.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>${u.loc}</loc><lastmod>${generated}</lastmod><changefreq>weekly</changefreq><priority>${u.priority}</priority></url>`).join('\n')}
+${main.map(u => `  <url><loc>${u.loc}</loc><lastmod>${generated}</lastmod><changefreq>weekly</changefreq><priority>${u.priority}</priority></url>`).join('\n')}
 </urlset>
+`);
+  const topperUrls = urlsFromDir('topper');
+  const questionUrls = urlsFromDir('question');
+  const hubUrls = [...urlsFromDir('paper'), ...urlsFromDir('optional')];
+  fs.writeFileSync(path.join(ROOT, 'sitemap-toppers.xml'), urlsetXml(topperUrls, generated));
+  fs.writeFileSync(path.join(ROOT, 'sitemap-questions.xml'), urlsetXml(questionUrls, generated));
+  fs.writeFileSync(path.join(ROOT, 'sitemap-hubs.xml'), urlsetXml(hubUrls, generated));
+
+  const idx = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>${SITE}/sitemap-main.xml</loc><lastmod>${generated}</lastmod></sitemap>
+  <sitemap><loc>${SITE}/sitemap-toppers.xml</loc><lastmod>${generated}</lastmod></sitemap>
+  <sitemap><loc>${SITE}/sitemap-questions.xml</loc><lastmod>${generated}</lastmod></sitemap>
+  <sitemap><loc>${SITE}/sitemap-hubs.xml</loc><lastmod>${generated}</lastmod></sitemap>
+</sitemapindex>
 `;
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), idx);
+  console.log(`sitemap.xml index — ${topperUrls.length} toppers, ${questionUrls.length} questions, ${hubUrls.length} hubs`);
 }
 
 function writeRobots() {

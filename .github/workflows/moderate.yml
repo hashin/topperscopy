@@ -56,14 +56,14 @@ jobs:
           echo "--- stdout ---"; cat /tmp/out.txt
           echo "--- stderr ---"; cat /tmp/err.txt
 
-      - name: Rebuild and push
+      - name: Validate, commit the source change, push
         if: steps.apply.outputs.ok == '1'
         run: |
           node build.js
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Add submission #${{ github.event.issue.number }} — approved by @${{ github.event.sender.login }} [skip ci]" || { echo "nothing changed"; exit 0; }
+          git commit -m "Add submission #${{ github.event.issue.number }} — approved by @${{ github.event.sender.login }}" || { echo "nothing changed"; exit 0; }
           git push
 
       - name: Close the issue

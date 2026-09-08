@@ -120,8 +120,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ocr-questions.csv data/copies.json data/index.json data/questions.json \
-                  data/toppers.json toppers.html sitemap.xml llms.txt robots.txt index.html dataset/
-          git diff --cached --quiet || git commit -m "ocr: tesseract pass results [skip ci]"
+          git add data/ocr-questions.csv
+          git diff --cached --quiet || git commit -m "ocr: tesseract pass results"
           git pull --rebase --autostash || true
           git push

@@ -1,19 +1,22 @@
 # Toppers Copy — project map
 
 Free static site: a searchable directory of UPSC Mains topper answer copies. Live at
-**https://topperscopy.hashin.me** (GitHub Pages, `main` branch root, Cloudflare `CNAME topperscopy → hashin.github.io`, HTTPS enforced). No backend. Everything free.
+**https://topperscopy.hashin.me** (GitHub Pages, **Actions-based deploy** — `.github/workflows/deploy.yml`
+runs `node build.js` fresh on every push to `main` and deploys the result; nothing generated is committed —
+Cloudflare `CNAME topperscopy → hashin.github.io`, HTTPS enforced). No backend. Everything free.
 
 Origin: a re-skin + extension of **upsckata.com "Topper Copies"** (credit it everywhere). That project's
 `questions.csv` is our searchable GS/Essay core. We add optional subjects, per-topper AIR/marks,
 link-only copies from other coaching sites, a submission workflow, dark mode, and a dataset backup.
 
-## ⚠️ Do not read these — they are large and generated
+## ⚠️ Do not read these — they are large, generated, and gitignored
 
-`data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB),
-`data/link-copies.json` (~1.6 MB, mostly VisionIAS), `data/questions.json` (deduped index), `toppers.html`, `dataset/*`. All produced/managed by
-`build.js` or bulk scripts. `link-copies.json` / `optionals.json` are hand-editable in principle but huge —
-edit via a script. Never open the generated ones to "understand the project"; this file is their shape. Never
-open them to "understand the project" — this file is the source of truth for their shape.
+`data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB, source
+mirror — tracked), `data/link-copies.json` (~1.6 MB, mostly VisionIAS — source, tracked), `data/questions.json`
+(deduped index), `toppers.html`, `topper/*`, `question/*`, `paper/*`, `optional/*`, `sitemap*.xml`, `llms.txt`,
+`robots.txt`, `dataset/*`. All produced by `build.js` — see `.gitignore`, which is why most of them **aren't in
+git at all**; run `node build.js` locally to (re)create them from the source files below. Never open the
+generated ones to "understand the project"; this file is the source of truth for their shape.
 
 ## Source-of-truth files (the only things you edit for data)
 
@@ -39,12 +42,31 @@ Reads the 5 source files → writes:
   first 110 chars) + paper. Drops GS4 case-study sub-parts ("(a)…(b)…") and stray fragments. Each entry:
   `{i, p, q(text), m, w, s:[syllabus node ids], yr:[years], a:[[copyId, page], …]}`. ~7.3k distinct, ~48% syllabus-mapped.
   Powers question-first view + Practice. Shard by paper post-OCR.
-- `data/toppers.json` — `{toppers:{<name>:{air,year,coaching,papers,copies,marks,verified,sources}}}`.
-- `toppers.html`, `sitemap.xml`, `robots.txt`, `llms.txt`; fills `<!-- STATIC:START/END -->` and `<!-- LD:START/END -->` markers in `index.html` (noscript index + JSON-LD).
+- `data/toppers.json` — `{toppers:{<name>:{air,year,coaching,papers,copies,marks,verified,sources,telegram?}}}`.
+- `toppers.html`, `robots.txt`, `llms.txt`; fills `<!-- STATIC:START/END -->` and `<!-- LD:START/END -->` markers in `index.html` (noscript index + JSON-LD).
+- **`writeTopperPages()` → `topper/<slug>/index.html`** — one static, crawlable, indexable page per topper
+  (`Person` JSON-LD, their copies table + up to 8 sample questions). Returns `nameToSlug` (a `Map`), threaded
+  into every other writer below so links between generated pages point at the right slug (handles same-name
+  collisions via `dedupeSlug()` — e.g. two different "Aditya Srivastava"s become `aditya-srivastava` /
+  `aditya-srivastava-2`).
+- **`writeQuestionPages()` → `question/<slug>/index.html`** — one page per deduped question (the same dedupe
+  `questions.json` already computes), each listing every topper who answered it (rank-sorted), linking straight
+  to the source PDF page. This is the actual SEO surface — the SPA and `toppers.html` are one URL each and
+  invisible to search engines; these ~8k pages are what shows up for "<topic> UPSC Mains answer". `q.sl` in
+  `questions.json` is this slug.
+- **`writeHubPages()` → `paper/<gs1|gs2|gs3|gs4|essay|other>/index.html`** and **`optional/<subject-slug>/index.html`**
+  — topic hub pages (top ~300 most-answered questions + full topper list per paper/subject).
+- **`writeSitemaps()`** — `sitemap.xml` is a `<sitemapindex>` referencing `sitemap-main.xml` (home + toppers.html),
+  `sitemap-toppers.xml`, `sitemap-questions.xml`, `sitemap-hubs.xml` (paper + optional). URLs are read straight
+  off the `topper/` / `question/` / `paper/` / `optional/` directories after they're written.
 - `dataset/` — consolidated CC-BY-4.0 backup: `questions.csv` (flat, all copies, `provenance` col), `copies.csv`, `toppers.csv`, `dataset.json` (nested), `manifest.json` (sha256s), `README.md`.
 
 **`stats`** = GS/Essay searchable index only (used by JSON-LD, llms.txt). **`stats.all`** = grand total
 incl. link-only + optionals (`{questions,copies,toppers,subjects,linkOnly}`) — the homepage headline.
+
+**None of the above is committed to git** (see `.gitignore`) — it's all rebuilt fresh by
+`.github/workflows/deploy.yml` on every push to `main` and deployed straight from there. Run `node build.js`
+locally whenever you need these files to inspect or test against.
 
 ## The app (static, vanilla, no build step for the browser)
 
@@ -70,8 +92,12 @@ incl. link-only + optionals (`{questions,copies,toppers,subjects,linkOnly}`) —
 - `assets/extract.js` — shared zero-dep question heuristic. `extractQuestions(pages)`, `toCsvRows()`. UMD (browser + node).
 - `assets/analyse.js` — lazy-loaded (Submit tab only). pdf.js from CDN for text-layer PDFs; Tesseract.js
   from CDN for OCR of scans (renders each page, crops top ~42%, per-page 30s timeout). Never bundled — zero cost unless used.
-- `assets/fonts/` — Inter + Fraunces, latin-subset woff2. `assets/og.jpg` — social image.
-- `sw.js` — service worker, precache shell + fonts + `index.json` (bump `VERSION` on shell changes).
+- `assets/fonts/` — Inter + Fraunces, latin-subset woff2 (Fraunces is `font-display:optional`, not preloaded —
+  headings only, never blocks or reflows). `assets/og.jpg` — social image, ~106 KB.
+- `sw.js` — service worker. Shell (`index.html`, CSS/JS, Inter, `index.json`/`toppers.json`/`optionals.json`)
+  is precached + stale-while-revalidate. The 3 heavy files (`copies.json`/`questions.json`/`link-copies.json`,
+  multi-MB) use cache-first-with-TTL instead (`HEAVY_TTL_MS`, 12h) — a repeat visit serves them straight from
+  cache with **no network request at all**, not just no re-render. Bump `VERSION` on shell changes.
 
 ## extract.js (repo root) — maintainer CLI
 
@@ -82,20 +108,32 @@ node extract.js <url|file.pdf> --topper "Name" --paper GS1 [--coaching X] [--air
 `--append` → `data/submissions.csv`.  `--json` → an `optionals.json` entry with embedded `questions[]`.
 Text-layer only (no OCR). Then `node build.js`.
 
+## Deploy
+
+`.github/workflows/deploy.yml` — the only thing that ships the site. On every push to `main`: checkout →
+`node build.js` (zero deps, no `npm install` needed) → stage the servable subset into `_site/` (excludes
+`.git`, `.github`, `node_modules`, `.ocr`, the maintainer-CLI scripts, docs) → `actions/upload-pages-artifact`
+→ `actions/deploy-pages`. GitHub Pages source is set to **build_type: workflow** (not the legacy
+branch-serves-root mode) — `gh api repos/hashin/topperscopy/pages` should show that. Nothing writes back to
+git, so there's no `[skip ci]` dance and no risk of a commit-triggered rebuild loop.
+
 ## Moderation
 
 `.github/workflows/moderate.yml`: a repo **collaborator** (triage+) adds the `approved` label to a
 submission issue → `.github/scripts/apply-submission.mjs` parses the issue body (markdown table +
 fenced ```csv / ```json) → writes to `optionals.json` / `submissions.csv` / `toppers.overrides.json` →
-`node build.js` → commits `[skip ci]` → comments + closes. Appoint a moderator = add a collaborator
-(see `MODERATORS.md`). `.github/workflows/build.yml` auto-rebuilds on any push to the 5 source files.
+`node build.js` (validation — fails the job if the data doesn't build) → commits **only the source-file
+diff** (generated files are gitignored, so `git add -A` can't pick them up) → pushes (which triggers
+`deploy.yml`) → comments + closes. Appoint a moderator = add a collaborator (see `MODERATORS.md`).
+`ocr.yml` / `ocr-gemini.yml` follow the same pattern: `node build.js` to validate, then commit only
+`data/ocr-questions.csv` (+ `data/optionals.json` for the Gemini pass).
 
 ## Workflow for any data change
 
 1. Edit a source file (see table above) — respect the dedupe rule.
-2. `node build.js`
-3. Commit **with `[skip ci]`** (generated files change too; `[skip ci]` stops a redundant Action run).
-4. Push. Pages redeploys in ~1 min. Verify at the live URL.
+2. `node build.js` locally, to check it builds clean and to eyeball the output.
+3. Commit the source file(s) only — the generated files are gitignored and won't be staged.
+4. Push. `deploy.yml` rebuilds + redeploys in ~1–2 min. Verify at the live URL.
 
 ## Data sources ingested so far
 
@@ -118,9 +156,15 @@ are **link-only** (scanned Drive/PDF, no question text yet).
   automated by a resumable `ocr-pipeline/` script; output merges into `optionals.json` / `submissions.csv`.
 - UnlockIAS deep year-archive (~+400 PDFs) not scraped — only featured toppers done.
 - GS SCORE (`iasscore.in/toppers-copy`) is **login-gated** — no public URLs, can't add.
-- Repo could be slimmed further by moving `build.js` into a Pages **deploy Action** and gitignoring all
-  generated artifacts (`data/*.json`, `toppers.html`, `dataset/`). Not done — would need the Pages
-  source switched to "GitHub Actions" and careful testing so the live site can't break.
+- `.git` history still carries every pre-2026-09 generated-file commit (~280 MB total repo). Switching to
+  Actions-based deploy (done) stops it growing further; reclaiming the historical size needs a history
+  rewrite (`git filter-repo` or a squash) — destructive (rewrites every commit hash, breaks existing
+  clones/forks) and deliberately **not done automatically** — ask before doing it.
+- Cloudflare DNS record for `topperscopy` is grey-cloud (DNS-only, `dig` resolves straight to
+  `185.199.10x.153`/GitHub's IPs, no `cf-ray` header). Orange-clouding it (SSL/TLS mode **Full (strict)**)
+  would add brotli (measured ~70% smaller than gzip on `copies.json`), real long-lived cache headers via a
+  Cache Rule on `/assets/*` and `/data/*`, and HTTP/3 — free, but needs the Cloudflare dashboard, not doable
+  from the CLI/API without a token.
 
 ## Conventions
 
