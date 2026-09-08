@@ -210,11 +210,19 @@ are **link-only** (scanned Drive/PDF, no question text yet).
 - ~~`.git` history is ~280 MB~~ — **stale, resolved.** `git count-objects -vH` reports **16.7 MiB** in a
   single pack, 0 loose objects, 0 garbage. Gitignoring the generated files + Actions-based deploy already
   fixed it. There is **no history rewrite to consider** — do not run `git filter-repo` here.
-- Cloudflare DNS record for `topperscopy` is grey-cloud (DNS-only, `dig` resolves straight to
-  `185.199.10x.153`/GitHub's IPs, no `cf-ray` header). Orange-clouding it (SSL/TLS mode **Full (strict)**)
-  would add brotli (measured ~70% smaller than gzip on `copies.json`), real long-lived cache headers via a
-  Cache Rule on `/assets/*` and `/data/*`, and HTTP/3 — free, but needs the Cloudflare dashboard, not doable
-  from the CLI/API without a token.
+- ~~Cloudflare record is grey-cloud~~ — **wrong, corrected 2026-09-08.** `hashin.me` is **not on Cloudflare
+  at all**: `dig NS hashin.me` returns `launch1/launch2.spaceship.net`, i.e. DNS is served by Spaceship, the
+  registrar. There is no zone to orange-cloud. Getting brotli / HTTP/3 / cache rules means **moving the
+  domain's nameservers to Cloudflare**, which is a whole-domain migration, not a per-site toggle:
+    - 6 subdomains (`www`, `blog`, `action`, `upscnotes`, `topperscopy`, `plato`) all CNAME to
+      `hashin.github.io` — trivial, Cloudflare auto-imports these.
+    - **Email is the real risk.** `hashin.me` runs iCloud custom-domain mail: `MX 10 mx01/mx02.mail.icloud.com`,
+      `TXT "v=spf1 include:icloud.com ~all"`, `TXT "apple-domain=oDdYk7mJzXwDmyDz"`. If those don't carry over
+      exactly, mail breaks silently.
+    - Payoff for topperscopy alone is ~137 KB on first load (427 KB → ~290 KB) plus HTTP/3. Judged **not worth
+      the risk on its own** — but it would benefit all 5 sites at once, so do it as a deliberate domain
+      migration if ever, never as a perf tweak. Note GitHub Pages already serves this site from Fastly's
+      Mumbai PoP (`x-served-by: cache-bom-*`), so the CDN-latency argument is largely moot for the audience.
 
 ## Conventions
 
