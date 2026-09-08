@@ -32,6 +32,12 @@ generated ones to "understand the project"; this file is the source of truth for
 
 **Dedupe rule:** by PDF URL (`.split('#')[0]`, strip `?…`). Same topper may have entries from multiple sources.
 
+**Topper-name canonicalisation:** the source files spell one person many ways (`ADITYA SRIVASTAVA` /
+`Aditya Srivastava`, `Muskan_Srivastava` from a PDF file name). Before grouping, `build.js` collapses
+case- and punctuation-variants (`nameKey()` = lowercase, non-alphanumerics → space — same collapse `slug()`
+does) onto one display spelling: the best-cased variant, then the most common. So you don't need to fix
+casing in the source files; a genuinely new spelling just needs to differ by more than case/punctuation.
+
 ## build.js  (`node build.js`, zero runtime deps)
 
 Reads the 5 source files → writes:

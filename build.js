@@ -100,6 +100,52 @@ function build() {
     ...loadCsv(path.join(DATA, 'ocr-questions.csv'), 'ocr')
   ];
 
+  // optional-subject + link-only sources — loaded here (before grouping) so the
+  // name-canonicalisation pass below sees every topper name from every source.
+  const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
+    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
+  const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
+    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
+
+  // --- Canonicalise topper names -------------------------------------------
+  // The source files spell the same person many ways — "ADITYA SRIVASTAVA" vs
+  // "Aditya Srivastava", "Akshansh yadav" vs "Akshansh Yadav", "Muskan_Srivastava"
+  // (underscores come straight off a PDF file name). We group copies by the exact
+  // name string, so each spelling became its own topper and its own
+  // /topper/<slug>/ page. nameKey() collapses case + punctuation (the same collapse
+  // slug() applies to slugs); we pick one display spelling per person — the
+  // best-cased variant, then the most common — and rewrite every source row to it
+  // before anything else runs.
+  const nameKey = s => String(s || '').trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const canonMap = new Map();
+  {
+    const counts = new Map();
+    const bump = s => { const t = String(s || '').trim(); if (t) counts.set(t, (counts.get(t) || 0) + 1); };
+    for (const r of data) bump(r.topper);
+    for (const o of optRaw) bump(o.topper);
+    for (const e of linkRaw) bump(e.topper);
+    const variants = new Map();
+    for (const [name, n] of counts) {
+      const k = nameKey(name);
+      if (!variants.has(k)) variants.set(k, []);
+      variants.get(k).push([name, n]);
+    }
+    const shouty = s => !/[a-z]/.test(s) || !/[A-Z]/.test(s);            // ALL CAPS or all lower
+    const capWords = s => s.split(/\s+/).filter(w => /^[^a-z]/.test(w)).length;
+    for (const [k, vs] of variants) {
+      vs.sort((a, b) =>
+        (shouty(a[0]) - shouty(b[0])) ||         // prefer a mixed-case spelling
+        (capWords(b[0]) - capWords(a[0])) ||     // then the one with more capitalised words
+        (b[1] - a[1]) ||                         // then the most common
+        a[0].localeCompare(b[0]));               // then stable
+      canonMap.set(k, vs[0][0]);
+    }
+  }
+  const canonName = s => canonMap.get(nameKey(s)) || String(s || '').trim();
+  for (const r of data) r.topper = canonName(r.topper);
+  for (const o of optRaw) if (o && o.topper) o.topper = canonName(o.topper);
+  for (const e of linkRaw) if (e && e.topper) e.topper = canonName(e.topper);
+
   const groups = new Map();
   for (const r of data) {
     if (!r.url) continue;
@@ -136,15 +182,11 @@ function build() {
     }
   }
 
-  const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
-    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
-
-  // GS/Essay copies that are only a link (no extractable question text). A PDF must live in
-  // exactly ONE surface — skip any link-copies entry that is also (a) already OCR'd & searchable,
-  // (b) present in optionals.json, or (c) an Indian Forest Service (IFoS) paper mis-filed as a
+  // optRaw / linkRaw are loaded and name-canonicalised near the top of build().
+  // A PDF must live in exactly ONE surface — the loop below skips any link-copies
+  // entry that is also (a) already OCR'd & searchable, (b) present in
+  // optionals.json, or (c) an Indian Forest Service (IFoS) paper mis-filed as a
   // CSE GS/Essay paper (that's the 2026-09-05 dedup bug that deleted the IFS bucket — never again).
-  const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
-    ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
   const optBaseUrls = new Set(optRaw.map(o => (o.url || '').split('#')[0]).filter(Boolean));
   const IFOS_RX = /UPSC[_ -]?IF(?:o?S)[_ -]?20\d\d|\bIFoS\b|indian forest service/i;
   const CSE_PAPER_RX = /^(?:GS[1-4]|Essay)$/i;
@@ -228,7 +270,8 @@ function build() {
     const ov = JSON.parse(fs.readFileSync(ovPath, 'utf8'));
     for (const [name, patch] of Object.entries(ov)) {
       if (name.startsWith('_')) continue;
-      const T = toppers[name] || (toppers[name] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
+      const key = canonName(name);
+      const T = toppers[key] || (toppers[key] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
       Object.assign(T, patch, { marks: { ...T.marks, ...(patch.marks || {}) } });
     }
   }
