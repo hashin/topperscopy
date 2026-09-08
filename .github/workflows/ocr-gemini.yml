@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       requests:
-        description: "Max Gemini requests this run (free tier ~1000/day; 6 pages per request)"
+        description: "Max Gemini requests this run (gemini-3.5-flash-lite free tier = 500/day, verified; 6 pages per request)"
         required: true
-        default: "800"
+        default: "550"
 
 permissions:
   contents: write
@@ -57,7 +57,7 @@ jobs:
         run: |
           node ocr-pipeline.mjs plan
           node ocr-pipeline.mjs freepass --concurrency 8
-          node ocr-pipeline.mjs gemini --requests ${{ github.event.inputs.requests || '800' }}
+          node ocr-pipeline.mjs gemini --requests ${{ github.event.inputs.requests || '550' }}
 
       - name: Save OCR cache
         if: always()
