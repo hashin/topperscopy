@@ -586,7 +586,13 @@ form input:focus, form select:focus, form textarea:focus { outline: none; border
   white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
 }
 .copy.qcard > summary:hover .qhead { color: var(--teal-text); }
-.tag.syl { background: var(--teal-weak); color: var(--teal-text); border-color: var(--teal-line); text-transform: none; letter-spacing: 0; font-weight: 500; }
+.tag.syl {
+  background: var(--teal-weak); color: var(--teal-text); border-color: var(--teal-line);
+  text-transform: none; letter-spacing: 0; font-weight: 500;
+  /* syllabus/theme labels are full sentences — let them wrap inside the card instead of
+     forcing the tag row (and the page) wider than the question box */
+  white-space: normal; overflow-wrap: anywhere; max-width: 100%;
+}
 
 /* ---------- prose ---------- */
 .prose { font-size: 16px; color: var(--body); max-width: 68ch; }
