@@ -59,6 +59,24 @@ function parseMeta(meta) {
   return [clean(marks), clean(words)];
 }
 
+// A `q` row from the upstream mirror is sometimes not a question at all — it's a
+// heading the topper wrote inside their own answer, scraped off the answer's
+// continuation page (e.g. "Why still untapped industry? Due to inherent
+// challenges" on the page after Akansh Dhull's Q15). Genuine exam questions
+// carry marks or a word limit, or a leading "15."/"Q.15" number; these fragments
+// carry none of that and either open with a mid-answer discourse marker or are
+// just too short to be a Mains question.
+const ANSWER_FRAGMENT_RX = /^\s*(so|now|then|thus|hence|however|moreover|furthermore|therefore|also|having discussed|now having|as discussed|from the above|in conclusion|to conclude|why (?:still|is it still)|what (?:is|was) the result|how did it|how can we|can it be said|is there a way)\b/i;
+function isAnswerFragment(question, marks, words, paper) {
+  const q = String(question || '').trim();
+  if (!q) return true;
+  if (marks || words) return false;                            // real questions carry marks / a word limit
+  if (/^\s*(?:Q\.?\s*)?\d+\s*[).:\-]/i.test(q)) return false;  // has a "15)" / "Q.15." number
+  const letters = q.replace(/[^\p{L}\p{N}]+/gu, '').length;
+  if (paper !== 'Essay' && letters < 22) return true;          // "What is Needed?", "How to Balance?"
+  return ANSWER_FRAGMENT_RX.test(q) && letters < 130;          // "Why still untapped industry? Due to …"
+}
+
 function fromFilename(url) {
   const fn = decodeURIComponent(url.split('/').pop() || '');
   const air = (fn.match(/AIR[-_ ]?(\d{1,3})\b/i) || [])[1];
@@ -92,13 +110,29 @@ function gitCommit() {
 }
 
 function build() {
-  const data = [
+  let data = [
     ...loadCsv(SRC, 'upsckata'),
     ...loadCsv(path.join(DATA, 'submissions.csv'), 'submission'),
     // questions read off scanned copies by ocr-pipeline.mjs — own file so a bad
     // batch can be reverted with one `git rm`, and so provenance stays visible
     ...loadCsv(path.join(DATA, 'ocr-questions.csv'), 'ocr')
   ];
+
+  // Maintainer denylist for upstream junk rows — questions.csv is a re-syncable
+  // mirror we never hand-edit, so bad rows are dropped here instead. Match by
+  // exact source URL (including #page=N) or by qKey() of the text; keys/urls
+  // starting "_" are treated as comments.
+  {
+    const exPath = path.join(DATA, 'questions.exclude.json');
+    if (fs.existsSync(exPath)) {
+      const ex = JSON.parse(fs.readFileSync(exPath, 'utf8'));
+      const exUrls = new Set((ex.urls || []).filter(u => u && !u.startsWith('_')));
+      const exKeys = new Set((ex.keys || []).filter(k => k && !k.startsWith('_')));
+      const before = data.length;
+      data = data.filter(r => !exUrls.has(r.url) && !exKeys.has(qKey(r.question)));
+      if (before - data.length) console.log(`questions.exclude.json dropped ${before - data.length} row(s)`);
+    }
+  }
 
   // optional-subject + link-only sources — loaded here (before grouping) so the
   // name-canonicalisation pass below sees every topper name from every source.
@@ -168,7 +202,8 @@ function build() {
     const qs = rs.map(r => {
       const [marks, words] = parseMeta(r.metadata || '');
       return [r.page, r.question, marks, words];
-    }).sort((a, b) => (a[0] || 0) - (b[0] || 0));
+    }).filter(([, q, m, w]) => !isAnswerFragment(q, m, w, paper))
+      .sort((a, b) => (a[0] || 0) - (b[0] || 0));
 
     copies.push({ i: i++, t: topper, c: coaching, p: paper, y: year, r: air, u: base, q: qs, prov });
 

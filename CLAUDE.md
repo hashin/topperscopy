@@ -29,6 +29,7 @@ generated ones to "understand the project"; this file is the source of truth for
 | `data/toppers.overrides.json` | maintainer AIR/year/marks corrections | `{"<name>":{air,year,verified,marks:{},sources:[]}}` — keys starting `_` ignored |
 | `data/syllabus.json` | **hand-authored** official UPSC syllabus, GS1–4 + Essay, 2 levels. `nodes[].kw` = lowercase phrases; build.js scores each question against its own paper's nodes | `{version, papers:{GS1:{name, nodes:[{id, t, kw:[]}]}, …}}` |
 | `data/syllabus-overrides.json` | *(optional)* pin a question to node(s); key = build.js `qKey()` of the text | `{"<qKey>": ["gs2.federalism", …]}` |
+| `data/questions.exclude.json` | *(optional)* maintainer denylist for junk "question" rows from the `questions.csv` mirror (upstream scraped an answer heading as a question). Drop by source URL or `qKey()` | `{urls:[…incl #page=N], keys:[…qKey()]}` — `_`-prefixed ignored |
 
 **Dedupe rule:** by PDF URL (`.split('#')[0]`, strip `?…`). Same topper may have entries from multiple sources.
 
@@ -37,6 +38,11 @@ generated ones to "understand the project"; this file is the source of truth for
 case- and punctuation-variants (`nameKey()` = lowercase, non-alphanumerics → space — same collapse `slug()`
 does) onto one display spelling: the best-cased variant, then the most common. So you don't need to fix
 casing in the source files; a genuinely new spelling just needs to differ by more than case/punctuation.
+
+**Answer-fragment filter:** upsckata.com sometimes scrapes a heading the topper wrote *inside* an answer
+(off the continuation page) as its own question — no marks, no word limit, no "15." number. `build.js`
+`isAnswerFragment()` drops the clear cases (short, or opening with a mid-answer discourse marker like
+"So,"/"Now"/"Why still"); anything it misses goes in `data/questions.exclude.json`.
 
 ## build.js  (`node build.js`, zero runtime deps)
 

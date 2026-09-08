@@ -1,0 +1,8 @@
+{
+  "_comment": "Maintainer denylist for junk 'question' rows that come from the upstream upsckata.com mirror (data/questions.csv is re-syncable and never hand-edited). build.js drops any row whose source URL is in `urls` (match the full value incl. #page=N) or whose qKey() is in `keys`. Entries starting with _ are ignored. build.js also auto-drops obvious answer-body fragments (isAnswerFragment); use this file only for ones that slip past it.",
+  "_example_urls": [
+    "https://cdn.visionias.in/toppersanswerbooklet/2ac99-661968_4510_akansh_dhull_rank_03.pdf#page=39"
+  ],
+  "urls": [],
+  "keys": []
+}
