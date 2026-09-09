@@ -341,7 +341,9 @@
       }
     });
 
-    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    // localhost/127.0.0.1 are secure contexts — register there too so SW changes are testable
+    var localDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '[::1]';
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || localDev)) {
       navigator.serviceWorker.register('sw.js').catch(function () {});
     }
   }
