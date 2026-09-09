@@ -24,7 +24,7 @@ No answer copy is hosted here. Every "Open PDF" link points to the file on the s
 Pure static — no runtime backend, no build step required to serve it.
 
 ```
-data/questions.csv          pristine mirror of upsckata.com's questions.csv — never hand-edited
+data/questions.csv          mirror of upsckata.com's questions.csv — only sanctioned hand-edit: fixing a wrong `subject`
 data/submissions.csv        accepted GS/Essay copy submissions (same 7-col schema)
 data/optionals.json         accepted optional-subject copies
 data/toppers.overrides.json maintainer-verified AIR / marks corrections

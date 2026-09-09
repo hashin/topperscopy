@@ -1,6 +1,0 @@
-{
-  "_comment": "Maintainer paper corrections for the re-syncable data/questions.csv mirror (never hand-edited). build.js rewrites the `subject` of every row whose source URL base (value before any #page=N) matches a key here, before copies are grouped — so a whole coaching mock that was scraped under the wrong GS paper lands in the right bucket. Value = GS1 | GS2 | GS3 | GS4 | Essay. Keys starting with _ are ignored.",
-  "_example": { "https://cdn.example.com/some-copy.pdf": "GS3" },
-
-  "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/876453603529616100_PDF_ORIGINAL.pdf": "GS3"
-}

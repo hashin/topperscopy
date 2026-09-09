@@ -22,7 +22,7 @@ generated ones to "understand the project"; this file is the source of truth for
 
 | File | What | Shape |
 |---|---|---|
-| `data/questions.csv` | pristine mirror of upsckata.com — **never hand-edit**, keep re-syncable | `topper,coaching,subject,page_number,question,metadata,url` (subject = GS1..GS4/Essay) |
+| `data/questions.csv` | mirror of upsckata.com — treat as append-mostly; **one sanctioned hand-edit: correcting a wrong `subject`** (a whole coaching copy scraped under the wrong GS paper). Never rewrite question text or reflow rows — keep it diff-clean. CRLF line endings; subject is the bare 3rd field | `topper,coaching,subject,page_number,question,metadata,url` (subject = GS1..GS4/Essay) |
 | `data/submissions.csv` | accepted GS/Essay copies **with** extracted question text | same 7 cols |
 | `data/link-copies.json` | GS/Essay copies that are **only a link** (scanned, no text) | `{entries:[{topper,paper,url,air?,year?,source?,by?,note?,verified}]}` — `paper` = GS1..GS4/Essay |
 | `data/optionals.json` | optional-subject copies | `{entries:[{topper,subject,url,air?,year?,marks?,source?,by?,note?,verified,questions?}]}` — `questions` = `[{page,question,marks,words}]` when known |
@@ -30,7 +30,6 @@ generated ones to "understand the project"; this file is the source of truth for
 | `data/syllabus.json` | **hand-authored** official UPSC syllabus, GS1–4 + Essay, 2 levels. `nodes[].kw` = lowercase phrases; build.js scores each question against its own paper's nodes | `{version, papers:{GS1:{name, nodes:[{id, t, kw:[]}]}, …}}` |
 | `data/syllabus-overrides.json` | *(optional)* pin a question to node(s); key = build.js `qKey()` of the text | `{"<qKey>": ["gs2.federalism", …]}` |
 | `data/questions.exclude.json` | *(optional)* maintainer denylist for junk "question" rows from the `questions.csv` mirror (upstream scraped an answer heading as a question). Drop by source URL or `qKey()` | `{urls:[…incl #page=N], keys:[…qKey()]}` — `_`-prefixed ignored |
-| `data/questions.repaper.json` | *(optional)* maintainer paper corrections for the `questions.csv` mirror — a whole scraped copy filed under the wrong GS paper upstream (e.g. a NextIAS GS3 mock mislabelled GS1). build.js rewrites each matching row's `subject` before grouping | `{"<pdf url, no #page>": "GS1..GS4/Essay"}` — `_`-prefixed ignored |
 
 **Dedupe rule:** by PDF URL (`.split('#')[0]`, strip `?…`). Same topper may have entries from multiple sources.
 
