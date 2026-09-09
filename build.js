@@ -77,6 +77,9 @@ function isAnswerFragment(question, marks, words, paper) {
   if (/^\s*(?:Q\.?\s*)?\d+\s*[).:\-]/i.test(q)) return false;  // has a "15)" / "Q.15." number
   const letters = q.replace(/[^\p{L}\p{N}]+/gu, '').length;
   if (paper !== 'Essay' && letters < 22) return true;          // "What is Needed?", "How to Balance?"
+  // Institute sample-copy marketing prompts: short 2nd-person questions, no marks/words/number
+  // ("When must you seek mentorship?"). Essay quote-topics legitimately address "you", so skip them.
+  if (paper !== 'Essay' && letters < 60 && /\b(you|your)\b/i.test(q)) return true;
   return ANSWER_FRAGMENT_RX.test(q) && letters < 130;          // "Why still untapped industry? Due to …"
 }
 
@@ -508,6 +511,10 @@ function writeQuestions(copies, generated) {
       if (c.p === 'GS4' && /^\s*\(?[a-e][\).]/i.test(question)) continue;
       if (/^\s*\(?[a-e][\).]/i.test(question) && question.length < 90) continue;   // orphan sub-part in other papers
       if (question.replace(/[^\p{L}\p{N}]+/gu, '').length < 12) continue;          // stray fragment
+      // scraped answer notes, not questions: a multi-line body with "->"/"→" structure
+      // ("How declined role leads to lack of SoP?\n1 A vacuum created -> filled by judiciary -> …").
+      // Conservative on purpose — GS4 case studies are multi-line too but don't use arrows (AUDIT B13).
+      if (/\n/.test(question) && /--?>|→/.test(question)) continue;
       const key = c.p + ' ' + qKey(question);
       let g = groups.get(key);
       if (!g) { g = { texts: [], p: c.p, m: '', w: '', a: [], yrs: new Set() }; groups.set(key, g); }
