@@ -147,33 +147,6 @@
       </div>
     </div>
 
-    <dialog id="practice" aria-label="Practice a question">
-      <div class="practice-head">
-        <strong>Practice</strong>
-        <span id="practice-streak" class="pstreak"></span>
-        <button type="button" id="practice-close" aria-label="Close">✕</button>
-      </div>
-      <div class="practice-papers" id="practice-papers" role="group" aria-label="Pick a paper">
-        <button data-pp="" aria-pressed="true">Any</button>
-        <button data-pp="GS1">GS1</button>
-        <button data-pp="GS2">GS2</button>
-        <button data-pp="GS3">GS3</button>
-        <button data-pp="GS4">GS4</button>
-        <button data-pp="Essay">Essay</button>
-        <button data-pp="Optional" disabled title="Optional-subject questions read off scanned copies">Optional ▸ after OCR</button>
-      </div>
-      <label class="practice-syl" id="practice-syl-wrap" hidden>
-        <span id="practice-syl-label">Topic</span>
-        <select id="practice-syl" aria-label="Narrow the practice question">
-          <option value="">Any topic</option>
-        </select>
-      </label>
-      <div id="practice-body"></div>
-      <div class="practice-foot">
-        <button type="button" id="practice-next" class="btn">Give me a question</button>
-      </div>
-    </dialog>
-
     <p class="resultmeta" id="resultmeta"></p>
     <div id="results">
       <div class="skeleton" id="results-skeleton">loading the copy database…</div>
@@ -568,6 +541,34 @@
       <p class="hint" id="about-gen"></p>
     </div>
   </section>
+
+  <!-- Practice — direct child of <main> so no view section's display:none can hide it (Firefox/Edge showed nothing when it was nested in #view-browse) -->
+  <dialog id="practice" aria-label="Practice a question">
+    <div class="practice-head">
+      <strong>Practice</strong>
+      <span id="practice-streak" class="pstreak"></span>
+      <button type="button" id="practice-close" aria-label="Close">✕</button>
+    </div>
+    <div class="practice-papers" id="practice-papers" role="group" aria-label="Pick a paper">
+      <button data-pp="" aria-pressed="true">Any</button>
+      <button data-pp="GS1">GS1</button>
+      <button data-pp="GS2">GS2</button>
+      <button data-pp="GS3">GS3</button>
+      <button data-pp="GS4">GS4</button>
+      <button data-pp="Essay">Essay</button>
+      <button data-pp="Optional" disabled title="Optional-subject questions read off scanned copies">Optional ▸ after OCR</button>
+    </div>
+    <label class="practice-syl" id="practice-syl-wrap" hidden>
+      <span id="practice-syl-label">Topic</span>
+      <select id="practice-syl" aria-label="Narrow the practice question">
+        <option value="">Any topic</option>
+      </select>
+    </label>
+    <div id="practice-body"></div>
+    <div class="practice-foot">
+      <button type="button" id="practice-next" class="btn">Give me a question</button>
+    </div>
+  </dialog>
 
 </main>
 

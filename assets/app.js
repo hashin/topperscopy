@@ -382,14 +382,10 @@
     if (!match) { ensureQI(); ensureFull(); }
     state.pp = 'Optional'; state.psyl = match || '';
     $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === 'Optional')); });
-    if (!dlg.open) {
-      parkBehindDialog();
-      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
-    }
+    openPracticeDialog();
     var body = $('#practice-body');
     if (body) { body.dataset.has = ''; body.innerHTML = '<p class="hint">Picking a question…</p>'; }
-    // yield once so the dialog paints before the render (rAF is throttled for
-    // background tabs — setTimeout always runs)
+    // yield once so the dialog paints before the render
     setTimeout(function () {
       fillPracticeSyl();
       if (match) nextPracticeQ(); else renderPractice();
@@ -891,45 +887,54 @@
     return m;
   }
 
-  // showModal() forces a relayout of the whole document; over a long results list
-  // it janks hard on slower devices. The dialog is modal — the list behind it is
-  // inert — so take it out of the layout entirely while the dialog is up.
-  // display:none (via [hidden]) is instant and universal; content-visibility is
-  // not (older Safari/Firefox ignore it). Restore scroll on the way back.
-  var _parkScroll = 0, _parked = [];
-  function parkBehindDialog() {
+  // The <dialog> now lives directly under <main> (not inside a view <section>),
+  // so no view's display:none can hide it. showModal() relayouts the whole
+  // document, so while it's up we pull the results list out of layout
+  // (display:none, universal) and restore scroll on close.
+  var _parkScroll = 0, _parked = [], _closing = false;
+  function openPracticeDialog() {
+    var dlg = $('#practice');
+    if (dlg.open) return;
     _parkScroll = window.pageYOffset || 0;
     _parked = [];
     ['#opt-body', '#results'].forEach(function (s) {
       var n = $(s);
-      if (n && !n.hidden && n.offsetParent !== null) { n.hidden = true; _parked.push(n); }  // only what's actually on screen
+      if (n && !n.hidden && n.offsetParent !== null) { n.hidden = true; _parked.push(n); }
     });
+    if (dlg.showModal) dlg.showModal(); else if (dlg.show) dlg.show(); else dlg.setAttribute('open', '');
   }
-  function unparkBehindDialog() {
+  function unparkList() {
     if (!_parked.length) return;
     _parked.forEach(function (n) { n.hidden = false; });
     _parked = [];
     window.scrollTo(0, _parkScroll);
+  }
+  function closePracticeDialog() {
+    if (_closing) return;
+    _closing = true;
+    var dlg = $('#practice');
+    if (dlg.open) { dlg.close ? dlg.close() : dlg.removeAttribute('open'); }
+    unparkList();
+    _closing = false;
   }
 
   function wirePractice() {
     var dlg = $('#practice');
     $('#practice-open').addEventListener('click', function () {
       ensureQI(); ensureFull();
-      parkBehindDialog();
-      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
-      fillPracticeSyl();
-      renderPractice();
+      openPracticeDialog();
+      setTimeout(function () { fillPracticeSyl(); renderPractice(); }, 0);
       track('practice_open', {});
     });
-    // catch every close path (button, backdrop, Esc) — the 'close' event is unreliable in some builds
-    dlg.addEventListener('close', unparkBehindDialog);
+    $('#practice-close').addEventListener('click', closePracticeDialog);
+    dlg.addEventListener('close', unparkList);                                 // .close() (unreliable in some builds)
+    dlg.addEventListener('cancel', unparkList);                               // native Esc
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) closePracticeDialog(); });  // backdrop
+    // the reliable catch-all: the [open] attribute goes away on every close path
     if (window.MutationObserver) {
-      new MutationObserver(function () { if (!dlg.open) unparkBehindDialog(); })
+      new MutationObserver(function () { if (!dlg.open) unparkList(); })
         .observe(dlg, { attributes: true, attributeFilter: ['open'] });
     }
-    $('#practice-close').addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); unparkBehindDialog(); });
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) { dlg.close ? dlg.close() : dlg.removeAttribute('open'); unparkBehindDialog(); } });
     $$('#practice-papers button').forEach(function (b) {
       b.addEventListener('click', function () {
         if (b.disabled) return;
