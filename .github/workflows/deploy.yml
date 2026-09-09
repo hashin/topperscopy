@@ -42,8 +42,8 @@ jobs:
             --exclude='.git' --exclude='.github' --exclude='_site' \
             --exclude='node_modules' --exclude='.ocr' \
             --exclude='*.md' --exclude='package.json' --exclude='package-lock.json' \
-            --exclude='build.js' --exclude='extract.js' --exclude='ocr-pipeline.mjs' \
-            --exclude='setup-ocr-vm.sh' --exclude='.gitignore' --exclude='.gitattributes' \
+            --exclude='/build.js' --exclude='/extract.js' --exclude='/ocr-pipeline.mjs' \
+            --exclude='/setup-ocr-vm.sh' --exclude='.gitignore' --exclude='.gitattributes' \
             ./ _site/
           echo "staged $(du -sh _site | cut -f1)"
 
