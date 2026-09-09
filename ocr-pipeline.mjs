@@ -954,11 +954,15 @@ if (cmd === 'bench') {
   KEEP_PDFS = true;
 
   const call = async (model, parts) => {
-    for (let a = 0; a < 5; a++) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${KEY}`,
-        { method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 8192 } }) });
+    for (let a = 0; a < 8; a++) {
+      let r;
+      try {
+        r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${KEY}`,
+          { method: 'POST', headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0, maxOutputTokens: 8192 } }) });
+      } catch (e) { await new Promise(x => setTimeout(x, 4000)); continue; }
       if (r.status === 429) { const b = await r.text(); if (/PerDay/i.test(b)) return { err: 'daily-quota' }; await new Promise(x => setTimeout(x, 32000)); continue; }
+      if (r.status >= 500) { await new Promise(x => setTimeout(x, 5000 + a * 5000)); continue; }   // 503 "high demand" — retry
       const j = await r.json().catch(() => ({}));
       if (!r.ok) return { err: `HTTP ${r.status} ${(j.error?.message || '').slice(0, 80)}` };
       let out = (j?.candidates?.[0]?.content?.parts?.[0]?.text || '').replace(/```(?:json)?/gi, '').trim();
@@ -966,7 +970,7 @@ if (cmd === 'bench') {
       let arr = []; if (mm) { try { arr = JSON.parse(mm[0]); } catch {} }
       return { arr, usage: j.usageMetadata || {} };
     }
-    return { err: 'rate-limited' };
+    return { err: 'unavailable-after-retries' };
   };
   // token-set signature so a reworded transcription still matches its baseline
   const sig = t => new Set(String(t).toLowerCase().match(/[a-z]{4,}/g) || []);
@@ -1010,40 +1014,57 @@ if (cmd === 'bench') {
     try { fs.unlinkSync(pdfPath); } catch {}
   }
 
-  const base = variants[0];
   const matched = (q, list) => list.some(o => o.page === q.page && jac(q.s, o.s) >= 0.6) || list.some(o => jac(q.s, o.s) >= 0.72);
-  console.log(`\n════════ BENCH: ${units.length} booklets · baseline = ${baseKey} ════════\n`);
+  const ok = variants.filter(v => !v.err && v.q.length);
   const pad = (s, n) => String(s).padEnd(n);
-  console.log(pad('variant', 26), pad('Q', 5), pad('recall', 8), pad('lost', 6), pad('extra', 7), pad('tok/req', 9), pad('img KB', 8), 'backlog $ (sync / batch)');
+  // baseline: the requested one if it ran, else the model that found the most questions
+  let base = ok.find(v => v.key === baseKey) || ok.slice().sort((a, b) => b.q.length - a.q.length)[0];
+
+  console.log(`\n════════ BENCH: ${units.length} booklets · baseline = ${base ? base.key : 'NONE — all failed'} ════════\n`);
+  for (const v of variants) if (v.err) console.log(`  ${pad(v.key, 26)} — FAILED: ${v.err}`);
+  if (!base) { console.log('no model returned questions — rerun when quota is available'); process.exit(1); }
+
+  // consensus: a question confirmed by another model is very unlikely to be garble
+  const others = k => ok.filter(v => v.key !== k);
+  const consensusRate = v => v.q.length ? v.q.filter(q => others(v.key).some(o => matched(q, o.q))).length / v.q.length : 0;
+
+  console.log(pad('variant', 26), pad('Q', 5), pad('recall', 8), pad('lost', 6), pad('extra', 7), pad('consensus', 10), pad('tok/req', 9), 'backlog $ sync/batch');
   const report = [];
-  for (const v of variants) {
-    if (v.err) { console.log(pad(v.key, 26), `— ${v.err}`); continue; }
+  for (const v of ok) {
     const tokPerReq = v.reqs ? Math.round(v.inTok / v.reqs) : 0;
-    const kbPerReq = v.reqs ? Math.round(v.imgBytes / v.reqs / 1024) : 0;
     const p = PRICE[v.m] || PRICE['gemini-3.5-flash-lite'];
     const reqs = Math.round(backlogUnits * REQ_PER_UNIT);
     const outPerReq = v.reqs ? v.outTok / v.reqs : 200;
     const sync = (reqs * tokPerReq / 1e6) * p.in + (reqs * outPerReq / 1e6) * p.out;
     let lost = 0, extra = 0; const lostEx = [], extraEx = [];
-    if (v.key === baseKey) {
-      console.log(pad(v.key + ' (base)', 26), pad(v.q.length, 5), pad('100%', 8), pad('—', 6), pad('—', 7), pad(tokPerReq, 9), pad(kbPerReq, 8), `$${sync.toFixed(0)} / $${(sync / 2).toFixed(0)}`);
-      report.push({ v, sync, recall: 1, lost: 0, extra: 0 }); continue;
-    }
-    for (const bq of base.q) if (!matched(bq, v.q)) { lost++; if (lostEx.length < 15) lostEx.push(bq); }
-    for (const vq of v.q) if (!matched(vq, base.q)) { extra++; if (extraEx.length < 15) extraEx.push(vq); }
+    for (const bq of base.q) if (!matched(bq, v.q)) { lost++; if (lostEx.length < 20) lostEx.push(bq); }
+    for (const vq of v.q) if (!matched(vq, base.q)) { extra++; if (extraEx.length < 20) extraEx.push(vq); }
     const recall = base.q.length ? (base.q.length - lost) / base.q.length : 1;
-    console.log(pad(v.key, 26), pad(v.q.length, 5), pad((recall * 100).toFixed(0) + '%', 8), pad(lost, 6), pad(extra, 7), pad(tokPerReq, 9), pad(kbPerReq, 8), `$${sync.toFixed(0)} / $${(sync / 2).toFixed(0)}`);
-    report.push({ v, sync, recall, lost, extra, lostEx, extraEx });
+    const cons = consensusRate(v);
+    console.log(pad(v.key + (v.key === base.key ? ' *' : ''), 26), pad(v.q.length, 5), pad(v.key === base.key ? '—' : (recall * 100).toFixed(0) + '%', 8),
+      pad(v.key === base.key ? '—' : lost, 6), pad(v.key === base.key ? '—' : extra, 7), pad((cons * 100).toFixed(0) + '%', 10), pad(tokPerReq, 9), `$${sync.toFixed(0)} / $${(sync / 2).toFixed(0)}`);
+    report.push({ v, sync, recall, lost, extra, lostEx, extraEx, cons });
   }
 
-  const b0 = report.find(r => r.v.key === baseKey);
+  const b0 = report.find(r => r.v.key === base.key);
   for (const r of report) {
-    if (r.v.key === baseKey || r.v.err) continue;
-    console.log(`\n── ${r.v.key} vs ${baseKey} ──  recall ${(r.recall * 100).toFixed(0)}% · saves $${(b0.sync - r.sync).toFixed(0)} (${((1 - r.sync / b0.sync) * 100).toFixed(0)}%) on the backlog`);
-    if (r.lostEx?.length) { console.log(`  LOST (baseline had, this variant missed) — the accuracy cost:`); r.lostEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 120)}`)); }
-    if (r.extraEx?.length) { console.log(`  EXTRA (this variant produced, baseline didn't) — real catch or low-res garble, eyeball:`); r.extraEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 120)}`)); }
+    if (r.v.key === base.key) continue;
+    console.log(`\n── ${r.v.key} vs ${base.key} ──  recall ${(r.recall * 100).toFixed(0)}% · consensus ${(r.cons * 100).toFixed(0)}% · $${r.sync.toFixed(0)} vs $${b0.sync.toFixed(0)}`);
+    if (r.lostEx.length) { console.log(`  LOST (${base.key} had these, ${r.v.m} missed):`); r.lostEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 130)}`)); }
+    if (r.extraEx.length) { console.log(`  EXTRA (${r.v.m} produced, ${base.key} didn't — real catch or garble):`); r.extraEx.forEach(q => console.log(`    p${q.page}  ${q.text.slice(0, 130)}`)); }
   }
-  console.log(`\nverdict guide: recall ≥ 97% + clean EXTRA list → the cheaper variant is safe. recall < 92% or garbled EXTRA → keep the baseline.`);
+
+  // full dumps for eyeballing
+  const dump = path.join(CACHE, `bench-${Date.now()}.txt`);
+  let txt = `BENCH ${new Date().toISOString()} · ${units.length} booklets\n`;
+  for (const v of ok) {
+    txt += `\n\n════ ${v.key} · ${v.q.length} questions · ${v.reqs} reqs ════\n`;
+    for (const q of v.q.slice().sort((a, b) => String(a.unit).localeCompare(String(b.unit)) || a.page - b.page))
+      txt += `  [${String(q.unit).slice(0, 24)}] p${q.page}  ${q.text}\n`;
+  }
+  fs.writeFileSync(dump, txt);
+  console.log(`\nfull per-model question lists → ${dump}`);
+  console.log(`verdict: pick a model with recall ≥ 95% vs baseline AND consensus ≥ 90% (low consensus = it's inventing/garbling).`);
   process.exit(0);
 }
 
