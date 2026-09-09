@@ -145,6 +145,18 @@ function build() {
   // name-canonicalisation pass below sees every topper name from every source.
   const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
     ? (JSON.parse(fs.readFileSync(path.join(DATA, 'optionals.json'), 'utf8')).entries || []) : [];
+
+  // Must stay in step with OPTIONALS in assets/app.js (manual — no shared module). A subject
+  // not in that list never shows in the Optionals grid and still mints a junk /optional/<slug>/
+  // page, so warn loudly (AUDIT B12).
+  const OPTIONAL_SUBJECTS = new Set(['Sociology', 'Anthropology', 'History', 'PSIR', 'Geography',
+    'Public Administration', 'Philosophy', 'Psychology', 'Economics', 'Mathematics', 'Physics',
+    'Chemistry', 'Commerce & Accountancy', 'Law', 'Management', 'Medical Science',
+    'Agriculture', 'Statistics', 'Literature', 'Forest Service (IFS)', 'Other']);
+  {
+    const stray = [...new Set(optRaw.map(o => o.subject).filter(s => s && !OPTIONAL_SUBJECTS.has(s)))];
+    if (stray.length) console.warn(`⚠  optionals.json has ${stray.length} subject(s) missing from the app's OPTIONALS list — invisible in the Optionals grid: ${stray.join(', ')}`);
+  }
   const linkRaw = fs.existsSync(path.join(DATA, 'link-copies.json'))
     ? (JSON.parse(fs.readFileSync(path.join(DATA, 'link-copies.json'), 'utf8')).entries || []) : [];
 
@@ -718,14 +730,14 @@ function writeStaticIndex(copies, toppers, stats, generated, nameToSlug) {
   const idxPath = path.join(ROOT, 'index.html');
   let html = fs.readFileSync(idxPath, 'utf8');
 
-  const names = Array.from(new Set(copies.map(c => c.t))).sort();
+  const names = Array.from(new Set(copies.map(c => c.t))).filter(n => n && n !== 'Unknown').sort();   // AUDIT B11
   // keep index.html itself lean and bounded — the nightly OCR pass keeps adding
   // searchable toppers, so link only the ~150 best-ranked here (crawlers reach the
   // rest via toppers.html, the canonical full static index).
   const searchableNames = new Set(copies.filter(c => !c.link).map(c => c.t));
   const NOSCRIPT_CAP = 150;
   const airOf = n => (toppers[n] && toppers[n].air) || 99999;
-  const listed = names.filter(n => searchableNames.has(n))
+  const listed = names.filter(n => n !== 'Unknown' && searchableNames.has(n))
     .sort((a, b) => airOf(a) - airOf(b) || a.localeCompare(b))
     .slice(0, NOSCRIPT_CAP);
   const topperLinks = listed.map(n =>
@@ -847,7 +859,7 @@ function writeToppersPage(copies, toppers, stats, generated, nameToSlug) {
     if (!byTopper.has(c.t)) byTopper.set(c.t, []);
     byTopper.get(c.t).push(c);
   }
-  const names = Array.from(byTopper.keys()).sort();
+  const names = Array.from(byTopper.keys()).filter(n => n && n !== 'Unknown').sort();   // not a person — see AUDIT B11
 
   // One 2.4 MB page with 11k links spread link equity thinly and made the browser parse the
   // whole corpus to show the first screen. Split alphabetically — the order it was already in,
@@ -1086,7 +1098,10 @@ function writeTopperPages(copies, optRaw, toppers, generated) {
   const byNameOpt = new Map();
   for (const o of optRaw) { if (!o.topper) continue; if (!byNameOpt.has(o.topper)) byNameOpt.set(o.topper, []); byNameOpt.get(o.topper).push(o); }
 
-  const names = [...new Set([...byName.keys(), ...byNameOpt.keys()])].sort();
+  // "Unknown" is where 56 NextIAS booklets with no parsable topper name land — it is not a
+  // person, so it gets no /topper/<slug>/ page, no toppers.html row, no dropdown entry. The
+  // copies themselves still render as cards and keep their /question/<slug>/ pages (AUDIT B11).
+  const names = [...new Set([...byName.keys(), ...byNameOpt.keys()])].filter(n => n && n !== 'Unknown').sort();
   const used = new Set();
   const nameToSlug = new Map();
 

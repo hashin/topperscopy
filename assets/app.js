@@ -538,7 +538,7 @@
 
   function topperOptions() {
     var m = {};
-    DB.copies.forEach(function (c) { m[c.t] = (m[c.t] || 0) + (c.stub ? 0 : 1); });
+    DB.copies.forEach(function (c) { if (c.t === 'Unknown') return; m[c.t] = (m[c.t] || 0) + (c.stub ? 0 : 1); });
     return Object.keys(m).sort().map(function (t) {
       var T = TOPPERS[t] || {};
       var cnt = m[t] || T.copies || 0;
