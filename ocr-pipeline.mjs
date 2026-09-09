@@ -1189,17 +1189,23 @@ if (cmd === 'gemini') {
   // run clear the whole backlog. Costs real money — see `probe` for an estimate.
   const PAID = args.includes('--paid');
   if (getArg('dpi')) RENDER_DPI = +getArg('dpi');                    // lower = fewer image tokens = cheaper; `bench --dpis` measures the accuracy cost
-  // The free daily quota is per-model (GenerateRequestsPerDayPerProjectPerModel,
-  // 500). --models rotates a booklet's whole OCR across several models so the
-  // effective free budget is N×500/day. One model per booklet keeps a
-  // document's transcription internally consistent. On a per-day 429 the model
-  // is dropped and its booklets reassigned to a live one.
+  // The free daily quota is per-model (GenerateRequestsPerDayPerProjectPerModel
+  // = 500). --models round-robins each BATCH across the live models — the
+  // *-flash-lite models were bench-verified to transcribe identically, so
+  // per-batch rotation is safe and lets the inter-request gap shrink by N. A
+  // per-day 429 drops that model; the batch is retried on the next live model
+  // with no wasted wait. The run only stops when every model is 429'd, so each
+  // model's full daily quota is drained before the run ends.
   const MODELS = (getArg('models') || getArg('model') || 'gemini-3.5-flash-lite').split(',').map(s => s.trim()).filter(Boolean);
-  const perModelCap = getArg('requests') ? +getArg('requests') : (PAID ? 1e6 : 480);   // stay under the 500 free cap
-  const gapMs = getArg('gap') ? +getArg('gap') : (PAID ? 250 : 4800); // ms between requests
-  const perReq = 6;                                                  // page images per request
+  // cap is a paranoia limit only — set above 500 so the API's own per-day 429
+  // is what actually stops each model (nothing left on the table).
+  const perModelCap = getArg('requests') ? +getArg('requests') : (PAID ? 1e6 : 550);
   const M = MODELS.map(name => ({ name, used: 0, dead: false }));
   const live = () => M.filter(m => !m.dead && m.used < perModelCap);
+  // ~12 req/min per model; with N live models the wall-clock gap is N× smaller
+  const baseGap = getArg('gap') ? +getArg('gap') : (PAID ? 250 : 5000);
+  const gapNow = () => Math.max(PAID ? 200 : 900, Math.round(baseGap / Math.max(1, live().length)));
+  const perReq = 6;                                                  // page images per request
   const only = getArg('source');
   const unitLimit = getArg('limit') ? +getArg('limit') : Infinity;
   const chunk = getArg('chunk') ? +getArg('chunk') : 0;
@@ -1231,10 +1237,9 @@ if (cmd === 'gemini') {
     jobs.push({ sha, c, rec, outPath, pages });
     if (jobs.length >= unitLimit) break;
   }
-  // assign a model per booklet, round-robin over live models (a resumed unit keeps its recorded one)
   let rr = 0;
   const pickModel = () => { const l = live(); return l.length ? l[rr++ % l.length] : null; };
-  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units · ${perModelCap}/model req · ${gapMs}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
+  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units · cap ${perModelCap}/model · ~${gapNow()}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
 
   const PROMPT = GEMINI_PROMPT;
 
@@ -1244,10 +1249,6 @@ if (cmd === 'gemini') {
   let unitsDone = 0, allDead = false;
   for (const job of jobs) {
     if (allDead || !live().length) break;
-    // model for this booklet: the one recorded on a resumed unit if still live, else round-robin
-    let jm = M.find(m => m.name === job.rec.geminiModel && !m.dead && m.used < perModelCap) || pickModel();
-    if (!jm) break;
-    job.rec.geminiModel = jm.name;
     const { fetchUrl } = resolve(job.c.representative);
     if (!fetchUrl) { continue; }
     KEEP_PDFS = true;
@@ -1279,15 +1280,10 @@ if (cmd === 'gemini') {
       }
       if (!rendered.length) continue;
 
-      let texts = null;
-      for (let attempt = 0; attempt < 8 && texts === null && !allDead; attempt++) {
-        if (jm.dead || jm.used >= perModelCap) {                 // current model spent → rotate to another
-          const nm = pickModel();
-          if (!nm) { allDead = true; break; }
-          if (nm.name !== jm.name) console.log(`  → switching ${job.c.source} to ${nm.name}`);
-          jm = nm; job.rec.geminiModel = jm.name;
-        }
-        if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+      let texts = null, jm = null;
+      for (let attempt = 0; attempt < 12 && texts === null && !allDead; attempt++) {
+        jm = pickModel();                                        // fresh model each attempt, round-robin over live
+        if (!jm) { allDead = true; break; }
         try {
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${jm.name}:generateContent?key=${KEY}`, {
             method: 'POST', headers: { 'content-type': 'application/json' },
@@ -1296,14 +1292,14 @@ if (cmd === 'gemini') {
           if (res.status === 429) {
             const body = await res.text();
             const perDay = /PerDay|per day|GenerateRequestsPerDay/i.test(body);
-            const wait = Math.min(70, (+(body.match(/"retryDelay":\s*"(\d+(?:\.\d+)?)s"/) || [])[1] || 30) + 2);
-            if (perDay) { jm.dead = true; console.log(`  ${jm.name}: daily quota reached · ${live().length} model(s) still live`); continue; }
-            console.log(`  ${jm.name} minute-rate limited, waiting ${wait}s (${attempt + 1}/8)`);
+            if (perDay) { jm.dead = true; console.log(`  ${jm.name}: daily quota drained · ${live().length} model(s) left`); continue; }  // next attempt picks another model, no wait
+            const wait = Math.min(70, (+(body.match(/"retryDelay":\s*"(\d+(?:\.\d+)?)s"/) || [])[1] || 20) + 2);
+            console.log(`  ${jm.name} minute-limited, ${wait}s (${attempt + 1}/12)`);
             await new Promise(r => setTimeout(r, wait * 1000));
             continue;
           }
-          if (res.status >= 500) { console.log(`  HTTP ${res.status}, retrying`); continue; }
-          if (res.status === 404) { jm.dead = true; console.log(`  ${jm.name}: 404 — dropping from rotation`); continue; }
+          if (res.status === 404) { jm.dead = true; console.log(`  ${jm.name}: 404 — dropped`); continue; }
+          if (res.status >= 500) { await new Promise(r => setTimeout(r, 4000 + attempt * 4000)); continue; }
           if (!res.ok) { console.log(`  ${jm.name} HTTP ${res.status}: ${(await res.text()).slice(0, 140)}`); texts = []; break; }
           const j = await res.json();
           let out = (j?.candidates?.[0]?.content?.parts?.[0]?.text || '').replace(/```(?:json)?/gi, '').trim();
@@ -1312,11 +1308,12 @@ if (cmd === 'gemini') {
           if (mm) { try { parsed = JSON.parse(mm[0]); } catch {} }
           if (!parsed.length && out) parsed = rendered.map((_, k) => k === 0 ? out : '');
           texts = parsed;
-        } catch (e) { console.log(`  request failed (${attempt + 1}/8): ${e.message}`); }
+        } catch (e) { console.log(`  request failed (${attempt + 1}/12): ${e.message}`); await new Promise(r => setTimeout(r, 3000)); }
       }
-      if (allDead) { console.log('  all models exhausted — stopping'); break; }
+      if (allDead) { console.log('  every model 429\'d — daily quota fully drained, stopping'); break; }
       if (texts === null) { console.log('  batch failed after retries, will retry next run'); continue; }  // pages stay unmarked
       jm.used++;
+      job.rec.geminiModel = jm.name;
 
       rendered.forEach((r, idx) => {
         try { fs.unlinkSync(r.img); } catch {}
@@ -1333,14 +1330,16 @@ if (cmd === 'gemini') {
       });
       job.rec.engine = 'gemini';
       fs.writeFileSync(job.outPath, JSON.stringify(job.rec));       // checkpoint after every request
-      if (live().length) await new Promise(r => setTimeout(r, gapMs));
+      if (live().length) await new Promise(r => setTimeout(r, gapNow()));
     }
     try { fs.unlinkSync(pdfPath); } catch {}
     if (!pages.length || !allDead) { job.rec.geminiDone = true; unitsDone++; }
     fs.writeFileSync(job.outPath, JSON.stringify(job.rec));
-    console.log(`  ${(job.c.key || job.c.representative.slice(-42))} · ${job.rec.questions.length} q · ${job.rec.geminiModel} · ${totalUsed()} req total`);
+    console.log(`  ${(job.c.key || job.c.representative.slice(-42))} · ${job.rec.questions.length} q · ${totalUsed()} req total`);
   }
-  console.log(`\ndone. ${totalUsed()} requests used${M.length > 1 ? ' (' + M.map(m => m.name.replace('gemini-', '') + ':' + m.used).join(' ') + ')' : ''} · ${unitsDone} units completed.`);
+  const leftover = M.filter(m => !m.dead).map(m => `${m.name.replace('gemini-', '')} had ${perModelCap - m.used}+ left`);
+  console.log(`\ndone. ${totalUsed()} requests${M.length > 1 ? ' (' + M.map(m => m.name.replace('gemini-', '') + ':' + m.used + (m.dead ? '✓' : '')).join(' ') + ')' : ''} · ${unitsDone} units`);
+  if (leftover.length && jobs.length) console.log(`NOTE: stopped with quota unspent — ${leftover.join(', ')}. A catch-up run today will drain it.`);
   process.exit(0);
 }
 

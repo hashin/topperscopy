@@ -9,29 +9,28 @@ name: OCR — Gemini vision pass
 # (full/preview flash = 20/day, pro = 0), so the rotation is 3 flash-lite
 # models → ~1,400 free req/night, backlog ~2 weeks, $0.
 #
-# Quota timing — the free-tier requests-per-day counter resets at midnight
-# US-Pacific: 07:00 UTC under PDT (Mar-Nov), 08:00 UTC under PST (Nov-Mar). A
-# run must START after that boundary to get a full fresh 500; GitHub only ever
-# delays a scheduled run, never fires it early. So:
-#   * 08:30 UTC primary — 30 min past the PST reset, 90 min past PDT. A GitHub
-#     delay of up to ~15 h still lands inside the same quota-day.
-#   * 16:30 UTC backup — catches the (rare) morning cron that GitHub skips
-#     entirely; same quota-day, so it only ever uses quota the morning run
-#     left on the table. If the morning run already spent all 500 it 429s on
-#     request 1 and exits clean.
-# The `concurrency` group below means the two never overlap.
+# Draining every model's quota, delay-proof — the per-day counter resets at
+# midnight US-Pacific (07:00 UTC PDT / 08:00 UTC PST). A run drains whatever
+# quota is available when it lands and stops only when EVERY model has 429'd
+# (`gemini` keeps rotating until all are dead), and `.ocr` caches progress so a
+# later run the same day picks up the rest. Three runs, 8 h apart, cover the
+# whole 24 h with margin around the reset — GitHub would have to skip or delay
+# all three out of one Pacific-day for a day's quota to be lost. The
+# `concurrency` group serialises them; a run that lands while another is going
+# just queues, then drains the residue and exits fast.
 on:
   schedule:
-    - cron: "30 8 * * *"        # 08:30 UTC — primary, just after the US-Pacific quota reset
-    - cron: "30 16 * * *"       # 16:30 UTC — backup for a skipped morning run, same quota-day
+    - cron: "20 8 * * *"        # 08:20 UTC — primary, right after the Pacific reset
+    - cron: "40 16 * * *"       # 16:40 UTC — mid-day catch-up (delayed/short morning run)
+    - cron: "0 1 * * *"         # 01:00 UTC — last drain before the next reset
   workflow_dispatch:
     inputs:
       requests:
-        description: "Per-model request cap (free tier = 500/day PER MODEL; rotation below multiplies it)"
+        description: "Per-model request cap (paranoia limit; 550 lets the real per-day 429 stop each model)"
         required: true
-        default: "480"
+        default: "550"
       models:
-        description: "Comma-separated model rotation (one model per booklet)"
+        description: "Comma-separated model rotation (each has its own 500/day)"
         required: true
         default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview"
 
@@ -74,7 +73,7 @@ jobs:
           node ocr-pipeline.mjs freepass --concurrency 8
           node ocr-pipeline.mjs gemini \
             --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview' }}" \
-            --requests ${{ github.event.inputs.requests || '480' }}
+            --requests ${{ github.event.inputs.requests || '550' }}
 
       - name: Save OCR cache
         if: always()
