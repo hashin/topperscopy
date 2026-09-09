@@ -150,6 +150,7 @@
     }).catch(function (e) {
       fullState = 'error'; fullPromise = null;
       track('data_error', { message: 'fulltext ' + String(e && e.message || e).slice(0, 100) });
+      if (state.view === 'browse') renderBrowse();   // clear a stuck "Searching…" state
     });
     return fullPromise;
   }
@@ -192,6 +193,7 @@
     }).catch(function (e) {
       qiState = 'error'; qiPromise = null;
       track('data_error', { message: 'qindex ' + String(e && e.message || e).slice(0, 100) });
+      if (state.view === 'browse') renderBrowse();   // clear a stuck "Searching…" state
     });
     return qiPromise;
   }
@@ -690,11 +692,14 @@
         : (loading ? ' · more copies + full-text search loading…' : ''));
 
     if (!list.length) {
+      var failed = (qiState === 'error' || fullState === 'error');
       box.appendChild(el('div', { class: 'empty' }, [
-        el('div', { class: 'big' }, [loading ? 'Searching…' : 'No matches']),
+        el('div', { class: 'big' }, [loading ? 'Searching…' : failed ? 'Search is unavailable' : 'No matches']),
         el('div', {}, [loading
           ? 'Loading the question text so search can look inside the copies.'
-          : 'Try a topper name, fewer words, “All words”, or clear a filter.'])
+          : failed
+            ? 'The question index could not be downloaded. Topper-name search still works — reload the page to retry.'
+            : 'Try a topper name, fewer words, “All words”, or clear a filter.'])
       ]));
       return;
     }
