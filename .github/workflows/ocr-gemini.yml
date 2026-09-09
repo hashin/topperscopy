@@ -5,7 +5,9 @@ name: OCR — Gemini vision pass
 # FREE tier. The daily 500-request cap is PER MODEL, so one booklet per model
 # round-robin gives N×500/day at $0. Each model stops clean on its own per-day
 # 429 and is dropped from the rotation. Progress is cached in .ocr/ so each run
-# resumes where it stopped. With 2 models the backlog drains in ~3 weeks.
+# resumes where it stopped. Only *-flash-lite has the 500/day free quota
+# (full/preview flash = 20/day, pro = 0), so the rotation is 3 flash-lite
+# models → ~1,400 free req/night, backlog ~2 weeks, $0.
 #
 # Quota timing — the free-tier requests-per-day counter resets at midnight
 # US-Pacific: 07:00 UTC under PDT (Mar-Nov), 08:00 UTC under PST (Nov-Mar). A
@@ -31,7 +33,7 @@ on:
       models:
         description: "Comma-separated model rotation (one model per booklet)"
         required: true
-        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite"
+        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview"
 
 permissions:
   contents: write
@@ -71,7 +73,7 @@ jobs:
           node ocr-pipeline.mjs plan
           node ocr-pipeline.mjs freepass --concurrency 8
           node ocr-pipeline.mjs gemini \
-            --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite' }}" \
+            --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview' }}" \
             --requests ${{ github.event.inputs.requests || '480' }}
 
       - name: Save OCR cache
