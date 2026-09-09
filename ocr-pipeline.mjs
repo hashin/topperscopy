@@ -948,8 +948,9 @@ if (cmd === 'bench') {
   const backlogUnits = clusters.filter(c => c.freepassDone ? (!c.freepassHit && !c.error) : true).length || 3600;
   const REQ_PER_UNIT = 5.3;
   let units = unitsNeedingOcr(clusters);
+  if (!units.length) units = clusters.slice();      // freepass hasn't marked residue (e.g. a fresh local plan) → use any
   if (only) units = units.filter(c => c.source === only);
-  if (!units.length) units = clusters.slice();     // fall back to any clusters if freepass hasn't marked residue
+  units = units.filter(c => resolve(c.representative).fetchUrl);   // skip Drive-folder reps (no direct file)
   units = units.slice(0, limit);
   KEEP_PDFS = true;
 
