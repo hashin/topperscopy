@@ -394,8 +394,12 @@ select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px v
 .tag.air   { background: var(--ink);       color: var(--surface);   border-color: transparent; letter-spacing: .06em; }
 .tag.year  { background: var(--sand-weak); color: #9a6a1f;          border-color: transparent; }
 .tag.marks { background: var(--rose-weak); color: #a85c74;          border-color: transparent; }
-:root[data-theme="dark"] .tag.year, :root:not([data-theme="light"]) .tag.year { color: var(--sand); }
-:root[data-theme="dark"] .tag.marks, :root:not([data-theme="light"]) .tag.marks { color: var(--rose); }
+:root[data-theme="dark"] .tag.year  { color: var(--sand); }
+:root[data-theme="dark"] .tag.marks { color: var(--rose); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tag.year  { color: var(--sand); }
+  :root:not([data-theme="light"]) .tag.marks { color: var(--rose); }
+}
 a.tag.tg { background: var(--teal-weak); color: var(--teal-text); border-color: transparent; text-decoration: none; }
 a.tag.tg:hover { background: var(--teal-line); }
 
@@ -416,7 +420,10 @@ a.tag.tg:hover { background: var(--teal-line); }
 }
 
 mark { background: var(--sand); color: #3a2c12; padding: 0 3px; border-radius: 3px; }
-:root[data-theme="dark"] mark, :root:not([data-theme="light"]) mark { background: var(--sand); color: #2a2010; }
+:root[data-theme="dark"] mark { background: var(--sand); color: #2a2010; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) mark { background: var(--sand); color: #2a2010; }
+}
 
 .more {
   display: block; width: 100%; margin: 16px 0; padding: 13px;
@@ -505,7 +512,10 @@ form input:focus, form select:focus, form textarea:focus { outline: none; border
 .an-or { font-size: 12.5px; color: var(--muted); }
 .an-status { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
 .an-status.bad { color: #b4453b; }
-:root[data-theme="dark"] .an-status.bad, :root:not([data-theme="light"]) .an-status.bad { color: #e8918a; }
+:root[data-theme="dark"] .an-status.bad { color: #e8918a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .an-status.bad { color: #e8918a; }
+}
 .an-result { margin-top: 12px; }
 .an-count { font-size: 14px; color: var(--ink); margin: 0 0 10px; }
 .an-count .an-note, .an-note { font-size: 12px; color: var(--muted); font-weight: 400; }
