@@ -93,6 +93,10 @@ function loadCsv(file, prov) {
   if (!rows.length) return [];
   const h = rows[0].map(x => x.trim());
   const ix = { topper: h.indexOf('topper'), coaching: h.indexOf('coaching'), subject: h.indexOf('subject'), page: h.indexOf('page_number'), question: h.indexOf('question'), metadata: h.indexOf('metadata'), url: h.indexOf('url') };
+  // A row with more than 7 fields means an unquoted comma inside one — parseCSV then reads
+  // r[6] as a truncated URL. Be loud instead of silently mangling it (AUDIT B7).
+  const malformed = rows.slice(1).filter(r => r.length > 7 && r.some(x => x !== ''));
+  if (malformed.length) console.warn(`⚠  ${path.basename(file)}: ${malformed.length} row(s) have >7 columns — an unquoted comma in a field. First: ${malformed[0].slice(0, 3).join(',')}…`);
   return rows.slice(1)
     .filter(r => r.length >= 7 && r.some(x => x !== ''))
     .map(r => ({

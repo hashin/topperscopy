@@ -1530,7 +1530,21 @@ if (cmd === 'emit') {
   }
   const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
   const csvPath = path.join(DATA, 'ocr-questions.csv');
-  const rowBase = line => norm(line.slice(line.lastIndexOf(',') + 1));
+  // Read the 7th (url) field of a CSV row properly — a quoted question or a url that itself
+  // contains a comma makes line.lastIndexOf(',') point at the wrong place (AUDIT B8).
+  const lastField = line => {
+    const out = []; let cur = '', q = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (q) { if (c === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { out.push(cur); cur = ''; }
+      else cur += c;
+    }
+    out.push(cur);
+    return out[out.length - 1];
+  };
+  const rowBase = line => norm(lastField(line));
 
   // Merge, never replace. The GH Actions .ocr cache can come back cold
   // (eviction / key miss) and re-OCR only a slice of the corpus that night —

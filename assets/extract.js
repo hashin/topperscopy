@@ -100,7 +100,7 @@
     return (questions || []).map(function (r) {
       var md = 'Type: question' + (r.salvaged ? ' (salvaged)' : '') + ', Word limit: ' + (r.words || '') + ', Marks: ' + (r.marks || '');
       return [esc(meta.topper || ''), esc(meta.coaching || meta.source || ''), esc(meta.subject || meta.paper || ''),
-        r.page, esc(r.question), esc(md), base ? base + '#page=' + r.page : ''].join(',');
+        r.page, esc(r.question), esc(md), esc(base ? base + '#page=' + r.page : '')].join(',');
     });
   }
 
