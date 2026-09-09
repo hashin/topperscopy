@@ -18,7 +18,7 @@ jobs:
     if: github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check the approver is a moderator
         id: perm
@@ -39,7 +39,7 @@ jobs:
             --body "@${{ github.event.sender.login }} — only repository collaborators (moderators) can approve submissions. Ask an admin to add you as a collaborator, or to approve this one."
           exit 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
 

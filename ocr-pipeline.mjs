@@ -36,6 +36,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import extractMod from './assets/extract.js';
 const { extractQuestions, toCsvRows } = extractMod;
 
@@ -133,6 +134,13 @@ function testKey(e) {
 }
 
 /* ---------- fetch + parse a PDF (with small cache) ---------- */
+// Ship pdf.js the bundled Standard-14 font metrics + keep it to errors only.
+// Without standardFontDataUrl every Times/Helvetica/Courier PDF logs
+// "Warning: UnknownErrorException: Ensure that the `standardFontDataUrl` API
+// parameter is provided." (~120/run) and falls back to guessed glyph widths,
+// which smears linesFromItems() row-grouping on the freepass text pass.
+const _pdfReq = createRequire(import.meta.url);
+const STANDARD_FONTS = path.join(path.dirname(_pdfReq.resolve('pdfjs-dist/package.json')), 'standard_fonts/');
 let pdfjs;
 async function loadPdfjs() {
   if (!pdfjs) pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
@@ -175,7 +183,10 @@ async function getPdf(url, opts = {}) {
     if (meta.sizeKB < 4) { meta.error = 'not-a-pdf'; fs.writeFileSync(metaPath, JSON.stringify(meta)); return meta; }
     fs.writeFileSync(pdfPath, buf);
     const pj = await loadPdfjs();
-    const doc = await pj.getDocument({ data: buf, isEvalSupported: false }).promise;
+    const doc = await pj.getDocument({
+      data: buf, isEvalSupported: false,
+      standardFontDataUrl: STANDARD_FONTS, verbosity: 0,
+    }).promise;
     meta.numPages = doc.numPages;
     try { meta.pageHeightPts = Math.round((await doc.getPage(1)).getViewport({ scale: 1 }).height); } catch {}
     const pages = [];
