@@ -34,6 +34,9 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 // Every "Open PDF/copy" href points at a third-party host. Anything that is not http(s) must
 // never reach an href — a javascript:/data: URL from a submission would run on our origin (B4).
 const safeHref = u => (/^https?:\/\//i.test(String(u || '')) ? esc(u) : '#');
+// JSON.stringify leaves "<" alone, so a "</script>" inside question text would close the
+// <script type="application/ld+json"> block. Escape it (AUDIT B19).
+const ldJson = o => JSON.stringify(o).replace(/</g, '\\u003c');
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function parseCSV(str) {
@@ -856,7 +859,7 @@ function jsonLd(stats, generated) {
       ].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
     }
   ];
-  return `<script type="application/ld+json">\n${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 0)}\n</script>`;
+  return `<script type="application/ld+json">\n${ldJson({ '@context': 'https://schema.org', '@graph': graph })}\n</script>`;
 }
 
 /* ---- toppers.html : the fully static crawlable index ---- */
@@ -994,7 +997,7 @@ ${num > 1 ? `<link rel="prev" href="${SITE}${href(num - 1)}">\n` : ''}${num < to
   nav.pager .pages span[aria-current]{background:var(--teal);color:var(--card);border-color:var(--teal);font-weight:600}
 </style>
 <script type="application/ld+json">
-${JSON.stringify(itemList, null, 0)}
+${ldJson(itemList)}
 </script>
 </head>
 <body>
@@ -1081,7 +1084,7 @@ function pageShell({ title, description, canonical, jsonLd, crumbs, body, robots
 <meta property="og:image" content="${SITE}/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>${MINI_CSS}</style>
-${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
+${jsonLd ? `<script type="application/ld+json">${ldJson(jsonLd)}</script>` : ''}
 </head>
 <body>
 <header><nav class="crumb">${crumbs}</nav></header>
