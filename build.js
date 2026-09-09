@@ -269,6 +269,13 @@ function build() {
   for (const c of copies) { papers[c.p] = (papers[c.p] || 0) + (c.q.length || (c.link ? 1 : 0)); qCount += c.q.length; if (c.link) linkCount++; }
 
   const generated = new Date().toISOString().slice(0, 10);
+
+  // Copy ids are positional — inserting a row anywhere upstream shifts every id after it.
+  // Every file that carries or references those ids is stamped with the same build id; the
+  // app refuses to merge two files that disagree (see assets/app.js loadFull / loadQuestionIndex).
+  const buildId = crypto.createHash('sha1')
+    .update(copies.map(c => c.i + '|' + c.u).sort().join('\n')).digest('hex').slice(0, 12);
+
   // stats = the searchable GS/Essay question index (used by JSON-LD, llms.txt, static index)
   const searchable = copies.filter(c => !c.link);
   const stats = { questions: qCount, copies: searchable.length, toppers: new Set(searchable.map(c => c.t)).size, papers };
@@ -336,13 +343,15 @@ function build() {
   });
 
   fs.writeFileSync(path.join(DATA, 'copies.json'),
-    JSON.stringify({ generated, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
+    JSON.stringify({ generated, build: buildId, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
 
-  // fold the variant table into questions.json (written just above by writeQuestions)
-  if (variants.length) {
+  // questions.json is written by writeQuestions() before the ids exist — fold in the variant
+  // table and the build id now. Unconditional: the build id must always be present.
+  {
     const qp = path.join(DATA, 'questions.json');
     const payload = JSON.parse(fs.readFileSync(qp, 'utf8'));
-    payload.variants = variants;
+    payload.build = buildId;
+    if (variants.length) payload.variants = variants;
     fs.writeFileSync(qp, JSON.stringify(payload));
   }
 
@@ -354,7 +363,7 @@ function build() {
   // Everything here still counts in `stats`, so the SEO/headline numbers keep growing regardless.
   const lite = copies.filter(c => !c.link && c.prov !== 'ocr')
     .map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
-  fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
+  fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, build: buildId, attribution: ATTRIBUTION, stats, copies: lite }));
 
   // maintainer overrides
   const ovPath = path.join(DATA, 'toppers.overrides.json');

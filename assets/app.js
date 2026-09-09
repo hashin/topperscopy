@@ -94,12 +94,36 @@
     if (saveData()) { setTimeout(function () { loadFull(); }, 6000); return; }
     idle(function () { loadFull(); }, { timeout: 4000 });
   }
+  // The three data files are cached independently — index.json is stale-while-revalidate in
+  // sw.js, copies.json / questions.json are cache-first with a 12 h TTL on their own clocks —
+  // so a returning visitor can hold a mismatched set. Copy ids are positional, so merging
+  // across builds would splice one copy's questions onto another. Fetch; if the build id
+  // disagrees with what we already hold, go round the caches once (a query string sw.js
+  // passes straight through) and take the newest.
+  function fetchAtBuild(url, want) {
+    return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      if (!want || !d.build || d.build === want) return d;
+      return fetch(url + '?b=' + encodeURIComponent(d.build || 'x') + '.' + Date.now())
+        .then(function (r) { return r.json(); });
+    });
+  }
+  function ensureFullPromise() { ensureFull(); return fullPromise || Promise.resolve(); }
+
   function loadFull() {
     if (fullPromise) return fullPromise;
     fullState = 'loading';
-    fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
+    fullPromise = fetchAtBuild('data/copies.json', DB && DB.build).then(function (d) {
       QBYID = {};
       DB.copies = DB.copies.filter(function (c) { return !c.stub; });  // drop name-search placeholders
+      // Boot index (index.json) and this file came from different builds — the id-keyed merge
+      // below would attach these questions to the wrong lite rows. copies.json is a strict
+      // superset of index.json, so drop the lite rows and rebuild wholly from it.
+      if (d.build && DB.build && d.build !== DB.build) {
+        DB.copies = [];
+        DB.build = d.build;
+        DB.generated = d.generated || DB.generated;
+        if (d.stats) DB.stats = d.stats;
+      }
       var known = {};
       DB.copies.forEach(function (c) { known[c.i] = c; });
       d.copies.forEach(function (c) {
@@ -138,10 +162,15 @@
   function loadQuestionIndex() {
     if (qiPromise) return qiPromise;
     qiState = 'loading';
-    qiPromise = Promise.all([
-      fetch('data/questions.json').then(function (r) { return r.json(); }),
-      fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; })
-    ]).then(function (res) {
+    // questions.json's a:[[copyId, page]] refs and its qids are only meaningful against the
+    // build copies.json was loaded at, so wait for that and pin to DB.build (which loadFull
+    // reconciles to copies.json's actual build).
+    qiPromise = ensureFullPromise().then(function () {
+      return Promise.all([
+        fetchAtBuild('data/questions.json', DB && DB.build),
+        fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+      ]);
+    }).then(function (res) {
       QI = res[0].questions || [];
       SYL = res[1];
       QTEXT = []; QTEXTLC = [];
