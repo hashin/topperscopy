@@ -380,12 +380,20 @@
     // Only the generic fallback touches GS/Essay data, so don't pull questions.json +
     // the 2 MB copies.json — that download + its sync processing froze the click.
     if (!match) { ensureQI(); ensureFull(); }
-    parkBehindDialog();
-    if (dlg.showModal && !dlg.open) dlg.showModal(); else dlg.setAttribute('open', '');
     state.pp = 'Optional'; state.psyl = match || '';
     $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === 'Optional')); });
-    fillPracticeSyl();
-    if (match) nextPracticeQ(); else renderPractice();
+    if (!dlg.open) {
+      parkBehindDialog();
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    }
+    var body = $('#practice-body');
+    if (body) { body.dataset.has = ''; body.innerHTML = '<p class="hint">Picking a question…</p>'; }
+    // yield once so the dialog paints before the render (rAF is throttled for
+    // background tabs — setTimeout always runs)
+    setTimeout(function () {
+      fillPracticeSyl();
+      if (match) nextPracticeQ(); else renderPractice();
+    }, 0);
     track('practice_open', { from: from || 'optional_page', subject: match || target });
   }
 
@@ -883,16 +891,25 @@
     return m;
   }
 
-  // showModal() over a long results list (the optionals subject view can be 5k DOM
-  // nodes) forces a full-page relayout — ~2 s the first time. The dialog is modal,
-  // so the list behind it is inert; skip its layout/paint while the dialog is up.
+  // showModal() forces a relayout of the whole document; over a long results list
+  // it janks hard on slower devices. The dialog is modal — the list behind it is
+  // inert — so take it out of the layout entirely while the dialog is up.
+  // display:none (via [hidden]) is instant and universal; content-visibility is
+  // not (older Safari/Firefox ignore it). Restore scroll on the way back.
+  var _parkScroll = 0, _parked = [];
   function parkBehindDialog() {
-    var parked = false;
-    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) { n.style.contentVisibility = 'hidden'; parked = n; } });
-    if (parked) void parked.offsetHeight;   // flush the style change before showModal() reads layout
+    _parkScroll = window.pageYOffset || 0;
+    _parked = [];
+    ['#opt-body', '#results'].forEach(function (s) {
+      var n = $(s);
+      if (n && !n.hidden && n.offsetParent !== null) { n.hidden = true; _parked.push(n); }  // only what's actually on screen
+    });
   }
   function unparkBehindDialog() {
-    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) n.style.contentVisibility = ''; });
+    if (!_parked.length) return;
+    _parked.forEach(function (n) { n.hidden = false; });
+    _parked = [];
+    window.scrollTo(0, _parkScroll);
   }
 
   function wirePractice() {
