@@ -858,11 +858,17 @@
     try { return JSON.parse(localStorage.getItem('tc-practice') || '{}'); } catch (e) { return {}; }
   }
   function pSave(o) { try { localStorage.setItem('tc-practice', JSON.stringify(o)); } catch (e) {} }
-  function pToday() { return new Date().toISOString().slice(0, 10); }
+  // Local calendar date — the audience is in IST and a UTC day boundary lands at 05:30 there,
+  // so toISOString() would break a streak for someone practising two calendar days running (B18).
+  function pDate(d) {
+    d = d || new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function pToday() { return pDate(); }
   function pBumpStreak() {
     var o = pStore(), s = o.s || { d: '', n: 0, t: 0 }, today = pToday();
     if (s.d !== today) {
-      var y = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+      var y = pDate(new Date(Date.now() - 864e5));
       s.n = s.d === y ? s.n + 1 : 1;
       s.d = today;
     }
