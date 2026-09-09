@@ -11,7 +11,7 @@
   'use strict';
   var PDF_VER = '4.10.38';
   var PDF_CDN = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@' + PDF_VER + '/build/';
-  var TESS_SRC = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+  var TESS_SRC = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';   // pinned — a floating @5 could ship a breaking 5.x (AUDIT B20)
   var pdfjsP = null, tessP = null;
 
   function loadPdfjs() {
@@ -110,7 +110,15 @@
 
   async function toData(source) {
     if (source instanceof Blob) return new Uint8Array(await source.arrayBuffer());
-    var res = await fetch(source, { mode: 'cors' });
+    var res;
+    try {
+      res = await fetch(source, { mode: 'cors' });
+    } catch (e) {
+      // Almost every host that publishes these PDFs (Drive, cdn.visionias.in, the NextIAS S3
+      // bucket, forumias.com) sends no CORS headers, so the browser blocks a cross-origin read.
+      // Nothing a static page can do — point at the file picker, which works (AUDIT B20).
+      throw new Error('That host doesn’t allow the browser to read the file directly. Download the PDF and choose it with “Choose a PDF” instead.');
+    }
     if (!res.ok) throw new Error('Could not fetch the PDF (HTTP ' + res.status + ')');
     var ct = res.headers.get('content-type') || '';
     if (ct && ct.indexOf('pdf') < 0 && ct.indexOf('octet-stream') < 0) throw new Error('That link is not a direct PDF.');
