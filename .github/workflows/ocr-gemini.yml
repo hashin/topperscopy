@@ -1,10 +1,11 @@
 name: OCR — Gemini vision pass
 
 # PRIMARY OCR for the link-only booklets: renders the printed-question strip of
-# every page and reads it with gemini-3.5-flash-lite on the FREE tier. Runs
-# daily, stops at the request budget (500/day, verified) and on the first HTTP
-# 429, so it never leaves the free quota. Progress is cached in .ocr/ so each
-# run resumes where the last one stopped — backlog drains over ~6-8 weeks.
+# every page and reads it with a rotation of gemini *-flash-lite models on the
+# FREE tier. The daily 500-request cap is PER MODEL, so one booklet per model
+# round-robin gives N×500/day at $0. Each model stops clean on its own per-day
+# 429 and is dropped from the rotation. Progress is cached in .ocr/ so each run
+# resumes where it stopped. With 2 models the backlog drains in ~3 weeks.
 #
 # Quota timing — the free-tier requests-per-day counter resets at midnight
 # US-Pacific: 07:00 UTC under PDT (Mar-Nov), 08:00 UTC under PST (Nov-Mar). A
@@ -24,9 +25,13 @@ on:
   workflow_dispatch:
     inputs:
       requests:
-        description: "Max Gemini requests this run (gemini-3.5-flash-lite free tier = 500/day, verified; 6 pages per request)"
+        description: "Per-model request cap (free tier = 500/day PER MODEL; rotation below multiplies it)"
         required: true
-        default: "550"
+        default: "480"
+      models:
+        description: "Comma-separated model rotation (one model per booklet)"
+        required: true
+        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite"
 
 permissions:
   contents: write
@@ -65,7 +70,9 @@ jobs:
         run: |
           node ocr-pipeline.mjs plan
           node ocr-pipeline.mjs freepass --concurrency 8
-          node ocr-pipeline.mjs gemini --requests ${{ github.event.inputs.requests || '550' }}
+          node ocr-pipeline.mjs gemini \
+            --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite' }}" \
+            --requests ${{ github.event.inputs.requests || '480' }}
 
       - name: Save OCR cache
         if: always()
