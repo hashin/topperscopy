@@ -39,8 +39,9 @@ jobs:
         run: |
           mkdir -p _site
           rsync -a \
+            --include='dataset/README.md' \
             --exclude='.git' --exclude='.github' --exclude='_site' \
-            --exclude='node_modules' --exclude='.ocr' \
+            --exclude='node_modules' --exclude='.ocr' --exclude='.DS_Store' \
             --exclude='*.md' --exclude='package.json' --exclude='package-lock.json' \
             --exclude='/build.js' --exclude='/extract.js' --exclude='/ocr-pipeline.mjs' \
             --exclude='/setup-ocr-vm.sh' --exclude='.gitignore' --exclude='.gitattributes' \

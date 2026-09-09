@@ -638,7 +638,7 @@ function writeDataset(copies, toppers, generated, commit) {
       repository: 'https://github.com/hashin/topperscopy',
       generated,
       attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
-      license: 'CC BY 4.0 for this compilation — see dataset/README.md',
+      license: 'CC BY 4.0 for this compilation — see https://topperscopy.hashin.me/dataset/README.md',
       schema_version: 2,
       counts
     },
@@ -1475,7 +1475,7 @@ Licence: MIT (code). CC BY 4.0 (this compilation).
 - Per-copy index (CSV): https://topperscopy.hashin.me/dataset/copies.csv
 - Everything as one nested JSON: https://topperscopy.hashin.me/dataset/dataset.json
 - Checksums and counts: https://topperscopy.hashin.me/dataset/manifest.json
-- Documentation: https://github.com/hashin/topperscopy/blob/main/dataset/README.md
+- Documentation: https://topperscopy.hashin.me/dataset/README.md
 
 ## Human-readable pages
 
