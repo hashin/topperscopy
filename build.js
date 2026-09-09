@@ -134,6 +134,23 @@ function build() {
     }
   }
 
+  // Maintainer paper re-classification for the same re-syncable mirror — a whole
+  // scraped copy filed under the wrong GS paper upstream (e.g. a NextIAS GS3 mock
+  // mislabelled GS1). Keyed by source URL base (no #page); _-prefixed keys ignored.
+  {
+    const rpPath = path.join(DATA, 'questions.repaper.json');
+    if (fs.existsSync(rpPath)) {
+      const rp = JSON.parse(fs.readFileSync(rpPath, 'utf8'));
+      const map = new Map(Object.entries(rp).filter(([k, v]) => k && !k.startsWith('_') && typeof v === 'string'));
+      let n = 0;
+      for (const r of data) {
+        const to = map.get((r.url || '').split('#')[0]);
+        if (to && r.subject !== to) { r.subject = to; n++; }
+      }
+      if (n) console.log(`questions.repaper.json re-papered ${n} row(s)`);
+    }
+  }
+
   // optional-subject + link-only sources — loaded here (before grouping) so the
   // name-canonicalisation pass below sees every topper name from every source.
   const optRaw = fs.existsSync(path.join(DATA, 'optionals.json'))
