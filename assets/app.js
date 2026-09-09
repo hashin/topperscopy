@@ -77,6 +77,7 @@
      The full data/copies.json (question text, ~2 MB gz) is fetched in the background and
      only blocks when the user actually searches or expands a copy. */
   var FULL = false, fullState = 'idle', fullPromise = null, QBYID = null;
+  var practiceIntent = null;   // ?practice=<subject-slug> from an /optional/<slug>/ page
   // copies.json (format 2) stores a question as an id into data/questions.json rather than
   // repeating its text. QTEXT resolves those ids; QTEXTLC is the same text lowercased once
   // at load, so searching never re-lowercases 5.5 MB of strings on every keystroke.
@@ -272,6 +273,10 @@
     var qp = new URLSearchParams(location.search).get('q');
     if (qp) { qp = qp.trim().slice(0, 200); state.q = qp; state.shown = PAGE; var qi = $('#q'); if (qi) qi.value = qp; }
 
+    // ?practice=<subject-slug> — deep link from an /optional/<slug>/ page (acted on after data loads)
+    var prc = new URLSearchParams(location.search).get('practice');
+    if (prc) practiceIntent = prc.trim().slice(0, 60);
+
     Promise.all([
       fetch('data/index.json').then(function (r) { return r.json(); }),
       fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
@@ -328,6 +333,24 @@
 
     renderBrowse();
     renderOptionals();
+
+    if (practiceIntent) { openPracticeFor(practiceIntent); practiceIntent = null; }
+  }
+
+  // open the Practice dialog pre-filtered to one optional subject (from ?practice=<slug>)
+  function openPracticeFor(want) {
+    var dlg = $('#practice');
+    if (!dlg || !OPTPOOL.length) return;
+    var norm = function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
+    var target = norm(want);
+    var match = Object.keys(optPracticeSubjects()).filter(function (s) { return norm(s) === target; })[0];
+    ensureQI(); ensureFull();
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    state.pp = 'Optional'; state.psyl = match || '';
+    $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === 'Optional')); });
+    fillPracticeSyl();
+    if (match) nextPracticeQ(); else renderPractice();
+    track('practice_open', { from: 'optional_page', subject: match || target });
   }
 
   // toppers.json carries every ranker, but the boot index only has the text-searchable ones — so a
@@ -785,7 +808,13 @@
   // Each entry: { i, p:subject, q, m, w, yr:[years], a:[{t,air,url,page}] } — same shape the
   // GS/Essay path (QI) uses, so nextPracticeQ can treat both the same way.
   var OPTPOOL = [];
-  function optQKey(t) { return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64); }
+  function optQKey(t) {
+    return String(t || '')
+      .replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}\s*[.\):\-]*\s+/i, '')            // drop leading "Q.3)" / "12." / "Q1 " / "06 " — mirrors build.js qKey()
+      .replace(/\s*\(\s*(?:answer\s+in\s+)?\d{1,4}\s*(?:words?|marks?)\s*\)\s*$/i, '') // drop trailing "(150 words)" / "(15 marks)"
+      .replace(/\s*\(\s*\d{1,3}\s*\)\s*$/, '')                                       // drop trailing bare "(10)" marks
+      .toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 64);
+  }
   function buildOptPool() {
     var g = {};
     OPTS.forEach(function (o) {

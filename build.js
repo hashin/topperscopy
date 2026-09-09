@@ -429,8 +429,10 @@ function dedupeSlug(base, used) {
 
 function qKey(text) {
   return String(text || '')
-    .replace(/^\s*(?:Q\.?|Question)?\s*\d+\s*[\).:\-]+\s*/i, '')     // drop leading "Q.3)" / "12."
+    .replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}\s*[.\):\-]*\s+/i, '') // drop leading "Q.3)" / "12." / "Q1 " / "06 " — mirrors dispQ()
     .replace(/^\s*\(?[a-e]\)?[\).:]\s+/i, '')                        // drop a leading "(a)"
+    .replace(/\s*\(\s*(?:answer\s+in\s+)?\d{1,4}\s*(?:words?|marks?)\s*\)\s*$/i, '') // drop trailing "(150 words)" / "(15 marks)"
+    .replace(/\s*\(\s*\d{1,3}\s*\)\s*$/, '')                         // drop trailing bare "(10)" marks
     .toLowerCase()
     .replace(/[^\p{L}\p{N}]+/gu, ' ')                                // keep letters/digits (incl. Devanagari)
     .trim()
@@ -1280,12 +1282,25 @@ ${qItems || '    <li>Coming soon.</li>'}
       return `      <tr><td>${tLink}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`;
     }).join('\n');
 
+    // distinct practisable questions read off this subject's copies (OCR, folded into optionals.json).
+    // Mirrors assets/app.js buildOptPool(): drop tiny fragments, dedupe on a normalised key.
+    const seenQ = new Set();
+    for (const o of entries) for (const q of (Array.isArray(o.questions) ? o.questions : [])) {
+      const t = String(q.question || '').trim();
+      if (t.replace(/[^a-z0-9]/gi, '').length < 12) continue;
+      seenQ.add(qKey(t));
+    }
+    const practisable = seenQ.size;
+    const practiceCta = practisable
+      ? `\n  <p><a class="cta" href="${SITE}/?practice=${slug(subject)}">Practise a ${esc(subject)} question (${practisable} available) →</a></p>`
+      : '';
+
     const body = `
   <h1>UPSC Mains ${esc(subject)} optional — topper answer copies</h1>
   <p class="lead">${entries.length} answer ${entries.length === 1 ? 'copy' : 'copies'} from ${toppersInSubject.length} toppers who took ${esc(subject)} as their optional subject.</p>
   <table><thead><tr><th>Topper</th><th>Source</th><th>Marks</th><th>Copy</th></tr></thead><tbody>
 ${rows}
-    </tbody></table>
+    </tbody></table>${practiceCta}
   <p><a class="cta" href="${SITE}/#optionals">Browse ${esc(subject)} on Toppers Copy →</a></p>`;
 
     const html = pageShell({
