@@ -345,8 +345,12 @@
     var norm = function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
     var target = norm(want);
     var match = Object.keys(optPracticeSubjects()).filter(function (s) { return norm(s) === target; })[0];
-    ensureQI(); ensureFull();
-    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    // the optional path runs entirely off OPTPOOL (already in memory from optionals.json).
+    // Only the generic fallback touches GS/Essay data, so don't pull questions.json +
+    // the 2 MB copies.json — that download + its sync processing froze the click.
+    if (!match) { ensureQI(); ensureFull(); }
+    parkBehindDialog();
+    if (dlg.showModal && !dlg.open) dlg.showModal(); else dlg.setAttribute('open', '');
     state.pp = 'Optional'; state.psyl = match || '';
     $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === 'Optional')); });
     fillPracticeSyl();
@@ -845,17 +849,34 @@
     return m;
   }
 
+  // showModal() over a long results list (the optionals subject view can be 5k DOM
+  // nodes) forces a full-page relayout — ~2 s the first time. The dialog is modal,
+  // so the list behind it is inert; skip its layout/paint while the dialog is up.
+  function parkBehindDialog() {
+    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) n.style.contentVisibility = 'hidden'; });
+  }
+  function unparkBehindDialog() {
+    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) n.style.contentVisibility = ''; });
+  }
+
   function wirePractice() {
     var dlg = $('#practice');
     $('#practice-open').addEventListener('click', function () {
       ensureQI(); ensureFull();
+      parkBehindDialog();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
       fillPracticeSyl();
       renderPractice();
       track('practice_open', {});
     });
-    $('#practice-close').addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); });
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) (dlg.close ? dlg.close() : dlg.removeAttribute('open')); });
+    // catch every close path (button, backdrop, Esc) — the 'close' event is unreliable in some builds
+    dlg.addEventListener('close', unparkBehindDialog);
+    if (window.MutationObserver) {
+      new MutationObserver(function () { if (!dlg.open) unparkBehindDialog(); })
+        .observe(dlg, { attributes: true, attributeFilter: ['open'] });
+    }
+    $('#practice-close').addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); unparkBehindDialog(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) { dlg.close ? dlg.close() : dlg.removeAttribute('open'); unparkBehindDialog(); } });
     $$('#practice-papers button').forEach(function (b) {
       b.addEventListener('click', function () {
         if (b.disabled) return;
