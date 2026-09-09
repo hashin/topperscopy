@@ -311,6 +311,10 @@
     var prc = new URLSearchParams(location.search).get('practice');
     if (prc) practiceIntent = prc.trim().slice(0, 60);
 
+    // ?paper=GS1 — deep link from a /paper/<slug>/ hub page (AUDIT B17)
+    var pp = new URLSearchParams(location.search).get('paper');
+    if (pp && PAPERS.indexOf(pp) >= 0) state.paper = pp;
+
     Promise.all([
       fetch('data/index.json').then(function (r) { return r.json(); }),
       fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),

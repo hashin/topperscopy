@@ -1296,7 +1296,7 @@ ${qItems || '    <li>Coming soon.</li>'}
   </ul>
   <h2>Toppers with a ${esc(paper)} copy</h2>
   <p>${tItems}</p>
-  <p><a class="cta" href="${SITE}/?q=">Search all ${esc(paper)} copies on Toppers Copy →</a></p>`;
+  <p><a class="cta" href="${SITE}/?paper=${encodeURIComponent(paper)}">Search all ${esc(paper)} copies on Toppers Copy →</a></p>`;
 
     const html = pageShell({
       title: `UPSC Mains ${paper} — topper answer copies & questions | Toppers Copy`,
