@@ -805,6 +805,20 @@
     });
   }
 
+  // A reader who spots OCR damage is the cheapest correction signal we have — give them one
+  // click to a pre-filled issue (AUDIT B14). The issue template promises this link.
+  function reportLink(paper, qtext, url, page) {
+    // GitHub issue forms prefill by field id (question / copy), not &body=.
+    var q = String(qtext || '').slice(0, 500);
+    var href = 'https://github.com/' + REPO + '/issues/new?template=report-question-error.yml' +
+      '&title=' + encodeURIComponent('[fix] ' + paper + ' — ' + q.slice(0, 60)) +
+      '&question=' + encodeURIComponent(q) +
+      '&copy=' + encodeURIComponent((url || '') + (url && page ? '#page=' + page : ''));
+    var a = el('a', { class: 'reportq', href: href, target: '_blank', rel: 'noopener' }, ['Report a problem']);
+    a.addEventListener('click', function (e) { e.stopPropagation(); track('report_question', { paper: paper }); });
+    return a;
+  }
+
   function questionCard(q) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
     var tags = [el('span', { class: 'tag paper' }, [q.p])];
@@ -816,6 +830,8 @@
 
     var head = el('div', { class: 'qhead' });
     head.innerHTML = highlight(dispQ(q.q), terms);
+    var a0 = (q.a || [])[0], c0 = a0 && COPYBYID[a0[0]];
+    head.appendChild(reportLink(q.p, dispQ(q.q), c0 && c0.u, a0 && a0[1]));
     var n = (q.a || []).length;
     var summary = el('summary', {}, [
       head,
@@ -1139,7 +1155,9 @@
       var meta = [];
       if (q[2]) meta.push(q[2] + ' marks');
       if (q[3]) meta.push(q[3] + (/\d$/.test(q[3]) ? ' words' : ''));
-      if (meta.length) txt.appendChild(el('span', { class: 'qmeta' }, [meta.join('  ·  ')]));
+      var mspan = el('span', { class: 'qmeta' }, meta.length ? [meta.join('  ·  ')] : []);
+      mspan.appendChild(reportLink(c.p, q[1], c.u, q[0]));
+      txt.appendChild(mspan);
       var href = safeHref(c.u + (q[0] ? '#page=' + q[0] : ''));
       var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [q[0] ? 'Open PDF · p.' + q[0] : 'Open PDF']);
       a.addEventListener('click', function () {

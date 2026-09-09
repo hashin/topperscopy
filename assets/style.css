@@ -408,6 +408,9 @@ a.tag.tg:hover { background: var(--teal-line); }
 .q:last-child { border-bottom: 0; }
 .q .txt { flex: 1; min-width: 0; font-size: 15.5px; line-height: 1.62; color: var(--body); white-space: pre-wrap; overflow-wrap: anywhere; }
 .q .qmeta { display: block; margin-top: 6px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.reportq { font-size: 11.5px; color: var(--muted); text-decoration: none; margin-left: 10px; opacity: .7; text-transform: none; letter-spacing: 0; }
+.reportq:hover { opacity: 1; color: var(--teal-text); text-decoration: underline; }
+.qhead .reportq { display: inline-block; margin: 4px 0 0; }
 .q .open {
   flex: none; align-self: start; font-size: 12.5px; font-weight: 600; white-space: nowrap;
   color: var(--teal-text); background: var(--teal-weak); border: 1px solid var(--teal-line);
