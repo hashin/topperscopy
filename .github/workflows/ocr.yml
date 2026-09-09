@@ -20,6 +20,11 @@ on:
 
 permissions:
   contents: write
+  actions: write        # to dispatch "Build & deploy" — a GITHUB_TOKEN push does NOT trigger it
+
+concurrency:
+  group: ocr-tesseract
+  cancel-in-progress: false
 
 jobs:
   prepare:
@@ -28,9 +33,12 @@ jobs:
       matrix: ${{ steps.mk.outputs.matrix }}
     steps:
       - id: mk
+        env:
+          SHARDS: ${{ github.event.inputs.shards }}
         run: |
-          N=${{ github.event.inputs.shards }}
-          echo "matrix=$(python3 -c "import json;print(json.dumps(list(range($N))))")" >> "$GITHUB_OUTPUT"
+          case "$SHARDS" in ''|*[!0-9]*) echo "shards must be a number, got '$SHARDS'"; exit 1;; esac
+          [ "$SHARDS" -ge 1 ] && [ "$SHARDS" -le 20 ] || { echo "shards must be 1-20"; exit 1; }
+          echo "matrix=$(python3 -c "import json,os;print(json.dumps(list(range(int(os.environ['SHARDS'])))))")" >> "$GITHUB_OUTPUT"
 
   ocr:
     needs: prepare
@@ -70,11 +78,16 @@ jobs:
           node ocr-pipeline.mjs freepass --concurrency 8
 
       - name: Tesseract OCR (shard ${{ matrix.shard }})
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARDS: ${{ github.event.inputs.shards }}
+          LIMIT: ${{ github.event.inputs.limit_per_shard }}
+          SOURCE: ${{ github.event.inputs.source }}
         run: |
-          ARGS="--chunk ${{ matrix.shard }} --of ${{ github.event.inputs.shards }}"
-          [ "${{ github.event.inputs.limit_per_shard }}" != "0" ] && ARGS="$ARGS --limit ${{ github.event.inputs.limit_per_shard }}"
-          [ -n "${{ github.event.inputs.source }}" ] && ARGS="$ARGS --source '${{ github.event.inputs.source }}'"
-          eval node ocr-pipeline.mjs ocr $ARGS
+          set -- ocr --chunk "$SHARD" --of "$SHARDS"
+          [ "$LIMIT" != "0" ] && set -- "$@" --limit "$LIMIT"
+          [ -n "$SOURCE" ] && set -- "$@" --source "$SOURCE"
+          node ocr-pipeline.mjs "$@"
 
       - name: Save OCR cache
         if: always()
@@ -117,10 +130,16 @@ jobs:
           node build.js
 
       - name: Commit
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ocr-questions.csv
-          git diff --cached --quiet || git commit -m "ocr: tesseract pass results"
-          git pull --rebase --autostash || true
+          if git diff --cached --quiet; then
+            echo "no data change — nothing to deploy"; exit 0
+          fi
+          git commit -m "ocr: tesseract pass results"
+          git pull --rebase --autostash
           git push
+          gh workflow run "Build & deploy" --ref main

@@ -70,7 +70,7 @@ jobs:
             echo "nothing changed — nothing to deploy"; exit 0
           fi
           git commit -m "Add submission #${{ github.event.issue.number }} — approved by @${{ github.event.sender.login }}"
-          git pull --rebase --autostash || true
+          git pull --rebase --autostash
           git push
           # a GITHUB_TOKEN push does not trigger other workflows, so kick the deploy explicitly
           gh workflow run "Build & deploy" --ref main
