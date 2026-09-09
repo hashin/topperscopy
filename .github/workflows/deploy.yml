@@ -45,6 +45,7 @@ jobs:
             --exclude='*.md' --exclude='package.json' --exclude='package-lock.json' \
             --exclude='/build.js' --exclude='/extract.js' --exclude='/ocr-pipeline.mjs' \
             --exclude='/setup-ocr-vm.sh' --exclude='.gitignore' --exclude='.gitattributes' \
+            --exclude='/ocr-yield.json' \
             --exclude='data/link-copies.json' --exclude='data/ocr-questions.csv' \
             --exclude='data/telegram.json' --exclude='data/questions.exclude.json' \
             --exclude='data/submissions.csv' --exclude='data/toppers.overrides.json' \

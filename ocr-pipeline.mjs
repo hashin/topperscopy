@@ -248,6 +248,14 @@ const OCRDIR = path.join(CACHE, 'ocr');
 const RAWDIR = path.join(CACHE, 'raw');   // raw per-page tesseract text — lets `reclean` re-run the filter offline
 for (const d of [PAGEDIR, OCRDIR, RAWDIR]) fs.mkdirSync(d, { recursive: true });
 
+// `redo` queues booklets (by url) to be OCR'd again even though their rows are
+// already committed — for copies that came back with a low question count. plan
+// re-includes them, freepass forces them to vision, gemini wipes the stale
+// record and re-reads, emit drops each one from the queue once re-read.
+const REDO_PATH = path.join(CACHE, 'redo.json');
+const readRedo = () => { try { return JSON.parse(fs.readFileSync(REDO_PATH, 'utf8')); } catch { return { entries: [] }; } };
+const redoUrlSet = () => new Set(readRedo().entries.map(e => norm(e.url)));
+
 function sh(cmd, argv, opts = {}) {
   const r = spawnSync(cmd, argv, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
   if (r.error) throw r.error;
@@ -711,7 +719,7 @@ function questionConfidence(q) {
 }
 
 function unitsNeedingOcr(clusters) {
-  return clusters.filter(c => c.freepassDone && !c.freepassHit && !c.error && !c.needsManual);
+  return clusters.filter(c => (c.redo || (c.freepassDone && !c.freepassHit)) && !c.error && !c.needsManual);
 }
 
 /* The instruction sent with every batch of page images — shared by `gemini`
@@ -733,7 +741,8 @@ const getArg = k => { const i = args.indexOf('--' + k); return i >= 0 ? args[i +
 if (cmd === 'plan') {
   const corpus = loadCorpus();
   const already = searchableBaseUrls();
-  const todo = corpus.filter(e => !already.has(norm(e.url)));
+  const redo = redoUrlSet();                       // queued for a re-OCR — keep them in the work list
+  const todo = corpus.filter(e => !already.has(norm(e.url)) || redo.has(norm(e.url)));
 
   const clusters = new Map(); // key -> {key, source, paper, members:[], singleton}
   for (const e of todo) {
@@ -748,7 +757,9 @@ if (cmd === 'plan') {
     c.members.sort((a, b) => decode(a.url).length - decode(b.url).length);
     c.representative = c.members[0].url;
     c.driveFolder = list.length && /drive\.google\.com\/(?:drive\/)?(?:u\/\d+\/)?folders\//.test(c.representative);
+    if (c.members.some(m => redo.has(norm(m.url)))) c.redo = true;   // freepass + gemini honour this
   }
+  if (redo.size) console.log(`redo queue: ${redo.size} url(s) → ${list.filter(c => c.redo).length} cluster(s) forced back into the OCR work list`);
 
   fs.writeFileSync(path.join(CACHE, 'clusters.json'), JSON.stringify(list, null, 2));
 
@@ -784,9 +795,14 @@ if (cmd === 'freepass') {
   const allScans = args.includes('--all'); // also download known-scan sources (for page counts)
 
   // decide the work list
+  const redo = redoUrlSet();
   const work = [];
   for (const c of clusters) {
     if (only && c.source !== only) continue;
+    if (c.redo || redo.has(norm(c.representative))) {   // queued re-OCR — skip the text layer, force vision
+      c.redo = true; c.freepassDone = true; c.freepassHit = false; c.error = null; c.knownScan = true;
+      continue;
+    }
     if (c.freepassDone || c.error || c.needsManual) continue;
     const { fetchUrl, note } = resolve(c.representative);
     if (!fetchUrl) { c.resolveNote = note; c.needsManual = true; continue; }
@@ -1240,6 +1256,12 @@ if (cmd === 'gemini') {
     let pages = null;                                              // null → decide from numPages after download
     if (fs.existsSync(outPath)) {
       rec = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      if (c.redo && (rec.geminiDone || (rec.questions && rec.questions.length))) {
+        // queued re-OCR: wipe the stale read, keep a breadcrumb of what it was
+        rec.redoHistory = (rec.redoHistory || []).concat([{ was: (rec.questions || []).length, model: rec.geminiModel || null, at: new Date().toISOString().slice(0, 10) }]);
+        rec.questions = []; rec.geminiPages = []; rec.geminiDone = false; rec.error = null; rec.engine = 'gemini';
+        try { for (const f of fs.readdirSync(path.join(CACHE, 'graw'))) if (f.startsWith(sha + '_p')) fs.unlinkSync(path.join(CACHE, 'graw', f)); } catch {}
+      }
       if (rec.geminiDone || rec.error) continue;
       if (rec.engine === 'tesseract' && rec.residuePages && rec.residuePages.length) pages = rec.residuePages.slice();
       else if (rec.engine === 'tesseract') { pages = null; }       // tesseract found everything? still let gemini sweep
@@ -1248,9 +1270,11 @@ if (cmd === 'gemini') {
     jobs.push({ sha, c, rec, outPath, pages });
     if (jobs.length >= unitLimit) break;
   }
+  jobs.sort((a, b) => (b.c.redo ? 1 : 0) - (a.c.redo ? 1 : 0));   // re-OCR queue first — a quota-short run still clears it
   let rr = 0;
   const pickModel = () => { const l = live(); return l.length ? l[rr++ % l.length] : null; };
-  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units · cap ${perModelCap}/model · ~${gapNow()}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
+  const redoCount = jobs.filter(j => j.c.redo).length;
+  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units${redoCount ? ` (${redoCount} redo)` : ''} · cap ${perModelCap}/model · ~${gapNow()}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
 
   const PROMPT = GEMINI_PROMPT;
 
@@ -1586,6 +1610,26 @@ if (cmd === 'emit') {
   fs.writeFileSync(csvPath, HEADER + finalRows.join('\n') + (finalRows.length ? '\n' : ''));
   console.log(`wrote data/ocr-questions.csv · ${finalRows.length} rows (${rows.length} fresh from ${units} units, ${skippedFlagged} held back` + (salvagedRows ? `, ${salvagedRows} salvaged` : '') + `)`);
   console.log(`optionals.json · folded questions into ${optMerged} entries from ${optUnits} OCR'd units` + (optOrphans ? ` (${optOrphans} not in optionals.json → CSV)` : '') + (skippedMaths ? ` · ${skippedMaths} Maths/Statistics units skipped` : '') + (optCleared ? ` · cleared ${optCleared} stale Maths entries` : ''));
+
+  // Sweep the redo queue: an entry is honoured once its unit has actually been
+  // re-read this cycle (record exists, geminiDone, no redoHistory pending). What
+  // it yields is what it yields — if still low, re-queue with `redo` + a note.
+  const redoDoc = readRedo();
+  if (redoDoc.entries.length) {
+    const stillQueued = redoDoc.entries.filter(e => {
+      const hit = memberOf.get(norm(e.url));
+      const sha = hit ? sha1(hit.c.representative) : sha1(norm(e.url));
+      const rp = path.join(OCRDIR, sha + '.json');
+      if (!fs.existsSync(rp)) return true;                       // not reached yet (quota) — keep
+      const r = JSON.parse(fs.readFileSync(rp, 'utf8'));
+      if (!r.geminiDone) return true;
+      const now = (r.questions || []).length;
+      console.log(`  redo done · ${e.url.slice(-54)} · ${e.was ?? '?'} → ${now}${e.want ? ` (wanted ${e.want})` : ''}${now < (e.want || 0) ? ' — still low' : ''}`);
+      return false;
+    });
+    fs.writeFileSync(REDO_PATH, JSON.stringify({ entries: stillQueued }, null, 2) + '\n');
+    console.log(`redo queue: ${redoDoc.entries.length - stillQueued.length} cleared, ${stillQueued.length} still pending`);
+  }
   console.log('next: node build.js');
   process.exit(0);
 }
@@ -1641,16 +1685,160 @@ if (cmd === 'audit-paper') {
   process.exit(0);
 }
 
+/* ---- shared: how many questions each OCR'd booklet yielded ---- */
+function splitCsvLine(line) {
+  const out = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (q) { if (c === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { out.push(cur); cur = ''; }
+    else cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+function yieldByBooklet() {
+  // base url -> { url, topper, coaching, subject, count, optional, pages, model, geminiPages, salvaged, redoHistory }
+  const by = new Map();
+  const bump = (url, patch) => {
+    const b = norm(url); if (!b) return;
+    const e = by.get(b) || { url: b, topper: '', coaching: '', subject: '', count: 0, optional: false };
+    by.set(b, Object.assign(e, patch, { count: e.count + (patch.count || 0) }));
+  };
+  const csvPath = path.join(DATA, 'ocr-questions.csv');
+  if (fs.existsSync(csvPath)) {
+    const lines = fs.readFileSync(csvPath, 'utf8').trim().split('\n').slice(1).filter(Boolean);
+    for (const l of lines) {
+      const f = splitCsvLine(l);                                   // topper,coaching,subject,page,question,metadata,url
+      bump(f[6], { topper: f[0] || '', coaching: f[1] || '', subject: f[2] || '', count: 1 });
+    }
+  }
+  const opPath = path.join(DATA, 'optionals.json');
+  if (fs.existsSync(opPath)) {
+    for (const e of JSON.parse(fs.readFileSync(opPath, 'utf8')).entries || []) {
+      if (Array.isArray(e.questions) && e.questions.length)
+        bump(e.url, { topper: e.topper || '', coaching: e.source || '', subject: e.subject || 'Optional', optional: true, count: e.questions.length });
+    }
+  }
+  // enrich from the .ocr record (page count, which model, salvage split, prior redo reads)
+  for (const e of by.values()) {
+    const rp = path.join(OCRDIR, sha1(e.url) + '.json');
+    if (!fs.existsSync(rp)) continue;
+    try {
+      const r = JSON.parse(fs.readFileSync(rp, 'utf8'));
+      e.pages = r.numPages || null;
+      e.model = r.geminiModel || (r.engine === 'tesseract' ? 'tesseract' : null);
+      e.geminiPages = (r.geminiPages || []).length || null;
+      e.salvaged = (r.questions || []).filter(q => q.salvaged || q.via === 'salvage').length || 0;
+      if (r.redoHistory) e.redoHistory = r.redoHistory;
+    } catch {}
+  }
+  return [...by.values()];
+}
+const median = xs => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+
+if (cmd === 'yield') {
+  // Per-booklet question count, with the low-yield outliers called out so `redo`
+  // can re-OCR them. A booklet is "low" when it landed well under the median for
+  // its own (coaching, subject) group, or under an absolute floor.
+  //   --floor N   absolute floor (default 8)     --frac F   share of the group median (default 0.6)
+  //   --source X  limit the report               --json     print the full json to stdout
+  const FLOOR = getArg('floor') ? +getArg('floor') : 8;
+  const FRAC = getArg('frac') ? +getArg('frac') : 0.6;
+  const src = getArg('source');
+  let booklets = yieldByBooklet().filter(b => b.count > 0);
+  if (src) booklets = booklets.filter(b => b.coaching === src);
+  if (!booklets.length) { console.log('nothing OCR\'d yet — run the pipeline first'); process.exit(0); }
+
+  const groups = new Map();                                        // "coaching ∥ subject" -> counts[]
+  for (const b of booklets) {
+    const k = `${b.coaching || '?'} ∥ ${b.subject || '?'}`;
+    (groups.get(k) || groups.set(k, []).get(k)).push(b.count);
+  }
+  const groupMed = new Map([...groups].map(([k, v]) => [k, median(v)]));
+  for (const b of booklets) {
+    const k = `${b.coaching || '?'} ∥ ${b.subject || '?'}`;
+    b.groupMedian = groupMed.get(k);
+    b.low = b.count < Math.max(FLOOR, b.groupMedian * FRAC);
+  }
+
+  console.log('group'.padEnd(42), 'n'.padStart(4), 'med'.padStart(5), 'min'.padStart(5), 'low'.padStart(5));
+  for (const [k, v] of [...groups].sort((a, b) => b[1].length - a[1].length)) {
+    const lows = booklets.filter(b => `${b.coaching || '?'} ∥ ${b.subject || '?'}` === k && b.low).length;
+    console.log(k.slice(0, 42).padEnd(42), String(v.length).padStart(4), String(groupMed.get(k)).padStart(5), String(Math.min(...v)).padStart(5), String(lows).padStart(5));
+  }
+  const low = booklets.filter(b => b.low).sort((a, b) => a.count - b.count);
+  console.log(`\n${booklets.length} booklets · ${low.length} low-yield:\n`);
+  for (const b of low)
+    console.log(`  ${String(b.count).padStart(3)} (med ${b.groupMedian}, ${b.pages || '?'}p${b.model ? ', ' + b.model.replace('gemini-', '') : ''}${b.redoHistory ? ', redone ' + b.redoHistory.length + '×' : ''})  ${b.coaching}/${b.subject}  ${b.url}`);
+  const outObj = { generated: new Date().toISOString(), floor: FLOOR, frac: FRAC, booklets: booklets.sort((a, b) => a.count - b.count) };
+  fs.writeFileSync(path.join(CACHE, 'yield.json'), JSON.stringify(outObj, null, 2) + '\n');
+  if (args.includes('--json')) console.log(JSON.stringify(outObj, null, 2));
+  console.log(`\nwrote .ocr/yield.json · next: node ocr-pipeline.mjs redo --below <N> [--source X]`);
+  process.exit(0);
+}
+
+if (cmd === 'redo') {
+  // Queue booklets to be OCR'd again on the next `gemini` run, even though their
+  // rows are already committed. plan re-includes them, freepass forces them to
+  // vision, gemini wipes the stale read, emit clears each from the queue once
+  // it has been re-read.
+  //   --below N [--source X] [--min-pages P]   queue every low/under-N booklet
+  //   --urls "u1,u2"   |   --list FILE          queue specific urls
+  //   --want N          annotate the target count (shown in emit's sweep log)
+  //   --clear          empty the queue          --dry   show, write nothing
+  const doc = readRedo();
+  const have = new Set(doc.entries.map(e => norm(e.url)));
+  const want = getArg('want') ? +getArg('want') : null;
+  const ycount = new Map(yieldByBooklet().map(b => [b.url, b.count]));
+
+  if (args.includes('--clear')) {
+    if (!args.includes('--dry')) fs.writeFileSync(REDO_PATH, JSON.stringify({ entries: [] }, null, 2) + '\n');
+    console.log('redo queue cleared'); process.exit(0);
+  }
+
+  let picked = [];
+  if (getArg('below')) {
+    const N = +getArg('below'), src = getArg('source'), minP = getArg('min-pages') ? +getArg('min-pages') : 0;
+    let booklets = yieldByBooklet().filter(b => b.count > 0 && b.count < N);
+    if (src) booklets = booklets.filter(b => b.coaching === src);
+    if (minP) booklets = booklets.filter(b => b.pages == null || b.pages >= minP);
+    picked = booklets.map(b => b.url);
+  }
+  const listFile = getArg('list');
+  if (listFile) picked = picked.concat(fs.readFileSync(listFile, 'utf8').split('\n').map(s => s.trim()).filter(Boolean));
+  if (getArg('urls')) picked = picked.concat(getArg('urls').split(',').map(s => s.trim()).filter(Boolean));
+
+  // Collapse each url to its cluster representative — OCR reads one copy per test,
+  // so queuing two toppers of the same paper is one re-read, not two.
+  const clP = path.join(CACHE, 'clusters.json');
+  const repOf = new Map();
+  if (fs.existsSync(clP)) for (const c of JSON.parse(fs.readFileSync(clP, 'utf8'))) for (const m of c.members || []) repOf.set(norm(m.url), norm(c.representative));
+  picked = [...new Set(picked.map(u => repOf.get(norm(u)) || norm(u)))].filter(u => u && !have.has(u));
+
+  if (!picked.length) { console.log('nothing new to queue' + (doc.entries.length ? ` (${doc.entries.length} already queued)` : '')); process.exit(0); }
+  for (const u of picked) doc.entries.push({ url: u, was: ycount.get(u) ?? null, want, added: new Date().toISOString().slice(0, 10) });
+  console.log(`queued ${picked.length} booklet(s) for re-OCR${want ? ` (target ${want})` : ''}:`);
+  for (const u of picked) console.log(`  ${ycount.get(u) ?? '?'}q  ${u}`);
+  if (args.includes('--dry')) { console.log('\n--dry: not written'); process.exit(0); }
+  fs.writeFileSync(REDO_PATH, JSON.stringify(doc, null, 2) + '\n');
+  console.log(`\nredo queue: ${doc.entries.length} total → picked up by the next \`plan → freepass → gemini → emit\` cycle`);
+  process.exit(0);
+}
+
 console.error(`usage: node ocr-pipeline.mjs <command> [options]
 
   plan                          cluster the corpus by test paper           (free, offline)
   freepass [--all]              download reps, harvest existing text layers (free)
   gemini [--requests N]         PRIMARY vision OCR — every page, needs GEMINI_API_KEY (free tier)
-         [--source X --limit N --chunk N --of M --model M]
+         [--source X --limit N --chunk N --of M --model M --dpi N]
   ocr [--chunk N --of M]        optional tesseract pass on the printed strip (free, low yield here)
   reclean [--gemini] [--verbose] re-run the extraction filter over cached OCR text, no network
   validate                      cross-check clusters, flag disagreements
   emit                          write data/ocr-questions.csv
   audit-paper                   check GS1-4/Essay classification
+  yield [--floor N --frac F]    per-booklet question count + low-yield outliers → .ocr/yield.json
+  redo  --below N [--source X]  queue low-yield booklets for a re-OCR (or --urls / --list / --clear)
   status                        progress + remaining work`);
 process.exit(1);
