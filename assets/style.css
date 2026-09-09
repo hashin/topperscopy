@@ -460,6 +460,8 @@ mark { background: var(--sand); color: #3a2c12; padding: 0 3px; border-radius: 3
 }
 .backbtn:hover { border-color: var(--teal); }
 .backrow h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 22px; }
+.backrow .practice-btn { margin-left: auto; padding: 9px 18px; }
+@media (max-width: 560px) { .backrow .practice-btn { margin-left: 0; width: 100%; } }
 
 /* ---------- forms ---------- */
 form { max-width: 760px; }

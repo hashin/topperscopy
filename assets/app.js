@@ -337,8 +337,9 @@
     if (practiceIntent) { openPracticeFor(practiceIntent); practiceIntent = null; }
   }
 
-  // open the Practice dialog pre-filtered to one optional subject (from ?practice=<slug>)
-  function openPracticeFor(want) {
+  // open the Practice dialog pre-filtered to one optional subject
+  // (from ?practice=<slug> on an /optional/ page, or the Optionals-tab button)
+  function openPracticeFor(want, from) {
     var dlg = $('#practice');
     if (!dlg || !OPTPOOL.length) return;
     var norm = function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
@@ -350,7 +351,7 @@
     $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === 'Optional')); });
     fillPracticeSyl();
     if (match) nextPracticeQ(); else renderPractice();
-    track('practice_open', { from: 'optional_page', subject: match || target });
+    track('practice_open', { from: from || 'optional_page', subject: match || target });
   }
 
   // toppers.json carries every ranker, but the boot index only has the text-searchable ones — so a
@@ -1132,6 +1133,13 @@
       back.querySelector('.backbtn').addEventListener('click', function () {
         state.optSubject = 'all'; state.optQ = ''; $('#opt-q').value = ''; renderOptionals();
       });
+      // "Practise" — only when this subject has questions read off its copies (OCR)
+      var pn = state.optSubject !== 'all' && optPracticeSubjects()[state.optSubject];
+      if (pn) {
+        var pbtn = el('button', { class: 'practice-btn', type: 'button' }, ['Practise a ' + state.optSubject + ' question']);
+        pbtn.addEventListener('click', function () { openPracticeFor(state.optSubject, 'optionals_tab'); });
+        back.appendChild(pbtn);
+      }
       body.appendChild(back);
 
       var list = OPTS.filter(function (o) {
