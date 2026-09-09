@@ -31,6 +31,9 @@ const SITE = 'https://topperscopy.hashin.me';
 const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. PDFs belong to their publishers; nothing is re-hosted. Some older GS/Essay text derives from earlier open community compilations.';
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// Every "Open PDF/copy" href points at a third-party host. Anything that is not http(s) must
+// never reach an href — a javascript:/data: URL from a submission would run on our origin (B4).
+const safeHref = u => (/^https?:\/\//i.test(String(u || '')) ? esc(u) : '#');
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function parseCSV(str) {
@@ -702,7 +705,7 @@ function topperMeta(name, toppers) {
 }
 function telegramLink(name, toppers) {
   const url = (toppers[name] || {}).telegram;
-  if (!url) return '';
+  if (!url || !/^https?:\/\//i.test(url)) return '';
   return ` <a class="tg" href="${esc(url)}" target="_blank" rel="nofollow noopener">Telegram ↗</a>`;
 }
 
@@ -869,7 +872,7 @@ function writeToppersPage(copies, toppers, stats, generated, nameToSlug) {
       const meta = topperMeta(name, toppers);
       const idSlug = (nameToSlug && nameToSlug.get(name)) || slug(name);
       const rows = list.map(c => {
-        const pdf = esc(c.u);
+        const pdf = safeHref(c.u);
         return `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.q.length}</td><td><a href="${pdf}" rel="nofollow noopener">source PDF</a></td></tr>`;
       }).join('\n');
       return `  <section id="${idSlug}">
@@ -1093,10 +1096,10 @@ function writeTopperPages(copies, optRaw, toppers, generated) {
     const total = list.length + opts.length;
 
     const rows = list.slice().sort((a, b) => a.p.localeCompare(b.p)).map(c =>
-      `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.link ? '—' : c.q.length}</td><td><a href="${esc(c.u)}" target="_blank" rel="nofollow noopener">${c.link ? 'Open copy' : 'source PDF'}</a></td></tr>`
+      `      <tr><td>${esc(c.p)}</td><td>${esc(c.c || '—')}</td><td>${c.link ? '—' : c.q.length}</td><td><a href="${safeHref(c.u)}" target="_blank" rel="nofollow noopener">${c.link ? 'Open copy' : 'source PDF'}</a></td></tr>`
     ).join('\n');
     const optRows = opts.map(o =>
-      `      <tr><td>${esc(o.subject || '—')}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" target="_blank" rel="nofollow noopener">Open copy</a></td></tr>`
+      `      <tr><td>${esc(o.subject || '—')}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${safeHref(o.url)}" target="_blank" rel="nofollow noopener">Open copy</a></td></tr>`
     ).join('\n');
 
     const samples = [];
@@ -1109,7 +1112,7 @@ function writeTopperPages(copies, optRaw, toppers, generated) {
     const samplesHtml = samples.length ? `
   <h2>Sample questions answered</h2>
   <ul>
-${samples.map(s => `    <li><a href="${esc(s.url)}${s.page ? '#page=' + s.page : ''}" target="_blank" rel="nofollow noopener">${esc(dispQ(s.qtext))}</a> <span class="tag">${esc(s.p)}</span></li>`).join('\n')}
+${samples.map(s => `    <li><a href="${safeHref(s.url + (s.page ? '#page=' + s.page : ''))}" target="_blank" rel="nofollow noopener">${esc(dispQ(s.qtext))}</a> <span class="tag">${esc(s.p)}</span></li>`).join('\n')}
   </ul>` : '';
 
     const jsonLd = {
@@ -1172,7 +1175,7 @@ function writeQuestionPages(list, copies, nameToSlug, generated) {
       const tSlug = nameToSlug.get(c.t);
       const tLink = tSlug ? `<a href="${SITE}/topper/${tSlug}/">${esc(c.t)}</a>` : esc(c.t);
       const pdf = c.u + (page ? '#page=' + page : '');
-      return `      <tr><td>${tLink}</td><td>${c.r ? 'AIR ' + c.r : '—'}${c.y ? ' · ' + c.y : ''}</td><td>${esc(c.c || '—')}</td><td><a href="${esc(pdf)}" rel="nofollow noopener">${page ? 'p.' + page : 'Open PDF'}</a></td></tr>`;
+      return `      <tr><td>${tLink}</td><td>${c.r ? 'AIR ' + c.r : '—'}${c.y ? ' · ' + c.y : ''}</td><td>${esc(c.c || '—')}</td><td><a href="${safeHref(pdf)}" rel="nofollow noopener">${page ? 'p.' + page : 'Open PDF'}</a></td></tr>`;
     }).join('\n');
 
     const tags = (q.s || []).map(id => `<span class="tag">${esc(sylLabel(id))}</span>`).join(' ');
@@ -1288,7 +1291,7 @@ ${qItems || '    <li>Coming soon.</li>'}
     const rows = entries.slice(0, 400).map(o => {
       const s = o.topper && nameToSlug.get(o.topper);
       const tLink = s ? `<a href="${SITE}/topper/${s}/">${esc(o.topper)}</a>` : esc(o.topper || '—');
-      return `      <tr><td>${tLink}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${esc(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`;
+      return `      <tr><td>${tLink}</td><td>${esc(o.source || '—')}</td><td>${o.marks ? esc(o.marks) : '—'}</td><td><a href="${safeHref(o.url)}" rel="nofollow noopener">Open copy</a></td></tr>`;
     }).join('\n');
 
     // distinct practisable questions read off this subject's copies (OCR, folded into optionals.json).

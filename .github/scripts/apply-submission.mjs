@@ -25,10 +25,16 @@ const body = fs.readFileSync(bodyFile, 'utf8').replace(/\r\n/g, '\n');
 
 /* ---------- parse the issue body ---------- */
 const fields = {};
-// markdown table rows:  | Field | value |
-for (const m of body.matchAll(/^\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|\s*$/gm)) {
-  const k = m[1].trim().toLowerCase();
-  const v = m[2].trim();
+// markdown table rows:  | Field | value |  — split on UNescaped pipes only, then unescape,
+// so a "|" inside a submitted field (real names do this: "Ramesh | ForumIAS") no longer
+// eats the field. The Submit form escapes pipes as "\|"; tolerate a stray unescaped one too.
+for (const line of body.split('\n')) {
+  const m = line.match(/^\s*\|(.+)\|\s*$/);
+  if (!m) continue;
+  const cells = m[1].split(/(?<!\\)\|/).map(s => s.trim().replace(/\\\|/g, '|'));
+  if (cells.length < 2) continue;
+  const k = cells[0].toLowerCase();
+  const v = cells.slice(1).join(' | ').trim();
   if (k === 'field' || /^-+$/.test(k)) continue;
   fields[k] = v;
 }
@@ -60,6 +66,16 @@ const jsonBlock = (body.match(/```json\n([\s\S]*?)```/i) || [])[1] || '';
 /* ---------- helpers ---------- */
 const csvEsc = v => { v = String(v == null ? '' : v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
 
+// Only ever link out to a real web URL. A javascript:/data: scheme here would end up in an
+// href on /topper/<slug>/ and /optional/<subject>/ and run on our own origin (AUDIT B4).
+function assertHttpUrl(u, what) {
+  let p;
+  try { p = new URL(u); } catch (e) { console.error(`${what} is not a valid URL: ${u}`); process.exit(1); }
+  if (p.protocol !== 'http:' && p.protocol !== 'https:') {
+    console.error(`${what} must be an http(s) link — got "${p.protocol}".`); process.exit(1);
+  }
+}
+
 function parseCsvRows(text) {
   const rows = [];
   let row = [], cur = '', q = false;
@@ -88,6 +104,7 @@ function patchOverrides(name, patch) {
 if (/^optional/i.test(paperRaw)) {
   const subject = paperRaw.replace(/^optional\s*[—:-]\s*/i, '').trim() || 'Other';
   if (!url) { console.error('Optional-subject copies need a "Copy link".'); process.exit(1); }
+  assertHttpUrl(url, 'Copy link');
 
   let questions;
   if (jsonBlock) {
@@ -154,11 +171,23 @@ const rows = parseCsvRows(csvBlock);
 const dataRows = rows[0] && /^topper$/i.test(rows[0][0].trim()) ? rows.slice(1) : rows;
 if (!dataRows.length) { console.error('The CSV block has no data rows.'); process.exit(1); }
 
+if (url) assertHttpUrl(url, 'Copy link');
+for (const r of dataRows) { const u = (r[6] || '').trim(); if (u) assertHttpUrl(u, 'A URL in the CSV block'); }
+
 const subPath = path.join(DATA, 'submissions.csv');
 const HEADER = 'topper,coaching,subject,page_number,question,metadata,url\n';
 let sub = fs.existsSync(subPath) ? fs.readFileSync(subPath, 'utf8') : HEADER;
 if (!sub.trim()) sub = HEADER;
 if (!sub.endsWith('\n')) sub += '\n';
+
+// moderate.yml fires on every `labeled` event, so removing and re-adding `approved` re-runs
+// this. Appending again would duplicate every question row on the copy card (AUDIT B5).
+const baseUrl = (url || '').split('#')[0];
+if (baseUrl && sub.includes(baseUrl)) {
+  console.log(`Already present: rows for ${baseUrl} are already in data/submissions.csv. Nothing to do.`);
+  process.exit(0);
+}
+
 sub += dataRows.map(r => r.map(csvEsc).join(',')).join('\n') + '\n';
 fs.writeFileSync(subPath, sub);
 

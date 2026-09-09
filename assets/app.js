@@ -34,6 +34,9 @@
     return n;
   };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+  // Every outbound copy/PDF link comes from data. A javascript:/data: URL in an href runs on
+  // our own origin — anything that is not http(s) becomes an inert "#" (AUDIT B4).
+  var safeHref = function (u) { return /^https?:\/\//i.test(String(u || '')) ? u : '#'; };
   var fmt = function (n) { return (n || 0).toLocaleString('en-IN'); };
   var debounce = function (fn, ms) { var t; return function () { var a = arguments, x = this; clearTimeout(t); t = setTimeout(function () { fn.apply(x, a); }, ms); }; };
   var SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
@@ -786,7 +789,7 @@
       return { c: c, page: pair[1], air: airOf(c) || 1e9, year: yearOf(c) };
     }).filter(Boolean).sort(function (a, b) { return a.air - b.air; });
     return rows.map(function (r) {
-      var href = r.c.u + (r.page ? '#page=' + r.page : '');
+      var href = safeHref(r.c.u + (r.page ? '#page=' + r.page : ''));
       var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [r.page ? 'Open · p.' + r.page : 'Open copy']);
       a.addEventListener('click', function () {
         track('pdf_open', { topper: r.c.t, paper: r.c.p, source: r.c.c || 'unknown', page: r.page || 0, link_domain: hostOf(r.c.u), outbound: true, transport_type: 'beacon', from: 'question' });
@@ -1004,7 +1007,7 @@
 
   function optAnswerRows(q) {
     return q.a.slice().sort(function (a, b) { return (a.air || 1e9) - (b.air || 1e9); }).map(function (a) {
-      var href = a.url + (a.page ? '#page=' + a.page : '');
+      var href = safeHref(a.url + (a.page ? '#page=' + a.page : ''));
       var link = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [a.page ? 'Open · p.' + a.page : 'Open copy']);
       link.addEventListener('click', function () {
         track('pdf_open', { topper: a.t, paper: q.p, source: a.src || 'unknown', page: a.page || 0, link_domain: hostOf(a.url), optional: true, outbound: true, transport_type: 'beacon', from: 'practice' });
@@ -1070,7 +1073,7 @@
     var mk = T.marks && T.marks[paper] != null ? T.marks[paper] : null;
     if (mk != null) out.push(el('span', { class: 'tag marks' }, [paper + ' ' + mk]));
     if (T.telegram) {
-      var tgA = el('a', { class: 'tag tg', href: T.telegram, target: '_blank', rel: 'noopener' }, ['Telegram ↗']);
+      var tgA = el('a', { class: 'tag tg', href: safeHref(T.telegram), target: '_blank', rel: 'noopener' }, ['Telegram ↗']);
       tgA.addEventListener('click', function (e) { e.stopPropagation(); });
       out.push(tgA);
     }
@@ -1104,7 +1107,7 @@
         el('span', { class: 'qn' }, ['link only']),
         el('span', { class: 'tags' }, tags)
       ]);
-      var la = el('a', { class: 'open', href: c.u, target: '_blank', rel: 'noopener' }, ['Open copy']);
+      var la = el('a', { class: 'open', href: safeHref(c.u), target: '_blank', rel: 'noopener' }, ['Open copy']);
       la.addEventListener('click', function () {
         track('pdf_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', link_domain: hostOf(c.u), link_only: true, outbound: true, transport_type: 'beacon' });
       });
@@ -1133,7 +1136,7 @@
       if (q[2]) meta.push(q[2] + ' marks');
       if (q[3]) meta.push(q[3] + (/\d$/.test(q[3]) ? ' words' : ''));
       if (meta.length) txt.appendChild(el('span', { class: 'qmeta' }, [meta.join('  ·  ')]));
-      var href = c.u + (q[0] ? '#page=' + q[0] : '');
+      var href = safeHref(c.u + (q[0] ? '#page=' + q[0] : ''));
       var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [q[0] ? 'Open PDF · p.' + q[0] : 'Open PDF']);
       a.addEventListener('click', function () {
         track('pdf_open', {
@@ -1150,7 +1153,7 @@
       // metadata-only so far — fill the list when the full text arrives
       ql.appendChild(el('div', { class: 'q loading' }, [
         el('div', { class: 'txt' }, ['Loading questions…']),
-        el('a', { class: 'open', href: c.u, target: '_blank', rel: 'noopener' }, ['Open PDF'])
+        el('a', { class: 'open', href: safeHref(c.u), target: '_blank', rel: 'noopener' }, ['Open PDF'])
       ]));
     }
 
@@ -1297,7 +1300,7 @@
     ]);
 
     function pdfLink(page, txt) {
-      var href = o.url + (page ? '#page=' + page : '');
+      var href = safeHref(o.url + (page ? '#page=' + page : ''));
       var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [txt]);
       a.addEventListener('click', function () {
         track('pdf_open', { topper: o.topper, paper: o.subject, source: o.source || 'unknown', page: page || 0, link_domain: hostOf(o.url), optional: true, outbound: true, transport_type: 'beacon' });
@@ -1548,25 +1551,28 @@
       e.preventDefault();
       var f = e.target;
       var g = function (n) { return (f[n] && f[n].value || '').trim(); };
+      // markdown table cells: a raw "|" splits the row and breaks the parser in
+      // .github/scripts/apply-submission.mjs; a newline breaks it too.
+      var cell = function (s) { return String(s == null ? '' : s).replace(/\|/g, '\\|').replace(/\r?\n/g, ' '); };
       var isCopy = kind === 'copy';
       var title = (isCopy ? '[copy] ' : '[data] ') + g('topper') +
         (g('air') ? ' — AIR ' + g('air') : '') + ' · ' + g('paper');
 
       var L = ['### ' + (isCopy ? 'New topper copy' : 'Topper data correction'), '',
         '| field | value |', '| --- | --- |',
-        '| Topper | ' + g('topper') + ' |',
-        '| AIR | ' + (g('air') || '—') + ' |',
-        '| Year | ' + (g('year') || '—') + ' |',
-        '| Paper / subject | ' + g('paper') + ' |'];
+        '| Topper | ' + cell(g('topper')) + ' |',
+        '| AIR | ' + cell(g('air') || '—') + ' |',
+        '| Year | ' + cell(g('year') || '—') + ' |',
+        '| Paper / subject | ' + cell(g('paper')) + ' |'];
       if (isCopy) {
-        L.push('| Copy link | ' + (g('url') || '—') + ' |');
-        L.push('| Source / coaching | ' + (g('source') || '—') + ' |');
-        L.push('| Marks in this paper | ' + (g('marks') || '—') + ' |');
+        L.push('| Copy link | ' + cell(g('url') || '—') + ' |');
+        L.push('| Source / coaching | ' + cell(g('source') || '—') + ' |');
+        L.push('| Marks in this paper | ' + cell(g('marks') || '—') + ' |');
         if (analysis && analysis.count) L.push('| Questions (auto-estimated) | ~' + analysis.count + ' over ' + analysis.numPages + ' pages · ' + analysis.method + ' |');
       } else {
-        L.push('| Subject-wise marks | ' + (g('allmarks') || '—') + ' |');
+        L.push('| Subject-wise marks | ' + cell(g('allmarks') || '—') + ' |');
       }
-      L.push('| Submitted by | ' + (g('by') || 'anonymous') + ' |', '',
+      L.push('| Submitted by | ' + cell(g('by') || 'anonymous') + ' |', '',
         '**Source / verification note**', '', g('note') || '_none provided_');
 
       if (isCopy && analysis && analysis.count) {
