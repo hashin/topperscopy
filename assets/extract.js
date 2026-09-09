@@ -54,7 +54,7 @@
   }
 
   function extractQuestions(pages) {
-    var out = [], seen = {}, lastKey = '';
+    var out = [], seen = Object.create(null), lastKey = '';
 
     function addQ(page, blob) {
       var qt = questionText(blob);

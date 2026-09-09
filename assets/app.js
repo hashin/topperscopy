@@ -428,7 +428,7 @@
   }
 
   function chipStat(n, label) { return '<span class="s"><b>' + fmt(n) + '</b> ' + label + '</span>'; }
-  function countSources() { var m = {}; DB.copies.forEach(function (c) { if (c.c) m[c.c] = 1; }); return Object.keys(m).length; }
+  function countSources() { var m = Object.create(null); DB.copies.forEach(function (c) { if (c.c) m[c.c] = 1; }); return Object.keys(m).length; }
 
   /* ---------- theme ---------- */
   function wireTheme() {
@@ -466,7 +466,7 @@
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
     if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
-    window.scrollTo({ top: 0, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });   // valid ScrollBehavior; unknown values fall back to 'auto'
     pageView(v);
     if (changed) track('tab_view', { view: v });
   }
@@ -481,11 +481,10 @@
     $('#q').addEventListener('input', debounce(function (e) {
       var term = e.target.value.trim();
       if (term.length < 2) return;
-      var res = filteredCopies();
       track('search', {
         search_term: term.toLowerCase().slice(0, 100),
         mode: state.mode, paper: state.paper,
-        results: (res && res.pending) ? -1 : res.length
+        results: filteredCopies().length   // plain array — never had a .pending flag
       });
     }, 900));
     $$('#mode button').forEach(function (b) {
@@ -543,7 +542,7 @@
   }
 
   function topperOptions() {
-    var m = {};
+    var m = Object.create(null);
     DB.copies.forEach(function (c) { if (c.t === 'Unknown') return; m[c.t] = (m[c.t] || 0) + (c.stub ? 0 : 1); });
     return Object.keys(m).sort().map(function (t) {
       var T = TOPPERS[t] || {};
@@ -552,12 +551,12 @@
     });
   }
   function sourceOptions() {
-    var m = {};
+    var m = Object.create(null);
     DB.copies.forEach(function (c) { if (c.c) m[c.c] = (m[c.c] || 0) + 1; });
     return Object.keys(m).sort().map(function (x) { return [x, x + ' (' + m[x] + ')']; });
   }
   function yearOptions() {
-    var m = {};
+    var m = Object.create(null);
     DB.copies.forEach(function (c) { if (c.stub) return; var y = yearOf(c); if (y) m[y] = (m[y] || 0) + 1; });
     return Object.keys(m).sort().reverse().map(function (y) { return [y, y + ' (' + m[y] + ')']; });
   }
@@ -913,7 +912,7 @@
     if (btn) { btn.disabled = !has; btn.textContent = has ? 'Optional' : 'Optional ▸ after OCR'; }
   }
   function optPracticeSubjects() {
-    var m = {};
+    var m = Object.create(null);
     OPTPOOL.forEach(function (q) { m[q.p] = (m[q.p] || 0) + 1; });
     return m;
   }
@@ -1226,7 +1225,7 @@
   }
 
   function optCounts() {
-    var m = {};
+    var m = Object.create(null);
     OPTS.forEach(function (o) { m[o.subject] = (m[o.subject] || 0) + 1; });
     return m;
   }
