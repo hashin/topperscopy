@@ -44,7 +44,7 @@
     view: 'browse', q: '', mode: 'all', paper: 'all',
     topper: '', source: '', year: '', sort: 'year', shown: PAGE,
     qview: 'copies', syl: '', pp: '', psyl: '',
-    optSubject: 'all', optQ: ''
+    optSubject: 'all', optQ: '', optShown: PAGE
   };
 
   var BAR = ['#09A1A1', '#F6C992', '#D396A6', '#5484A4', '#ACC0D3', '#30525C'];
@@ -853,7 +853,9 @@
   // nodes) forces a full-page relayout — ~2 s the first time. The dialog is modal,
   // so the list behind it is inert; skip its layout/paint while the dialog is up.
   function parkBehindDialog() {
-    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) n.style.contentVisibility = 'hidden'; });
+    var parked = false;
+    ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) { n.style.contentVisibility = 'hidden'; parked = n; } });
+    if (parked) void parked.offsetHeight;   // flush the style change before showModal() reads layout
   }
   function unparkBehindDialog() {
     ['#opt-body', '#results'].forEach(function (s) { var n = $(s); if (n) n.style.contentVisibility = ''; });
@@ -1129,7 +1131,7 @@
   function wireOptionals() {
     $('#opt-q').addEventListener('input', debounce(function (e) {
       state.optQ = e.target.value.trim().toLowerCase();
-      if (state.optQ && state.optSubject === 'all') state.optSubject = 'all';
+      state.optShown = PAGE;
       renderOptionals();
     }, 150));
   }
@@ -1152,7 +1154,7 @@
         el('h2', {}, [state.optSubject === 'all' ? 'Search results' : state.optSubject])
       ]);
       back.querySelector('.backbtn').addEventListener('click', function () {
-        state.optSubject = 'all'; state.optQ = ''; $('#opt-q').value = ''; renderOptionals();
+        state.optSubject = 'all'; state.optQ = ''; state.optShown = PAGE; $('#opt-q').value = ''; renderOptionals();
       });
       // "Practise" — only when this subject has questions read off its copies (OCR)
       var pn = state.optSubject !== 'all' && optPracticeSubjects()[state.optSubject];
@@ -1181,7 +1183,17 @@
         ]));
         return;
       }
-      list.forEach(function (o) { body.appendChild(optCard(o)); });
+      // paginate — every optCard is an expanded <details> (~50 DOM nodes); a 90-copy
+      // subject dumped all at once was ~5k nodes and jammed the main thread (and any
+      // modal opened over it).
+      var shown = state.optShown || PAGE;
+      list.slice(0, shown).forEach(function (o) { body.appendChild(optCard(o)); });
+      if (list.length > shown) {
+        var n = Math.min(PAGE, list.length - shown);
+        var more = el('button', { class: 'more' }, ['Show ' + n + ' more  ·  ' + (list.length - shown) + ' hidden']);
+        more.addEventListener('click', function () { state.optShown = shown + PAGE; renderOptionals(); });
+        body.appendChild(more);
+      }
       return;
     }
 
@@ -1197,7 +1209,7 @@
         el('div', { class: 'scount' }, [n ? n + (n === 1 ? ' copy' : ' copies') : 'no copies yet'])
       ]);
       card.addEventListener('click', function () {
-        state.optSubject = sub; renderOptionals(); window.scrollTo(0, 0);
+        state.optSubject = sub; state.optShown = PAGE; renderOptionals(); window.scrollTo(0, 0);
         track('optional_subject_view', { subject: sub, copies: n });
       });
       grid.appendChild(card);
