@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-10T18:01:54.830Z",
+  "generated": "2026-09-10T19:15:57.419Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -629,6 +629,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7fdcb-288173_2424_ruchi-singh_rank_171.pdf",
+      "topper": "Ruchi Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2598,7 +2612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -4334,7 +4348,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -4740,7 +4754,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 16,
       "low": false
     },
     {
