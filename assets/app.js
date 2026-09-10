@@ -273,8 +273,19 @@
       if (!('IntersectionObserver' in window)) return;
       if (io) io.disconnect();
       io = new IntersectionObserver(function (entries) {
-        var stuck = !entries[0].isIntersecting && state.view === 'browse';
-        if (stuck) tb.classList.add('slim'); else unslim();
+        if (entries[0].isIntersecting || state.view !== 'browse') { unslim(); return; }
+        // Only collapse if there's enough page left below the fold that folding
+        // the filter rows away can't pull the sentinel back into view. On a short
+        // result list (one or two copies) collapsing shrinks the document enough
+        // that the browser clamps the scroll position back up past the trigger,
+        // which re-expands the toolbar, which pushes it down again — a rapid
+        // up/down loop that only stops when the search box is focused.
+        if (!tb.classList.contains('slim')) {
+          var ff = tb.querySelector('.toolbar-filters');
+          var delta = (ff ? ff.getBoundingClientRect().height : 0) + 48;
+          if (document.documentElement.scrollHeight - window.innerHeight - window.scrollY < delta) return;
+        }
+        tb.classList.add('slim');
       }, { rootMargin: '-' + (v + 8) + 'px 0px 0px 0px', threshold: 0 });
       io.observe(sentinel);
     }
