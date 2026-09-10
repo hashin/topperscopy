@@ -240,9 +240,14 @@ async function pool(items, n, fn) {
  * whole, because some booklets open with the full question paper as an insert.
  * ========================================================================== */
 
-const STRIP_FRACTION = 0.38;   // top share of the page that holds the printed question
+let STRIP_FRACTION = 0.38;     // top share of the page that holds the printed question; --strip overrides
 const FULL_PAGE_UNTIL = 3;     // pages 1..3 render whole (question-paper inserts live here)
 let RENDER_DPI = 150;          // pdftoppm raster resolution; --dpi overrides (image tokens ≈ 97% of the API bill)
+// GS4 Section-B case studies are a full page of printed scenario + (a)/(b)/(c)
+// sub-parts, often Hindi-above-English, so 0.38 slices the English question in
+// half. Render nearly the whole page for GS4; Gemini is told to ignore the
+// handwriting that this now includes.
+const STRIP_BY_PAPER = p => /gs.?4|ethic/i.test(p || '') ? 0.92 : STRIP_FRACTION;
 const PAGEDIR = path.join(CACHE, 'pages');
 const OCRDIR = path.join(CACHE, 'ocr');
 const RAWDIR = path.join(CACHE, 'raw');   // raw per-page tesseract text — lets `reclean` re-run the filter offline
@@ -263,11 +268,11 @@ function sh(cmd, argv, opts = {}) {
 }
 
 /** Render one page (or its top strip) to PNG. Returns the file path, or null. */
-function renderPage(pdfPath, pageNo, heightPts, outPrefix, dpi = RENDER_DPI) {
-  const full = pageNo <= FULL_PAGE_UNTIL;
+function renderPage(pdfPath, pageNo, heightPts, outPrefix, dpi = RENDER_DPI, frac = STRIP_FRACTION) {
+  const full = pageNo <= FULL_PAGE_UNTIL || frac >= 0.99;
   const argv = ['-png', '-r', String(dpi), '-f', String(pageNo), '-l', String(pageNo), '-aa', 'yes', '-aaVector', 'yes'];
   if (!full && heightPts) {
-    const hPx = Math.round(heightPts * (dpi / 72) * STRIP_FRACTION);
+    const hPx = Math.round(heightPts * (dpi / 72) * frac);
     argv.push('-x', '0', '-y', '0', '-W', '20000', '-H', String(hPx));
   }
   argv.push(pdfPath, outPrefix);
@@ -528,17 +533,36 @@ function cleanOcrQuestion(blob, essay) {
   return null;
 }
 
+/** A GS4 Section-B case study: a printed scenario (often ½–1 page) that ends in
+ *  lettered sub-parts. These legitimately run long, so the length gates give
+ *  them more room — but only when the shape is unmistakably a case study, not
+ *  just any wall of text. */
+function isCaseStudy(s) {
+  s = String(s || '');
+  if (s.length < 320) return false;
+  const sub = new Set((s.match(/\(\s*([a-e])\s*\)/g) || []).map(x => x.replace(/[()\s]/g, '').toLowerCase()));
+  const hasAB = sub.has('a') && sub.has('b');
+  const followUp = /\b(answer the following|following questions?|in (?:the|this) (?:given\s+)?(?:context|scenario|situation|case)|in the light of (?:the )?(?:above|situation|case)|given (?:the|this) (?:situation|scenario|case|circumstances)|questions? that arise|course of action|what (?:will|would) you do|examine the (?:ethical|options)|options (?:available|do you have)|merits and demerits)\b/i.test(s);
+  const secondPerson = /\byou are (?:a|an|the|now|currently|working|posted|serving|heading|the head|in[- ]charge)|you have (?:been|recently|just)\b|as (?:the|a|an) (?:district magistrate|dm\b|collector|sp\b|superintendent|commissioner|municipal commissioner|secretary|chief secretary|ceo|managing director|chief executive|officer[- ]in[- ]charge|administrator|head of|chairman|chairperson|team lead|district education officer|deo\b)/i.test(s);
+  // third-person protagonist: "Mr X is …", "Utkarsh is a dedicated …", "Rakesh, a young IAS officer, …"
+  const thirdPerson = /^(?:["“']?(?:Mr\.?|Mrs\.?|Ms\.?|Dr\.?|Shri|Smt\.?)\s+[A-Z]|["“']?[A-Z][a-z]{2,}\s+(?:is|was|has been|had been|works|worked|joined|serves|served|holds|held|recently|,\s+a[n]?\s))/.test(s.trim());
+  const scenario = secondPerson || thirdPerson;
+  return (hasAB && (followUp || scenario)) || (followUp && scenario) || (scenario && s.length > 700 && /\?/.test(s));
+}
+
 /** Gemini already did the OCR *and* the cleanup — its output is clean English
  *  prose. So we trust it: split on " || ", strip any leaked Devanagari and a
  *  trailing marks number, sanity-check, keep. No span surgery. */
-function cleanGeminiQuestion(s, essay) {
+function cleanGeminiQuestion(s, essay, gs4) {
   s = String(s || '')
+    .replace(/\s*<{1,3}\s*CUT\s*>{1,3}\s*$/i, '')            // truncation marker (stitching happens upstream)
     .replace(/\\n/g, ' ')                                    // literal escaped newline that slipped through JSON
     .replace(/[ऀ-ॿ]+/g, ' ')                                // any leaked Devanagari
     .replace(/```(?:json)?/gi, '')
     .replace(/\s+/g, ' ')
     .replace(/^Q\.?\s*\d{1,2}[.)]?\s*/i, '')                 // leading "Q.15 "
     .replace(/^\s*\d{1,2}[.)]\s*/, '')                       // leading "15. "
+    .replace(/^\s*\(?\s*(?:[a-e]|[ivx]{1,3})\s*\)\s*/i, '')  // leading "(a) " / "b) " / "(ii) " sub-part marker
     .replace(/\(([^)]*)\)/g, (m, inr) =>                     // drop empty / "(250 )" parens, keep "(150 words)" & years
       /[A-Za-z]/.test(inr) || /^\s*(?:1[6-9]|20)\d\d\s*$/.test(inr) ? m : ' ')
     .replace(/^\s*[-–—?]+\s*/, '')
@@ -548,13 +572,21 @@ function cleanGeminiQuestion(s, essay) {
     .replace(/\s+\d{1,2}\s*$/, '')                           // trailing " 10"
     .replace(/\s{2,}/g, ' ')
     .trim();
-  if (/^none\b/i.test(s) || s.length < 20 || s.length > 700) return null;
+  // A GS4 Section-B case study is one long printed scenario ending in lettered
+  // sub-parts — legitimately 800–2500 chars. GS4 theory questions also run
+  // longer than GS1-3. Everything else caps at 900.
+  const caseStudy = isCaseStudy(s);
+  const cap = caseStudy ? 2600 : gs4 ? 1400 : 900;
+  if (/^none\b/i.test(s) || s.length < 20 || s.length > cap) return null;
   if (RUBRIC_RX.test(s)) return null;                        // "Write two essays…", "Section A", "Maximum Marks"
   if (!/^["“'']?[A-Z]/.test(s)) return null;
   if ((s.match(/[A-Za-z]/g) || []).length / s.length < 0.55) return null;
   const words = s.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
   if (words.length < (essay ? 5 : 6)) return null;
-  if (!essay && !DIRECTIVE_RX.test(s) && !/\?/.test(s) &&
+  // GS4/Essay quote prompts — «"…quote…" — Thinker» — carry their directive
+  // ("what does it mean to you") on a preceding line we don't see. Keep them.
+  const quotePrompt = /^["“].{15,}["”]\s*[-–—~:]\s*[A-Z]/.test(s) || /^["“].{25,}["”]\.?\s*$/.test(s);
+  if (!essay && !caseStudy && !quotePrompt && !DIRECTIVE_RX.test(s) && !/\?/.test(s) &&
       !/^["“'']?(?:how|why|what|which|do you|to what extent|should|can|is|are|in what)\b/i.test(s)) return null;
   return s;
 }
@@ -567,6 +599,7 @@ function cleanGeminiQuestion(s, essay) {
  *  Anything this returns is tagged `salvaged` downstream. */
 function salvageGeminiQuestion(raw, essay) {
   let s = String(raw || '')
+    .replace(/\s*<{1,3}\s*CUT\s*>{1,3}\s*$/i, '')
     .replace(/\\n/g, ' ').replace(/[ऀ-ॿ]+/g, ' ').replace(/```(?:json)?/gi, '')
     .replace(/\s+/g, ' ')
     .replace(/^\s*(?:Q\.?\s*)?\d{1,2}\s*[.)]\s*/i, '')          // "Q.15 " / "12. "
@@ -582,7 +615,8 @@ function salvageGeminiQuestion(raw, essay) {
   if (/^[a-z]/.test(s)) s = s[0].toUpperCase() + s.slice(1);   // OCR ate the opening capital
   s = s.replace(/[\s,;:–—-]+(?:and|or|but|the|a|an|of|in|to|with|for|which|that|as|by|on|from)\s*$/i, '').trim();
 
-  if (!s || s.length < 30 || s.length > 700) return null;
+  const caseStudy = isCaseStudy(s);
+  if (!s || s.length < 30 || s.length > (caseStudy ? 2600 : 700)) return null;
   if (/^none\b/i.test(s)) return null;
   if (RUBRIC_RX.test(s) || INSTRUCTION_RX.test(s) || TRUNC_LEAD_RX.test(s)) return null;
   if (MATHS_RX.test(s)) return null;
@@ -676,10 +710,11 @@ function filterFreepassQuestions(qs, paper) {
  *  `opts.paper` drives essay-mode leniency; `opts.engine` picks the path. */
 function questionsFromOcr(text, pageNo, opts = {}) {
   const essay = /essay/i.test(opts.paper || '');
+  const gs4 = /gs.?4|ethic/i.test(opts.paper || '');
   if (opts.engine === 'gemini') {
     const out = [];
     for (const chunk of String(text || '').split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
-      let q = cleanGeminiQuestion(chunk, essay), salvaged = false;
+      let q = cleanGeminiQuestion(chunk, essay, gs4), salvaged = false;
       if (!q && opts.salvage !== false) { q = salvageGeminiQuestion(chunk, essay); salvaged = !!q; }
       if (q) out.push({ page: pageNo, question: q, salvaged, marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '', words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
     }
@@ -725,10 +760,12 @@ function unitsNeedingOcr(clusters) {
 /* The instruction sent with every batch of page images — shared by `gemini`
  * (production) and `bench` (model A/B) so the comparison is honest. */
 const GEMINI_PROMPT = [
-  'Each image is the top strip of a page from a UPSC Mains answer booklet.',
-  'The printed/typed text at the top is the exam QUESTION. Everything handwritten is the candidate\'s answer — ignore it completely.',
+  'Each image is a page (or the top of a page) from a UPSC Mains answer booklet.',
+  'The printed/typed text is the exam QUESTION. Everything handwritten is the candidate\'s answer — ignore it completely.',
   'The question is usually printed in BOTH Hindi (Devanagari) and English. Return ONLY the English text. Do NOT include any Hindi/Devanagari characters. Keep any "(Answer in 150/250 words)" part.',
-  'If the image shows several numbered questions (a question-paper page), join them with " || " into one string.',
+  'Transcribe the COMPLETE printed question. A GS Paper 4 (Ethics) question is often a long case-study: a full paragraph of scenario followed by sub-parts "(a) …", "(b) …", "(c) …" — include the entire scenario AND every sub-part in that one string.',
+  'If the image shows several separate numbered questions (a question-paper page), join them with " || ".',
+  'If the printed question clearly runs off the bottom edge of the image and is cut mid-sentence, end that string with the marker <<CUT>>.',
   'If the image has no printed question (pure handwriting, a cover page, an instructions or marks page, evaluation indicators, or only a header/logo), use exactly: NONE',
   'Output ONLY a raw JSON array of strings — one entry per image, in order. No markdown, no code fence, no commentary.'
 ].join(' ');
@@ -1294,12 +1331,14 @@ if (cmd === 'gemini') {
       continue;
     }
     const heightPts = meta.pageHeightPts || 842;
+    const frac = getArg('strip') ? +getArg('strip') : STRIP_BY_PAPER(job.c.paper || job.rec.paper);
     job.rec.numPages = meta.numPages || job.rec.numPages;
     let pages = job.pages || Array.from({ length: Math.min(meta.numPages || 0, 120) }, (_, i) => i + 1);
     const doneSet = new Set(job.rec.geminiPages);
     pages = pages.filter(p => !doneSet.has(p));
     const qKey = t => t.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 64);
     const seenQ = new Set((job.rec.questions || []).map(q => qKey(q.question)));
+    let cut = '';                                                    // running <<CUT>> tail across pages
 
     for (let i = 0; i < pages.length && !allDead; i += perReq) {
       const slice = pages.slice(i, i + perReq);
@@ -1308,7 +1347,7 @@ if (cmd === 'gemini') {
       for (const p of slice) {
         const prefix = path.join(PAGEDIR, `g_${job.sha}_p${p}`);
         let img = null;
-        try { img = renderPage(pdfPath, p, heightPts, prefix); } catch {}
+        try { img = renderPage(pdfPath, p, heightPts, prefix, RENDER_DPI, frac); } catch {}
         if (!img) continue;
         parts.push({ inline_data: { mime_type: 'image/png', data: fs.readFileSync(img).toString('base64') } });
         rendered.push({ p, img });
@@ -1353,14 +1392,18 @@ if (cmd === 'gemini') {
       rendered.forEach((r, idx) => {
         try { fs.unlinkSync(r.img); } catch {}
         const t = String(texts[idx] || '').trim();
-        try { fs.writeFileSync(path.join(GRAW, `${job.sha}_p${r.p}.txt`), t); } catch {}
+        try { fs.writeFileSync(path.join(GRAW, `${job.sha}_p${r.p}.txt`), t); } catch {}   // raw, marker and all — salvage stitches later
         job.rec.geminiPages.push(r.p);
         if (!t || /^none$/i.test(t)) { return; }
-        for (const q of questionsFromOcr(t, r.p, { paper: job.c.paper, engine: 'gemini' })) {
+        // stitch a printed question that ran off the previous page's bottom edge
+        let text = t, page = r.p;
+        if (cut) { text = cut.replace(/\s*<{1,3}\s*CUT\s*>{1,3}\s*$/i, '') + ' ' + t.replace(/^\s*\(?\s*(?:[a-e]|[ivx]{1,3})\s*\)\s*/i, ''); cut = ''; }
+        if (/<{1,3}\s*CUT\s*>{1,3}\s*$/i.test(text)) { cut = text; return; }               // hold for the next page
+        for (const q of questionsFromOcr(text, page, { paper: job.c.paper, engine: 'gemini' })) {
           const k = qKey(q.question);
           if (seenQ.has(k)) continue;                          // same topic already caught on an earlier page
           seenQ.add(k);
-          job.rec.questions.push({ ...q, page: r.p, via: 'gemini', model: jm.name });
+          job.rec.questions.push({ ...q, page, via: 'gemini', model: jm.name });
         }
       });
       job.rec.engine = 'gemini';
@@ -1411,12 +1454,17 @@ if (cmd === 'validate') {
 }
 
 if (cmd === 'salvage') {
-  // Recover Gemini transcriptions that the extraction filter rejected. Re-walks
-  // every cached .ocr/graw/*.txt, re-runs questionsFromOcr() (which now falls
-  // back to salvageGeminiQuestion() on a reject) and merges anything new into
-  // the unit's .ocr/ocr/<sha>.json — geminiPages / geminiDone are left intact,
-  // so it is idempotent and safe to run every night before `emit`.
-  //   --dry      print what would be salvaged, write nothing
+  // Re-derive questions from every cached .ocr/graw/*.txt and merge anything the
+  // committed record is missing into .ocr/ocr/<sha>.json — WITHOUT re-calling
+  // Gemini (geminiPages / geminiDone / geminiModel are left intact), so it is
+  // idempotent and safe to run every night before `emit`. Two ways a page can
+  // now yield a question it didn't before:
+  //   1. cleanGeminiQuestion() was tightened/loosened since the OCR pass — e.g.
+  //      the GS4 case-study length cap. A now-accepted chunk missing from the
+  //      record is added as `via: reextract`.
+  //   2. cleanGeminiQuestion() still rejects it but salvageGeminiQuestion() can
+  //      dress the OCR wound — added as `salvaged`.
+  //   --dry      print what would change, write nothing
   //   --verbose  also print the still-rejected chunks
   const dry = args.includes('--dry'), verbose = args.includes('--verbose');
   const GRAW = path.join(CACHE, 'graw');
@@ -1442,35 +1490,52 @@ if (cmd === 'salvage') {
     if (!fs.existsSync(outPath)) continue;
     const rec = JSON.parse(fs.readFileSync(outPath, 'utf8'));
     const essay = /essay/i.test(c.paper || rec.paper || '');
+    const gs4 = /gs.?4|ethic/i.test(c.paper || rec.paper || '');
     const seen = new Set((rec.questions || []).map(q => qKey(q.question)));
     const added = [];
     pages.sort((a, b) => a.page - b.page);
-    for (const { page, file } of pages) {
-      const raw = fs.readFileSync(path.join(GRAW, file), 'utf8').trim();
-      if (!raw || /^none$/i.test(raw)) continue;
-      for (const chunk of raw.split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
-        if (cleanGeminiQuestion(chunk, essay)) continue;             // already extracted on the main pass
+    const harvest = (text, page) => {
+      for (const chunk of String(text).split(/\s*\|\|\s*|\n(?=\s*\d{1,2}[.)]\s)/)) {
+        const clean = cleanGeminiQuestion(chunk, essay, gs4);
+        const marks = (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '';
+        const words = (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '';
+        if (clean) {
+          const k = qKey(clean);
+          if (k && !seen.has(k)) { seen.add(k); added.push({ page, question: clean, via: 'reextract', marks, words }); }
+          continue;
+        }
         const q = salvageGeminiQuestion(chunk, essay);
         if (q) {
           const k = qKey(q);
-          if (k && !seen.has(k)) {
-            seen.add(k);
-            added.push({ page, question: q, salvaged: true, via: 'salvage',
-              marks: (chunk.match(/\b(\d{1,3})\s*marks?\b/i) || [])[1] || '',
-              words: (chunk.match(/\b(\d{2,3})\s*words?\b/i) || [])[1] || '' });
-          }
+          if (k && !seen.has(k)) { seen.add(k); added.push({ page, question: q, salvaged: true, via: 'salvage', marks, words }); }
         } else if (chunk.trim().length > 25) {
           stillRejected++;
           if (verbose) console.log(`  ✗ ${c.source} p${page}: ${JSON.stringify(chunk.trim().slice(0, 140))}`);
         }
       }
+    };
+    let carry = '', carryPage = 0;                                   // a <<CUT>> tail waiting for its continuation
+    for (const { page, file } of pages) {
+      let raw = fs.readFileSync(path.join(GRAW, file), 'utf8').trim();
+      if (carry) {                                                   // previous page ran off the edge — glue this one on
+        if (raw && !/^none$/i.test(raw)) {
+          raw = carry.replace(/\s*<{1,3}\s*CUT\s*>{1,3}\s*$/i, '') + ' ' +
+                raw.replace(/^\s*\(?\s*(?:[a-e]|[ivx]{1,3})\s*\)\s*/i, '');
+        } else { harvest(carry, carryPage); raw = ''; }
+        carry = '';
+      }
+      if (!raw || /^none$/i.test(raw)) continue;
+      if (/<{1,3}\s*CUT\s*>{1,3}\s*$/i.test(raw)) { carry = raw; carryPage = page; continue; }
+      harvest(raw, page);
     }
+    if (carry) harvest(carry, carryPage);                            // last page was cut, nothing followed
     if (added.length) {
       salvagedTotal += added.length;
       units++;
       if (dry || verbose) {
-        console.log(`\n${c.source} · ${(c.key || c.representative.slice(-46))} · +${added.length} salvaged`);
-        for (const q of added) console.log(`   p${q.page} ${JSON.stringify(q.question)}`);
+        const re = added.filter(q => q.via === 'reextract').length, sv = added.length - re;
+        console.log(`\n${c.source} · ${(c.key || c.representative.slice(-46))} · +${added.length} (${re} re-extract, ${sv} salvage)`);
+        for (const q of added) console.log(`   p${q.page} [${q.via}] ${JSON.stringify(q.question.slice(0, 200))}`);
       }
       if (!dry) {
         rec.questions = (rec.questions || []).concat(added);
@@ -1784,7 +1849,8 @@ if (cmd === 'redo') {
   // rows are already committed. plan re-includes them, freepass forces them to
   // vision, gemini wipes the stale read, emit clears each from the queue once
   // it has been re-read.
-  //   --below N [--source X] [--min-pages P]   queue every low/under-N booklet
+  //   --below N [--source X] [--paper GS4] [--min-pages P]   queue matching booklets
+  //   --paper GS4       queue every booklet of a paper (with or without --below)
   //   --urls "u1,u2"   |   --list FILE          queue specific urls
   //   --want N          annotate the target count (shown in emit's sweep log)
   //   --clear          empty the queue          --dry   show, write nothing
@@ -1799,10 +1865,12 @@ if (cmd === 'redo') {
   }
 
   let picked = [];
-  if (getArg('below')) {
-    const N = +getArg('below'), src = getArg('source'), minP = getArg('min-pages') ? +getArg('min-pages') : 0;
+  if (getArg('below') || getArg('paper')) {
+    const N = getArg('below') ? +getArg('below') : Infinity, src = getArg('source');
+    const paper = getArg('paper'), minP = getArg('min-pages') ? +getArg('min-pages') : 0;
     let booklets = yieldByBooklet().filter(b => b.count > 0 && b.count < N);
     if (src) booklets = booklets.filter(b => b.coaching === src);
+    if (paper) booklets = booklets.filter(b => new RegExp(paper, 'i').test(b.subject || ''));
     if (minP) booklets = booklets.filter(b => b.pages == null || b.pages >= minP);
     picked = booklets.map(b => b.url);
   }
@@ -1832,13 +1900,14 @@ console.error(`usage: node ocr-pipeline.mjs <command> [options]
   plan                          cluster the corpus by test paper           (free, offline)
   freepass [--all]              download reps, harvest existing text layers (free)
   gemini [--requests N]         PRIMARY vision OCR — every page, needs GEMINI_API_KEY (free tier)
-         [--source X --limit N --chunk N --of M --model M --dpi N]
+         [--source X --limit N --chunk N --of M --model M --dpi N --strip 0..1]
   ocr [--chunk N --of M]        optional tesseract pass on the printed strip (free, low yield here)
   reclean [--gemini] [--verbose] re-run the extraction filter over cached OCR text, no network
+  salvage [--dry --verbose]     re-derive questions from cached Gemini text (no API calls) — runs nightly
   validate                      cross-check clusters, flag disagreements
   emit                          write data/ocr-questions.csv
   audit-paper                   check GS1-4/Essay classification
   yield [--floor N --frac F]    per-booklet question count + low-yield outliers → .ocr/yield.json
-  redo  --below N [--source X]  queue low-yield booklets for a re-OCR (or --urls / --list / --clear)
+  redo  --below N [--paper GS4] queue low-yield booklets for a re-OCR (or --source X / --urls / --list / --clear)
   status                        progress + remaining work`);
 process.exit(1);

@@ -37,8 +37,16 @@ on:
         description: "Comma-separated booklet URLs to re-OCR (low-yield fixes; see `yield` report). Blank = normal run."
         required: false
         default: ""
+      redo_paper:
+        description: "Queue a whole paper for re-OCR, e.g. GS4 (uses .ocr/yield.json). Blank = none."
+        required: false
+        default: ""
       dpi:
         description: "Render DPI (blank = 150). Bump to ~220 for a redo run that needs a sharper header."
+        required: false
+        default: ""
+      strip:
+        description: "Page top-fraction to render, 0..1 (blank = 0.38, or 0.92 for GS4). 1 = whole page."
         required: false
         default: ""
 
@@ -94,13 +102,16 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           REDO='${{ github.event.inputs.redo }}'
+          REDO_PAPER='${{ github.event.inputs.redo_paper }}'
           [ -n "$REDO" ] && node ocr-pipeline.mjs redo --urls "$REDO"
+          [ -n "$REDO_PAPER" ] && node ocr-pipeline.mjs redo --paper "$REDO_PAPER"
           node ocr-pipeline.mjs plan
           node ocr-pipeline.mjs freepass --concurrency 8
           node ocr-pipeline.mjs gemini \
             --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview' }}" \
             --requests ${{ github.event.inputs.requests || '550' }} \
-            ${{ github.event.inputs.dpi && format('--dpi {0}', github.event.inputs.dpi) || '' }}
+            ${{ github.event.inputs.dpi && format('--dpi {0}', github.event.inputs.dpi) || '' }} \
+            ${{ github.event.inputs.strip && format('--strip {0}', github.event.inputs.strip) || '' }}
 
       - name: Save OCR cache
         if: always()
