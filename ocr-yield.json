@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-10T19:15:57.419Z",
+  "generated": "2026-09-11T05:24:20.206Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -855,6 +855,20 @@
       "count": 4,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5a4fd-1213334_2488_ritika_rath_rank_48.pdf",
+      "topper": "Ritika Rath",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 5,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 5,
       "low": true
     },
     {
