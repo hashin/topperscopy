@@ -966,7 +966,7 @@ ${num > 1 ? `<link rel="prev" href="${SITE}${href(num - 1)}">\n` : ''}${num < to
 <meta property="og:url" content="${SITE}${href(num)}">
 <meta property="og:image" content="${SITE}/assets/og.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="675">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${SITE}/assets/og.jpg">
 <style>
