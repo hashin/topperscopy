@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T17:25:51.746Z",
+  "generated": "2026-09-11T19:19:22.620Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -657,6 +657,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bbf05-817626_2422_neeraj-trar_rank_180.pdf",
+      "topper": "Neeraj Trar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -4839,6 +4853,20 @@
       "count": 19,
       "optional": false,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a37ee-288173_2423_ruchi-singh_rank_171.pdf",
+      "topper": "Ruchi Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
