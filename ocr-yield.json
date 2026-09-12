@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T19:19:22.620Z",
+  "generated": "2026-09-12T05:15:01.590Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2470,6 +2470,20 @@
       "optional": false,
       "groupMedian": 8,
       "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0d97b-854826_2424_tanuj-pathak_rank_72.pdf",
+      "topper": "TANUJ PATHAK",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/a00dc-1306059_2425_mayank_dubey_rank_313.pdf",
