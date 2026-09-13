@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-12T18:47:02.795Z",
+  "generated": "2026-09-13T05:30:23.372Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -671,6 +671,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ccc1d-368701_2423_swati_sharma_rank_17.pdf",
+      "topper": "SWATI SHARMA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
