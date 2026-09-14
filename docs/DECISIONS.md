@@ -700,3 +700,65 @@ re-fetches from scratch) — and confirmed gone (single fetch) on the fixed code
 not a confirmed zero) then released (resolves correctly to the fallback's real count and "no word
 match" label). `tools/perf/search-parity.mjs` (0/210 unexplained regressions) and
 `tools/perf/history.mjs` (6/6) re-run clean; `npm run check:all` 24/24 enforced.
+
+---
+
+## DECISION-16 — DECISION-15's #4 fix (`SUBSTRING_PENDING`) only covered "All words" mode; "Exact
+phrase" mode had the identical false-zero window, unfixed
+*2026-09-15 · active · cites DECISION-6, DECISION-14, DECISION-15*
+
+**Decision.** Pre-merge review of PR #6 (the branch carrying DECISION-15's four fixes) found one
+more real, reproducible bug in `matchingQidsIndexed()`: the `mode === 'exact'` branch has its own
+"index found nothing, fallback scan needs `QTEXTLC` and it hasn't loaded yet" case, and unlike the
+`else if (!acc.size)` branch a few lines below it (DECISION-15's #4), it did not set
+`SUBSTRING_PENDING` — it fell straight through to `return signedMapsFromPositions(idx, acc)` with
+`acc` still empty, which `renderBrowse()` reads as a **confirmed** zero. Fixed by adding the same
+check DECISION-15's #4 uses, guarded on `!verified.size` (true exactly when `acc.forEach` above
+matched nothing — either because `acc` started empty, or because a nonempty `acc` verified against
+text and came up empty; the `acc.size && !QTEXT` guard two lines above already returns early via
+`PHRASE_PENDING` for the one case where `QTEXTLC` could be null with a nonempty `acc`, so by the
+time execution reaches `!verified.size`, `QTEXTLC` being falsy only ever means `acc` was empty from
+the start):
+
+```js
+if (!verified.size) { SUBSTRING_PENDING = true; return { q: new Map(), v: new Map() }; }
+```
+
+placed right after the existing `if (!verified.size && QTEXTLC) { … fallback … }` check, so it only
+fires when that check's `QTEXTLC` condition was the reason it didn't run.
+
+**Why.** DECISION-15's own "Enforced by" section for #4 says it was "confirmed via `data/qtext.json`
+held in flight" — but that reproduction (like the fix itself) only exercised the default "All
+words" mode. Verified directly with a throwaway Playwright script (`tools/perf/_lib.mjs`'s
+`serve()`/`openPage()`, `page.context().route('**/data/qtext.json', …)` held via an unresolved
+route, never fulfilled until the test explicitly continues it): typing a query with one term not a
+prefix of any indexed token (`"zzzqxvvzyzzqx federalism"`) in "All words" mode correctly shows
+"Searching inside 9,082 copies…" while `qtext.json` is held; switching to "Exact phrase" mode and
+typing the same query showed **`"0 copies for "zzzqxvvzyzzqx federalism""`** — a confirmed
+false zero, identical in kind to the bug DECISION-6/INV-16 exist to prevent and DECISION-15's #4
+was written to close the last gap of. After the fix, the same script shows "Searching inside 9,082
+copies…" in exact mode too, while held, and resolves correctly once `qtext.json` is released. This
+is the same lesson DECISION-9/DECISION-14/DECISION-15 keep re-teaching: a fix verified by
+reproducing *one* path (here, one of two search modes) does not prove the sibling path is also
+fixed, even when the code sits three lines away and looks like it should be symmetric.
+
+**Rejected.**
+- *Make `mode === 'exact'` fall through into the shared `else if (!acc.size)` branch instead of
+  duplicating the check.* The two branches compute different things before reaching this point
+  (`verified` vs raw `acc`) and merging them would need restructuring the whole `if/else if`, for a
+  three-line duplication that is already commented as deliberately mirroring its sibling — not
+  worth the churn for a bugfix commit.
+- *Broaden the condition to `else if (!verified.size && !QTEXTLC)` for explicitness.* Logically
+  identical (by the time this line runs, `!verified.size` already implies `!QTEXTLC` — the `if`
+  right above it would have returned otherwise) but adds a redundant check a reader has to verify
+  is actually redundant; the comment explains the invariant instead.
+
+**Reverse if.** Never — direct fix for a reproduced bug, same class as DECISION-15's #4.
+
+**Enforced by.** Not statically checkable — verified by direct reproduction (throwaway Playwright
+script, not committed): exact-mode query with `data/qtext.json` held via `page.route`, before the
+fix showed a confirmed "0 copies" string, after the fix shows "Searching inside N copies…" and
+resolves correctly on release. Control run in "All words" mode (unaffected by this bug) confirmed
+unchanged. `tools/perf/search-parity.mjs` (0/210 unexplained regressions) and
+`tools/perf/history.mjs` (6/6) re-run clean after the fix; `npm run check:all` 24/24 enforced,
+`BUDGET-app_js` 35.2 KB / ceiling 36 KB (no ceiling change needed).

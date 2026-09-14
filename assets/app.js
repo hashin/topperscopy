@@ -934,6 +934,13 @@
         FALLBACK_USED = true;
         return scoreFallbackMatches(matchingQidsSubstring(terms, mode), expansions, idx.qCount + idx.vCount);
       }
+      // Same false-zero window as the !acc.size branch below, but reachable in exact-phrase
+      // mode too (found reviewing DECISION-14's fix: SUBSTRING_PENDING only covered the 'all
+      // words' path) — the fallback scan needs QTEXTLC and it hasn't loaded yet, so this is not
+      // a confirmed zero. Covers both acc.size===0 from the start and acc.size>0 with nothing
+      // verified (QTEXTLC null in the forEach above means acc was already empty, since a
+      // nonempty acc with !QTEXT returns earlier via PHRASE_PENDING).
+      if (!verified.size) { SUBSTRING_PENDING = true; return { q: new Map(), v: new Map() }; }
       acc = verified;
     } else if (!acc.size) {
       if (QTEXTLC) {

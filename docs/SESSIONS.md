@@ -390,3 +390,36 @@ time a race is suspected near a `.catch()` that doesn't rethrow.
 old 35 KB ceiling by 4 bytes before the bump). `npm run check:all` 24/24 enforced, 0 tracked.
 DECISION-14 marked as having its deferred items resolved, pointing to `DECISION-15`. Not yet
 merged to main or pushed — next step is opening a PR the same way #5 was (review before merge).
+
+## 2026-09-15 — Pre-merge review of PR #6 (DECISION-15's fixes), found + fixed one more bug, merged
+**Asked.** Resume a review-and-merge task for `hashin/topperscopy#6` (the branch carrying
+DECISION-15's four fixes) that had been interrupted mid-review by a usage-limit reset.
+**Did.** Read `CLAUDE.md`/`docs/MEMORY.md`/`docs/INTENT.md`/`DECISION-14`/`DECISION-15`, ran
+`node build.js && npm run check:all` clean (24/24) as a baseline, then reviewed the PR's diff
+(`assets/app.js` + `tools/check/budget.json`) across the 8 finder angles by hand: line-by-line
+tracing of `scoreFallbackMatches()`/`NAME_HIT_SCORE`/`dbReadyPromise`/`SUBSTRING_PENDING`,
+removed-behavior check on the `boot()` reordering (confirmed the `?q=`/`?practice=`/`?paper=`/
+`?syl=` handling was moved intact, not duplicated or dropped), and a manual trace of every branch
+of `matchingQidsIndexed()`'s `mode === 'exact'` path. Found one real bug DECISION-15's own
+reproduction didn't catch: `SUBSTRING_PENDING` (fix #4) was only wired into the `else if
+(!acc.size)` branch, which is the "All words" mode path — "Exact phrase" mode has its own,
+structurally identical "index found nothing, `qtext.json` fallback not loaded yet" case that
+still fell through to a confirmed-empty return. Reproduced live with a throwaway Playwright script
+(`tools/perf/_lib.mjs` `serve()`/`openPage()`, holding `data/qtext.json` via `page.route`): "All
+words" mode correctly showed "Searching inside 9,082 copies…" while held; "Exact phrase" mode with
+the identical query showed a confirmed `"0 copies for …"`. Fixed with a three-line addition
+mirroring the existing branch (see `DECISION-16`), reproduced-and-confirmed-fixed with the same
+script, then re-ran `tools/perf/search-parity.mjs` (0/210 unexplained) and `tools/perf/history.mjs`
+(6/6) clean, `npm run check:all` 24/24 enforced. Committed and pushed the fix to
+`claude/fix-decision-14-followups`, appended `DECISION-16`, then merged PR #6 to `main`
+(`gh pr merge 6 --merge`) and verified the `deploy.yml` run completed and the live site at
+https://topperscopy.hashin.me serves an `assets/app.js` containing all four DECISION-15 symbols
+plus the DECISION-16 fix.
+**Learned.** DECISION-15's own text warns "a test that passes proves the scenario it covers, not
+the scenario it was meant to stand in for" (echoing DECISION-14) — and its own #4 reproduction is
+a fresh instance of exactly that: the fix and its verification both only exercised one of the two
+search modes the bug class applies to, even though the sibling mode's code sits three lines below
+in the same function. Worth generalizing further: when a fix branches on a mode/flag with more
+than one value, check the *other* values too, not just the one the failing report happened to use.
+**Left.** Nothing outstanding from this pass — `npm run check:all` 24/24 enforced, 0 tracked;
+`BUDGET-app_js` 35.2 KB / ceiling 36 KB, no ceiling change needed. PR #6 merged and deployed.
