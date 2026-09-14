@@ -1,6 +1,6 @@
 # Toppers Copy
 
-A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search across ~17,000 questions and open the exact page of each copy.
+A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **26,621 questions** across **9,082 answer copies** by **1,694 rank-holders**, and open the exact page of each copy.
 
 Live: **https://topperscopy.hashin.me**
 
@@ -47,6 +47,32 @@ node build.js
 
 The GitHub Action in `.github/workflows/build.yml` does this automatically on push.
 
+## Project memory — start here if you are picking this up cold
+
+The repo carries its own context so a new session does not have to re-derive it:
+
+| File | Answers |
+|---|---|
+| [`CLAUDE.md`](CLAUDE.md) | The project map — what every file does. |
+| [`docs/MEMORY.md`](docs/MEMORY.md) | **Read first.** How the memory system works and the session protocol. |
+| [`docs/INTENT.md`](docs/INTENT.md) | What this is for, and what has actually been asked for. |
+| [`docs/DECISIONS.md`](docs/DECISIONS.md) | Why the code is like this — including what was rejected and what would reverse it. |
+| [`docs/INVARIANTS.md`](docs/INVARIANTS.md) | What must never break, and the check that proves each one. |
+| [`docs/SESSIONS.md`](docs/SESSIONS.md) | What each session did and learned. |
+
+```bash
+npm install          # playwright-core, dev only — not used by build.js or CI
+node build.js        # the checks measure real output, so build first
+npm run check        # ~2s: every invariant, each citing the intent it protects
+npm run check:all    # adds the browser checks
+npm run perf         # the full performance harness
+```
+
+`npm run check` is the honest status of the project at any moment. Checks are either **enforced**
+(must pass) or **tracked** (known-failing, tied to an open audit item) — so the same file is both a
+regression guard and a live to-do list. When a tracked check starts passing, it gets promoted and the
+budget ceiling ratchets down.
+
 ## SEO & AI readability
 
 - Rich `<head>`: canonical, Open Graph + Twitter cards, `theme-color`, `<link rel=alternate>` to the JSON.
@@ -58,20 +84,51 @@ The GitHub Action in `.github/workflows/build.yml` does this automatically on pu
 - `toppers.html` is a complete, JS-free, crawlable index of every topper and copy; the SPA is
   progressive enhancement on top. `index.html` also carries a `<noscript>` summary + full topper list.
 
-## Performance
+## Performance — measured, not assumed
 
-- **Split data load.** Boot fetches `data/index.json` — copy metadata only, ~26 KB gzipped — so the
-  card list paints in well under a second on mobile. The full `data/copies.json` (question text,
-  ~2 MB gzipped) loads in the background on `requestIdleCallback`, or immediately the moment the user
-  focuses the search box or expands a copy. On `Save-Data` / 2G it isn't fetched until actually needed.
-- Fonts (Inter + Fraunces) are self-hosted, latin-subset, variable, `font-display: swap` — no
-  third-party font request. Both are `<link rel=preload>`ed; `index.json` is preloaded, `copies.json` prefetched.
-- `content-visibility: auto` on result cards; results paginate 25 at a time.
-- On phones (`<=680px`): the sticky header/toolbar drop `backdrop-filter` for a solid bar (kills
-  scroll jank on mid Android), the colour wash is anchored instead of `fixed`, and all inputs are
-  16px so iOS Safari doesn't zoom on focus. Desktop keeps the blur and fixed wash.
-- Service worker (`sw.js`) precaches shell + fonts + `index.json`, runtime-caches `copies.json` (stale-while-revalidate).
-- GA loads `async` and never blocks render.
+Full audit with repro commands: [`PERF-UX-AUDIT-2026-09-14.md`](PERF-UX-AUDIT-2026-09-14.md).
+Every number here comes from `npm run perf` (real Chromium, CPU throttled 4x, network throttled).
+
+**What is good today.** First paint is fast: **FCP/LCP 676 ms on 4G**, 1,044 ms on slow 3G, with the
+first 25 cards already painted. Boot fetches `data/index.json` — copy metadata only, ~25 KB gzipped.
+
+**What is not.** Search is gated on a large download:
+
+| | gzip on the wire | gates |
+|---|---:|---|
+| `data/index.json` | 25 KB | the first 25 cards |
+| `data/copies.json` | 330 KB | searching inside copies |
+| `data/questions.json` | **1,639 KB** | searching inside copies |
+| **total before a text query can be answered** | **1,994 KB** | |
+
+Measured consequence: typing `federalism` costs **2,670 ms on 4G / 4,455 ms on slow 3G** before real
+results appear — and for most of that wait the interface reads `0 copies for "federalism"`, for a
+corpus that has 162 matching copies. That is the top item in the audit (P1).
+
+**Where it is going.** A conventional inverted index over the same corpus is **292 KB gzipped**
+(measured: `node tools/perf/index-proto.mjs`) and answers the same queries; question *text* is only
+needed to display the ~25 matches on screen, not to find them. With the dead `sl` field dropped and
+the text split out, the search-gating payload target is **751 KB on plain gzip (-62 %)**. Progress is
+enforced by a ratcheting budget in `tools/check/budget.json`.
+
+**Techniques actually in the code right now:**
+
+- **Split data load.** Boot fetches `index.json` only. `copies.json` loads on `requestIdleCallback`,
+  or immediately when the user focuses the search box. On `Save-Data` / 2G it is delayed further.
+- **Self-hosted fonts**, latin-subset, variable, no third-party font request. Inter is `font-display:
+  swap` and preloaded; Fraunces is `font-display: optional` and deliberately **not** preloaded — see
+  audit P9(c) for why preloading a font the browser has been told not to use costs 65.8 KB for nothing.
+- **Results paginate** 25 at a time.
+- **Phones (<=680px):** the sticky header/toolbar drop `backdrop-filter` for a solid bar (a known
+  scroll-jank source on mid Android), the colour wash is anchored instead of `fixed`, and inputs are
+  16px so iOS Safari does not zoom on focus.
+- **Service worker** precaches the shell, runtime-caches the heavy data files cache-first with a TTL.
+- **GA loads `async`** and never blocks render.
+
+> Previous versions of this section claimed `content-visibility: auto` on result cards, a
+> `copies.json` prefetch, and that both fonts were preloaded. **None of the three existed in the
+> code.** `INV-15` in `tools/check/invariants.mjs` now fails the build if this section describes an
+> optimisation the code does not have.
 
 ## Analytics
 

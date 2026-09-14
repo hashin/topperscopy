@@ -9,12 +9,40 @@ Origin: a re-skin + extension of **upsckata.com "Topper Copies"** (credit it eve
 `questions.csv` is our searchable GS/Essay core. We add optional subjects, per-topper AIR/marks,
 link-only copies from other coaching sites, a submission workflow, dark mode, and a dataset backup.
 
+## ⚡ Start here — the session protocol
+
+This repo carries its own memory, because chat context does not survive a new session and this
+project has twice been bitten by stale documentation (see `docs/MEMORY.md` for both cases).
+
+**Before writing any code:**
+
+1. Read **`docs/MEMORY.md`** — how the memory works, and the full protocol.
+2. Read `docs/INTENT.md` (what Hashin has asked for) and `docs/DECISIONS.md` (why the code is like
+   this, and what would reverse each choice). Both are short. Read them fully.
+3. Read the last 2–3 entries of `docs/SESSIONS.md`.
+4. Run `node build.js && npm run check`. Two seconds, and it tells you exactly which invariants
+   hold right now. If something is already red before you touch anything, **say so**.
+
+**Before finishing:** append to `docs/SESSIONS.md`; add any new want to `docs/INTENT.md`; add an ADR
+to `docs/DECISIONS.md` for any non-obvious choice; promote any tracked invariant that now passes;
+`npm run check` must pass.
+
+**Never silently reverse a `DECISION-n`.** Supersede it properly, or leave it alone.
+
+| Command | Does |
+|---|---|
+| `npm run check` | Every invariant, ~2 s, no browser. The honest status of the project. |
+| `npm run check:all` | Adds the browser checks (CLS, the false-zero bug). |
+| `npm run perf` | Full performance harness — sizes, vitals, cold-search latency. |
+| `node build.js` | Regenerates everything. Precondition for both of the above. |
+
 ## Current work
 
-- **`PERF-UX-AUDIT-2026-09-14.md`** — performance & UX audit, phased for implementation. Start there for
-  any speed/UI work; it carries measured baselines and a per-phase verification protocol. The harness
-  lives in `tools/perf/` (`npm run perf`).
+- **`PERF-UX-AUDIT-2026-09-14.md`** — performance & UX audit, 22 items in 7 phases, each sized for
+  one session. Start there for any speed/UI work; it carries measured baselines and a per-phase
+  verification protocol. Harness in `tools/perf/`.
 - `AUDIT-2026-09-09.md` — the earlier correctness audit (B1–B21). All items fixed; kept for history.
+- `docs/` — intent, decisions, invariants, session log. The source of truth for *why*.
 
 ## ⚠️ Do not read these — they are large, generated, and gitignored
 

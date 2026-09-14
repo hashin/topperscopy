@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "Performance budgets, in gzipped KB as GitHub Pages serves them.",
+    "`ceiling` fails the check — it is today's value plus a little headroom, so nothing regresses.",
+    "`target` is where docs/INVARIANTS.md says we are going; it is reported, not enforced.",
+    "When a phase lands and the real number drops below `target`, LOWER the ceiling to the new",
+    "value + headroom in the same commit. That is how the ratchet works — a budget that is never",
+    "tightened is a budget that is never met.",
+    "Re-measure with: node tools/perf/sizes.mjs"
+  ],
+  "budgets": {
+    "boot": {
+      "ceiling_kb": 260,
+      "target_kb": 240,
+      "files": [
+        "index.html",
+        "assets/style.css",
+        "assets/app.js",
+        "assets/fonts/inter-latin.woff2",
+        "assets/fonts/fraunces-latin.woff2",
+        "data/index.json",
+        "data/toppers.json"
+      ],
+      "why": "Everything needed to paint the hero and the first 25 cards. INTENT-2 (speed is the product)."
+    },
+    "search": {
+      "ceiling_kb": 2050,
+      "target_kb": 800,
+      "files": [
+        "data/index.json",
+        "data/copies.json",
+        "data/questions.json",
+        "data/qmeta.json",
+        "data/qindex.bin"
+      ],
+      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1."
+    },
+    "app_js": {
+      "ceiling_kb": 28,
+      "target_kb": 28,
+      "files": ["assets/app.js"],
+      "why": "DECISION-2 (no framework, no bundler). If this creeps past ~28 KB gz, something was added that probably belongs in a lazy-loaded module."
+    }
+  }
+}
