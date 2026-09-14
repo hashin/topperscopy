@@ -1547,6 +1547,127 @@ node tools/perf/history.mjs
 
 ---
 
+### Phase 6 landed — 2026-09-14
+
+R2 and R3 done as specified. R1 was implemented, but the R1 addendum's own instruction —
+"get a real number before deciding how much of the fix is still needed" — turned up a result the
+audit did not anticipate: **the specified fix (keyed DOM reconciliation) does not address the
+long-task number, in either direction it was measured.**
+
+**R1, measured (`tools/perf/inp.mjs`, new, committed as the regression guard).** Steady-state
+keystrokes: **0ms**, confirming last session's throwaway finding — Phase 5 already fixed this as
+an unintended side effect of replacing the linear substring scan with the binary index lookup.
+The empty→query transition is genuinely not fine: **54–94ms** across repeated runs on two
+different query terms, both before and after the DOM fix landed — implementing the fix moved this
+number by nothing. A CDP CPU profile of a single, realistic first-ever query ("federalism",
+"commission") found why: the dominant cost is `loadQuestionText()`'s one-time `Map`-build from
+`data/qtext.json` (**26–28ms self time**, `assets/app.js:216`-ish) plus `parseQIndex()`
+(**7–10ms**) — both one-time JSON/binary-parse costs that happen to coincide with the first search
+because that is what triggers `ensureQText()`/`ensureQIndexBin()`. `filteredCopies()` itself
+(the sort, the list-building `.map()`) measured **3–5ms** for a realistic query — nowhere near the
+bottleneck. A pathological single-common-letter query ("s", matching 5,830 of 8,075 copies) does
+make `filteredCopies()` expensive (33ms self time, mostly `Array.sort` over the huge match set),
+but that is a different, narrower problem than "rebuilding the whole list," and not what a typical
+search hits.
+
+**So the audit's diagnosis (`box.innerHTML=''` rebuild cost) does not hold post-Phase-5, in
+either the steady-state or the empty-query case** — this is the same shape of finding as the
+Phase 4→5 and Phase 5→6 addenda (a phase's own fix silently resolves or reshapes a later phase's
+starting assumption), just found by implementing rather than by prep-measuring.
+
+**Implemented anyway, for a different, real reason found while testing manually.** A card the
+user had manually expanded lost its open state on the very next keystroke: `wireBrowse()`'s input
+handler calls `renderBrowse()` with no `reopen` list, and the pre-R1 `box.innerHTML=''` rebuild
+recomputed every card's `openIt` (auto-open-on-match) fresh every time, discarding whatever the
+user had actually toggled. Reproduced directly: expand a name-hit card (openIt is false for a name
+hit, so this can only be the user's own action), type one more character that still matches by
+name — the card closes on its own. This is squarely `INTENT-3` ("no lost keystrokes… feel
+smooth"), just not one the audit's ms-denominated framing would catch. `getCard()` /
+`reconcileBrowseList()` (audit's specified mechanism) fix exactly this: an id whose signature is
+unchanged is returned as the same DOM node untouched; an id whose signature changed is rebuilt but
+carries forward its own real current `.open` state via `copyCard()`'s new `forceOpen` parameter,
+not a value recomputed as if the card were brand new. Verified: expand a card, type further
+(content-changing) keystrokes, the manual open/close choice survives every one of them — for both
+a rebuild-forced case (query narrows, content genuinely changes) and a fully-reused case (sort
+order changes, ids don't). The Phase 5 interaction the addendum specifically flagged (a card whose
+match the index confirmed before `qtext.json` landed, showing "Loading question text…") also
+verified correctly: held `data/qtext.json` in flight, confirmed the placeholder renders and the
+card stays in its open state, released the file, confirmed it backfills to real text in the same
+node with no duplicate and no collapse.
+
+**Two real bugs found and fixed along the way, both by testing, neither named anywhere in the
+audit:**
+1. `cardSig()`'s first version included the query text unconditionally — for a link-only or stub
+   card (no highlighting, no question list, nothing query-dependent in the rendered output) this
+   forced a pointless rebuild on every keystroke, and neither of those two `copyCard()` branches
+   applies `forceOpen` (they predate it), so a manually-expanded link-only card silently snapped
+   shut on the next keystroke — the exact bug R1 exists to fix, reintroduced by R1's own
+   implementation for one card shape. Fixed: `cardSig()` returns a constant for stub/link-only
+   ids, keeping them permanently in the reuse-as-is path once built.
+2. Making `.filters-toggle` visible by default on mobile (R2, below) surfaced a pre-existing touch
+   target under Google's 24px minimum (23px) — the `.toolbar.slim` collapsed state this button was
+   copied from had never actually been exercised by `tools/perf/a11y.mjs`, which loads the page but
+   never scrolls. Fixed with `min-height: 40px` on the base rule (benefits both the always-visible
+   mobile state and the original scroll-triggered one).
+
+**R2, measured (`tools/perf/fold.mjs`).** Before: 0 result cards above the fold at both 390×844
+and 1440×900. The audit's own fix (drop `#sub`, keep `#statline`, collapse `.credit` to a one-line
+link to About, widen `h1`) was not sufficient by itself — even with the hero/stats/disclaimer
+trimmed to nothing, the filter row (paper chips, mode, syllabus/topper/source/year/sort — expanded
+by default until the toolbar's own *scroll*-triggered "slim" collapse) still pushed every card
+below the fold at 390px. Extended the fix to start phones in that same collapsed-filters posture
+from first paint, not only after the user has scrolled past the sentinel — the toggle button and
+its reveal mechanism (`.toolbar.open .toolbar-filters`) already existed for exactly this, just
+never applied before the first scroll. After: **2 result cards above the fold at 390×844** ✅.
+1440×900 desktop still shows 0 — correctly out of scope: the audit's own fix section scopes to
+`max-width: 680px` and its Target line names only 390×844.
+
+**CLS regression found and fixed within this same item.** Compacting the mobile hero moved
+`#resultmeta` — which starts empty and is filled by JS once the first render runs, the same shape
+of bug `#statline`/`#papers` were already fixed for (AUDIT P3) — into the visible viewport for the
+first time; the ~22px fill that was previously invisible below the fold now measurably shifted the
+search UI. Measured: **CLS 0.0051 → 0.3005** on 3G immediately after the R2 CSS landed. Fixed by
+reserving `#resultmeta`'s height the same way `#statline`/`#papers` already are: **CLS 0.0604** on
+3G, comfortably under the 0.1 "good" threshold, with one small residual source (`footer.site`
+being pushed far down the page as the result list grows in from a shorter skeleton — a natural
+below-the-fold consequence of async content loading, not a regression, and not worth chasing
+further against this item's own scope).
+
+**R3.** Implemented as specified, plus the `?syl=` read path and one deviation found necessary by
+testing: `syncUrl()`'s original draft cached "was the query empty" in a module variable, updated
+only when the URL actually changed. A Back navigation reverts the URL without going through that
+"changed" branch, so the cached flag drifted from reality — the very next new search then used
+`replaceState` instead of `pushState` (no real bug from that alone), collapsing what should have
+been a second history entry into the first, so a *second* Back on a *second* search fell off the
+app's own history entirely onto `about:blank`. Rewritten to read "was empty" fresh from
+`location.search` on every call — self-correcting, no state to drift. `tools/perf/history.mjs`
+(new) exercises six things in one run: `?q=` appears on typing; the hash changes (`setView()`'s
+own `#browse`/`#about` routing) without dropping `?q=`; `?q=` survives a tab switch and back;
+typing a query letter-by-letter produces exactly one history entry, not six (`replaceState` per
+keystroke); one Back genuinely clears it; `?paper=` writes correctly from the paper filter chips.
+All six pass. `INV-14` flipped from tracked to enforced in the same commit, per `docs/MEMORY.md`'s
+protocol.
+
+| Metric | Before Phase 6 | After Phase 6 |
+|---|---:|---:|
+| Long task, steady-state keystroke (`inp.mjs`) | ~0ms (Phase 5 side effect, unverified) | **0ms, verified & committed as a regression guard** |
+| Long task, empty→query transition | 52–81ms (single throwaway run) | **54–94ms** (repeated, real — R1's DOM fix does not move this; root cause is `loadQuestionText()`'s one-time `Map`-build + `parseQIndex()`, not rendering) |
+| Manually-expanded card survives further typing | no (collapses on the next keystroke) | **yes** |
+| Result cards above the fold, 390×844 (`fold.mjs`) | 0 | **2** |
+| CLS, 3G mobile (`cls.mjs`) | 0.0051 | **0.0604** (dipped to 0.3005 mid-fix, then fixed — see above) |
+| `?q=`/`?paper=`/`?syl=` reach the URL | no | **yes** (`history.mjs`, 6/6) |
+| `assets/app.js` | 31.3 KB gz | **33.4 KB gz** (+2.1 KB — `BUDGET-app_js` ceiling ratcheted 33→34 KB, real core-rendering functionality, not lazy-loadable per DECISION-2's own criterion) |
+| `npm run check:all` | 23/23 enforced, 1 tracked | **24/24 enforced, 0 tracked** — `INV-14` promoted |
+
+**What the audit got right that this session should say plainly:** it explicitly told the next
+session not to trust the stale baseline and to measure first (the boxed addendum under R1) — that
+instruction is exactly what surfaced this outcome, and the audit's own framing ("this may collapse
+to NO ACTION… that is a legitimate outcome, not a failure to do the work") anticipated the
+possibility, just not the specific shape it took (implemented, but for a different reason than
+stated).
+
+---
+
 # Phase 7 — Where the project can go
 
 Not implementation instructions. Judgements about the product, for you to accept or reject.
@@ -1652,9 +1773,9 @@ Tick as you land each item. One commit per item.
 | 3 | T4 — OPTIONAL: intern `copies.json` strings | ⏸ deliberately skipped — see "Phase 3 landed" |
 | 4 | I1 — content-derived stable ids | ☑ |
 | 5 | E1 — inverted index + prefix search + relevance ranking | ☑ |
-| 6 | R1 — keyed card reconciliation | ☐ |
-| 6 | R2 — trim the mobile first screen | ☐ |
-| 6 | R3 — search state in the URL | ☐ |
+| 6 | R1 — keyed card reconciliation | ☑ implemented, but NOT for the audit's stated long-task reason — see "Phase 6 landed" |
+| 6 | R2 — trim the mobile first screen | ☑ |
+| 6 | R3 — search state in the URL | ☑ |
 
 ## Target, measured
 
@@ -1667,7 +1788,7 @@ number, on this document's own corpus and harness, at the commit Phase 5 landed 
 | Cold search, 4G | 2,670 ms | ~1,000 ms | **496 ms** (was already 483 ms post-Phase-3/4 — 4G was never payload-bound here) |
 | Cold search, slow 3G | 4,455 ms | ~1,500 ms | **521 ms** (was 771 ms post-Phase-3/4, −32%) |
 | CLS (3G mobile) | 0.193 | 0.00 | **0.0051** (unchanged — Phase 5 touches search, not layout) |
-| Longest keystroke task | 235 ms | < 50 ms | **70–73 ms** cold-search long task (Phase 6/R1 still owns the steady-state per-keystroke number) |
+| Longest keystroke task | 235 ms | < 50 ms | **0ms steady-state** (verified, `tools/perf/inp.mjs`); **54–94ms on the empty→query transition**, unresolved — see "Phase 6 landed": the cause is one-time JSON/binary parse cost coinciding with the first search, not list-rebuilding, and R1's DOM fix does not reduce it |
 
 **Read this table carefully.** The *original* 1,994 KB / 4,455 ms baseline was measured before
 Phases 1, 3 and 4 landed — by the time Phase 5 started, Phases 1/3/4 had already brought slow-3G

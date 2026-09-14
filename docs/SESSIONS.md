@@ -273,3 +273,55 @@ checking at every phase boundary, per that addendum's own note.
 **Left.** Phase 6 (R1–R3) not started; a detailed prompt was handed to the user for a fresh
 session. `tools/perf/inp.mjs` and `tools/perf/history.mjs` don't exist yet — first real work of
 that session is writing them (inp.mjs before deciding R1's scope, per the addendum above).
+
+## 2026-09-14 — Phase 6 (R1: keyed reconciliation, R2: mobile fold, R3: search-in-URL)
+**Asked.** Implement Phase 6 exactly — three independent, one-session items. Measure R1's real
+long-task number before deciding its scope, per the addendum from last session's prep.
+**Did.** Wrote `tools/perf/inp.mjs` first: steady-state keystrokes measure **0ms** (confirmed —
+Phase 5's binary index lookup already fixed this), but the empty→query transition measures
+**54–94ms**, real and repeated. A CPU profile (not in the plan, but needed to decide what to do
+with that number) showed the cost is `loadQuestionText()`'s one-time `Map`-build from
+`qtext.json` (~27ms) plus `parseQIndex()` (~8ms) — one-time parse work coinciding with the first
+search, not `renderBrowse()`'s DOM rebuild. Implemented R1's keyed reconciliation
+(`getCard()`/`reconcileBrowseList()`) anyway, for a different, real reason found by manually
+exercising the feature: a manually-expanded card was closing itself on the very next keystroke
+(`renderBrowse()` recomputed `openIt` fresh every render, discarding the user's own toggle) —
+squarely INTENT-3, just not millisecond-denominated. `copyCard()` gained a `forceOpen` param so a
+reused/rebuilt card carries forward its real open state instead of a recomputed default.
+R2: trimmed the mobile hero (`#sub` hidden, `.credit` collapsed to a one-line About link, `h1`
+widened) — insufficient alone, since the filter row was still expanded by default until the
+toolbar's scroll-triggered "slim" collapse; extended that collapsed-filters posture to first paint
+on phones. R3: `syncUrl()`/`applyUrlToState()` — `?q=`/`?paper=`/`?syl=` now read AND write, with
+one `pushState` per empty→non-empty transition and `replaceState` for everything else, coexisting
+with `setView()`'s existing hash-only replaceState. `INV-14` promoted from tracked to enforced.
+**Learned.** Three bugs, all found by testing rather than stated in the audit or caught by the
+obvious happy-path check (see `DECISION-13` for the first two):
+1. R1's own first draft reintroduced the bug it was fixing, for stub/link-only cards specifically
+   — `cardSig()` included the query text unconditionally, forcing those cards (whose rendered
+   output never depends on the query) to rebuild every keystroke, and `copyCard()`'s stub/link
+   branches never apply `forceOpen` (they predate it) — so a manually-opened link-only card
+   snapped shut on the next keystroke, caught only by manually testing the exact scenario R1 was
+   supposed to fix, on a card type the audit never mentioned.
+2. R3's `syncUrl()` cached "was the query empty" in a module var, updated only inside its own
+   "URL changed" branch — a Back navigation's `popstate` handler also calls it, but by then the
+   URL is already back to empty, so that call short-circuits and never refreshes the cache. Net
+   effect: a second search's first keystroke used `replaceState` instead of `pushState`, and a
+   second Back fell off the app's own history onto `about:blank`. `tools/perf/history.mjs`'s own
+   two-search-two-Back sequence caught it; reading "was empty" fresh from `location.search` every
+   call removed the cache (and the bug) entirely.
+3. R2's own fix caused a real CLS regression (0.0051 → 0.3005 on 3G) as a side effect of
+   *succeeding* at its actual goal: `#resultmeta` has always started empty and filled from JS
+   (the same shape of bug `#statline`/`#papers` were fixed for in Phase 1/P3), but that fill used
+   to happen below the fold, where a layout shift is invisible to CLS. Making the mobile layout
+   more compact moved it into the viewport, so a previously-harmless async fill became a real,
+   felt shift. Fixed the same way as `#statline`/`#papers`: reserve the height. Making a page
+   *more* compact can turn a dormant CLS bug live — worth checking at every future "fit more above
+   the fold" change, not just this one.
+**Left.** R1's real remaining problem — 54–94ms on the very first search, caused by one-time
+`qtext.json`/`qindex.bin` parse cost, not list-rebuilding — is unresolved and out of this phase's
+scope (a different problem than the one R1 was scoped to fix). Flagged in the audit doc's "Phase 6
+landed" section with the precise profiled breakdown, as a candidate for a future, separately-
+measured phase (e.g. chunking the `Map` build, or moving it off the main thread) rather than
+guessed at here. `BUDGET-app_js` ceiling ratcheted 33→34 KB for R1+R3's real, non-lazy-loadable
+code (DECISION-2's own stated criterion). `npm run check:all`: 24/24 enforced, 0 tracked — the
+first time this phase's checklist has had zero tracked items outstanding.

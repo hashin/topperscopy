@@ -447,3 +447,80 @@ this session's.
 the engine or the corpus changes materially); `BUDGET-search` in `tools/check/budget.json`
 (ceiling ratcheted to the real 1132.0 KB, not the un-measured 751/800 KB projection); the size
 comment in `tools/check/budget.json`'s `"search"` bucket carries the full measured breakdown.
+
+---
+
+## DECISION-13 — R1's card reuse preserves real open state, not a recomputed default; R3's URL
+sync reads "was empty" fresh, never caches it
+*2026-09-14 · active · cites DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
+
+**Decision.** Two rules, both found necessary by testing rather than stated in the audit:
+
+1. `getCard()` (R1) never recomputes a card's open/closed state from `copyCard()`'s own
+   auto-open-on-match heuristic once that card has been rendered once. A rebuilt card (content
+   changed, id unchanged) carries forward the reused element's actual current `.open` — via a new
+   `forceOpen` parameter on `copyCard()` that overrides the heuristic outright, not one that only
+   forces it *open* — so a user's manual close is respected exactly as much as a manual open.
+   `cardSig()` (the fingerprint that decides whether a card needs rebuilding at all) returns a
+   constant for stub and link-only cards specifically, because neither of `copyCard()`'s branches
+   for those two shapes applies `forceOpen` — they predate it, and their rendered output never
+   depends on the query anyway — so routing them through the query-dependent signature would
+   force a pointless rebuild every keystroke that silently reverts them to closed.
+2. `syncUrl()` (R3) determines whether the query was previously empty by reading
+   `location.search` fresh on every call (`!u.searchParams.get('q')` against the URL as it
+   currently stands), never from a module-level flag updated only inside the "URL actually
+   changed" branch.
+
+**Why.**
+
+1. Manually testing R1 (not in the audit's own Verify block, which only checks long-task
+   duration) found that a card the user had expanded closed itself on the very next keystroke:
+   `wireBrowse()`'s input handler calls `renderBrowse()` with no `reopen` list, and every
+   pre-R1 render recomputed `openIt` from scratch, discarding the user's own toggle. This is
+   exactly `INTENT-3` ("no lost keystrokes… feel smooth"), just not a millisecond number — the
+   kind of defect DECISION-9's discipline (measure before trusting a diagnosis, but also don't
+   assume a fix's *only* value is the number in the audit) is written to surface. The first
+   implementation only forced cards *open* when reused (matching `reopen`'s historical, open-only
+   semantics) — verified against a link-only card specifically (which the R2 work happened to
+   surface first, see "Phase 6 landed"): with `cardSig()` not yet special-casing stub/link cards,
+   every keystroke rebuilt them via `copyCard()`, whose stub/link branches never read
+   `forceOpen` at all, so a manually-opened link-only card silently closed on the next keystroke —
+   the identical bug R1 exists to fix, reintroduced for one card shape by R1's own first draft.
+2. `tools/perf/history.mjs` (built to verify R3, per DECISION-9) caught this directly: type a
+   query (`pushState`, since the URL was empty), switch tabs and back (replaceState only, no
+   effect on the query param), press Back (pops the one `pushState` entry — URL and app state
+   both correctly revert to empty), then type a **second** query. The first implementation cached
+   "was empty" in a module var, updated only when `syncUrl()`'s own "did the URL actually change"
+   branch ran — but the Back navigation's `popstate` handler calls `syncUrl()` too, and at that
+   point the URL is *already* back to empty, so that call takes the early-return path and never
+   touches the cached flag. The flag stayed `false` from the first query, so the second query's
+   first keystroke incorrectly used `replaceState` instead of `pushState` — collapsing what should
+   have been a second, independent history entry into the same one the first Back had already
+   consumed. A second Back on the second search then fell off the app's own history stack
+   entirely, landing on `about:blank`. Reading fresh from `location.search` removes the cache
+   altogether: correctness follows from the URL, which is always authoritative, instead of from
+   keeping a second copy of the same fact in sync with it by hand.
+
+**Rejected.**
+- *R1: only ever force cards open, never force them closed (mirroring `reopen`'s pre-existing
+  semantics).* This is what the first draft did — rejected once the manual test above showed a
+  user's own close was just as important to preserve as their open, and doing so costs nothing
+  extra (the reused element's `.open` is already known).
+- *R1: give stub/link-only cards a real signature and just accept they rebuild every keystroke.*
+  Simpler, but reintroduces the exact bug class this item exists to remove for a whole card shape
+  — rejected for the same reason DECISION-11 rejected "mostly fixed, with one deliberately-kept
+  exception."
+- *R3: keep the cached flag but also update it inside `applyUrlToState()`/the popstate handler.*
+  Works, but requires every future code path that can change the URL out from under `syncUrl()`
+  to remember to keep the cache honest — a second place to get it right, for no benefit over
+  reading the one authoritative source (the URL itself) directly.
+
+**Reverse if.** Never, for either half — both are the direct fix for a reproduced bug, not a
+style preference.
+
+**Enforced by.** Not statically checkable. R1: verified manually (expand a card, type further
+keystrokes, open/closed state survives; a link-only card specifically, before and after the
+`cardSig()` fix; the Phase-5 placeholder-backfill interaction with `data/qtext.json` held via
+`page.route` and released, confirming no duplicate card and no lost open state). R3:
+`tools/perf/history.mjs` (new, committed) — 6/6 checks, including the specific two-Back sequence
+that reproduced the `about:blank` bug; re-run any time `syncUrl()`/`applyUrlToState()` change.
