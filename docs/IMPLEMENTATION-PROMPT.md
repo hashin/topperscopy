@@ -20,10 +20,14 @@ everything after that assumes its predecessors landed.
 | 1 — P1–P11 | **done, merged to `main`, deployed** (run #69) |
 | 2 — D1, D3 | **done**, on `claude/intelligent-allen-ayrpxh`, not yet merged |
 | 2 — D2 | **open — needs Hashin's decision**, not code. Nothing blocks on it. |
-| 3 — T1–T4 | next |
-| 4–6 | not started |
+| 3 — T1–T3 | **done**, on `claude/intelligent-allen-ayrpxh`, not yet merged |
+| 3 — T4 | **deliberately skipped** — needs Phase 6 profiling data first, see the audit doc |
+| 4 — I1 | next |
+| 5–6 | not started |
 
-`npm run check`: **24/24 enforced passing**, 1 tracked (INV-14, belongs to Phase 6).
+`npm run check`: **24/24 enforced passing**, 1 tracked (INV-14, belongs to Phase 6). Search-gating
+payload is 1,728.2 KB gz (`BUDGET-search` ceiling 1,785 KB) after Phase 3 — see "Phase 3 landed" in
+the audit doc for the full table.
 
 ## The prompt
 
@@ -31,7 +35,7 @@ everything after that assumes its predecessors landed.
 REPOSITORY: hashin/topperscopy   (NOT hashin/hashin.github.io — that is a different project)
 BRANCH:     claude/intelligent-allen-ayrpxh
 
-PHASE: 1
+PHASE: 4
 
 FIRST, BEFORE ANYTHING ELSE — prove you are in the right repository:
 
@@ -131,7 +135,7 @@ prompt has to make the agent *verify* it before reading anything.
 |---|---|---|---|
 | 1 | P1–P11 (11 items) | ~~Comfortable~~ | **DONE** — merged and deployed 2026-09-14. |
 | 2 | D1–D3 (3 items) | ~~Light~~ | **D1, D3 DONE.** D2 is Hashin's call, still open. |
-| 3 | T1–T4 (4 items) | Medium | T3 is the real work; T4 is explicitly optional and probably should not be done. |
+| 3 | T1–T4 (4 items) | Medium | **DONE** (T1–T3) — T4 skipped, needs Phase 6 profiling first. |
 | 4 | I1 (1 item) | Medium–heavy | Highest-risk change in the audit. Verify id churn is **0**. |
 | 5 | E1 (1 item) | **Full session** | The search engine. Nothing else in this session. |
 | 6 | R1–R3 (3 items) | Medium | Re-measure after R1 and stop if the long task is under 50 ms. |
