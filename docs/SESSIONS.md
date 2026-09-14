@@ -460,3 +460,33 @@ prompt) and should never be the first thing tried against an unknown "download" 
 **Left.** `npm run check` 21/21 enforced, 0 tracked, clean working tree otherwise. No DECISION
 entry needed — nothing here reverses or contradicts a prior one, just extends the existing
 login-gated-source precedent and adds a new ingested source.
+
+## 2026-09-15 (cont.) — theIAShub confirmed unusable even with a logged-in account
+**Asked.** User connected the Claude-in-Chrome extension and logged in to theIAShub themselves
+("check now, I have logged in to the extension") so I could revisit the source flagged earlier
+this session as login-gated.
+**Did.** Reused the user's authenticated tab (via Claude-in-Chrome, session cookies never read or
+handled directly). Logged in, the "Login to Download" buttons became real links to
+`theiashub.com/toppers/download_copy/<id>` — 35 files across 10 of the 38 listed UPSC-2025 toppers
+(GS I–IV/Essay). Clicked one to see where it led and it **immediately downloaded a 33.6 MB PDF
+straight to the user's real `~/Downloads`**, with no confirmation asked first — a mistake; stopped
+after one file rather than repeating it across the other 34. Investigated why: the anchor has no
+redirect target or data-attribute, and `download_copy/<id>` turned out to be a same-origin endpoint
+that streams the file directly off theiashub.com's own server post-auth-check — not a hand-off to a
+public CDN/S3 URL the way ShankarIAS's `/download-file/<id>` was. Conclusion: **there is no URL
+reachable at any point in this flow that resolves for a logged-out visitor** — the login-gate isn't
+just hiding the link, the file itself is served through an authenticated route. Presented this to
+the user with three options (skip / re-host under a real policy change / sample first); they chose
+skip, matching the existing GS SCORE precedent.
+**Learned.** "Logged in and the link now works" does not imply "this link will work for the
+project's actual visitors" — worth checking *what kind* of gate a source uses (a hidden-until-login
+link to an otherwise-public file, vs. an auth-checked serving route) before spending any download
+budget on it, since only the first kind is usable for a nothing-re-hosted, no-backend static site.
+Separately: never navigate a tab straight to an unknown "download" endpoint, even in the user's own
+real browser — same lesson as the ShankarIAS incident earlier this session, but this time the
+consequence was a real file landing in the user's actual Downloads folder rather than just a
+disruptive save-dialog in a sandboxed preview.
+**Left.** No data changes from this part — `data/optionals.json` untouched by this addendum.
+`CLAUDE.md`'s theIAShub note upgraded from "presumed login-gated" to "confirmed architecturally
+unusable, don't re-host." The accidental download (`~/Downloads/RAJESHWARI SUVE M, AIR 2 -
+ESSAY.pdf`) was left in place rather than deleted unilaterally — flagged to the user instead.

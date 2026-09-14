@@ -296,10 +296,17 @@ All non-upsckata copies are **link-only** (scanned Drive/PDF, no question text y
   automated by a resumable `ocr-pipeline/` script; output merges into `optionals.json` / `submissions.csv`.
 - UnlockIAS deep year-archive (~+400 PDFs) not scraped — only featured toppers done.
 - GS SCORE (`iasscore.in/toppers-copy`) is **login-gated** — no public URLs, can't add.
-- theIAShub (`theiashub.com/toppers/upsc/2025`) is **login-gated the same way** — 38 UPSC 2025 toppers
-  listed with paper labels (GS I–IV/Essay), but every single file on every per-topper page
-  (`/toppers/upsc/2025/<slug>`) shows "Login to Download" with no PDF URL anywhere in the DOM or
-  network requests, confirmed on multiple toppers. Same call as GS SCORE: can't add without an account.
+- theIAShub (`theiashub.com/toppers/upsc/2025`) is **login-gated, confirmed architecturally
+  unusable even with an account** — 35 answer copies across 10 of the 38 listed UPSC-2025 toppers
+  (GS I–IV/Essay labeled). Logged out, every file shows "Login to Download" with no PDF URL in the
+  DOM or network. Logged in (2026-09-15, with Hashin's own account via the Claude-in-Chrome
+  extension), the link (`/toppers/download_copy/<id>`) turned out to be a same-origin endpoint that
+  **streams the file directly off theiashub.com's own server after an auth check** — not a redirect
+  to a public CDN/S3 URL. There is no publicly-linkable URL to add at any point in this flow: a link
+  to `download_copy/<id>` would hit the same login wall for every other site visitor, regardless of
+  whose account fetched it. Same bucket as GS SCORE, for a slightly different mechanical reason
+  (theirs never reveals a link at all; theIAShub reveals one, but it only resolves for an
+  authenticated session). Decision: skip, don't re-host — see `docs/SESSIONS.md` 2026-09-15.
 - ~~`.git` history is ~280 MB~~ — **stale, resolved.** `git count-objects -vH` reports **16.7 MiB** in a
   single pack, 0 loose objects, 0 garbage. Gitignoring the generated files + Actions-based deploy already
   fixed it. There is **no history rewrite to consider** — do not run `git filter-repo` here.
