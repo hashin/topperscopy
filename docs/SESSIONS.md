@@ -57,5 +57,7 @@ carries **no upsckata credit** despite `CLAUDE.md` requiring it (now audit P11),
 links to `data/questions.csv` — the 8.94 MB file audit item **D1** proposes to stop deploying, so
 landing D1 alone would ship a 404 to every AI crawler. Writing an assertion is a better audit than
 reading the code.
-**Left.** All 22 audit items still to implement. `npm run check` currently shows 14/15 enforced
-passing and 0/7 tracked — that is the correct starting state, and the tracked count is the progress bar.
+**Left.** All 23 audit items still to implement (P11 was added by this session). `npm run check`
+shows **14/14 enforced passing, 0/8 tracked** — the correct starting state, with the tracked count as
+the progress bar. `docs/IMPLEMENTATION-PROMPT.md` is the prompt to paste into the next session; one
+phase per session, Phase 5 alone.

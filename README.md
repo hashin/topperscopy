@@ -59,6 +59,7 @@ The repo carries its own context so a new session does not have to re-derive it:
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Why the code is like this — including what was rejected and what would reverse it. |
 | [`docs/INVARIANTS.md`](docs/INVARIANTS.md) | What must never break, and the check that proves each one. |
 | [`docs/SESSIONS.md`](docs/SESSIONS.md) | What each session did and learned. |
+| [`docs/IMPLEMENTATION-PROMPT.md`](docs/IMPLEMENTATION-PROMPT.md) | The prompt to paste into a new session to implement one audit phase. |
 
 ```bash
 npm install          # playwright-core, dev only — not used by build.js or CI

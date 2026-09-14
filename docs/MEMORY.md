@@ -28,6 +28,10 @@ silently; a failing check does not.
 | **`INVARIANTS.md`** | *What must never break, and which check proves it?* | An intent or decision becomes machine-checkable. |
 | **`SESSIONS.md`** | *What happened, and what did we learn?* | Every session, at the end. Append. |
 
+Plus **`IMPLEMENTATION-PROMPT.md`** — the prompt to paste into a new session to implement one phase
+of an audit, with the read-order and the "do not read" list that keep a session inside its context
+budget.
+
 `INVARIANTS.md` is the load-bearing one. It is the bridge between "what Hashin wants" and
 "what CI enforces" — every entry cites an `INTENT-n` or `DECISION-n`, and every entry names the
 check in `tools/check/invariants.mjs` that proves it. Intent that cannot be checked is still
