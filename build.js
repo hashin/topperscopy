@@ -320,7 +320,7 @@ function build() {
   // copies.json, because copies.json now references these questions by id instead of
   // repeating their text: a question nine toppers answered used to be stored nine times,
   // which was ~71% of that file's bytes.
-  const qList = writeQuestions(copies, generated);
+  const qList = writeQuestions(copies, generated, buildId);
 
   // A group's chosen text is one of its members, so qKey() of it is that group's key.
   const qidByKey = new Map(), qTextById = new Map();
@@ -370,12 +370,17 @@ function build() {
   fs.writeFileSync(path.join(DATA, 'copies.json'),
     JSON.stringify({ generated, build: buildId, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
 
-  // questions.json is written by writeQuestions() before the ids exist — fold in the variant
-  // table and the build id now. Unconditional: the build id must always be present.
+  // qtext.json (and, for one release, the questions.json compat shim) are written by
+  // writeQuestions() before the variant table exists — fold it in now.
+  {
+    const tp = path.join(DATA, 'qtext.json');
+    const payload = JSON.parse(fs.readFileSync(tp, 'utf8'));
+    if (variants.length) payload.variants = variants;
+    fs.writeFileSync(tp, JSON.stringify(payload));
+  }
   {
     const qp = path.join(DATA, 'questions.json');
     const payload = JSON.parse(fs.readFileSync(qp, 'utf8'));
-    payload.build = buildId;
     if (variants.length) payload.variants = variants;
     fs.writeFileSync(qp, JSON.stringify(payload));
   }
@@ -499,7 +504,7 @@ function mapSyllabus(text, paper, syl, overrides) {
   return scored.slice(0, 2).filter(x => x[1] >= 8).map(x => x[0]);
 }
 
-function writeQuestions(copies, generated) {
+function writeQuestions(copies, generated, buildId) {
   const syl = loadSyllabus();
   const ovPath = path.join(DATA, 'syllabus-overrides.json');
   const overrides = fs.existsSync(ovPath) ? JSON.parse(fs.readFileSync(ovPath, 'utf8')) : {};
@@ -549,8 +554,30 @@ function writeQuestions(copies, generated) {
     if (q.s.length) mapped[q.p] = (mapped[q.p] || 0) + 1;
   }
 
+  // T3 (PERF-UX-AUDIT-2026-09-14): split the ~1.4 MB gzip questions.json into the ~104 KB
+  // meta clients need to find/filter/pick a question (qmeta.json) and the ~780 KB of prose
+  // needed only to render one (qtext.json), so the syllabus filter, paper filter and Practice
+  // question-picking don't wait on text that isn't on screen yet. `text[i]` lines up with
+  // `questions[i].i` because `list` is already in id order (assigned just above).
+  // build id is known already (computed before this function runs); qtext.json's `variants`
+  // table is not — the caller patches it in below, once copies.json discovers which copies'
+  // wording diverges from their deduped question's text.
+  fs.writeFileSync(path.join(DATA, 'qmeta.json'), JSON.stringify({
+    generated, build: buildId,
+    syllabus_version: syl && syl.version || null,
+    count: list.length,
+    byPaper,
+    questions: list.map(q => ({ i: q.i, p: q.p, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
+  }));
+  fs.writeFileSync(path.join(DATA, 'qtext.json'), JSON.stringify({
+    build: buildId,
+    text: list.map(q => q.q)
+  }));
+
+  // Compatibility shim for one release: a cached app.js from before T3 still asks for this.
+  // Delete once that release has rolled off (see docs/DECISIONS.md).
   fs.writeFileSync(path.join(DATA, 'questions.json'), JSON.stringify({
-    generated,
+    generated, build: buildId,
     syllabus_version: syl && syl.version || null,
     count: list.length,
     byPaper,
@@ -558,7 +585,7 @@ function writeQuestions(copies, generated) {
   }));
 
   const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
-  console.log(`questions.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);
+  console.log(`qmeta.json + qtext.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);
   return list;
 }
 

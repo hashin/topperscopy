@@ -24,16 +24,16 @@
       "why": "Everything needed to paint the hero and the first 25 cards. INTENT-2 (speed is the product)."
     },
     "search": {
-      "ceiling_kb": 2050,
+      "ceiling_kb": 1785,
       "target_kb": 800,
       "files": [
         "data/index.json",
         "data/copies.json",
-        "data/questions.json",
         "data/qmeta.json",
+        "data/qtext.json",
         "data/qindex.bin"
       ],
-      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1."
+      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1. T1 dropped the sl field (-206 KB); T3 split questions.json into qmeta.json+qtext.json (no byte change by itself, but questions.json is no longer fetched by fresh app.js, so it's replaced here by its two successors — it stays deployed for one release as a compat shim for a cached pre-T3 app.js, tracked separately in docs/DECISIONS.md, not in this budget). Measured 1728.2 KB after T1+T3; ceiling carries ~55 KB headroom for corpus growth between sessions. Phase 5's inverted index is what reaches the 800 KB target."
     },
     "app_js": {
       "ceiling_kb": 28,

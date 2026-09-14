@@ -10,9 +10,10 @@ const FILES = [
   'data/copies.json', 'data/questions.json', 'data/qmeta.json', 'data/qtext.json',
   'data/qindex.bin', 'toppers.html'
 ];
-// Files the browser must have before it can answer a text query.
-const SEARCH_GATING = ['data/index.json', 'data/copies.json', 'data/questions.json',
-                       'data/qmeta.json', 'data/qindex.bin'];
+// Files the browser must have before it can answer a text query. questions.json isn't here —
+// fresh app.js never fetches it after T3 (it's a one-release compat shim for stale caches only).
+const SEARCH_GATING = ['data/index.json', 'data/copies.json',
+                       'data/qmeta.json', 'data/qtext.json', 'data/qindex.bin'];
 
 let totG = 0, totB = 0, gateG = 0, gateB = 0;
 console.log('file                              raw        gzip      brotli');

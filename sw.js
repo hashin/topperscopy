@@ -3,7 +3,7 @@
    instead: a repeat visit serves straight from cache with NO network request,
    revalidating in the background at most once every HEAVY_TTL_MS. Bump VERSION
    to force a full refresh of everything. */
-var VERSION = 'tc-v23';
+var VERSION = 'tc-v24';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
@@ -11,7 +11,12 @@ var SHELL = [
   './manifest.webmanifest', './assets/icon.svg', './assets/icon-192.png', './assets/icon-512.png',
   './data/index.json', './data/toppers.json', './data/optionals.json'
 ];
-var DATA_HEAVY = /\/data\/(copies|questions|link-copies)\.json$/;
+// T3 split questions.json into qmeta.json (small, meta-only) + qtext.json (the heavy prose);
+// questions.json itself is kept for one release as a compat shim for a cached pre-T3 app.js.
+// qtext.json isn't named in the audit's own list of what to add here, but leaving a ~1.26 MB
+// text file on the stale-while-revalidate path below would re-fetch it over the network on
+// every single visit — exactly what this cache-first-with-TTL path exists to avoid.
+var DATA_HEAVY = /\/data\/(copies|questions|qmeta|qtext|link-copies)\.json$/;
 var HEAVY_TTL_MS = 12 * 60 * 60 * 1000; // OCR/data rebuilds land at most a few times/day
 
 self.addEventListener('install', function (e) {

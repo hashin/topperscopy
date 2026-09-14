@@ -63,8 +63,12 @@ check('INV-3', 'enforced', 'DECISION-5', 'Copy ids and question ids are unique',
   const ids = new Set(copies.map(c => c.i));
   const out = [`copies ${ids.size}/${copies.length}`];
   let ok = ids.size === copies.length;
-  if (exists('data/questions.json')) {
-    const { questions } = JSON.parse(read('data/questions.json'));
+  // qmeta.json (T3) is the enduring source of question ids; questions.json is a one-release
+  // compat shim and will eventually stop existing (see docs/DECISIONS.md) — check it too while
+  // it's still around, but qmeta.json is the one this check must never silently lose.
+  const qFile = exists('data/qmeta.json') ? 'data/qmeta.json' : (exists('data/questions.json') ? 'data/questions.json' : null);
+  if (qFile) {
+    const { questions } = JSON.parse(read(qFile));
     const qids = new Set(questions.map(q => q.i));
     out.push(`questions ${qids.size}/${questions.length}`);
     ok = ok && qids.size === questions.length;
@@ -102,6 +106,7 @@ check('INV-6', 'enforced', 'DECISION-3', 'No third-party script loads during fir
 check('INV-7', 'enforced', 'DECISION-4', 'Every generated artefact is gitignored', () => {
   const ig = read('.gitignore');
   const generated = ['/data/copies.json', '/data/index.json', '/data/questions.json',
+    '/data/qmeta.json', '/data/qtext.json',
     '/data/toppers.json', '/toppers.html', '/sitemap.xml', '/llms.txt', '/robots.txt',
     '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
   const missing = generated.filter(g => !ig.includes(g));
@@ -113,6 +118,7 @@ check('INV-8', 'enforced', 'DECISION-4', 'No generated artefact is tracked by gi
   let tracked = '';
   try {
     tracked = execFileSync('git', ['ls-files', 'data/copies.json', 'data/questions.json',
+      'data/qmeta.json', 'data/qtext.json',
       'toppers.html', 'sitemap.xml', 'llms.txt', 'dataset'], { cwd: ROOT, encoding: 'utf8' }).trim();
   } catch { return { ok: true, detail: 'git unavailable — skipped' }; }
   return { ok: !tracked, detail: tracked ? 'TRACKED (must not be): ' + tracked.split('\n').join(' ') : 'none tracked' };
