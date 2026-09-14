@@ -554,7 +554,7 @@ function writeQuestions(copies, generated) {
     syllabus_version: syl && syl.version || null,
     count: list.length,
     byPaper,
-    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a, sl: q.slug }))
+    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
   }));
 
   const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
