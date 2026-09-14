@@ -106,3 +106,40 @@ before being trusted.
 **Left.** D2 (hosting) needs Hashin's call — see audit D2; nothing else blocks on it, because
 Phases 3–5 are hosting-independent. Phase 3 (T1–T4) is next and is where the payload actually
 starts shrinking. One tracked invariant remains: INV-14 (R3, Phase 6).
+
+## 2026-09-14 — Phase 3 (T1–T3 landed, T4 deliberately skipped)
+**Asked.** Implement exactly Phase 3 of the audit — no more, no less; T4 is optional and the audit
+argues against doing it without Phase 6 profiling data, which doesn't exist yet.
+**Did.** T1 (dropped `sl` from `questions.json`, −206 KB gz), T2 (`copies.json`/`questions.json`
+fetch in parallel — extended in the same commit to cover the T3 split too), T3 (split
+`questions.json` into `qmeta.json` (109 KB gz, meta-only) + `qtext.json` (1.26 MB gz, text +
+variants), fetched together but resolved independently). Search-gating payload 1,998.8 → 1,728.2 KB
+gz. `BUDGET-search` ceiling ratcheted 2050 → 1785 KB. `npm run check:all` 24/24 enforced (unchanged
+count — no invariant was tied to Phase 3 specifically; the ratchet is the enforcement). See
+"Phase 3 landed" in the audit doc for the full table, and `DECISION-10`.
+**Learned.** This branch's local checkout was stale at session start — three individual git
+commits (cc48ef2/eeef2bd/c423bc0) that origin had already squashed into "Phase 1 (P1–P11)" plus a
+separate "Phase 2 (D1, D3)" commit, alongside an uncommitted local WIP diff that was an *earlier,
+inferior draft* of the same P4 fix already properly landed upstream (with a `mark` param and
+`LASTCOUNT`, which the local draft lacked). Stashed the draft, hard-reset to
+`origin/claude/intelligent-allen-ayrpxh` to recover the true branch state, matching the session
+prompt's own STATE description exactly. **Second:** splitting one file into two is not
+"no behaviour change" — two places in `app.js` implicitly assumed meta and text arrived together
+in one promise (`fillQuestions()` waited on the wrong one; `nextPracticeQ()`/`questionCard()` read
+`.q` off a now-text-less object) and would have shipped real bugs (a card stuck on "Loading
+questions…" forever; a blank Practice question) if not caught by writing three scratch Playwright
+scripts that actually drive the race, not just reasoning about it. **Third:** `tools/perf/sizes.mjs`
+and `tools/check/budget.json` already had `qmeta.json` pre-seeded into their file lists (evidently
+by whoever scaffolded the audit) but still counted the now-dead `questions.json` and omitted
+`qtext.json` — a half-updated measurement tool is worse than an unupdated one, because it *looks*
+current. **Fourth:** the sandbox's CDP network throttle does not reliably bottleneck total transfer
+in this environment (2.2 MB delivered in ~3.4s against a nominal 200 KB/s cap, in both the
+pre-session baseline and after) — `measure.mjs`'s aggregate cold-search-wait number is not trustworthy
+here regardless of what changes; `waterfall.mjs`'s direct request-timestamp measurement is, and is
+what T2/T3's parallel-loading claims actually rest on.
+**Left.** T4 skipped on the audit's own advice (needs Phase 6 profiling first). Phase 4 (I1 —
+content-derived stable copy/question ids) is next; do that before Phase 5 (the index keys off
+question ids too). `data/questions.json` compat shim should be deleted in the release *after* this
+one rolls out (once no visitor can still be running the pre-T3 cached `app.js`) — remove it from
+`build.js`, `.gitignore`, `sw.js`'s `DATA_HEAVY`, and the three `tools/check/invariants.mjs` spots
+that still reference it as a fallback. One tracked invariant remains: INV-14 (R3, Phase 6).

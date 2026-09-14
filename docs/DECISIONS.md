@@ -241,3 +241,57 @@ in this repo's audit that survived was one that could be made to flip by reverti
 **Enforced by.** Not checkable — it is a rule about how checks are written. The measurement notes
 are kept as comments at the top of `tools/perf/showmore.mjs` and `tools/perf/lost-keystroke.mjs`,
 where the next person will actually read them.
+
+---
+
+## DECISION-10 — Question text and meta are two independently-loaded promises, not one split file
+*2026-09-14 · active · cites INTENT-2, INTENT-3, AUDIT T3*
+
+**Decision.** `qmeta.json` and `qtext.json` (Phase 3/T3) are fetched by two separate functions
+(`loadQuestionIndex()` / `loadQuestionText()`) with two separate promises (`qiPromise`/`qtPromise`)
+and states (`qiState`/`qtState`), both started from the same trigger (`ensureQI()` now also calls
+`ensureQText()`) but resolved independently. The variant table (a copy's own divergent wording)
+moved into `qtext.json`, not `qmeta.json` — it's pure text, matched and displayed the same way as
+the main question text, so it belongs with the prose it has nothing structurally in common with
+meta rows. `sw.js`'s `DATA_HEAVY` regex was extended to also cache `qtext.json` (not just
+`qmeta.json`, which is all the audit's own T3 section named) — leaving a ~1.26 MB file on the
+default stale-while-revalidate path would re-fetch it over the network on every single visit,
+defeating the entire point of the split.
+
+**Why.** The audit's stated goal is that "qmeta.json alone unlocks the syllabus filter, the paper
+filter, the question-first view's counts, and Practice question-picking" — a claim that only holds
+if code reading `QI` items never assumes `.q` (text) is present just because meta arrived. Two
+places did assume exactly that, and would have shipped visible bugs if untouched:
+`fillQuestions()` (expanding a copy card) was waiting on `qiPromise` to decide when `qOf(c)` was
+safe to call, but `qOf(c)` actually resolves through `QTEXT` — waiting on the wrong promise could
+resolve while text was still empty and the card would be stuck on "Loading questions…" forever,
+never retried. `nextPracticeQ()` and `questionCard()` read `q.q` directly, which no longer exists
+on a qmeta row — left unfixed, Practice would show a blank question with tags and a working answer
+list underneath, and the question-first view would show blank card headlines. Both are exactly the
+"quiet lie" `DECISION-6` was written to prevent, just in an area `DECISION-6` didn't originally
+cover (the question-first view and Practice, not the main copy search).
+
+**Rejected.** Gating all text-dependent UI (Practice, question-first view) on `qtext.json` being
+fully loaded, same as before the split, and only shipping the syllabus-filter/paper-filter win. This
+was the *simpler and lower-risk* option, and defensible under "no more, no less" scope discipline
+— but it silently drops the audit's explicit "Practice question-picking" claim. Chose instead to
+let Practice's selection (id pick, streak bump, seen-list update) proceed off `qmeta.json` alone,
+showing "Loading question text…" and backfilling that one DOM node in place
+(`PENDING_PRACTICE_TXT`) once `qtext.json` resolves — verified with a scratch Playwright script
+(not committed) that forces the race by polling "Another question" every 80ms from page load: the
+streak bumps and a question is selected (`{"seen":{"GS2":[2517]}}`) tens of picks before `qtext.json`
+could plausibly have landed, showing the placeholder, then the real text lands without re-picking.
+The question-first view took the more conservative middle path: paper/syllabus filtering and the
+*count* work off meta alone (verified: "8,102 questions" and a populated syllabus `<select>` before
+any query and before `qtext.json` arrives), but rendering actual question cards still waits on text
+— a card with no visible content is a worse failure mode there than in Practice, where tags and the
+answer list underneath still give the user something real to look at while the headline backfills.
+
+**Reverse if.** A future session finds the `PENDING_PRACTICE_TXT` single-slot backfill is
+insufficient (e.g. a feature request to prefetch/preview multiple questions at once) — at that
+point it should become a small queue, not a single pending slot.
+
+**Enforced by.** Not directly checkable as a code rule; verified this session with three scratch
+Playwright scripts (see `docs/SESSIONS.md`, not committed) rather than assumed from the audit's
+prose, per `DECISION-9`. `INV-16`/`INV-17` (browser-based, `npm run check:all`) still cover the
+original copy-search "never show a false zero" case.

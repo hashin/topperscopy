@@ -111,6 +111,50 @@ The table above is the original baseline and is left as the historical record. A
 Payload is unchanged, as expected — that is Phases 3–5. Phase 1 was about what the interface
 *does* with the payload it has.
 
+### Phase 3 landed — 2026-09-14
+
+T1–T3 done; T4 deliberately skipped (see below). Measured with `node tools/perf/baseline.mjs`,
+before capturing a snapshot at the start of the session and after landing all three commits:
+
+| Metric | Before Phase 3 | After T1–T3 |
+|---|---:|---:|
+| `data/questions.json` (still deployed, compat shim) | 1,642.4 KB gz | 1,436.6 KB gz (T1: dropped `sl`) |
+| `data/qmeta.json` (new) | — | **109.0 KB gz** |
+| `data/qtext.json` (new; text + the variant table, moved here from questions.json) | — | **1,262.7 KB gz** |
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 1,998.8 KB gz | **1,728.2 KB gz** (−270.6 KB, −13.5%) |
+| `copies.json` / `qmeta.json` / `qtext.json` request start gap, 3G (`tools/perf/waterfall.mjs`) | 2,666 ms (serialised, pre-T2) | **0 ms** |
+| Total transfer for a cold search, 3G | 2,224 KB | **1,955 KB** |
+| Longest main-thread task during cold search, 3G | 115 ms | **81 ms** |
+| `npm run check` | 22/22 enforced, 2 tracked (D1, R3) | **24/24 enforced**, 1 tracked (R3) |
+| `BUDGET-search` ceiling | 2,050 KB | **1,785 KB** (ratcheted; measured 1,728.2 + ~55 KB headroom) |
+
+**What did not move, and why that's honest rather than a miss:** `measure.mjs`'s cold-search
+"usable results after Nms" metric was 482 ms before, 453 ms after (3G) — essentially noise. That
+metric is not trustworthy in this sandbox regardless of what this session changed: the *baseline*
+capture, taken before this session touched anything, already showed ~2.2 MB delivered in ~3.4s
+against a nominal 200 KB/s 3G throttle — a ratio the throttle cannot produce if it were actually
+bottlenecking total throughput (most likely Chromium's CDP network emulation not summing bandwidth
+correctly across several parallel connections to localhost in this environment). `waterfall.mjs`'s
+direct request-timestamp measurement is unaffected by that and is the trustworthy evidence for T2:
+0 ms gap, confirmed by first showing it FAILING against the unfixed code (2,666 ms gap).
+
+**T3's real, verified win is not in these bytes** — it's that `qmeta.json` (109 KB) no longer
+waits behind `qtext.json` (1.26 MB) to become usable. Confirmed with three scratch Playwright
+scripts (not committed — see `docs/SESSIONS.md`), not assumed: the syllabus filter populates
+(72 `<select>` options) and the question-first view reports an accurate "8,102 questions" count
+before any question *text* has arrived; a Practice question is picked and its streak bumped as
+soon as `qmeta.json` lands, showing "Loading question text…" and backfilling that one DOM node in
+place once `qtext.json` resolves, rather than blocking selection or re-picking; and a text search
+never renders a false zero or a false count while `qtext.json` is still in flight (extends
+`DECISION-6` to the question-first view and Practice, which the original P1 fix didn't cover).
+
+**T4 — deliberately not done.** The audit's own argument against it (gzip gain ~39 KB only; the
+real win is raw-size/parse-time, and only *if* Phase 6 profiling shows that's actually hurting) is
+still correct and Phase 6 hasn't run. Doing it now would be exactly the kind of change DECISION-9
+warns about — a "fix" for a problem nobody has measured yet, at a real readability cost in both
+`build.js` and `app.js`. Revisit only after Phase 6 profiling names parse time or memory as an
+actual problem.
+
 ---
 
 ## The three structural problems
@@ -1438,10 +1482,10 @@ Tick as you land each item. One commit per item.
 | 2 | D1 — stop deploying `data/questions.csv` | ☑ |
 | 2 | D2 — hosting decision — **awaiting Hashin**, not code | ⏸ |
 | 2 | D3 — `sw.js` caches the cache-buster response | ☑ |
-| 3 | T1 — drop `sl` from `questions.json` | ☐ |
-| 3 | T2 — parallel `copies.json` + `questions.json` | ☐ |
-| 3 | T3 — split `qmeta.json` / `qtext.json` | ☐ |
-| 3 | T4 — OPTIONAL: intern `copies.json` strings | ☐ |
+| 3 | T1 — drop `sl` from `questions.json` | ☑ |
+| 3 | T2 — parallel `copies.json` + `questions.json` | ☑ |
+| 3 | T3 — split `qmeta.json` / `qtext.json` | ☑ |
+| 3 | T4 — OPTIONAL: intern `copies.json` strings | ⏸ deliberately skipped — see "Phase 3 landed" |
 | 4 | I1 — content-derived stable ids | ☐ |
 | 5 | E1 — inverted index + prefix search + relevance ranking | ☐ |
 | 6 | R1 — keyed card reconciliation | ☐ |
