@@ -93,7 +93,11 @@ Every number here comes from `npm run perf` (real Chromium, CPU throttled 4x, ne
 **What is good today.** First paint is fast: **FCP/LCP 676 ms on 4G**, 1,044 ms on slow 3G, with the
 first 25 cards already painted. Boot fetches `data/index.json` — copy metadata only, ~25 KB gzipped.
 
-**What is not.** Search is gated on a large download:
+**What is not, as measured at the audit's original baseline.** Search was gated on a large download —
+the numbers below are the 2026-09-14 starting point the audit was written against, kept here as the
+problem statement; see the audit's "Phase N landed" sections for what's actually shipped since
+(`data/questions.json` below no longer exists — Phase 3 split it into `data/qmeta.json` +
+`data/qtext.json`, and the P1 fix already stopped the "0 copies" flash this measurement describes):
 
 | | gzip on the wire | gates |
 |---|---:|---|
@@ -102,9 +106,9 @@ first 25 cards already painted. Boot fetches `data/index.json` — copy metadata
 | `data/questions.json` | **1,639 KB** | searching inside copies |
 | **total before a text query can be answered** | **1,994 KB** | |
 
-Measured consequence: typing `federalism` costs **2,670 ms on 4G / 4,455 ms on slow 3G** before real
-results appear — and for most of that wait the interface reads `0 copies for "federalism"`, for a
-corpus that has 162 matching copies. That is the top item in the audit (P1).
+Measured consequence at that baseline: typing `federalism` cost **2,670 ms on 4G / 4,455 ms on slow
+3G** before real results appeared — and for most of that wait the interface read `0 copies for
+"federalism"`, for a corpus that had 162 matching copies. That was the top item in the audit (P1).
 
 **Where it is going.** A conventional inverted index over the same corpus is **292 KB gzipped**
 (measured: `node tools/perf/index-proto.mjs`) and answers the same queries; question *text* is only

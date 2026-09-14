@@ -8,7 +8,6 @@ _site/
 # never committed, so the repo stays small and doesn't grow ~40MB per rebuild.
 /data/copies.json
 /data/index.json
-/data/questions.json
 /data/qmeta.json
 /data/qtext.json
 /data/toppers.json

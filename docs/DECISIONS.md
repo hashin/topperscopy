@@ -108,7 +108,9 @@ locally for the checks to run**, so `node build.js` is a precondition for `npm r
 ---
 
 ## DECISION-5 — Copy and question ids must be stable across builds
-*2026-09-09 (partial, as a build stamp) → to be completed by `PERF-UX-AUDIT-2026-09-14.md` Phase 4*
+*2026-09-09 (partial, as a build stamp) → completed 2026-09-14 by `PERF-UX-AUDIT-2026-09-14.md`
+Phase 4 / I1 — active, not superseded; this decision's own plan was carried out as written. See
+`DECISION-11` for what implementing it actually required.*
 
 **Decision.** The id on a copy is the join key between three independently-cached files
 (`index.json`, `copies.json`, the question index). It must therefore not change when unrelated data
@@ -123,14 +125,17 @@ of the wrong PDF. Documented and reproduced as `AUDIT-2026-09-09.md` B1.
 builds. This makes wrong data impossible but leaves three costs: the two big files must load in
 series, a mismatch re-downloads 1.64 MB, and nothing can be cached long.
 
-**What is still to do (Phase 4, I1).** Derive the id from a hash of the copy URL. That removes the
-whole class of problem rather than defending against it. **Must include an explicit collision guard**
-— 8,075 ids in a 32-bit space is a ~0.75 % birthday chance, and it grows with the corpus.
+**Done (Phase 4, I1, 2026-09-14).** Ids are now a hash of the copy URL (copies) or paper+canonical-
+text (questions), each with an explicit collision guard, exactly as planned here. The build-id
+stamp and every consumer of it (`fetchAtBuild`'s retry, `loadFull`'s drop-and-rebuild branch, T2's
+reconcile branches, `sw.js`'s cache-buster branch) are deleted. `DECISION-11` covers what this
+actually required beyond the one-line plan above.
 
-**Reverse if.** Nothing. The stamp is a workaround; the hash is the fix.
+**Reverse if.** Nothing. The stamp was a workaround; the hash is the fix, and it's done.
 
-**Enforced by.** `INV-3` (uniqueness). Stability itself is checked by the repro in the audit's
-Phase 4 "Verify" block — id churn must be **0**.
+**Enforced by.** `INV-3` (uniqueness). Stability is verified by the repro in the audit's Phase 4
+"Verify" block (id churn must be **0** — confirmed, extended to questions and question *text*, and
+to a canonical-text-change scenario, not just an appended row).
 
 ---
 
@@ -295,3 +300,69 @@ point it should become a small queue, not a single pending slot.
 Playwright scripts (see `docs/SESSIONS.md`, not committed) rather than assumed from the audit's
 prose, per `DECISION-9`. `INV-16`/`INV-17` (browser-based, `npm run check:all`) still cover the
 original copy-search "never show a false zero" case.
+
+---
+
+## DECISION-11 — Question text/variants are id-keyed `Map`s in memory, id-keyed JSON objects on
+the wire; variant ids are content-hashed too
+*2026-09-14 · active · cites DECISION-5, AUDIT Phase 4/I1*
+
+**Decision.** `data/qtext.json`'s `text` and `variants` are JSON objects keyed by the (now-hashed)
+id, not arrays indexed by it. `assets/app.js` parses them into `Map`s (`QTEXT`, `QVAR`, and their
+lowercased twins `QTEXTLC`, `QVARLC`), not plain objects — `matchingQids()` scans these `Map`s and
+returns `Map`s. Copy-side `variantRef()` in `build.js` now hashes the variant TEXT
+(`-stableId('variant|'+text, ...)`), with the same collision guard as copy/question ids, replacing
+the previous push-order `-(variants.push(t))` scheme.
+
+**Why.** Three things, found implementing `DECISION-5`'s plan, none named in the audit's I1 section:
+
+1. **qtext.json was still an array-by-id.** T3 (same session, landed just before this phase) built
+   `qtext.json` as `text: [t0, t1, ...]`, indexed directly by question id — correct only because
+   ids were `0..8101`. The audit's proposed hash id (~32-bit, up to ~4.29 billion) turns
+   `QTEXT[qq.i] = text` and `new Uint8Array(QTEXTLC.length)` into an attempt to allocate a multi-GB
+   structure on the first search — an immediate crash, not a subtle bug. T3 and this audit item
+   were scoped in the same session before either was reconciled against the other.
+2. **Variant ids had the identical id-drift problem I1 exists to remove.** `variantRef()`'s ids were
+   a fresh push-order counter every build — build-local, not content-derived. A copy's own
+   divergent-wording reference could resolve to the wrong text across a build skew between its
+   `copies.json` and `qtext.json` (both cached independently) — the exact bug class this whole
+   phase exists to eliminate, just relocated onto the variant id instead of the main qid.
+3. **A plain object keyed by large sparse integers is measurably slow to scan.** A warmed,
+   interleaved Node benchmark against the real corpus (8,102 entries, not synthetic data) — because
+   an unmeasured assumption here is exactly what `DECISION-9` exists to prevent — showed
+   `matchingQids()`'s per-keystroke scan costing **0.98 ms** on the old position-indexed
+   `Uint8Array`, **3.6 ms** (+264%) on a plain object with the same ~8k entries keyed by hash id
+   (`for...in`), and **1.0 ms** (+1–7%, noise-level) on a `Map` scanned with `.forEach`. `Map` was
+   the only option that didn't trade the correctness fix for a real, felt regression.
+
+**Rejected.**
+- *Keep qtext.json's array shape, defer question-id hashing to a later phase.* Reintroduces a
+  second id namespace (build-local array position vs. stable hash) exactly where `DECISION-5`
+  wants one clean scheme, and Phase 5's index keys off question ids too — deferring only moves the
+  same work later with more to reconcile by then.
+- *`Object.keys()` + indexed loop instead of `for...in`.* Measured: 2.6–2.8 ms, a real improvement
+  over plain `for...in` but still +170% over the array baseline — not good enough given `Map` gets
+  to parity for the same amount of code change.
+- *Leave variant ids build-local, accept the residual risk.* Rejected because it's the same bug
+  I1 exists to fix, just smaller in blast radius (only a copy's own divergent rows) — "mostly
+  fixed, with one deliberately-kept exception" is a worse design than "fixed," and the fix
+  (hash the variant text) costs nothing extra once `stableId()` already exists.
+- *Fork a legacy id scheme to keep `data/questions.json` alive for a stale pre-T3 `app.js`.*
+  Covered separately — see `docs/SESSIONS.md`'s Phase 4 entry. Deleted instead; `ocr-pipeline.mjs`'s
+  `audit-paper` (its one real internal consumer) now reads `qmeta.json`+`qtext.json` directly.
+
+**Reverse if.** Phase 5's inverted index replaces `qtext.json`'s role entirely with a purpose-built
+compact format (`qindex.bin`) — at that point this decision's `Map`-vs-object tradeoff may no
+longer apply to whatever replaces it, but the *reason* (measure before trusting a data-structure
+choice under load) still does.
+
+**Enforced by.** Not a static check — verified this session (not committed): id-churn = 0 for
+copies, questions, and question text across both an appended row and a canonical-text-change
+scenario; the collision guard's retry-and-resolve path and its fail-loudly path both exercised
+directly; 10 real copies / 89 rendered question rows cross-checked against raw `copies.json`+
+`qtext.json` data with zero mismatches (the actual AUDIT-2026-09-09 B1 failure mode, checked
+directly rather than inferred from id uniqueness alone); the warmed micro-benchmark above,
+re-confirmed in-browser after the `Map` fix landed. `BUDGET-search`'s ceiling in
+`tools/check/budget.json` carries the real, measured byte cost of id-keyed storage (+330.3 KB,
++19.1% over Phase 3) — reported honestly rather than optimized away, since Phase 5 is where
+payload compactness is in scope, not here.

@@ -63,12 +63,8 @@ check('INV-3', 'enforced', 'DECISION-5', 'Copy ids and question ids are unique',
   const ids = new Set(copies.map(c => c.i));
   const out = [`copies ${ids.size}/${copies.length}`];
   let ok = ids.size === copies.length;
-  // qmeta.json (T3) is the enduring source of question ids; questions.json is a one-release
-  // compat shim and will eventually stop existing (see docs/DECISIONS.md) — check it too while
-  // it's still around, but qmeta.json is the one this check must never silently lose.
-  const qFile = exists('data/qmeta.json') ? 'data/qmeta.json' : (exists('data/questions.json') ? 'data/questions.json' : null);
-  if (qFile) {
-    const { questions } = JSON.parse(read(qFile));
+  if (exists('data/qmeta.json')) {
+    const { questions } = JSON.parse(read('data/qmeta.json'));
     const qids = new Set(questions.map(q => q.i));
     out.push(`questions ${qids.size}/${questions.length}`);
     ok = ok && qids.size === questions.length;
@@ -105,7 +101,7 @@ check('INV-6', 'enforced', 'DECISION-3', 'No third-party script loads during fir
 
 check('INV-7', 'enforced', 'DECISION-4', 'Every generated artefact is gitignored', () => {
   const ig = read('.gitignore');
-  const generated = ['/data/copies.json', '/data/index.json', '/data/questions.json',
+  const generated = ['/data/copies.json', '/data/index.json',
     '/data/qmeta.json', '/data/qtext.json',
     '/data/toppers.json', '/toppers.html', '/sitemap.xml', '/llms.txt', '/robots.txt',
     '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
@@ -117,20 +113,11 @@ check('INV-8', 'enforced', 'DECISION-4', 'No generated artefact is tracked by gi
   // Cheap proxy: these must not be in the index. Requires git; skip gracefully if absent.
   let tracked = '';
   try {
-    tracked = execFileSync('git', ['ls-files', 'data/copies.json', 'data/questions.json',
+    tracked = execFileSync('git', ['ls-files', 'data/copies.json',
       'data/qmeta.json', 'data/qtext.json',
       'toppers.html', 'sitemap.xml', 'llms.txt', 'dataset'], { cwd: ROOT, encoding: 'utf8' }).trim();
   } catch { return { ok: true, detail: 'git unavailable — skipped' }; }
   return { ok: !tracked, detail: tracked ? 'TRACKED (must not be): ' + tracked.split('\n').join(' ') : 'none tracked' };
-});
-
-check('INV-20', 'enforced', 'INTENT-2 · AUDIT D3', 'A build-skew refetch is cached, not thrown away', () => {
-  // app.js's fetchAtBuild retries as ?b=<id>.<ts> when two data files disagree on their build.
-  // sw.js must store that response under the clean url or the visitor pays 1.64 MB again next
-  // visit. Full test: node tools/perf/sw-double.mjs
-  const sw = read('sw.js');
-  const ok = /url\.search[\s\S]{0,600}?c\.put\(url\.origin \+ url\.pathname/.test(sw);
-  return { ok, detail: ok ? 'cached under the clean url' : 'the cache-buster response is discarded' };
 });
 
 check('INV-9', 'enforced', 'DECISION-8', 'tools/ is excluded from the deployed site', () => {

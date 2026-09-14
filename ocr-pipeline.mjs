@@ -1702,7 +1702,14 @@ if (cmd === 'emit') {
 if (cmd === 'audit-paper') {
   // Cross-check that each question sits in the right paper (GS1-4 / Essay).
   // Four independent signals; a question is flagged only when they agree it's wrong.
-  const qs = JSON.parse(fs.readFileSync(path.join(DATA, 'questions.json'), 'utf8')).questions;
+  // Phase 4 (I1) split questions.json into qmeta.json (meta) + qtext.json (text, id-keyed
+  // object — ids are a content hash, not a row position, so qtext.text[id] not qtext.text[k]).
+  // Both always come from the same just-completed local `node build.js`, so there's no
+  // cross-build staleness risk zipping them here, unlike a browser holding two independently
+  // cached files.
+  const qmeta = JSON.parse(fs.readFileSync(path.join(DATA, 'qmeta.json'), 'utf8')).questions;
+  const qtext = JSON.parse(fs.readFileSync(path.join(DATA, 'qtext.json'), 'utf8')).text;
+  const qs = qmeta.map(q => ({ i: q.i, p: q.p, a: q.a, q: qtext[q.i] || '' }));
   const syl = JSON.parse(fs.readFileSync(path.join(DATA, 'syllabus.json'), 'utf8'));
   const nodesByPaper = {};
   for (const [p, def] of Object.entries(syl.papers || {})) nodesByPaper[p] = (def.nodes || []).map(n => ({ id: n.id, kw: (n.kw || []).map(k => k.toLowerCase()) }));

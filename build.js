@@ -10,7 +10,8 @@
  *   data/toppers.overrides.json  (maintainer-verified AIR / marks)
  *        |
  *        v
- *   data/copies.json, data/index.json, data/toppers.json   (served by the app)
+ *   data/copies.json, data/index.json, data/toppers.json,
+ *   data/qmeta.json, data/qtext.json                       (served by the app)
  *   toppers.html, sitemap.xml, llms.txt, robots.txt        (static / SEO)
  *   index.html                                             (<noscript> + JSON-LD markers)
  *   dataset/questions.csv, copies.csv, toppers.csv,
@@ -29,6 +30,22 @@ const SRC = path.join(DATA, 'questions.csv');
 const SITE = 'https://topperscopy.hashin.me';
 // non-prominent provenance string embedded in the served JSON; the named acknowledgement lives in dataset/README.md
 const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. PDFs belong to their publishers; nothing is re-hosted. Some older GS/Essay text derives from earlier open community compilations.';
+
+// Content-derived, collision-guarded id (audit Phase 4 / I1, DECISION-5). A hash of the seed
+// (a copy's URL, or paper+text for a question, or the literal text for a variant) rather than a
+// row position, so ids never drift when something is inserted upstream (AUDIT B1: one appended
+// row re-pointed 87% of positional ids). `taken` is a per-namespace Set — copies, questions and
+// variants each get their own, so a copy id and a question id may collide with each other freely
+// (they're never compared or looked up against the same table) but must never collide within
+// their own namespace. On a collision, retry deterministically with the seed itself, so a build
+// is reproducible; give up and fail the build loudly rather than ever emit a silent collision.
+const stableId = (seed, taken) => {
+  for (let n = 1, s = seed; n < 1000; n++, s = seed + '#' + n) {
+    const id = parseInt(crypto.createHash('sha1').update(s).digest('hex').slice(0, 8), 16);
+    if (!taken.has(id)) { taken.add(id); return id; }
+  }
+  throw new Error('stableId: could not resolve a collision after 999 retries for seed: ' + seed);
+};
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 // Every "Open PDF/copy" href points at a third-party host. Anything that is not http(s) must
@@ -215,7 +232,7 @@ function build() {
 
   const copies = [];
   const toppers = {};
-  let i = 0;
+  const takenCopyIds = new Set();
   for (const [base, rs] of groups) {
     const topper = rs.map(r => r.topper).find(Boolean) || 'Unknown';
     const coaching = rs.map(r => r.coaching).find(Boolean) || '';
@@ -230,7 +247,7 @@ function build() {
     }).filter(([, q, m, w]) => !isAnswerFragment(q, m, w, paper))
       .sort((a, b) => (a[0] || 0) - (b[0] || 0));
 
-    copies.push({ i: i++, t: topper, c: coaching, p: paper, y: year, r: air, u: base, q: qs, prov });
+    copies.push({ i: stableId(base, takenCopyIds), t: topper, c: coaching, p: paper, y: year, r: air, u: base, q: qs, prov });
 
     if (topper !== 'Unknown') {
       const T = toppers[topper] || (toppers[topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
@@ -258,7 +275,7 @@ function build() {
     if (groups.has(base)) { linkSkippedAsSearchable++; continue; }
     if (optBaseUrls.has(base)) { linkConflicts.push(['also in optionals.json', e.paper, base]); continue; }
     if (IFOS_RX.test(base) && CSE_PAPER_RX.test(e.paper)) { linkConflicts.push(['IFoS paper mis-filed as CSE ' + e.paper + ' — belongs in optionals.json as "Forest Service (IFS)"', e.paper, base]); continue; }
-    copies.push({ i: i++, t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: base, q: [], prov: 'link', link: 1, note: e.note || '' });
+    copies.push({ i: stableId(base, takenCopyIds), t: e.topper, c: e.source || '', p: e.paper, y: e.year || null, r: e.air || null, u: base, q: [], prov: 'link', link: 1, note: e.note || '' });
     const T = toppers[e.topper] || (toppers[e.topper] = { air: null, year: null, coaching: [], papers: [], copies: 0, marks: {}, verified: false, sources: [] });
     T.copies++;
     if (e.air && !T.air) T.air = e.air;
@@ -295,12 +312,6 @@ function build() {
 
   const generated = new Date().toISOString().slice(0, 10);
 
-  // Copy ids are positional — inserting a row anywhere upstream shifts every id after it.
-  // Every file that carries or references those ids is stamped with the same build id; the
-  // app refuses to merge two files that disagree (see assets/app.js loadFull / loadQuestionIndex).
-  const buildId = crypto.createHash('sha1')
-    .update(copies.map(c => c.i + '|' + c.u).sort().join('\n')).digest('hex').slice(0, 12);
-
   // stats = the searchable GS/Essay question index (used by JSON-LD, llms.txt, static index)
   const searchable = copies.filter(c => !c.link);
   const stats = { questions: qCount, copies: searchable.length, toppers: new Set(searchable.map(c => c.t)).size, papers };
@@ -320,7 +331,7 @@ function build() {
   // copies.json, because copies.json now references these questions by id instead of
   // repeating their text: a question nine toppers answered used to be stored nine times,
   // which was ~71% of that file's bytes.
-  const qList = writeQuestions(copies, generated, buildId);
+  const qList = writeQuestions(copies, generated);
 
   // A group's chosen text is one of its members, so qKey() of it is that group's key.
   const qidByKey = new Map(), qTextById = new Map();
@@ -340,17 +351,23 @@ function build() {
   // Rows writeQuestions() deliberately drops (GS4 sub-parts, orphan "(a)" fragments, stray
   // text) have no deduped entry — those keep their literal text inline, so nothing is lost.
   // Wire format 2: q row = [page, qid|text, marks, words]. assets/app.js resolves a numeric
-  // slot through data/questions.json and takes a string slot as-is (which also makes a
+  // slot through data/qtext.json and takes a string slot as-is (which also makes a
   // stale format-1 copies.json in a service-worker cache keep working).
   // A divergent row can't borrow the group's text, but inlining it would put long GS4 case
   // studies and Essay quote-sets back into the file EVERY visitor downloads on idle. Instead
-  // they go in a variant table that rides along with questions.json — which is only fetched
+  // they go in a variant table that rides along with qtext.json — which is only fetched
   // when someone actually searches inside the copies or opens a card. Negative id = variant.
-  const variants = [], variantId = new Map();
+  // The variant id is a hash of the variant TEXT (not push order, unlike the pre-Phase-4
+  // design) so a copy's own divergent-wording reference stays resolvable even if its
+  // copies.json and qtext.json come from different builds (both are cached independently) —
+  // without this, variants would still carry the exact id-drift risk this whole phase exists
+  // to remove, just relocated from the main qid onto the variant id (DECISION-5).
+  const variants = {}, variantId = new Map(), takenVariantIds = new Set();
   const variantRef = t => {
     if (variantId.has(t)) return variantId.get(t);
-    const id = -(variants.push(t));      // 1-based, negated: first variant is -1
+    const id = -stableId('variant|' + t, takenVariantIds);
     variantId.set(t, id);
+    variants[-id] = t;
     return id;
   };
   let qRef = 0, qVar = 0;
@@ -368,21 +385,14 @@ function build() {
   });
 
   fs.writeFileSync(path.join(DATA, 'copies.json'),
-    JSON.stringify({ generated, build: buildId, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
+    JSON.stringify({ generated, attribution: ATTRIBUTION, format: 2, stats, copies: wireCopies }));
 
-  // qtext.json (and, for one release, the questions.json compat shim) are written by
-  // writeQuestions() before the variant table exists — fold it in now.
+  // qtext.json is written by writeQuestions() before the variant table exists — fold it in now.
   {
     const tp = path.join(DATA, 'qtext.json');
     const payload = JSON.parse(fs.readFileSync(tp, 'utf8'));
-    if (variants.length) payload.variants = variants;
+    if (Object.keys(variants).length) payload.variants = variants;
     fs.writeFileSync(tp, JSON.stringify(payload));
-  }
-  {
-    const qp = path.join(DATA, 'questions.json');
-    const payload = JSON.parse(fs.readFileSync(qp, 'utf8'));
-    if (variants.length) payload.variants = variants;
-    fs.writeFileSync(qp, JSON.stringify(payload));
   }
 
   // lightweight boot index — the hand-curated text-searchable core, without the question text.
@@ -393,7 +403,7 @@ function build() {
   // Everything here still counts in `stats`, so the SEO/headline numbers keep growing regardless.
   const lite = copies.filter(c => !c.link && c.prov !== 'ocr')
     .map(c => ({ i: c.i, t: c.t, c: c.c, p: c.p, y: c.y, r: c.r, u: c.u, n: c.q.length }));
-  fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, build: buildId, attribution: ATTRIBUTION, stats, copies: lite }));
+  fs.writeFileSync(path.join(DATA, 'index.json'), JSON.stringify({ generated, attribution: ATTRIBUTION, stats, copies: lite }));
 
   // maintainer overrides
   const ovPath = path.join(DATA, 'toppers.overrides.json');
@@ -445,13 +455,13 @@ function build() {
   const subs = copies.filter(c => c.prov !== 'upsckata').length;
   console.log(`index.json   ${lite.length} copies (${(fs.statSync(path.join(DATA, 'index.json')).size / 1024).toFixed(0)} KB)`);
   console.log(`copies.json  ${copies.length} copies, ${qCount} questions (${subs} copies from submissions)` +
-    ` · ${(fs.statSync(path.join(DATA, 'copies.json')).size / 1048576).toFixed(2)} MB, ${qRef} question refs + ${qVar} variant refs (${variants.length} distinct)`);
+    ` · ${(fs.statSync(path.join(DATA, 'copies.json')).size / 1048576).toFixed(2)} MB, ${qRef} question refs + ${qVar} variant refs (${Object.keys(variants).length} distinct)`);
   console.log(`toppers.json ${Object.keys(toppers).length} toppers, ${withAir} with an auto-parsed AIR`);
   console.log(`toppers.html + sitemap.xml + llms.txt + robots.txt written; index.html markers filled`);
   console.log(`dataset/     ${dsCounts.copies} copies, ${dsCounts.questions} questions, ${dsCounts.toppers} toppers, ${dsCounts.submissions} from submissions`);
 }
 
-/* ---- deduped question index: data/questions.json ---- */
+/* ---- deduped question index: data/qmeta.json + data/qtext.json ---- */
 // strip leading "Q.3)" / "12." numbering for display — mirrors assets/app.js dispQ()
 function dispQ(t) { return String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, ''); }
 
@@ -504,7 +514,7 @@ function mapSyllabus(text, paper, syl, overrides) {
   return scored.slice(0, 2).filter(x => x[1] >= 8).map(x => x[0]);
 }
 
-function writeQuestions(copies, generated, buildId) {
+function writeQuestions(copies, generated) {
   const syl = loadSyllabus();
   const ovPath = path.join(DATA, 'syllabus-overrides.json');
   const overrides = fs.existsSync(ovPath) ? JSON.parse(fs.readFileSync(ovPath, 'utf8')) : {};
@@ -546,7 +556,11 @@ function writeQuestions(copies, generated, buildId) {
   });
   list.sort((x, y) => x.p.localeCompare(y.p) || y.a.length - x.a.length || x.q.localeCompare(y.q));
   const usedQSlugs = new Set();
-  list.forEach((q, i) => { q.i = i; q.slug = dedupeSlug(q.p + '-' + dispQ(q.q).slice(0, 70), usedQSlugs); });
+  const takenQuestionIds = new Set();
+  // Hash of paper+text, not row position (DECISION-5 / audit Phase 4-I1) — a question's id only
+  // moves if its own canonical text changes (a new, longer submission becomes the group's
+  // chosen member), not because some unrelated row was inserted earlier in the corpus.
+  list.forEach(q => { q.i = stableId(q.p + '|' + q.q, takenQuestionIds); q.slug = dedupeSlug(q.p + '-' + dispQ(q.q).slice(0, 70), usedQSlugs); });
 
   const byPaper = {}, mapped = {};
   for (const q of list) {
@@ -557,32 +571,25 @@ function writeQuestions(copies, generated, buildId) {
   // T3 (PERF-UX-AUDIT-2026-09-14): split the ~1.4 MB gzip questions.json into the ~104 KB
   // meta clients need to find/filter/pick a question (qmeta.json) and the ~780 KB of prose
   // needed only to render one (qtext.json), so the syllabus filter, paper filter and Practice
-  // question-picking don't wait on text that isn't on screen yet. `text[i]` lines up with
-  // `questions[i].i` because `list` is already in id order (assigned just above).
-  // build id is known already (computed before this function runs); qtext.json's `variants`
-  // table is not — the caller patches it in below, once copies.json discovers which copies'
-  // wording diverges from their deduped question's text.
+  // question-picking don't wait on text that isn't on screen yet.
+  // Phase 4 (I1): qtext.json's `text` is keyed BY id, not positioned by it — question ids are
+  // now a sparse hash (up to ~4.29 billion), and both a plain array indexed by id (`text[id]`)
+  // and any structure sized off the max id (`new Array(id)`, `new Uint8Array(id)`) would try to
+  // allocate a multi-GB structure in the browser on the first search. A plain object with the id
+  // as its (string) key reads identically at every call site (`QTEXT[q.i]`) but costs O(1) space
+  // per entry instead of O(max id). This also makes qtext.json safe to cache independently of
+  // qmeta.json again — with an array, two files from different builds could disagree on which
+  // position means which id; an id-keyed object can't, by construction (DECISION-5).
   fs.writeFileSync(path.join(DATA, 'qmeta.json'), JSON.stringify({
-    generated, build: buildId,
+    generated,
     syllabus_version: syl && syl.version || null,
     count: list.length,
     byPaper,
     questions: list.map(q => ({ i: q.i, p: q.p, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
   }));
-  fs.writeFileSync(path.join(DATA, 'qtext.json'), JSON.stringify({
-    build: buildId,
-    text: list.map(q => q.q)
-  }));
-
-  // Compatibility shim for one release: a cached app.js from before T3 still asks for this.
-  // Delete once that release has rolled off (see docs/DECISIONS.md).
-  fs.writeFileSync(path.join(DATA, 'questions.json'), JSON.stringify({
-    generated, build: buildId,
-    syllabus_version: syl && syl.version || null,
-    count: list.length,
-    byPaper,
-    questions: list.map(q => ({ i: q.i, p: q.p, q: q.q, m: q.m, w: q.w, s: q.s, yr: q.yr, a: q.a }))
-  }));
+  const text = {};
+  for (const q of list) text[q.i] = q.q;
+  fs.writeFileSync(path.join(DATA, 'qtext.json'), JSON.stringify({ text }));
 
   const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
   console.log(`qmeta.json + qtext.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);

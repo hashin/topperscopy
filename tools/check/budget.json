@@ -24,7 +24,7 @@
       "why": "Everything needed to paint the hero and the first 25 cards. INTENT-2 (speed is the product)."
     },
     "search": {
-      "ceiling_kb": 1785,
+      "ceiling_kb": 2115,
       "target_kb": 800,
       "files": [
         "data/index.json",
@@ -33,7 +33,7 @@
         "data/qtext.json",
         "data/qindex.bin"
       ],
-      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1. T1 dropped the sl field (-206 KB); T3 split questions.json into qmeta.json+qtext.json (no byte change by itself, but questions.json is no longer fetched by fresh app.js, so it's replaced here by its two successors — it stays deployed for one release as a compat shim for a cached pre-T3 app.js, tracked separately in docs/DECISIONS.md, not in this budget). Measured 1728.2 KB after T1+T3; ceiling carries ~55 KB headroom for corpus growth between sessions. Phase 5's inverted index is what reaches the 800 KB target."
+      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1. Phase 4 (I1) is a real, measured regression here, accepted deliberately: content-derived ids (up to ~4.29 billion, vs the old 0..8101 positional ones) serialize as up to 10 digits instead of 1-4, and qtext.json/variants became id-keyed objects instead of position-indexed arrays (required for correctness — see DECISION-11). Measured 1728.2 KB (post-T3) -> 2058.5 KB (post-I1), +330.3 KB / +19.1%. Ceiling carries ~55 KB headroom for corpus growth between sessions, same margin as before. Phase 5's inverted index (a purpose-built compact format, not general-purpose JSON) is what reaches the 800 KB target — id compactness is explicitly deferred there, not chased here (DECISION-9: don't optimize what hasn't been profiled as a real problem)."
     },
     "app_js": {
       "ceiling_kb": 28,

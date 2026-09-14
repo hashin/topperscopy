@@ -22,12 +22,16 @@ everything after that assumes its predecessors landed.
 | 2 — D2 | **open — needs Hashin's decision**, not code. Nothing blocks on it. |
 | 3 — T1–T3 | **done**, on `claude/intelligent-allen-ayrpxh`, not yet merged |
 | 3 — T4 | **deliberately skipped** — needs Phase 6 profiling data first, see the audit doc |
-| 4 — I1 | next |
-| 5–6 | not started |
+| 4 — I1 | **done**, on `claude/intelligent-allen-ayrpxh`, not yet merged |
+| 5 — E1 | next — full session, nothing else. Ids are stable now (I1), which E1 can assume. |
+| 6 | not started |
 
-`npm run check`: **24/24 enforced passing**, 1 tracked (INV-14, belongs to Phase 6). Search-gating
-payload is 1,728.2 KB gz (`BUDGET-search` ceiling 1,785 KB) after Phase 3 — see "Phase 3 landed" in
-the audit doc for the full table.
+`npm run check:all`: **23/23 enforced passing**, 1 tracked (INV-14, belongs to Phase 6 — count is
+−1 from the 24/24 after Phase 3 because I1 deleted `INV-20`, which only tested the buildId
+mechanism I1 removed). Search-gating payload is 2,058.5 KB gz (`BUDGET-search` ceiling 2,115 KB)
+after Phase 4 — a real, accepted increase over Phase 3's 1,728.2 KB (content-derived ids are
+bigger than positional ones); see "Phase 4 landed" in the audit doc for the full table and why.
+`git tag pre-phase-4-i1` (pushed) is the rollback point from before I1, if needed.
 
 ## The prompt
 
@@ -35,7 +39,7 @@ the audit doc for the full table.
 REPOSITORY: hashin/topperscopy   (NOT hashin/hashin.github.io — that is a different project)
 BRANCH:     claude/intelligent-allen-ayrpxh
 
-PHASE: 4
+PHASE: 5
 
 FIRST, BEFORE ANYTHING ELSE — prove you are in the right repository:
 
@@ -136,7 +140,7 @@ prompt has to make the agent *verify* it before reading anything.
 | 1 | P1–P11 (11 items) | ~~Comfortable~~ | **DONE** — merged and deployed 2026-09-14. |
 | 2 | D1–D3 (3 items) | ~~Light~~ | **D1, D3 DONE.** D2 is Hashin's call, still open. |
 | 3 | T1–T4 (4 items) | Medium | **DONE** (T1–T3) — T4 skipped, needs Phase 6 profiling first. |
-| 4 | I1 (1 item) | Medium–heavy | Highest-risk change in the audit. Verify id churn is **0**. |
+| 4 | I1 (1 item) | Medium–heavy | **DONE** — was even bigger than scoped: also fixed a crash-on-first-search bug in T3's qtext.json, hashed variant ids, and a real Map-vs-object perf regression. See DECISION-11. |
 | 5 | E1 (1 item) | **Full session** | The search engine. Nothing else in this session. |
 | 6 | R1–R3 (3 items) | Medium | Re-measure after R1 and stop if the long task is under 50 ms. |
 | 7 | — | Discussion | Product strategy. Read it with Hashin; do not code from it. |

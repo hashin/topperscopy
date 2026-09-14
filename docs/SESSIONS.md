@@ -143,3 +143,47 @@ question ids too). `data/questions.json` compat shim should be deleted in the re
 one rolls out (once no visitor can still be running the pre-T3 cached `app.js`) — remove it from
 `build.js`, `.gitignore`, `sw.js`'s `DATA_HEAVY`, and the three `tools/check/invariants.mjs` spots
 that still reference it as a fallback. One tracked invariant remains: INV-14 (R3, Phase 6).
+
+## 2026-09-14 — Phase 4 (I1: content-derived stable ids)
+**Asked.** Implement Phase 4 exactly — this session planned it in detail with the user first
+(plan mode), since the audit itself calls it the highest-risk change in the document. User
+approved the plan, then said "implement phase 4" to execute it. Two decisions were made explicit
+before touching code: fix the qtext.json id-indexing bug in the same phase (rigorous testing
+required, not deferred), and delete the `data/questions.json` compat shim now rather than fork a
+legacy id scheme to keep it alive.
+**Did.** Copy ids (`stableId(url, ...)`), question ids (`stableId(paper+'|'+text, ...)`), and
+variant ids (`-stableId('variant|'+text, ...)`) are all content-derived hashes now, each with an
+explicit collision guard (retry-with-suffix, fail loudly if unresolvable — both paths tested
+directly). Deleted the entire buildId reconciliation machinery: `fetchAtBuild`, `loadFull`'s
+drop-and-rebuild branch, T2's reconcile branches in `loadQuestionIndex`/`loadQuestionText`, `sw.js`'s
+`?b=` cache-buster handling (and the `INV-20`/`sw-double.mjs` check that tested only that
+mechanism — deleted, not adapted, since there's nothing left for it to test). `HEAVY_TTL_MS` 12h →
+7 days. Deleted the `data/questions.json` compat shim; fixed its one real consumer
+(`ocr-pipeline.mjs audit-paper`, which read it directly) to read `qmeta.json`+`qtext.json` instead
+— verified by actually running that command, not just reading the diff.
+**Learned.** Three things the plan session's own investigation found that the audit's I1 section
+never mentioned, each would have been a real bug if shipped as literally specified:
+1. T3's `qtext.json` (built the same session Phase 4 was scoped) stores question text as an array
+   indexed *by* the question id. That's only safe for small sequential ids; a ~32-bit hash id
+   turns `QTEXT[qq.i]=text` into an attempt to allocate a multi-GB array — an immediate crash on
+   the first search, not a subtle bug. T3 and I1 were never reconciled against each other because
+   they landed in the same session before I1 was implemented.
+2. The variant-id scheme (`build.js`'s `variantRef()`) was *also* positional (push-order, fresh
+   every build) — the exact id-drift bug I1 exists to eliminate, just relocated onto a copy's own
+   divergent-wording reference instead of the main qid. The audit's I1 section doesn't mention
+   variants at all. Fixed the same way as the main ids.
+3. **The most important one, and the reason DECISION-9 exists:** the "obvious" fix for #1 — swap
+   the array for a plain object keyed by id — is real, but *also* real: a warmed, interleaved Node
+   benchmark against the actual corpus (not synthetic data) showed that plain object costing 3.6×
+   the old array's per-keystroke scan time. `Object.keys()`+indexed-loop only got it to +170%. An
+   ES6 `Map` got it to +1–7% (noise-level) — and only *because it was measured* did this get
+   caught before shipping; the initial implementation used a plain object and passed every
+   functional test cleanly. Functional correctness and performance are genuinely independent
+   axes; testing one told us nothing about the other.
+**Left.** The measured byte cost is real and larger than a rough guess would suggest: search-gating
+payload 1,728.2 → 2,058.5 KB gz (+19.1%), `BUDGET-search` ceiling ratcheted 1,785 → 2,115 KB.
+Deliberately not optimized further — Phase 5's purpose-built inverted index is where payload
+compactness belongs, not a general-purpose JSON id scheme. Phase 5 is next; it can now assume
+stable ids throughout, which is the whole reason this phase came first. One tracked invariant
+remains: INV-14 (R3, Phase 6). `git tag pre-phase-4-i1` (pushed) marks the rollback point if
+anything surfaces later that this session's verification missed.

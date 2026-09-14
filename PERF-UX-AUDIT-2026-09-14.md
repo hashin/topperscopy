@@ -1148,6 +1148,68 @@ git checkout data/submissions.csv && node build.js
 Also assert in `build.js` that `new Set(copies.map(c => c.i)).size === copies.length`, and the same
 for question ids.
 
+### Phase 4 landed — 2026-09-14
+
+I1 done — copy ids, question ids, **and variant ids** (not named in this section above, found while
+implementing it — see below) are now content-derived hashes, with an explicit collision guard. The
+whole build-stamp reconciliation machinery this section names for deletion is gone:
+`fetchAtBuild`'s retry, `loadFull`'s drop-and-rebuild branch, T2's reconcile branches, `sw.js`'s
+`?b=` cache-buster handling. `HEAVY_TTL_MS` raised 12h → 7 days.
+
+**Two things this section didn't anticipate, found implementing it, both fixed as part of I1 (not
+deferred):**
+
+1. **`qtext.json` (added by Phase 3/T3, landed the same session this item was scoped) was a plain
+   array indexed by question id.** That only worked because ids were `0..8101`. A ~32-bit hash id
+   (as specified above) turns `QTEXT[qq.i] = text` and `new Uint8Array(QTEXTLC.length)` into an
+   attempt to allocate a multi-GB structure on the first search — an immediate crash, not a subtle
+   bug. Fixed: `qtext.json`'s `text`/`variants` are now JSON objects keyed by id; `assets/app.js`
+   parses them into `Map`s (see next item for why not plain objects).
+2. **The variant-id scheme (`build.js`'s `variantRef()`) was *also* positional** — a fresh push-order
+   counter every build, not content-derived — carrying the exact id-drift risk this whole phase
+   exists to remove, just relocated onto a copy's own divergent-wording reference instead of the
+   main qid. Fixed the same way: `-stableId('variant|'+text, …)`.
+
+**A third thing, measured rather than assumed (`DECISION-9`):** a warmed, interleaved Node
+benchmark against the real corpus showed `matchingQids()`'s per-keystroke scan costing **0.98 ms**
+on the old position-indexed `Uint8Array`, **3.6 ms (+264%)** on a plain object keyed by the new
+large sparse ids (`for...in`), and **1.0 ms (+1–7%, noise-level)** on a `Map` scanned with
+`.forEach()`. Shipped `Map`, not a plain object, for `QTEXT`/`QTEXTLC`/`QVAR`/`QVARLC` and
+`matchingQids()`'s return value. Full reasoning: `docs/DECISIONS.md` DECISION-11.
+
+**The `data/questions.json` compat shim (T3's "kept for one release") was deleted now instead,**
+not kept alive with a forked legacy id scheme — neither Phase 3 nor Phase 4 had reached production
+when this was decided, so the risk T3 built the shim for was smaller than it looked. Its one real
+internal consumer, `ocr-pipeline.mjs`'s `audit-paper` command, now reads `qmeta.json`+`qtext.json`
+directly (both always come from the same local build, no staleness risk for that use).
+
+| Metric | Before I1 | After I1 |
+|---|---:|---:|
+| Id churn on an appended row (copies / questions / question text) | n/a (positional — B1: 87% churn) | **0 / 0 / 0** |
+| Id churn on a canonical-text change (a longer submission becomes a question's chosen text) | n/a | old id **removed cleanly** (never resolves to wrong text); new id consistent across copies.json + qmeta.json + qtext.json within the same build |
+| Collision guard | none | retry-and-resolve **and** fail-loudly paths both verified directly (not just the happy path) |
+| `matchingQids()` per-keystroke scan (warmed, real corpus) | 0.98 ms | **1.0 ms** (Map; a naive plain-object port measured 3.6 ms) |
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 1,728.2 KB gz | **2,058.5 KB gz** (+330.3 KB, +19.1%) |
+| `BUDGET-search` ceiling | 1,785 KB | **2,115 KB** (ratcheted to the measured number + ~55 KB headroom) |
+| `npm run check:all` | 24/24 enforced, 1 tracked | **23/23 enforced**, 1 tracked (−1: `INV-20` deleted — it tested the now-deleted `?b=` mechanism directly) |
+
+**Be honest about the byte cost.** +330.3 KB is real and bigger than a rough estimate would
+suggest — ids up to ~4.29 billion serialize as up to 10 digits instead of 1–4, and `qtext.json`'s
+id-keyed object structure (required for correctness, see above) adds per-entry key overhead a
+positional array didn't have. Not optimized away here: Phase 5's purpose-built inverted index
+(`qindex.bin`) is where payload compactness is actually in scope; chasing it now would be exactly
+the kind of unmeasured, premature change `DECISION-9` warns against. The `Map`-vs-object fix above
+is the one performance change made here, and only because it was measured as a real, felt
+regression, not a hypothetical one.
+
+**Verification, not just the recipe above:** the id-churn check was extended to question ids and
+question *text* (not just copies), and specifically to the canonical-text-change scenario (the case
+most likely to actually move a question id in practice, since it's a hash of the text itself) — not
+just an appended row. 10 real copies / 89 rendered question rows were cross-checked against raw
+`copies.json` + `qtext.json` data directly, with zero mismatches — the actual AUDIT-2026-09-09 B1
+failure mode (one copy showing another's questions), checked directly rather than inferred from id
+uniqueness alone.
+
 ---
 
 # Phase 5 — The search engine
@@ -1486,7 +1548,7 @@ Tick as you land each item. One commit per item.
 | 3 | T2 — parallel `copies.json` + `questions.json` | ☑ |
 | 3 | T3 — split `qmeta.json` / `qtext.json` | ☑ |
 | 3 | T4 — OPTIONAL: intern `copies.json` strings | ⏸ deliberately skipped — see "Phase 3 landed" |
-| 4 | I1 — content-derived stable ids | ☐ |
+| 4 | I1 — content-derived stable ids | ☑ |
 | 5 | E1 — inverted index + prefix search + relevance ranking | ☐ |
 | 6 | R1 — keyed card reconciliation | ☐ |
 | 6 | R2 — trim the mobile first screen | ☐ |

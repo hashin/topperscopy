@@ -108,36 +108,20 @@
     if (saveData()) { setTimeout(function () { loadFull(); }, 6000); return; }
     idle(function () { loadFull(); }, { timeout: 4000 });
   }
-  // The data files are cached independently — index.json is stale-while-revalidate in
-  // sw.js, copies.json / qmeta.json / qtext.json are cache-first with a 12 h TTL on their own
-  // clocks — so a returning visitor can hold a mismatched set. Copy ids are positional, so merging
-  // across builds would splice one copy's questions onto another. Fetch; if the build id
-  // disagrees with what we already hold, go round the caches once (a query string sw.js
-  // passes straight through) and take the newest.
-  function fetchAtBuild(url, want) {
-    return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
-      if (!want || !d.build || d.build === want) return d;
-      return fetch(url + '?b=' + encodeURIComponent(d.build || 'x') + '.' + Date.now())
-        .then(function (r) { return r.json(); });
-    });
-  }
+  // The data files are cached independently — index.json is stale-while-revalidate in sw.js,
+  // copies.json / qmeta.json / qtext.json are cache-first with a 7-day TTL on their own clocks —
+  // so a returning visitor can hold a mismatched set. Ids are content-derived (Phase 4 / I1,
+  // DECISION-5), so this is now harmless: an id that exists in one file either means the same
+  // thing in every other file that ever mentions it, or doesn't exist there yet (a question too
+  // new to be in a stale cached copies.json). No reconciliation needed — just fetch.
   function ensureFullPromise() { ensureFull(); return fullPromise || Promise.resolve(); }
 
   function loadFull() {
     if (fullPromise) return fullPromise;
     fullState = 'loading';
-    fullPromise = fetchAtBuild('data/copies.json', DB && DB.build).then(function (d) {
+    fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
       QBYID = {};
       DB.copies = DB.copies.filter(function (c) { return !c.stub; });  // drop name-search placeholders
-      // Boot index (index.json) and this file came from different builds — the id-keyed merge
-      // below would attach these questions to the wrong lite rows. copies.json is a strict
-      // superset of index.json, so drop the lite rows and rebuild wholly from it.
-      if (d.build && DB.build && d.build !== DB.build) {
-        DB.copies = [];
-        DB.build = d.build;
-        DB.generated = d.generated || DB.generated;
-        if (d.stats) DB.stats = d.stats;
-      }
       var known = {};
       DB.copies.forEach(function (c) { known[c.i] = c; });
       d.copies.forEach(function (c) {
@@ -177,24 +161,16 @@
   function loadQuestionIndex() {
     if (qiPromise) return qiPromise;
     qiState = 'loading';
-    // qmeta.json's a:[[copyId, page]] refs and its qids are only meaningful against the build
-    // copies.json was loaded at, so wait for that and pin to DB.build (which loadFull reconciles
-    // to copies.json's actual build).
     // Start the download NOW rather than after copies.json has landed and parsed — on slow 3G
-    // that serialisation costs ~1.8s of dead air. Correctness still requires the two files to
-    // agree on a build, so we join below and reconcile before touching any refs.
-    var qJson = fetchAtBuild('data/qmeta.json', DB && DB.build);
+    // that serialisation costs ~1.8s of dead air (T2). Ids are content-derived (Phase 4 / I1),
+    // so qmeta.json's a:[[copyId, page]] refs need no reconciliation against copies.json — a
+    // copyId either resolves through COPYBYID once copies.json has loaded, or doesn't yet (a
+    // very recent copy not in a stale cached copies.json), never the wrong copy.
+    var qJson = fetch('data/qmeta.json').then(function (r) { return r.json(); });
     var sJson = fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; });
     qiPromise = Promise.all([ensureFullPromise(), qJson, sJson]).then(function (parts) {
-      var res = [parts[1], parts[2]];
-      // copies.json may have reconciled DB.build to a different build while this was in flight.
-      if (res[0] && res[0].build && DB && DB.build && res[0].build !== DB.build) {
-        return fetchAtBuild('data/qmeta.json', DB.build).then(function (d) { return [d, res[1]]; });
-      }
-      return res;
-    }).then(function (res) {
-      QI = res[0].questions || [];
-      SYL = res[1];
+      QI = parts[1].questions || [];
+      SYL = parts[2];
       qiState = 'ready';
       fillSyllabus();
       if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
@@ -215,24 +191,34 @@
 
   // The ~780 KB of question prose, split out of qmeta.json in T3. Not needed to find or filter
   // a question (qmeta.json alone does that) — only to render or text-match one. Fetched in
-  // parallel with qmeta.json (same trigger, same build-skew reconcile as T2/loadQuestionIndex),
-  // but resolved independently so meta-only consumers aren't held up behind ~780 KB they don't need.
+  // parallel with qmeta.json (same trigger as T2), resolved independently so meta-only consumers
+  // aren't held up behind ~780 KB they don't need. `text`/`variants` arrive as id-keyed JSON
+  // objects (Phase 4 / I1) — question ids are now a sparse ~32-bit hash, and any structure sized
+  // or indexed by the raw id value (an array, a Uint8Array) would try to allocate space up to the
+  // id's magnitude (up to ~4.29 billion) instead of the ~8k entries actually present. They're
+  // converted to `Map`s here, not kept as plain objects: a warmed, interleaved benchmark
+  // (DECISION-9 — measure, don't assume) showed matchingQids() scanning a plain object keyed by
+  // large sparse ids costs ~3.6ms vs ~1.0ms for the old position-indexed array, a real per-
+  // keystroke regression; a Map scanned the same way costs ~1.0ms, matching the old array. Map
+  // keys are numbers throughout (JSON object keys parse as strings; converted once here) so
+  // `.get(q.i)` works without a wrapping String()/Number() at every call site.
   function loadQuestionText() {
     if (qtPromise) return qtPromise;
     qtState = 'loading';
-    var tJson = fetchAtBuild('data/qtext.json', DB && DB.build);
+    var tJson = fetch('data/qtext.json').then(function (r) { return r.json(); });
     qtPromise = Promise.all([ensureFullPromise(), tJson]).then(function (parts) {
       var d = parts[1];
-      if (d && d.build && DB && DB.build && d.build !== DB.build) {
-        return fetchAtBuild('data/qtext.json', DB.build);
+      QTEXT = new Map(); QTEXTLC = new Map();
+      for (var id in (d.text || {})) {
+        var nid = Number(id), t = String(d.text[id] || '');
+        QTEXT.set(nid, t); QTEXTLC.set(nid, t.toLowerCase());
       }
-      return d;
-    }).then(function (d) {
-      QTEXT = d.text || []; QTEXTLC = [];
-      for (var qi = 0; qi < QTEXT.length; qi++) QTEXTLC[qi] = String(QTEXT[qi] || '').toLowerCase();
       // variant texts — a copy whose own wording the deduped entry doesn't faithfully contain
-      QVAR = d.variants || []; QVARLC = [];
-      for (var vi = 0; vi < QVAR.length; vi++) QVARLC[vi] = String(QVAR[vi] || '').toLowerCase();
+      QVAR = new Map(); QVARLC = new Map();
+      for (var vid in (d.variants || {})) {
+        var nvid = Number(vid), vt = String(d.variants[vid] || '');
+        QVAR.set(nvid, vt); QVARLC.set(nvid, vt.toLowerCase());
+      }
       qtState = 'ready';
       // copy cards and the question-first view can now show/match question text
       if (state.view === 'browse' && (state.qview === 'questions' || state.q)) renderBrowse();
@@ -242,7 +228,7 @@
       } else if ($('#practice').open) {
         renderPractice();
       }
-      track('question_text_loaded', { count: QTEXT.length });
+      track('question_text_loaded', { count: QTEXT.size });
       return QTEXT;
     }).catch(function (e) {
       qtState = 'error'; qtPromise = null;
@@ -255,7 +241,7 @@
 
   // Resolve a qmeta.json row's text from the separately-loaded qtext.json. null = not loaded yet;
   // every caller already treats that as "not ready" and re-renders once loadQuestionText resolves.
-  function qText(q) { return QTEXT ? (QTEXT[q.i] || '') : null; }
+  function qText(q) { return QTEXT ? (QTEXT.get(q.i) || '') : null; }
 
   // syllabus node id -> readable label ("GS2 · Federalism")
   function sylLabel(id) {
@@ -666,8 +652,8 @@
   // format-1 copies.json still sitting in a service-worker cache.
   function rawQ(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
 
-  // positive id -> deduped question; negative -> this copy's own variant wording (1-based, negated)
-  function textOfId(v) { return v < 0 ? (QVAR[-v - 1] || '') : (QTEXT[v] || ''); }
+  // positive id -> deduped question; negative -> this copy's own variant wording (id = -hash)
+  function textOfId(v) { return v < 0 ? (QVAR.get(-v) || '') : (QTEXT.get(v) || ''); }
 
   // resolved rows, cached per copy. null means "ids present but the table isn't loaded yet",
   // which every caller already treats as "not loaded" and re-renders after.
@@ -689,22 +675,24 @@
   }
 
   // One pass over the ~9.9k deduped questions per query, instead of ~18k question instances
-  // per copy per keystroke. Returns a flag array indexed by question id.
+  // per copy per keystroke. Returns a Map of question id -> 1 for ids that match. A Map, not a
+  // plain object: ids are a sparse ~32-bit hash since Phase 4 / I1, and a plain object keyed by
+  // large sparse integers measured ~3.6x slower to scan than a Map here (DECISION-9 — see
+  // loadQuestionText()).
   function matchingQids(terms, mode) {
     var joined = terms.join(' ');
     function scan(src) {
-      var hit = new Uint8Array(src.length);
-      for (var i = 0; i < src.length; i++) {
-        var t = src[i];
-        if (!t) continue;
-        if (mode === 'exact') { if (t.indexOf(joined) >= 0) hit[i] = 1; continue; }
-        var ok = 1;
-        for (var w = 0; w < terms.length; w++) if (t.indexOf(terms[w]) < 0) { ok = 0; break; }
-        hit[i] = ok;
-      }
+      var hit = new Map();
+      src.forEach(function (t, id) {
+        if (!t) return;
+        if (mode === 'exact') { if (t.indexOf(joined) >= 0) hit.set(id, 1); return; }
+        var ok = true;
+        for (var w = 0; w < terms.length; w++) if (t.indexOf(terms[w]) < 0) { ok = false; break; }
+        if (ok) hit.set(id, 1);
+      });
       return hit;
     }
-    return { q: scan(QTEXTLC), v: scan(QVARLC || []) };
+    return { q: scan(QTEXTLC), v: scan(QVARLC || new Map()) };
   }
 
   // A topper's year / rank: prefer the verified toppers.json value, fall back to the copy's own.
@@ -742,7 +730,7 @@
         for (var qi2 = 0; qi2 < raw.length; qi2++) {
           var v = raw[qi2][1];
           var isHit = (typeof v === 'number')
-            ? !!(qhit && (v < 0 ? qhit.v[-v - 1] : qhit.q[v]))
+            ? !!(qhit && (v < 0 ? qhit.v.get(-v) : qhit.q.get(v)))
             : matchQ(v, terms, state.mode);      // inline text (dropped row, or format-1 cache)
           if (isHit) qs.push(res[qi2]);
         }
