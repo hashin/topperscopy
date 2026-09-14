@@ -1425,6 +1425,23 @@ Dependencies: Phase 5 landed. One session.
 keystroke path. Measured on mobile at CPU 4×: **~250 ms input → repaint, with an 86–91 ms long
 task**, and **235 ms** on the first-ever search. Chrome's INP "good" threshold is 200 ms.
 
+> ⚠️ **Addendum, 2026-09-14, after Phase 5 landed — this baseline is stale, re-check before
+> assuming R1 is still needed at this size.** A throwaway (uncommitted) keystroke long-task
+> measurement against the post-Phase-5 build — type "state" letter-by-letter into an empty
+> search box, 4G/CPU×4, PerformanceObserver `longtask` entries — found **one 52 ms task on the
+> very first keystroke** (the empty→query transition) and **zero long tasks on every subsequent
+> keystroke**, even as the result set grew to 1,088 copies / 2,940 matching questions. Not the
+> 86–91 ms steady-state / 235 ms first-search numbers above. Plausible causes, not confirmed:
+> `content-visibility` (P9a) and the sort fix (P6) already landed in Phase 1 and were never
+> re-measured against this specific scenario; Phase 5 also changed what a keystroke triggers
+> (`matchingQidsIndexed()` over a binary index instead of a linear string scan), which is a
+> plausibly real, favorable side effect but wasn't the target of that phase and its cost here
+> was never isolated. **Write `tools/perf/inp.mjs` and get a real number before deciding R1 is
+> still worth doing at all, and at what size** — DECISION-9 the same way the E1 addendum was:
+> one quick diagnostic pass is a strong lead, not a verified result. If the real number is
+> already under ~50 ms, this item may collapse to "NO ACTION, re-verified" the same way P6 did
+> in Phase 1 — that is a legitimate outcome, not a failure to do the work.
+
 ### Fix
 
 Key the cards by copy id and reconcile instead of replacing:

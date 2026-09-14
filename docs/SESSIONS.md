@@ -253,3 +253,23 @@ not assumed reachable without a further pass at the translation-table/postings e
 search on 3G: 771 → **521 ms (−32%)**; 4G barely moved (483→496 ms — was never payload-bound).
 `npm run check:all` still 23/23 enforced, 1 tracked (INV-14/R3, Phase 6, untouched). Phase 6
 (R1–R3: keyed card reconciliation, mobile fold, search-in-URL) is next.
+
+## 2026-09-14 — Phase 6 prompt-prep (no code changes)
+**Asked.** "create a detailed prompt for phase 6... give me an overview of remaining work."
+**Did.** No implementation. Before writing the handoff prompt, checked the audit's R1 baseline
+against the current (post-Phase-5) build with a throwaway, uncommitted keystroke long-task
+measurement (4G/CPU×4, PerformanceObserver `longtask`, typing "state" letter-by-letter from an
+empty box): found one 52 ms task on the empty→query transition and zero on every keystroke
+after, even at 1,088 copies / 2,940 matching questions — not the 86–91 ms steady-state / 235 ms
+first-search numbers the audit's R1 section still quotes. Re-confirmed R2 is still fully failing
+(`node tools/perf/fold.mjs`: 0 result cards above the fold at both 390×844 and 1440×900,
+unchanged from Phase 1). Added an addendum to R1 (same pattern as the Phase 4→5 addendum) rather
+than handing the finding over only in a chat message.
+**Learned.** A phase's own perf fix can partially resolve a *later* phase's item as a side
+effect — Phase 5 replaced the keystroke matching path (linear string scan → binary index
+lookup) without that being its goal, and nobody had re-measured R1 against it. Same lesson as
+the Phase 4→5 addendum, different direction (this time the news might be good, not bad) — worth
+checking at every phase boundary, per that addendum's own note.
+**Left.** Phase 6 (R1–R3) not started; a detailed prompt was handed to the user for a fresh
+session. `tools/perf/inp.mjs` and `tools/perf/history.mjs` don't exist yet — first real work of
+that session is writing them (inp.mjs before deciding R1's scope, per the addendum above).
