@@ -169,7 +169,7 @@ check('INV-13', 'enforced', 'INTENT-2 · AUDIT D1', 'data/questions.csv is not d
   return { ok, detail: ok ? 'excluded' : '8.94 MB shipped to the live site, fetched by nothing' };
 });
 
-check('INV-14', 'tracked', 'INTENT-3 · AUDIT R3', 'A search is reflected in the URL', () => {
+check('INV-14', 'enforced', 'INTENT-3 · AUDIT R3', 'A search is reflected in the URL', () => {
   const js = read('assets/app.js');
   // history.replaceState alone is not enough - it is already used for TAB routing (#browse,
   // #submit). The query specifically must reach the URL.

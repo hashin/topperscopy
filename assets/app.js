@@ -46,6 +46,9 @@
   // (AUDIT P4), LASTCOUNT lets the analytics handler report the count without running the
   // entire search a second time (AUDIT P5).
   var LASTLIST = null, LASTCOUNT = 0;
+  // Audit R1, DECISION-13: copy id -> its currently-rendered <details.copy> element, so
+  // renderBrowse() can reconcile instead of tearing the list down every keystroke.
+  var CARDMAP = new Map();
   var QI = null, SYL = null, COPYBYID = {}, qiState = 'idle', qiPromise = null;
   // T3 (audit): question TEXT is split into its own file (qtext.json) from the meta that finds
   // and filters a question (qmeta.json, in QI). qtState/qtPromise track that fetch separately so
@@ -374,7 +377,6 @@
   }
   function fillSyllabus() {
     var sel = $('#syl'); if (!sel || !SYL) return;
-    var keep = sel.value;
     var frag = document.createDocumentFragment();           // off-DOM; swap once (AUDIT P3)
     frag.appendChild(el('option', { value: '' }, ['Whole syllabus']));
     var counts = {};
@@ -388,7 +390,7 @@
       frag.appendChild(og);
     });
     sel.replaceChildren ? sel.replaceChildren(frag) : (sel.innerHTML = '', sel.appendChild(frag));
-    sel.value = keep;
+    sel.value = state.syl;   // authoritative — may hold a ?syl= that predates this select's options (R3)
   }
 
   /* ---------- collapsing toolbar ---------- */
@@ -501,6 +503,10 @@
     // ?paper=GS1 — deep link from a /paper/<slug>/ hub page (AUDIT B17)
     var pp = new URLSearchParams(location.search).get('paper');
     if (pp && PAPERS.indexOf(pp) >= 0) state.paper = pp;
+
+    // ?syl=<node id> — a shared/bookmarked syllabus filter (R3; fillSyllabus() applies it once loaded)
+    var sylp = new URLSearchParams(location.search).get('syl');
+    if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; ensureQI(); }
 
     Promise.all([
       fetch('data/index.json').then(function (r) { return r.json(); }),
@@ -969,13 +975,54 @@
     return list;
   }
 
+  // Audit R3: q/paper/syl -> ?q=/?paper=/?syl=. Coexists with setView()'s own hash-only
+  // replaceState (a relative '#view' resolves against the current URL, untouched by this) and
+  // with the hash new URL(location.href) below carries forward unmodified — DECISION-13.
+  // pushState fires once, on the empty->non-empty transition, so Back undoes a search instead of
+  // leaving the site (INTENT-3) rather than one entry per keystroke. "Was empty" is read fresh
+  // from location.search each call, not cached — a cached flag drifts the moment the URL changes
+  // for a reason other than this function (a Back/Forward popstate) and walks Back off the app's
+  // own history (DECISION-13 — an earlier version cached it and did exactly that).
+  function syncUrl() {
+    try {
+      var u = new URL(location.href);
+      var wasEmpty = !u.searchParams.get('q');
+      if (state.q) u.searchParams.set('q', state.q); else u.searchParams.delete('q');
+      if (state.paper && state.paper !== 'all') u.searchParams.set('paper', state.paper); else u.searchParams.delete('paper');
+      if (state.syl) u.searchParams.set('syl', state.syl); else u.searchParams.delete('syl');
+      if (u.href === location.href) return;
+      if (wasEmpty && state.q) history.pushState(null, '', u);
+      else history.replaceState(null, '', u);
+    } catch (e) { /* URL/history unsupported — search still works, just not shareable */ }
+  }
+
+  // popstate: re-read q/paper/syl into state + the controls that mirror it, then re-render (R3).
+  function applyUrlToState() {
+    if (!DB) return;
+    var params = new URLSearchParams(location.search);
+    state.q = (params.get('q') || '').trim().slice(0, 200);
+    state.shown = PAGE;
+    var paper = params.get('paper');
+    state.paper = (paper && PAPERS.indexOf(paper) >= 0) ? paper : 'all';
+    state.syl = (params.get('syl') || '').trim().slice(0, 60);
+    if (state.syl) state.qview = 'questions';
+    var qi = $('#q'); if (qi && qi.value !== state.q) qi.value = state.q;
+    $$('#papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.paper === state.paper)); });
+    $$('#qview button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.qview === state.qview)); });
+    var sel = $('#syl'); if (sel) sel.value = state.syl;
+    if (state.q || state.syl) { ensureFull(); ensureQI(); }
+    renderBrowse();
+  }
+  window.addEventListener('popstate', function () { if (state.view === 'browse') applyUrlToState(); });
+
   function renderBrowse(reopen) {
     if (!DB) return;
+    syncUrl();
     updateFilterCount();
     if (state.qview === 'questions') return renderQuestions();
     var list = filteredCopies();
     LASTLIST = list; LASTCOUNT = list.length;
-    var box = $('#results'); box.innerHTML = '';
+    var box = $('#results');
 
     var nameHits = 0, totalQ = 0, stubHits = 0;
     list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; if (x.c.stub) stubHits++; });
@@ -1013,6 +1060,7 @@
 
     if (!list.length) {
       var failed = (qxState === 'error' || fullState === 'error');
+      box.innerHTML = ''; CARDMAP.clear();
       box.appendChild(el('div', { class: 'empty' }, [
         el('div', { class: 'big' }, [loading ? 'Searching…' : failed ? 'Search is unavailable' : 'No matches']),
         el('div', {}, [loading
@@ -1024,8 +1072,70 @@
       return;
     }
 
-    appendCards(list, 0, state.shown, box, reopen);
+    reconcileBrowseList(list, box, reopen);
     if (list.length > state.shown) box.appendChild(makeMoreButton(list, box));
+  }
+
+  // Audit R1: fingerprints what would change copyCard(c,qs,n,nameHit)'s output for this id — NOT
+  // open state, preserved separately below. Includes per-row pending/resolved (q[1]==null) so a
+  // reused card gets its qtext.json backfill instead of being skipped as "unchanged" (DECISION-10).
+  function cardSig(x) {
+    // Stub/link-only cards render the same markup regardless of query, and copyCard() never
+    // applies forceOpen on either branch — a constant sig keeps them in the reuse-as-is path
+    // forever once built, so a link-only card's native <details> toggle is never disturbed.
+    if (x.c.stub) return 'stub';
+    if (x.c.k) return 'link';
+    return state.q + '\x01' + state.mode + '\x01' + x.n + '\x01' + (x.nameHit ? 1 : 0) + '\x01' +
+      x.qs.map(function (q) { return q[0] + ':' + (q[1] == null ? 'p' : 'r'); }).join(',');
+  }
+
+  // Reuse the on-screen element for this id when its signature is unchanged (cheapest path).
+  // Otherwise rebuild its content but carry forward its REAL current open/closed state — a
+  // manual toggle must survive further typing (DECISION-13), not reset to copyCard()'s own
+  // auto-open-on-match default. A node never seen before opens per `reopen` (ids open in the DOM
+  // before this render — the FULL-load/qtext-arrival backfills pass this) or that default.
+  function getCard(x, reopen) {
+    var id = x.c.i, sig = cardSig(x), existing = CARDMAP.get(id);
+    if (existing && existing.dataset.tcSig === sig) return existing;
+    var forceOpen = existing ? !!existing.open
+      : ((reopen && reopen.indexOf(String(id)) >= 0) ? true : undefined);
+    var node = copyCard(x.c, x.qs, x.n, x.nameHit, forceOpen);
+    node.dataset.tcSig = sig;
+    CARDMAP.set(id, node);
+    return node;
+  }
+
+  // Reconcile #results to exactly the top state.shown items of `list`, in order, instead of
+  // innerHTML=''-and-rebuild on every keystroke (audit R1). insertBefore/appendChild on an
+  // existing node moves it, no rebuild — no flash, no lost <details> state.
+  function reconcileBrowseList(list, box, reopen) {
+    var grouped = state.sort === 'year' || (state.sort === 'best' && !state.q);
+    var visible = list.slice(0, state.shown);
+    var counts = null;
+    if (grouped) { counts = {}; visible.forEach(function (x) { var y = yearOf(x.c) || 0; counts[y] = (counts[y] || 0) + 1; }); }
+    var curY = null, seq = [], wanted = new Set();
+    visible.forEach(function (x) {
+      if (grouped) {
+        var y = yearOf(x.c) || 0;
+        if (y !== curY) {
+          curY = y;
+          seq.push(el('div', { class: 'yeargroup' }, [
+            el('span', { class: 'yg-year' }, [y ? String(y) : 'Year not recorded']),
+            el('span', { class: 'yg-count' }, [fmt(counts[y]) + (counts[y] === 1 ? ' copy' : ' copies')])
+          ]));
+        }
+      }
+      var card = getCard(x, reopen);
+      wanted.add(card);
+      seq.push(card);
+    });
+    var cur = box.firstChild;
+    for (var i = 0; i < seq.length; i++) {
+      if (cur === seq[i]) { cur = cur.nextSibling; continue; }
+      box.insertBefore(seq[i], cur);
+    }
+    while (cur) { var next = cur.nextSibling; box.removeChild(cur); cur = next; }
+    CARDMAP.forEach(function (node, id) { if (!wanted.has(node)) CARDMAP.delete(id); });   // drop ids no longer on screen
   }
 
   // Render list[from..to) into box, inserting before `mark` when given (so the Show-more button
@@ -1051,9 +1161,7 @@
           ]));
         }
       }
-      var card = copyCard(x.c, x.qs, x.n, x.nameHit);
-      if (reopen && reopen.indexOf(String(x.c.i)) >= 0) card.open = true;
-      put(card);
+      put(getCard(x, reopen));   // keeps CARDMAP in sync so a later keystroke can reuse this card (R1)
     });
   }
 
@@ -1478,9 +1586,11 @@
     return out;
   }
 
-  function copyCard(c, qs, count, nameHit) {
+  // forceOpen (R1/getCard): undefined = use the default below; true/false overrides it with a
+  // reused card's real current open state, so a manual toggle survives a content rebuild.
+  function copyCard(c, qs, count, nameHit, forceOpen) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
-    var openIt = (terms.length > 0 && !nameHit) || !!state.topper;
+    var openIt = forceOpen !== undefined ? forceOpen : ((terms.length > 0 && !nameHit) || !!state.topper);
     var n = count != null ? count : (qs ? qs.length : (c.n || 0));
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
