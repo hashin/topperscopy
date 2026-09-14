@@ -48,8 +48,7 @@ of the phase's work — it is how you prove the change did what it claims:
 | Script | Phase | Must assert |
 |---|---|---|
 | `zoom.mjs` | P10 | at 280px wide and 200% zoom the toolbar does not overlap the header |
-| `sw-double.mjs` | D3 | exactly one `questions.json` fetch across a simulated build skew |
-| `waterfall.mjs` | T2 | `copies.json` and `questions.json` start within ~50 ms of each other |
+| `waterfall.mjs` | T2 | `copies.json`, `qmeta.json` and `qtext.json` start within ~50 ms of each other |
 | `cardsize.mjs` | P9a | the median collapsed card height, for `contain-intrinsic-size` |
 | `search-parity.mjs` | **E1** | 200 real queries: new engine ⊇ old for prefix, ≡ for whole-word |
 | `inp.mjs` | R1 | longest long task per keystroke < 50 ms at 25 cards |

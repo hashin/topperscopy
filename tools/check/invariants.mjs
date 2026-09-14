@@ -63,8 +63,8 @@ check('INV-3', 'enforced', 'DECISION-5', 'Copy ids and question ids are unique',
   const ids = new Set(copies.map(c => c.i));
   const out = [`copies ${ids.size}/${copies.length}`];
   let ok = ids.size === copies.length;
-  if (exists('data/questions.json')) {
-    const { questions } = JSON.parse(read('data/questions.json'));
+  if (exists('data/qmeta.json')) {
+    const { questions } = JSON.parse(read('data/qmeta.json'));
     const qids = new Set(questions.map(q => q.i));
     out.push(`questions ${qids.size}/${questions.length}`);
     ok = ok && qids.size === questions.length;
@@ -101,7 +101,8 @@ check('INV-6', 'enforced', 'DECISION-3', 'No third-party script loads during fir
 
 check('INV-7', 'enforced', 'DECISION-4', 'Every generated artefact is gitignored', () => {
   const ig = read('.gitignore');
-  const generated = ['/data/copies.json', '/data/index.json', '/data/questions.json',
+  const generated = ['/data/copies.json', '/data/index.json',
+    '/data/qmeta.json', '/data/qtext.json', '/data/qindex.bin',
     '/data/toppers.json', '/toppers.html', '/sitemap.xml', '/llms.txt', '/robots.txt',
     '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
   const missing = generated.filter(g => !ig.includes(g));
@@ -112,7 +113,8 @@ check('INV-8', 'enforced', 'DECISION-4', 'No generated artefact is tracked by gi
   // Cheap proxy: these must not be in the index. Requires git; skip gracefully if absent.
   let tracked = '';
   try {
-    tracked = execFileSync('git', ['ls-files', 'data/copies.json', 'data/questions.json',
+    tracked = execFileSync('git', ['ls-files', 'data/copies.json',
+      'data/qmeta.json', 'data/qtext.json',
       'toppers.html', 'sitemap.xml', 'llms.txt', 'dataset'], { cwd: ROOT, encoding: 'utf8' }).trim();
   } catch { return { ok: true, detail: 'git unavailable — skipped' }; }
   return { ok: !tracked, detail: tracked ? 'TRACKED (must not be): ' + tracked.split('\n').join(' ') : 'none tracked' };
@@ -161,13 +163,13 @@ check('INV-12', 'enforced', 'INTENT-3 · AUDIT P8', 'extract.js is not on the cr
   return { ok, detail: ok ? 'lazy-loaded' : 'still eagerly loaded in index.html for every visitor' };
 });
 
-check('INV-13', 'tracked', 'INTENT-2 · AUDIT D1', 'data/questions.csv is not deployed', () => {
+check('INV-13', 'enforced', 'INTENT-2 · AUDIT D1', 'data/questions.csv is not deployed', () => {
   const dep = read('.github/workflows/deploy.yml');
   const ok = /--exclude='data\/questions\.csv'/.test(dep);
   return { ok, detail: ok ? 'excluded' : '8.94 MB shipped to the live site, fetched by nothing' };
 });
 
-check('INV-14', 'tracked', 'INTENT-3 · AUDIT R3', 'A search is reflected in the URL', () => {
+check('INV-14', 'enforced', 'INTENT-3 · AUDIT R3', 'A search is reflected in the URL', () => {
   const js = read('assets/app.js');
   // history.replaceState alone is not enough - it is already used for TAB routing (#browse,
   // #submit). The query specifically must reach the URL.
@@ -175,16 +177,19 @@ check('INV-14', 'tracked', 'INTENT-3 · AUDIT R3', 'A search is reflected in the
   return { ok, detail: ok ? 'the query reaches the URL' : 'searches are not shareable and Back does not undo them (the existing replaceState is tab routing only)' };
 });
 
-check('INV-14b', 'enforced', 'INTENT-6 · AUDIT D1', 'llms.txt does not link to a file we do not deploy', () => {
-  if (!exists('llms.txt')) return { ok: true, detail: 'run `node build.js` to check' };
+check('INV-14b', 'enforced', 'INTENT-6 · AUDIT D1', 'Nothing we serve links to a file we do not deploy', () => {
   const dep = read('.github/workflows/deploy.yml');
-  const txt = read('llms.txt');
+  const excluded = p => new RegExp("--exclude='/?" + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep);
   const broken = [];
-  for (const m of txt.matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g)) {
-    const rel = m[1];
-    if (new RegExp("--exclude='" + rel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep)) broken.push(rel);
+  // llms.txt uses absolute URLs; index.html uses relative/absolute hrefs. Check both — the
+  // About tab linked to data/questions.csv and would have 404'd the moment D1 landed.
+  if (exists('llms.txt')) {
+    for (const m of read('llms.txt').matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g))
+      if (excluded(m[1])) broken.push('llms.txt -> ' + m[1]);
   }
-  return { ok: broken.length === 0, detail: broken.length ? 'links to un-deployed file(s): ' + broken.join(', ') : 'every linked path is deployed' };
+  for (const m of read('index.html').matchAll(/(?:href|src|contentUrl)="\/?((?:data|dataset)\/[^"]+)"/g))
+    if (excluded(m[1])) broken.push('index.html -> ' + m[1]);
+  return { ok: broken.length === 0, detail: broken.length ? 'links to un-deployed file(s): ' + broken.join(', ') : 'every linked data path is deployed' };
 });
 
 check('INV-18', 'enforced', 'INTENT-3 · AUDIT P2', 'boot() adopts a query already in the search box', () => {

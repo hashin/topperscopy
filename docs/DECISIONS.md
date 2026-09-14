@@ -108,7 +108,9 @@ locally for the checks to run**, so `node build.js` is a precondition for `npm r
 ---
 
 ## DECISION-5 — Copy and question ids must be stable across builds
-*2026-09-09 (partial, as a build stamp) → to be completed by `PERF-UX-AUDIT-2026-09-14.md` Phase 4*
+*2026-09-09 (partial, as a build stamp) → completed 2026-09-14 by `PERF-UX-AUDIT-2026-09-14.md`
+Phase 4 / I1 — active, not superseded; this decision's own plan was carried out as written. See
+`DECISION-11` for what implementing it actually required.*
 
 **Decision.** The id on a copy is the join key between three independently-cached files
 (`index.json`, `copies.json`, the question index). It must therefore not change when unrelated data
@@ -123,14 +125,17 @@ of the wrong PDF. Documented and reproduced as `AUDIT-2026-09-09.md` B1.
 builds. This makes wrong data impossible but leaves three costs: the two big files must load in
 series, a mismatch re-downloads 1.64 MB, and nothing can be cached long.
 
-**What is still to do (Phase 4, I1).** Derive the id from a hash of the copy URL. That removes the
-whole class of problem rather than defending against it. **Must include an explicit collision guard**
-— 8,075 ids in a 32-bit space is a ~0.75 % birthday chance, and it grows with the corpus.
+**Done (Phase 4, I1, 2026-09-14).** Ids are now a hash of the copy URL (copies) or paper+canonical-
+text (questions), each with an explicit collision guard, exactly as planned here. The build-id
+stamp and every consumer of it (`fetchAtBuild`'s retry, `loadFull`'s drop-and-rebuild branch, T2's
+reconcile branches, `sw.js`'s cache-buster branch) are deleted. `DECISION-11` covers what this
+actually required beyond the one-line plan above.
 
-**Reverse if.** Nothing. The stamp is a workaround; the hash is the fix.
+**Reverse if.** Nothing. The stamp was a workaround; the hash is the fix, and it's done.
 
-**Enforced by.** `INV-3` (uniqueness). Stability itself is checked by the repro in the audit's
-Phase 4 "Verify" block — id churn must be **0**.
+**Enforced by.** `INV-3` (uniqueness). Stability is verified by the repro in the audit's Phase 4
+"Verify" block (id churn must be **0** — confirmed, extended to questions and question *text*, and
+to a canonical-text-change scenario, not just an appended row).
 
 ---
 
@@ -241,3 +246,365 @@ in this repo's audit that survived was one that could be made to flip by reverti
 **Enforced by.** Not checkable — it is a rule about how checks are written. The measurement notes
 are kept as comments at the top of `tools/perf/showmore.mjs` and `tools/perf/lost-keystroke.mjs`,
 where the next person will actually read them.
+
+---
+
+## DECISION-10 — Question text and meta are two independently-loaded promises, not one split file
+*2026-09-14 · active · cites INTENT-2, INTENT-3, AUDIT T3*
+
+**Decision.** `qmeta.json` and `qtext.json` (Phase 3/T3) are fetched by two separate functions
+(`loadQuestionIndex()` / `loadQuestionText()`) with two separate promises (`qiPromise`/`qtPromise`)
+and states (`qiState`/`qtState`), both started from the same trigger (`ensureQI()` now also calls
+`ensureQText()`) but resolved independently. The variant table (a copy's own divergent wording)
+moved into `qtext.json`, not `qmeta.json` — it's pure text, matched and displayed the same way as
+the main question text, so it belongs with the prose it has nothing structurally in common with
+meta rows. `sw.js`'s `DATA_HEAVY` regex was extended to also cache `qtext.json` (not just
+`qmeta.json`, which is all the audit's own T3 section named) — leaving a ~1.26 MB file on the
+default stale-while-revalidate path would re-fetch it over the network on every single visit,
+defeating the entire point of the split.
+
+**Why.** The audit's stated goal is that "qmeta.json alone unlocks the syllabus filter, the paper
+filter, the question-first view's counts, and Practice question-picking" — a claim that only holds
+if code reading `QI` items never assumes `.q` (text) is present just because meta arrived. Two
+places did assume exactly that, and would have shipped visible bugs if untouched:
+`fillQuestions()` (expanding a copy card) was waiting on `qiPromise` to decide when `qOf(c)` was
+safe to call, but `qOf(c)` actually resolves through `QTEXT` — waiting on the wrong promise could
+resolve while text was still empty and the card would be stuck on "Loading questions…" forever,
+never retried. `nextPracticeQ()` and `questionCard()` read `q.q` directly, which no longer exists
+on a qmeta row — left unfixed, Practice would show a blank question with tags and a working answer
+list underneath, and the question-first view would show blank card headlines. Both are exactly the
+"quiet lie" `DECISION-6` was written to prevent, just in an area `DECISION-6` didn't originally
+cover (the question-first view and Practice, not the main copy search).
+
+**Rejected.** Gating all text-dependent UI (Practice, question-first view) on `qtext.json` being
+fully loaded, same as before the split, and only shipping the syllabus-filter/paper-filter win. This
+was the *simpler and lower-risk* option, and defensible under "no more, no less" scope discipline
+— but it silently drops the audit's explicit "Practice question-picking" claim. Chose instead to
+let Practice's selection (id pick, streak bump, seen-list update) proceed off `qmeta.json` alone,
+showing "Loading question text…" and backfilling that one DOM node in place
+(`PENDING_PRACTICE_TXT`) once `qtext.json` resolves — verified with a scratch Playwright script
+(not committed) that forces the race by polling "Another question" every 80ms from page load: the
+streak bumps and a question is selected (`{"seen":{"GS2":[2517]}}`) tens of picks before `qtext.json`
+could plausibly have landed, showing the placeholder, then the real text lands without re-picking.
+The question-first view took the more conservative middle path: paper/syllabus filtering and the
+*count* work off meta alone (verified: "8,102 questions" and a populated syllabus `<select>` before
+any query and before `qtext.json` arrives), but rendering actual question cards still waits on text
+— a card with no visible content is a worse failure mode there than in Practice, where tags and the
+answer list underneath still give the user something real to look at while the headline backfills.
+
+**Reverse if.** A future session finds the `PENDING_PRACTICE_TXT` single-slot backfill is
+insufficient (e.g. a feature request to prefetch/preview multiple questions at once) — at that
+point it should become a small queue, not a single pending slot.
+
+**Enforced by.** Not directly checkable as a code rule; verified this session with three scratch
+Playwright scripts (see `docs/SESSIONS.md`, not committed) rather than assumed from the audit's
+prose, per `DECISION-9`. `INV-16`/`INV-17` (browser-based, `npm run check:all`) still cover the
+original copy-search "never show a false zero" case.
+
+---
+
+## DECISION-11 — Question text/variants are id-keyed `Map`s in memory, id-keyed JSON objects on
+the wire; variant ids are content-hashed too
+*2026-09-14 · active · cites DECISION-5, AUDIT Phase 4/I1*
+
+**Decision.** `data/qtext.json`'s `text` and `variants` are JSON objects keyed by the (now-hashed)
+id, not arrays indexed by it. `assets/app.js` parses them into `Map`s (`QTEXT`, `QVAR`, and their
+lowercased twins `QTEXTLC`, `QVARLC`), not plain objects — `matchingQids()` scans these `Map`s and
+returns `Map`s. Copy-side `variantRef()` in `build.js` now hashes the variant TEXT
+(`-stableId('variant|'+text, ...)`), with the same collision guard as copy/question ids, replacing
+the previous push-order `-(variants.push(t))` scheme.
+
+**Why.** Three things, found implementing `DECISION-5`'s plan, none named in the audit's I1 section:
+
+1. **qtext.json was still an array-by-id.** T3 (same session, landed just before this phase) built
+   `qtext.json` as `text: [t0, t1, ...]`, indexed directly by question id — correct only because
+   ids were `0..8101`. The audit's proposed hash id (~32-bit, up to ~4.29 billion) turns
+   `QTEXT[qq.i] = text` and `new Uint8Array(QTEXTLC.length)` into an attempt to allocate a multi-GB
+   structure on the first search — an immediate crash, not a subtle bug. T3 and this audit item
+   were scoped in the same session before either was reconciled against the other.
+2. **Variant ids had the identical id-drift problem I1 exists to remove.** `variantRef()`'s ids were
+   a fresh push-order counter every build — build-local, not content-derived. A copy's own
+   divergent-wording reference could resolve to the wrong text across a build skew between its
+   `copies.json` and `qtext.json` (both cached independently) — the exact bug class this whole
+   phase exists to eliminate, just relocated onto the variant id instead of the main qid.
+3. **A plain object keyed by large sparse integers is measurably slow to scan.** A warmed,
+   interleaved Node benchmark against the real corpus (8,102 entries, not synthetic data) — because
+   an unmeasured assumption here is exactly what `DECISION-9` exists to prevent — showed
+   `matchingQids()`'s per-keystroke scan costing **0.98 ms** on the old position-indexed
+   `Uint8Array`, **3.6 ms** (+264%) on a plain object with the same ~8k entries keyed by hash id
+   (`for...in`), and **1.0 ms** (+1–7%, noise-level) on a `Map` scanned with `.forEach`. `Map` was
+   the only option that didn't trade the correctness fix for a real, felt regression.
+
+**Rejected.**
+- *Keep qtext.json's array shape, defer question-id hashing to a later phase.* Reintroduces a
+  second id namespace (build-local array position vs. stable hash) exactly where `DECISION-5`
+  wants one clean scheme, and Phase 5's index keys off question ids too — deferring only moves the
+  same work later with more to reconcile by then.
+- *`Object.keys()` + indexed loop instead of `for...in`.* Measured: 2.6–2.8 ms, a real improvement
+  over plain `for...in` but still +170% over the array baseline — not good enough given `Map` gets
+  to parity for the same amount of code change.
+- *Leave variant ids build-local, accept the residual risk.* Rejected because it's the same bug
+  I1 exists to fix, just smaller in blast radius (only a copy's own divergent rows) — "mostly
+  fixed, with one deliberately-kept exception" is a worse design than "fixed," and the fix
+  (hash the variant text) costs nothing extra once `stableId()` already exists.
+- *Fork a legacy id scheme to keep `data/questions.json` alive for a stale pre-T3 `app.js`.*
+  Covered separately — see `docs/SESSIONS.md`'s Phase 4 entry. Deleted instead; `ocr-pipeline.mjs`'s
+  `audit-paper` (its one real internal consumer) now reads `qmeta.json`+`qtext.json` directly.
+
+**Reverse if.** Phase 5's inverted index replaces `qtext.json`'s role entirely with a purpose-built
+compact format (`qindex.bin`) — at that point this decision's `Map`-vs-object tradeoff may no
+longer apply to whatever replaces it, but the *reason* (measure before trusting a data-structure
+choice under load) still does.
+
+**Enforced by.** Not a static check — verified this session (not committed): id-churn = 0 for
+copies, questions, and question text across both an appended row and a canonical-text-change
+scenario; the collision guard's retry-and-resolve path and its fail-loudly path both exercised
+directly; 10 real copies / 89 rendered question rows cross-checked against raw `copies.json`+
+`qtext.json` data with zero mismatches (the actual AUDIT-2026-09-09 B1 failure mode, checked
+directly rather than inferred from id uniqueness alone); the warmed micro-benchmark above,
+re-confirmed in-browser after the `Map` fix landed. `BUDGET-search`'s ceiling in
+`tools/check/budget.json` carries the real, measured byte cost of id-keyed storage (+330.3 KB,
++19.1% over Phase 3) — reported honestly rather than optimized away, since Phase 5 is where
+payload compactness is in scope, not here.
+
+---
+
+## DECISION-12 — `qindex.bin` indexes variants too; postings use local positions; qtext.json
+drops out of the search-gating budget; "superset" only holds for exact-phrase pre-verification
+*2026-09-14 · active · cites DECISION-7, DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 5/E1*
+
+**Decision.** Four things not settled by the audit's E1 section or its Phase-4 addendum:
+
+1. `writeQIndex()` indexes every variant (a copy's own wording the deduped question doesn't
+   faithfully contain — 3,103 of them) alongside the 8,102 canonical questions, not canonical
+   questions alone. Local positions `0..qCount-1` are canonical questions (qmeta.json's own
+   order); `qCount..qCount+vCount-1` are variants, sorted by numeric id ascending for a
+   deterministic build. The translation table's sign is implicit in which half a position falls
+   in — no extra bit needed.
+2. Postings reference the local position (per the addendum's own fix), and the translation
+   table is one `uint32` per position, unsigned, in that same two-part order.
+3. `data/qtext.json` is removed from `BUDGET-search`'s file list and `tools/perf/sizes.mjs`'s
+   `SEARCH_GATING` — the index is what answers a query now; text only renders the snippet and
+   arrives after.
+4. The audit's Verify section says the new engine must return "a superset for prefix queries."
+   Measured (`tools/perf/search-parity.mjs`), that's backwards for mode `'all'`: every token
+   that starts with prefix P also *contains* P as a substring, so NEW is always a *subset* of
+   OLD there — OLD is the noisier engine (DECISION-7 already says this: "eral matches nothing"
+   is a subset relationship, not a superset one). The one place "superset" is actually correct
+   is an exact-phrase query's *unverified* AND-candidate set, shown before qtext.json has landed
+   (labelled "phrase not yet checked") — that candidate set is provably a superset of the final,
+   text-verified answer, and collapses to exact equality once verification runs.
+
+**Why.**
+
+1. Today's substring scan matches against both `QTEXTLC` and `QVARLC` — dropping variants from
+   the index would silently stop matching those ~3.1k copies' own divergent wording (an
+   Essay quote set, a GS4 case study's specific sub-question) the moment the query didn't
+   happen to also hit their group's canonical text, and the only way it would ever come back is
+   the *fallback-on-zero-total-results* path, which wouldn't fire when other canonical
+   questions still matched the same query. `tools/perf/search-parity.mjs` — built to catch
+   exactly this class of silent loss (DECISION-9) — is what confirms this isn't happening.
+2. Measured, not assumed: this costs real bytes. `qindex.bin` is 475.2 KB gzip production
+   (629.9 KB raw, 14,779 tokens), not the addendum's 327.7 KB canonical-only re-measurement —
+   postings grew from 255.6 KB to 388.6 KB gzip because variant texts are exactly the
+   long, divergent, low-token-reuse strings (GS4 "three quotations" sets, Essay topics) that
+   compress worst as postings, and the translation table grew from 31.7 to 43.8 KB gzip
+   proportional to the extra ~3.1k positions.
+3. With the index gating the answer instead of the text, `qtext.json`'s ~1.4 MB gzip genuinely
+   no longer sits on the critical path to "how many copies, which ones" — keeping it in the
+   budget would report a number nothing in the running app actually waits on, the same category
+   of stale-input mistake `docs/MEMORY.md` exists to prevent.
+4. Point 4 was checked by proof, not vibes: for a single term, `NEW_docs ⊆ {docs containing that
+   term's completion word} ⊆ {docs containing the term as any substring} = OLD_docs`, and AND
+   composes subsets into subsets. `search-parity.mjs`'s first version treated *any* OLD-only id
+   as a failure and reported 72/210 queries "regressing" — all 72 turned out to be exactly this
+   subset relationship (or, for phrase queries, a substring straddling a token boundary the same
+   way "estate" contains "state" — "this achievement" contains the literal substring "is a"
+   without either word being a real token there). Re-checked by testing whether the term(s)
+   genuinely tokenize as real words/adjacent-sequences in the specific lost document, not just
+   diffing id sets: 0 unexplained regressions across 210 real queries.
+
+**Rejected.**
+- *Canonical questions only, matching the addendum's one measurement.* Cheaper (327.7 KB vs
+  475.2 KB) but a real, silent correctness regression for ~3,103 copies — rejected for the same
+  reason DECISION-11 rejected "mostly fixed, with one deliberately-kept exception."
+- *Keep qtext.json in the search budget as a conservative superset.* Defensible as "what a
+  fully-rendered search needs," but the budget's own stated purpose is "everything that must
+  land before a text query can be answered" — qtext.json no longer gates that answer, so
+  including it reports a number that doesn't describe the running app, which is precisely what
+  `docs/MEMORY.md`'s founding incidents (a stale README, a stale CLAUDE.md figure) warn against.
+- *Force the audit's "superset" wording to hold by weakening the new engine's precision (e.g.
+  also union in raw substring hits for short/common terms).* Would reintroduce exactly the
+  noise DECISION-7 accepted removing, to make a Verify-step assertion true that measurement
+  shows was never correct as stated for that case.
+
+**Reverse if.** A future corpus makes variant text a much larger share of total content (right
+now variants are a bounded, submission-shaped minority) — at that point canonical-only indexing
+with variants left to the substring fallback might be worth revisiting on its own numbers, not
+this session's.
+
+**Enforced by.** `tools/perf/search-parity.mjs` (0/210 unexplained regressions, re-run any time
+the engine or the corpus changes materially); `BUDGET-search` in `tools/check/budget.json`
+(ceiling ratcheted to the real 1132.0 KB, not the un-measured 751/800 KB projection); the size
+comment in `tools/check/budget.json`'s `"search"` bucket carries the full measured breakdown.
+
+---
+
+## DECISION-13 — R1's card reuse preserves real open state, not a recomputed default; R3's URL
+sync reads "was empty" fresh, never caches it
+*2026-09-14 · point 1 SUPERSEDED by DECISION-14 (a card's raw `.open` reading was not, on its own,
+a reliable signal of "the user chose this" — see DECISION-14); point 2 active, unchanged · cites
+DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
+
+**Decision.** Two rules, both found necessary by testing rather than stated in the audit:
+
+1. `getCard()` (R1) never recomputes a card's open/closed state from `copyCard()`'s own
+   auto-open-on-match heuristic once that card has been rendered once. A rebuilt card (content
+   changed, id unchanged) carries forward the reused element's actual current `.open` — via a new
+   `forceOpen` parameter on `copyCard()` that overrides the heuristic outright, not one that only
+   forces it *open* — so a user's manual close is respected exactly as much as a manual open.
+   `cardSig()` (the fingerprint that decides whether a card needs rebuilding at all) returns a
+   constant for stub and link-only cards specifically, because neither of `copyCard()`'s branches
+   for those two shapes applies `forceOpen` — they predate it, and their rendered output never
+   depends on the query anyway — so routing them through the query-dependent signature would
+   force a pointless rebuild every keystroke that silently reverts them to closed.
+2. `syncUrl()` (R3) determines whether the query was previously empty by reading
+   `location.search` fresh on every call (`!u.searchParams.get('q')` against the URL as it
+   currently stands), never from a module-level flag updated only inside the "URL actually
+   changed" branch.
+
+**Why.**
+
+1. Manually testing R1 (not in the audit's own Verify block, which only checks long-task
+   duration) found that a card the user had expanded closed itself on the very next keystroke:
+   `wireBrowse()`'s input handler calls `renderBrowse()` with no `reopen` list, and every
+   pre-R1 render recomputed `openIt` from scratch, discarding the user's own toggle. This is
+   exactly `INTENT-3` ("no lost keystrokes… feel smooth"), just not a millisecond number — the
+   kind of defect DECISION-9's discipline (measure before trusting a diagnosis, but also don't
+   assume a fix's *only* value is the number in the audit) is written to surface. The first
+   implementation only forced cards *open* when reused (matching `reopen`'s historical, open-only
+   semantics) — verified against a link-only card specifically (which the R2 work happened to
+   surface first, see "Phase 6 landed"): with `cardSig()` not yet special-casing stub/link cards,
+   every keystroke rebuilt them via `copyCard()`, whose stub/link branches never read
+   `forceOpen` at all, so a manually-opened link-only card silently closed on the next keystroke —
+   the identical bug R1 exists to fix, reintroduced for one card shape by R1's own first draft.
+2. `tools/perf/history.mjs` (built to verify R3, per DECISION-9) caught this directly: type a
+   query (`pushState`, since the URL was empty), switch tabs and back (replaceState only, no
+   effect on the query param), press Back (pops the one `pushState` entry — URL and app state
+   both correctly revert to empty), then type a **second** query. The first implementation cached
+   "was empty" in a module var, updated only when `syncUrl()`'s own "did the URL actually change"
+   branch ran — but the Back navigation's `popstate` handler calls `syncUrl()` too, and at that
+   point the URL is *already* back to empty, so that call takes the early-return path and never
+   touches the cached flag. The flag stayed `false` from the first query, so the second query's
+   first keystroke incorrectly used `replaceState` instead of `pushState` — collapsing what should
+   have been a second, independent history entry into the same one the first Back had already
+   consumed. A second Back on the second search then fell off the app's own history stack
+   entirely, landing on `about:blank`. Reading fresh from `location.search` removes the cache
+   altogether: correctness follows from the URL, which is always authoritative, instead of from
+   keeping a second copy of the same fact in sync with it by hand.
+
+**Rejected.**
+- *R1: only ever force cards open, never force them closed (mirroring `reopen`'s pre-existing
+  semantics).* This is what the first draft did — rejected once the manual test above showed a
+  user's own close was just as important to preserve as their open, and doing so costs nothing
+  extra (the reused element's `.open` is already known).
+- *R1: give stub/link-only cards a real signature and just accept they rebuild every keystroke.*
+  Simpler, but reintroduces the exact bug class this item exists to remove for a whole card shape
+  — rejected for the same reason DECISION-11 rejected "mostly fixed, with one deliberately-kept
+  exception."
+- *R3: keep the cached flag but also update it inside `applyUrlToState()`/the popstate handler.*
+  Works, but requires every future code path that can change the URL out from under `syncUrl()`
+  to remember to keep the cache honest — a second place to get it right, for no benefit over
+  reading the one authoritative source (the URL itself) directly.
+
+**Reverse if.** Never, for either half — both are the direct fix for a reproduced bug, not a
+style preference.
+
+**Enforced by.** Not statically checkable. R1: verified manually (expand a card, type further
+keystrokes, open/closed state survives; a link-only card specifically, before and after the
+`cardSig()` fix; the Phase-5 placeholder-backfill interaction with `data/qtext.json` held via
+`page.route` and released, confirming no duplicate card and no lost open state). R3:
+`tools/perf/history.mjs` (new, committed) — 6/6 checks, including the specific two-Back sequence
+that reproduced the `about:blank` bug; re-run any time `syncUrl()`/`applyUrlToState()` change.
+
+---
+
+## DECISION-14 — Four bugs found in a pre-merge review of the Phases 2–6 PR, fixed in the same
+commit: a card's raw `.open` isn't "the user chose this"; `LAST_QSCORE`'s sign convention;
+Practice's stuck loading state; Back navigation desyncing Browse from the URL across a tab switch
+*2026-09-14 · active · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md Phase 6*
+
+**Decision.** Before merging the branch carrying Phases 2–6 into `main`, a genuinely independent
+multi-angle review (8 finder angles, `code-review` skill at `high` effort, run against the full
+`main...HEAD` diff) surfaced four real, reproducible bugs — three in this session's own R1/R3
+work, one in Phase 5's already-merged-to-this-branch scoring code. All four were verified by
+direct reproduction (not just source-reading) and fixed in the same commit as the review.
+
+1. **`getCard()`'s `forceOpen` used a card's raw `.open` reading as "the user's real choice,"
+   but a card that was simply rendered closed because there was no query yet is not a choice —
+   it is `copyCard()`'s own prior default, indistinguishable from a manual close by inspecting
+   `.open` alone.** Fixed with an explicit `tcTouched` flag, set only inside `copyCard()`'s
+   summary click handler (a real user interaction), and checked by `getCard()` instead of the
+   raw `.open` value: `forceOpen` is now only ever set from a *touched* element's state.
+2. **`matchingQidsIndexed()` stored `LAST_QSCORE` keyed by `idxIdOf()`'s raw signed id (negative
+   for a variant), but every reader (`filteredCopies()`, and `qhit.q`/`qhit.v` from the same
+   function) uses a positive-normalized key** — so a query whose only match was a copy's own
+   variant wording scored 0 under "Best match," indistinguishable from a non-match. Fixed by
+   normalizing the write side to `Math.abs(idxIdOf(idx, p))`.
+3. **`loadQuestionIndex()`'s completion handler dropped the paired `renderPractice()` call
+   `loadFull()`'s analogous handler still has**, leaving the Practice dialog stuck on "Loading
+   questions…" once `qmeta.json` landed, since `nextPracticeQ()`'s own early-return path never
+   retries on its own. Fixed by restoring the pair.
+4. **The `popstate` listener only resyncs `state.q`/`paper`/`syl` while `state.view === 'browse'`**
+   (DECISION-13's own R3 work), so a Back navigation that lands while the user is on a different
+   tab is silently missed — switching back to Browse then shows stale results with no visible
+   connection to what the URL says. Fixed in `setView()`: compare the URL's q/paper/syl against
+   in-memory state whenever arriving at Browse, and only resync (via `applyUrlToState()`) when
+   they actually disagree — calling `applyUrlToState()` unconditionally on every tab switch was
+   rejected (see below) because it also resets `state.shown`, which would silently discard a
+   legitimate "Show more" expansion on every ordinary Browse→About→Browse click.
+
+**Why.** All four were found by an agent-driven review specifically instructed to verify
+candidates by reproduction, not by trusting a plausible-sounding trace — and #1 in particular
+*looked* correct from source alone (a manual test of the exact scenario named in DECISION-13's
+own "Enforced by" section — expand a card, type further, state survives — passed both before and
+after this fix, because that test never exercised a card that had *never* been touched becoming a
+*new* match, only cards already known to be name-hits or already-matching). This is the same
+lesson DECISION-9 exists to generalize: a test that passes proves the scenario it covers, not the
+scenario it was meant to stand in for. Root cause for #1 and #4 both: state (`.open`, `state.q`)
+was read as if it always meant "chosen by the user," when large parts of this codebase set it
+programmatically too — the fix in both cases is to track *provenance* (was this a real user
+action) rather than trust the current value's shape alone.
+
+**Rejected.**
+- *#1: keep `forceOpen = existing.open` but add an extra check for `nameHit`/other heuristics to
+  guess when a card "should" have auto-opened.* Fragile and gets more special-cased with every
+  new match type; a real touched/untouched distinction is the general fix.
+- *#4: call `applyUrlToState()` unconditionally whenever `setView('browse')` runs.* Simpler, but
+  verified live to reset `state.shown` (discarding "Show more" pagination) on every ordinary tab
+  switch, not just the Back-navigation-elsewhere case it needs to fix — rejected once measured,
+  not assumed safe.
+- *#4: make `popstate` resync regardless of `state.view`.* Would fix the specific bug but
+  re-renders `#results` while the user is looking at a different tab, for no visible benefit —
+  the targeted comparison in `setView()` only does the (cheap) work when it's actually needed.
+- *Leave any of the four as "documented, not fixed."* Considered for all four, applied to the
+  four lower-severity/pre-existing findings from the same review (see the review's own report:
+  the `FALLBACK_USED` scoring gap, name-hit vs. text-match ranking, a `DB` null-deref race in
+  `boot()`, and the `INV-16` false-zero window before `qtext.json` loads) — all real, but each
+  either degrades gracefully, is a product judgment call, self-heals, or needs more design work
+  than a pre-merge review pass should absorb without its own dedicated scrutiny. The four fixed
+  here were fixed because they are contained, freshly-understood (three are this session's own
+  code), and user-visibly wrong in ordinary use, not edge cases.
+
+**Reverse if.** Never, for the four fixes. The four *deferred* findings are candidates for a
+future phase; revisit them with the same review discipline (reproduce before fixing) rather than
+patching from the trace alone.
+
+**Enforced by.** Not statically checkable — all four verified by direct reproduction with
+throwaway Playwright scripts (not committed) before and after each fix: #1 via console-traced
+`getCard()`/`copyCard()` calls against a real content match on a never-touched card; #2 via
+`tools/perf/search-parity.mjs` (still 0/210 unexplained regressions after the fix); #3 read from
+source (low-risk, mirrors the already-tested `loadFull()` pattern exactly); #4 via the literal
+search→About→Back→Browse sequence, plus a no-regression check that plain tab-switching leaves
+"Show more" pagination untouched. `npm run check:all` (24/24 enforced) and
+`tools/perf/history.mjs` (6/6) re-run clean after all four fixes landed together.

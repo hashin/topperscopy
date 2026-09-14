@@ -47,11 +47,13 @@ to `docs/DECISIONS.md` for any non-obvious choice; promote any tracked invariant
 ## ⚠️ Do not read these — they are large, generated, and gitignored
 
 `data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB, source
-mirror — tracked), `data/link-copies.json` (~1.6 MB, mostly VisionIAS — source, tracked), `data/questions.json`
-(deduped index), `toppers.html`, `topper/*`, `question/*`, `paper/*`, `optional/*`, `sitemap*.xml`, `llms.txt`,
-`robots.txt`, `dataset/*`. All produced by `build.js` — see `.gitignore`, which is why most of them **aren't in
-git at all**; run `node build.js` locally to (re)create them from the source files below. Never open the
-generated ones to "understand the project"; this file is the source of truth for their shape.
+mirror — tracked), `data/link-copies.json` (~1.6 MB, mostly VisionIAS — source, tracked), `data/qmeta.json` +
+`data/qtext.json` (the deduped question index, split in two since audit Phase 3/T3 — see below),
+`toppers.html`, `topper/*`, `question/*`, `paper/*`, `optional/*`, `sitemap*.xml`, `llms.txt`, `robots.txt`,
+`dataset/*`. All produced by `build.js` — see `.gitignore`, which is why most of them **aren't in git at all**;
+run `node build.js` locally to (re)create them from the source files below. Never open the generated ones to
+"understand the project";
+this file is the source of truth for their shape.
 
 ## Source-of-truth files (the only things you edit for data)
 
@@ -83,31 +85,51 @@ casing in the source files; a genuinely new spelling just needs to differ by mor
 
 Reads the 5 source files → writes:
 - `data/copies.json` — `{generated, attribution, format:2, stats, copies:[{i,t,c,p,y,r,u,q:[[page,qid,marks,words]],prov,link?,note?}]}`. **Every** copy (searchable GS/Essay + link-only). App lazy-loads it on idle/search/expand.
-  **`qid` is an index into `questions.json`, not the question text** (wire format 2). The same question
-  answered by nine toppers used to be stored nine times — question text was ~71% of this file's bytes.
+  **`i` (a copy's id) is a content hash of its URL, and `qid` is a content hash of paper+canonical-
+  text — a hash of `data/qtext.json`'s key for that question, not the question text itself** (wire
+  format 2; ids since Phase 4/I1, `DECISION-5`/`DECISION-11` — `stableId()` in `build.js`, with an
+  explicit collision guard, retried deterministically on collision, fails the build loudly if it
+  can't resolve). Ids are stable across builds: the same URL or the same canonical question text
+  always hashes to the same id, so nothing downstream needs to reconcile two files that might
+  disagree on what an id means (see AUDIT-2026-09-09 B1, which this removes the root cause of, not
+  just a defence against). The same question answered by nine toppers used to be stored nine
+  times — question text was ~71% of this file's bytes.
   **A qid is used only when the deduped entry's text faithfully *contains* this copy's own text.** The group
   keeps its longest member, which usually recovers a truncated scrape (1,406 rows now read more completely
   than before) — but `qKey()` only compares the first 110 normalised chars, so questions sharing a long
   preamble (the GS4 "three quotations of great thinkers" sets) group together with genuinely different
   wording, and a copy must never display another copy's question. Anything that is not a faithful superset
-  gets a **negative id** into `questions.json`'s `variants[]` (1-based, negated: `-1` = `variants[0]`), which
+  gets a **negative id** into `data/qtext.json`'s `variants` (a hash of the variant text itself, negated —
+  not push order, same reasoning as the main qid: a copy's own divergent wording must resolve correctly
+  regardless of which build's `qtext.json` a visitor's browser happens to have cached), which
   preserves the exact wording without putting long GS4/Essay texts back into the file every visitor
   downloads on idle. Result: **every** row is an id, 0 inline strings, 92.2% byte-identical to the original
   + 7.8% more complete, **0 divergent**, and search returns the same copies it did before (verified against
   `dataset/questions.csv`, which still carries the original per-copy text). `app.js` also still accepts a
   literal string in that slot, so a stale format-1 file in a service worker cache keeps working.
-  Net: 2,352 KB → 292 KB gzipped (179 KB brotli).
   **Build order matters:** `writeQuestions()` runs *before* copies.json is written, because it produces the ids.
 - `data/index.json` — boot payload: **only the text-searchable copies** (`!link`), minus `q`, plus `n`. Link-only copies are NOT here — they arrive with copies.json and app.js merges them into `DB.copies` + refreshes facets. Keeps boot ~26 KB gz regardless of link-only volume.
-- `data/questions.json` — **deduped question index** (lazy, ~1.4 MB gz). Since format 2 this is also the
-  **only** place question text lives, so it is required for full-text search and for showing questions on a
-  copy card — not just for the question-first view. Carries `variants[]` (see above) alongside `questions[]`.
-  It is deliberately the file that absorbed the variant text: it loads only on real search intent or a card
-  expand, whereas `copies.json` is fetched on idle by everyone. `writeQuestions()` groups every
-  searchable copy's `q` rows by `qKey()` (strip "Q.3)" numbering, lowercase, keep letters/digits incl. Devanagari,
-  first 110 chars) + paper. Drops GS4 case-study sub-parts ("(a)…(b)…") and stray fragments. Each entry:
-  `{i, p, q(text), m, w, s:[syllabus node ids], yr:[years], a:[[copyId, page], …]}`. ~7.3k distinct, ~48% syllabus-mapped.
-  Powers question-first view + Practice. Shard by paper post-OCR.
+- `data/qmeta.json` + `data/qtext.json` — **deduped question index**, split in two by audit Phase 3/T3.
+  `writeQuestions()` groups every searchable copy's `q` rows by `qKey()` (strip "Q.3)" numbering,
+  lowercase, keep letters/digits incl. Devanagari, first 110 chars) + paper. Drops GS4 case-study
+  sub-parts ("(a)…(b)…") and stray fragments. `qtext.json`'s `text` is an object **keyed by id**, not a
+  position-indexed array (Phase 4/I1) — ids are now a sparse ~32-bit hash (up to ~4.29 billion), and an
+  array indexed or sized by the raw id would try to allocate space up to that magnitude instead of the
+  ~8k entries actually present. `assets/app.js` parses it into a `Map`, not a plain object — see below.
+  - `data/qmeta.json` (~104 KB gz pre-I1; ids are bigger now, see the "Phase 4 landed" note in the
+    audit) — `{generated, syllabus_version, count, byPaper, questions:[{i, p,
+    m, w, s:[syllabus node ids], yr:[years], a:[[copyId, page], …]}]}`. No question text. This alone is
+    enough to find/filter/count a question (syllabus filter, paper filter, Practice question-picking) —
+    everything that doesn't need to be read.
+  - `data/qtext.json` (question prose + the variant table) —
+    `{text: {id: question text, …}, variants: {id: variant text, …}}`. Needed only to *render* or
+    *text-match* a question, never to find one. `variants` lives here (not in qmeta.json) because it's
+    also pure text used the same way (matched and displayed), so it belongs with the other prose, not the meta.
+  Since format 2 (`copies.json`), `qtext.json` is also the **only** place question text lives, so it is
+  required for full-text search and for showing questions on a copy card — not just for the question-first
+  view. `qmeta.json` and `qtext.json` are fetched together (same trigger as the old single-file fetch) but
+  resolved independently, so the ~104 KB meta file doesn't wait behind the ~1.4 MB text file. ~8.1k distinct,
+  ~48% syllabus-mapped. Powers question-first view + Practice. Shard by paper post-OCR.
 - `data/toppers.json` — `{toppers:{<name>:{air,year,coaching,papers,copies,marks,verified,sources,telegram?}}}`.
 - `toppers.html`, `robots.txt`, `llms.txt`; fills `<!-- STATIC:START/END -->` and `<!-- LD:START/END -->` markers in `index.html` (noscript index + JSON-LD).
 - **`writeTopperPages()` → `topper/<slug>/index.html`** — one static, crawlable, indexable page per topper
@@ -116,10 +138,12 @@ Reads the 5 source files → writes:
   collisions via `dedupeSlug()` — e.g. two different "Aditya Srivastava"s become `aditya-srivastava` /
   `aditya-srivastava-2`).
 - **`writeQuestionPages()` → `question/<slug>/index.html`** — one page per deduped question (the same dedupe
-  `questions.json` already computes), each listing every topper who answered it (rank-sorted), linking straight
-  to the source PDF page. This is the actual SEO surface — the SPA and `toppers.html` are one URL each and
-  invisible to search engines; these ~8k pages are what shows up for "<topic> UPSC Mains answer". `q.sl` in
-  `questions.json` is this slug.
+  `writeQuestions()` already computes), each listing every topper who answered it (rank-sorted), linking
+  straight to the source PDF page. This is the actual SEO surface — the SPA and `toppers.html` are one URL
+  each and invisible to search engines; these ~8k pages are what shows up for "<topic> UPSC Mains answer".
+  `q.slug` holding this slug lives only on `writeQuestions()`'s in-memory list — **not** shipped in
+  `qmeta.json`/`qtext.json` (audit T1 dropped it as dead weight: `app.js` never reads it, and the slug is
+  already baked into the `question/` URL).
   **The question text is the `<h1>`** (the paper label is a `.kicker` eyebrow above it) —
   it is the unique, high-value string on the page and the one people actually search for. Pages with a
   **single answer get `noindex,follow`** and are left out of `sitemap-questions.xml`: they are ~2/3 of all
@@ -152,23 +176,45 @@ locally whenever you need these files to inspect or test against.
   - **Question text resolution (format 2).** `rawQ(c)` = the stored rows (`qid` or literal text); `qOf(c)` =
     the same rows with ids resolved through `QTEXT`, cached on `c.qr`, and `null` while the table is still
     loading (every caller already treats null as "not loaded" and re-renders after). `QTEXT`/`QTEXTLC` are
-    built from `questions.json` (plus `QVAR`/`QVARLC` for the variant table; `textOfId()` picks between them
-    on the sign of the id) — `QTEXTLC` is the text lowercased **once at load**, so a keystroke no
-    longer re-lowercases 5.5 MB of strings. `matchingQids()` scans those ~8.1k deduped strings once per
-    query and returns `{q, v}` — a `Uint8Array` flag per question id and per variant id; `filteredCopies()` tests raw rows against them
-    and renders the resolved ones. Searching therefore needs `questions.json`, so a text query fires both
-    `ensureFull()` and `ensureQI()` (and focusing the search box warms both).
+    `Map`s (not plain objects — see below) built from `data/qtext.json` (plus `QVAR`/`QVARLC`, also `Map`s,
+    for the variant table, also in qtext.json since T3; `textOfId()` picks between them on the sign of the
+    id) — `QTEXTLC` is the text lowercased **once at load**, so a keystroke no longer re-lowercases 5.5 MB
+    of strings. `matchingQids()` scans those ~8.1k deduped strings once per query and returns `{q, v}` — a
+    `Map` of `id -> 1` per question id and per variant id that matched; `filteredCopies()` tests raw rows
+    against them (`qhit.q.get(v)` / `qhit.v.get(-v)`) and renders the resolved ones. Searching therefore
+    needs `qtext.json`, so a text query fires both `ensureFull()` and `ensureQText()`.
+    **Why `Map`, not a plain object (Phase 4/I1, `DECISION-11`):** ids are a sparse ~32-bit hash now,
+    not `0..8101` — a plain object keyed by large sparse integers measured **~3.6× slower** to scan
+    (`for...in` over ~8k entries) than the old position-indexed `Uint8Array`; a `Map` scanned with
+    `.forEach()` measured within noise of the original (warmed, interleaved Node benchmark against the
+    real corpus — never trust this kind of thing unmeasured, `DECISION-9`).
+  - **Meta vs text (audit Phase 3/T3).** `QI`/`SYL` (question meta + syllabus tree) come from
+    `loadQuestionIndex()` fetching `data/qmeta.json`; question *text* (`QTEXT`/`QTEXTLC`/`QVAR`/`QVARLC`)
+    comes from `loadQuestionText()` fetching `data/qtext.json` — a separate promise (`qtPromise`/`qtState`),
+    started alongside meta (`ensureQI()` always also calls `ensureQText()`) but resolved independently, so
+    the much smaller qmeta.json doesn't wait behind the much larger qtext.json. Since Phase 4/I1, ids are
+    content-derived and can't drift between the two files, so there is no reconciliation step — each is a
+    plain `fetch()`, no build-mismatch retry (contrast T2's original design, which this phase removed).
+    `qText(q)` resolves a `QI` row's text (`null` while qtext.json hasn't landed — every caller treats that
+    as "not ready yet" and shows a loading state, never a false count, per `DECISION-6`).
   Browse default sort `year` = year-grouped, newest year first, best AIR first within a year (`yearOf`/`airOf`
   use toppers.json then the copy's own value). Search box matches topper names immediately + question text once
   loaded. Link-only copies render as "link only" cards. Theme toggle (`localStorage tc-theme`). GA custom events.
-  - **Question-first view** (`#qview` toggle): `loadQuestionIndex()` lazy-fetches `questions.json`+`syllabus.json`;
-    `renderQuestions()` shows deduped questions → expand for the topper answer list (resolved via `COPYBYID`,
-    built from `DB.copies`). `#syl` `<select>` (optgroups per paper) filters by syllabus node; picking one
-    auto-switches to question view. `dispQ()` strips leading "Q.12" for display.
+  - **Question-first view** (`#qview` toggle): `loadQuestionIndex()` lazy-fetches `qmeta.json`+`syllabus.json`
+    (paper/syllabus filtering and counts work off this alone); `renderQuestions()` shows deduped questions
+    once `qtext.json` has also landed → expand for the topper answer list (resolved via `COPYBYID`, built
+    from `DB.copies`). `#syl` `<select>` (optgroups per paper) filters by syllabus node, populated from
+    `qmeta.json` alone; picking one auto-switches to question view. `dispQ()` strips leading "Q.12" for display.
   - **Practice** (`#practice` `<dialog>`, opened by the `.practice-btn` in `.searchrow`): pick a paper (optionals
-    disabled till OCR) → random question (prefers ≥3 answers) + its topper answers. `localStorage tc-practice` =
-    `{seen:{<paper>:[qids capped 600]}, s:{d:date, n:streakDays, t:totalAttempted}}`. `.practice-btn.nudge` dot
-    shows until you practice that day.
+    disabled till OCR) → random question (prefers ≥3 answers) + its topper answers. Question *picking*
+    (`nextPracticeQ()`) only needs `qmeta.json` (`q.a`/`q.p`/`q.s`); if `qtext.json` hasn't landed yet it
+    still bumps the streak and picks a question, but shows "Loading question text…" and backfills that one
+    DOM node in place via `PENDING_PRACTICE_TXT` once the text arrives, rather than blocking or re-picking.
+    `localStorage tc-practice` = `{seen:{<paper>:[qids capped 600]}, s:{d:date, n:streakDays, t:totalAttempted}}`
+    (Phase 4/I1 changed qids from small sequential ints to a hash — a visitor's existing `seen` list
+    silently stops matching anything post-deploy, so Practice history effectively resets once; accepted,
+    not worked around — see `DECISION-11`/`docs/SESSIONS.md`).
+    `.practice-btn.nudge` dot shows until you practice that day.
 - `assets/style.css` — design system. Palette from 6 user swatches on warm paper; Fraunces + Inter.
   Light/dark via 3-state pattern (`:root` / `@media prefers-color-scheme` / `:root[data-theme=dark]`).
   Phones ≤680px drop `backdrop-filter`, 16px inputs.
@@ -181,9 +227,13 @@ locally whenever you need these files to inspect or test against.
 - `assets/fonts/` — Inter + Fraunces, latin-subset woff2 (Fraunces is `font-display:optional`, not preloaded —
   headings only, never blocks or reflows). `assets/og.jpg` — social image, ~106 KB.
 - `sw.js` — service worker. Shell (`index.html`, CSS/JS, Inter, `index.json`/`toppers.json`/`optionals.json`)
-  (plus the manifest + icons) is precached + stale-while-revalidate. The 3 heavy files (`copies.json`/`questions.json`/`link-copies.json`,
-  multi-MB) use cache-first-with-TTL instead (`HEAVY_TTL_MS`, 12h) — a repeat visit serves them straight from
-  cache with **no network request at all**, not just no re-render. Bump `VERSION` on shell changes.
+  (plus the manifest + icons) is precached + stale-while-revalidate. The heavy files
+  (`copies.json`/`qmeta.json`/`qtext.json`/`link-copies.json`, multi-hundred-KB to multi-MB) use
+  cache-first-with-TTL instead (`HEAVY_TTL_MS`, 7 days since Phase 4/I1 — was 12h, sized around the old
+  positional-id risk: stable ids mean a stale cache is merely missing recent content, never wrong) — a
+  repeat visit serves them straight from cache with **no network request at all**, not just no re-render.
+  No more `?b=` cache-buster query-string handling (Phase 4/I1 deleted it along with the buildId
+  reconciliation it existed for). Bump `VERSION` on shell changes (or on `DATA_HEAVY`'s pattern).
 
 ## extract.js (repo root) — maintainer CLI
 

@@ -111,6 +111,50 @@ The table above is the original baseline and is left as the historical record. A
 Payload is unchanged, as expected — that is Phases 3–5. Phase 1 was about what the interface
 *does* with the payload it has.
 
+### Phase 3 landed — 2026-09-14
+
+T1–T3 done; T4 deliberately skipped (see below). Measured with `node tools/perf/baseline.mjs`,
+before capturing a snapshot at the start of the session and after landing all three commits:
+
+| Metric | Before Phase 3 | After T1–T3 |
+|---|---:|---:|
+| `data/questions.json` (still deployed, compat shim) | 1,642.4 KB gz | 1,436.6 KB gz (T1: dropped `sl`) |
+| `data/qmeta.json` (new) | — | **109.0 KB gz** |
+| `data/qtext.json` (new; text + the variant table, moved here from questions.json) | — | **1,262.7 KB gz** |
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 1,998.8 KB gz | **1,728.2 KB gz** (−270.6 KB, −13.5%) |
+| `copies.json` / `qmeta.json` / `qtext.json` request start gap, 3G (`tools/perf/waterfall.mjs`) | 2,666 ms (serialised, pre-T2) | **0 ms** |
+| Total transfer for a cold search, 3G | 2,224 KB | **1,955 KB** |
+| Longest main-thread task during cold search, 3G | 115 ms | **81 ms** |
+| `npm run check` | 22/22 enforced, 2 tracked (D1, R3) | **24/24 enforced**, 1 tracked (R3) |
+| `BUDGET-search` ceiling | 2,050 KB | **1,785 KB** (ratcheted; measured 1,728.2 + ~55 KB headroom) |
+
+**What did not move, and why that's honest rather than a miss:** `measure.mjs`'s cold-search
+"usable results after Nms" metric was 482 ms before, 453 ms after (3G) — essentially noise. That
+metric is not trustworthy in this sandbox regardless of what this session changed: the *baseline*
+capture, taken before this session touched anything, already showed ~2.2 MB delivered in ~3.4s
+against a nominal 200 KB/s 3G throttle — a ratio the throttle cannot produce if it were actually
+bottlenecking total throughput (most likely Chromium's CDP network emulation not summing bandwidth
+correctly across several parallel connections to localhost in this environment). `waterfall.mjs`'s
+direct request-timestamp measurement is unaffected by that and is the trustworthy evidence for T2:
+0 ms gap, confirmed by first showing it FAILING against the unfixed code (2,666 ms gap).
+
+**T3's real, verified win is not in these bytes** — it's that `qmeta.json` (109 KB) no longer
+waits behind `qtext.json` (1.26 MB) to become usable. Confirmed with three scratch Playwright
+scripts (not committed — see `docs/SESSIONS.md`), not assumed: the syllabus filter populates
+(72 `<select>` options) and the question-first view reports an accurate "8,102 questions" count
+before any question *text* has arrived; a Practice question is picked and its streak bumped as
+soon as `qmeta.json` lands, showing "Loading question text…" and backfilling that one DOM node in
+place once `qtext.json` resolves, rather than blocking selection or re-picking; and a text search
+never renders a false zero or a false count while `qtext.json` is still in flight (extends
+`DECISION-6` to the question-first view and Practice, which the original P1 fix didn't cover).
+
+**T4 — deliberately not done.** The audit's own argument against it (gzip gain ~39 KB only; the
+real win is raw-size/parse-time, and only *if* Phase 6 profiling shows that's actually hurting) is
+still correct and Phase 6 hasn't run. Doing it now would be exactly the kind of change DECISION-9
+warns about — a "fix" for a problem nobody has measured yet, at a real readability cost in both
+`build.js` and `app.js`. Revisit only after Phase 6 profiling names parse time or memory as an
+actual problem.
+
 ---
 
 ## The three structural problems
@@ -1104,6 +1148,68 @@ git checkout data/submissions.csv && node build.js
 Also assert in `build.js` that `new Set(copies.map(c => c.i)).size === copies.length`, and the same
 for question ids.
 
+### Phase 4 landed — 2026-09-14
+
+I1 done — copy ids, question ids, **and variant ids** (not named in this section above, found while
+implementing it — see below) are now content-derived hashes, with an explicit collision guard. The
+whole build-stamp reconciliation machinery this section names for deletion is gone:
+`fetchAtBuild`'s retry, `loadFull`'s drop-and-rebuild branch, T2's reconcile branches, `sw.js`'s
+`?b=` cache-buster handling. `HEAVY_TTL_MS` raised 12h → 7 days.
+
+**Two things this section didn't anticipate, found implementing it, both fixed as part of I1 (not
+deferred):**
+
+1. **`qtext.json` (added by Phase 3/T3, landed the same session this item was scoped) was a plain
+   array indexed by question id.** That only worked because ids were `0..8101`. A ~32-bit hash id
+   (as specified above) turns `QTEXT[qq.i] = text` and `new Uint8Array(QTEXTLC.length)` into an
+   attempt to allocate a multi-GB structure on the first search — an immediate crash, not a subtle
+   bug. Fixed: `qtext.json`'s `text`/`variants` are now JSON objects keyed by id; `assets/app.js`
+   parses them into `Map`s (see next item for why not plain objects).
+2. **The variant-id scheme (`build.js`'s `variantRef()`) was *also* positional** — a fresh push-order
+   counter every build, not content-derived — carrying the exact id-drift risk this whole phase
+   exists to remove, just relocated onto a copy's own divergent-wording reference instead of the
+   main qid. Fixed the same way: `-stableId('variant|'+text, …)`.
+
+**A third thing, measured rather than assumed (`DECISION-9`):** a warmed, interleaved Node
+benchmark against the real corpus showed `matchingQids()`'s per-keystroke scan costing **0.98 ms**
+on the old position-indexed `Uint8Array`, **3.6 ms (+264%)** on a plain object keyed by the new
+large sparse ids (`for...in`), and **1.0 ms (+1–7%, noise-level)** on a `Map` scanned with
+`.forEach()`. Shipped `Map`, not a plain object, for `QTEXT`/`QTEXTLC`/`QVAR`/`QVARLC` and
+`matchingQids()`'s return value. Full reasoning: `docs/DECISIONS.md` DECISION-11.
+
+**The `data/questions.json` compat shim (T3's "kept for one release") was deleted now instead,**
+not kept alive with a forked legacy id scheme — neither Phase 3 nor Phase 4 had reached production
+when this was decided, so the risk T3 built the shim for was smaller than it looked. Its one real
+internal consumer, `ocr-pipeline.mjs`'s `audit-paper` command, now reads `qmeta.json`+`qtext.json`
+directly (both always come from the same local build, no staleness risk for that use).
+
+| Metric | Before I1 | After I1 |
+|---|---:|---:|
+| Id churn on an appended row (copies / questions / question text) | n/a (positional — B1: 87% churn) | **0 / 0 / 0** |
+| Id churn on a canonical-text change (a longer submission becomes a question's chosen text) | n/a | old id **removed cleanly** (never resolves to wrong text); new id consistent across copies.json + qmeta.json + qtext.json within the same build |
+| Collision guard | none | retry-and-resolve **and** fail-loudly paths both verified directly (not just the happy path) |
+| `matchingQids()` per-keystroke scan (warmed, real corpus) | 0.98 ms | **1.0 ms** (Map; a naive plain-object port measured 3.6 ms) |
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 1,728.2 KB gz | **2,058.5 KB gz** (+330.3 KB, +19.1%) |
+| `BUDGET-search` ceiling | 1,785 KB | **2,115 KB** (ratcheted to the measured number + ~55 KB headroom) |
+| `npm run check:all` | 24/24 enforced, 1 tracked | **23/23 enforced**, 1 tracked (−1: `INV-20` deleted — it tested the now-deleted `?b=` mechanism directly) |
+
+**Be honest about the byte cost.** +330.3 KB is real and bigger than a rough estimate would
+suggest — ids up to ~4.29 billion serialize as up to 10 digits instead of 1–4, and `qtext.json`'s
+id-keyed object structure (required for correctness, see above) adds per-entry key overhead a
+positional array didn't have. Not optimized away here: Phase 5's purpose-built inverted index
+(`qindex.bin`) is where payload compactness is actually in scope; chasing it now would be exactly
+the kind of unmeasured, premature change `DECISION-9` warns against. The `Map`-vs-object fix above
+is the one performance change made here, and only because it was measured as a real, felt
+regression, not a hypothetical one.
+
+**Verification, not just the recipe above:** the id-churn check was extended to question ids and
+question *text* (not just copies), and specifically to the canonical-text-change scenario (the case
+most likely to actually move a question id in practice, since it's a hash of the text itself) — not
+just an appended row. 10 real copies / 89 rendered question rows were cross-checked against raw
+`copies.json` + `qtext.json` data directly, with zero mismatches — the actual AUDIT-2026-09-09 B1
+failure mode (one copy showing another's questions), checked directly rather than inferred from id
+uniqueness alone.
+
 ---
 
 # Phase 5 — The search engine
@@ -1167,6 +1273,33 @@ uint32   dictBytes, uint32 lenTableBytes, uint32 postingsBytes
 
 Read it with `fetch(...).then(r => r.arrayBuffer())` and a `DataView`. No dependency.
 
+> ⚠️ **Addendum, 2026-09-14, after Phase 4 landed — the postings estimate above no longer holds.**
+> Phase 4 (I1) made question ids content-derived hashes (~32-bit, up to ~4.29 billion) instead of
+> `0..8101`. `tools/perf/index-proto.mjs` (and the `328 KB raw / 256 KB gzip` postings estimate
+> above) delta-encode ids **in ascending sorted order within each token's postings list** — that
+> only compresses well when ids are small and dense. Re-measured against the current corpus
+> (patched copy of the prototype, not committed — `data/questions.json` it originally read no
+> longer exists either, see below): postings **naively delta-encoded by raw stable id balloon to
+> 954.8 KB gzip** (vs. the 256 KB estimated) — nearly 4× larger, big enough that Phase 5 could ship
+> a search-gating total *worse* than Phase 4's 2,058.5 KB, not the promised 751 KB.
+>
+> **The fix, measured working**: postings should reference a **local dense position** (`0..n-1`,
+> e.g. build order) into a small translation table shipped in the *same* binary file — self-contained,
+> so there's no cross-file positional-drift risk (`qindex.bin` is always fetched/cached as one atomic
+> unit, unlike `qmeta.json`/`qtext.json`). Deltas over local positions compress the same as before
+> Phase 4; the translation table (`uint32` per entry, local position → stable id, effectively
+> incompressible since hash output is high-entropy) costs ~31.7 KB gzip for 8,102 entries. Measured
+> total this way: **327.7 KB gzip** — within 12% of the original 292 KB estimate, i.e. this recovers
+> the number the audit promised. The exact translation-table encoding/ordering is not settled — work
+> it out and verify it, don't just copy this number.
+>
+> **`tools/perf/index-proto.mjs` itself needs fixing before it can even run** — it reads the deleted
+> `data/questions.json`; point it at `qmeta.json` + `qtext.json`, and build both the naive (Version A,
+> for the record) and local-position (Version B) postings so the regression is visible in the tool's
+> own output, not just asserted in this note. Do this **first**, before designing `qindex.bin`'s
+> final format — see `docs/SESSIONS.md`'s Phase 4 entry for the reasoning and DECISION-9's standing
+> instruction to measure rather than assume.
+
 ### Query algorithm (`assets/app.js`)
 
 1. Tokenise the query the same way `build.js` does: `.toLowerCase().match(/[a-z0-9]+/g)`.
@@ -1210,7 +1343,9 @@ than any millisecond in this document.
 
 ```bash
 node build.js
-node tools/perf/sizes.mjs            # data/qindex.bin must be ~415 KB raw / ~292 KB gzip
+node tools/perf/sizes.mjs            # data/qindex.bin measured 629.9 KB raw / 475.2 KB gzip —
+                                      # bigger than the ~415/~292 KB estimate above; see "Phase 5
+                                      # landed" below (variant-parity, not a regression)
 node tools/perf/search-parity.mjs    # runs 200 real queries through old and new, reports differences
 node tools/perf/measure.mjs 3g       # cold search must drop from ~4,455ms to under ~1,500ms
 ```
@@ -1219,6 +1354,62 @@ node tools/perf/measure.mjs 3g       # cold search must drop from ~4,455ms to un
 changes: capture old-engine results for a fixed query list, then assert the new engine returns a
 superset for prefix queries and an identical set for whole-word queries. Any query where the new
 engine returns fewer results must be listed and explained.
+
+> ⚠️ **This paragraph is wrong about "superset", corrected by Phase 5's own measurement — see
+> "Phase 5 landed" below and `docs/DECISIONS.md` DECISION-12.** For mode `'all'`, NEW is provably
+> a *subset* of OLD (every token starting with a prefix also contains it as a substring, and AND
+> composes subsets into subsets) — OLD is the noisier engine, consistent with this document's own
+> "eral matches nothing" framing a few paragraphs up. "Superset" is the correct word only for an
+> exact-phrase query's unverified candidate set, shown before `qtext.json` lands.
+
+### Phase 5 landed — 2026-09-14
+
+E1 done: `data/qindex.bin` (build.js's `writeQIndex()`), the binary reader + query engine in
+`assets/app.js`, BM25-lite ranking as the new default "Best match" sort, and the substring
+fallback for a zero-hit query, all as specified — plus three things this section's addendum
+flagged as unsettled and this session had to work out and measure, not assume (DECISION-9):
+
+1. **`qindex.bin` indexes variants, not just canonical questions** — today's substring scan
+   matches a copy's own divergent wording (`QVARLC`) as well as the deduped question
+   (`QTEXTLC`); an index that only covered canonical questions would silently stop matching
+   ~3,103 copies' worth of that wording the moment their query didn't also hit the canonical
+   text. Cost: `qindex.bin` measures **475.2 KB gzip** (629.9 KB raw, 14,779 tokens), not the
+   addendum's 327.7 KB canonical-only re-measurement — see DECISION-12.
+2. **`data/qtext.json` came out of `BUDGET-search`'s file list.** The index answers a query now;
+   text only renders the snippet and arrives after — keeping qtext.json in the "what must land
+   before we know the answer" budget would report a number the running app no longer waits on.
+3. **The audit's own "superset for prefix queries" wording is backwards for mode `'all'`** — see
+   the boxed correction above and DECISION-12. `tools/perf/search-parity.mjs`'s first version
+   trusted that wording and flagged 72/210 real queries as "regressions"; every one turned out to
+   be either the (expected, DECISION-7) subset relationship, or a substring straddling a token
+   boundary the same way "estate" contains "state" (checked directly — is the term a real token
+   in the specific lost document, not just an id-set diff). Fixed classification: **0/210
+   unexplained regressions.**
+
+A match the index confirms but whose text hasn't loaded yet now renders immediately with a
+"Loading question text…" placeholder row (DECISION-6: degrade, never hide) instead of being
+withheld from the list until `qtext.json` arrives — the existing render-on-text-arrival path
+backfills it, now preserving any cards the visitor had open across that backfill.
+
+| Metric | Before E1 (post-Phase-4) | After E1 |
+|---|---:|---:|
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 2,058.5 KB gz | **1,132.0 KB gz** (−926.5 KB, −45%) |
+| `data/qindex.bin` | did not exist | **475.2 KB gz** (629.9 KB raw) |
+| Cold search, slow 3G (`node tools/perf/measure.mjs 3g`) | 771 ms | **521 ms** (−32%) |
+| Cold search, 4G | 483 ms | **496 ms** (unchanged — 4G was never payload-bound here) |
+| `assets/app.js` | 26.8 KB gz | **31.3 KB gz** (+4.5 KB — the binary reader, query engine, ranking) |
+| `tools/perf/search-parity.mjs` (210 real queries) | did not exist | **0 unexplained regressions** (see point 3 above) |
+| `npm run check:all` | 23/23 enforced, 1 tracked | **23/23 enforced**, 1 tracked (unchanged — `INV-14`/R3 is Phase 6) |
+
+**Be honest about the byte cost, again.** 1,132.0 KB beats the pre-Phase-5 number by 45% but
+misses the audit's original 751/800 KB projection by a real margin — not because the index design
+was wrong, but because that projection (both the original estimate and its own Phase-4 addendum
+re-measurement) covered canonical questions only, and never accounted for the variant-parity
+requirement `search-parity.mjs` was built specifically to catch. Shipping the cheaper, canonical-
+only index would have hit the target number and silently broken search for ~3,103 copies —
+rejected for the same reason DECISION-11 rejected "mostly fixed, with one deliberately-kept
+exception." `BUDGET-search`'s target is now 1,000 KB (a real stretch — trimming the translation
+table or postings encoding further — not a number this session assumed reachable without one).
 
 ---
 
@@ -1233,6 +1424,23 @@ Dependencies: Phase 5 landed. One session.
 `renderBrowse()` does `box.innerHTML = ''` and rebuilds. P4 fixed the "Show more" path; this is the
 keystroke path. Measured on mobile at CPU 4×: **~250 ms input → repaint, with an 86–91 ms long
 task**, and **235 ms** on the first-ever search. Chrome's INP "good" threshold is 200 ms.
+
+> ⚠️ **Addendum, 2026-09-14, after Phase 5 landed — this baseline is stale, re-check before
+> assuming R1 is still needed at this size.** A throwaway (uncommitted) keystroke long-task
+> measurement against the post-Phase-5 build — type "state" letter-by-letter into an empty
+> search box, 4G/CPU×4, PerformanceObserver `longtask` entries — found **one 52 ms task on the
+> very first keystroke** (the empty→query transition) and **zero long tasks on every subsequent
+> keystroke**, even as the result set grew to 1,088 copies / 2,940 matching questions. Not the
+> 86–91 ms steady-state / 235 ms first-search numbers above. Plausible causes, not confirmed:
+> `content-visibility` (P9a) and the sort fix (P6) already landed in Phase 1 and were never
+> re-measured against this specific scenario; Phase 5 also changed what a keystroke triggers
+> (`matchingQidsIndexed()` over a binary index instead of a linear string scan), which is a
+> plausibly real, favorable side effect but wasn't the target of that phase and its cost here
+> was never isolated. **Write `tools/perf/inp.mjs` and get a real number before deciding R1 is
+> still worth doing at all, and at what size** — DECISION-9 the same way the E1 addendum was:
+> one quick diagnostic pass is a strong lead, not a verified result. If the real number is
+> already under ~50 ms, this item may collapse to "NO ACTION, re-verified" the same way P6 did
+> in Phase 1 — that is a legitimate outcome, not a failure to do the work.
 
 ### Fix
 
@@ -1339,6 +1547,127 @@ node tools/perf/history.mjs
 
 ---
 
+### Phase 6 landed — 2026-09-14
+
+R2 and R3 done as specified. R1 was implemented, but the R1 addendum's own instruction —
+"get a real number before deciding how much of the fix is still needed" — turned up a result the
+audit did not anticipate: **the specified fix (keyed DOM reconciliation) does not address the
+long-task number, in either direction it was measured.**
+
+**R1, measured (`tools/perf/inp.mjs`, new, committed as the regression guard).** Steady-state
+keystrokes: **0ms**, confirming last session's throwaway finding — Phase 5 already fixed this as
+an unintended side effect of replacing the linear substring scan with the binary index lookup.
+The empty→query transition is genuinely not fine: **54–94ms** across repeated runs on two
+different query terms, both before and after the DOM fix landed — implementing the fix moved this
+number by nothing. A CDP CPU profile of a single, realistic first-ever query ("federalism",
+"commission") found why: the dominant cost is `loadQuestionText()`'s one-time `Map`-build from
+`data/qtext.json` (**26–28ms self time**, `assets/app.js:216`-ish) plus `parseQIndex()`
+(**7–10ms**) — both one-time JSON/binary-parse costs that happen to coincide with the first search
+because that is what triggers `ensureQText()`/`ensureQIndexBin()`. `filteredCopies()` itself
+(the sort, the list-building `.map()`) measured **3–5ms** for a realistic query — nowhere near the
+bottleneck. A pathological single-common-letter query ("s", matching 5,830 of 8,075 copies) does
+make `filteredCopies()` expensive (33ms self time, mostly `Array.sort` over the huge match set),
+but that is a different, narrower problem than "rebuilding the whole list," and not what a typical
+search hits.
+
+**So the audit's diagnosis (`box.innerHTML=''` rebuild cost) does not hold post-Phase-5, in
+either the steady-state or the empty-query case** — this is the same shape of finding as the
+Phase 4→5 and Phase 5→6 addenda (a phase's own fix silently resolves or reshapes a later phase's
+starting assumption), just found by implementing rather than by prep-measuring.
+
+**Implemented anyway, for a different, real reason found while testing manually.** A card the
+user had manually expanded lost its open state on the very next keystroke: `wireBrowse()`'s input
+handler calls `renderBrowse()` with no `reopen` list, and the pre-R1 `box.innerHTML=''` rebuild
+recomputed every card's `openIt` (auto-open-on-match) fresh every time, discarding whatever the
+user had actually toggled. Reproduced directly: expand a name-hit card (openIt is false for a name
+hit, so this can only be the user's own action), type one more character that still matches by
+name — the card closes on its own. This is squarely `INTENT-3` ("no lost keystrokes… feel
+smooth"), just not one the audit's ms-denominated framing would catch. `getCard()` /
+`reconcileBrowseList()` (audit's specified mechanism) fix exactly this: an id whose signature is
+unchanged is returned as the same DOM node untouched; an id whose signature changed is rebuilt but
+carries forward its own real current `.open` state via `copyCard()`'s new `forceOpen` parameter,
+not a value recomputed as if the card were brand new. Verified: expand a card, type further
+(content-changing) keystrokes, the manual open/close choice survives every one of them — for both
+a rebuild-forced case (query narrows, content genuinely changes) and a fully-reused case (sort
+order changes, ids don't). The Phase 5 interaction the addendum specifically flagged (a card whose
+match the index confirmed before `qtext.json` landed, showing "Loading question text…") also
+verified correctly: held `data/qtext.json` in flight, confirmed the placeholder renders and the
+card stays in its open state, released the file, confirmed it backfills to real text in the same
+node with no duplicate and no collapse.
+
+**Two real bugs found and fixed along the way, both by testing, neither named anywhere in the
+audit:**
+1. `cardSig()`'s first version included the query text unconditionally — for a link-only or stub
+   card (no highlighting, no question list, nothing query-dependent in the rendered output) this
+   forced a pointless rebuild on every keystroke, and neither of those two `copyCard()` branches
+   applies `forceOpen` (they predate it), so a manually-expanded link-only card silently snapped
+   shut on the next keystroke — the exact bug R1 exists to fix, reintroduced by R1's own
+   implementation for one card shape. Fixed: `cardSig()` returns a constant for stub/link-only
+   ids, keeping them permanently in the reuse-as-is path once built.
+2. Making `.filters-toggle` visible by default on mobile (R2, below) surfaced a pre-existing touch
+   target under Google's 24px minimum (23px) — the `.toolbar.slim` collapsed state this button was
+   copied from had never actually been exercised by `tools/perf/a11y.mjs`, which loads the page but
+   never scrolls. Fixed with `min-height: 40px` on the base rule (benefits both the always-visible
+   mobile state and the original scroll-triggered one).
+
+**R2, measured (`tools/perf/fold.mjs`).** Before: 0 result cards above the fold at both 390×844
+and 1440×900. The audit's own fix (drop `#sub`, keep `#statline`, collapse `.credit` to a one-line
+link to About, widen `h1`) was not sufficient by itself — even with the hero/stats/disclaimer
+trimmed to nothing, the filter row (paper chips, mode, syllabus/topper/source/year/sort — expanded
+by default until the toolbar's own *scroll*-triggered "slim" collapse) still pushed every card
+below the fold at 390px. Extended the fix to start phones in that same collapsed-filters posture
+from first paint, not only after the user has scrolled past the sentinel — the toggle button and
+its reveal mechanism (`.toolbar.open .toolbar-filters`) already existed for exactly this, just
+never applied before the first scroll. After: **2 result cards above the fold at 390×844** ✅.
+1440×900 desktop still shows 0 — correctly out of scope: the audit's own fix section scopes to
+`max-width: 680px` and its Target line names only 390×844.
+
+**CLS regression found and fixed within this same item.** Compacting the mobile hero moved
+`#resultmeta` — which starts empty and is filled by JS once the first render runs, the same shape
+of bug `#statline`/`#papers` were already fixed for (AUDIT P3) — into the visible viewport for the
+first time; the ~22px fill that was previously invisible below the fold now measurably shifted the
+search UI. Measured: **CLS 0.0051 → 0.3005** on 3G immediately after the R2 CSS landed. Fixed by
+reserving `#resultmeta`'s height the same way `#statline`/`#papers` already are: **CLS 0.0604** on
+3G, comfortably under the 0.1 "good" threshold, with one small residual source (`footer.site`
+being pushed far down the page as the result list grows in from a shorter skeleton — a natural
+below-the-fold consequence of async content loading, not a regression, and not worth chasing
+further against this item's own scope).
+
+**R3.** Implemented as specified, plus the `?syl=` read path and one deviation found necessary by
+testing: `syncUrl()`'s original draft cached "was the query empty" in a module variable, updated
+only when the URL actually changed. A Back navigation reverts the URL without going through that
+"changed" branch, so the cached flag drifted from reality — the very next new search then used
+`replaceState` instead of `pushState` (no real bug from that alone), collapsing what should have
+been a second history entry into the first, so a *second* Back on a *second* search fell off the
+app's own history entirely onto `about:blank`. Rewritten to read "was empty" fresh from
+`location.search` on every call — self-correcting, no state to drift. `tools/perf/history.mjs`
+(new) exercises six things in one run: `?q=` appears on typing; the hash changes (`setView()`'s
+own `#browse`/`#about` routing) without dropping `?q=`; `?q=` survives a tab switch and back;
+typing a query letter-by-letter produces exactly one history entry, not six (`replaceState` per
+keystroke); one Back genuinely clears it; `?paper=` writes correctly from the paper filter chips.
+All six pass. `INV-14` flipped from tracked to enforced in the same commit, per `docs/MEMORY.md`'s
+protocol.
+
+| Metric | Before Phase 6 | After Phase 6 |
+|---|---:|---:|
+| Long task, steady-state keystroke (`inp.mjs`) | ~0ms (Phase 5 side effect, unverified) | **0ms, verified & committed as a regression guard** |
+| Long task, empty→query transition | 52–81ms (single throwaway run) | **54–94ms** (repeated, real — R1's DOM fix does not move this; root cause is `loadQuestionText()`'s one-time `Map`-build + `parseQIndex()`, not rendering) |
+| Manually-expanded card survives further typing | no (collapses on the next keystroke) | **yes** |
+| Result cards above the fold, 390×844 (`fold.mjs`) | 0 | **2** |
+| CLS, 3G mobile (`cls.mjs`) | 0.0051 | **0.0604** (dipped to 0.3005 mid-fix, then fixed — see above) |
+| `?q=`/`?paper=`/`?syl=` reach the URL | no | **yes** (`history.mjs`, 6/6) |
+| `assets/app.js` | 31.3 KB gz | **33.4 KB gz** (+2.1 KB — `BUDGET-app_js` ceiling ratcheted 33→34 KB, real core-rendering functionality, not lazy-loadable per DECISION-2's own criterion) |
+| `npm run check:all` | 23/23 enforced, 1 tracked | **24/24 enforced, 0 tracked** — `INV-14` promoted |
+
+**What the audit got right that this session should say plainly:** it explicitly told the next
+session not to trust the stale baseline and to measure first (the boxed addendum under R1) — that
+instruction is exactly what surfaced this outcome, and the audit's own framing ("this may collapse
+to NO ACTION… that is a legitimate outcome, not a failure to do the work") anticipated the
+possibility, just not the specific shape it took (implemented, but for a different reason than
+stated).
+
+---
+
 # Phase 7 — Where the project can go
 
 Not implementation instructions. Judgements about the product, for you to accept or reject.
@@ -1435,28 +1764,38 @@ Tick as you land each item. One commit per item.
 | 1 | P9 — `content-visibility`; fix the README claims | ☑ |
 | 1 | P10 — `--hdr` ceiling is viewport-relative | ☑ |
 | 1 | P11 — upsckata credit in `llms.txt` | ☑ |
-| 2 | D1 — stop deploying `data/questions.csv` | ☐ |
-| 2 | D2 — hosting decision (see recommendation) | ☐ |
-| 2 | D3 — `sw.js` caches the cache-buster response | ☐ |
-| 3 | T1 — drop `sl` from `questions.json` | ☐ |
-| 3 | T2 — parallel `copies.json` + `questions.json` | ☐ |
-| 3 | T3 — split `qmeta.json` / `qtext.json` | ☐ |
-| 3 | T4 — OPTIONAL: intern `copies.json` strings | ☐ |
-| 4 | I1 — content-derived stable ids | ☐ |
-| 5 | E1 — inverted index + prefix search + relevance ranking | ☐ |
-| 6 | R1 — keyed card reconciliation | ☐ |
-| 6 | R2 — trim the mobile first screen | ☐ |
-| 6 | R3 — search state in the URL | ☐ |
+| 2 | D1 — stop deploying `data/questions.csv` | ☑ |
+| 2 | D2 — hosting decision — **awaiting Hashin**, not code | ⏸ |
+| 2 | D3 — `sw.js` caches the cache-buster response | ☑ |
+| 3 | T1 — drop `sl` from `questions.json` | ☑ |
+| 3 | T2 — parallel `copies.json` + `questions.json` | ☑ |
+| 3 | T3 — split `qmeta.json` / `qtext.json` | ☑ |
+| 3 | T4 — OPTIONAL: intern `copies.json` strings | ⏸ deliberately skipped — see "Phase 3 landed" |
+| 4 | I1 — content-derived stable ids | ☑ |
+| 5 | E1 — inverted index + prefix search + relevance ranking | ☑ |
+| 6 | R1 — keyed card reconciliation | ☑ implemented, but NOT for the audit's stated long-task reason — see "Phase 6 landed" |
+| 6 | R2 — trim the mobile first screen | ☑ |
+| 6 | R3 — search state in the URL | ☑ |
 
 ## Target, measured
 
-| | today | after Phase 5 | after Phase 5 + Brotli |
+The original projection row is kept for history. The "after Phase 5, measured" row is the real
+number, on this document's own corpus and harness, at the commit Phase 5 landed on.
+
+| | original baseline | projected after Phase 5 | **measured after Phase 5** |
 |---|---:|---:|---:|
-| Search-ready bytes | 1,994 KB | **751 KB** | **550 KB** |
-| Cold search, 4G | 2,670 ms | ~1,000 ms | ~800 ms |
-| Cold search, slow 3G | 4,455 ms | ~1,500 ms | ~1,200 ms |
-| CLS (3G mobile) | 0.193 | **0.00** | 0.00 |
-| Longest keystroke task | 235 ms | < 50 ms | < 50 ms |
+| Search-ready bytes | 1,994 KB | 751 KB | **1,132.0 KB gz** (was 2,058.5 KB post-Phase-4 — the honest before/after; see "Phase 5 landed" below for why 751 KB assumed away a real cost) |
+| Cold search, 4G | 2,670 ms | ~1,000 ms | **496 ms** (was already 483 ms post-Phase-3/4 — 4G was never payload-bound here) |
+| Cold search, slow 3G | 4,455 ms | ~1,500 ms | **521 ms** (was 771 ms post-Phase-3/4, −32%) |
+| CLS (3G mobile) | 0.193 | 0.00 | **0.0051** (unchanged — Phase 5 touches search, not layout) |
+| Longest keystroke task | 235 ms | < 50 ms | **0ms steady-state** (verified, `tools/perf/inp.mjs`); **54–94ms on the empty→query transition**, unresolved — see "Phase 6 landed": the cause is one-time JSON/binary parse cost coinciding with the first search, not list-rebuilding, and R1's DOM fix does not reduce it |
+
+**Read this table carefully.** The *original* 1,994 KB / 4,455 ms baseline was measured before
+Phases 1, 3 and 4 landed — by the time Phase 5 started, Phases 1/3/4 had already brought slow-3G
+cold search down to 771 ms and the search-gating payload down to 2,058.5 KB (with content-derived
+ids added back in Phase 4). Phase 5's own, apples-to-apples delta is **2,058.5 → 1,132.0 KB
+(−45%)** and **771 → 521 ms on 3G (−32%)** — real and large, just not the number you get by
+naively subtracting from the 2026-09-14 baseline row above it.
 
 The Phase 5 timing figures are projections from the measured payload reduction; everything else in
 this document is measured. Re-run `tools/perf/measure.mjs` after each phase and replace the

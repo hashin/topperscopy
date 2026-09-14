@@ -46,10 +46,19 @@
   // (AUDIT P4), LASTCOUNT lets the analytics handler report the count without running the
   // entire search a second time (AUDIT P5).
   var LASTLIST = null, LASTCOUNT = 0;
+  // Audit R1, DECISION-13: copy id -> its currently-rendered <details.copy> element, so
+  // renderBrowse() can reconcile instead of tearing the list down every keystroke.
+  var CARDMAP = new Map();
   var QI = null, SYL = null, COPYBYID = {}, qiState = 'idle', qiPromise = null;
+  // T3 (audit): question TEXT is split into its own file (qtext.json) from the meta that finds
+  // and filters a question (qmeta.json, in QI). qtState/qtPromise track that fetch separately so
+  // the syllabus filter, paper filter and Practice question-picking — all meta-only — don't wait
+  // on ~780 KB of prose they don't need. PENDING_PRACTICE_TXT backfills a Practice card's question
+  // line in place once the text lands, without re-picking the question or losing the streak bump.
+  var qtState = 'idle', qtPromise = null, PENDING_PRACTICE_TXT = null;
   var state = {
     view: 'browse', q: '', mode: 'all', paper: 'all',
-    topper: '', source: '', year: '', sort: 'year', shown: PAGE,
+    topper: '', source: '', year: '', sort: 'best', shown: PAGE,
     qview: 'copies', syl: '', pp: '', psyl: '',
     optSubject: 'all', optQ: '', optShown: PAGE
   };
@@ -85,10 +94,19 @@
      only blocks when the user actually searches or expands a copy. */
   var FULL = false, fullState = 'idle', fullPromise = null, QBYID = null;
   var practiceIntent = null;   // ?practice=<subject-slug> from an /optional/<slug>/ page
-  // copies.json (format 2) stores a question as an id into data/questions.json rather than
-  // repeating its text. QTEXT resolves those ids; QTEXTLC is the same text lowercased once
-  // at load, so searching never re-lowercases 5.5 MB of strings on every keystroke.
+  // copies.json (format 2) stores a question as an id into data/qtext.json (split from
+  // data/qmeta.json in T3) rather than repeating its text. QTEXT resolves those ids; QTEXTLC is
+  // the same text lowercased once at load, so searching never re-lowercases 5.5 MB of strings on
+  // every keystroke.
   var QTEXT = null, QTEXTLC = null, QVAR = null, QVARLC = null;
+  // Phase 5 / E1 (DECISION-7, DECISION-12): the token-prefix inverted index, data/qindex.bin.
+  // This is what actually FINDS a match now — QTEXT/QTEXTLC above are only needed to RENDER
+  // the matched text (a card's snippet) and to verify an exact-phrase candidate. QIDX loads and
+  // resolves independently of QTEXT, same two-independent-promises pattern as qmeta/qtext
+  // (DECISION-10) — a search can return its real copy list and count before a single byte of
+  // question prose has arrived.
+  var QIDX = null, qxState = 'idle', qxPromise = null;
+  var FALLBACK_USED = false, PHRASE_PENDING = false, LAST_QSCORE = null;
 
   function saveData() {
     var c = navigator.connection || {};
@@ -101,36 +119,20 @@
     if (saveData()) { setTimeout(function () { loadFull(); }, 6000); return; }
     idle(function () { loadFull(); }, { timeout: 4000 });
   }
-  // The three data files are cached independently — index.json is stale-while-revalidate in
-  // sw.js, copies.json / questions.json are cache-first with a 12 h TTL on their own clocks —
-  // so a returning visitor can hold a mismatched set. Copy ids are positional, so merging
-  // across builds would splice one copy's questions onto another. Fetch; if the build id
-  // disagrees with what we already hold, go round the caches once (a query string sw.js
-  // passes straight through) and take the newest.
-  function fetchAtBuild(url, want) {
-    return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
-      if (!want || !d.build || d.build === want) return d;
-      return fetch(url + '?b=' + encodeURIComponent(d.build || 'x') + '.' + Date.now())
-        .then(function (r) { return r.json(); });
-    });
-  }
+  // The data files are cached independently — index.json is stale-while-revalidate in sw.js,
+  // copies.json / qmeta.json / qtext.json are cache-first with a 7-day TTL on their own clocks —
+  // so a returning visitor can hold a mismatched set. Ids are content-derived (Phase 4 / I1,
+  // DECISION-5), so this is now harmless: an id that exists in one file either means the same
+  // thing in every other file that ever mentions it, or doesn't exist there yet (a question too
+  // new to be in a stale cached copies.json). No reconciliation needed — just fetch.
   function ensureFullPromise() { ensureFull(); return fullPromise || Promise.resolve(); }
 
   function loadFull() {
     if (fullPromise) return fullPromise;
     fullState = 'loading';
-    fullPromise = fetchAtBuild('data/copies.json', DB && DB.build).then(function (d) {
+    fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
       QBYID = {};
       DB.copies = DB.copies.filter(function (c) { return !c.stub; });  // drop name-search placeholders
-      // Boot index (index.json) and this file came from different builds — the id-keyed merge
-      // below would attach these questions to the wrong lite rows. copies.json is a strict
-      // superset of index.json, so drop the lite rows and rebuild wholly from it.
-      if (d.build && DB.build && d.build !== DB.build) {
-        DB.copies = [];
-        DB.build = d.build;
-        DB.generated = d.generated || DB.generated;
-        if (d.stats) DB.stats = d.stats;
-      }
       var known = {};
       DB.copies.forEach(function (c) { known[c.i] = c; });
       d.copies.forEach(function (c) {
@@ -170,30 +172,24 @@
   function loadQuestionIndex() {
     if (qiPromise) return qiPromise;
     qiState = 'loading';
-    // questions.json's a:[[copyId, page]] refs and its qids are only meaningful against the
-    // build copies.json was loaded at, so wait for that and pin to DB.build (which loadFull
-    // reconciles to copies.json's actual build).
-    qiPromise = ensureFullPromise().then(function () {
-      return Promise.all([
-        fetchAtBuild('data/questions.json', DB && DB.build),
-        fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; })
-      ]);
-    }).then(function (res) {
-      QI = res[0].questions || [];
-      SYL = res[1];
-      QTEXT = []; QTEXTLC = [];
-      for (var qi = 0; qi < QI.length; qi++) {
-        var qq = QI[qi];
-        QTEXT[qq.i] = qq.q;
-        QTEXTLC[qq.i] = String(qq.q || '').toLowerCase();
-      }
-      // variant texts — a copy whose own wording the deduped entry doesn't faithfully contain
-      QVAR = res[0].variants || []; QVARLC = [];
-      for (var vi = 0; vi < QVAR.length; vi++) QVARLC[vi] = String(QVAR[vi] || '').toLowerCase();
+    // Start the download NOW rather than after copies.json has landed and parsed — on slow 3G
+    // that serialisation costs ~1.8s of dead air (T2). Ids are content-derived (Phase 4 / I1),
+    // so qmeta.json's a:[[copyId, page]] refs need no reconciliation against copies.json — a
+    // copyId either resolves through COPYBYID once copies.json has loaded, or doesn't yet (a
+    // very recent copy not in a stale cached copies.json), never the wrong copy.
+    var qJson = fetch('data/qmeta.json').then(function (r) { return r.json(); });
+    var sJson = fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; });
+    qiPromise = Promise.all([ensureFullPromise(), qJson, sJson]).then(function (parts) {
+      QI = parts[1].questions || [];
+      SYL = parts[2];
       qiState = 'ready';
       fillSyllabus();
-      // copy cards can now show their question text, so re-render an active text search too
-      if (state.view === 'browse' && (state.qview === 'questions' || state.q)) renderBrowse();
+      if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
+      // Also re-render, not just refill the syllabus dropdown: nextPracticeQ() shows "Loading
+      // questions…" and returns without retrying when QI isn't ready yet (the paper-pick handler
+      // is the only other caller) — without this, the dialog stays stuck on that placeholder
+      // once QI actually lands, until the user manually clicks "Another question" (found in
+      // review before merge; loadFull()'s own handler already does this for FULL).
       if ($('#practice').open) { fillPracticeSyl(); renderPractice(); }
       track('question_index_loaded', { count: QI.length });
       return QI;
@@ -204,7 +200,176 @@
     });
     return qiPromise;
   }
-  function ensureQI() { if (!QI && qiState !== 'loading') loadQuestionIndex(); }
+  function ensureQI() {
+    if (!QI && qiState !== 'loading') loadQuestionIndex();
+    ensureQText();   // start the text fetch alongside meta — every ensureQI() call site gets both
+  }
+
+  // The ~780 KB of question prose, split out of qmeta.json in T3. Not needed to find or filter
+  // a question (qmeta.json alone does that) — only to render or text-match one. Fetched in
+  // parallel with qmeta.json (same trigger as T2), resolved independently so meta-only consumers
+  // aren't held up behind ~780 KB they don't need. `text`/`variants` arrive as id-keyed JSON
+  // objects (Phase 4 / I1) — question ids are now a sparse ~32-bit hash, and any structure sized
+  // or indexed by the raw id value (an array, a Uint8Array) would try to allocate space up to the
+  // id's magnitude (up to ~4.29 billion) instead of the ~8k entries actually present. They're
+  // converted to `Map`s here, not kept as plain objects: a warmed, interleaved benchmark
+  // (DECISION-9 — measure, don't assume) showed matchingQids() scanning a plain object keyed by
+  // large sparse ids costs ~3.6ms vs ~1.0ms for the old position-indexed array, a real per-
+  // keystroke regression; a Map scanned the same way costs ~1.0ms, matching the old array. Map
+  // keys are numbers throughout (JSON object keys parse as strings; converted once here) so
+  // `.get(q.i)` works without a wrapping String()/Number() at every call site.
+  function loadQuestionText() {
+    if (qtPromise) return qtPromise;
+    qtState = 'loading';
+    var tJson = fetch('data/qtext.json').then(function (r) { return r.json(); });
+    qtPromise = Promise.all([ensureFullPromise(), tJson]).then(function (parts) {
+      var d = parts[1];
+      QTEXT = new Map(); QTEXTLC = new Map();
+      for (var id in (d.text || {})) {
+        var nid = Number(id), t = String(d.text[id] || '');
+        QTEXT.set(nid, t); QTEXTLC.set(nid, t.toLowerCase());
+      }
+      // variant texts — a copy whose own wording the deduped entry doesn't faithfully contain
+      QVAR = new Map(); QVARLC = new Map();
+      for (var vid in (d.variants || {})) {
+        var nvid = Number(vid), vt = String(d.variants[vid] || '');
+        QVAR.set(nvid, vt); QVARLC.set(nvid, vt.toLowerCase());
+      }
+      qtState = 'ready';
+      // copy cards and the question-first view can now show/match question text. Phase 5 / E1:
+      // a matched card can already be open (showing a "Loading question text…" placeholder row)
+      // by the time this lands, since the index alone was enough to find and render it — keep
+      // it open across the backfill re-render instead of silently collapsing it on the user.
+      if (state.view === 'browse' && (state.qview === 'questions' || state.q)) {
+        renderBrowse($$('#results .copy[open]').map(function (n) { return n.getAttribute('data-i'); }));
+      }
+      if (PENDING_PRACTICE_TXT) {
+        PENDING_PRACTICE_TXT.div.textContent = dispQ(qText(PENDING_PRACTICE_TXT.q));
+        PENDING_PRACTICE_TXT = null;
+      } else if ($('#practice').open) {
+        renderPractice();
+      }
+      track('question_text_loaded', { count: QTEXT.size });
+      return QTEXT;
+    }).catch(function (e) {
+      qtState = 'error'; qtPromise = null;
+      track('data_error', { message: 'qtext ' + String(e && e.message || e).slice(0, 100) });
+      if (state.view === 'browse') renderBrowse();   // clear a stuck "Searching…" state
+    });
+    return qtPromise;
+  }
+  function ensureQText() { if (!QTEXT && qtState !== 'loading') loadQuestionText(); }
+
+  /* ---------- Phase 5 / E1: the token-prefix inverted index, data/qindex.bin ----------
+     This is what actually finds a match now. It resolves independently of QTEXT (same
+     two-promise pattern as qmeta/qtext, DECISION-10) — a search gets its real copy list and
+     count as soon as this + copies.json have landed, well before ~1.4 MB of question prose. */
+  function loadQIndexBin() {
+    if (qxPromise) return qxPromise;
+    qxState = 'loading';
+    qxPromise = fetch('data/qindex.bin').then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
+      QIDX = parseQIndex(buf);
+      qxState = 'ready';
+      if (state.view === 'browse' && state.q) renderBrowse();
+      track('qindex_loaded', { tokens: QIDX.tokens.length });
+      return QIDX;
+    }).catch(function (e) {
+      qxState = 'error'; qxPromise = null;
+      track('data_error', { message: 'qindex_bin ' + String(e && e.message || e).slice(0, 100) });
+      if (state.view === 'browse') renderBrowse();   // clear a stuck "Searching…" state
+    });
+    return qxPromise;
+  }
+  function ensureQIndexBin() { if (!QIDX && qxState !== 'loading') loadQIndexBin(); }
+
+  // Parse data/qindex.bin. Header: magic "TCIX" + version, tokenCount, qCount, vCount, then
+  // four section byte-lengths, then the sections themselves: front-coded dictionary, a varint
+  // postings-length table, delta+varint postings (over LOCAL positions 0..qCount+vCount-1), and
+  // a uint32-per-position translation table back to the stable id (position < qCount => a
+  // canonical question id; position >= qCount => a variant id, negated by the caller — see
+  // build.js's writeQIndex()). Postings reference the local position, not the id, because the
+  // id is now a ~32-bit content hash (Phase 4/I1) that does not compress as small sequential
+  // deltas — see PERF-UX-AUDIT-2026-09-14.md's E1 addendum and tools/perf/index-proto.mjs.
+  // The dictionary is decoded into a plain sorted string array up front (14.5k entries, trivial)
+  // so every query is a plain binary search with no re-decoding per keystroke; postings for a
+  // token are decoded lazily and cached, since most keystrokes touch only a handful of tokens.
+  function parseQIndex(buf) {
+    var dv = new DataView(buf);
+    var magic = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
+    if (magic !== 'TCIX') throw new Error('bad qindex.bin magic: ' + magic);
+    var o = 5;   // magic (4) + version (1)
+    var tokenCount = dv.getUint32(o, true); o += 4;
+    var qCount = dv.getUint32(o, true); o += 4;
+    var vCount = dv.getUint32(o, true); o += 4;
+    var dictBytes = dv.getUint32(o, true); o += 4;
+    var lenTableBytes = dv.getUint32(o, true); o += 4;
+    var postingsBytes = dv.getUint32(o, true); o += 4;
+    var translationBytes = dv.getUint32(o, true); o += 4;
+    var dictStart = o;
+    var lenStart = dictStart + dictBytes;
+    var postStart = lenStart + lenTableBytes;
+    var transStart = postStart + postingsBytes;
+
+    var dictStr = new TextDecoder('utf-8').decode(new Uint8Array(buf, dictStart, dictBytes));
+    var tokens = new Array(tokenCount);
+    var prev = '', p2 = 0, line = 0;
+    while (p2 < dictStr.length && line < tokenCount) {
+      var nl = dictStr.indexOf('\n', p2);
+      var rec = dictStr.slice(p2, nl);
+      var shared = rec.charCodeAt(0) - 48;
+      var t = prev.slice(0, shared) + rec.slice(1);
+      tokens[line++] = t; prev = t; p2 = nl + 1;
+    }
+
+    var bytes = new Uint8Array(buf);
+    function readVarintsInto(start, count, out) {
+      var p = start;
+      for (var k = 0; k < count; k++) {
+        var v = 0, shift = 0, b;
+        do { b = bytes[p++]; v |= (b & 127) << shift; shift += 7; } while (b & 128);
+        out[k] = v >>> 0;
+      }
+      return p;
+    }
+    var lens = new Uint32Array(tokenCount);
+    readVarintsInto(lenStart, tokenCount, lens);
+    var postOffset = new Uint32Array(tokenCount + 1);
+    postOffset[0] = postStart;
+    for (var k2 = 0; k2 < tokenCount; k2++) postOffset[k2 + 1] = postOffset[k2] + lens[k2];
+
+    var translate = new Uint32Array(qCount + vCount);
+    for (var k3 = 0; k3 < qCount + vCount; k3++) translate[k3] = dv.getUint32(transStart + k3 * 4, true);
+
+    var postingsCache = new Map();
+    function postingsOf(tokenIdx) {
+      var cached = postingsCache.get(tokenIdx);
+      if (cached) return cached;
+      var start = postOffset[tokenIdx], end = postOffset[tokenIdx + 1];
+      var out = [], p = start, last = 0;
+      while (p < end) {
+        var v = 0, shift = 0, b;
+        do { b = bytes[p++]; v |= (b & 127) << shift; shift += 7; } while (b & 128);
+        last += (v >>> 0); out.push(last);
+      }
+      postingsCache.set(tokenIdx, out);
+      return out;
+    }
+    function lowerBound(w) {
+      var lo = 0, hi = tokens.length;
+      while (lo < hi) { var mid = (lo + hi) >> 1; if (tokens[mid] < w) lo = mid + 1; else hi = mid; }
+      return lo;
+    }
+    // every token in [lo,hi) starts with `term` — tokens are [a-z0-9]+ only, so U+FFFF sorts
+    // after any of them and is a safe upper-bound sentinel.
+    function prefixRange(term) { return [lowerBound(term), lowerBound(term + '￿')]; }
+
+    return { version: dv.getUint8(4), tokens: tokens, qCount: qCount, vCount: vCount,
+      translate: translate, postingsOf: postingsOf, prefixRange: prefixRange };
+  }
+
+  // Resolve a qmeta.json row's text from the separately-loaded qtext.json. null = not loaded yet;
+  // every caller already treats that as "not ready" and re-renders once loadQuestionText resolves.
+  function qText(q) { return QTEXT ? (QTEXT.get(q.i) || '') : null; }
 
   // syllabus node id -> readable label ("GS2 · Federalism")
   function sylLabel(id) {
@@ -217,7 +382,6 @@
   }
   function fillSyllabus() {
     var sel = $('#syl'); if (!sel || !SYL) return;
-    var keep = sel.value;
     var frag = document.createDocumentFragment();           // off-DOM; swap once (AUDIT P3)
     frag.appendChild(el('option', { value: '' }, ['Whole syllabus']));
     var counts = {};
@@ -231,7 +395,7 @@
       frag.appendChild(og);
     });
     sel.replaceChildren ? sel.replaceChildren(frag) : (sel.innerHTML = '', sel.appendChild(frag));
-    sel.value = keep;
+    sel.value = state.syl;   // authoritative — may hold a ?syl= that predates this select's options (R3)
   }
 
   /* ---------- collapsing toolbar ---------- */
@@ -247,7 +411,7 @@
     if (state.topper) n++;
     if (state.source) n++;
     if (state.year) n++;
-    if (state.sort !== 'year') n++;
+    if (state.sort !== 'best') n++;
     return n;
   }
   function updateFilterCount() {
@@ -345,6 +509,10 @@
     var pp = new URLSearchParams(location.search).get('paper');
     if (pp && PAPERS.indexOf(pp) >= 0) state.paper = pp;
 
+    // ?syl=<node id> — a shared/bookmarked syllabus filter (R3; fillSyllabus() applies it once loaded)
+    var sylp = new URLSearchParams(location.search).get('syl');
+    if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; ensureQI(); }
+
     Promise.all([
       fetch('data/index.json').then(function (r) { return r.json(); }),
       fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
@@ -416,7 +584,7 @@
     var target = norm(want);
     var match = Object.keys(optPracticeSubjects()).filter(function (s) { return norm(s) === target; })[0];
     // the optional path runs entirely off OPTPOOL (already in memory from optionals.json).
-    // Only the generic fallback touches GS/Essay data, so don't pull questions.json +
+    // Only the generic fallback touches GS/Essay data, so don't pull qmeta.json/qtext.json +
     // the 2 MB copies.json — that download + its sync processing froze the click.
     if (!match) { ensureQI(); ensureFull(); }
     state.pp = 'Optional'; state.psyl = match || '';
@@ -496,6 +664,19 @@
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
     if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
+    // R3 fix (found in review before merge): popstate only resyncs state.q/paper/syl while
+    // state.view === 'browse', so a Back navigation that lands while on another tab leaves
+    // Browse's in-memory state stale until the URL and state are compared here. Only resync
+    // when they actually disagree — applyUrlToState() also resets state.shown to PAGE, and
+    // unconditionally calling it on every plain tab switch would discard a legitimate
+    // "Show more" expansion that nothing has made stale.
+    if (v === 'browse') {
+      var up = new URLSearchParams(location.search);
+      var uq = (up.get('q') || '').trim().slice(0, 200);
+      var upaper = up.get('paper'); upaper = (upaper && PAPERS.indexOf(upaper) >= 0) ? upaper : 'all';
+      var usyl = (up.get('syl') || '').trim().slice(0, 60);
+      if (uq !== state.q || upaper !== state.paper || usyl !== state.syl) applyUrlToState();
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });   // valid ScrollBehavior; unknown values fall back to 'auto'
     pageView(v);
     if (changed) track('tab_view', { view: v });
@@ -610,13 +791,13 @@
     return terms.every(function (w) { return t.indexOf(w) >= 0; });
   }
 
-  // raw row = [page, qid|text, marks, words] — qid for a question in data/questions.json,
+  // raw row = [page, qid|text, marks, words] — qid for a question in data/qtext.json,
   // literal text for the rows writeQuestions() drops (sub-parts, fragments) and for a
   // format-1 copies.json still sitting in a service-worker cache.
   function rawQ(c) { return c.q || (QBYID && QBYID[c.i]) || null; }
 
-  // positive id -> deduped question; negative -> this copy's own variant wording (1-based, negated)
-  function textOfId(v) { return v < 0 ? (QVAR[-v - 1] || '') : (QTEXT[v] || ''); }
+  // positive id -> deduped question; negative -> this copy's own variant wording (id = -hash)
+  function textOfId(v) { return v < 0 ? (QVAR.get(-v) || '') : (QTEXT.get(v) || ''); }
 
   // resolved rows, cached per copy. null means "ids present but the table isn't loaded yet",
   // which every caller already treats as "not loaded" and re-renders after.
@@ -637,23 +818,116 @@
     return out;
   }
 
-  // One pass over the ~9.9k deduped questions per query, instead of ~18k question instances
-  // per copy per keystroke. Returns a flag array indexed by question id.
-  function matchingQids(terms, mode) {
+  // The pre-Phase-5 engine: one substring scan over the ~9.9k deduped question/variant strings
+  // per query. Superseded by matchingQidsIndexed() below as the primary path, but kept as the
+  // explicit, audit-specified fallback for a query the token-prefix index returns nothing for
+  // (DECISION-7's known trade-off: "eral" no longer matches "federalism" via the index, but a
+  // student who typed a genuine fragment should still find it, once qtext.json has landed, at
+  // the cost of one full scan instead of zero). Returns a Map of question id -> 1 for ids that
+  // match. A Map, not a plain object: ids are a sparse ~32-bit hash since Phase 4 / I1, and a
+  // plain object keyed by large sparse integers measured ~3.6x slower to scan than a Map here
+  // (DECISION-9 — see loadQuestionText()).
+  function matchingQidsSubstring(terms, mode) {
     var joined = terms.join(' ');
     function scan(src) {
-      var hit = new Uint8Array(src.length);
-      for (var i = 0; i < src.length; i++) {
-        var t = src[i];
-        if (!t) continue;
-        if (mode === 'exact') { if (t.indexOf(joined) >= 0) hit[i] = 1; continue; }
-        var ok = 1;
-        for (var w = 0; w < terms.length; w++) if (t.indexOf(terms[w]) < 0) { ok = 0; break; }
-        hit[i] = ok;
-      }
+      var hit = new Map();
+      src.forEach(function (t, id) {
+        if (!t) return;
+        if (mode === 'exact') { if (t.indexOf(joined) >= 0) hit.set(id, 1); return; }
+        var ok = true;
+        for (var w = 0; w < terms.length; w++) if (t.indexOf(terms[w]) < 0) { ok = false; break; }
+        if (ok) hit.set(id, 1);
+      });
       return hit;
     }
-    return { q: scan(QTEXTLC), v: scan(QVARLC || []) };
+    return { q: scan(QTEXTLC), v: scan(QVARLC || new Map()) };
+  }
+
+  // position < idx.qCount -> a canonical question id; position >= idx.qCount -> a variant id,
+  // returned negated (same sign convention rawQ()/textOfId() already use).
+  function idxIdOf(idx, pos) { return pos < idx.qCount ? idx.translate[pos] : -idx.translate[pos]; }
+
+  // All dictionary tokens starting with `term` (a binary-searched prefix range), unioned into
+  // one Set of local positions. `exact` is just the postings of the token equal to `term`
+  // itself, if the corpus has one — used only for ranking (an exact word match outranks a
+  // longer completion the prefix happened to also pull in). `df` is the term's total raw
+  // document-frequency across the whole expansion, used as this query's idf weight.
+  function expandTerm(idx, term) {
+    var range = idx.prefixRange(term), positions = new Set(), exact = null, df = 0;
+    for (var ti = range[0]; ti < range[1]; ti++) {
+      var post = idx.postingsOf(ti);
+      df += post.length;
+      if (idx.tokens[ti] === term) exact = new Set(post);
+      for (var pi = 0; pi < post.length; pi++) positions.add(post[pi]);
+    }
+    return { positions: positions, exact: exact || new Set(), df: df };
+  }
+
+  function signedMapsFromPositions(idx, positions) {
+    var q = new Map(), v = new Map();
+    positions.forEach(function (p) {
+      var id = idxIdOf(idx, p);
+      if (id < 0) v.set(-id, 1); else q.set(id, 1);
+    });
+    return { q: q, v: v };
+  }
+
+  // The Phase 5 / E1 primary matcher. Tokenise-and-prefix-expand each term (query algorithm,
+  // audit E1), AND the expansions (intersecting the shortest first), verify an exact-phrase
+  // candidate set against QTEXT once it has landed, and fall back to the old substring scan
+  // exactly once if the index genuinely found nothing (DECISION-7's mitigation — see the
+  // "no word match" label this sets FALLBACK_USED for, read in renderBrowse()). Also computes a
+  // simple, explainable BM25-lite score per matched id into LAST_QSCORE, consumed by the
+  // "Best match" sort: idf = log(N/df) so rarer terms weigh more, and a term whose EXACT token
+  // (not a longer prefix-completion) hit this document gets a 1.3x bonus.
+  function matchingQidsIndexed(terms, mode) {
+    FALLBACK_USED = false; PHRASE_PENDING = false; LAST_QSCORE = new Map();
+    var idx = QIDX;
+    var expansions = terms.map(function (t) { return expandTerm(idx, t); });
+    var acc;
+    if (expansions.some(function (e) { return e.positions.size === 0; })) {
+      acc = new Set();
+    } else {
+      var order = expansions.map(function (e, i) { return i; })
+        .sort(function (a, b) { return expansions[a].positions.size - expansions[b].positions.size; });
+      acc = expansions[order[0]].positions;
+      for (var k = 1; k < order.length; k++) {
+        var next = expansions[order[k]].positions, out = new Set();
+        acc.forEach(function (p) { if (next.has(p)) out.add(p); });
+        acc = out;
+      }
+    }
+
+    if (mode === 'exact') {
+      if (acc.size && !QTEXT) { PHRASE_PENDING = true; return signedMapsFromPositions(idx, acc); }
+      var joined = terms.join(' '), verified = new Set();
+      acc.forEach(function (p) {
+        var id = idxIdOf(idx, p);
+        var t = id < 0 ? (QVARLC.get(-id) || '') : (QTEXTLC.get(id) || '');
+        if (t && t.indexOf(joined) >= 0) verified.add(p);
+      });
+      if (!verified.size && QTEXTLC) { FALLBACK_USED = true; return matchingQidsSubstring(terms, mode); }
+      acc = verified;
+    } else if (!acc.size) {
+      if (QTEXTLC) { FALLBACK_USED = true; return matchingQidsSubstring(terms, mode); }
+      return { q: new Map(), v: new Map() };
+    }
+
+    if (acc.size) {
+      var N = idx.qCount + idx.vCount;
+      var idf = expansions.map(function (e) { return Math.max(0.05, Math.log((N + 1) / (e.df + 1))); });
+      acc.forEach(function (p) {
+        var s = 0;
+        for (var ti2 = 0; ti2 < terms.length; ti2++) s += idf[ti2] * (expansions[ti2].exact.has(p) ? 1.3 : 1.0);
+        // Positive-normalized key: idxIdOf() is negative for a variant position (same sign
+        // convention textOfId()/rawQ() use), but filteredCopies() looks scores up the same way
+        // it looks up qhit.q/qhit.v — always positive, sign stripped at the call site. Storing
+        // the raw signed id here meant every variant-only match silently scored 0 under "Best
+        // match" (bug found in review before merge, see docs/DECISIONS.md).
+        LAST_QSCORE.set(Math.abs(idxIdOf(idx, p)), s);
+      });
+    }
+    return signedMapsFromPositions(idx, acc);
   }
 
   // A topper's year / rank: prefer the verified toppers.json value, fall back to the copy's own.
@@ -664,13 +938,17 @@
   function filteredCopies() {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
     var needsText = terms.length > 0;
-    // A query matches a topper's name straight away (index.json is enough); matching the
-    // text *inside* copies needs the big file, so kick that off but never block the UI on it.
+    // A query matches a topper's name straight away (index.json is enough). Matching *inside*
+    // a copy needs copies.json (the raw per-copy rows) and the token index qindex.bin (which
+    // finds the match) — never QTEXT, which is only needed to render the matched snippet
+    // (Phase 5 / E1: the index is what answers "does this match", not the prose).
     if (needsText) {
       if (!FULL && fullState !== 'error') ensureFull();
-      if (!QTEXT && qiState !== 'error') ensureQI();   // the question text lives here now
+      if (!QIDX && qxState !== 'error') ensureQIndexBin();
+      ensureQText();   // never blocks a match — only needed to render/verify text once it lands
     }
-    var qhit = (needsText && QTEXTLC) ? matchingQids(terms, state.mode) : null;
+    var qhit = (needsText && QIDX) ? matchingQidsIndexed(terms, state.mode) : null;
+    var scores = LAST_QSCORE;
 
     var list = DB.copies.map(function (c) {
       if (state.paper !== 'all' && c.p !== state.paper) return null;
@@ -680,54 +958,101 @@
 
       var nameHit = needsText && matchName(c.t, terms);
       // placeholder for a not-yet-loaded topper — only ever shown for a matching name search
-      if (c.stub) return nameHit ? { c: c, qs: [], nameHit: true, n: 0 } : null;
-      var qs = [];
+      if (c.stub) return nameHit ? { c: c, qs: [], nameHit: true, n: 0, score: 0 } : null;
+      var qs = [], score = 0;
       if (needsText && !nameHit) {
         if (c.k) return null;                    // link-only: only a name can match
         var raw = rawQ(c);
         if (!raw || !raw.length) return null;
-        var res = qOf(c);
-        if (!res) return null;                   // question table not loaded yet — re-renders after
+        if (!qhit) return null;                  // index not loaded yet — re-renders once it is
+        var res = qOf(c);                        // null = text not loaded yet; rows render as pending
         for (var qi2 = 0; qi2 < raw.length; qi2++) {
           var v = raw[qi2][1];
           var isHit = (typeof v === 'number')
-            ? !!(qhit && (v < 0 ? qhit.v[-v - 1] : qhit.q[v]))
+            ? !!(v < 0 ? qhit.v.get(-v) : qhit.q.get(v))
             : matchQ(v, terms, state.mode);      // inline text (dropped row, or format-1 cache)
-          if (isHit) qs.push(res[qi2]);
+          if (!isHit) continue;
+          qs.push(res ? res[qi2] : [raw[qi2][0], null, raw[qi2][2], raw[qi2][3]]);
+          if (typeof v === 'number' && scores) {
+            var s = scores.get(v < 0 ? -v : v) || 0;
+            if (s > score) score = s;
+          }
         }
         if (!qs.length) return null;
       }
-      return { c: c, qs: qs, nameHit: !!nameHit, n: qs.length || c.n || (qOf(c) || []).length };
+      return { c: c, qs: qs, nameHit: !!nameHit, n: qs.length || c.n || (qOf(c) || []).length, score: score };
     }).filter(Boolean);
 
     list.sort(function (a, b) {
-      if (state.sort === 'year') {
-        var ya = yearOf(a.c), yb = yearOf(b.c);
-        if (ya !== yb) return (yb || 0) - (ya || 0);          // newest first, unknown-year last
-        return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) ||   // then best rank first
-          a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
-      }
-      if (state.sort === 'air') {
-        return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) || a.c.t.localeCompare(b.c.t);
-      }
+      // 'best' only has something to rank by when there's a query; with none, or on a score
+      // tie, it falls through to the same newest-year/best-AIR order 'year' uses.
+      if (state.sort === 'best' && state.q && a.score !== b.score) return b.score - a.score;
       if (state.sort === 'qty') return b.n - a.n;
-      return a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
+      if (state.sort === 'air') return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) || a.c.t.localeCompare(b.c.t);
+      if (state.sort === 'name') return a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
+      var ya = yearOf(a.c), yb = yearOf(b.c);
+      if (ya !== yb) return (yb || 0) - (ya || 0);          // newest first, unknown-year last
+      return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) ||   // then best rank first
+        a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
     });
     return list;
   }
 
+  // Audit R3: q/paper/syl -> ?q=/?paper=/?syl=. Coexists with setView()'s own hash-only
+  // replaceState (a relative '#view' resolves against the current URL, untouched by this) and
+  // with the hash new URL(location.href) below carries forward unmodified — DECISION-13.
+  // pushState fires once, on the empty->non-empty transition, so Back undoes a search instead of
+  // leaving the site (INTENT-3) rather than one entry per keystroke. "Was empty" is read fresh
+  // from location.search each call, not cached — a cached flag drifts the moment the URL changes
+  // for a reason other than this function (a Back/Forward popstate) and walks Back off the app's
+  // own history (DECISION-13 — an earlier version cached it and did exactly that).
+  function syncUrl() {
+    try {
+      var u = new URL(location.href);
+      var wasEmpty = !u.searchParams.get('q');
+      if (state.q) u.searchParams.set('q', state.q); else u.searchParams.delete('q');
+      if (state.paper && state.paper !== 'all') u.searchParams.set('paper', state.paper); else u.searchParams.delete('paper');
+      if (state.syl) u.searchParams.set('syl', state.syl); else u.searchParams.delete('syl');
+      if (u.href === location.href) return;
+      if (wasEmpty && state.q) history.pushState(null, '', u);
+      else history.replaceState(null, '', u);
+    } catch (e) { /* URL/history unsupported — search still works, just not shareable */ }
+  }
+
+  // popstate: re-read q/paper/syl into state + the controls that mirror it, then re-render (R3).
+  function applyUrlToState() {
+    if (!DB) return;
+    var params = new URLSearchParams(location.search);
+    state.q = (params.get('q') || '').trim().slice(0, 200);
+    state.shown = PAGE;
+    var paper = params.get('paper');
+    state.paper = (paper && PAPERS.indexOf(paper) >= 0) ? paper : 'all';
+    state.syl = (params.get('syl') || '').trim().slice(0, 60);
+    if (state.syl) state.qview = 'questions';
+    var qi = $('#q'); if (qi && qi.value !== state.q) qi.value = state.q;
+    $$('#papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.paper === state.paper)); });
+    $$('#qview button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.qview === state.qview)); });
+    var sel = $('#syl'); if (sel) sel.value = state.syl;
+    if (state.q || state.syl) { ensureFull(); ensureQI(); }
+    renderBrowse();
+  }
+  window.addEventListener('popstate', function () { if (state.view === 'browse') applyUrlToState(); });
+
   function renderBrowse(reopen) {
     if (!DB) return;
+    syncUrl();
     updateFilterCount();
     if (state.qview === 'questions') return renderQuestions();
     var list = filteredCopies();
     LASTLIST = list; LASTCOUNT = list.length;
-    var box = $('#results'); box.innerHTML = '';
+    var box = $('#results');
 
     var nameHits = 0, totalQ = 0, stubHits = 0;
     list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; if (x.c.stub) stubHits++; });
+    // Phase 5 / E1: a match is now found by qindex.bin, not qtext.json — QTEXT only renders the
+    // snippet (and verifies an exact phrase), so it no longer gates whether we know the answer.
     var loading = (!FULL && fullState !== 'error') ||
-      (!!state.q && !QTEXT && qiState !== 'error');
+      (!!state.q && !QIDX && qxState !== 'error');
     var realN = list.length - stubHits;
     // While the index is still downloading we do not yet know the answer. Printing
     // "0 copies for X" here reads as "this site doesn't have it" — measured, that showed for
@@ -737,22 +1062,32 @@
       $('#resultmeta').textContent = 'Searching inside ' +
         fmt((DB.stats && DB.stats.all && DB.stats.all.copies) || (DB.stats && DB.stats.copies) || 0) + ' copies…';
     } else {
-      $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') +
-        (state.q
-          ? ' for “' + state.q + '”' +
-            (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
-            (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
-            (stubHits ? ' · fetching copies for ' + fmt(stubHits) + (stubHits === 1 ? ' more topper…' : ' more toppers…')
-              : (loading ? ' · still scanning inside the copies…' : ''))
-          : (loading ? ' · more copies + full-text search loading…' : ''));
+      var extra = '';
+      if (state.q) {
+        extra = ' for “' + state.q + '”' +
+          (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
+          (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '');
+        if (stubHits) extra += ' · fetching copies for ' + fmt(stubHits) + (stubHits === 1 ? ' more topper…' : ' more toppers…');
+        else if (loading) extra += ' · still scanning inside the copies…';
+        // DECISION-7's accepted trade-off surfaced, not silently applied: the index found no
+        // word match, so this used the old substring scan once (label required by audit E1).
+        else if (FALLBACK_USED) extra += ' · no word match — showing text matches';
+        // DECISION-6: an exact-phrase candidate set the index found but hasn't verified against
+        // text yet (qtext.json still loading) is shown, not hidden — just labelled as provisional.
+        else if (PHRASE_PENDING) extra += ' · phrase not yet checked';
+      } else if (loading) {
+        extra = ' · more copies + full-text search loading…';
+      }
+      $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') + extra;
     }
 
     if (!list.length) {
-      var failed = (qiState === 'error' || fullState === 'error');
+      var failed = (qxState === 'error' || fullState === 'error');
+      box.innerHTML = ''; CARDMAP.clear();
       box.appendChild(el('div', { class: 'empty' }, [
         el('div', { class: 'big' }, [loading ? 'Searching…' : failed ? 'Search is unavailable' : 'No matches']),
         el('div', {}, [loading
-          ? 'Loading the question text so search can look inside the copies.'
+          ? 'Loading the search index so it can look inside the copies.'
           : failed
             ? 'The question index could not be downloaded. Topper-name search still works — reload the page to retry.'
             : 'Try a topper name, fewer words, “All words”, or clear a filter.'])
@@ -760,8 +1095,76 @@
       return;
     }
 
-    appendCards(list, 0, state.shown, box, reopen);
+    reconcileBrowseList(list, box, reopen);
     if (list.length > state.shown) box.appendChild(makeMoreButton(list, box));
+  }
+
+  // Audit R1: fingerprints what would change copyCard(c,qs,n,nameHit)'s output for this id — NOT
+  // open state, preserved separately below. Includes per-row pending/resolved (q[1]==null) so a
+  // reused card gets its qtext.json backfill instead of being skipped as "unchanged" (DECISION-10).
+  function cardSig(x) {
+    // Stub/link-only cards render the same markup regardless of query, and copyCard() never
+    // applies forceOpen on either branch — a constant sig keeps them in the reuse-as-is path
+    // forever once built, so a link-only card's native <details> toggle is never disturbed.
+    if (x.c.stub) return 'stub';
+    if (x.c.k) return 'link';
+    return state.q + '\x01' + state.mode + '\x01' + x.n + '\x01' + (x.nameHit ? 1 : 0) + '\x01' +
+      x.qs.map(function (q) { return q[0] + ':' + (q[1] == null ? 'p' : 'r'); }).join(',');
+  }
+
+  // Reuse the on-screen element for this id when its signature is unchanged (cheapest path).
+  // Otherwise rebuild its content, but only carry forward the existing element's open/closed
+  // state when the user actually clicked it (tcTouched, set by copyCard()'s summary listener) —
+  // a real manual toggle must survive further typing (DECISION-13), but a card that was simply
+  // rendered closed because there was no query yet is NOT a manual choice, and must not override
+  // copyCard()'s own auto-open-on-match default once it genuinely matches (a real regression this
+  // fixes: reusing a plain "never touched" `.open` reading forced every pre-existing card closed
+  // forever, even ones a fresh search newly matches). A node never seen before opens per `reopen`
+  // (ids open in the DOM before this render — the FULL-load/qtext-arrival backfills pass this) or
+  // that default.
+  function getCard(x, reopen) {
+    var id = x.c.i, sig = cardSig(x), existing = CARDMAP.get(id);
+    if (existing && existing.dataset.tcSig === sig) return existing;
+    var forceOpen = (existing && existing.dataset.tcTouched) ? !!existing.open
+      : ((reopen && reopen.indexOf(String(id)) >= 0) ? true : undefined);
+    var node = copyCard(x.c, x.qs, x.n, x.nameHit, forceOpen);
+    if (existing && existing.dataset.tcTouched) node.dataset.tcTouched = '1';
+    node.dataset.tcSig = sig;
+    CARDMAP.set(id, node);
+    return node;
+  }
+
+  // Reconcile #results to exactly the top state.shown items of `list`, in order, instead of
+  // innerHTML=''-and-rebuild on every keystroke (audit R1). insertBefore/appendChild on an
+  // existing node moves it, no rebuild — no flash, no lost <details> state.
+  function reconcileBrowseList(list, box, reopen) {
+    var grouped = state.sort === 'year' || (state.sort === 'best' && !state.q);
+    var visible = list.slice(0, state.shown);
+    var counts = null;
+    if (grouped) { counts = {}; visible.forEach(function (x) { var y = yearOf(x.c) || 0; counts[y] = (counts[y] || 0) + 1; }); }
+    var curY = null, seq = [], wanted = new Set();
+    visible.forEach(function (x) {
+      if (grouped) {
+        var y = yearOf(x.c) || 0;
+        if (y !== curY) {
+          curY = y;
+          seq.push(el('div', { class: 'yeargroup' }, [
+            el('span', { class: 'yg-year' }, [y ? String(y) : 'Year not recorded']),
+            el('span', { class: 'yg-count' }, [fmt(counts[y]) + (counts[y] === 1 ? ' copy' : ' copies')])
+          ]));
+        }
+      }
+      var card = getCard(x, reopen);
+      wanted.add(card);
+      seq.push(card);
+    });
+    var cur = box.firstChild;
+    for (var i = 0; i < seq.length; i++) {
+      if (cur === seq[i]) { cur = cur.nextSibling; continue; }
+      box.insertBefore(seq[i], cur);
+    }
+    while (cur) { var next = cur.nextSibling; box.removeChild(cur); cur = next; }
+    CARDMAP.forEach(function (node, id) { if (!wanted.has(node)) CARDMAP.delete(id); });   // drop ids no longer on screen
   }
 
   // Render list[from..to) into box, inserting before `mark` when given (so the Show-more button
@@ -769,7 +1172,9 @@
   // so both produce identical markup and identical year grouping.
   function appendCards(list, from, to, box, reopen, mark) {
     var put = function (node) { mark ? box.insertBefore(node, mark) : box.appendChild(node); };
-    var grouped = state.sort === 'year';
+    // 'best' with no query falls through to the same year/AIR order 'year' uses (filteredCopies()
+    // above) — group it the same way too, so browsing with no search still shows year headers.
+    var grouped = state.sort === 'year' || (state.sort === 'best' && !state.q);
     var counts = null;
     if (grouped) { counts = {}; list.forEach(function (x) { var y = yearOf(x.c) || 0; counts[y] = (counts[y] || 0) + 1; }); }
     // Carry the last year header across an append so a group is not re-titled mid-run.
@@ -785,9 +1190,7 @@
           ]));
         }
       }
-      var card = copyCard(x.c, x.qs, x.n, x.nameHit);
-      if (reopen && reopen.indexOf(String(x.c.i)) >= 0) card.open = true;
-      put(card);
+      put(getCard(x, reopen));   // keeps CARDMAP in sync so a later keystroke can reuse this card (R1)
     });
   }
 
@@ -817,14 +1220,24 @@
   /* ---------- question-first view ---------- */
   function dispQ(t) { return String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, ''); }
 
+  // Paper and syllabus filters are meta-only (q.p, q.s) and work the moment qmeta.json lands.
+  // A text query needs qtext.json (T3) — while it's still loading, textReady is false and every
+  // question passes the text test provisionally; renderQuestions() shows that as an in-progress
+  // count rather than a final one, never a false zero (DECISION-6).
   function filteredQuestions() {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    var textReady = !!QTEXTLC;
     return (QI || []).filter(function (q) {
       if (state.paper !== 'all' && q.p !== state.paper) return false;
       if (state.syl && (q.s || []).indexOf(state.syl) < 0) return false;
-      if (terms.length && !matchQ(q.q, terms, state.mode)) return false;
+      if (terms.length) {
+        if (!textReady) return true;
+        if (!matchQ(qText(q), terms, state.mode)) return false;
+      }
       return true;
-    }).sort(function (a, b) { return b.a.length - a.a.length || String(a.q).localeCompare(String(b.q)); });
+    }).sort(function (a, b) {
+      return b.a.length - a.a.length || (textReady ? String(qText(a)).localeCompare(String(qText(b))) : 0);
+    });
   }
 
   function renderQuestions() {
@@ -837,10 +1250,29 @@
       ]));
       return;
     }
+    var textReady = !!QTEXTLC;
     var list = filteredQuestions();
     var sylTxt = state.syl ? ' in ' + sylLabel(state.syl) : '';
-    $('#resultmeta').textContent = fmt(list.length) + (list.length === 1 ? ' question' : ' questions') +
-      (state.q ? ' for “' + state.q + '”' : '') + sylTxt;
+    if (state.q && !textReady) {
+      // Can't yet say how many of these actually match the query text — never claim a count
+      // we don't have (DECISION-6). list.length here is "candidates", not "matches".
+      $('#resultmeta').textContent = 'Searching inside ' + fmt(list.length) +
+        (list.length === 1 ? ' question' : ' questions') + sylTxt + '…';
+    } else {
+      $('#resultmeta').textContent = fmt(list.length) + (list.length === 1 ? ' question' : ' questions') +
+        (state.q ? ' for “' + state.q + '”' : '') + sylTxt;
+    }
+
+    if (!textReady) {
+      var failed = qtState === 'error';
+      box.appendChild(el('div', { class: 'empty' }, [
+        el('div', { class: 'big' }, [failed ? 'Question text unavailable' : 'Loading question text…']),
+        el('div', {}, [failed
+          ? 'The question text could not be downloaded. Reload the page to retry.'
+          : 'Fetching the text for ' + fmt(list.length) + (list.length === 1 ? ' question…' : ' questions…')])
+      ]));
+      return;
+    }
 
     if (!list.length) {
       box.appendChild(el('div', { class: 'empty' }, [
@@ -891,6 +1323,7 @@
 
   function questionCard(q) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    var text = qText(q) || '';   // renderQuestions() only calls this once qtext.json has loaded
     var tags = [el('span', { class: 'tag paper' }, [q.p])];
     if (q.m) tags.push(el('span', { class: 'tag marks' }, [q.m + ' marks']));
     var wn = q.w && (String(q.w).match(/\d+/) || [])[0];
@@ -899,9 +1332,9 @@
     (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
 
     var head = el('div', { class: 'qhead' });
-    head.innerHTML = highlight(dispQ(q.q), terms);
+    head.innerHTML = highlight(dispQ(text), terms);
     var a0 = (q.a || [])[0], c0 = a0 && COPYBYID[a0[0]];
-    head.appendChild(reportLink(q.p, dispQ(q.q), c0 && c0.u, a0 && a0[1]));
+    head.appendChild(reportLink(q.p, dispQ(text), c0 && c0.u, a0 && a0[1]));
     var n = (q.a || []).length;
     var summary = el('summary', {}, [
       head,
@@ -1148,7 +1581,13 @@
     if (wn) tags.push(el('span', { class: 'tag' }, [wn + ' words']));
     if (q.yr && q.yr.length) tags.push(el('span', { class: 'tag year' }, ['asked ' + q.yr.join(', ')]));
     if (!isOpt) (q.s || []).forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
-    body.appendChild(el('div', { class: 'pq' }, [dispQ(q.q)]));
+    // Picking the question itself only needs qmeta.json (q.a/q.p/q.s) — text is a separate fetch
+    // (T3). Show the pick immediately; if the text hasn't landed yet, backfill this node in place
+    // once it does, rather than blocking selection or re-picking (see loadQuestionText()).
+    var text = isOpt ? q.q : qText(q);
+    var pq = el('div', { class: 'pq' }, [text != null ? dispQ(text) : 'Loading question text…']);
+    body.appendChild(pq);
+    if (!isOpt && text == null) { ensureQText(); PENDING_PRACTICE_TXT = { div: pq, q: q }; }
     body.appendChild(el('div', { class: 'tags' }, tags));
 
     var rows = isOpt ? optAnswerRows(q) : answerRows(q);
@@ -1176,9 +1615,11 @@
     return out;
   }
 
-  function copyCard(c, qs, count, nameHit) {
+  // forceOpen (R1/getCard): undefined = use the default below; true/false overrides it with a
+  // reused card's real current open state, so a manual toggle survives a content rebuild.
+  function copyCard(c, qs, count, nameHit, forceOpen) {
     var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
-    var openIt = (terms.length > 0 && !nameHit) || !!state.topper;
+    var openIt = forceOpen !== undefined ? forceOpen : ((terms.length > 0 && !nameHit) || !!state.topper);
     var n = count != null ? count : (qs ? qs.length : (c.n || 0));
     var tags = [el('span', { class: 'tag paper' }, [c.p])]
       .concat(c.c ? [el('span', { class: 'tag' }, [c.c])] : [])
@@ -1226,14 +1667,6 @@
     var have = qs && qs.length ? qs : ((terms.length && !nameHit) ? [] : qOf(c));
 
     function renderQ(q) {
-      var txt = el('div', { class: 'txt' });
-      txt.innerHTML = highlight(q[1], terms);
-      var meta = [];
-      if (q[2]) meta.push(q[2] + ' marks');
-      if (q[3]) meta.push(q[3] + (/\d$/.test(q[3]) ? ' words' : ''));
-      var mspan = el('span', { class: 'qmeta' }, meta.length ? [meta.join('  ·  ')] : []);
-      mspan.appendChild(reportLink(c.p, q[1], c.u, q[0]));
-      txt.appendChild(mspan);
       var href = safeHref(c.u + (q[0] ? '#page=' + q[0] : ''));
       var a = el('a', { class: 'open', href: href, target: '_blank', rel: 'noopener' }, [q[0] ? 'Open PDF · p.' + q[0] : 'Open PDF']);
       a.addEventListener('click', function () {
@@ -1242,6 +1675,21 @@
           page: q[0] || 0, link_domain: hostOf(c.u), outbound: true, transport_type: 'beacon'
         });
       });
+      // Phase 5 / E1: the index confirms a match before qtext.json (the prose) has necessarily
+      // landed. Show the card now — DECISION-6 says degrade, never hide — and let renderBrowse()'s
+      // existing re-render-on-qtext-arrival (loadQuestionText()) backfill the real text in place.
+      if (q[1] == null) {
+        var pending = el('div', { class: 'txt' }, ['Loading question text…']);
+        return el('div', { class: 'q loading' }, [pending, a]);
+      }
+      var txt = el('div', { class: 'txt' });
+      txt.innerHTML = highlight(q[1], terms);
+      var meta = [];
+      if (q[2]) meta.push(q[2] + ' marks');
+      if (q[3]) meta.push(q[3] + (/\d$/.test(q[3]) ? ' words' : ''));
+      var mspan = el('span', { class: 'qmeta' }, meta.length ? [meta.join('  ·  ')] : []);
+      mspan.appendChild(reportLink(c.p, q[1], c.u, q[0]));
+      txt.appendChild(mspan);
       return el('div', { class: 'q' }, [txt, a]);
     }
 
@@ -1260,7 +1708,10 @@
     function fillQuestions() {
       if (filled) return;
       ensureFull(); ensureQI();
-      Promise.all([fullPromise || Promise.resolve(), qiPromise || Promise.resolve()]).then(function () {
+      // qOf(c) resolves ids through QTEXT (the text table), not QI (the meta table) — so this
+      // must wait on qtPromise, not qiPromise, or it can resolve while QTEXT is still empty and
+      // never retry (T3: text and meta now land on independent promises).
+      Promise.all([fullPromise || Promise.resolve(), qtPromise || Promise.resolve()]).then(function () {
         var full = qOf(c);
         if (!full || filled) return;
         filled = true; ql.innerHTML = '';
@@ -1268,6 +1719,7 @@
       });
     }
     summary.addEventListener('click', function () {
+      d.dataset.tcTouched = '1';   // a real user toggle — getCard() must never override this again
       if (!d.open) { track('copy_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', questions: n }); fillQuestions(); }
     });
     if (openIt && !filled) fillQuestions();
