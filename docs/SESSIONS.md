@@ -187,3 +187,24 @@ compactness belongs, not a general-purpose JSON id scheme. Phase 5 is next; it c
 stable ids throughout, which is the whole reason this phase came first. One tracked invariant
 remains: INV-14 (R3, Phase 6). `git tag pre-phase-4-i1` (pushed) marks the rollback point if
 anything surfaces later that this session's verification missed.
+
+## 2026-09-14 — Phase 5 prompt-prep (no code changes)
+**Asked.** "give me a detailed prompt to continue working with the next phase on a new chat
+session" — Phase 5 (E1, the inverted index) is next.
+**Did.** No implementation — Phase 5 is a full-session item and wasn't started. But before writing
+the prompt, ran `tools/perf/index-proto.mjs`'s logic against the *current* post-Phase-4 corpus
+(patched copy, not committed — the real script reads the now-deleted `data/questions.json`) to
+check whether Phase 4's id hashing affects Phase 5's own numbers. It does, badly: postings
+naively delta-encoded by the new large sparse ids balloon from an estimated 256 KB gzip to a
+**measured 954.8 KB** — Phase 5 could ship a search-gating total worse than what Phase 4 already
+has, not the promised 751 KB. A local-dense-position + self-contained translation table design
+(details in the audit doc's new addendum) recovered **327.7 KB**, within 12% of the original
+estimate. Added this as an addendum to the audit's E1 section rather than silently handing it over
+in a chat message only — this is exactly the class of finding this project's `docs/` exists to keep
+from being re-discovered.
+**Learned.** A fix landing in one phase can silently invalidate a *later* phase's own numbers even
+when nothing in that later phase's spec changed — Phase 5's E1 section was written before Phase 4
+existed, and nobody reconciled the two until this prep pass measured it directly. Worth checking
+for on every phase boundary from now on, not just assuming downstream phases are unaffected.
+**Left.** Phase 5 itself: not started. `tools/perf/index-proto.mjs` needs fixing (reads a deleted
+file) before it can even run — first thing the Phase 5 session should do, per the addendum.

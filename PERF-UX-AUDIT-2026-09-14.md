@@ -1273,6 +1273,33 @@ uint32   dictBytes, uint32 lenTableBytes, uint32 postingsBytes
 
 Read it with `fetch(...).then(r => r.arrayBuffer())` and a `DataView`. No dependency.
 
+> ⚠️ **Addendum, 2026-09-14, after Phase 4 landed — the postings estimate above no longer holds.**
+> Phase 4 (I1) made question ids content-derived hashes (~32-bit, up to ~4.29 billion) instead of
+> `0..8101`. `tools/perf/index-proto.mjs` (and the `328 KB raw / 256 KB gzip` postings estimate
+> above) delta-encode ids **in ascending sorted order within each token's postings list** — that
+> only compresses well when ids are small and dense. Re-measured against the current corpus
+> (patched copy of the prototype, not committed — `data/questions.json` it originally read no
+> longer exists either, see below): postings **naively delta-encoded by raw stable id balloon to
+> 954.8 KB gzip** (vs. the 256 KB estimated) — nearly 4× larger, big enough that Phase 5 could ship
+> a search-gating total *worse* than Phase 4's 2,058.5 KB, not the promised 751 KB.
+>
+> **The fix, measured working**: postings should reference a **local dense position** (`0..n-1`,
+> e.g. build order) into a small translation table shipped in the *same* binary file — self-contained,
+> so there's no cross-file positional-drift risk (`qindex.bin` is always fetched/cached as one atomic
+> unit, unlike `qmeta.json`/`qtext.json`). Deltas over local positions compress the same as before
+> Phase 4; the translation table (`uint32` per entry, local position → stable id, effectively
+> incompressible since hash output is high-entropy) costs ~31.7 KB gzip for 8,102 entries. Measured
+> total this way: **327.7 KB gzip** — within 12% of the original 292 KB estimate, i.e. this recovers
+> the number the audit promised. The exact translation-table encoding/ordering is not settled — work
+> it out and verify it, don't just copy this number.
+>
+> **`tools/perf/index-proto.mjs` itself needs fixing before it can even run** — it reads the deleted
+> `data/questions.json`; point it at `qmeta.json` + `qtext.json`, and build both the naive (Version A,
+> for the record) and local-position (Version B) postings so the regression is visible in the tool's
+> own output, not just asserted in this note. Do this **first**, before designing `qindex.bin`'s
+> final format — see `docs/SESSIONS.md`'s Phase 4 entry for the reasoning and DECISION-9's standing
+> instruction to measure rather than assume.
+
 ### Query algorithm (`assets/app.js`)
 
 1. Tokenise the query the same way `build.js` does: `.toLowerCase().match(/[a-z0-9]+/g)`.
