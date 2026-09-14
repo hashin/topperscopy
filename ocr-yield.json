@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-14T18:55:43.381Z",
+  "generated": "2026-09-14T20:39:48.409Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -702,6 +702,36 @@
       "low": true
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P2.pdf",
+      "topper": "Ajay R Raj",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 3,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P21.pdf",
+      "topper": "Ajay R Raj",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 3,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ROSHAN_P3.pdf",
+      "topper": "Roshan V",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 3,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/c192f-1562623_2423_ajink_kumar_rank_135.pdf",
       "topper": "Ajink Kumar",
       "coaching": "VisionIAS",
@@ -984,6 +1014,16 @@
       "low": true
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ARUNPRAKASH_M_P3.pdf",
+      "topper": "Arunprakash M",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 4,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/186/pttp220283_tc072-test-02-gs02.pdf",
       "topper": "AVINASH CHOUDHARY",
       "coaching": "NextIAS",
@@ -993,7 +1033,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
-      "salvaged": 2,
+      "salvaged": 0,
       "groupMedian": 5,
       "low": true
     },
@@ -1416,6 +1456,16 @@
       "subject": "Other",
       "count": 6,
       "optional": false,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P1.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 6,
+      "optional": true,
       "groupMedian": 7,
       "low": true
     },
@@ -1865,6 +1915,76 @@
       "url": "https://drive.google.com/file/d/1v5yWjjvVnibCK-MdN5eTmjEnD9hbQEX9/view",
       "topper": "Aman Pratap Singh",
       "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/RAJESHWARI_SUVE_P2_compressed.pdf",
+      "topper": "Rajeshwari",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P4.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P41.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P4.pdf",
+      "topper": "Ajay R Raj",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ARUNPRAKASH_M_P2.pdf",
+      "topper": "Arunprakash M",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ARUNPRAKASH_M_P4.pdf",
+      "topper": "Arunprakash M",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P2.pdf",
+      "topper": "Nishanth T",
+      "coaching": "Shankar IAS Parliament",
       "subject": "Sociology",
       "count": 7,
       "optional": true,
@@ -2770,6 +2890,76 @@
       "low": false
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P3.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ARUNPRAKASH_M_P1.pdf",
+      "topper": "Arunprakash M",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AGNES_MERITTA_STEFFY_P1.pdf",
+      "topper": "Agnes Meritta Steffy",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AGNES_MERITTA_STEFFY_P2.pdf",
+      "topper": "Agnes Meritta Steffy",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AGNES_MERITTA_STEFFY_P3.pdf",
+      "topper": "Agnes Meritta Steffy",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P3.pdf",
+      "topper": "Nishanth T",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P4.pdf",
+      "topper": "Nishanth T",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/59/mts_2023_unchecked_pttp221500_tc062.pdf",
       "topper": "Shoiab",
       "coaching": "NextIAS",
@@ -3218,6 +3408,16 @@
       "low": false
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/RAJESHWARI_SUVE_P1_compressed.pdf",
+      "topper": "Rajeshwari",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 10,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/21774_760_Sudhir_Rank_42.pdf",
       "topper": "Sudhir Kumar",
       "coaching": "VisionIAS",
@@ -3554,6 +3754,16 @@
       "low": false
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P1.pdf",
+      "topper": "Nishanth T",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 12,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/37256_873_Pratishtha_Rank_50.pdf",
       "topper": "Pratishtha Mamgain",
       "coaching": "VisionIAS",
@@ -3677,6 +3887,20 @@
       "geminiPages": 64,
       "salvaged": 1,
       "groupMedian": 12,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/400f3-1492371_2424_muskan-srivastava_98.pdf",
+      "topper": "MUSKAN SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 14,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
