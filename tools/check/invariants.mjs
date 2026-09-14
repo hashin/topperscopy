@@ -102,7 +102,7 @@ check('INV-6', 'enforced', 'DECISION-3', 'No third-party script loads during fir
 check('INV-7', 'enforced', 'DECISION-4', 'Every generated artefact is gitignored', () => {
   const ig = read('.gitignore');
   const generated = ['/data/copies.json', '/data/index.json',
-    '/data/qmeta.json', '/data/qtext.json',
+    '/data/qmeta.json', '/data/qtext.json', '/data/qindex.bin',
     '/data/toppers.json', '/toppers.html', '/sitemap.xml', '/llms.txt', '/robots.txt',
     '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
   const missing = generated.filter(g => !ig.includes(g));

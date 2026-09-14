@@ -395,6 +395,8 @@ function build() {
     fs.writeFileSync(tp, JSON.stringify(payload));
   }
 
+  writeQIndex(qList, variants, generated);
+
   // lightweight boot index — the hand-curated text-searchable core, without the question text.
   // Omitted and lazy-loaded with data/copies.json (then merged into DB.copies + refreshFacets):
   //   • link-only copies (scanned, no text)
@@ -594,6 +596,87 @@ function writeQuestions(copies, generated) {
   const pct = Object.keys(byPaper).map(p => `${p} ${mapped[p] || 0}/${byPaper[p]}`).join('  ');
   console.log(`qmeta.json + qtext.json ${list.length} distinct questions · syllabus-mapped: ${pct}`);
   return list;
+}
+
+/* ---- token-prefix inverted index: data/qindex.bin (Phase 5 / E1, DECISION-7, DECISION-12) ----
+ * Ships postings instead of prose so the client can find a match without downloading and
+ * lowercasing all ~5,500 KB of question text (qtext.json) first — see PERF-UX-AUDIT-2026-09-14.md.
+ *
+ * Documents indexed: every canonical deduped question (qList, local positions 0..qCount-1, same
+ * order as qmeta.json's `questions` array) PLUS every variant — a copy's own wording the deduped
+ * entry doesn't faithfully contain (local positions qCount..qCount+vCount-1). Today's substring
+ * scan (matchingQids() in assets/app.js) matches against both QTEXTLC and QVARLC, so the index
+ * must cover both too, or a query that only a variant's wording answers would silently stop
+ * matching — the exact "quiet lie" DECISION-6 exists to prevent, just relocated onto this index.
+ *
+ * Postings reference the LOCAL position, not the stable id — measured in tools/perf/index-proto.mjs:
+ * delta-encoding the raw ~32-bit content-hash ids (Phase 4/I1) directly balloons postings ~4x
+ * (954.8 KB gzip) because they no longer compress as small sequential deltas. A translation table
+ * (local position -> stable id, one uint32 each) shipped in this SAME file recovers the original
+ * size (measured 327.7 KB gzip for canonical questions alone) with zero cross-file drift risk,
+ * since qindex.bin is always fetched/cached as one atomic unit (addendum to audit E1).
+ */
+function writeQIndex(qList, variants, generated) {
+  const tok = s => String(s || '').toLowerCase().match(/[a-z0-9]+/g) || [];
+  const varint = a => { const o = []; for (let v of a) { while (v >= 128) { o.push((v & 127) | 128); v >>>= 7; } o.push(v); } return o; };
+  const frontCode = tokens => {
+    let dict = '', prev = '';
+    for (const t of tokens) {
+      let p = 0; while (p < prev.length && p < t.length && prev[p] === t[p] && p < 15) p++;
+      dict += String.fromCharCode(48 + p) + t.slice(p) + '\n'; prev = t;
+    }
+    return Buffer.from(dict, 'utf8');
+  };
+
+  const qCount = qList.length;
+  // Sorted ascending so the translation table's ordering is deterministic across builds
+  // regardless of object key insertion order (variants is built incrementally in wireCopies()).
+  const variantIds = Object.keys(variants).map(Number).sort((a, b) => a - b);
+  const vCount = variantIds.length;
+  const N = qCount + vCount;
+  const docText = new Array(N);
+  for (let i = 0; i < qCount; i++) docText[i] = qList[i].q;
+  for (let j = 0; j < vCount; j++) docText[qCount + j] = variants[variantIds[j]];
+
+  const post = new Map();
+  for (let i = 0; i < N; i++) {
+    for (const t of new Set(tok(docText[i]))) {
+      let arr = post.get(t);
+      if (!arr) post.set(t, arr = []);
+      arr.push(i);   // i increases monotonically, so each token's postings arrive pre-sorted
+    }
+  }
+  const tokens = [...post.keys()].sort();
+  const dictB = frontCode(tokens);
+  const lens = [], pb = [];
+  for (const t of tokens) {
+    const positions = post.get(t);
+    const d = []; let last = 0;
+    for (const p of positions) { d.push(p - last); last = p; }
+    const v = varint(d); lens.push(v.length); for (const b of v) pb.push(b);
+  }
+  const lenB = Buffer.from(varint(lens));
+  const postB = Buffer.from(pb);
+  const transB = Buffer.alloc(N * 4);
+  for (let i = 0; i < qCount; i++) transB.writeUInt32LE(qList[i].i >>> 0, i * 4);
+  for (let j = 0; j < vCount; j++) transB.writeUInt32LE(variantIds[j] >>> 0, (qCount + j) * 4);
+
+  const header = Buffer.alloc(4 + 1 + 4 * 7);
+  let o = 0;
+  header.write('TCIX', o, 'ascii'); o += 4;
+  header.writeUInt8(1, o); o += 1;
+  header.writeUInt32LE(tokens.length, o); o += 4;
+  header.writeUInt32LE(qCount, o); o += 4;
+  header.writeUInt32LE(vCount, o); o += 4;
+  header.writeUInt32LE(dictB.length, o); o += 4;
+  header.writeUInt32LE(lenB.length, o); o += 4;
+  header.writeUInt32LE(postB.length, o); o += 4;
+  header.writeUInt32LE(transB.length, o); o += 4;
+
+  const out = Buffer.concat([header, dictB, lenB, postB, transB]);
+  fs.writeFileSync(path.join(DATA, 'qindex.bin'), out);
+  console.log(`qindex.bin   ${tokens.length} tokens · ${qCount} questions + ${vCount} variants indexed · ${(out.length / 1024).toFixed(1)} KB raw`);
+  return { tokens: tokens.length, qCount, vCount, bytes: out.length };
 }
 
 /* ---- consolidated backup dataset (not served by the app) ---- */

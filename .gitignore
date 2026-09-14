@@ -10,6 +10,7 @@ _site/
 /data/index.json
 /data/qmeta.json
 /data/qtext.json
+/data/qindex.bin
 /data/toppers.json
 /toppers.html
 /toppers-*.html
