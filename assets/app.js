@@ -19,6 +19,9 @@
     'Chemistry', 'Commerce & Accountancy', 'Law', 'Management', 'Medical Science',
     'Agriculture', 'Statistics', 'Literature', 'Forest Service (IFS)', 'Other'];
   var PAGE = 25;
+  // "Best match" sort: an exact topper-name match always outranks a text match — see
+  // filteredCopies(). Deliberately far above any realistic idf-sum score (DECISION-14).
+  var NAME_HIT_SCORE = 1e6;
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -106,7 +109,10 @@
   // (DECISION-10) — a search can return its real copy list and count before a single byte of
   // question prose has arrived.
   var QIDX = null, qxState = 'idle', qxPromise = null;
-  var FALLBACK_USED = false, PHRASE_PENDING = false, LAST_QSCORE = null;
+  var FALLBACK_USED = false, PHRASE_PENDING = false, SUBSTRING_PENDING = false, LAST_QSCORE = null;
+  // Resolves once boot()'s own fetch has set DB — assigned before anything that might call
+  // ensureFull() (DECISION-14: a fast repeat visit can resolve copies.json before this).
+  var dbReadyPromise = null;
 
   function saveData() {
     var c = navigator.connection || {};
@@ -130,7 +136,11 @@
   function loadFull() {
     if (fullPromise) return fullPromise;
     fullState = 'loading';
-    fullPromise = fetch('data/copies.json').then(function (r) { return r.json(); }).then(function (d) {
+    var copiesJson = fetch('data/copies.json').then(function (r) { return r.json(); });
+    // Wait for DB to exist before touching it — copiesJson can resolve before boot()'s own
+    // index.json fetch does (see dbReadyPromise above).
+    fullPromise = Promise.all([dbReadyPromise || Promise.resolve(), copiesJson]).then(function (parts) {
+      var d = parts[1];
       QBYID = {};
       DB.copies = DB.copies.filter(function (c) { return !c.stub; });  // drop name-search placeholders
       var known = {};
@@ -487,6 +497,24 @@
       entry_view: ['browse', 'optionals', 'submit', 'about'].indexOf(initial) < 0 ? 'browse' : initial
     });
 
+    // Assign dbReadyPromise before anything below that might call ensureFull()/ensureQI()
+    // (DECISION-14 — see dbReadyPromise's own declaration).
+    dbReadyPromise = Promise.all([
+      fetch('data/index.json').then(function (r) { return r.json(); }),
+      fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
+      fetch('data/optionals.json').then(function (r) { return r.json(); }).catch(function () { return { entries: [] }; })
+    ]).then(function (res) {
+      DB = res[0]; TOPPERS = res[1].toppers || {}; OPTS = res[2].entries || [];
+      var sk = $('#results-skeleton'); if (sk) sk.remove();
+      onData();
+      track('data_loaded', { copies: DB.stats.copies, questions: DB.stats.questions });
+      scheduleFull();
+    }).catch(function (e) {
+      var sk = $('#results-skeleton'); if (sk) sk.remove();
+      $('#sub').textContent = 'Could not load the database — ' + e.message;
+      track('data_error', { message: String(e && e.message || e).slice(0, 120) });
+    });
+
     // honour the ?q= SearchAction URL (JSON-LD potentialAction + shared/bookmarked search links)
     var qi = $('#q');
     var qp = new URLSearchParams(location.search).get('q');
@@ -512,22 +540,6 @@
     // ?syl=<node id> — a shared/bookmarked syllabus filter (R3; fillSyllabus() applies it once loaded)
     var sylp = new URLSearchParams(location.search).get('syl');
     if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; ensureQI(); }
-
-    Promise.all([
-      fetch('data/index.json').then(function (r) { return r.json(); }),
-      fetch('data/toppers.json').then(function (r) { return r.json(); }).catch(function () { return { toppers: {} }; }),
-      fetch('data/optionals.json').then(function (r) { return r.json(); }).catch(function () { return { entries: [] }; })
-    ]).then(function (res) {
-      DB = res[0]; TOPPERS = res[1].toppers || {}; OPTS = res[2].entries || [];
-      var sk = $('#results-skeleton'); if (sk) sk.remove();
-      onData();
-      track('data_loaded', { copies: DB.stats.copies, questions: DB.stats.questions });
-      scheduleFull();
-    }).catch(function (e) {
-      var sk = $('#results-skeleton'); if (sk) sk.remove();
-      $('#sub').textContent = 'Could not load the database — ' + e.message;
-      track('data_error', { message: String(e && e.message || e).slice(0, 120) });
-    });
 
     // outbound-link tracking for static links (credit, footer, about)
     document.addEventListener('click', function (e) {
@@ -872,6 +884,18 @@
     return { q: q, v: v };
   }
 
+  // DECISION-14: the substring fallback used to return unscored matches, tying at 0 under "Best
+  // match". `expansions` still carries each term's index df even when the index found nothing —
+  // reuse it for a flat idf-sum score (same formula, no "exact token" bonus). Matches within one
+  // fallback query still tie with each other; this only stops them tying with "no match" too.
+  function scoreFallbackMatches(hitMaps, expansions, N) {
+    var idf = expansions.map(function (e) { return Math.max(0.05, Math.log((N + 1) / (e.df + 1))); });
+    var s = idf.reduce(function (a, b) { return a + b; }, 0);
+    hitMaps.q.forEach(function (_, id) { LAST_QSCORE.set(id, s); });
+    hitMaps.v.forEach(function (_, id) { LAST_QSCORE.set(id, s); });
+    return hitMaps;
+  }
+
   // The Phase 5 / E1 primary matcher. Tokenise-and-prefix-expand each term (query algorithm,
   // audit E1), AND the expansions (intersecting the shortest first), verify an exact-phrase
   // candidate set against QTEXT once it has landed, and fall back to the old substring scan
@@ -881,7 +905,7 @@
   // "Best match" sort: idf = log(N/df) so rarer terms weigh more, and a term whose EXACT token
   // (not a longer prefix-completion) hit this document gets a 1.3x bonus.
   function matchingQidsIndexed(terms, mode) {
-    FALLBACK_USED = false; PHRASE_PENDING = false; LAST_QSCORE = new Map();
+    FALLBACK_USED = false; PHRASE_PENDING = false; SUBSTRING_PENDING = false; LAST_QSCORE = new Map();
     var idx = QIDX;
     var expansions = terms.map(function (t) { return expandTerm(idx, t); });
     var acc;
@@ -906,10 +930,27 @@
         var t = id < 0 ? (QVARLC.get(-id) || '') : (QTEXTLC.get(id) || '');
         if (t && t.indexOf(joined) >= 0) verified.add(p);
       });
-      if (!verified.size && QTEXTLC) { FALLBACK_USED = true; return matchingQidsSubstring(terms, mode); }
+      if (!verified.size && QTEXTLC) {
+        FALLBACK_USED = true;
+        return scoreFallbackMatches(matchingQidsSubstring(terms, mode), expansions, idx.qCount + idx.vCount);
+      }
+      // Same false-zero window as the !acc.size branch below, but reachable in exact-phrase
+      // mode too (found reviewing DECISION-14's fix: SUBSTRING_PENDING only covered the 'all
+      // words' path) — the fallback scan needs QTEXTLC and it hasn't loaded yet, so this is not
+      // a confirmed zero. Covers both acc.size===0 from the start and acc.size>0 with nothing
+      // verified (QTEXTLC null in the forEach above means acc was already empty, since a
+      // nonempty acc with !QTEXT returns earlier via PHRASE_PENDING).
+      if (!verified.size) { SUBSTRING_PENDING = true; return { q: new Map(), v: new Map() }; }
       acc = verified;
     } else if (!acc.size) {
-      if (QTEXTLC) { FALLBACK_USED = true; return matchingQidsSubstring(terms, mode); }
+      if (QTEXTLC) {
+        FALLBACK_USED = true;
+        return scoreFallbackMatches(matchingQidsSubstring(terms, mode), expansions, idx.qCount + idx.vCount);
+      }
+      // Index found nothing, but the fallback scan can't run yet without QTEXTLC — returning
+      // empty maps here would read as a CONFIRMED zero, the exact false-zero bug INV-16/
+      // DECISION-6 exist to prevent (DECISION-14: a window neither originally covered).
+      SUBSTRING_PENDING = true;
       return { q: new Map(), v: new Map() };
     }
 
@@ -958,8 +999,11 @@
 
       var nameHit = needsText && matchName(c.t, terms);
       // placeholder for a not-yet-loaded topper — only ever shown for a matching name search
-      if (c.stub) return nameHit ? { c: c, qs: [], nameHit: true, n: 0, score: 0 } : null;
-      var qs = [], score = 0;
+      if (c.stub) return nameHit ? { c: c, qs: [], nameHit: true, n: 0, score: NAME_HIT_SCORE } : null;
+      // A name match is a stronger signal than any in-text match, so it outranks one under
+      // "Best match" (DECISION-14) — among themselves, name hits still tie and fall through
+      // to the year/AIR order.
+      var qs = [], score = nameHit ? NAME_HIT_SCORE : 0;
       if (needsText && !nameHit) {
         if (c.k) return null;                    // link-only: only a name can match
         var raw = rawQ(c);
@@ -1051,8 +1095,10 @@
     list.forEach(function (x) { totalQ += x.qs.length; if (x.nameHit) nameHits++; if (x.c.stub) stubHits++; });
     // Phase 5 / E1: a match is now found by qindex.bin, not qtext.json — QTEXT only renders the
     // snippet (and verifies an exact phrase), so it no longer gates whether we know the answer.
+    // SUBSTRING_PENDING (DECISION-14): the one case qtext.json still gates the answer.
     var loading = (!FULL && fullState !== 'error') ||
-      (!!state.q && !QIDX && qxState !== 'error');
+      (!!state.q && !QIDX && qxState !== 'error') ||
+      (!!state.q && SUBSTRING_PENDING && qtState !== 'error');
     var realN = list.length - stubHits;
     // While the index is still downloading we do not yet know the answer. Printing
     // "0 copies for X" here reads as "this site doesn't have it" — measured, that showed for
