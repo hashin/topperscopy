@@ -85,3 +85,24 @@ that fell into them.
 **Left.** Phase 2 (D1–D3) next; D1 now has a second half, because `llms.txt` linked to the file it
 removes. Phases 3–5 are where the payload actually shrinks. Two tracked invariants remain: INV-13
 (D1) and INV-14 (R3).
+
+
+## 2026-09-14 — Phase 1 merged to main; Phase 2 (D1, D3) implemented
+**Asked.** Merge Phase 1 to `main`, then continue with Phase 2.
+**Did.** Fast-forwarded `main` to the Phase 1 work (5 commits, `d60292c..20ac2a1`) — that is the
+first production deploy of the audit fixes. Then D1 and D3. D2 is a hosting decision for Hashin,
+not code, and is left open.
+- **D1** — `data/questions.csv` (8.94 MB) no longer ships. It had *two* live links, not one: the
+  `llms.txt` reference was removed with P11, and the **About tab in `index.html` also linked to it**
+  and would have 404'd. Both now point at `/dataset/questions.csv`, the canonical download.
+- **D3** — a build-skew refetch (`?b=<id>.<ts>`) is now stored under the clean url, so a visitor
+  after a nightly OCR commit no longer pays 1.64 MB twice and keeps nothing. `sw.js` → `tc-v23`.
+**Learned.** `INV-14b`, which I wrote last session specifically to catch exactly this class of
+problem, **only scanned `llms.txt`** — it would have passed while D1 shipped a 404 in `index.html`.
+A check that covers one of two surfaces is a check that gives false confidence. It now scans both,
+and was verified to go red against the un-fixed link. Same discipline as DECISION-9: every check
+added this session (INV-20, `tools/perf/sw-double.mjs`) was shown to FAIL against the old code
+before being trusted.
+**Left.** D2 (hosting) needs Hashin's call — see audit D2; nothing else blocks on it, because
+Phases 3–5 are hosting-independent. Phase 3 (T1–T4) is next and is where the payload actually
+starts shrinking. One tracked invariant remains: INV-14 (R3, Phase 6).

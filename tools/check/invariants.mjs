@@ -118,6 +118,15 @@ check('INV-8', 'enforced', 'DECISION-4', 'No generated artefact is tracked by gi
   return { ok: !tracked, detail: tracked ? 'TRACKED (must not be): ' + tracked.split('\n').join(' ') : 'none tracked' };
 });
 
+check('INV-20', 'enforced', 'INTENT-2 · AUDIT D3', 'A build-skew refetch is cached, not thrown away', () => {
+  // app.js's fetchAtBuild retries as ?b=<id>.<ts> when two data files disagree on their build.
+  // sw.js must store that response under the clean url or the visitor pays 1.64 MB again next
+  // visit. Full test: node tools/perf/sw-double.mjs
+  const sw = read('sw.js');
+  const ok = /url\.search[\s\S]{0,600}?c\.put\(url\.origin \+ url\.pathname/.test(sw);
+  return { ok, detail: ok ? 'cached under the clean url' : 'the cache-buster response is discarded' };
+});
+
 check('INV-9', 'enforced', 'DECISION-8', 'tools/ is excluded from the deployed site', () => {
   const dep = read('.github/workflows/deploy.yml');
   return { ok: /--exclude='\/tools'/.test(dep), detail: /--exclude='\/tools'/.test(dep) ? 'excluded' : 'tools/ would be published to the live site' };
@@ -161,7 +170,7 @@ check('INV-12', 'enforced', 'INTENT-3 · AUDIT P8', 'extract.js is not on the cr
   return { ok, detail: ok ? 'lazy-loaded' : 'still eagerly loaded in index.html for every visitor' };
 });
 
-check('INV-13', 'tracked', 'INTENT-2 · AUDIT D1', 'data/questions.csv is not deployed', () => {
+check('INV-13', 'enforced', 'INTENT-2 · AUDIT D1', 'data/questions.csv is not deployed', () => {
   const dep = read('.github/workflows/deploy.yml');
   const ok = /--exclude='data\/questions\.csv'/.test(dep);
   return { ok, detail: ok ? 'excluded' : '8.94 MB shipped to the live site, fetched by nothing' };
@@ -175,16 +184,19 @@ check('INV-14', 'tracked', 'INTENT-3 · AUDIT R3', 'A search is reflected in the
   return { ok, detail: ok ? 'the query reaches the URL' : 'searches are not shareable and Back does not undo them (the existing replaceState is tab routing only)' };
 });
 
-check('INV-14b', 'enforced', 'INTENT-6 · AUDIT D1', 'llms.txt does not link to a file we do not deploy', () => {
-  if (!exists('llms.txt')) return { ok: true, detail: 'run `node build.js` to check' };
+check('INV-14b', 'enforced', 'INTENT-6 · AUDIT D1', 'Nothing we serve links to a file we do not deploy', () => {
   const dep = read('.github/workflows/deploy.yml');
-  const txt = read('llms.txt');
+  const excluded = p => new RegExp("--exclude='/?" + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep);
   const broken = [];
-  for (const m of txt.matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g)) {
-    const rel = m[1];
-    if (new RegExp("--exclude='" + rel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep)) broken.push(rel);
+  // llms.txt uses absolute URLs; index.html uses relative/absolute hrefs. Check both — the
+  // About tab linked to data/questions.csv and would have 404'd the moment D1 landed.
+  if (exists('llms.txt')) {
+    for (const m of read('llms.txt').matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g))
+      if (excluded(m[1])) broken.push('llms.txt -> ' + m[1]);
   }
-  return { ok: broken.length === 0, detail: broken.length ? 'links to un-deployed file(s): ' + broken.join(', ') : 'every linked path is deployed' };
+  for (const m of read('index.html').matchAll(/(?:href|src|contentUrl)="\/?((?:data|dataset)\/[^"]+)"/g))
+    if (excluded(m[1])) broken.push('index.html -> ' + m[1]);
+  return { ok: broken.length === 0, detail: broken.length ? 'links to un-deployed file(s): ' + broken.join(', ') : 'every linked data path is deployed' };
 });
 
 check('INV-18', 'enforced', 'INTENT-3 · AUDIT P2', 'boot() adopts a query already in the search box', () => {

@@ -3,7 +3,7 @@
    instead: a repeat visit serves straight from cache with NO network request,
    revalidating in the background at most once every HEAVY_TTL_MS. Bump VERSION
    to force a full refresh of everything. */
-var VERSION = 'tc-v22';
+var VERSION = 'tc-v23';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
@@ -34,7 +34,20 @@ self.addEventListener('fetch', function (e) {
   if (url.pathname.indexOf('/gtag/') !== -1) return;
 
   if (DATA_HEAVY.test(url.pathname)) {
-    if (url.search) return;   // explicit cache-buster from app.js fetchAtBuild — straight to the network
+    if (url.search) {
+      // Explicit cache-buster from app.js fetchAtBuild, sent when two data files disagree on
+      // their build id. Go to the network — but store the result under the CLEAN url, so the
+      // next load reads it from cache instead of busting again. Without this, a visitor after a
+      // nightly OCR commit downloads questions.json twice (3.3 MB) and keeps neither. (AUDIT D3)
+      e.respondWith(fetch(e.request).then(function (res) {
+        if (res && res.ok) {
+          var copy = res.clone();
+          caches.open(VERSION).then(function (c) { c.put(url.origin + url.pathname, copy); });
+        }
+        return res;
+      }));
+      return;
+    }
     e.respondWith(
       caches.open(VERSION).then(function (c) {
         return c.match(e.request).then(function (hit) {

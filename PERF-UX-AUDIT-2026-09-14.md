@@ -1435,9 +1435,9 @@ Tick as you land each item. One commit per item.
 | 1 | P9 — `content-visibility`; fix the README claims | ☑ |
 | 1 | P10 — `--hdr` ceiling is viewport-relative | ☑ |
 | 1 | P11 — upsckata credit in `llms.txt` | ☑ |
-| 2 | D1 — stop deploying `data/questions.csv` | ☐ |
-| 2 | D2 — hosting decision (see recommendation) | ☐ |
-| 2 | D3 — `sw.js` caches the cache-buster response | ☐ |
+| 2 | D1 — stop deploying `data/questions.csv` | ☑ |
+| 2 | D2 — hosting decision — **awaiting Hashin**, not code | ⏸ |
+| 2 | D3 — `sw.js` caches the cache-buster response | ☑ |
 | 3 | T1 — drop `sl` from `questions.json` | ☐ |
 | 3 | T2 — parallel `copies.json` + `questions.json` | ☐ |
 | 3 | T3 — split `qmeta.json` / `qtext.json` | ☐ |
