@@ -325,3 +325,39 @@ measured phase (e.g. chunking the `Map` build, or moving it off the main thread)
 guessed at here. `BUDGET-app_js` ceiling ratcheted 33→34 KB for R1+R3's real, non-lazy-loadable
 code (DECISION-2's own stated criterion). `npm run check:all`: 24/24 enforced, 0 tracked — the
 first time this phase's checklist has had zero tracked items outstanding.
+
+## 2026-09-14 — Pre-merge review of the Phases 2-6 PR (found + fixed 4 bugs, documented 4 more)
+**Asked.** "Open a PR from this branch to main" (hashin/topperscopy#5), then "review and merge
+it" after a merge attempt was blocked by the auto-mode classifier ("Merge Without Review").
+**Did.** Ran the `code-review` skill at `high` effort against the full `main...HEAD` diff (8
+finder angles: line-by-line, removed-behavior, cross-file tracer, reuse, simplification,
+efficiency, altitude, conventions). Half the agents hit the account's monthly spend limit mid-run;
+did those angles inline instead of silently reporting a partial review, then re-ran the failed
+ones once the limit reset ("restart them all"). Found and fixed 4 real bugs, verified each by
+direct reproduction before and after, not by trusting the trace alone (DECISION-9 discipline
+applied to *this session's own* work, not just the audit's): `LAST_QSCORE`'s sign mismatch
+(variant search matches always scored 0 under "Best match"); R1's `getCard()` treating a card's
+raw `.open` as "the user chose this" when it was often just `copyCard()`'s own prior default,
+silently suppressing auto-open on a fresh match; a dropped `renderPractice()` call leaving
+Practice stuck on "Loading questions…"; and R3's `popstate` listener missing a resync when a Back
+navigation lands while on a different tab, leaving Browse showing stale results after switching
+back. Documented 4 more real findings the review confirmed but did not fix (a `FALLBACK_USED`
+path with no relevance scoring, name-hit vs. text-match ranking under the new default sort, a `DB`
+null-deref race in `boot()` on a fast revisit, and an `INV-16` false-zero window before
+`qtext.json` loads) — see `DECISION-14` and the code-review tool's own findings report.
+`BUDGET-app_js` ceiling 34→35 KB (34.24 KB measured with all four fixes).
+**Learned.** A test that passes proves the scenario it covers, not the scenario it was meant to
+stand in for — the R1 open-state bug is the sharpest example this project has produced of this
+yet: the exact manual test named in `DECISION-13`'s own "Enforced by" section (expand a card,
+type further, state survives) passed both before and after the fix, because it only ever
+exercised cards that were already name-hits or already-matching — never a card transitioning from
+"never touched, closed by default" to "genuinely matches now." Constructing the actual failure
+needed a specific setup (search a term genuinely inside an *already-rendered, never-clicked*
+card's own text) that neither the implementation session's own testing nor a first read of the
+diff surfaced — only an independent agent tracing `getCard()`/`copyCard()`'s data flow found it,
+and even that needed live reproduction (not just the trace) to confirm, since the first repro
+attempt accidentally passed through an unrelated `CARDMAP.clear()` path that masked the bug.
+**Left.** PR not yet merged — this review was the blocker the auto-mode classifier raised;
+merging is the next step once the user confirms. The 4 documented-not-fixed findings are
+candidates for a future phase (see `DECISION-14`'s "Rejected" section for why each was deferred
+rather than fixed here). `git status` clean, `npm run check:all` 24/24 enforced after the fixes.

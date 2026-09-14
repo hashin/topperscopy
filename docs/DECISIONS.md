@@ -452,7 +452,9 @@ comment in `tools/check/budget.json`'s `"search"` bucket carries the full measur
 
 ## DECISION-13 — R1's card reuse preserves real open state, not a recomputed default; R3's URL
 sync reads "was empty" fresh, never caches it
-*2026-09-14 · active · cites DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
+*2026-09-14 · point 1 SUPERSEDED by DECISION-14 (a card's raw `.open` reading was not, on its own,
+a reliable signal of "the user chose this" — see DECISION-14); point 2 active, unchanged · cites
+DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
 
 **Decision.** Two rules, both found necessary by testing rather than stated in the audit:
 
@@ -524,3 +526,85 @@ keystrokes, open/closed state survives; a link-only card specifically, before an
 `page.route` and released, confirming no duplicate card and no lost open state). R3:
 `tools/perf/history.mjs` (new, committed) — 6/6 checks, including the specific two-Back sequence
 that reproduced the `about:blank` bug; re-run any time `syncUrl()`/`applyUrlToState()` change.
+
+---
+
+## DECISION-14 — Four bugs found in a pre-merge review of the Phases 2–6 PR, fixed in the same
+commit: a card's raw `.open` isn't "the user chose this"; `LAST_QSCORE`'s sign convention;
+Practice's stuck loading state; Back navigation desyncing Browse from the URL across a tab switch
+*2026-09-14 · active · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md Phase 6*
+
+**Decision.** Before merging the branch carrying Phases 2–6 into `main`, a genuinely independent
+multi-angle review (8 finder angles, `code-review` skill at `high` effort, run against the full
+`main...HEAD` diff) surfaced four real, reproducible bugs — three in this session's own R1/R3
+work, one in Phase 5's already-merged-to-this-branch scoring code. All four were verified by
+direct reproduction (not just source-reading) and fixed in the same commit as the review.
+
+1. **`getCard()`'s `forceOpen` used a card's raw `.open` reading as "the user's real choice,"
+   but a card that was simply rendered closed because there was no query yet is not a choice —
+   it is `copyCard()`'s own prior default, indistinguishable from a manual close by inspecting
+   `.open` alone.** Fixed with an explicit `tcTouched` flag, set only inside `copyCard()`'s
+   summary click handler (a real user interaction), and checked by `getCard()` instead of the
+   raw `.open` value: `forceOpen` is now only ever set from a *touched* element's state.
+2. **`matchingQidsIndexed()` stored `LAST_QSCORE` keyed by `idxIdOf()`'s raw signed id (negative
+   for a variant), but every reader (`filteredCopies()`, and `qhit.q`/`qhit.v` from the same
+   function) uses a positive-normalized key** — so a query whose only match was a copy's own
+   variant wording scored 0 under "Best match," indistinguishable from a non-match. Fixed by
+   normalizing the write side to `Math.abs(idxIdOf(idx, p))`.
+3. **`loadQuestionIndex()`'s completion handler dropped the paired `renderPractice()` call
+   `loadFull()`'s analogous handler still has**, leaving the Practice dialog stuck on "Loading
+   questions…" once `qmeta.json` landed, since `nextPracticeQ()`'s own early-return path never
+   retries on its own. Fixed by restoring the pair.
+4. **The `popstate` listener only resyncs `state.q`/`paper`/`syl` while `state.view === 'browse'`**
+   (DECISION-13's own R3 work), so a Back navigation that lands while the user is on a different
+   tab is silently missed — switching back to Browse then shows stale results with no visible
+   connection to what the URL says. Fixed in `setView()`: compare the URL's q/paper/syl against
+   in-memory state whenever arriving at Browse, and only resync (via `applyUrlToState()`) when
+   they actually disagree — calling `applyUrlToState()` unconditionally on every tab switch was
+   rejected (see below) because it also resets `state.shown`, which would silently discard a
+   legitimate "Show more" expansion on every ordinary Browse→About→Browse click.
+
+**Why.** All four were found by an agent-driven review specifically instructed to verify
+candidates by reproduction, not by trusting a plausible-sounding trace — and #1 in particular
+*looked* correct from source alone (a manual test of the exact scenario named in DECISION-13's
+own "Enforced by" section — expand a card, type further, state survives — passed both before and
+after this fix, because that test never exercised a card that had *never* been touched becoming a
+*new* match, only cards already known to be name-hits or already-matching). This is the same
+lesson DECISION-9 exists to generalize: a test that passes proves the scenario it covers, not the
+scenario it was meant to stand in for. Root cause for #1 and #4 both: state (`.open`, `state.q`)
+was read as if it always meant "chosen by the user," when large parts of this codebase set it
+programmatically too — the fix in both cases is to track *provenance* (was this a real user
+action) rather than trust the current value's shape alone.
+
+**Rejected.**
+- *#1: keep `forceOpen = existing.open` but add an extra check for `nameHit`/other heuristics to
+  guess when a card "should" have auto-opened.* Fragile and gets more special-cased with every
+  new match type; a real touched/untouched distinction is the general fix.
+- *#4: call `applyUrlToState()` unconditionally whenever `setView('browse')` runs.* Simpler, but
+  verified live to reset `state.shown` (discarding "Show more" pagination) on every ordinary tab
+  switch, not just the Back-navigation-elsewhere case it needs to fix — rejected once measured,
+  not assumed safe.
+- *#4: make `popstate` resync regardless of `state.view`.* Would fix the specific bug but
+  re-renders `#results` while the user is looking at a different tab, for no visible benefit —
+  the targeted comparison in `setView()` only does the (cheap) work when it's actually needed.
+- *Leave any of the four as "documented, not fixed."* Considered for all four, applied to the
+  four lower-severity/pre-existing findings from the same review (see the review's own report:
+  the `FALLBACK_USED` scoring gap, name-hit vs. text-match ranking, a `DB` null-deref race in
+  `boot()`, and the `INV-16` false-zero window before `qtext.json` loads) — all real, but each
+  either degrades gracefully, is a product judgment call, self-heals, or needs more design work
+  than a pre-merge review pass should absorb without its own dedicated scrutiny. The four fixed
+  here were fixed because they are contained, freshly-understood (three are this session's own
+  code), and user-visibly wrong in ordinary use, not edge cases.
+
+**Reverse if.** Never, for the four fixes. The four *deferred* findings are candidates for a
+future phase; revisit them with the same review discipline (reproduce before fixing) rather than
+patching from the trace alone.
+
+**Enforced by.** Not statically checkable — all four verified by direct reproduction with
+throwaway Playwright scripts (not committed) before and after each fix: #1 via console-traced
+`getCard()`/`copyCard()` calls against a real content match on a never-touched card; #2 via
+`tools/perf/search-parity.mjs` (still 0/210 unexplained regressions after the fix); #3 read from
+source (low-risk, mirrors the already-tested `loadFull()` pattern exactly); #4 via the literal
+search→About→Back→Browse sequence, plus a no-regression check that plain tab-switching leaves
+"Show more" pagination untouched. `npm run check:all` (24/24 enforced) and
+`tools/perf/history.mjs` (6/6) re-run clean after all four fixes landed together.

@@ -185,7 +185,12 @@
       qiState = 'ready';
       fillSyllabus();
       if (state.view === 'browse' && state.qview === 'questions') renderBrowse();
-      if ($('#practice').open) fillPracticeSyl();
+      // Also re-render, not just refill the syllabus dropdown: nextPracticeQ() shows "Loading
+      // questions…" and returns without retrying when QI isn't ready yet (the paper-pick handler
+      // is the only other caller) — without this, the dialog stays stuck on that placeholder
+      // once QI actually lands, until the user manually clicks "Another question" (found in
+      // review before merge; loadFull()'s own handler already does this for FULL).
+      if ($('#practice').open) { fillPracticeSyl(); renderPractice(); }
       track('question_index_loaded', { count: QI.length });
       return QI;
     }).catch(function (e) {
@@ -659,6 +664,19 @@
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
     if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
+    // R3 fix (found in review before merge): popstate only resyncs state.q/paper/syl while
+    // state.view === 'browse', so a Back navigation that lands while on another tab leaves
+    // Browse's in-memory state stale until the URL and state are compared here. Only resync
+    // when they actually disagree — applyUrlToState() also resets state.shown to PAGE, and
+    // unconditionally calling it on every plain tab switch would discard a legitimate
+    // "Show more" expansion that nothing has made stale.
+    if (v === 'browse') {
+      var up = new URLSearchParams(location.search);
+      var uq = (up.get('q') || '').trim().slice(0, 200);
+      var upaper = up.get('paper'); upaper = (upaper && PAPERS.indexOf(upaper) >= 0) ? upaper : 'all';
+      var usyl = (up.get('syl') || '').trim().slice(0, 60);
+      if (uq !== state.q || upaper !== state.paper || usyl !== state.syl) applyUrlToState();
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });   // valid ScrollBehavior; unknown values fall back to 'auto'
     pageView(v);
     if (changed) track('tab_view', { view: v });
@@ -901,7 +919,12 @@
       acc.forEach(function (p) {
         var s = 0;
         for (var ti2 = 0; ti2 < terms.length; ti2++) s += idf[ti2] * (expansions[ti2].exact.has(p) ? 1.3 : 1.0);
-        LAST_QSCORE.set(idxIdOf(idx, p), s);
+        // Positive-normalized key: idxIdOf() is negative for a variant position (same sign
+        // convention textOfId()/rawQ() use), but filteredCopies() looks scores up the same way
+        // it looks up qhit.q/qhit.v — always positive, sign stripped at the call site. Storing
+        // the raw signed id here meant every variant-only match silently scored 0 under "Best
+        // match" (bug found in review before merge, see docs/DECISIONS.md).
+        LAST_QSCORE.set(Math.abs(idxIdOf(idx, p)), s);
       });
     }
     return signedMapsFromPositions(idx, acc);
@@ -1090,16 +1113,22 @@
   }
 
   // Reuse the on-screen element for this id when its signature is unchanged (cheapest path).
-  // Otherwise rebuild its content but carry forward its REAL current open/closed state — a
-  // manual toggle must survive further typing (DECISION-13), not reset to copyCard()'s own
-  // auto-open-on-match default. A node never seen before opens per `reopen` (ids open in the DOM
-  // before this render — the FULL-load/qtext-arrival backfills pass this) or that default.
+  // Otherwise rebuild its content, but only carry forward the existing element's open/closed
+  // state when the user actually clicked it (tcTouched, set by copyCard()'s summary listener) —
+  // a real manual toggle must survive further typing (DECISION-13), but a card that was simply
+  // rendered closed because there was no query yet is NOT a manual choice, and must not override
+  // copyCard()'s own auto-open-on-match default once it genuinely matches (a real regression this
+  // fixes: reusing a plain "never touched" `.open` reading forced every pre-existing card closed
+  // forever, even ones a fresh search newly matches). A node never seen before opens per `reopen`
+  // (ids open in the DOM before this render — the FULL-load/qtext-arrival backfills pass this) or
+  // that default.
   function getCard(x, reopen) {
     var id = x.c.i, sig = cardSig(x), existing = CARDMAP.get(id);
     if (existing && existing.dataset.tcSig === sig) return existing;
-    var forceOpen = existing ? !!existing.open
+    var forceOpen = (existing && existing.dataset.tcTouched) ? !!existing.open
       : ((reopen && reopen.indexOf(String(id)) >= 0) ? true : undefined);
     var node = copyCard(x.c, x.qs, x.n, x.nameHit, forceOpen);
+    if (existing && existing.dataset.tcTouched) node.dataset.tcTouched = '1';
     node.dataset.tcSig = sig;
     CARDMAP.set(id, node);
     return node;
@@ -1690,6 +1719,7 @@
       });
     }
     summary.addEventListener('click', function () {
+      d.dataset.tcTouched = '1';   // a real user toggle — getCard() must never override this again
       if (!d.open) { track('copy_open', { topper: c.t, paper: c.p, source: c.c || 'unknown', questions: n }); fillQuestions(); }
     });
     if (openIt && !filled) fillQuestions();
