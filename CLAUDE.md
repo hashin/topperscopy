@@ -282,8 +282,12 @@ VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + all 3,720 GS/E
 body `type=toppers_answers` while logged in, `d.result` = 4k rows),
 NextIAS (`nextias.com/toppers-answers-ias`, 2,020 GS/Essay + 138 optionals incl. new **Economics** bucket,
 255 toppers 2023–25; public S3/CDN PDFs, `<article>` per topper, year `<select id=yearSelect>`=all/2025/24/23;
-299 unlabelled "Analytics/AIM" booklets stored as paper `Other`). All non-upsckata copies
-are **link-only** (scanned Drive/PDF, no question text yet).
+299 unlabelled "Analytics/AIM" booklets stored as paper `Other`), Shankar IAS Parliament
+(`shankariasparliament.com/upsc-toppers-list`, Sociology optional only so far — 11 toppers/2025, 35 PDFs;
+SPA route, actual file server-redirects via an HTTP `Refresh` header off `/download-file/<id>`, resolved
+with `fetch(url,{redirect:'manual'})` reading that header — **never navigate the tab straight to a
+`download-file/<id>` or `uploads/downloads/*.pdf` URL, it triggers a real browser save-file prompt**).
+All non-upsckata copies are **link-only** (scanned Drive/PDF, no question text yet).
 
 ## Open items
 
@@ -292,6 +296,10 @@ are **link-only** (scanned Drive/PDF, no question text yet).
   automated by a resumable `ocr-pipeline/` script; output merges into `optionals.json` / `submissions.csv`.
 - UnlockIAS deep year-archive (~+400 PDFs) not scraped — only featured toppers done.
 - GS SCORE (`iasscore.in/toppers-copy`) is **login-gated** — no public URLs, can't add.
+- theIAShub (`theiashub.com/toppers/upsc/2025`) is **login-gated the same way** — 38 UPSC 2025 toppers
+  listed with paper labels (GS I–IV/Essay), but every single file on every per-topper page
+  (`/toppers/upsc/2025/<slug>`) shows "Login to Download" with no PDF URL anywhere in the DOM or
+  network requests, confirmed on multiple toppers. Same call as GS SCORE: can't add without an account.
 - ~~`.git` history is ~280 MB~~ — **stale, resolved.** `git count-objects -vH` reports **16.7 MiB** in a
   single pack, 0 loose objects, 0 garbage. Gitignoring the generated files + Actions-based deploy already
   fixed it. There is **no history rewrite to consider** — do not run `git filter-repo` here.

@@ -423,3 +423,40 @@ in the same function. Worth generalizing further: when a fix branches on a mode/
 than one value, check the *other* values too, not just the one the failing report happened to use.
 **Left.** Nothing outstanding from this pass — `npm run check:all` 24/24 enforced, 0 tracked;
 `BUDGET-app_js` 35.2 KB / ceiling 36 KB, no ceiling change needed. PR #6 merged and deployed.
+
+## 2026-09-15 — Added Shankar IAS Parliament Sociology toppers; theIAShub found login-gated
+**Asked.** "add topper's copy from this link: shankariasparliament.com/upsc-toppers-list/SC2025" and,
+separately, "for the following link, use automation using chrome extension if you can't fetch
+directly: theiashub.com/toppers/upsc/2025" (Chrome extension wasn't connected this session; fell
+back to the in-app Browser tool, which reached both sites directly).
+**Did.** ShankarIAS's `SC2025` page is a Sociology-optional-only topper list (11 toppers, 2025). Its
+"View" links resolve through an Angular SPA route to `/upsc-toppers-details/<id>/SC2025`
+(server-rendered, `fetch()`-readable), each listing 1–4 "Moksha Answer" links to
+`/download-file/<id>`, which is **not** a real download endpoint but a same-origin redirect —
+resolved cleanly via `fetch(url,{redirect:'manual'})` and reading the `Refresh` response header,
+with no navigation needed. Learned the hard way first: an early attempt navigated the tab straight
+to a `download-file/<id>` URL to read the resulting network request, which the user immediately
+flagged as repeatedly popping a real "save file" dialog in their browser — stopped that approach
+mid-batch and switched to the header-reading method for the remaining ids. Added all 35 resolved
+PDFs (all confirmed `application/pdf` via HEAD first) to `data/optionals.json`, subject `Sociology`,
+year 2025, `source: "Shankar IAS Parliament"`. Reused the topper name `"Rajeshwari"` (not "Rajeshwari
+Suve") for AIR 2 because that exact person already exists in the data from Level Up IAS under that
+spelling — `nameKey()` only collapses case/punctuation, so a fuller name would have created a
+second, unmerged topper for the same real person. `node build.js && npm run check` clean, 21/21
+enforced, 1,693→1,702 toppers.
+theIAShub's `toppers/upsc/2025` listing (38 UPSC-2025 toppers, GS I–IV/Essay labeled) turned out to
+be **login-gated at the file level**: the listing page's answer-copy links all point at
+`/user-login?redirect=toppers`, and every per-topper page (`/toppers/upsc/2025/<slug>`) shows
+"Login to Download" on every file with no PDF URL recoverable from the DOM or network requests —
+checked on two different toppers to rule out a one-off. Same situation the project already
+documented for GS SCORE. Did not create an account or log in (out of scope regardless of source).
+Recorded both outcomes in `CLAUDE.md` (ingested-sources list + Open items) rather than leaving
+theIAShub's login-gate as something a future session has to rediscover.
+**Learned.** When a "download" link's `href` doesn't resolve directly (a JS-driven route, here an
+Angular SPA action), check the *response headers* of a plain `fetch` before resorting to real
+browser navigation — the `Refresh` header on `/download-file/<id>` gave the exact target URL with
+zero side effects, where navigating the tab has real, user-visible consequences (a save-file
+prompt) and should never be the first thing tried against an unknown "download" endpoint.
+**Left.** `npm run check` 21/21 enforced, 0 tracked, clean working tree otherwise. No DECISION
+entry needed — nothing here reverses or contradicts a prior one, just extends the existing
+login-gated-source precedent and adds a new ingested source.
