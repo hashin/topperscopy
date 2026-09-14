@@ -361,3 +361,32 @@ attempt accidentally passed through an unrelated `CARDMAP.clear()` path that mas
 merging is the next step once the user confirms. The 4 documented-not-fixed findings are
 candidates for a future phase (see `DECISION-14`'s "Rejected" section for why each was deferred
 rather than fixed here). `git status` clean, `npm run check:all` 24/24 enforced after the fixes.
+
+(PR #5 merged shortly after this entry — squashed into commit `1c92ee3` on `main` — and the live
+site was verified working via Chrome: no console errors, search→URL sync, auto-open, and Back all
+confirmed on the deployed build.)
+
+## 2026-09-14 — Fixed DECISION-14's four deferred findings
+**Asked.** "fix the four deferred findings from DECISION-14."
+**Did.** New branch (`claude/fix-decision-14-followups`) off the now-merged `main`. Fixed all
+four, each verified by direct reproduction before and after, not from the original review's trace
+alone: (1) `scoreFallbackMatches()` gives the DECISION-7 substring fallback a real idf-sum score
+instead of leaving every fallback match tied at 0 under "Best match"; (2) `NAME_HIT_SCORE` (1e6)
+makes an exact topper-name match always outrank a text match; (3) `dbReadyPromise`, assigned
+before `boot()`'s `?q=`/`?syl=` handling can call `ensureFull()`, closes the race where
+`loadFull()` could dereference `DB` before `boot()`'s own fetch had set it; (4) `SUBSTRING_PENDING`
+closes the one remaining `INV-16` false-zero window — the index finding zero candidates while
+`qtext.json` (needed for the fallback) hasn't loaded yet. Full writeup in `DECISION-15`.
+**Learned.** The DB-race finding (#3) needed a reproduction technique the original review didn't
+use: checking for a *visible* error (page error, console error) found nothing on the unfixed code,
+because `loadFull()`'s own `.catch()` silently swallows the `TypeError` on `DB.copies` — the bug
+only shows up as a **second, wasted network fetch of `copies.json`** once `scheduleFull()`'s later
+idle callback retries after `DB` actually gets set. Confirmed by holding `data/index.json` in
+flight (via `page.route`) while letting `copies.json` resolve immediately, then counting requests
+— 2 fetches on the pre-fix code, 1 on the fixed code. A silent catch block hiding a real crash is
+exactly the kind of thing "no error appeared" doesn't prove innocent — worth remembering the next
+time a race is suspected near a `.catch()` that doesn't rethrow.
+**Left.** `BUDGET-app_js` ceiling 35→36 KB (35.0 KB measured with all four fixes — right at the
+old 35 KB ceiling by 4 bytes before the bump). `npm run check:all` 24/24 enforced, 0 tracked.
+DECISION-14 marked as having its deferred items resolved, pointing to `DECISION-15`. Not yet
+merged to main or pushed — next step is opening a PR the same way #5 was (review before merge).

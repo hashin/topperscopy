@@ -532,7 +532,9 @@ that reproduced the `about:blank` bug; re-run any time `syncUrl()`/`applyUrlToSt
 ## DECISION-14 — Four bugs found in a pre-merge review of the Phases 2–6 PR, fixed in the same
 commit: a card's raw `.open` isn't "the user chose this"; `LAST_QSCORE`'s sign convention;
 Practice's stuck loading state; Back navigation desyncing Browse from the URL across a tab switch
-*2026-09-14 · active · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md Phase 6*
+*2026-09-14 · active — the four findings this decision deferred (see "Rejected" below) were fixed
+in a follow-up session; see DECISION-15 · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md
+Phase 6*
 
 **Decision.** Before merging the branch carrying Phases 2–6 into `main`, a genuinely independent
 multi-angle review (8 finder angles, `code-review` skill at `high` effort, run against the full
@@ -608,3 +610,93 @@ source (low-risk, mirrors the already-tested `loadFull()` pattern exactly); #4 v
 search→About→Back→Browse sequence, plus a no-regression check that plain tab-switching leaves
 "Show more" pagination untouched. `npm run check:all` (24/24 enforced) and
 `tools/perf/history.mjs` (6/6) re-run clean after all four fixes landed together.
+
+---
+
+## DECISION-15 — The four findings DECISION-14 deferred are fixed: fallback searches now score,
+name matches outrank text matches, `boot()`'s `DB` race is closed, and the last `INV-16` gap
+(substring fallback before `qtext.json` loads) is covered
+*2026-09-14 · active · cites DECISION-6, DECISION-7, DECISION-9, DECISION-14*
+
+**Decision.** All four findings DECISION-14 deferred are fixed, each verified by direct
+reproduction before and after (not from the trace alone — the same discipline DECISION-14 itself
+asked for on revisit):
+
+1. **The substring-fallback path (`matchingQidsSubstring`, DECISION-7) never populated
+   `LAST_QSCORE`, so every fallback-triggered search tied at score 0 under "Best match."** New
+   `scoreFallbackMatches(hitMaps, expansions, N)` reuses the `expansions` array `matchingQidsIndexed()`
+   already computed — its per-term document frequency is still meaningful even when the index
+   itself found no candidates — for a flat idf-sum score applied to every fallback match. A term
+   the index has never seen (`df=0`) scores maximally rare, which is the right call: the fallback
+   exists precisely for text the index can't describe. Matches from one fallback query still tie
+   with each other (the substring scan has no way to rank within its own results); this only stops
+   them tying with "no match" too, and stops them being invisible when mixed with real name-hit
+   or indexed-match scores in the same render.
+2. **`filteredCopies()` never assigned a score to `nameHit` copies, so an exact topper-name match
+   always ranked behind any copy with a nonzero in-text score under "Best match."** New
+   `NAME_HIT_SCORE` constant (`1e6`, declared with the other module constants — far above any
+   realistic idf-sum, worst case ~9.3 per term) is used as `nameHit` copies' score instead of 0.
+   Name hits now always sort first under "Best match"; among themselves they still tie and fall
+   through to the year/AIR order, same as before.
+3. **`boot()` could call `ensureFull()` (and thus `loadFull()`, which unconditionally dereferences
+   `DB.copies`) before `DB` was assigned by `boot()`'s own `index.json`/`toppers.json`/
+   `optionals.json` fetch**, on a fast repeat visit where `copies.json` resolves from the
+   service-worker cache before those three do. New `dbReadyPromise`, assigned synchronously at the
+   top of `boot()` — before the `?q=`/`?syl=` handling that can call `ensureFull()`/`ensureQI()` —
+   holds that fetch chain; `loadFull()` now does `Promise.all([dbReadyPromise, copiesJson])`
+   before touching `DB`, instead of assuming it already exists.
+4. **The `!acc.size` branch of `matchingQidsIndexed()` — the index found zero prefix candidates —
+   returned empty maps outright when `QTEXTLC` hadn't loaded yet, instead of signalling that the
+   substring fallback (which needs that same text) simply hadn't had a chance to run.** This read
+   to `renderBrowse()` as a CONFIRMED zero, printing "0 copies for X" for a query the fallback
+   might yet answer — the exact bug `INV-16`/DECISION-6 exist to prevent, in a window that check
+   (and the earlier E1/DECISION-12 work) never covered. New `SUBSTRING_PENDING` flag (same pattern
+   as `FALLBACK_USED`/`PHRASE_PENDING`, reset alongside them), read into `renderBrowse()`'s
+   `loading` computation, so this specific window now shows "Searching inside N copies…" instead.
+
+**Why.** All four were exactly as DECISION-14 described them: real, but each needing either a
+scoring design (#1, #2) or a careful ordering fix (#3) or a new pending-flag (#4) rather than a
+quick patch — the reason they were deferred rather than folded into the original pre-merge pass.
+Fixing them properly, on their own, with room to verify each by reproduction rather than by
+re-reading the same trace that found them, is exactly the "future phase, same review discipline"
+DECISION-14's own "Reverse if" asked for.
+
+**Rejected.**
+- *#1: score fallback matches per-document somehow (e.g. count of matched terms actually present
+  in that document's text).* The substring scan (`matchingQidsSubstring`) doesn't retain
+  per-document term-match detail, only a yes/no hit — recovering it would mean re-scanning each
+  matched document's text a second time, real cost for a rarely-hit path (DECISION-7's fallback is
+  already the last resort). The flat idf-sum is free (the data is already in hand) and correctly
+  ranks a fallback match above "no match," which is the actual bug being fixed.
+- *#2: derive `NAME_HIT_SCORE` from something proportional to match quality (e.g. exact full-name
+  match vs. a partial one).* `matchName()` is a simple all-terms-substring check with no notion of
+  "how exact," and building one just for ranking weight is more machinery than the actual need —
+  a name match should simply win, not be finely graded against other name matches.
+- *#3: guard every `DB.copies` access with a null check instead of fixing the ordering.* Papers
+  over the actual bug (a promise race) with defensive checks at every call site, and a null check
+  can't tell "not loaded yet" from "loaded, this copy is legitimately gone" — the ordering fix
+  removes the race rather than working around its symptom, in keeping with DECISION-14's own
+  "track provenance" lesson.
+- *#4: give `SUBSTRING_PENDING` a distinct resultmeta suffix (like `FALLBACK_USED`'s "no word
+  match" label or `PHRASE_PENDING`'s "phrase not yet checked").* Unnecessary — the flag only
+  needs to feed `loading`, and the existing "Searching inside N copies…" / "· still scanning
+  inside the copies…" messaging already covers every case `loading` is true, including this one.
+  A distinct label would explain nothing a student needs to act on differently.
+
+**Reverse if.** Never — these are direct fixes for reproduced bugs DECISION-14 already
+established were real, not style preferences up for revisiting.
+
+**Enforced by.** Not statically checkable — verified by direct reproduction with throwaway
+Playwright scripts (not committed): #1 confirmed via a temporary debug log of `LAST_QSCORE`'s
+contents after a fallback query (score 9.32, matching the expected max-rarity idf for a term with
+zero index document-frequency; removed before commit); #2 confirmed live (searching "ram" surfaces
+name-matching toppers in the first 3 results, ahead of coincidental text matches); #3 confirmed by
+reproducing the exact race — holding `data/index.json` in flight while `data/copies.json` resolves
+immediately reproduces a **second, wasted fetch of `copies.json`** on the pre-fix code (the silent
+crash-and-retry signature: `loadFull()`'s own `.catch()` swallows the `TypeError` on `DB.copies`,
+setting `fullState='error'` and `fullPromise=null`, so `scheduleFull()`'s later idle callback
+re-fetches from scratch) — and confirmed gone (single fetch) on the fixed code, same reproduction;
+#4 confirmed via `data/qtext.json` held in flight (resultmeta reads "Searching inside N copies…",
+not a confirmed zero) then released (resolves correctly to the fallback's real count and "no word
+match" label). `tools/perf/search-parity.mjs` (0/210 unexplained regressions) and
+`tools/perf/history.mjs` (6/6) re-run clean; `npm run check:all` 24/24 enforced.
