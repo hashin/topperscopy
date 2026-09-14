@@ -271,6 +271,8 @@ main { padding-bottom: 96px; }
 }
 .credit strong { color: var(--body); font-weight: 600; }
 .credit a { color: var(--teal-text); }
+/* one-line stand-in for .credit on phones — see the mobile block below (audit R2) */
+.credit-mobile { display: none; }
 
 /* ---------- shared view bits ---------- */
 .view { padding-top: 8px; }
@@ -293,7 +295,7 @@ main { padding-bottom: 96px; }
 
 /* the "Filters" disclosure — only shown once the toolbar is collapsed */
 .filters-toggle {
-  display: none; align-items: center; gap: 7px; flex: none;
+  display: none; align-items: center; gap: 7px; flex: none; min-height: 40px;
   font: inherit; font-size: 13.5px; font-weight: 500; cursor: pointer;
   color: var(--ink); background: var(--surface); border: 1px solid var(--border-2);
   border-radius: 12px; padding: 0 14px; box-shadow: var(--shadow-sm);
@@ -318,6 +320,18 @@ main { padding-bottom: 96px; }
   .toolbar.slim { position: sticky; top: var(--hdr, 56px); background: var(--paper); }
   .toolbar.slim .filters-toggle { padding: 0 12px; font-size: 13px; }
   .toolbar.slim .filters-toggle svg { display: none; }
+
+  /* Audit R2: trimming the hero (above) wasn't enough on its own — the filter row (paper
+     chips, mode, syllabus/topper/source/year/sort) is expanded by default until the toolbar's
+     own scroll-triggered "slim" collapse kicks in, and at 390px that row alone was still tall
+     enough to push every result card below the fold even with the disclaimer/stats trimmed.
+     Start phones in the same collapsed-filters posture .slim already uses after scrolling, not
+     only once the user has scrolled past the sentinel — the toggle button is already built for
+     exactly this and needs no new behaviour, just to render before the first scroll too. */
+  .toolbar-filters { display: none; }
+  .filters-toggle { display: inline-flex; padding: 0 12px; font-size: 13px; }
+  .filters-toggle svg { display: none; }
+  .toolbar.open .toolbar-filters { display: flex; padding-top: 2px; max-height: 62vh; overflow-y: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .toolbar { transition: none; } }
 
@@ -357,7 +371,13 @@ select {
 }
 select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px var(--ring); }
 
-.resultmeta { font-size: 13.5px; color: var(--muted); margin: 16px 0 16px; }
+/* Audit R2 fallout: #resultmeta starts empty and JS fills it once the first render runs (same
+   shape of bug as #statline/#papers, AUDIT P3) — it was never in that fix's INV-11 coverage
+   because on the pre-R2 layout the fill happened below the fold, where a shift is invisible to
+   CLS. Compacting the mobile hero moved it (and everything below it) into the viewport, so the
+   same ~22px fill now measurably shifts the search UI: CLS 0.0051 -> 0.3005 on 3G (measured).
+   Reserve one line so the fill no longer moves anything already painted. */
+.resultmeta { font-size: 13.5px; color: var(--muted); margin: 16px 0 16px; min-height: 22px; }
 
 /* year group headers in the browse list */
 .yeargroup {
@@ -658,15 +678,27 @@ footer.site .spacer { flex: 1; }
   .view:not(#view-browse) .hero { padding: 22px 0 4px; }
   .statline { margin-top: 18px; gap: 6px 16px; }
 
+  /* Audit R2: the first viewport was entirely hero/stats/disclaimer, with the search box at
+     the very bottom edge and 0 result cards visible (tools/perf/fold.mjs). #sub and #statline
+     printed the same counts twice — keep #statline (the chips scan faster) and drop #sub. The
+     seven-line credit/disclaimer paragraph is important for rights holders but is not what a
+     student came for and is duplicated in About — swap it for a one-line pointer there
+     (.credit-mobile, defined above). Nothing is removed, only reordered/deduplicated per phone.
+     h1 also loses its ch-based max-width here so it wraps at 2 lines instead of 3 at 390px. */
+  #sub { display: none; }
+  .hero h1 { max-width: none; }
+  .credit { display: none; }
+  .credit-mobile { display: block; margin: 14px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .credit-mobile a { color: var(--teal-text); }
+
   /* 16px keeps iOS Safari from zooming the viewport on field focus */
   select, form input, form select, form textarea { font-size: 16px; }
   .theme-toggle { width: 40px; height: 40px; }
   .copy > summary { padding: 15px 16px; }
   .q { padding: 13px 16px; }
-  /* measured: median collapsed card 125px at 390px wide, statline 74px, papers 84px,
-     and #sub wraps to 3 lines (26px -> 78px) once the real counts replace "loading…" */
+  /* measured: median collapsed card 125px at 390px wide, statline 74px, papers 84px.
+     #sub is hidden above, so it no longer needs a reserved height for CLS (audit P3/INV-17). */
   .copy { contain-intrinsic-size: auto 125px; }
   .statline { min-height: 74px; }
   #papers { min-height: 84px; }
-  #sub { min-height: 78px; }
 }
