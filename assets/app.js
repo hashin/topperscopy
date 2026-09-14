@@ -173,11 +173,18 @@
     // questions.json's a:[[copyId, page]] refs and its qids are only meaningful against the
     // build copies.json was loaded at, so wait for that and pin to DB.build (which loadFull
     // reconciles to copies.json's actual build).
-    qiPromise = ensureFullPromise().then(function () {
-      return Promise.all([
-        fetchAtBuild('data/questions.json', DB && DB.build),
-        fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; })
-      ]);
+    // Start the big download NOW rather than after copies.json has landed and parsed — on slow
+    // 3G that serialisation costs ~1.8s of dead air. Correctness still requires the two files to
+    // agree on a build, so we join below and reconcile before touching any refs.
+    var qJson = fetchAtBuild('data/questions.json', DB && DB.build);
+    var sJson = fetch('data/syllabus.json').then(function (r) { return r.json(); }).catch(function () { return null; });
+    qiPromise = Promise.all([ensureFullPromise(), qJson, sJson]).then(function (parts) {
+      var res = [parts[1], parts[2]];
+      // copies.json may have reconciled DB.build to a different build while this was in flight.
+      if (res[0] && res[0].build && DB && DB.build && res[0].build !== DB.build) {
+        return fetchAtBuild('data/questions.json', DB.build).then(function (d) { return [d, res[1]]; });
+      }
+      return res;
     }).then(function (res) {
       QI = res[0].questions || [];
       SYL = res[1];
