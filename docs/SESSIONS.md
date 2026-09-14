@@ -208,3 +208,48 @@ existed, and nobody reconciled the two until this prep pass measured it directly
 for on every phase boundary from now on, not just assuming downstream phases are unaffected.
 **Left.** Phase 5 itself: not started. `tools/perf/index-proto.mjs` needs fixing (reads a deleted
 file) before it can even run — first thing the Phase 5 session should do, per the addendum.
+
+## 2026-09-14 — Phase 5 (E1: inverted index + relevance ranking)
+**Asked.** Implement Phase 5 (E1) exactly — a full-session item per the audit's own sizing.
+Fixed `index-proto.mjs` first (reproduced the addendum's 954.8 KB naive / 327.7 KB local-position
+numbers exactly), wrote `tools/perf/search-parity.mjs` against the OLD engine before touching
+`assets/app.js`, then built `data/qindex.bin` (`build.js`'s `writeQIndex()`) and the client-side
+binary reader + query engine + BM25-lite ranking.
+**Did.** Token-prefix inverted index shipped as `data/qindex.bin`: front-coded dictionary,
+delta+varint postings over local positions, a translation table back to stable ids — self-
+contained in one atomic file per the addendum's fix. Indexes canonical questions **and**
+variants (3,103 of them) for parity with what the old substring scan matched via `QVARLC` — not
+in the audit's original scope, found by asking what `search-parity.mjs` needed to actually prove.
+`assets/app.js`: binary parser, prefix-range binary search, AND intersection (shortest-first),
+exact-phrase candidate+verify, a once-only substring fallback labelled "no word match — showing
+text matches", "Best match" as the new default sort (BM25-lite: idf per term + a 1.3x bonus for
+an exact token match over a prefix-completion). A card the index confirms but whose text hasn't
+loaded renders now with a "Loading question text…" placeholder instead of being hidden
+(DECISION-6), backfilled by the existing render-on-qtext-arrival path (now open-card-preserving).
+`qtext.json` removed from `BUDGET-search`'s definition — it no longer gates the answer.
+**Learned.** Two things, both caught by measuring rather than trusting the document (DECISION-9):
+1. The audit's own Verify step says the new engine must return "a superset for prefix queries."
+   Provably backwards for word/AND queries — NEW is always a *subset* of OLD there (every token
+   starting with a prefix also contains it as a substring; AND composes subsets into subsets).
+   The first version of `search-parity.mjs` believed the audit's wording and flagged 72/210 real
+   queries as regressions. All 72 were the expected subset relationship, or — for phrase queries
+   — a literal substring straddling a token boundary the same way "estate" contains "state"
+   ("this achievement" contains "is a" with neither word a real token there). Fixed the
+   classification to check whether the term(s) genuinely tokenize as real words in the specific
+   lost document, not just diff id sets: 0/210 unexplained regressions. The one place "superset"
+   really is correct: an exact-phrase query's unverified AND-candidate set, before `qtext.json`
+   has landed.
+2. Including variants in the index (not scoped by the audit or its addendum) cost real, measured
+   bytes: `qindex.bin` is 475.2 KB gzip in production, not the addendum's 327.7 KB canonical-only
+   figure — postings grew from 255.6→388.6 KB gzip because variant texts (GS4 case studies, Essay
+   quote sets) are exactly the long, low-token-reuse strings that compress worst. Shipping the
+   cheaper canonical-only index would have hit the 751 KB target number and silently broken
+   search for those ~3,103 copies the moment their query didn't also hit their group's canonical
+   text — decided this was the same mistake DECISION-11 already rejected once ("mostly fixed,
+   with one deliberately-kept exception"), so paid the extra ~150 KB instead.
+**Left.** Search-gating payload: 2,058.5 → **1,132.0 KB gz (−45%)**, short of the 751/800 KB
+projection for the reason above — `BUDGET-search` target lowered to a real 1,000 KB stretch goal,
+not assumed reachable without a further pass at the translation-table/postings encoding. Cold
+search on 3G: 771 → **521 ms (−32%)**; 4G barely moved (483→496 ms — was never payload-bound).
+`npm run check:all` still 23/23 enforced, 1 tracked (INV-14/R3, Phase 6, untouched). Phase 6
+(R1–R3: keyed card reconciliation, mobile fold, search-in-URL) is next.

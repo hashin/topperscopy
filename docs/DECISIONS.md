@@ -366,3 +366,84 @@ re-confirmed in-browser after the `Map` fix landed. `BUDGET-search`'s ceiling in
 `tools/check/budget.json` carries the real, measured byte cost of id-keyed storage (+330.3 KB,
 +19.1% over Phase 3) — reported honestly rather than optimized away, since Phase 5 is where
 payload compactness is in scope, not here.
+
+---
+
+## DECISION-12 — `qindex.bin` indexes variants too; postings use local positions; qtext.json
+drops out of the search-gating budget; "superset" only holds for exact-phrase pre-verification
+*2026-09-14 · active · cites DECISION-7, DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 5/E1*
+
+**Decision.** Four things not settled by the audit's E1 section or its Phase-4 addendum:
+
+1. `writeQIndex()` indexes every variant (a copy's own wording the deduped question doesn't
+   faithfully contain — 3,103 of them) alongside the 8,102 canonical questions, not canonical
+   questions alone. Local positions `0..qCount-1` are canonical questions (qmeta.json's own
+   order); `qCount..qCount+vCount-1` are variants, sorted by numeric id ascending for a
+   deterministic build. The translation table's sign is implicit in which half a position falls
+   in — no extra bit needed.
+2. Postings reference the local position (per the addendum's own fix), and the translation
+   table is one `uint32` per position, unsigned, in that same two-part order.
+3. `data/qtext.json` is removed from `BUDGET-search`'s file list and `tools/perf/sizes.mjs`'s
+   `SEARCH_GATING` — the index is what answers a query now; text only renders the snippet and
+   arrives after.
+4. The audit's Verify section says the new engine must return "a superset for prefix queries."
+   Measured (`tools/perf/search-parity.mjs`), that's backwards for mode `'all'`: every token
+   that starts with prefix P also *contains* P as a substring, so NEW is always a *subset* of
+   OLD there — OLD is the noisier engine (DECISION-7 already says this: "eral matches nothing"
+   is a subset relationship, not a superset one). The one place "superset" is actually correct
+   is an exact-phrase query's *unverified* AND-candidate set, shown before qtext.json has landed
+   (labelled "phrase not yet checked") — that candidate set is provably a superset of the final,
+   text-verified answer, and collapses to exact equality once verification runs.
+
+**Why.**
+
+1. Today's substring scan matches against both `QTEXTLC` and `QVARLC` — dropping variants from
+   the index would silently stop matching those ~3.1k copies' own divergent wording (an
+   Essay quote set, a GS4 case study's specific sub-question) the moment the query didn't
+   happen to also hit their group's canonical text, and the only way it would ever come back is
+   the *fallback-on-zero-total-results* path, which wouldn't fire when other canonical
+   questions still matched the same query. `tools/perf/search-parity.mjs` — built to catch
+   exactly this class of silent loss (DECISION-9) — is what confirms this isn't happening.
+2. Measured, not assumed: this costs real bytes. `qindex.bin` is 475.2 KB gzip production
+   (629.9 KB raw, 14,779 tokens), not the addendum's 327.7 KB canonical-only re-measurement —
+   postings grew from 255.6 KB to 388.6 KB gzip because variant texts are exactly the
+   long, divergent, low-token-reuse strings (GS4 "three quotations" sets, Essay topics) that
+   compress worst as postings, and the translation table grew from 31.7 to 43.8 KB gzip
+   proportional to the extra ~3.1k positions.
+3. With the index gating the answer instead of the text, `qtext.json`'s ~1.4 MB gzip genuinely
+   no longer sits on the critical path to "how many copies, which ones" — keeping it in the
+   budget would report a number nothing in the running app actually waits on, the same category
+   of stale-input mistake `docs/MEMORY.md` exists to prevent.
+4. Point 4 was checked by proof, not vibes: for a single term, `NEW_docs ⊆ {docs containing that
+   term's completion word} ⊆ {docs containing the term as any substring} = OLD_docs`, and AND
+   composes subsets into subsets. `search-parity.mjs`'s first version treated *any* OLD-only id
+   as a failure and reported 72/210 queries "regressing" — all 72 turned out to be exactly this
+   subset relationship (or, for phrase queries, a substring straddling a token boundary the same
+   way "estate" contains "state" — "this achievement" contains the literal substring "is a"
+   without either word being a real token there). Re-checked by testing whether the term(s)
+   genuinely tokenize as real words/adjacent-sequences in the specific lost document, not just
+   diffing id sets: 0 unexplained regressions across 210 real queries.
+
+**Rejected.**
+- *Canonical questions only, matching the addendum's one measurement.* Cheaper (327.7 KB vs
+  475.2 KB) but a real, silent correctness regression for ~3,103 copies — rejected for the same
+  reason DECISION-11 rejected "mostly fixed, with one deliberately-kept exception."
+- *Keep qtext.json in the search budget as a conservative superset.* Defensible as "what a
+  fully-rendered search needs," but the budget's own stated purpose is "everything that must
+  land before a text query can be answered" — qtext.json no longer gates that answer, so
+  including it reports a number that doesn't describe the running app, which is precisely what
+  `docs/MEMORY.md`'s founding incidents (a stale README, a stale CLAUDE.md figure) warn against.
+- *Force the audit's "superset" wording to hold by weakening the new engine's precision (e.g.
+  also union in raw substring hits for short/common terms).* Would reintroduce exactly the
+  noise DECISION-7 accepted removing, to make a Verify-step assertion true that measurement
+  shows was never correct as stated for that case.
+
+**Reverse if.** A future corpus makes variant text a much larger share of total content (right
+now variants are a bounded, submission-shaped minority) — at that point canonical-only indexing
+with variants left to the substring fallback might be worth revisiting on its own numbers, not
+this session's.
+
+**Enforced by.** `tools/perf/search-parity.mjs` (0/210 unexplained regressions, re-run any time
+the engine or the corpus changes materially); `BUDGET-search` in `tools/check/budget.json`
+(ceiling ratcheted to the real 1132.0 KB, not the un-measured 751/800 KB projection); the size
+comment in `tools/check/budget.json`'s `"search"` bucket carries the full measured breakdown.

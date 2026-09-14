@@ -1343,7 +1343,9 @@ than any millisecond in this document.
 
 ```bash
 node build.js
-node tools/perf/sizes.mjs            # data/qindex.bin must be ~415 KB raw / ~292 KB gzip
+node tools/perf/sizes.mjs            # data/qindex.bin measured 629.9 KB raw / 475.2 KB gzip —
+                                      # bigger than the ~415/~292 KB estimate above; see "Phase 5
+                                      # landed" below (variant-parity, not a regression)
 node tools/perf/search-parity.mjs    # runs 200 real queries through old and new, reports differences
 node tools/perf/measure.mjs 3g       # cold search must drop from ~4,455ms to under ~1,500ms
 ```
@@ -1352,6 +1354,62 @@ node tools/perf/measure.mjs 3g       # cold search must drop from ~4,455ms to un
 changes: capture old-engine results for a fixed query list, then assert the new engine returns a
 superset for prefix queries and an identical set for whole-word queries. Any query where the new
 engine returns fewer results must be listed and explained.
+
+> ⚠️ **This paragraph is wrong about "superset", corrected by Phase 5's own measurement — see
+> "Phase 5 landed" below and `docs/DECISIONS.md` DECISION-12.** For mode `'all'`, NEW is provably
+> a *subset* of OLD (every token starting with a prefix also contains it as a substring, and AND
+> composes subsets into subsets) — OLD is the noisier engine, consistent with this document's own
+> "eral matches nothing" framing a few paragraphs up. "Superset" is the correct word only for an
+> exact-phrase query's unverified candidate set, shown before `qtext.json` lands.
+
+### Phase 5 landed — 2026-09-14
+
+E1 done: `data/qindex.bin` (build.js's `writeQIndex()`), the binary reader + query engine in
+`assets/app.js`, BM25-lite ranking as the new default "Best match" sort, and the substring
+fallback for a zero-hit query, all as specified — plus three things this section's addendum
+flagged as unsettled and this session had to work out and measure, not assume (DECISION-9):
+
+1. **`qindex.bin` indexes variants, not just canonical questions** — today's substring scan
+   matches a copy's own divergent wording (`QVARLC`) as well as the deduped question
+   (`QTEXTLC`); an index that only covered canonical questions would silently stop matching
+   ~3,103 copies' worth of that wording the moment their query didn't also hit the canonical
+   text. Cost: `qindex.bin` measures **475.2 KB gzip** (629.9 KB raw, 14,779 tokens), not the
+   addendum's 327.7 KB canonical-only re-measurement — see DECISION-12.
+2. **`data/qtext.json` came out of `BUDGET-search`'s file list.** The index answers a query now;
+   text only renders the snippet and arrives after — keeping qtext.json in the "what must land
+   before we know the answer" budget would report a number the running app no longer waits on.
+3. **The audit's own "superset for prefix queries" wording is backwards for mode `'all'`** — see
+   the boxed correction above and DECISION-12. `tools/perf/search-parity.mjs`'s first version
+   trusted that wording and flagged 72/210 real queries as "regressions"; every one turned out to
+   be either the (expected, DECISION-7) subset relationship, or a substring straddling a token
+   boundary the same way "estate" contains "state" (checked directly — is the term a real token
+   in the specific lost document, not just an id-set diff). Fixed classification: **0/210
+   unexplained regressions.**
+
+A match the index confirms but whose text hasn't loaded yet now renders immediately with a
+"Loading question text…" placeholder row (DECISION-6: degrade, never hide) instead of being
+withheld from the list until `qtext.json` arrives — the existing render-on-text-arrival path
+backfills it, now preserving any cards the visitor had open across that backfill.
+
+| Metric | Before E1 (post-Phase-4) | After E1 |
+|---|---:|---:|
+| Search-gating payload (`node tools/perf/sizes.mjs`) | 2,058.5 KB gz | **1,132.0 KB gz** (−926.5 KB, −45%) |
+| `data/qindex.bin` | did not exist | **475.2 KB gz** (629.9 KB raw) |
+| Cold search, slow 3G (`node tools/perf/measure.mjs 3g`) | 771 ms | **521 ms** (−32%) |
+| Cold search, 4G | 483 ms | **496 ms** (unchanged — 4G was never payload-bound here) |
+| `assets/app.js` | 26.8 KB gz | **31.3 KB gz** (+4.5 KB — the binary reader, query engine, ranking) |
+| `tools/perf/search-parity.mjs` (210 real queries) | did not exist | **0 unexplained regressions** (see point 3 above) |
+| `npm run check:all` | 23/23 enforced, 1 tracked | **23/23 enforced**, 1 tracked (unchanged — `INV-14`/R3 is Phase 6) |
+
+**Be honest about the byte cost, again.** 1,132.0 KB beats the pre-Phase-5 number by 45% but
+misses the audit's original 751/800 KB projection by a real margin — not because the index design
+was wrong, but because that projection (both the original estimate and its own Phase-4 addendum
+re-measurement) covered canonical questions only, and never accounted for the variant-parity
+requirement `search-parity.mjs` was built specifically to catch. Shipping the cheaper, canonical-
+only index would have hit the target number and silently broken search for ~3,103 copies —
+rejected for the same reason DECISION-11 rejected "mostly fixed, with one deliberately-kept
+exception." `BUDGET-search`'s target is now 1,000 KB (a real stretch — trimming the translation
+table or postings encoding further — not a number this session assumed reachable without one).
 
 ---
 
@@ -1576,20 +1634,30 @@ Tick as you land each item. One commit per item.
 | 3 | T3 — split `qmeta.json` / `qtext.json` | ☑ |
 | 3 | T4 — OPTIONAL: intern `copies.json` strings | ⏸ deliberately skipped — see "Phase 3 landed" |
 | 4 | I1 — content-derived stable ids | ☑ |
-| 5 | E1 — inverted index + prefix search + relevance ranking | ☐ |
+| 5 | E1 — inverted index + prefix search + relevance ranking | ☑ |
 | 6 | R1 — keyed card reconciliation | ☐ |
 | 6 | R2 — trim the mobile first screen | ☐ |
 | 6 | R3 — search state in the URL | ☐ |
 
 ## Target, measured
 
-| | today | after Phase 5 | after Phase 5 + Brotli |
+The original projection row is kept for history. The "after Phase 5, measured" row is the real
+number, on this document's own corpus and harness, at the commit Phase 5 landed on.
+
+| | original baseline | projected after Phase 5 | **measured after Phase 5** |
 |---|---:|---:|---:|
-| Search-ready bytes | 1,994 KB | **751 KB** | **550 KB** |
-| Cold search, 4G | 2,670 ms | ~1,000 ms | ~800 ms |
-| Cold search, slow 3G | 4,455 ms | ~1,500 ms | ~1,200 ms |
-| CLS (3G mobile) | 0.193 | **0.00** | 0.00 |
-| Longest keystroke task | 235 ms | < 50 ms | < 50 ms |
+| Search-ready bytes | 1,994 KB | 751 KB | **1,132.0 KB gz** (was 2,058.5 KB post-Phase-4 — the honest before/after; see "Phase 5 landed" below for why 751 KB assumed away a real cost) |
+| Cold search, 4G | 2,670 ms | ~1,000 ms | **496 ms** (was already 483 ms post-Phase-3/4 — 4G was never payload-bound here) |
+| Cold search, slow 3G | 4,455 ms | ~1,500 ms | **521 ms** (was 771 ms post-Phase-3/4, −32%) |
+| CLS (3G mobile) | 0.193 | 0.00 | **0.0051** (unchanged — Phase 5 touches search, not layout) |
+| Longest keystroke task | 235 ms | < 50 ms | **70–73 ms** cold-search long task (Phase 6/R1 still owns the steady-state per-keystroke number) |
+
+**Read this table carefully.** The *original* 1,994 KB / 4,455 ms baseline was measured before
+Phases 1, 3 and 4 landed — by the time Phase 5 started, Phases 1/3/4 had already brought slow-3G
+cold search down to 771 ms and the search-gating payload down to 2,058.5 KB (with content-derived
+ids added back in Phase 4). Phase 5's own, apples-to-apples delta is **2,058.5 → 1,132.0 KB
+(−45%)** and **771 → 521 ms on 3G (−32%)** — real and large, just not the number you get by
+naively subtracting from the 2026-09-14 baseline row above it.
 
 The Phase 5 timing figures are projections from the measured payload reduction; everything else in
 this document is measured. Re-run `tools/perf/measure.mjs` after each phase and replace the
