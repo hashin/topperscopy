@@ -9,6 +9,13 @@ Origin: a re-skin + extension of **upsckata.com "Topper Copies"** (credit it eve
 `questions.csv` is our searchable GS/Essay core. We add optional subjects, per-topper AIR/marks,
 link-only copies from other coaching sites, a submission workflow, dark mode, and a dataset backup.
 
+## Current work
+
+- **`PERF-UX-AUDIT-2026-09-14.md`** — performance & UX audit, phased for implementation. Start there for
+  any speed/UI work; it carries measured baselines and a per-phase verification protocol. The harness
+  lives in `tools/perf/` (`npm run perf`).
+- `AUDIT-2026-09-09.md` — the earlier correctness audit (B1–B21). All items fixed; kept for history.
+
 ## ⚠️ Do not read these — they are large, generated, and gitignored
 
 `data/copies.json` (~7.5 MB), `data/index.json`, `data/toppers.json`, `data/questions.csv` (~9 MB, source
@@ -219,10 +226,20 @@ are **link-only** (scanned Drive/PDF, no question text yet).
     - **Email is the real risk.** `hashin.me` runs iCloud custom-domain mail: `MX 10 mx01/mx02.mail.icloud.com`,
       `TXT "v=spf1 include:icloud.com ~all"`, `TXT "apple-domain=oDdYk7mJzXwDmyDz"`. If those don't carry over
       exactly, mail breaks silently.
-    - Payoff for topperscopy alone is ~137 KB on first load (427 KB → ~290 KB) plus HTTP/3. Judged **not worth
-      the risk on its own** — but it would benefit all 5 sites at once, so do it as a deliberate domain
-      migration if ever, never as a perf tweak. Note GitHub Pages already serves this site from Fastly's
-      Mumbai PoP (`x-served-by: cache-bom-*`), so the CDN-latency argument is largely moot for the audience.
+    - ~~Payoff for topperscopy alone is ~137 KB on first load~~ — **that number was wrong, corrected
+      2026-09-14.** It counted only the *boot* payload. The payload that decides whether search feels
+      instant is the search-gating one, and measured end-to-end against a real brotli origin the saving
+      is **1,078 KB (2,220 KB → 1,142 KB, −49 %)** — 8× the old estimate. See
+      `PERF-UX-AUDIT-2026-09-14.md` item **D2**, and `node tools/perf/compare-encodings.mjs`.
+    - **Also wrong:** the choice is not only "move the nameservers". Netlify and Vercel both serve brotli
+      on their free tiers and attach a custom domain via **a single CNAME added at Spaceship** — the zone
+      stays put, every MX/SPF/apple-domain record is untouched, and the iCloud-mail risk is zero. Check
+      their ~100 GB/month free-tier bandwidth caps against real traffic first.
+    - Still true: GitHub Pages already serves this site from Fastly's Mumbai PoP (`x-served-by: cache-bom-*`),
+      so the CDN-latency argument is largely moot for the audience. And still true that the *nameserver*
+      migration is a whole-domain job to be done deliberately, never as a perf tweak.
+    - **Do the data-format work first either way** (audit Phases 3–5): it is hosting-independent and cuts the
+      search payload 1,994 KB → 751 KB on plain gzip. Brotli then multiplies it. Do not block on hosting.
 
 ## Conventions
 
