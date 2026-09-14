@@ -187,7 +187,26 @@ console.log(idx ? `data/qindex.bin found — v${idx.version}, ${idx.tokens.lengt
                 : 'data/qindex.bin NOT built yet — reporting the OLD-engine baseline only. Re-run once writeQIndex() lands.');
 console.log('');
 
-let wholeWordExact = 0, wholeWordMismatch = 0, subsetOk = 0, newOnlyBug = 0;
+// Is an oldOnly id's loss explained by the accepted substring->token-prefix trade-off, or a
+// real bug? Not "any diff at all" — a raw substring hit can straddle a token boundary (e.g.
+// "this achievement" contains the literal substring "is a" purely because "this" ENDS in "is"
+// and "achievement" STARTS with "a" — neither word is a real token there) exactly the same way
+// "estate" contains "state" mid-word. Checked directly (DECISION-9), not assumed: for mode
+// 'all', explained iff at least one query term is NOT among the document's real tokens. For
+// mode 'exact', explained iff the phrase's words do not appear as a real ADJACENT token
+// sequence anywhere in the document (i.e. the same boundary-straddling situation, just spanning
+// the whole phrase instead of one word).
+function isExplained(id, terms, mode) {
+  const t = id < 0 ? QVARLC.get(-id) : QTEXTLC.get(id);
+  const words = tok(t || '');
+  if (mode !== 'exact') return terms.some(term => words.indexOf(term) < 0);
+  for (let i = 0; i + terms.length <= words.length; i++) {
+    if (terms.every((term, k) => words[i + k] === term)) return false;   // a real match — NOT explained, i.e. a bug
+  }
+  return true;
+}
+
+let wholeWordExact = 0, wholeWordExplained = 0, newOnlyBug = 0, realBugs = 0;
 const mismatches = [];
 for (const q of queries) {
   const oldSet = oldMatch(q.terms, q.mode);
@@ -195,35 +214,35 @@ for (const q of queries) {
   const newSet = newMatch(idx, q.terms, q.mode);
   const newOnly = [...newSet].filter(id => !oldSet.has(id));
   const oldOnly = [...oldSet].filter(id => !newSet.has(id));
-  const isWholeWord = q.mode === 'all' && q.terms.every(t => vocab.has(t));
-  if (newOnly.length) { newOnlyBug++; mismatches.push({ q, kind: 'NEW-ONLY (should be impossible)', ids: newOnly.slice(0, 3) }); continue; }
-  if (q.mode === 'exact') {
-    if (oldOnly.length) mismatches.push({ q, kind: 'exact-phrase lost a match', ids: oldOnly.slice(0, 3) });
-    else wholeWordExact++;
+  const isWholeWord = q.terms.every(t => vocab.has(t));
+  if (newOnly.length) { newOnlyBug++; mismatches.push({ q, kind: 'NEW-ONLY (should be impossible)', ids: newOnly.slice(0, 5) }); continue; }
+  if (!oldOnly.length) { wholeWordExact++; continue; }
+  const realLosses = oldOnly.filter(id => !isExplained(id, q.terms, q.mode));
+  if (!realLosses.length) {
+    wholeWordExplained++;   // every loss is a boundary/mid-token substring collision — DECISION-7's trade-off, just measured rather than assumed
     continue;
   }
-  if (isWholeWord) {
-    if (oldOnly.length) { wholeWordMismatch++; mismatches.push({ q, kind: 'whole-word query lost matches (compound-token edge case)', ids: oldOnly.slice(0, 3) }); }
-    else wholeWordExact++;
-  } else {
-    subsetOk++; // fragment/prefix: NEW ⊆ OLD expected, difference is the accepted DECISION-7 trade-off
-  }
+  realBugs++;
+  mismatches.push({
+    q, kind: (q.mode === 'exact' ? 'exact-phrase' : isWholeWord ? 'whole-word' : 'fragment/prefix') + ' — genuine loss (real token match, not found)',
+    ids: realLosses.slice(0, 3), total: realLosses.length, explainedCount: oldOnly.length - realLosses.length
+  });
 }
 
 if (idx) {
-  console.log(`whole-word / phrase queries with NEW === OLD:        ${wholeWordExact}`);
-  console.log(`whole-word queries where NEW lost a match (bug?):    ${wholeWordMismatch}`);
-  console.log(`fragment/prefix queries, NEW ⊆ OLD as expected:      ${subsetOk}`);
-  console.log(`queries where NEW found something OLD did not:       ${newOnlyBug}  (should always be 0 — see the proof at the top of this file)`);
+  console.log(`queries where every OLD-only id is explained            (boundary/mid-token substring collision, DECISION-7): ${wholeWordExact + wholeWordExplained}`);
+  console.log(`queries with at least one GENUINE loss (real token/phrase match the index missed):                          ${realBugs}`);
+  console.log(`queries where NEW found something OLD did not (should always be 0 — see the proof at the top of this file): ${newOnlyBug}`);
   if (mismatches.length) {
     console.log('\nDetails (every unexplained regression, per the audit\'s Verify step):');
     for (const m of mismatches) {
-      const exampleTexts = m.ids.map(id => (id < 0 ? QVARLC.get(-id) : QTEXTLC.get(id)) || '').map(t => t.slice(0, 70));
-      console.log(`  [${m.kind}] query ${JSON.stringify(m.q.label)} (mode=${m.q.mode}) — ${m.ids.length} example id(s):`);
+      const exampleTexts = m.ids.map(id => (id < 0 ? QVARLC.get(-id) : QTEXTLC.get(id)) || '').map(t => t.slice(0, 90));
+      const totalNote = m.total != null ? ` — ${m.total} genuine loss(es) out of ${m.total + m.explainedCount} old-only id(s), ${m.explainedCount} explained` : '';
+      console.log(`  [${m.kind}] query ${JSON.stringify(m.q.label)} (mode=${m.q.mode})${totalNote}:`);
       exampleTexts.forEach(t => console.log('      ' + JSON.stringify(t) + '…'));
     }
   }
-  const exitBad = newOnlyBug > 0 || mismatches.some(m => m.kind.indexOf('bug') >= 0 || m.kind.indexOf('lost a match') >= 0);
+  const exitBad = newOnlyBug > 0 || realBugs > 0;
   if (exitBad) { console.log('\nFAIL — an unexplained regression was found.'); process.exitCode = 1; }
   else console.log('\nOK — every difference is the accepted substring→prefix trade-off (DECISION-7), nothing unexplained.');
 }

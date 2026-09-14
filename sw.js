@@ -3,7 +3,7 @@
    instead: a repeat visit serves straight from cache with NO network request, revalidating
    in the background at most once every HEAVY_TTL_MS. Bump VERSION to force a full refresh
    of everything. */
-var VERSION = 'tc-v25';
+var VERSION = 'tc-v26';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
@@ -13,7 +13,10 @@ var SHELL = [
 ];
 // `questions.json` (the pre-Phase-4 compat shim) is gone — deleted along with the buildId
 // machinery it existed for once ids became content-derived (Phase 4 / I1, DECISION-5).
-var DATA_HEAVY = /\/data\/(copies|qmeta|qtext|link-copies)\.json$/;
+// qindex.bin (Phase 5 / E1) joins the heavy set — it's what finds a search match now, so a
+// repeat visitor needs it cache-first the same way as the JSON data files, not on the default
+// stale-while-revalidate path (which would re-fetch it over the network on every single visit).
+var DATA_HEAVY = /\/data\/(copies|qmeta|qtext|link-copies)\.json$|\/data\/qindex\.bin$/;
 // Ids can no longer drift (I1), so a stale cached copy is merely missing recent content, never
 // wrong — 7 days is fine (was 12h, sized around the old positional-id risk).
 var HEAVY_TTL_MS = 7 * 24 * 60 * 60 * 1000;

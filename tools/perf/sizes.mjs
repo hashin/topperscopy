@@ -12,8 +12,11 @@ const FILES = [
 ];
 // Files the browser must have before it can answer a text query. questions.json isn't here —
 // fresh app.js never fetches it after T3 (it's a one-release compat shim for stale caches only).
+// qtext.json isn't here either, as of Phase 5 / E1: the token-prefix index (qindex.bin) is what
+// FINDS a match now; qtext.json only renders the snippet, and arrives after results are already
+// on screen (DECISION-7) — see PERF-UX-AUDIT-2026-09-14.md's "Phase 5 landed" section.
 const SEARCH_GATING = ['data/index.json', 'data/copies.json',
-                       'data/qmeta.json', 'data/qtext.json', 'data/qindex.bin'];
+                       'data/qmeta.json', 'data/qindex.bin'];
 
 let totG = 0, totB = 0, gateG = 0, gateB = 0;
 console.log('file                              raw        gzip      brotli');

@@ -24,22 +24,21 @@
       "why": "Everything needed to paint the hero and the first 25 cards. INTENT-2 (speed is the product)."
     },
     "search": {
-      "ceiling_kb": 2115,
-      "target_kb": 800,
+      "ceiling_kb": 1195,
+      "target_kb": 1000,
       "files": [
         "data/index.json",
         "data/copies.json",
         "data/qmeta.json",
-        "data/qtext.json",
         "data/qindex.bin"
       ],
-      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1. Phase 4 (I1) is a real, measured regression here, accepted deliberately: content-derived ids (up to ~4.29 billion, vs the old 0..8101 positional ones) serialize as up to 10 digits instead of 1-4, and qtext.json/variants became id-keyed objects instead of position-indexed arrays (required for correctness — see DECISION-11). Measured 1728.2 KB (post-T3) -> 2058.5 KB (post-I1), +330.3 KB / +19.1%. Ceiling carries ~55 KB headroom for corpus growth between sessions, same margin as before. Phase 5's inverted index (a purpose-built compact format, not general-purpose JSON) is what reaches the 800 KB target — id compactness is explicitly deferred there, not chased here (DECISION-9: don't optimize what hasn't been profiled as a real problem)."
+      "why": "Everything that must land before a text query can be answered. The single biggest lever on felt speed — see PERF-UX-AUDIT-2026-09-14.md S1 and E1. Phase 5 (E1) landed the token-prefix inverted index (data/qindex.bin) and REMOVED data/qtext.json from this list — the index is what finds a match now, qtext.json only renders the snippet and arrives after results are already on screen (DECISION-7), so it no longer gates the answer. Measured 2058.5 KB (post-I1) -> 1132.0 KB (post-E1), -926.5 KB / -45%. This is short of the audit's original 751/800 KB projection because that estimate (and its own addendum's 327.7 KB qindex.bin re-measurement) covered canonical questions only; production's qindex.bin also indexes ~3.1k copies' variant wording (a copy whose phrasing the deduped question doesn't faithfully contain) for search parity with what the substring scan used to match against QVARLC — dropping that coverage would silently stop matching those copies until qtext.json loads, which tools/perf/search-parity.mjs is built to catch. Measured cost of that parity: qindex.bin is 475.2 KB gzip (629.9 KB raw: 14,779 tokens, 8,102 questions + 3,103 variants), not the 327.7 KB canonical-only figure — see docs/DECISIONS.md DECISION-12. Ceiling carries ~63 KB headroom for corpus growth; target is a stretch goal for a future pass at trimming the translation table or postings encoding further, not assumed reachable without one."
     },
     "app_js": {
-      "ceiling_kb": 28,
-      "target_kb": 28,
+      "ceiling_kb": 33,
+      "target_kb": 33,
       "files": ["assets/app.js"],
-      "why": "DECISION-2 (no framework, no bundler). If this creeps past ~28 KB gz, something was added that probably belongs in a lazy-loaded module."
+      "why": "DECISION-2 (no framework, no bundler). Phase 5 (E1) added the qindex.bin binary reader, the token-prefix query engine (prefix expansion, AND intersection, exact-phrase verification, substring fallback) and BM25-lite ranking — real core search functionality, not a feature that belongs behind a lazy-loaded module the way pdf.js/Tesseract do (DECISION-3), since every visitor who searches needs it. Measured 26.8 KB (pre-E1) -> 31.3 KB gzip. If this creeps much past ~33 KB gz, something new was added that probably belongs in a lazy-loaded module instead."
     }
   }
 }
