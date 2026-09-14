@@ -1456,6 +1456,12 @@ Site: https://topperscopy.hashin.me
 Updated: ${generated}
 Licence: MIT (code). CC BY 4.0 (this compilation).
 
+Credit: the question-level database (which topper answered which question, on which page of which
+PDF) is mirrored from upsckata.com "Topper Copies" — https://toppercopies.upsckata.com/ — an
+independent, non-commercial mirror. Please credit upsckata.com when reusing this data. The
+optional-subject section, per-topper AIR/marks tags and all community submissions are original to
+this project. No answer copy is hosted here; every link points to the site that published the PDF.
+
 ## What it contains
 
 - Which UPSC Mains topper answered which question, in which paper, on which page of which PDF.
@@ -1468,7 +1474,6 @@ Licence: MIT (code). CC BY 4.0 (this compilation).
 
 - Full question index (JSON, grouped by copy): https://topperscopy.hashin.me/data/copies.json
 - Per-topper AIR / year / marks (JSON): https://topperscopy.hashin.me/data/toppers.json
-- Raw source table (CSV): https://topperscopy.hashin.me/data/questions.csv
 - Optional-subject submissions (JSON): https://topperscopy.hashin.me/data/optionals.json
 
 ## Complete dataset (backup, includes all accepted submissions)

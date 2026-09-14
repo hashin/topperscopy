@@ -195,3 +195,49 @@ actually wanted. Write that script **before** changing the engine.
 the tools.
 
 **Enforced by.** `INV-9`.
+
+
+## DECISION-9 — A browser measurement is not trusted until it has been shown to fail
+*2026-09-14 · active · cites INTENT-2, INTENT-6*
+
+**Decision.** Before a perf/UX measurement is used to justify or verify a change, it must be shown
+to produce the FAILING result against the unfixed code. A check that has never failed proves nothing.
+
+**Why.** Implementing Phase 1 produced four separate wrong measurements, three of them for the same
+item (P4, "Show more"):
+
+1. An unwarmed, non-interleaved micro-benchmark said to hoist an `Intl.Collator`. Warmed and
+   interleaved, that change is **~3x slower**. (Already recorded as audit P6 = NO ACTION.)
+2. `showmore.mjs` scrolled with `element.scrollIntoView()` on the very button it then clicked and
+   removed. It reported ~785px of drift **identically before and after the fix** — a number
+   produced entirely by the instrument.
+3. The same test then clicked a button that was off-screen, which no user does.
+4. The same test called `window.scrollTo(y)` while the page sets `html { scroll-behavior: smooth }`,
+   so every measurement was taken mid-animation. This reported drift of **2,167px and 4,635px** on
+   code whose real drift is **0px**.
+
+Chasing (2) and (4) produced two code changes — preserving the Show-more button node, and
+`overflow-anchor: none` on `#results` — that were made on false diagnoses. The button-preservation
+was kept on its own merits; the `overflow-anchor` rule was **A/B'd and removed**, because with a
+correct instrument it made no difference. Shipping it would have been dead CSS justified by a
+comment citing a measurement that was wrong.
+
+**The specific traps, all real in this codebase:**
+- `html { scroll-behavior: smooth }` — always scroll with `behavior: 'instant'` and wait for
+  `scrollY` to stop changing (`settle()` in `tools/perf/showmore.mjs`).
+- Deferred scripts run **before** `DOMContentLoaded`, so `waitForSelector` cannot reach the
+  pre-boot window. To test it, hold `app.js` in flight with `page.route` (see
+  `tools/perf/lost-keystroke.mjs`).
+- Node identity (`dataset` tags surviving a re-render) is a far more reliable signal than any
+  geometry measurement for "was this appended or rebuilt".
+- CLS only manifests where the data is slow enough to arrive — measure it on **3G**, not 4G. An
+  earlier version of `INV-17` measured on 4G and passed at CLS 0, while 3G was 0.193.
+
+**Rejected.** Trusting a single measurement because it is large and confident-looking. Every number
+in this repo's audit that survived was one that could be made to flip by reverting the fix.
+
+**Reverse if.** Never.
+
+**Enforced by.** Not checkable — it is a rule about how checks are written. The measurement notes
+are kept as comments at the top of `tools/perf/showmore.mjs` and `tools/perf/lost-keystroke.mjs`,
+where the next person will actually read them.

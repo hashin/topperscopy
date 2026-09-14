@@ -93,6 +93,24 @@ Chromium, 390×844 mobile viewport, **CPU throttled 4×** (≈ a mid-range Andro
 **First paint is genuinely good (676 ms). Search is not: the site downloads 1.97 MB before it can
 answer the first query, and while it waits it tells the student "0 copies".**
 
+### Phase 1 landed — 2026-09-14
+
+The table above is the original baseline and is left as the historical record. After Phase 1
+(P1–P11, measured the same way):
+
+| Metric | Before | After Phase 1 |
+|---|---:|---:|
+| CLS, slow 3G mobile | **0.193** ❌ | **0.0014** ✅ |
+| Shows "0 copies" mid-load | yes, for 2.7 s / 4.5 s | **never** ✅ |
+| "Show more" moves the card you were reading | up to **785 px** | **0 px** ✅ |
+| Query typed before `app.js` boots | silently dropped | **adopted** ✅ |
+| FCP / LCP, 4G | 676 ms | **536 ms** |
+| Requests on first load | 13 | 12 (`extract.js` no longer eager) |
+| `npm run check` | 14/14 enforced, 0/8 tracked | **22/22 enforced**, 2 tracked left (D1, R3) |
+
+Payload is unchanged, as expected — that is Phases 3–5. Phase 1 was about what the interface
+*does* with the payload it has.
+
 ---
 
 ## The three structural problems
@@ -1406,17 +1424,17 @@ Tick as you land each item. One commit per item.
 
 | Phase | Item | Done |
 |---|---|:--:|
-| 1 | P1 — never print "0 copies" while loading | ☐ |
-| 1 | P2 — adopt a query typed before boot | ☐ |
-| 1 | P3 — reserve `#statline` / `#papers` height (CLS) | ☐ |
-| 1 | P4 — "Show more" appends instead of rebuilding | ☐ |
-| 1 | P5 — analytics stops re-running the search | ☐ |
+| 1 | P1 — never print "0 copies" while loading | ☑ |
+| 1 | P2 — adopt a query typed before boot | ☑ |
+| 1 | P3 — reserve `#statline` / `#papers` height (CLS) | ☑ |
+| 1 | P4 — "Show more" appends instead of rebuilding | ☑ |
+| 1 | P5 — analytics stops re-running the search | ☑ |
 | 1 | P6 — NO ACTION (verified: leave the sort alone) | ☑ |
-| 1 | P7 — `#resultmeta` live region | ☐ |
-| 1 | P8 — lazy-load `extract.js` | ☐ |
-| 1 | P9 — `content-visibility`; fix the README claims | ☐ |
-| 1 | P10 — `--hdr` ceiling is viewport-relative | ☐ |
-| 1 | P11 — upsckata credit in `llms.txt` | ☐ |
+| 1 | P7 — `#resultmeta` live region | ☑ |
+| 1 | P8 — lazy-load `extract.js` | ☑ |
+| 1 | P9 — `content-visibility`; fix the README claims | ☑ |
+| 1 | P10 — `--hdr` ceiling is viewport-relative | ☑ |
+| 1 | P11 — upsckata credit in `llms.txt` | ☑ |
 | 2 | D1 — stop deploying `data/questions.csv` | ☐ |
 | 2 | D2 — hosting decision (see recommendation) | ☐ |
 | 2 | D3 — `sw.js` caches the cache-buster response | ☐ |

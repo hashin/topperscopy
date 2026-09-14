@@ -42,6 +42,10 @@
   var SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 
   var DB = null, TOPPERS = {}, OPTS = [];
+  // Result of the most recent render: LASTLIST lets Show-more append without re-filtering
+  // (AUDIT P4), LASTCOUNT lets the analytics handler report the count without running the
+  // entire search a second time (AUDIT P5).
+  var LASTLIST = null, LASTCOUNT = 0;
   var QI = null, SYL = null, COPYBYID = {}, qiState = 'idle', qiPromise = null;
   var state = {
     view: 'browse', q: '', mode: 'all', paper: 'all',
@@ -214,7 +218,8 @@
   function fillSyllabus() {
     var sel = $('#syl'); if (!sel || !SYL) return;
     var keep = sel.value;
-    sel.innerHTML = '<option value="">Whole syllabus</option>';
+    var frag = document.createDocumentFragment();           // off-DOM; swap once (AUDIT P3)
+    frag.appendChild(el('option', { value: '' }, ['Whole syllabus']));
     var counts = {};
     (QI || []).forEach(function (q) { (q.s || []).forEach(function (id) { counts[id] = (counts[id] || 0) + 1; }); });
     Object.keys(SYL.papers).forEach(function (p) {
@@ -223,8 +228,9 @@
         var c = counts[n.id] || 0;
         og.appendChild(el('option', { value: n.id }, [n.t + (c ? ' (' + c + ')' : '')]));
       });
-      sel.appendChild(og);
+      frag.appendChild(og);
     });
+    sel.replaceChildren ? sel.replaceChildren(frag) : (sel.innerHTML = '', sel.appendChild(frag));
     sel.value = keep;
   }
 
@@ -267,7 +273,10 @@
     // and re-arm the observer (its rootMargin can't be changed in place).
     function sync() {
       var v = Math.round(header.getBoundingClientRect().height);
-      if (!v || v > 240 || v === hdrPx) return;   // 0 = hidden tab; >240 = bogus reflow
+      // 0 = hidden tab. A bogus reflow reads as a header taller than half the viewport; a
+      // legitimately tall one (tabs wrapped at 200% zoom, or a 280px-wide device) can be
+      // 250-300px and must still be tracked, or the sticky toolbar overlaps it (AUDIT P10).
+      if (!v || v > Math.max(240, window.innerHeight * 0.5) || v === hdrPx) return;
       hdrPx = v;
       document.documentElement.style.setProperty('--hdr', v + 'px');
       if (!('IntersectionObserver' in window)) return;
@@ -315,8 +324,18 @@
     });
 
     // honour the ?q= SearchAction URL (JSON-LD potentialAction + shared/bookmarked search links)
+    var qi = $('#q');
     var qp = new URLSearchParams(location.search).get('q');
-    if (qp) { qp = qp.trim().slice(0, 200); state.q = qp; state.shown = PAGE; var qi = $('#q'); if (qi) qi.value = qp; }
+    // Also adopt whatever is already in the box. #q is live from first paint but app.js is
+    // deferred, so a fast typist's query — and any value the browser restored on a
+    // back-navigation — would otherwise be displayed but never searched (AUDIT P2).
+    if (!qp && qi && qi.value) qp = qi.value;
+    if (qp) {
+      qp = qp.trim().slice(0, 200);
+      state.q = qp; state.shown = PAGE;
+      if (qi && qi.value !== qp) qi.value = qp;
+      ensureFull(); ensureQI();
+    }
 
     // ?practice=<subject-slug> — deep link from an /optional/<slug>/ page (acted on after data loads)
     var prc = new URLSearchParams(location.search).get('practice');
@@ -495,7 +514,7 @@
       track('search', {
         search_term: term.toLowerCase().slice(0, 100),
         mode: state.mode, paper: state.paper,
-        results: filteredCopies().length   // plain array — never had a .pending flag
+        results: LASTCOUNT   // from the render that already happened — never re-run the search (AUDIT P5)
       });
     }, 900));
     $$('#mode button').forEach(function (b) {
@@ -536,7 +555,9 @@
   }
 
   function buildPaperSeg() {
-    var row = $('#papers'); row.innerHTML = '';
+    // Build off-DOM and swap once. Clearing with innerHTML='' and refilling makes the row
+    // measure 0 for a frame, which the browser records as a layout shift (AUDIT P3).
+    var row = $('#papers'); var frag = document.createDocumentFragment();
     var defs = [['all', 'All']].concat(PAPERS.filter(function (p) { return DB.stats.papers[p]; })
       .map(function (p) { return [p, p === 'Other' ? 'Other' : p]; }));
     defs.forEach(function (d) {
@@ -548,8 +569,9 @@
         renderBrowse();
         track('filter_change', { filter: 'paper', value: d[0] });
       });
-      row.appendChild(b);
+      frag.appendChild(b);
     });
+    row.replaceChildren ? row.replaceChildren(frag) : (row.innerHTML = '', row.appendChild(frag));
   }
 
   function topperOptions() {
@@ -575,9 +597,10 @@
     if (!sel) return;
     var first = sel.querySelector('option');
     var hasBlank = first && first.value === '';
-    sel.innerHTML = '';
-    if (hasBlank) sel.appendChild(first);
-    pairs.forEach(function (p) { sel.appendChild(el('option', { value: p[0] }, [p[1]])); });
+    var frag = document.createDocumentFragment();          // off-DOM; swap once (AUDIT P3)
+    if (hasBlank) frag.appendChild(first);
+    pairs.forEach(function (p) { frag.appendChild(el('option', { value: p[0] }, [p[1]])); });
+    sel.replaceChildren ? sel.replaceChildren(frag) : (sel.innerHTML = '', sel.appendChild(frag));
     if (keep) sel.value = keep;
   }
 
@@ -698,6 +721,7 @@
     updateFilterCount();
     if (state.qview === 'questions') return renderQuestions();
     var list = filteredCopies();
+    LASTLIST = list; LASTCOUNT = list.length;
     var box = $('#results'); box.innerHTML = '';
 
     var nameHits = 0, totalQ = 0, stubHits = 0;
@@ -705,14 +729,23 @@
     var loading = (!FULL && fullState !== 'error') ||
       (!!state.q && !QTEXT && qiState !== 'error');
     var realN = list.length - stubHits;
-    $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') +
-      (state.q
-        ? ' for “' + state.q + '”' +
-          (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
-          (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
-          (stubHits ? ' · fetching copies for ' + fmt(stubHits) + (stubHits === 1 ? ' more topper…' : ' more toppers…')
-            : (loading ? ' · still scanning inside the copies…' : ''))
-        : (loading ? ' · more copies + full-text search loading…' : ''));
+    // While the index is still downloading we do not yet know the answer. Printing
+    // "0 copies for X" here reads as "this site doesn't have it" — measured, that showed for
+    // 2.7 s on 4G / 4.5 s on slow 3G before 162 real results arrived (AUDIT P1, DECISION-6).
+    // Never render a zero we are not sure of.
+    if (state.q && loading && realN === 0) {
+      $('#resultmeta').textContent = 'Searching inside ' +
+        fmt((DB.stats && DB.stats.all && DB.stats.all.copies) || (DB.stats && DB.stats.copies) || 0) + ' copies…';
+    } else {
+      $('#resultmeta').textContent = fmt(realN) + ' ' + (realN === 1 ? 'copy' : 'copies') +
+        (state.q
+          ? ' for “' + state.q + '”' +
+            (nameHits ? ' · ' + fmt(nameHits) + ' by topper name' : '') +
+            (totalQ ? ' · ' + fmt(totalQ) + ' matching questions' : '') +
+            (stubHits ? ' · fetching copies for ' + fmt(stubHits) + (stubHits === 1 ? ' more topper…' : ' more toppers…')
+              : (loading ? ' · still scanning inside the copies…' : ''))
+          : (loading ? ' · more copies + full-text search loading…' : ''));
+    }
 
     if (!list.length) {
       var failed = (qiState === 'error' || fullState === 'error');
@@ -727,17 +760,26 @@
       return;
     }
 
+    appendCards(list, 0, state.shown, box, reopen);
+    if (list.length > state.shown) box.appendChild(makeMoreButton(list, box));
+  }
+
+  // Render list[from..to) into box, inserting before `mark` when given (so the Show-more button
+  // keeps its DOM position and node identity). Shared by the first render and the append path,
+  // so both produce identical markup and identical year grouping.
+  function appendCards(list, from, to, box, reopen, mark) {
+    var put = function (node) { mark ? box.insertBefore(node, mark) : box.appendChild(node); };
     var grouped = state.sort === 'year';
     var counts = null;
     if (grouped) { counts = {}; list.forEach(function (x) { var y = yearOf(x.c) || 0; counts[y] = (counts[y] || 0) + 1; }); }
-
-    var curY = null;
-    list.slice(0, state.shown).forEach(function (x) {
+    // Carry the last year header across an append so a group is not re-titled mid-run.
+    var curY = (grouped && from > 0 && list[from - 1]) ? (yearOf(list[from - 1].c) || 0) : null;
+    list.slice(from, to).forEach(function (x) {
       if (grouped) {
         var y = yearOf(x.c) || 0;
         if (y !== curY) {
           curY = y;
-          box.appendChild(el('div', { class: 'yeargroup' }, [
+          put(el('div', { class: 'yeargroup' }, [
             el('span', { class: 'yg-year' }, [y ? String(y) : 'Year not recorded']),
             el('span', { class: 'yg-count' }, [fmt(counts[y]) + (counts[y] === 1 ? ' copy' : ' copies')])
           ]));
@@ -745,15 +787,31 @@
       }
       var card = copyCard(x.c, x.qs, x.n, x.nameHit);
       if (reopen && reopen.indexOf(String(x.c.i)) >= 0) card.open = true;
-      box.appendChild(card);
+      put(card);
     });
+  }
 
-    if (list.length > state.shown) {
-      var n = Math.min(PAGE, list.length - state.shown);
-      var more = el('button', { class: 'more' }, ['Show ' + n + ' more  ·  ' + (list.length - state.shown) + ' hidden']);
-      more.addEventListener('click', function () { state.shown += PAGE; renderBrowse(); });
-      box.appendChild(more);
-    }
+  function moreLabel(list) {
+    var n = Math.min(PAGE, list.length - state.shown);
+    return 'Show ' + n + ' more  ·  ' + fmt(list.length - state.shown) + ' hidden';
+  }
+
+  function makeMoreButton(list, box) {
+    var more = el('button', { class: 'more' }, [moreLabel(list)]);
+    more.addEventListener('click', function () {
+      // Append only, and keep THIS button node alive. Calling renderBrowse() would innerHTML=''
+      // the list, re-run the filter+sort and close every expanded card. Removing and recreating
+      // the button is nearly as bad: it is the node Chrome's scroll anchoring is holding on to,
+      // and destroying it makes the viewport jump ~1,000-3,000px (measured, AUDIT P4). So insert
+      // the new cards *before* it and relabel it in place.
+      var from = state.shown;
+      state.shown += PAGE;
+      var cur = LASTLIST || filteredCopies();
+      appendCards(cur, from, state.shown, box, null, more);
+      if (cur.length > state.shown) more.textContent = moreLabel(cur);
+      else more.remove();
+    });
+    return more;
   }
 
   /* ---------- question-first view ---------- */
@@ -1372,11 +1430,17 @@
 
   function loadAnalyser() {
     if (analyseLoaded) return analyseLoaded;
-    analyseLoaded = new Promise(function (resolve, reject) {
-      var s = document.createElement('script');
-      s.src = 'assets/analyse.js'; s.onload = resolve; s.onerror = reject;
-      document.head.appendChild(s);
-    });
+    // extract.js is no longer loaded eagerly in index.html — every visitor was paying for a
+    // file only submitters use (AUDIT P8). analyse.js needs TC.extract, so load it first.
+    function inject(src) {
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = src; s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    analyseLoaded = (self.TC && self.TC.extract ? Promise.resolve() : inject('assets/extract.js'))
+      .then(function () { return inject('assets/analyse.js'); });
     return analyseLoaded;
   }
 

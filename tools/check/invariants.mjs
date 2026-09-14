@@ -51,7 +51,7 @@ check('INV-2', 'enforced', 'INTENT-4', 'upsckata.com credit is in the docs', () 
   return { ok: missing.length === 0, detail: missing.length ? 'credit missing from: ' + missing.join(', ') : 'present in README + CLAUDE.md' };
 });
 
-check('INV-2b', 'tracked', 'INTENT-4 · AUDIT P11', 'upsckata.com credit is in llms.txt', () => {
+check('INV-2b', 'enforced', 'INTENT-4 · AUDIT P11', 'upsckata.com credit is in llms.txt', () => {
   if (!exists('llms.txt')) return { ok: false, detail: 'run `node build.js` first' };
   const ok = /upsckata/i.test(read('llms.txt'));
   return { ok, detail: ok ? 'present' : 'absent — CLAUDE.md conventions require credit in llms.txt' };
@@ -143,19 +143,19 @@ for (const [name, b] of Object.entries(budget.budgets)) {
  * These are TRACKED until the audit phases land, then flip to enforced.
  * ------------------------------------------------------------------ */
 
-check('INV-10', 'tracked', 'INTENT-3 · AUDIT P7', '#resultmeta is a live region', () => {
+check('INV-10', 'enforced', 'INTENT-3 · AUDIT P7', '#resultmeta is a live region', () => {
   const html = read('index.html');
   const m = html.match(/<p[^>]*id="resultmeta"[^>]*>/);
   return { ok: !!(m && /aria-live/.test(m[0])), detail: m ? m[0] : 'element not found' };
 });
 
-check('INV-11', 'tracked', 'INTENT-3 · AUDIT P3', '#statline and #papers reserve their height', () => {
+check('INV-11', 'enforced', 'INTENT-3 · AUDIT P3', '#statline and #papers reserve their height', () => {
   const css = read('assets/style.css');
   const ok = /\.statline\s*\{[^}]*min-height/.test(css) && /#papers\s*\{[^}]*min-height/.test(css);
   return { ok, detail: ok ? 'both reserved' : 'no min-height — causes the measured CLS 0.193' };
 });
 
-check('INV-12', 'tracked', 'INTENT-3 · AUDIT P8', 'extract.js is not on the critical path', () => {
+check('INV-12', 'enforced', 'INTENT-3 · AUDIT P8', 'extract.js is not on the critical path', () => {
   const html = read('index.html');
   const ok = !/<script[^>]*assets\/extract\.js/.test(html);
   return { ok, detail: ok ? 'lazy-loaded' : 'still eagerly loaded in index.html for every visitor' };
@@ -185,6 +185,16 @@ check('INV-14b', 'enforced', 'INTENT-6 · AUDIT D1', 'llms.txt does not link to 
     if (new RegExp("--exclude='" + rel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep)) broken.push(rel);
   }
   return { ok: broken.length === 0, detail: broken.length ? 'links to un-deployed file(s): ' + broken.join(', ') : 'every linked path is deployed' };
+});
+
+check('INV-18', 'enforced', 'INTENT-3 · AUDIT P2', 'boot() adopts a query already in the search box', () => {
+  // Static guard only. The real test is tools/perf/lost-keystroke.mjs, which holds app.js in
+  // flight to reproduce the window — you cannot reach it by waiting for #q, because deferred
+  // scripts run before DOMContentLoaded and the app has already booted by then.
+  const js = read('assets/app.js');
+  const ok = /if \(!qp && qi && qi\.value\) qp = qi\.value;/.test(js);
+  return { ok, detail: ok ? 'adopted (full check: node tools/perf/lost-keystroke.mjs)'
+                          : 'a query typed before app.js boots would be shown but never run' };
 });
 
 check('INV-15', 'enforced', 'INTENT-6 · AUDIT P9', 'Docs do not claim optimisations that are absent', () => {
@@ -242,9 +252,28 @@ if (WITH_BROWSER) {
     await new Promise(r => setTimeout(r, 1200));
     return { sawZero, cls: +window.__cls.toFixed(4) };
   });
-  check('INV-16', 'tracked', 'INTENT-3 · AUDIT P1', 'Never shows "0 copies" while the index is loading', () =>
+  // P4: Show-more must append, not rebuild. Node identity is the reliable signal — scroll
+  // measurements here are dominated by `html { scroll-behavior: smooth }` unless you scroll
+  // with behavior:'instant' and wait for it to settle (see tools/perf/showmore.mjs).
+  const more = await page.evaluate(async () => {
+    const box = document.querySelector('#results');
+    const b = box.querySelector('.more');
+    if (!b) return { skip: true };
+    [...box.querySelectorAll('.copy')].forEach((c, i) => { c.dataset.tcTag = 'g' + i; });
+    const n0 = box.querySelectorAll('.copy').length;
+    b.click();
+    await new Promise(r => setTimeout(r, 900));
+    const cards = [...box.querySelectorAll('.copy')];
+    return { n0, n1: cards.length, kept: cards.filter(c => c.dataset.tcTag !== undefined).length };
+  });
+  check('INV-19', 'enforced', 'INTENT-3 · AUDIT P4', 'Show more appends instead of rebuilding the list', () =>
+    more.skip ? { ok: true, detail: 'no Show-more button to test' }
+              : { ok: more.kept === more.n0 && more.n1 > more.n0,
+                  detail: `${more.n0} -> ${more.n1} cards, ${more.kept}/${more.n0} originals kept` });
+
+  check('INV-16', 'enforced', 'INTENT-3 · AUDIT P1', 'Never shows "0 copies" while the index is loading', () =>
     ({ ok: !probe.sawZero, detail: probe.sawZero ? 'showed "0 copies" mid-load — reads as "not here" and the student leaves' : 'never showed a false zero' }));
-  check('INV-17', 'tracked', 'INTENT-3 · AUDIT P3', 'CLS within Google\'s "good" threshold (<= 0.1) on slow 3G', () =>
+  check('INV-17', 'enforced', 'INTENT-3 · AUDIT P3', 'CLS within Google\'s "good" threshold (<= 0.1) on slow 3G', () =>
     ({ ok: probe.cls <= 0.1, detail: `CLS ${probe.cls}` }));
   await browser.close(); await srv.close();
 }

@@ -61,3 +61,27 @@ reading the code.
 shows **14/14 enforced passing, 0/8 tracked** — the correct starting state, with the tracked count as
 the progress bar. `docs/IMPLEMENTATION-PROMPT.md` is the prompt to paste into the next session; one
 phase per session, Phase 5 alone.
+
+
+## 2026-09-14 — Phase 1 implemented (P1–P11)
+**Asked.** Hashin started a Sonnet session on Phase 1; it came back with nothing. Cause: that
+session was attached to **hashin/hashin.github.io** (the blog), not **hashin/topperscopy** — none of
+the files it was told to read exist there. `docs/IMPLEMENTATION-PROMPT.md` has been fixed to make
+the repo attachment explicit and to require a "prove you are in the right repo" step first.
+**Did.** All of Phase 1 except P6 (which is NO ACTION by design). Measured results in
+`PERF-UX-AUDIT-2026-09-14.md` under "Phase 1 landed". Highlights: CLS 0.193 → **0.0014**; the false
+"0 copies" is gone; "Show more" moves the reader **0 px** (was up to 785 px); a query typed before
+`app.js` boots is now adopted. `npm run check` went 14/14 enforced → **22/22**, with six tracked
+invariants promoted and two new ones added (INV-18, INV-19).
+**Learned.** The instruments were wrong more often than the code. Four separate false measurements,
+three of them on the same item — the worst reported 4,635 px of drift on code whose real drift is
+**0 px**, because `html { scroll-behavior: smooth }` means `scrollTo` animates and everything was
+measured mid-animation. Two code changes were made on those false diagnoses; one was kept on its own
+merits, the other (`overflow-anchor: none`) was A/B'd and **removed** once the instrument was fixed.
+Also: you cannot test the pre-boot window by waiting for `#q` — deferred scripts run before
+`DOMContentLoaded`, so the app has already booted; you have to hold `app.js` in flight with
+`page.route`. All of this is now `DECISION-9`, with the traps written at the top of the two scripts
+that fell into them.
+**Left.** Phase 2 (D1–D3) next; D1 now has a second half, because `llms.txt` linked to the file it
+removes. Phases 3–5 are where the payload actually shrinks. Two tracked invariants remain: INV-13
+(D1) and INV-14 (R3).

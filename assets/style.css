@@ -255,7 +255,12 @@ main { padding-bottom: 96px; }
 .hero .sub { margin: 16px 0 0; color: var(--muted); font-size: 16px; }
 .hero .lead { margin: 14px 0 0; color: var(--body); font-size: 16.5px; max-width: 64ch; }
 
-.statline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 26px; }
+/* #statline and #papers are empty at first paint and filled by JS once the data lands.
+   Without a reserved height that fill shifts the whole page — measured CLS 0.193 on slow 3G
+   (AUDIT P3). The values are the measured filled heights; re-measure with tools/perf/cls.mjs
+   if the contents change. */
+.statline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 26px; min-height: 34px; }
+#papers { min-height: 45px; }
 .statline .s { font-size: 14px; color: var(--muted); display: inline-flex; align-items: baseline; gap: 6px; }
 .statline .s b { font-family: var(--serif); font-weight: 500; font-size: 21px; color: var(--ink); letter-spacing: -.01em; }
 
@@ -369,6 +374,12 @@ select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px v
   background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   margin-bottom: 14px; box-shadow: var(--shadow-sm);
   transition: box-shadow .18s, border-color .18s, transform .18s;
+  /* Cards below the fold skip layout and paint until scrolled near. contain-intrinsic-size is
+     the MEASURED median collapsed card height (tools/perf/cardsize.mjs) — a wrong value trades
+     paint cost for scrollbar jitter, which is worse. `auto` lets the browser remember the real
+     size once a card has rendered, so expanded cards are sized correctly too. (AUDIT P9a) */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100px;
 }
 .copy:hover { border-color: var(--border-2); }
 .copy[open] { box-shadow: var(--shadow); border-color: var(--teal-line); }
@@ -652,4 +663,10 @@ footer.site .spacer { flex: 1; }
   .theme-toggle { width: 40px; height: 40px; }
   .copy > summary { padding: 15px 16px; }
   .q { padding: 13px 16px; }
+  /* measured: median collapsed card 125px at 390px wide, statline 74px, papers 84px,
+     and #sub wraps to 3 lines (26px -> 78px) once the real counts replace "loading…" */
+  .copy { contain-intrinsic-size: auto 125px; }
+  .statline { min-height: 74px; }
+  #papers { min-height: 84px; }
+  #sub { min-height: 78px; }
 }

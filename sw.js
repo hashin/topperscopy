@@ -3,10 +3,10 @@
    instead: a repeat visit serves straight from cache with NO network request,
    revalidating in the background at most once every HEAVY_TTL_MS. Bump VERSION
    to force a full refresh of everything. */
-var VERSION = 'tc-v21';
+var VERSION = 'tc-v22';
 var SHELL = [
   './', './index.html',
-  './assets/style.css', './assets/app.js', './assets/extract.js',
+  './assets/style.css', './assets/app.js',
   './assets/fonts/inter-latin.woff2',
   './manifest.webmanifest', './assets/icon.svg', './assets/icon-192.png', './assets/icon-512.png',
   './data/index.json', './data/toppers.json', './data/optionals.json'

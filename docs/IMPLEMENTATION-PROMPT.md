@@ -16,9 +16,20 @@ everything after that assumes its predecessors landed.
 ## The prompt
 
 ```text
-Work in the hashin/topperscopy repository, on the branch claude/intelligent-allen-ayrpxh.
+REPOSITORY: hashin/topperscopy   (NOT hashin/hashin.github.io — that is a different project)
+BRANCH:     claude/intelligent-allen-ayrpxh
 
 PHASE: 1
+
+FIRST, BEFORE ANYTHING ELSE — prove you are in the right repository:
+
+  git remote -v && ls PERF-UX-AUDIT-2026-09-14.md docs/MEMORY.md tools/check/invariants.mjs
+
+If the remote is not hashin/topperscopy, or those files are missing, you are in the wrong repo.
+STOP, attach hashin/topperscopy (add_repo, then clone it), and work there. Do NOT create the
+files yourself in whatever repo you happen to be in, and do NOT commit anything to
+hashin/hashin.github.io. A session that skipped this check in September 2026 spent its entire
+run in the blog repo and produced nothing.
 
 Your job is to implement exactly that phase of PERF-UX-AUDIT-2026-09-14.md — no more,
 no less. Do not start the next phase. Do not do "while I'm here" cleanups.
@@ -93,6 +104,14 @@ REPORT BACK WITH:
 ```
 
 ---
+
+## Why the repo check is first
+
+The first Sonnet session given this prompt was started from a CLI whose default source is
+`hashin/hashin.github.io` — Hashin's Jekyll blog. The prompt said "work in hashin/topperscopy", but
+saying it is not the same as being there. The session sat on the blog's `master`, could not find a
+single file it had been told to read, and pushed nothing. Naming the repository is not enough; the
+prompt has to make the agent *verify* it before reading anything.
 
 ## Phase sizing
 
