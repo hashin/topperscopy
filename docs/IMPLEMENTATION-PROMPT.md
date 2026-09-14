@@ -13,6 +13,18 @@ everything after that assumes its predecessors landed.
 
 ---
 
+## Where things stand (2026-09-14)
+
+| Phase | State |
+|---|---|
+| 1 — P1–P11 | **done, merged to `main`, deployed** (run #69) |
+| 2 — D1, D3 | **done**, on `claude/intelligent-allen-ayrpxh`, not yet merged |
+| 2 — D2 | **open — needs Hashin's decision**, not code. Nothing blocks on it. |
+| 3 — T1–T4 | next |
+| 4–6 | not started |
+
+`npm run check`: **24/24 enforced passing**, 1 tracked (INV-14, belongs to Phase 6).
+
 ## The prompt
 
 ```text
@@ -117,8 +129,8 @@ prompt has to make the agent *verify* it before reading anything.
 
 | Phase | Items | Session load | Notes |
 |---|---|---|---|
-| 1 | P1–P11 (11 items) | Comfortable | Ten small diffs; most of the felt improvement. Start here. |
-| 2 | D1–D3 (3 items) | Light | D2 is a decision for Hashin, not code. Can run before or after Phase 1. |
+| 1 | P1–P11 (11 items) | ~~Comfortable~~ | **DONE** — merged and deployed 2026-09-14. |
+| 2 | D1–D3 (3 items) | ~~Light~~ | **D1, D3 DONE.** D2 is Hashin's call, still open. |
 | 3 | T1–T4 (4 items) | Medium | T3 is the real work; T4 is explicitly optional and probably should not be done. |
 | 4 | I1 (1 item) | Medium–heavy | Highest-risk change in the audit. Verify id churn is **0**. |
 | 5 | E1 (1 item) | **Full session** | The search engine. Nothing else in this session. |
