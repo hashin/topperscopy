@@ -42,7 +42,7 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin.woff2" crossorigin>
 <!-- as="fetch" preloads in CORS mode; without crossorigin the credentials mode never
      matches app.js's fetch() and the browser throws the preloaded copy away. -->
-<link rel="preload" as="fetch" type="application/json" href="data/index.json" crossorigin>
+<link rel="preload" as="fetch" type="application/json" href="data/copies.json" crossorigin>
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <link rel="preconnect" href="https://www.google-analytics.com">
 
@@ -332,14 +332,14 @@
       <h2>Optional subject copies</h2>
       <p class="lead">
         Sociology, Anthropology, History, PSIR, Geography and the rest — plus a Forest Service (IFS) bucket.
-        The upstream database covers only CSE GS &amp; Essay, so this section is built from what students send in —
+        Compiled from institute pages and from what students send in; these copies are also in the main search —
         <a href="#submit" data-goto="submit">add a copy&nbsp;→</a>
       </p>
     </div>
     <div class="toolbar">
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="search" id="opt-q" placeholder="Search optional copies by topper, source or note…" autocomplete="off" aria-label="Search optional subject copies">
+        <input type="search" id="opt-q" placeholder="Search optional copies by topper, source, note or question…" autocomplete="off" aria-label="Search optional subject copies">
       </div>
     </div>
     <div id="opt-body"></div>
@@ -507,7 +507,9 @@
         GS &amp; Essay text derives from earlier open community compilations of the same copies. Optional-subject
         and newer copies are compiled from institute pages
         (<a href="https://www.levelupias.com/" target="_blank" rel="noopener">Level Up IAS</a>, Vision IAS, IMS4Maths,
-        SuccessClap, LotusArise and others) and from what people send in. If anyone whose work is indexed here
+        SuccessClap, LotusArise and others) and from what people send in. The GS &amp; Essay question index builds on
+        open community work, including <a href="https://toppercopies.upsckata.com/" target="_blank" rel="noopener">upsckata.com's
+        "Topper Copies"</a>. If anyone whose work is indexed here
         wants a change, <a href="https://github.com/hashin/topperscopy/issues">open an issue</a>.</p>
 
       <h2>Where the PDFs live</h2>
@@ -529,7 +531,9 @@
       <h2>Full static index</h2>
       <p>Prefer no JavaScript, or crawling the data? <a href="toppers.html">The complete static index of every topper and copy</a>
         lists all rankers, their papers and links to each source PDF. Machine-readable data:
-        <a href="data/copies.json">copies.json</a>, <a href="data/toppers.json">toppers.json</a>,
+        <a href="data/copies.json">copies.json</a> (every copy, grouped by topper),
+        <a href="data/questions-gs1.json">questions-gs1.json</a> (and -gs2, -gs3, -gs4, -essay, -other, -optional —
+        deduped question text with the copies and pages that answer it),
         <a href="/dataset/questions.csv">questions.csv</a>, <a href="/llms.txt">llms.txt</a>.</p>
 
       <h2>Complete dataset</h2>
