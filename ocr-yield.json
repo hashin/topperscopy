@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-15T18:09:44.395Z",
+  "generated": "2026-09-15T19:57:32.189Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -710,26 +710,6 @@
       "low": true
     },
     {
-      "url": "https://sleepyclasses.com/wp-content/uploads/2025/06/Aaryan-Chetiwal-Mains-2024-FLT-1.pdf",
-      "topper": "Aaryan Chetiwal",
-      "coaching": "Sleepy Classes",
-      "subject": "Sociology",
-      "count": 3,
-      "optional": true,
-      "groupMedian": 3.5,
-      "low": true
-    },
-    {
-      "url": "https://drive.google.com/file/d/1DLIw9j7insmEZ6UR2UYJmP_9fX-W05Iw/view",
-      "topper": "KUNAL AGARWAL",
-      "coaching": "IAS Delhi Institute",
-      "subject": "PSIR",
-      "count": 3,
-      "optional": true,
-      "groupMedian": 3,
-      "low": true
-    },
-    {
       "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P2.pdf",
       "topper": "Ajay R Raj",
       "coaching": "Shankar IAS Parliament",
@@ -750,6 +730,16 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1DLIw9j7insmEZ6UR2UYJmP_9fX-W05Iw/view",
+      "topper": "KUNAL AGARWAL",
+      "coaching": "IAS Delhi Institute",
+      "subject": "PSIR",
+      "count": 3,
+      "optional": true,
+      "groupMedian": 3,
+      "low": true
+    },
+    {
       "url": "https://www.shankariasparliament.com/uploads/downloads/ROSHAN_P3.pdf",
       "topper": "Roshan V",
       "coaching": "Shankar IAS Parliament",
@@ -757,6 +747,30 @@
       "count": 3,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2025/06/Aaryan-Chetiwal-Mains-2024-FLT-1.pdf",
+      "topper": "Aaryan Chetiwal",
+      "coaching": "Sleepy Classes",
+      "subject": "Sociology",
+      "count": 3,
+      "optional": true,
+      "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/525f2-710846_2423_madhav_agarwal_rank_16.pdf",
+      "topper": "Madhav Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -1930,9 +1944,39 @@
       "low": true
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/RAJESHWARI_SUVE_P2_compressed.pdf",
+      "topper": "Rajeshwari",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1dsmMQd3QQ4h_Kwh2hRfJ6yXJsaBLnnZd/view",
       "topper": "Aayushi Bansal",
       "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P4.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P41.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
       "subject": "Sociology",
       "count": 7,
       "optional": true,
@@ -1990,6 +2034,16 @@
       "low": true
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P4.pdf",
+      "topper": "Ajay R Raj",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 7,
+      "optional": true,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1L--o4CTomf0z9b9JhWwMljdV1_88gvg2/view",
       "topper": "Siddharth Singh",
       "coaching": "Level Up IAS",
@@ -2013,46 +2067,6 @@
       "url": "https://drive.google.com/file/d/1v5yWjjvVnibCK-MdN5eTmjEnD9hbQEX9/view",
       "topper": "Aman Pratap Singh",
       "coaching": "Level Up IAS",
-      "subject": "Sociology",
-      "count": 7,
-      "optional": true,
-      "groupMedian": 7,
-      "low": true
-    },
-    {
-      "url": "https://www.shankariasparliament.com/uploads/downloads/RAJESHWARI_SUVE_P2_compressed.pdf",
-      "topper": "Rajeshwari",
-      "coaching": "Shankar IAS Parliament",
-      "subject": "Sociology",
-      "count": 7,
-      "optional": true,
-      "groupMedian": 7,
-      "low": true
-    },
-    {
-      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P4.pdf",
-      "topper": "Sruthi R",
-      "coaching": "Shankar IAS Parliament",
-      "subject": "Sociology",
-      "count": 7,
-      "optional": true,
-      "groupMedian": 7,
-      "low": true
-    },
-    {
-      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P41.pdf",
-      "topper": "Sruthi R",
-      "coaching": "Shankar IAS Parliament",
-      "subject": "Sociology",
-      "count": 7,
-      "optional": true,
-      "groupMedian": 7,
-      "low": true
-    },
-    {
-      "url": "https://www.shankariasparliament.com/uploads/downloads/AJAY_R_RAJ_P4.pdf",
-      "topper": "Ajay R Raj",
-      "coaching": "Shankar IAS Parliament",
       "subject": "Sociology",
       "count": 7,
       "optional": true,
@@ -3000,6 +3014,16 @@
       "low": false
     },
     {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P3.pdf",
+      "topper": "Sruthi R",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1vsukTnBy-0Xuu2u9Xe-8tXfqtjx3HUzN/view",
       "topper": "Neelesh Goyal",
       "coaching": "Level Up IAS",
@@ -3013,26 +3037,6 @@
       "url": "https://drive.google.com/file/d/1vP4W9IPIf6FiDOM0babxLEr8m2J3Wlzp/view",
       "topper": "Ria Kaur",
       "coaching": "Level Up IAS",
-      "subject": "Sociology",
-      "count": 8,
-      "optional": true,
-      "groupMedian": 7,
-      "low": false
-    },
-    {
-      "url": "https://drive.google.com/file/d/1S4g8qGDZpqAtpu3e6xCuNy80YV6QcN3o/view",
-      "topper": "Virender Singh",
-      "coaching": "Level Up IAS",
-      "subject": "Sociology",
-      "count": 8,
-      "optional": true,
-      "groupMedian": 7,
-      "low": false
-    },
-    {
-      "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P3.pdf",
-      "topper": "Sruthi R",
-      "coaching": "Shankar IAS Parliament",
       "subject": "Sociology",
       "count": 8,
       "optional": true,
@@ -3073,6 +3077,16 @@
       "url": "https://www.shankariasparliament.com/uploads/downloads/AGNES_MERITTA_STEFFY_P3.pdf",
       "topper": "Agnes Meritta Steffy",
       "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 8,
+      "optional": true,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1S4g8qGDZpqAtpu3e6xCuNy80YV6QcN3o/view",
+      "topper": "Virender Singh",
+      "coaching": "Level Up IAS",
       "subject": "Sociology",
       "count": 8,
       "optional": true,
@@ -3555,6 +3569,16 @@
       "count": 10,
       "optional": true,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://t.me/VikasKunduAIR27",
+      "topper": "Vikas kundu",
+      "coaching": "",
+      "subject": "PSIR",
+      "count": 10,
+      "optional": true,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -6579,6 +6603,20 @@
       "pages": 52,
       "model": null,
       "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6ac20-710846_2422_madhav_agarwal_rank_16.pdf",
+      "topper": "Madhav Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
       "salvaged": 0,
       "groupMedian": 19,
       "low": false
