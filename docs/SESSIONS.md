@@ -618,3 +618,26 @@ maintainer clicking "approved" one at a time) — but a future session batch-app
 at once should stagger them, or expect to reprocess losers by hand exactly as done here.
 **Left.** All four issues closed (`merged` label on #9/#10/#11). `npm run check` 24/24 enforced. No
 DECISION entry — this is normal moderation, not an architecture choice.
+
+## 2026-09-15 (cont.) — Verified alpha96-tec's copies live, found & fixed a duplicate; added Interviews to SEO/llms.txt
+**Asked.** "check if the added copies are actually present in the website. do this whenever an issue
+is closed likewise. also mention in the seo and llm.txt that we have an extensive database of
+interview transcripts, that the candidates can use to prepare for interviews."
+**Did.** Fetched the live `data/copies.json` and confirmed Vikas Kundu/Animesh Mishra/Priyasha Verma
+were all present — but Animesh Mishra and Priyasha Verma each had **two** PSIR copy rows for the same
+Google Drive file (one from the pre-existing Level Up IAS compilation, one just added from the issue,
+differing only in the share-link query string — `?usp=sharing`/`?usp=drive_link` vs a bare `/view`).
+`apply-submission.mjs`'s duplicate check compares URL strings verbatim, so it missed this. Removed the
+two redundant entries from `data/optionals.json` by hand, rebuilt, checked (24/24), committed, pushed,
+verified the fix live, and left a follow-up comment on both closed issues explaining it. Then wired an
+`interviewCount` (3,863) through `writeStaticIndex()` (homepage meta/og/twitter descriptions),
+`jsonLd()` (new FAQ entry + Dataset keywords), and `writeLlms()` (top summary, a "What it contains"
+bullet, a machine-readable-data entry for `interview-list.json`/`interview-text-<year>.json`, and a
+human-readable-pages entry) — all framing it as Personality Test prep material. Also added interview
+keywords to index.html's static `<meta name="keywords">`. Verified all three live post-deploy.
+**Learned.** "The apply script exited 0 and the copy is present" is not the same as "this didn't
+create a duplicate" — worth checking not just presence but whether an existing entry already covered
+the same underlying file under a different URL string. Saved as a standing memory
+(`verify-after-closing-issues.md`) since Hashin asked for this to be standard practice going forward.
+**Left.** `npm run check` 24/24 enforced. No DECISION entry — the SEO/llms.txt additions are prose,
+not architecture, and the duplicate fix is a straightforward bug fix already explained inline.
