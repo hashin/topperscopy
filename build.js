@@ -982,7 +982,7 @@ ${sections}
 
 // index.html: the <noscript> index, the JSON-LD graph and the description metas live between
 // marker comments and are refilled every build — index.html is tracked, everything else here is not.
-function writeStaticIndex(copies, toppers, stats, generated, nameToSlug) {
+function writeStaticIndex(copies, toppers, stats, generated, nameToSlug, interviewCount) {
   const idxPath = path.join(ROOT, 'index.html');
   let html = fs.readFileSync(idxPath, 'utf8');
   const names = Array.from(new Set(copies.map(c => c.t))).filter(n => n && n !== 'Unknown').sort();
@@ -1004,6 +1004,9 @@ function writeStaticIndex(copies, toppers, stats, generated, nameToSlug) {
     <p><strong><a href="toppers.html">Open the full static index of all ${names.length} toppers and every copy &rarr;</a></strong>
     &nbsp;·&nbsp; <a href="data/copies.json">machine-readable data (JSON)</a>
     &nbsp;·&nbsp; <a href="/llms.txt">llms.txt</a></p>
+    ${interviewCount ? `<p>Preparing for your own Personality Test? The <a href="/#interviews">Interviews tab</a> has
+    ${fmt(interviewCount)} UPSC interview transcripts — real board-by-board questions, DAF topics and candidate
+    backgrounds — to see what boards actually ask.</p>` : ''}
     <h3>Selected rankers${listed.length < stats.toppers ? ` (${listed.length} of ${stats.toppers} — full list in <a href="toppers.html">toppers.html</a>)` : ''}</h3>
     <ul>
 ${topperLinks}
@@ -1012,13 +1015,14 @@ ${topperLinks}
 </noscript>`;
 
   html = replaceBlock(html, 'STATIC', noscript);
-  html = replaceBlock(html, 'LD', jsonLd(stats, generated));
+  html = replaceBlock(html, 'LD', jsonLd(stats, generated, interviewCount));
   // social/description metas track the live totals, rounded so the file does not churn daily
   const floor = (n, step) => Math.floor(n / step) * step;
   const qN = fmt(floor(stats.all.questions, 500)), cN = fmt(floor(stats.all.copies, 500));
-  html = replaceBlock(html, 'META', `<meta name="description" content="Search ${qN}+ questions inside ${cN}+ UPSC Civil Services Mains topper answer copies — GS1-4, Essay and optional subjects — and open the exact page of each copy. Free, open and community-built.">`);
-  html = replaceBlock(html, 'OGDESC', `<meta property="og:description" content="Search ${qN}+ questions inside ${cN}+ UPSC Mains topper answer copies and jump to the exact page. GS, Essay and optional subjects. Free and open.">`);
-  html = replaceBlock(html, 'TWDESC', `<meta name="twitter:description" content="Search inside ${cN}+ UPSC Mains topper answer copies and jump to the exact page. GS, Essay and optionals. Free and open.">`);
+  const ivN = fmt(floor(interviewCount || 0, 100));
+  html = replaceBlock(html, 'META', `<meta name="description" content="Search ${qN}+ questions inside ${cN}+ UPSC Civil Services Mains topper answer copies — GS1-4, Essay and optional subjects — plus ${ivN}+ interview transcripts to help you prepare for your own Personality Test. Free, open and community-built.">`);
+  html = replaceBlock(html, 'OGDESC', `<meta property="og:description" content="Search ${qN}+ questions inside ${cN}+ UPSC Mains topper answer copies, jump to the exact page, and study ${ivN}+ real interview transcripts. GS, Essay and optional subjects. Free and open.">`);
+  html = replaceBlock(html, 'TWDESC', `<meta name="twitter:description" content="Search inside ${cN}+ UPSC Mains topper answer copies and ${ivN}+ interview transcripts. GS, Essay, optionals and Personality Test prep. Free and open.">`);
   fs.writeFileSync(idxPath, html);
 }
 
@@ -1028,7 +1032,7 @@ function replaceBlock(html, tag, content) {
   return html.replace(re, `$1\n${content}\n$2`);
 }
 
-function jsonLd(stats, generated) {
+function jsonLd(stats, generated, interviewCount) {
   const graph = [
     {
       '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name: 'Toppers Copy',
@@ -1046,7 +1050,7 @@ function jsonLd(stats, generated) {
     {
       '@type': 'Dataset', '@id': SITE + '/#dataset', name: 'UPSC Mains Topper Answer Copies — question index',
       description: `A structured index of ${fmt(stats.questions)} questions across ${fmt(stats.copies)} UPSC Civil Services Mains answer copies written by ${stats.toppers} rank-holders, covering General Studies Papers 1–4 and the Essay paper. Each record links to the exact page of the source PDF published by coaching institutes such as ForumIAS, Vision IAS and NextIAS.`,
-      url: SITE + '/', keywords: ['UPSC', 'Civil Services Exam', 'Mains', 'answer copy', 'toppers', 'General Studies', 'Essay', 'IAS'],
+      url: SITE + '/', keywords: ['UPSC', 'Civil Services Exam', 'Mains', 'answer copy', 'toppers', 'General Studies', 'Essay', 'IAS', 'interview transcripts', 'Personality Test'],
       license: 'https://github.com/hashin/topperscopy/blob/main/LICENSE', isAccessibleForFree: true,
       creator: { '@id': SITE + '/#org' }, dateModified: generated,
       distribution: [
@@ -1062,6 +1066,7 @@ function jsonLd(stats, generated) {
         ['What is Toppers Copy?', `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${fmt(stats.questions)} questions inside ${fmt(stats.copies)} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
         ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them; it is a free, open, community-built index.'],
         ['Does it cover optional subjects?', 'Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more.'],
+        ...(interviewCount ? [['Can I prepare for the UPSC interview (Personality Test) here?', `Yes. The Interviews tab has ${fmt(interviewCount)} real UPSC Personality Test transcripts — board members, the questions each panellist actually asked, DAF topics discussed, and candidate hobbies and education background — searchable by board, year, optional subject or state.`]] : []),
         ['Is it free?', 'Yes, completely free and open source. No login, no ads.'],
         ['How can I add a missing copy or a topper’s marks?', 'Use the Submit form on the site. It opens a pre-filled GitHub issue that a maintainer verifies before it goes live.']
       ].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
@@ -1125,14 +1130,16 @@ Sitemap: ${SITE}/sitemap.xml
 `);
 }
 
-function writeLlms(stats, generated) {
+function writeLlms(stats, generated, interviewCount) {
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# Toppers Copy
 
 > A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
 > **Mains topper answer copies**. It indexes ${fmt(stats.questions)} questions inside
 > ${fmt(stats.copies)} answer copies written by ${stats.toppers} rank-holders and links each
 > question to the exact page of the source PDF. Covers General Studies Paper 1, 2, 3 and 4, the Essay paper,
-> and a community-built section for optional subjects.
+> and a community-built section for optional subjects. It also has ${fmt(interviewCount || 0)} UPSC
+> Personality Test (interview) transcripts — real board-by-board questions and DAF topics — for
+> candidates preparing for their own interview.
 
 Site: https://topperscopy.hashin.me
 Updated: ${generated}
@@ -1142,7 +1149,9 @@ Credit: the question-level database (which topper answered which question, on wh
 PDF) is mirrored from upsckata.com "Topper Copies" — https://toppercopies.upsckata.com/ — an
 independent, non-commercial mirror. Please credit upsckata.com when reusing this data. The
 optional-subject section, per-topper AIR/marks tags and all community submissions are original to
-this project. No answer copy is hosted here; every link points to the site that published the PDF.
+this project. The interview-transcript archive is a separate mirror of upsckata's own interview
+data and does not require the same credit. No answer copy is hosted here; every link points to the
+site that published the PDF.
 
 ## What it contains
 
@@ -1151,12 +1160,19 @@ this project. No answer copy is hosted here; every link points to the site that 
 - Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others.
 - Optional-subject copies: Sociology, Anthropology, History, PSIR, Geography, Public Administration,
   Philosophy, Economics, Literature and more (community-submitted).
+- ${fmt(interviewCount || 0)} UPSC Personality Test interview transcripts — board, the questions each
+  panellist actually asked, DAF topics discussed, candidate hobbies and education background — an
+  extensive database candidates can use to prepare for their own interview. Filterable by board, year,
+  optional subject and home state; searchable by candidate, board, topic, hobby or education.
 
 ## Machine-readable data
 
 - Every copy, grouped by topper, with AIR / year / marks (JSON): https://topperscopy.hashin.me/data/copies.json
 - Deduped question text per paper, each with the copies and pages that answer it (JSON):
   https://topperscopy.hashin.me/data/questions-gs1.json (also -gs2, -gs3, -gs4, -essay, -other, -optional)
+- Every interview transcript's metadata (JSON): https://topperscopy.hashin.me/data/interview-list.json
+- Full interview transcript text, one shard per year (JSON): https://topperscopy.hashin.me/data/interview-text-2025.json
+  (also -2017 through -2026)
 
 ## Complete dataset (backup, includes all accepted submissions)
 
@@ -1171,6 +1187,7 @@ this project. No answer copy is hosted here; every link points to the site that 
 
 - Home / search: https://topperscopy.hashin.me/
 - Full static index of every topper and copy: https://topperscopy.hashin.me/toppers.html
+- Interview transcripts (Personality Test prep): https://topperscopy.hashin.me/#interviews
 - Submit a copy or a correction: https://topperscopy.hashin.me/#submit
 - About & credits: https://topperscopy.hashin.me/#about
 
@@ -1354,7 +1371,8 @@ function build() {
 
   writeCopies(copies, toppers, stats, generated);
   writeShards(byPaper, syl, generated);
-  writeInterviews(loadInterviews(), generated);
+  const interviewDocs = loadInterviews();
+  writeInterviews(interviewDocs, generated);
 
   // GS/Essay questions get a page each; slugs are assigned in this fixed order so they stay stable
   const qList = [];
@@ -1366,12 +1384,12 @@ function build() {
   for (const [paper, P] of Object.entries(byPaper)) if (PAPERS.indexOf(paper) < 0) optQuestions.push(...P.questions);
 
   const nameToSlug = writeTopperPages(copies, toppers);
-  writeStaticIndex(gs, toppers, stats, generated, nameToSlug);
+  writeStaticIndex(gs, toppers, stats, generated, nameToSlug, interviewDocs.length);
   const topperIndexPages = writeToppersPages(gs, toppers, stats, generated, nameToSlug);
   const indexableQuestionSlugs = writeQuestionPages(qList, copyByUrl, nameToSlug, syl);
   writeHubPages(qList, optQuestions, copies, nameToSlug);
   writeSitemaps(generated, indexableQuestionSlugs, topperIndexPages);
-  writeLlms(stats, generated);
+  writeLlms(stats, generated, interviewDocs.length);
   writeRobots();
   const ds = writeDataset(copies, toppers, generated);
   console.log(`dataset/     ${ds.copies} copies, ${ds.questions} questions, ${ds.toppers} toppers, ${ds.submissions} from submissions`);
