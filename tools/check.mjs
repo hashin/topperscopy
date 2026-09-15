@@ -46,7 +46,7 @@ function check(id, cites, title, fn) {
 if (!exists('data/copies.json')) { console.error('run `node build.js` first — the checks measure real output'); process.exit(1); }
 const DB = JSON.parse(read('data/copies.json'));
 const copies = [];
-for (const name in DB.toppers) for (const r of DB.toppers[name].copies) copies.push({ i: r[0], t: name, p: r[1], u: r[3] });
+for (const name in DB.toppers) for (const r of DB.toppers[name].copies) copies.push({ t: name, p: r[0], u: r[2] });
 
 /* ---- data integrity ---- */
 check('INV-1', 'INTENT-4', 'No answer copy is re-hosted on our own domain', () => {
@@ -57,17 +57,17 @@ check('INV-2', 'INTENT-5', 'Every copy link is http(s) — no javascript:/data: 
   const bad = copies.filter(c => !/^https?:\/\//i.test(String(c.u || '')));
   return { ok: !bad.length, detail: bad.length ? `${bad.length} non-http(s) URLs, e.g. ${String(bad[0].u).slice(0, 60)}` : 'all https/http' };
 });
-check('INV-3', 'DECISION-5', 'Copy ids are unique', () => {
-  const ids = new Set(copies.map(c => c.i));
-  return { ok: ids.size === copies.length, detail: `${ids.size}/${copies.length}` };
+check('INV-3', 'DECISION-17', 'A PDF URL appears in exactly one copy', () => {
+  const urls = new Set(copies.map(c => c.u));
+  return { ok: urls.size === copies.length, detail: `${urls.size}/${copies.length}` };
 });
-check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy', () => {
-  const ids = new Set(copies.map(c => c.i));
+check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
+  const urls = new Set(copies.map(c => c.u));
   let refs = 0, bad = 0, questions = 0;
   for (const s of SHARDS) {
     if (!exists(`data/questions-${s}.json`)) return { ok: false, detail: `data/questions-${s}.json missing` };
     const d = JSON.parse(read(`data/questions-${s}.json`));
-    for (const q of d.questions.concat(d.fragments)) { questions++; for (const [cid] of q[1]) { refs++; if (!ids.has(cid)) bad++; } }
+    for (const q of d.questions.concat(d.fragments)) { questions++; for (const [i] of q[1]) { refs++; if (!urls.has(d.urls[i])) bad++; } }
   }
   return { ok: !bad, detail: `${refs} refs across ${questions} questions${bad ? ', ' + bad + ' point at no copy' : ', all resolve'}` };
 });

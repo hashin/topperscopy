@@ -2,8 +2,12 @@
  *
  * Data it reads (all written by build.js):
  *   data/copies.json              every copy, grouped by topper — the only file needed to boot
- *   data/questions-<paper>.json   one shard per paper: [text, [[copyId, page], …], [syllabus ids], marks, words]
+ *   data/questions-<paper>.json   one shard per paper: a table of copy URLs, then
+ *                                 [text, [[urlIndex, page], …], [syllabus ids], marks, words] per question
  *   data/syllabus.json            the hand-written syllabus tree, for filter labels
+ *
+ * A copy's URL is its key everywhere. A shard ref whose URL is not in copies.json is skipped
+ * when the shard is indexed — the only thing a cache skew between the two files can do.
  *
  * Search: a topper-name match comes from the copies (always in memory); a text match is an
  * indexOf() over every question in every loaded shard the paper filter allows. While a needed
@@ -70,10 +74,10 @@
 
   /* ---------- data ---------- */
   var DB = null;          // parsed data/copies.json
-  var COPIES = [];        // every copy: { i, t, p, c, u, n, link, note, T (its topper), tlc (name lowercased) }
-  var COPYBYID = {};
+  var COPIES = [];        // every copy: { t, p, c, u, n, link, note, T (its topper), tlc (name lowercased) }
+  var COPYBYURL = {};
   var TOPPERS = {};       // name -> { air, year, verified, marks, telegram, copies:[copy] }
-  var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{copyId:[{q,page}]} }
+  var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
   var SYL = null;         // data/syllabus.json
   var LOADS = {};         // url -> promise; one fetch per file, ever
@@ -107,23 +111,26 @@
     (window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); })(go, { timeout: 4000 });
   }
 
-  // A shard's question: { id, txt, lc, refs, s, m, w, p, kind }. Text is lowercased once here
-  // so a keystroke never re-lowercases the corpus. byCopy is the reverse map a copy card uses.
+  // A shard's question: { id, txt, lc, refs:[{c, page}], s, m, w, p, kind }. Refs are resolved to
+  // copies here (a URL copies.json does not know is dropped) and the text is lowercased once, so
+  // a keystroke never re-lowercases the corpus. byCopy is the reverse map a copy card uses.
   function indexShard(d, name) {
     var sh = { questions: [], fragments: [], all: [], byCopy: {} };
     function add(rows, kind, into) {
       (rows || []).forEach(function (r) {
-        var c0 = r[1][0] && COPYBYID[r[1][0][0]];
-        var q = { txt: r[0], lc: r[0].toLowerCase(), refs: r[1], s: r[2] || [], m: r[3] || '', w: r[4] || '', kind: kind,
-          p: name === 'optional' ? (c0 ? c0.p : 'Optional') : SHARD_PAPER[name] };
+        var refs = [];
+        r[1].forEach(function (ref) { var c = COPYBYURL[d.urls[ref[0]]]; if (c) refs.push({ c: c, page: ref[1] }); });
+        if (!refs.length) return;
+        var q = { txt: r[0], lc: r[0].toLowerCase(), refs: refs, s: r[2] || [], m: r[3] || '', w: r[4] || '', kind: kind,
+          p: name === 'optional' ? refs[0].c.p : SHARD_PAPER[name] };
         q.id = fnv(q.p + '|' + q.txt);
         into.push(q); sh.all.push(q);
-        r[1].forEach(function (ref) { (sh.byCopy[ref[0]] = sh.byCopy[ref[0]] || []).push({ q: q, page: ref[1] }); });
+        refs.forEach(function (ref) { (sh.byCopy[ref.c.u] = sh.byCopy[ref.c.u] || []).push({ q: q, page: ref.page }); });
       });
     }
     add(d.questions, 'q', sh.questions);
     add(d.fragments, 'f', sh.fragments);
-    for (var id in sh.byCopy) sh.byCopy[id].sort(function (a, b) { return a.page - b.page; });
+    for (var u in sh.byCopy) sh.byCopy[u].sort(function (a, b) { return a.page - b.page; });
     return sh;
   }
   // the shards a paper filter needs
@@ -136,7 +143,7 @@
   function copyRows(c) {
     var sh = SHARDS[shardOf(c.p)];
     if (!sh) { ensureShard(shardOf(c.p)); return null; }
-    return sh.byCopy[c.i] || [];
+    return sh.byCopy[c.u] || [];
   }
   var PRACTICE_WANTED = false, practiceIntent = null;
   function onShardLoaded(name) {
@@ -179,8 +186,8 @@
       Object.keys(d.toppers).forEach(function (name) {
         var T = d.toppers[name];
         T.marks = T.marks || {}; T.copies = T.copies.map(function (r) {
-          var c = { i: r[0], t: name, p: r[1], c: r[2], u: r[3], n: r[4], link: !!r[5], note: r[6] || '', T: T, tlc: name.toLowerCase() };
-          COPIES.push(c); COPYBYID[c.i] = c;
+          var c = { t: name, p: r[0], c: r[1], u: r[2], n: r[3], link: !!r[4], note: r[5] || '', T: T, tlc: name.toLowerCase() };
+          COPIES.push(c); COPYBYURL[c.u] = c;
           return c;
         });
         TOPPERS[name] = T;
@@ -437,7 +444,7 @@
   var airOf = function (c) { return c.T.air || 0; };
   var paperOk = function (c) { return state.paper === 'all' || c.p === state.paper || (state.paper === 'Optional' && isOptional(c.p)); };
 
-  // Scan every loaded shard the paper filter allows. Returns copyId -> [{q, page}] for the
+  // Scan every loaded shard the paper filter allows. Returns copy url -> [{q, page}] for the
   // questions that matched, plus whether a needed shard is still loading or failed.
   function textHits(ts) {
     var hits = {}, loading = false, failed = false;
@@ -446,7 +453,7 @@
       if (!sh) { if (SHARD_ERR[name]) failed = true; else { loading = true; ensureShard(name); } return; }
       sh.all.forEach(function (q) {
         if (!matches(q.lc, ts, state.mode)) return;
-        q.refs.forEach(function (ref) { (hits[ref[0]] = hits[ref[0]] || []).push({ q: q, page: ref[1] }); });
+        q.refs.forEach(function (ref) { (hits[ref.c.u] = hits[ref.c.u] || []).push({ q: q, page: ref.page }); });
       });
     });
     return { hits: hits, loading: loading, failed: failed };
@@ -466,7 +473,7 @@
       var nameHit = ts.length > 0 && matches(c.tlc, ts, 'all');
       var qs = [], score = nameHit ? NAME_HIT_SCORE : 0;
       if (ts.length && !nameHit) {
-        qs = th.hits[c.i] || [];
+        qs = th.hits[c.u] || [];
         if (!qs.length) return;
         qs.sort(function (a, b) { return a.page - b.page; });
         score = qs.length;
@@ -537,7 +544,7 @@
             el('span', { class: 'yg-count' }, [fmt(counts[y]) + (counts[y] === 1 ? ' copy' : ' copies')])]));
         }
       }
-      put(copyCard(x.c, x.qs, x.nameHit, !!open[String(x.c.i)], terms()));
+      put(copyCard(x.c, x.qs, x.nameHit, !!open[x.c.u], terms()));
     });
   }
   function moreLabel(list) { return 'Show ' + Math.min(PAGE, list.length - state.shown) + ' more  ·  ' + fmt(list.length - state.shown) + ' hidden'; }
@@ -584,7 +591,7 @@
       el('span', { class: 'tags' }, tags)
     ]);
     var ql = el('div', { class: 'qlist' });
-    var d = el('details', { class: 'copy', 'data-i': c.i, open: openIt ? '' : null }, [summary, ql]);
+    var d = el('details', { class: 'copy', 'data-i': c.u, open: openIt ? '' : null }, [summary, ql]);
     if (c.link) {
       ql.appendChild(el('div', { class: 'q' }, [el('div', { class: 'txt' }, [c.note || 'Scanned answer copy — not text-searchable. Open it to read.']), pdfLink(c, 0, 'Open copy', { link_only: true })]));
       return d;
@@ -675,7 +682,7 @@
     var wn = q.w && (String(q.w).match(/\d+/) || [])[0];
     if (wn) tags.push(el('span', { class: 'tag' }, [wn + ' words']));
     var yrs = {};
-    q.refs.forEach(function (r) { var c = COPYBYID[r[0]]; if (c && yearOf(c)) yrs[yearOf(c)] = 1; });
+    q.refs.forEach(function (r) { if (yearOf(r.c)) yrs[yearOf(r.c)] = 1; });
     var yl = Object.keys(yrs).sort();
     if (yl.length) tags.push(el('span', { class: 'tag year' }, [(prefix || '') + yl.join(', ')]));
     q.s.forEach(function (id) { tags.push(el('span', { class: 'tag syl' }, [sylLabel(id).split(' · ').pop()])); });
@@ -683,8 +690,7 @@
   }
   // every copy that answered this question, best rank first
   function answerRows(q, from) {
-    return q.refs.map(function (r) { var c = COPYBYID[r[0]]; return c ? { c: c, page: r[1] } : null; })
-      .filter(Boolean).sort(function (a, b) { return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9); })
+    return q.refs.slice().sort(function (a, b) { return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9); })
       .map(function (r) {
         var meta = [r.c.t];
         if (airOf(r.c)) meta.push('AIR ' + airOf(r.c));
@@ -695,8 +701,7 @@
   function questionCard(q, forceOpen, ts) {
     var head = el('div', { class: 'qhead' });
     head.innerHTML = highlight(dispQ(q.txt), ts);
-    var c0 = COPYBYID[q.refs[0][0]];
-    head.appendChild(reportLink(q.p, dispQ(q.txt), c0 && c0.u, q.refs[0][1]));
+    head.appendChild(reportLink(q.p, dispQ(q.txt), q.refs[0].c.u, q.refs[0].page));
     var n = q.refs.length;
     var summary = el('summary', {}, [head, el('span', { class: 'qn' }, [n + (n === 1 ? ' answer' : ' answers')]), el('span', { class: 'tags' }, questionTags(q))]);
     var body = el('div', { class: 'qlist' });
@@ -891,7 +896,7 @@
         if (state.optSubject !== 'all' && c.p !== state.optSubject) return false;
         if (!ts.length) return true;
         var blob = (c.t + ' ' + c.note + ' ' + c.c).toLowerCase();
-        if (sh) (sh.byCopy[c.i] || []).forEach(function (r) { blob += ' ' + r.q.lc; });
+        if (sh) (sh.byCopy[c.u] || []).forEach(function (r) { blob += ' ' + r.q.lc; });
         return matches(blob, ts, 'all');
       });
       if (!list.length) {

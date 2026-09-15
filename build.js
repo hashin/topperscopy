@@ -37,17 +37,6 @@ const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. P
  * 1. Helpers
  * ====================================================================== */
 
-// A copy's id is a hash of its URL, so it never changes when unrelated rows are added or
-// removed (a positional id once re-pointed 87% of copies after one appended row). Collisions
-// are retried deterministically and a build that cannot resolve one fails loudly.
-const stableId = (seed, taken) => {
-  for (let n = 1, s = seed; n < 1000; n++, s = seed + '#' + n) {
-    const id = parseInt(crypto.createHash('sha1').update(s).digest('hex').slice(0, 8), 16);
-    if (!taken.has(id)) { taken.add(id); return id; }
-  }
-  throw new Error('stableId: could not resolve a collision after 999 retries for seed: ' + seed);
-};
-
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 // Every "Open PDF" href comes from data. Anything that is not http(s) must never reach an href —
 // a javascript:/data: URL from a submission would run on our origin.
@@ -64,10 +53,11 @@ const shardOf = p => (PAPERS.indexOf(p) >= 0 ? p.toLowerCase() : 'optional');
 // strip a leading "Q.3)" / "12." for display — mirrors dispQ() in assets/app.js
 const dispQ = t => String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, '');
 
-// Canonical form of a question for dedupe: drop the question number, lowercase, collapse every
-// non-letter/digit run to one space (Unicode-aware, so Devanagari survives).
+// Canonical form of a question for dedupe: drop the question number and a leading "(b)",
+// lowercase, collapse every non-letter/digit run to one space (Unicode-aware, so Devanagari survives).
 const norm = t => String(t || '')
   .replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}\s*[.\):\-]*\s+/i, '')
+  .replace(/^\s*\(?[a-e]\)?[\).:]\s+/i, '')
   .toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 
 // The key that data/questions.exclude.json and data/syllabus-overrides.json address a question by.
@@ -246,8 +236,9 @@ function canonicaliseNames({ rows, optionals, links }) {
  * 4. Copies + the toppers table
  * ====================================================================== */
 
-// In memory a copy is { i, t, c, p, u, y, r, q:[[page, text, marks, words]], prov, link, optional, note, marks }.
-// A PDF lives in exactly ONE copy, keyed by its URL without the #page fragment.
+// In memory a copy is { t, c, p, u, y, r, q:[[page, text, marks, words]], prov, link, optional, note, marks }.
+// A PDF lives in exactly ONE copy, and its URL (without the #page fragment) IS the copy's key —
+// everywhere: copies.json, the question shards, the dataset. No id to mint, drift or collide.
 function buildCopies({ rows, optionals, links }) {
   const groups = new Map();
   for (const r of rows) {
@@ -257,7 +248,7 @@ function buildCopies({ rows, optionals, links }) {
     groups.get(base).push(r);
   }
 
-  const copies = [], takenIds = new Set();
+  const copies = [];
   for (const [base, rs] of groups) {
     const paper = rs.map(r => r.subject).find(Boolean) || 'Other';
     const provs = [...new Set(rs.map(r => r.prov))];
@@ -268,7 +259,6 @@ function buildCopies({ rows, optionals, links }) {
       .sort((a, b) => a[0] - b[0]);
     const { air, year } = fromFilename(base);
     copies.push({
-      i: stableId(base, takenIds),
       t: rs.map(r => r.topper).find(Boolean) || 'Unknown',
       c: rs.map(r => r.coaching).find(Boolean) || '',
       p: paper, u: base, y: year, r: air,
@@ -288,7 +278,7 @@ function buildCopies({ rows, optionals, links }) {
     if (groups.has(base)) continue;
     if (optUrls.has(base)) { conflicts.push(['also in optionals.json', e.paper, base]); continue; }
     if (IFOS_RX.test(base) && /^(?:GS[1-4]|Essay)$/i.test(e.paper)) { conflicts.push(['IFoS paper mis-filed as CSE ' + e.paper + ' — belongs in optionals.json as "Forest Service (IFS)"', e.paper, base]); continue; }
-    copies.push({ i: stableId(base, takenIds), t: e.topper, c: e.source || '', p: e.paper, u: base, y: e.year || null, r: e.air || null, q: [], prov: 'link', link: true, optional: false, note: e.note || '' });
+    copies.push({ t: e.topper, c: e.source || '', p: e.paper, u: base, y: e.year || null, r: e.air || null, q: [], prov: 'link', link: true, optional: false, note: e.note || '' });
   }
 
   // Optional-subject copies: the subject is the paper. Those with OCR'd questions are searchable
@@ -305,7 +295,7 @@ function buildCopies({ rows, optionals, links }) {
       .map(x => [x.page || 0, String(x.question || '').trim(), x.marks || '', x.words || ''])
       .filter(([, q]) => q)
       .sort((a, b) => a[0] - b[0]);
-    copies.push({ i: stableId(base, takenIds), t: o.topper || 'Unknown', c: o.source || '', p: o.subject, u: base, y: o.year || null, r: o.air || null, q: qs, prov: 'submission', link: qs.length === 0, optional: true, note: o.note || '', marks: o.marks || null });
+    copies.push({ t: o.topper || 'Unknown', c: o.source || '', p: o.subject, u: base, y: o.year || null, r: o.air || null, q: qs, prov: 'submission', link: qs.length === 0, optional: true, note: o.note || '', marks: o.marks || null });
   }
   if (conflicts.length) {
     console.warn(`\n⚠  ${conflicts.length} DATA CONFLICT${conflicts.length === 1 ? '' : 'S'} — a PDF classified two different ways. Resolve by hand; do NOT just delete one side. Build kept the safer copy:`);
@@ -314,13 +304,13 @@ function buildCopies({ rows, optionals, links }) {
   }
   if (optNowSearchable) console.log(`info: ${optNowSearchable} optionals.json PDFs are also question-searchable via OCR — fine, but the OCR pipeline should fold their questions into optionals.json.`);
 
-  copies.sort((a, b) => a.t.localeCompare(b.t) || a.p.localeCompare(b.p) || a.u.localeCompare(b.u));
+  copies.forEach((c, i) => { c.idx = i; });   // source order — the toppers table and the hub pages read it
   return copies;
 }
 
-// One entry per display name. AIR / year resolve here, once: the first copy that carries one
-// (file-name parse, then the link/optional entry's own value), then maintainer overrides on top.
-// The client never looks anything up — a copy's card reads its topper's resolved values.
+// One entry per display name. AIR / year resolve here, once: the first copy in source order that
+// carries one (file-name parse, then the link/optional entry's own value), then maintainer
+// overrides on top. The client never looks anything up — a card reads its topper's resolved values.
 function buildToppers(copies, canon) {
   const toppers = {};
   const T = name => toppers[name] || (toppers[name] = { air: null, year: null, verified: false, marks: {}, sources: [], copies: [] });
@@ -358,11 +348,15 @@ function buildToppers(copies, canon) {
  * 5. Dedupe questions — containment merge
  * ====================================================================== */
 
-// rows: [{ text, cid, page, m, w, year }] for ONE paper. Returns [{ text, refs:[[cid,page]], m, w, yrs }].
+// rows: [{ text, url, page, m, w, year }] for ONE paper. Returns [{ text, refs:[[url,page]], m, w, yrs }].
 // Bucket by the first 60 normalised chars; inside a bucket, longest text first, and a text that
 // is a substring of an already-kept text merges into it (its answer refs move over). A truncated
 // scrape therefore folds into the full question, but two questions that share only a preamble
 // (the GS4 "three quotations" sets) stay separate — a copy never shows another copy's question.
+// One exception: when the longer text carries on with ANOTHER numbered question right after the
+// shorter one ends ("…it became a butterfly. 2. It is easier to…" — an essay test's whole topic
+// list), it is a list, not a fuller version of the same question, so no merge.
+const continuesWithAnotherQuestion = rest => /^\s*(?:q\s*)?\d{1,2}\s/.test(rest);
 function dedupe(rows) {
   const buckets = new Map();
   for (const r of rows) {
@@ -375,13 +369,13 @@ function dedupe(rows) {
     if (r.m && !e.m) e.m = r.m;
     if (r.w && !e.w) e.w = r.w;
     if (r.year) e.yrs.add(r.year);
-    e.refs.push([r.cid, r.page || 0]);
+    e.refs.push([r.url, r.page || 0]);
   }
   const out = [];
   for (const b of buckets.values()) {
     const kept = [];
     for (const e of [...b.values()].sort((x, y) => y.n.length - x.n.length)) {
-      const host = kept.find(k => k.n.indexOf(e.n) >= 0);
+      const host = kept.find(k => { const at = k.n.indexOf(e.n); return at >= 0 && !continuesWithAnotherQuestion(k.n.slice(at + e.n.length)); });
       if (!host) { kept.push(e); continue; }
       host.refs.push(...e.refs);
       if (e.m && !host.m) host.m = e.m;
@@ -390,7 +384,7 @@ function dedupe(rows) {
     }
     out.push(...kept);
   }
-  for (const e of out) { e.refs.sort((a, b) => a[0] - b[0] || a[1] - b[1]); delete e.n; }
+  for (const e of out) { e.refs.sort((a, b) => a[0].localeCompare(b[0]) || a[1] - b[1]); delete e.n; }
   out.sort((a, b) => b.refs.length - a.refs.length || a.text.localeCompare(b.text));
   return out;
 }
@@ -402,7 +396,7 @@ function dedupeAll(copies) {
     if (!c.q.length) continue;
     const P = byPaper[c.p] || (byPaper[c.p] = { questions: [], fragments: [] });
     for (const [page, text, m, w] of c.q) {
-      (isStandalone(text, c.p) ? P.questions : P.fragments).push({ text, cid: c.i, page, m, w, year: c.y });
+      (isStandalone(text, c.p) ? P.questions : P.fragments).push({ text, url: c.u, page, m, w, year: c.y });
     }
   }
   for (const p of Object.keys(byPaper)) {
@@ -458,9 +452,9 @@ function writeCopies(copies, toppers, stats, generated) {
     if (Object.keys(t.marks).length) o.marks = t.marks;
     if (t.telegram) o.telegram = t.telegram;
     if (t.sources && t.sources.length) o.sources = t.sources;
-    // [id, paper, source, url, questions, linkOnly, note?]
+    // [paper, source, url, questions, linkOnly, note?]
     o.copies = t.copies.map(c => {
-      const row = [c.i, c.p, c.c, c.u, c.q.length, c.link ? 1 : 0];
+      const row = [c.p, c.c, c.u, c.q.length, c.link ? 1 : 0];
       if (c.note) row.push(c.note);
       return row;
     });
@@ -471,7 +465,8 @@ function writeCopies(copies, toppers, stats, generated) {
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
-// shard row: [text, [[copyId, page], …], [syllabus node ids], marks, words]
+// shard: { urls: [copy url, …], questions: [[text, [[urlIndex, page], …], [syllabus node ids], marks, words], …], fragments: [same] }
+// A copy belongs to one paper, so its URL appears in exactly one shard's table, and refs are small ints.
 function writeShards(byPaper, syl, generated) {
   const shards = {};
   for (const [paper, P] of Object.entries(byPaper)) {
@@ -483,8 +478,11 @@ function writeShards(byPaper, syl, generated) {
   const report = [];
   for (const name of Object.keys(shards).sort()) {
     const S = shards[name];
+    const urls = [...new Set(S.questions.concat(S.fragments).flatMap(q => q[1].map(r => r[0])))].sort();
+    const at = new Map(urls.map((u, i) => [u, i]));
+    const rows = list => list.map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
     const file = path.join(DATA, `questions-${name}.json`);
-    fs.writeFileSync(file, JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, questions: S.questions, fragments: S.fragments }));
+    fs.writeFileSync(file, JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, urls, questions: rows(S.questions), fragments: rows(S.fragments) }));
     report.push(`${name} ${S.questions.length}+${S.fragments.length} (${(fs.statSync(file).size / 1024).toFixed(0)} KB)`);
   }
   console.log(`questions-*.json  ${report.join(' · ')}`);
@@ -637,7 +635,7 @@ ${samples.map(s => `    <li><a href="${safeHref(s.url + (s.page ? '#page=' + s.p
 // answered it. This is the real SEO surface. A page with a single answer is too thin to earn an
 // index slot: it gets noindex,follow and stays out of the sitemap until a second copy lands.
 // Returns the indexable slugs for writeSitemaps().
-function writeQuestionPages(qList, copyById, nameToSlug, syl) {
+function writeQuestionPages(qList, copyByUrl, nameToSlug, syl) {
   const dir = path.join(ROOT, 'question');
   fs.rmSync(dir, { recursive: true, force: true });
   const indexable = new Set();
@@ -645,7 +643,7 @@ function writeQuestionPages(qList, copyById, nameToSlug, syl) {
 
   for (const q of qList) {
     const answers = q.refs
-      .map(([cid, page]) => { const c = copyById.get(cid); return c ? { c, page } : null; })
+      .map(([url, page]) => { const c = copyByUrl.get(url); return c ? { c, page } : null; })
       .filter(Boolean)
       .sort((x, y) => (x.c.r || 1e9) - (y.c.r || 1e9))
       .slice(0, 120);
@@ -751,7 +749,7 @@ ${qItems || '    <li>Coming soon.</li>'}
   }
 
   const bySubject = new Map();
-  for (const c of opts) { if (!bySubject.has(c.p)) bySubject.set(c.p, []); bySubject.get(c.p).push(c); }
+  for (const c of opts.slice().sort((a, b) => a.idx - b.idx)) { if (!bySubject.has(c.p)) bySubject.set(c.p, []); bySubject.get(c.p).push(c); }
   for (const [subject, entries] of bySubject) {
     const toppersInSubject = [...new Set(entries.map(c => c.t).filter(n => n && n !== 'Unknown'))].sort();
     const rows = entries.slice(0, 400).map(c => {
@@ -1153,6 +1151,7 @@ function writeDataset(copies, toppers, generated) {
   const csv = v => { v = String(v == null ? '' : v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
   const all = copies.map(c => ({ ...c, p: c.optional ? 'Optional — ' + c.p : c.p }))
     .sort((a, b) => a.t.localeCompare(b.t) || a.p.localeCompare(b.p));
+  all.forEach((c, i) => { c.i = i + 1; });   // copy_id = row number in copies.csv; pdf_url is the real key
 
   const agg = {};
   for (const c of all) {
@@ -1267,7 +1266,10 @@ function build() {
   const canon = canonicaliseNames(src);
   const copies = buildCopies(src);
   const toppers = buildToppers(copies, canon);
-  const copyById = new Map(copies.map(c => [c.i, c]));
+  // stable sort: within a topper and paper, searchable copies keep coming before link-only ones
+  copies.sort((a, b) => a.t.localeCompare(b.t) || a.p.localeCompare(b.p));
+  for (const t of Object.values(toppers)) t.copies.sort((a, b) => a.p.localeCompare(b.p));
+  const copyByUrl = new Map(copies.map(c => [c.u, c]));
   const gs = copies.filter(c => !c.optional);
 
   // stats = the searchable GS/Essay index (JSON-LD, llms.txt, noscript); stats.all = the homepage headline
@@ -1310,7 +1312,7 @@ function build() {
   const nameToSlug = writeTopperPages(copies, toppers);
   writeStaticIndex(gs, toppers, stats, generated, nameToSlug);
   const topperIndexPages = writeToppersPages(gs, toppers, stats, generated, nameToSlug);
-  const indexableQuestionSlugs = writeQuestionPages(qList, copyById, nameToSlug, syl);
+  const indexableQuestionSlugs = writeQuestionPages(qList, copyByUrl, nameToSlug, syl);
   writeHubPages(qList, optQuestions, copies, nameToSlug);
   writeSitemaps(generated, indexableQuestionSlugs, topperIndexPages);
   writeLlms(stats, generated);
