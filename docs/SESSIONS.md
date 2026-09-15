@@ -641,3 +641,36 @@ the same underlying file under a different URL string. Saved as a standing memor
 (`verify-after-closing-issues.md`) since Hashin asked for this to be standard practice going forward.
 **Left.** `npm run check` 24/24 enforced. No DECISION entry — the SEO/llms.txt additions are prose,
 not architecture, and the duplicate fix is a straightforward bug fix already explained inline.
+
+## 2026-09-15 (cont.) — Added ForumIAS PSIR toppers; piyushchaubey.com is login-gated
+**Asked.** "add copies from these links under relevant categories:
+https://piyushchaubey.com/downloads
+https://academy.forumias.com/optional-test-series/ToppersCopy.html"
+**Did.** `academy.forumias.com/optional-test-series/ToppersCopy.html` lists 12 PSIR toppers with
+"View Answer Copy" links; 9 resolve to real, publicly-fetchable same-origin PDFs (verified with HEAD
+requests — all `200 application/pdf`), 3 (Ritwik Rai, Aditi Patel, Amit Negi) point at a YouTube
+channel instead. Cross-checked all 9 names against `data/copies.json` via the project's own
+`nameKey()` normalisation before adding anything, per the standing "never merge on a guess" rule
+(DECISION-19 etc.) — found one real collision: this page's "Preeti Kumari, AIR 130, UPSC 2022" vs.
+the dataset's existing Preeti Kumari at AIR 301/2024 (a different optional subject, Anthropology).
+Skipped that one and left it as an open item (`CLAUDE.md`) for Hashin to confirm identity rather than
+guessing which AIR is right or silently merging two people. Added the other 8 to
+`data/optionals.json` as PSIR link-only copies (Rakhi AIR 65, Kashish Kalra AIR 96, Niharika Sinha AIR
+365, Shiksha Pathak AIR 453, Shashwat Pandit AIR 481 — all 2025; Aditya Acharya AIR 96, 2024; Anirudh
+Jain AIR 295, Swarnim Bhardwaj AIR 417 — both 2022). Three of the eight (Rakhi, Aditya Acharya,
+Shiksha Pathak) already existed from other sources — the new PSIR copy merged cleanly under their
+existing AIR/year with no conflict. `piyushchaubey.com/downloads` (a PSIR coaching site) turned out to
+be login-gated: the listing shows topper names/ranks, but every download icon links to
+`/login?redirect=downloads` with no PDF URL recoverable without an account — same bucket as GS
+SCORE/theIAShub, documented in `CLAUDE.md`, nothing added. `node build.js && npm run check` 24/24
+(9118 → 9126 copies), verified all 5 spot-checked new toppers live on topperscopy.hashin.me after
+deploy, per the standing verify-after-merge habit.
+**Learned.** Nothing new — this is `verify-after-closing-issues.md`'s discipline applied to a fresh
+ingestion instead of a submission issue, and it worked the same way: checking `nameKey()` collisions
+*before* writing data caught the Preeti Kumari case before it became a live bug, rather than after.
+**Left.** `npm run check` 24/24 enforced. Preeti Kumari's PSIR copy (AIR 130, 2022) not added —
+flagged in `CLAUDE.md` Open items for a human decision. Also spotted (not fixed, out of scope): an
+existing upsckata-mirrored row tags a Niharika Sinha PDF as paper "GS2" even though its filename says
+"PSIR_COPY_5" — `data/questions.csv` is append-mostly and the only sanctioned hand-edit is fixing a
+wrong `subject`, so this is fixable, just not part of this task; noted for whoever audits that mirror
+next.

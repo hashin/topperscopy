@@ -148,6 +148,19 @@ with `fetch(url,{redirect:'manual'})` reading that header — **never navigate t
 `download-file/<id>` or `uploads/downloads/*.pdf` URL, it triggers a real browser save-file prompt**).
 All non-upsckata copies are **link-only** (scanned Drive/PDF, no question text yet).
 
+ForumIAS's optional-test-series page (`academy.forumias.com/optional-test-series/ToppersCopy.html`)
+added 8 PSIR toppers (2026-09-15) — 9 of its 12 listed toppers had real, publicly-fetchable PDFs
+(same-origin `.pdf` links, no login); 3 pointed at a YouTube channel instead of a copy and were
+skipped. One (Preeti Kumari, AIR 130, "UPSC 2022" on that page) was skipped deliberately — the
+dataset already has a different Preeti Kumari at AIR 301/2024, and this project's name
+canonicalisation (`nameKey()`) is spelling-only, so adding it would have silently merged two
+different people. Needs a human to confirm identity before it's added — see `docs/SESSIONS.md`
+2026-09-15.
+
+**piyushchaubey.com** (`/downloads`, a PSIR coaching site) is **login-gated** — the listing page shows
+topper names/ranks but every "download" link goes to `/login?redirect=downloads` with no PDF URL
+recoverable without an account. Same bucket as GS SCORE/theIAShub — skip, don't re-host.
+
 **Interviews** (2026-09-15): `data/interviews.json` is a separate, whole-file mirror of
 `upsckata.com/data/interviews.json` — 3,863 UPSC Personality Test transcripts, unrelated to the GS/Essay
 `questions.csv` core above. Per Hashin's instruction this source is **not credited** (unlike the
@@ -156,6 +169,11 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 ## Open items
 
+- **Preeti Kumari name collision** (2026-09-15) — ForumIAS's PSIR toppers page lists a "Preeti Kumari,
+  AIR 130, UPSC 2022"; the dataset already has a different Preeti Kumari at AIR 301/2024 (Anthropology
+  optional). Not added — needs Hashin to confirm whether these are the same person (re-attempted with
+  a different optional) or two different people, then either merge deliberately (with a name variant if
+  they're different) or add the AIR 130/2022 PSIR copy as-is if they're the same.
 - **Questions-only OCR of all link-only copies** — user will trigger later (after compiling more
   optionals). Plan: Gemini 2.0 Flash on the top page-strip, ~$5 one-time, ~19k pages. Downloads
   automated by a resumable `ocr-pipeline/` script; output merges into `optionals.json` / `submissions.csv`.
