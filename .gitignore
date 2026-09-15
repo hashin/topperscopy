@@ -7,11 +7,7 @@ _site/
 # "Workflow for any data change"). Deployed fresh by .github/workflows/deploy.yml —
 # never committed, so the repo stays small and doesn't grow ~40MB per rebuild.
 /data/copies.json
-/data/index.json
-/data/qmeta.json
-/data/qtext.json
-/data/qindex.bin
-/data/toppers.json
+/data/questions-*.json
 /toppers.html
 /toppers-*.html
 /sitemap.xml
