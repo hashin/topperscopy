@@ -856,3 +856,30 @@ Verified this session (throwaway scripts, not committed): search parity against
 recovered a fuller text), 1 exact-phrase query lost 5 copies where the phrase only ever matched a
 missing ")" in one scrape of an otherwise identical question; static pages — the sampled topper
 and question pages byte-identical to the `main` build apart from the timestamp.
+
+---
+
+## DECISION-18 — A query's terms are split between the topper's name and the question text
+*2026-09-15 · active · cites INTENT-8, DECISION-17*
+
+**Decision.** In `filteredCopies()`, the terms a copy's topper name already contains are removed
+from the query and only the *rest* has to be found inside that copy's questions. So `shakti dubey`
+is a plain name hit, `dubey ethics` is Shakti Dubey's copies whose questions mention ethics, and
+`federalism` is every copy with such a question. Text hits are scanned once per distinct "rest"
+(`hitsFor()`), which in practice is one or two scans per keystroke.
+
+**Why.** Hashin's stated need is "questions answered by a specific topper". Before this, every
+term had to match *either* the whole name *or* the text — `dubey ethics` returned **0 copies**
+(verified live on the PR branch, and the same on `main`). The topper `<select>` covered the case,
+but no student discovers a dropdown when the search box says no.
+
+**Rejected.** Leaving it to the topper dropdown (invisible to the user who needs it). A separate
+"topper:" query syntax (nobody would type it). Fuzzy name matching (a different, larger problem).
+
+**Reverse if.** Common-word names cause visible false positives — e.g. a topper called "Ram" making
+`ram temple` rank their copies first. If that happens, require a name-term to match a whole word of
+the name, not a substring.
+
+**Enforced by.** Not statically checkable; verified live: `federalism` 171 copies (unchanged),
+`shakti dubey` 29 by name (unchanged), `dubey ethics` 1 copy · 2 questions, `nehara federalism`
+1 copy · 2 questions, `aditya srivastava federalism` 0 (correct — none of his 25 copies has one).

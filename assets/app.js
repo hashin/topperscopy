@@ -464,25 +464,36 @@
     return { hits: hits, loading: loading, failed: failed };
   }
 
-  // -> { list: [{ c, qs, nameHit, score }], loading, failed }. A name hit matches straight away;
-  // a text hit needs the copy's shard. Score for "Best match": name hit = a huge constant,
-  // otherwise the number of matched questions, +0.5 when one of them contains the whole phrase.
+  // -> { list: [{ c, qs, nameHit, score }], loading, failed }. The terms a topper's name
+  // accounts for are taken off the query and only the rest has to be found inside that copy —
+  // so "shakti dubey" is a plain name hit, "dubey ethics" is Shakti Dubey's copies whose
+  // questions mention ethics, and "federalism" is every copy with such a question.
+  // Score for "Best match": a name hit is a huge constant (+ matched questions, so a copy that
+  // satisfies both halves of a mixed query outranks a bare name hit); otherwise the number of
+  // matched questions, +0.5 when one of them contains the whole phrase.
   function filteredCopies() {
-    var ts = terms(), th = ts.length ? textHits(ts) : null, phrase = ts.join(' ');
-    var list = [];
+    var ts = terms(), list = [], loading = false, failed = false;
+    var hitsBy = {};   // text hits per distinct "rest of the query", scanned once each
+    function hitsFor(rest) {
+      var k = rest.join(' ');
+      if (!hitsBy[k]) { hitsBy[k] = textHits(rest); loading = loading || hitsBy[k].loading; failed = failed || hitsBy[k].failed; }
+      return hitsBy[k].hits;
+    }
     COPIES.forEach(function (c) {
       if (!paperOk(c)) return;
       if (state.topper && c.t !== state.topper) return;
       if (state.source && c.c !== state.source) return;
       if (state.year && String(yearOf(c)) !== state.year) return;
-      var nameHit = ts.length > 0 && matches(c.tlc, ts, 'all');
+      var rest = ts.filter(function (t) { return c.tlc.indexOf(t) < 0; });   // terms the name doesn't cover
+      var nameHit = ts.length > 0 && !rest.length, inName = rest.length < ts.length;
       var qs = [], score = nameHit ? NAME_HIT_SCORE : 0;
-      if (ts.length && !nameHit) {
-        qs = th.hits[c.u] || [];
+      if (rest.length) {
+        qs = hitsFor(rest)[c.u] || [];
         if (!qs.length) return;
         qs.sort(function (a, b) { return a.page - b.page; });
-        score = qs.length;
-        if (ts.length > 1 && state.mode === 'all') for (var k = 0; k < qs.length; k++) if (qs[k].q.lc.indexOf(phrase) >= 0) { score += 0.5; break; }
+        score = (inName ? NAME_HIT_SCORE : 0) + qs.length;
+        var phrase = rest.join(' ');
+        if (rest.length > 1 && state.mode === 'all') for (var k = 0; k < qs.length; k++) if (qs[k].q.lc.indexOf(phrase) >= 0) { score += 0.5; break; }
       }
       list.push({ c: c, qs: qs, nameHit: nameHit, score: score, n: qs.length || c.n });
     });
@@ -495,7 +506,7 @@
       if (ya !== yb) return yb - ya;                            // then best rank
       return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9) || a.c.t.localeCompare(b.c.t) || a.c.p.localeCompare(b.c.p);
     });
-    return { list: list, loading: th ? th.loading : false, failed: th ? th.failed : false };
+    return { list: list, loading: loading, failed: failed };
   }
 
   /* ---------- browse: rendering ---------- */

@@ -525,3 +525,14 @@ on full normalised text fixed ~170 of those pages as a side effect.
 scope to touch — noted in CLAUDE.md Open items). The sandboxed browser pane refuses service-worker
 registration, so `sw.js` was read, not exercised. `copies.json` is 184 KB gz rather than the brief's
 ~163 KB estimate — the difference is the 719 distinct source notes, kept because cards show them.
+
+## 2026-09-15 — Review of the simplification PR (#7): mixed name + question queries
+**Asked.** Verify the cloud agent's PR independently before handing it over.
+**Did.** Rebuilt the branch locally (`node build.js && npm run check` 21/21), then drove it in a
+browser: boot, `federalism` (171 copies), name search, Questions view, Practice, Optionals, theme,
+service worker (registered and serving — the agent's sandbox couldn't). Found that a mixed query
+(`dubey ethics`) returned 0 copies — the exact "questions answered by a specific topper" case
+INTENT-8 names. Fixed in `filteredCopies()` (DECISION-18), re-verified every query above.
+**Learned.** The stale-while-revalidate service worker serves the *previous* `app.js` on the first
+load after an edit — clear the registration before trusting a local test of a code change.
+**Left.** PR #7 open for Hashin's review; not merged.
