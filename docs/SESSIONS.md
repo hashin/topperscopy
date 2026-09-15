@@ -593,3 +593,28 @@ applied to a field's meaning instead of a number.
 **Left.** No full-text search inside transcripts, no per-interview static SEO pages, no topper-name
 linkage — all deliberately deferred (DECISION-19's "Rejected", `docs/INTENT.md`'s open questions).
 `npm run check` 24/24 enforced, 0 tracked, clean otherwise.
+
+## 2026-09-15 — Closed alpha96-tec's four submission issues (#8-#11)
+**Asked.** "close the issues opened by alpha96-tec after adding questions to the website."
+**Did.** Found 4 open submission issues from alpha96-tec: #9 (Vikas Kundu, AIR 27, PSIR, with an
+OCR question-CSV block) and #11/#10 (Priyasha Verma AIR 324, Animesh Mishra AIR 428, both PSIR,
+link-only) were structured `[copy]` submissions; #8 was a stray companion issue with no structured
+body ("Pls use other copies available on his tg channel too"). Approved #9/#10/#11 via the existing
+`approved`-label moderation pipeline (`moderate.yml` → `apply-submission.mjs`) rather than hand-editing
+data files. Labeling all three at once raced: #9's run pushed first and closed cleanly; #10 and #11's
+runs hit a rebase conflict on the shared `data/optionals.json`/`toppers.overrides.json` and failed
+before their "close the issue" step ran, leaving them labeled `approved` but unapplied. Reprocessed
+#10 and #11 by hand, one at a time — `node .github/scripts/apply-submission.mjs`, `node build.js &&
+npm run check`, commit, push, then the same close-comment format the bot uses — to avoid a second
+race. For #8, checked `t.me/s/VikasKunduAIR27`'s public preview to honor the "other copies from his
+tg channel" ask; it's disabled (redirects to the app-install page without a login), so closed with a
+comment explaining that and inviting direct links if there are specific PDFs to add.
+**Learned.** The moderation workflow's `git pull --rebase --autostash` step isn't safe against two
+`labeled` events firing close together — each run's "Apply the submission" step succeeds and commits
+locally before either has pulled the other's push, so the loser's rebase conflicts and the whole job
+fails past that point (no comment, no label removal, issue stays open with a stale `approved` label).
+Not a bug worth fixing here (four issues opened once is not a real concurrency problem for a solo
+maintainer clicking "approved" one at a time) — but a future session batch-approving several issues
+at once should stagger them, or expect to reprocess losers by hand exactly as done here.
+**Left.** All four issues closed (`merged` label on #9/#10/#11). `npm run check` 24/24 enforced. No
+DECISION entry — this is normal moderation, not an architecture choice.
