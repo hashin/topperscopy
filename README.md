@@ -15,6 +15,9 @@ independent, non-commercial mirror. It adds:
   from the same box;
 - **per-topper tags** — AIR, exam year, subject-wise marks — auto-seeded from source PDF file names
   and topped up by submissions;
+- an **Interviews** section — 3,800+ UPSC Personality Test transcripts (board, candidate, questions
+  asked by each panel member, DAF topics, hobbies, education) — a separate mirror of upsckata's own
+  interview-transcript archive;
 - a **Submit** workflow so students can add missing copies and correct topper data.
 
 No answer copy is hosted here. Every "Open PDF" link points to the file on the site that published it
@@ -31,11 +34,14 @@ data/ocr-questions.csv      questions read off scanned copies by ocr-pipeline.mj
 data/link-copies.json       GS/Essay copies that are only a link
 data/optionals.json         optional-subject copies (some with OCR'd questions)
 data/toppers.overrides.json maintainer-verified AIR / marks corrections
+data/interviews.json        mirror of upsckata's Personality Test interview transcripts
         |
   build.js
         |
         +->  data/copies.json                 every copy, grouped by topper — the only file the app boots from
         +->  data/questions-<paper>.json      one shard per paper: deduped question text + [url, page] refs
+        +->  data/interview-list.json         every interview's metadata — the Interviews tab's boot file
+        +->  data/interview-text-<year>.json  one shard per year: {id: transcript text}, fetched per interview
         +->  topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, llms.txt, robots.txt
         +->  index.html  (<noscript> + JSON-LD between markers)
         +->  dataset/    (complete consolidated backup — see dataset/README.md — not loaded by the site)

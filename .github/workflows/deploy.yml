@@ -49,7 +49,7 @@ jobs:
             --exclude='data/link-copies.json' --exclude='data/ocr-questions.csv' --exclude='data/optionals.json' \
             --exclude='data/telegram.json' --exclude='data/questions.exclude.json' \
             --exclude='data/submissions.csv' --exclude='data/toppers.overrides.json' \
-            --exclude='data/questions.csv' \
+            --exclude='data/questions.csv' --exclude='data/interviews.json' \
             ./ _site/
           echo "staged $(du -sh _site | cut -f1)"
 

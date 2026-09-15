@@ -883,3 +883,81 @@ the name, not a substring.
 **Enforced by.** Not statically checkable; verified live: `federalism` 171 copies (unchanged),
 `shakti dubey` 29 by name (unchanged), `dubey ethics` 1 copy · 2 questions, `nehara federalism`
 1 copy · 2 questions, `aditya srivastava federalism` 0 (correct — none of his 25 copies has one).
+
+---
+
+## DECISION-19 — Interviews are a separate corpus: a whole-file mirror, metadata-only search, no
+topper linkage, and never prefetched
+*2026-09-15 · active · cites INTENT-9, DECISION-17*
+
+**Decision.** Hashin asked for an Interviews tab built from `upsckata.com/data/interviews.json` (3,863
+UPSC Personality Test transcripts) — "you don't have to specifically credit it for it," unlike the
+GS/Essay `questions.csv` core, which upsckata must be credited for everywhere. Four choices, each made
+because the obvious alternative either cost real bytes on the boot path or risked a wrong data merge:
+
+1. **The source is committed whole, as `data/interviews.json` (11.5 MB)** — the same "big source file"
+   pattern as `questions.csv` (9 MB), not per-transcript scraping. `build.js`'s `writeInterviews()`
+   recomputes board/year/optional/state facet counts from the docs rather than trusting the source
+   file's own `meta` block — same reason as everywhere else in this project (`docs/MEMORY.md`: "anything
+   a script can verify, a script must verify").
+2. **Two generated shapes, split the same way DECISION-17 split copies from question text**:
+   `data/interview-list.json` (189 KB gzip — metadata for all 3,863 interviews, no transcript text) and
+   `data/interview-text-<year>.json` (10 shards, largest 625 KB gzip) — one shard per year, `{id: text}`,
+   fetched only when a specific card is opened.
+3. **Neither file is ever prefetched on idle.** Unlike the copy question shards (DECISION-17), which
+   are fetched for every visitor a few seconds after boot because search is the whole product,
+   `interview-list.json` is fetched only when the Interviews tab is actually clicked, and a year's text
+   shard only when a card from that year is expanded. A visitor who never opens the tab downloads
+   nothing extra — INTENT-2 ("a site that is fast on a MacBook and slow on a ₹8,000 phone has failed
+   the actual user") applies to a brand-new, opt-in feature at least as much as to the existing one.
+4. **Interview candidates are never matched to `TOPPERS`/`COPIES`.** 2,145 of 3,863 transcripts (55%)
+   have no candidate name at all, and matching the rest by free-text name would risk exactly the
+   "quiet lie" bug class this project's memory exists to prevent — a wrong merge would attach one
+   person's interview transcript to a different person's answer copies, with no way for a reader to
+   tell. `data/dataset.json`'s per-topper CSV export already reserves an `Interview` marks column
+   (`MK` in `writeDataset()`) for a future, deliberate linkage; this feature does not populate it.
+
+**Why.** Four separate small decisions, but one reasoning: treat a big, brand-new corpus with the same
+discipline DECISION-17 already established for the existing one — split boot-critical metadata from
+large text, never make a visitor pay for a feature they did not ask for, and never let two records
+merge on a guess. `pt` (present on 104/3,863 interviews) is renamed `marks` in the generated shape —
+confirmed against the transcript text itself (`"PT MARKS-209"`, `"PT marks: 180"` immediately followed
+by "Recommended") to be the Personality Test score out of 275, not guessed from the field name alone.
+
+**Rejected.**
+- *One `data/interviews.json` output, text and metadata together.* Simplest, but the full corpus is
+  4.0 MB gzip — the same shape of problem DECISION-17 fixed for copies, reintroduced for a feature
+  nobody asked to pay for by default.
+- *Shard text by board instead of year.* 22 boards vs. 10 years — more, smaller files, no material
+  benefit; year already matches the dropdown a student reaches for ("interviews from this year's
+  batch"), and matches the copy side's own year facet.
+- *Prefetch `interview-list.json` on idle, like the copy shards.* It is small enough (189 KB) that this
+  was tempting, but every visitor arrives for copies, not interviews — DECISION-17's own boot-budget
+  table shows the project already treats "bytes nobody asked for" as a real cost, not a rounding error.
+- *Full-text search across all loaded transcript shards, mirroring copies' `indexOf` search.* Would
+  require prefetching all 10 shards (3.3 MB) to be honest about coverage, or reintroducing a
+  DECISION-6-style "still loading" qualifier for partial coverage — both add real weight for a v1 the
+  brief didn't ask to be exhaustively searchable, only added. Metadata (name, board, DAF topics,
+  hobbies, education) already covers the search a student is likely to run ("who did PSIR", "what was
+  asked about bird census"); revisit if that proves insufficient.
+- *Fuzzy-match candidate names to `TOPPERS` for a future "see this person's answer copies too" link.*
+  Same reason DECISION-18's own "Reject" list gives for not fuzzy-matching names generally — a wrong
+  merge is worse than no link, and more than half the records have no name to match on at all.
+- *Per-interview static SEO pages (`interview/<slug>/`), mirroring `topper/`/`question/`.* Real future
+  value (interview transcripts are exactly the kind of long-tail content search engines reward), but a
+  second static-page generator, sitemap entries and `dataset/` export is more than "add a tab" asked
+  for. Left as an open item, not built speculatively.
+
+**Reverse if.** A student-facing need for full-text search inside transcripts is confirmed (not
+assumed) — at that point, prefetch all year shards behind the same 2G/Save-Data-aware scheduler
+`scheduleShards()` already uses, and reuse `indexOf` search exactly as DECISION-17 does for copies.
+Or: Hashin asks for interview transcripts to appear on a topper's own page — at that point build a
+real, reviewed name-matching pass (not a guess), the same rigor DECISION-17/18's name canonicalisation
+already gets for copies.
+
+**Enforced by.** `INV-13` (every interview's text resolves in its year's shard — 3,863/3,863),
+`BUDGET interview list` (189.2 KB / 220 KB ceiling), `BUDGET interview shards` (largest shard 625.3 KB /
+700 KB ceiling, one file at a time). Verified live: Interviews tab loads only `interview-list.json` on
+open (no text shard) until a card is expanded, at which point exactly one year's shard loads; search
+"mathematics" returns metadata hits, the `Optionals` dropdown set to "Mathematics" returns exactly the
+73 interviews `interview-list.json`'s own facet count says it should.

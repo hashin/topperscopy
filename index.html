@@ -79,6 +79,7 @@
     <nav class="tabs" aria-label="Sections">
       <button data-view="browse" aria-current="page">Browse</button>
       <button data-view="optionals">Optionals</button>
+      <button data-view="interviews">Interviews</button>
       <button data-view="submit">Submit</button>
       <button data-view="about">About</button>
     </nav>
@@ -344,6 +345,36 @@
       </div>
     </div>
     <div id="opt-body"></div>
+  </section>
+
+  <!-- INTERVIEWS -->
+  <section class="view" id="view-interviews" hidden aria-label="UPSC Personality Test interview transcripts">
+    <div class="hero">
+      <h2>Interview transcripts</h2>
+      <p class="lead">
+        UPSC Personality Test (interview) transcripts — who asked what, board by board. A separate
+        mirror of upsckata's interview archive, searchable by candidate, board, topic, hobby or
+        education background.
+      </p>
+    </div>
+    <div class="toolbar">
+      <div class="searchrow">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" id="iv-q" placeholder="Search by candidate, board, DAF topic, hobby or education…" autocomplete="off" aria-label="Search interview transcripts">
+        </div>
+      </div>
+      <div class="toolbar-filters">
+        <div class="filters">
+          <select id="iv-board" aria-label="Filter by board"><option value="">All boards</option></select>
+          <select id="iv-year" aria-label="Filter by year"><option value="">All years</option></select>
+          <select id="iv-optional" aria-label="Filter by optional subject"><option value="">All optionals</option></select>
+          <select id="iv-state" aria-label="Filter by home state"><option value="">All states</option></select>
+        </div>
+      </div>
+    </div>
+    <p class="resultmeta" id="iv-resultmeta" role="status" aria-live="polite" aria-atomic="true"></p>
+    <div id="iv-results"></div>
   </section>
 
   <!-- SUBMIT -->

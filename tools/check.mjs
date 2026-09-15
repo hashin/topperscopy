@@ -24,13 +24,18 @@ const BUDGETS = {
   'shard gs4': { ceiling: 690, files: ['data/questions-gs4.json'], why: 'GS4 case studies are long — this is the one to watch' },
   'shard essay': { ceiling: 25, files: ['data/questions-essay.json'], why: '' },
   'shard other': { ceiling: 30, files: ['data/questions-other.json'], why: '' },
-  'shard optional': { ceiling: 20, files: ['data/questions-optional.json'], why: 'grows with the optional-subject OCR pass' }
+  'shard optional': { ceiling: 20, files: ['data/questions-optional.json'], why: 'grows with the optional-subject OCR pass' },
+  'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
-const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/toppers.html', '/toppers-*.html', '/sitemap.xml',
+const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/data/interview-list.json', '/data/interview-text-*.json',
+  '/toppers.html', '/toppers-*.html', '/sitemap.xml',
   '/sitemap-main.xml', '/sitemap-toppers.xml', '/sitemap-questions.xml', '/sitemap-hubs.xml', '/llms.txt', '/robots.txt',
   '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
 const SHARDS = ['gs1', 'gs2', 'gs3', 'gs4', 'essay', 'other', 'optional'];
+// Largest interview-text shard, whichever year that is this build — one ceiling covers all of them,
+// the same way BUDGET-shard-gs4 covers GS4 without a separate rule per paper.
+const INTERVIEW_YEAR_CEILING = 700;
 
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const exists = f => fs.existsSync(path.join(ROOT, f));
@@ -121,12 +126,26 @@ check('INV-10', 'DECISION-4', 'Every generated path is gitignored and untracked'
 });
 check('INV-11', 'DECISION-8', 'tools/ and the source-only data files are excluded from the deployed site', () => {
   const dep = read('.github/workflows/deploy.yml');
-  const missing = ['/tools', 'data/questions.csv', 'data/optionals.json', 'data/link-copies.json'].filter(p => !dep.includes(`--exclude='${p}'`));
+  const missing = ['/tools', 'data/questions.csv', 'data/optionals.json', 'data/link-copies.json', 'data/interviews.json'].filter(p => !dep.includes(`--exclude='${p}'`));
   return { ok: !missing.length, detail: missing.length ? 'deploy.yml would publish: ' + missing.join(', ') : 'excluded' };
 });
 check('INV-12', 'INTENT-3', '#resultmeta is a live region', () => {
   const m = read('index.html').match(/<p[^>]*id="resultmeta"[^>]*>/);
   return { ok: !!(m && /aria-live/.test(m[0])), detail: m ? m[0] : 'element not found' };
+});
+check('INV-13', 'DECISION-19', 'Every interview in interview-list.json has its text in its year\'s shard', () => {
+  if (!exists('data/interview-list.json')) return { ok: false, detail: 'data/interview-list.json missing' };
+  const L = JSON.parse(read('data/interview-list.json'));
+  const years = new Set(L.interviews.map(x => x.y));
+  let bad = 0;
+  const shards = {};
+  for (const y of years) {
+    const f = `data/interview-text-${y}.json`;
+    if (!exists(f)) { bad += L.interviews.filter(x => x.y === y).length; continue; }
+    shards[y] = JSON.parse(read(f)).text;
+  }
+  for (const x of L.interviews) if (!shards[x.y] || !(x.i in shards[x.y])) bad++;
+  return { ok: !bad, detail: bad ? `${bad}/${L.interviews.length} have no matching text` : `${L.interviews.length}/${L.interviews.length} resolve` };
 });
 
 /* ---- budgets ---- */
@@ -138,6 +157,15 @@ for (const [name, b] of Object.entries(BUDGETS)) {
     return { ok: kb <= b.ceiling, detail: `${kb.toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
   });
 }
+
+check('BUDGET interview shards', 'INTENT-2', `every interview-text-<year>.json within ${INTERVIEW_YEAR_CEILING} KB gzip`, () => {
+  const files = fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^interview-text-\d+\.json$/.test(f)).map(f => 'data/' + f);
+  if (!files.length) return { ok: false, detail: 'no interview-text-*.json found' };
+  const sizes = files.map(f => [f, gzKb(f)]);
+  const over = sizes.filter(([, kb]) => kb > INTERVIEW_YEAR_CEILING);
+  const max = sizes.reduce((m, [f, kb]) => (kb > m[1] ? [f, kb] : m), ['', 0]);
+  return { ok: !over.length, detail: `${files.length} shards, largest ${max[0]} at ${max[1].toFixed(1)} KB — fetched one at a time, only when a transcript from that year is opened` };
+});
 
 /* ---- report ---- */
 const failed = results.filter(r => !r.ok);

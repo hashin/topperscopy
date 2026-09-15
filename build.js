@@ -7,17 +7,20 @@
  *   data/optionals.json                                      optional-subject copies (some with OCR'd questions)
  *   data/toppers.overrides.json, telegram.json               maintainer corrections
  *   data/syllabus.json, syllabus-overrides.json, questions.exclude.json
+ *   data/interviews.json                                     mirror of upsckata's interview transcripts
  *        |
  *        v
  *   data/copies.json                     every copy, grouped by topper — the only file the app needs to boot
  *   data/questions-<paper>.json          one shard per paper: deduped question text + which copy/page answers it
+ *   data/interview-list.json             every interview transcript's metadata (no text) — the Interviews tab boots from this
+ *   data/interview-text-<year>.json      one shard per year: {id: full transcript text}, fetched only when a transcript is opened
  *   topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, robots.txt, llms.txt   (SEO)
  *   index.html                           the <!-- STATIC --> / <!-- LD --> / <!-- META --> markers are refilled
  *   dataset/                             CC-BY backup of everything (not loaded by the site)
  *
  * The file reads top to bottom in the order the build runs:
  *   1. helpers   2. parse sources   3. canonicalise topper names   4. copies + toppers table
- *   5. dedupe questions   6. syllabus mapping   7. write copies.json + shards
+ *   5. dedupe questions   6. syllabus mapping   7. write copies.json + shards   7b. interviews
  *   8. static pages   9. sitemaps / robots / llms   10. dataset
  *
  * Run:  node build.js
@@ -486,6 +489,57 @@ function writeShards(byPaper, syl, generated) {
     report.push(`${name} ${S.questions.length}+${S.fragments.length} (${(fs.statSync(file).size / 1024).toFixed(0)} KB)`);
   }
   console.log(`questions-*.json  ${report.join(' · ')}`);
+}
+
+/* ======================================================================
+ * 7b. Interviews — mirror of upsckata's Personality Test transcripts.
+ * ====================================================================== */
+
+// data/interviews.json is { meta, docs:[{ i, c, u, b, d, y, s, o, st, k, h, e, n, mk, pt, q, w, v, t }] } —
+// a straight mirror of upsckata's own file (i=id, b=board/chairperson, d=date, y=year, s=slot,
+// o=optionals, st=states, k=DAF key topics, h=hobbies, e=education, n=candidate name, mk=mock
+// interviews attended, pt=personality-test marks out of 275, q/w=question/word count, v=Telegram
+// view count, t=the full transcript text). Facet counts (board/year/optional/state) are recomputed
+// here rather than trusted from the source file's own `meta`, same reason as everything else in
+// this project: a script must verify what a script can verify.
+function loadInterviews() {
+  return readJson(path.join(DATA, 'interviews.json'), { meta: {}, docs: [] }).docs || [];
+}
+
+function countBy(docs, get) {
+  const c = new Map();
+  for (const d of docs) for (const v of [].concat(get(d) || [])) if (v) c.set(v, (c.get(v) || 0) + 1);
+  return [...c].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+// data/interview-list.json  — every interview's metadata, no transcript text (the Interviews tab's
+// one boot file, loaded only when that tab opens). data/interview-text-<year>.json — one shard per
+// year, {id: full text}, fetched only when a specific transcript is expanded.
+function writeInterviews(docs, generated) {
+  const interviews = docs.map(d => ({
+    i: d.i, b: d.b, n: d.n || null, d: d.d || null, y: d.y, s: d.s || null,
+    o: d.o || [], st: d.st || [], k: d.k || null, h: d.h || null, e: d.e || null, mk: d.mk || null,
+    marks: d.pt != null ? d.pt : null, q: d.q || 0, w: d.w || 0, v: d.v || null, u: d.u || null
+  }));
+  const list = {
+    generated, total: interviews.length,
+    boards: countBy(docs, d => d.b), years: countBy(docs, d => d.y),
+    optionals: countBy(docs, d => d.o), states: countBy(docs, d => d.st),
+    interviews
+  };
+  fs.writeFileSync(path.join(DATA, 'interview-list.json'), JSON.stringify(list));
+
+  for (const f of fs.readdirSync(DATA)) if (/^interview-text-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
+  const byYear = new Map();
+  for (const d of docs) { if (!byYear.has(d.y)) byYear.set(d.y, {}); byYear.get(d.y)[d.i] = d.t || ''; }
+  const report = [];
+  for (const year of [...byYear.keys()].sort()) {
+    const file = path.join(DATA, `interview-text-${year}.json`);
+    fs.writeFileSync(file, JSON.stringify({ generated, year, text: byYear.get(year) }));
+    report.push(`${year} (${(fs.statSync(file).size / 1024).toFixed(0)} KB)`);
+  }
+  console.log(`interview-list.json  ${interviews.length} interviews · ${list.boards.length} boards · ${(fs.statSync(path.join(DATA, 'interview-list.json')).size / 1024).toFixed(0)} KB raw`);
+  console.log(`interview-text-*.json  ${report.join(' · ')}`);
 }
 
 /* ======================================================================
@@ -1300,6 +1354,7 @@ function build() {
 
   writeCopies(copies, toppers, stats, generated);
   writeShards(byPaper, syl, generated);
+  writeInterviews(loadInterviews(), generated);
 
   // GS/Essay questions get a page each; slugs are assigned in this fixed order so they stay stable
   const qList = [];

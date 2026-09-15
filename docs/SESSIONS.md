@@ -559,3 +559,37 @@ before PR #7/DECISION-17 merged). A fresh `node build.js` produces `copies.json`
 **Left.** Not re-measured against a live PageSpeed re-run (the shared report link had expired;
 verification here was local measurement + `npm run check`, not a fresh CrUX/Lighthouse pass) — worth
 re-running PageSpeed in a few weeks once this deploys and CrUX's 28-day window rolls forward.
+
+## 2026-09-15 — New Interviews tab, mirrored from upsckata's interview-transcript archive
+**Asked.** "add an 'interview' tab to this website by taking full data from this website:
+https://upsckata.com/interviews … you don't have to specifically credit it for it" (INTENT-9).
+**Did.** Downloaded `upsckata.com/data/interviews.json` (3,863 UPSC Personality Test transcripts,
+11.5 MB) and committed it whole as `data/interviews.json`, the same "big source file" pattern as
+`questions.csv`. Added `writeInterviews()` to `build.js` (step 7b): recomputes board/year/optional/
+state facet counts from the docs (never trusts the source's own `meta`) and writes two generated
+shapes, mirroring DECISION-17's split for copies — `data/interview-list.json` (metadata for all 3,863
+interviews, no transcript text, 189 KB gzip) and `data/interview-text-<year>.json` (10 shards, `{id:
+text}`, largest 625 KB gzip). Renamed the source's `pt` field to `marks` after confirming against the
+raw transcript text itself (`"PT MARKS-209"`, `"PT marks: 180"` followed by "Recommended") that it's
+the Personality Test score out of 275, not guessed from the field name. Added an Interviews tab to
+`index.html`/`assets/app.js`: board/year/optional/state filters + free-text search over candidate
+name, board, DAF topics, hobbies and education (not transcript text — see Rejected below); a card
+expands to lazy-fetch its year's shard and show the full transcript plus a link to the original
+Telegram post. Neither `interview-list.json` nor any text shard is prefetched on idle — both load only
+when the tab/card is actually opened, unlike the copy question shards. Added `INV-13` (every
+interview's text resolves in its year's shard) and two budget checks to `tools/check.mjs`; excluded
+`data/interviews.json` from the deploy (`deploy.yml`) and gitignored the two generated shapes. Wrote
+DECISION-19 for the four scope choices (whole-file mirror, split shapes, never-prefetch, no
+topper-name linkage). Verified live: tab opens with only `interview-list.json` fetched (no text);
+expanding a card fetches exactly its own year's shard; searching "mathematics" hits metadata; the
+Optionals dropdown set to "Mathematics" returns exactly 73, matching the facet count; mobile (375px)
+layout holds with no new CSS — the interview cards reuse `.copy`/`.tag`/`.q` from the copies feature
+end to end. `node build.js && npm run check` 24/24 enforced (was 21/21 before this session).
+**Learned.** The source's own field names needed verifying against the actual transcript prose before
+trusting them for a user-facing label — `pt` looked like it could mean several things (prep time,
+percentile, post count) until cross-referencing a few transcripts' own "PT marks: N — Recommended"
+lines confirmed it's the interview score out of 275. Same discipline DECISION-9 asks for measurements,
+applied to a field's meaning instead of a number.
+**Left.** No full-text search inside transcripts, no per-interview static SEO pages, no topper-name
+linkage — all deliberately deferred (DECISION-19's "Rejected", `docs/INTENT.md`'s open questions).
+`npm run check` 24/24 enforced, 0 tracked, clean otherwise.

@@ -5,6 +5,10 @@
  *   data/questions-<paper>.json   one shard per paper: a table of copy URLs, then
  *                                 [text, [[urlIndex, page], …], [syllabus ids], marks, words] per question
  *   data/syllabus.json            the hand-written syllabus tree, for filter labels
+ *   data/interview-list.json      every interview transcript's metadata — fetched only when the
+ *                                 Interviews tab opens, never part of boot
+ *   data/interview-text-<year>.json  one shard per year, {id: transcript text} — fetched only when
+ *                                 a specific transcript card is opened
  *
  * A copy's URL is its key everywhere. A shard ref whose URL is not in copies.json is skipped
  * when the shard is indexed — the only thing a cache skew between the two files can do.
@@ -64,7 +68,7 @@
   function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'unknown'; } }
 
   /* ---------- analytics ---------- */
-  var VIEW_TITLE = { browse: 'Browse copies', optionals: 'Optional subjects', submit: 'Submit', about: 'About' };
+  var VIEW_TITLE = { browse: 'Browse copies', optionals: 'Optional subjects', interviews: 'Interviews', submit: 'Submit', about: 'About' };
   function ga() { return (typeof window.gtag === 'function') ? window.gtag : function () { (window.dataLayer = window.dataLayer || []).push(arguments); }; }
   function track(name, params) { try { ga()('event', name, params || {}); } catch (e) {} }
   function pageView(view) {
@@ -80,6 +84,8 @@
   var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
   var SYL = null;         // data/syllabus.json
+  var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
+  var IV_TEXT = {};       // year -> {id: transcript text}, one shard fetched per year, lazily
   var LOADS = {};         // url -> promise; one fetch per file, ever
 
   function load(url) {
@@ -100,6 +106,18 @@
   function ensureSyllabus() {
     if (SYL || LOADS['data/syllabus.json']) return;
     load('data/syllabus.json').then(function (s) { SYL = s; fillSyllabus(); fillPracticeSyl(); }, function () {});
+  }
+  // The Interviews tab is a wholly separate corpus nobody browsing copies asked for, so unlike the
+  // question shards it is never prefetched on idle — only fetched once that tab is actually opened.
+  function ensureInterviewList() {
+    if (IV || LOADS['data/interview-list.json']) return;
+    load('data/interview-list.json').then(function (d) { IV = d; fillInterviewFacets(); renderInterviews(); },
+      function (e) { track('data_error', { message: 'interview-list ' + String(e && e.message || e).slice(0, 100) }); renderInterviews(); });
+  }
+  // One shard per year; a transcript is only ever read when its own card is opened.
+  function interviewText(iv, cb) {
+    if (IV_TEXT[iv.y]) { cb(IV_TEXT[iv.y][iv.i]); return; }
+    load('data/interview-text-' + iv.y + '.json').then(function (d) { IV_TEXT[iv.y] = d.text; cb(d.text[iv.i]); }, function () { cb(null); });
   }
   // Prefetch every shard once the page is idle, so a search that comes later is already answered.
   // On a metered or 2G connection wait longer, but still fetch — search is the product.
@@ -169,13 +187,14 @@
     view: 'browse', q: '', mode: 'all', paper: 'all',
     topper: '', source: '', year: '', sort: 'best', shown: PAGE,
     qview: 'copies', syl: '', pp: '', psyl: '',
-    optSubject: 'all', optQ: '', optShown: PAGE
+    optSubject: 'all', optQ: '', optShown: PAGE,
+    ivQ: '', ivBoard: '', ivYear: '', ivOptional: '', ivState: '', ivShown: PAGE
   };
   var LASTCOUNT = 0;
 
   /* ---------- boot ---------- */
   function boot() {
-    wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireSubmit(); wireToolbarCollapse();
+    wireTheme(); wireTabs(); wireBrowse(); wireOptionals(); wireInterviews(); wireSubmit(); wireToolbarCollapse();
     var initial = location.hash ? location.hash.replace('#', '') : 'browse';
     if (location.hash) setView(initial); else pageView('browse');
     track('app_ready', { theme: document.documentElement.getAttribute('data-theme') || 'system',
@@ -275,11 +294,12 @@
     window.addEventListener('hashchange', function () { setView(location.hash.replace('#', '') || 'browse'); });
   }
   function setView(v) {
-    if (['browse', 'optionals', 'submit', 'about'].indexOf(v) < 0) v = 'browse';
+    if (['browse', 'optionals', 'interviews', 'submit', 'about'].indexOf(v) < 0) v = 'browse';
     var changed = state.view !== v;
     state.view = v;
     $$('nav.tabs button').forEach(function (b) { if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     $$('.view').forEach(function (sec) { sec.hidden = sec.id !== 'view-' + v; });
+    if (v === 'interviews') ensureInterviewList();
     if (v !== 'browse' && TB.unslim) TB.unslim();
     if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v);
     // A Back navigation that landed while another tab was showing changed the URL but not
@@ -947,6 +967,104 @@
       body.appendChild(el('div', { class: 'empty', style: 'margin-top:14px' }, [el('div', { class: 'big' }, ['This section is brand new']),
         el('div', {}, ['Pick a subject above to add the first copy, or ']), el('a', { href: '#submit', 'data-goto': 'submit' }, ['open the Submit form →'])]));
     }
+  }
+
+  /* ---------- interviews tab ---------- */
+  function wireInterviews() {
+    $('#iv-q').addEventListener('input', debounce(function (e) {
+      state.ivQ = e.target.value.trim().toLowerCase(); state.ivShown = PAGE; renderInterviews();
+    }, 160));
+    [['iv-board', 'ivBoard'], ['iv-year', 'ivYear'], ['iv-optional', 'ivOptional'], ['iv-state', 'ivState']].forEach(function (pair) {
+      $('#' + pair[0]).addEventListener('change', function (e) {
+        state[pair[1]] = e.target.value; state.ivShown = PAGE; renderInterviews();
+        track('filter_change', { filter: pair[1], value: e.target.value || '(all)' });
+      });
+    });
+  }
+  function fillInterviewFacets() {
+    if (!IV) return;
+    fillSelect($('#iv-board'), IV.boards.map(function (b) { return [b[0], b[0] + ' (' + b[1] + ')']; }), state.ivBoard);
+    var yrs = IV.years.slice().sort(function (a, b) { return b[0] - a[0]; });
+    fillSelect($('#iv-year'), yrs.map(function (y) { return [String(y[0]), String(y[0]) + ' (' + y[1] + ')']; }), state.ivYear);
+    fillSelect($('#iv-optional'), IV.optionals.map(function (o) { return [o[0], o[0] + ' (' + o[1] + ')']; }), state.ivOptional);
+    fillSelect($('#iv-state'), IV.states.map(function (s) { return [s[0], s[0] + ' (' + s[1] + ')']; }), state.ivState);
+  }
+  // A candidate's name, board, DAF topics, hobbies and education background are all searched
+  // together — there is no separate "text" corpus loaded up front the way copy questions are.
+  function ivMatches(iv, ts) {
+    if (!ts.length) return true;
+    var blob = [iv.n, iv.b, iv.k, iv.h, iv.e, iv.mk].filter(Boolean).join(' ').toLowerCase();
+    for (var i = 0; i < ts.length; i++) if (blob.indexOf(ts[i]) < 0) return false;
+    return true;
+  }
+  function filteredInterviews() {
+    if (!IV) return [];
+    var ts = state.ivQ.split(/\s+/).filter(Boolean);
+    return IV.interviews.filter(function (iv) {
+      if (state.ivBoard && iv.b !== state.ivBoard) return false;
+      if (state.ivYear && String(iv.y) !== state.ivYear) return false;
+      if (state.ivOptional && iv.o.indexOf(state.ivOptional) < 0) return false;
+      if (state.ivState && iv.st.indexOf(state.ivState) < 0) return false;
+      return ivMatches(iv, ts);
+    }).sort(function (a, b) { return b.y - a.y || (b.d || '').localeCompare(a.d || ''); });
+  }
+  function renderInterviews() {
+    var box = $('#iv-results'), meta = $('#iv-resultmeta');
+    if (!IV) { meta.textContent = 'Loading interview transcripts…'; return; }
+    var list = filteredInterviews();
+    meta.textContent = fmt(list.length) + (list.length === 1 ? ' interview' : ' interviews') + (state.ivQ ? ' for “' + state.ivQ + '”' : '');
+    var open = openIds(box);
+    box.innerHTML = '';
+    if (!list.length) { box.appendChild(emptyBox('No matches', 'Try fewer words or clear a filter.')); return; }
+    var shown = state.ivShown || PAGE;
+    list.slice(0, shown).forEach(function (iv) { box.appendChild(interviewCard(iv, !!open[iv.i])); });
+    if (list.length > shown) {
+      var more = el('button', { class: 'more' }, ['Show ' + Math.min(PAGE, list.length - shown) + ' more  ·  ' + fmt(list.length - shown) + ' hidden']);
+      more.addEventListener('click', function () { state.ivShown = shown + PAGE; renderInterviews(); });
+      box.appendChild(more);
+    }
+  }
+  function interviewTags(iv) {
+    var tags = [el('span', { class: 'tag year' }, [String(iv.y)])];
+    if (iv.s) tags.push(el('span', { class: 'tag' }, [iv.s]));
+    iv.o.forEach(function (o) { tags.push(el('span', { class: 'tag paper' }, [o])); });
+    iv.st.forEach(function (s) { tags.push(el('span', { class: 'tag' }, [s])); });
+    if (iv.marks != null) tags.push(el('span', { class: 'tag marks' }, ['PT ' + iv.marks + '/275']));
+    return tags;
+  }
+  function interviewCard(iv, forceOpen) {
+    var summary = el('summary', {}, [
+      el('span', { class: 'name' }, [iv.n || 'Anonymous candidate']),
+      el('span', { class: 'qn' }, [fmt(iv.q) + (iv.q === 1 ? ' question' : ' questions')]),
+      el('span', { class: 'tags' }, [el('span', { class: 'tag' }, ['Board: ' + iv.b])].concat(interviewTags(iv)))
+    ]);
+    var body = el('div', { class: 'qlist' });
+    var d = el('details', { class: 'copy', 'data-i': iv.i, open: forceOpen ? '' : null }, [summary, body]);
+    var filled = false;
+    function fill() {
+      if (filled) return;
+      filled = true;
+      body.innerHTML = '';
+      body.appendChild(el('div', { class: 'q loading' }, [el('div', { class: 'txt' }, ['Loading transcript…'])]));
+      interviewText(iv, function (txt) {
+        body.innerHTML = '';
+        var facts = [];
+        if (iv.k) facts.push('DAF topics: ' + iv.k);
+        if (iv.h) facts.push('Hobbies: ' + iv.h);
+        if (iv.e) facts.push('Education: ' + iv.e);
+        if (iv.mk) facts.push('Mocks attended: ' + iv.mk);
+        if (facts.length) body.appendChild(el('div', { class: 'q' }, [el('div', { class: 'txt' }, [facts.join('  ·  ')])]));
+        var ts = state.ivQ.split(/\s+/).filter(Boolean);
+        var txtNode = el('div', { class: 'txt' });
+        txtNode.innerHTML = txt ? highlight(txt, ts) : 'Transcript unavailable — reload the page to retry.';
+        var row = [txtNode];
+        if (iv.u) row.push(pdfLink({ u: iv.u, t: iv.n || iv.b, p: 'Interview' }, 0, 'Open source ↗'));
+        body.appendChild(el('div', { class: 'q' }, row));
+      });
+    }
+    summary.addEventListener('click', function () { if (!d.open) { fill(); track('interview_open', { board: iv.b, year: iv.y }); } });
+    if (forceOpen) fill();
+    return d;
   }
 
   /* ---------- collapsing toolbar ---------- */

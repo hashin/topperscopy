@@ -154,6 +154,26 @@ machinery crept back); the README-honesty check.
 
 ---
 
+## INTENT-9 — An Interviews tab, from upsckata's own interview-transcript archive
+
+*Stated 2026-09-15.*
+
+> "add an 'interview' tab to this website by taking full data from this website:
+> https://upsckata.com/interviews … you don't have to specifically credit it for it"
+
+A separate corpus from the GS/Essay `questions.csv` core (INTENT-1's "credit upsckata everywhere"
+does not apply here — Hashin was explicit this source needs no credit). 3,863 UPSC Personality Test
+transcripts: board, candidate, DAF topics, hobbies, education, mock coachings, and the full
+question-by-question transcript.
+
+**Consequence for every future decision touching Interviews:** this is "add," not "integrate" — do
+not fuzzy-match candidates to existing toppers, do not assume it should be as tightly woven into
+search/SEO as the copies feature, unless Hashin asks for that explicitly. See DECISION-19.
+
+*Not machine-checkable. Guides scope for anything touching the Interviews tab.*
+
+---
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.
@@ -177,3 +197,7 @@ Record them here rather than guessing. Move them into an `INTENT-n` once he deci
   failing, and adds ongoing complexity the day after DECISION-17/PR #7 deliberately removed some.
   Revisit only if CLS is still bad after the skeleton fix, or if Search Console ever shows Core Web
   Vitals costing rankings.
+- **Full-text search inside interview transcripts, and per-interview static SEO pages.** Both deferred
+  in DECISION-19's v1 (metadata-only search; no `interview/<slug>/` pages) — real future value, but
+  each is a second data-loading path or a second static-page generator, more than "add a tab" asked
+  for. Revisit if Hashin wants the Interviews tab to be as searchable/crawlable as the copies feature.
