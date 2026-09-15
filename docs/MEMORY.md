@@ -28,14 +28,13 @@ silently; a failing check does not.
 | **`INVARIANTS.md`** | *What must never break, and which check proves it?* | An intent or decision becomes machine-checkable. |
 | **`SESSIONS.md`** | *What happened, and what did we learn?* | Every session, at the end. Append. |
 
-Plus **`IMPLEMENTATION-PROMPT.md`** — the prompt to paste into a new session to implement one phase
-of an audit, with the read-order and the "do not read" list that keep a session inside its context
-budget.
+`docs/archive/` holds the two audits and the OCR notes that shaped the code up to DECISION-17. They
+are history — useful for "why was this ever built", never needed to understand a line of today's code.
 
 `INVARIANTS.md` is the load-bearing one. It is the bridge between "what Hashin wants" and
-"what CI enforces" — every entry cites an `INTENT-n` or `DECISION-n`, and every entry names the
-check in `tools/check/invariants.mjs` that proves it. Intent that cannot be checked is still
-written down, but it is marked as such so nobody mistakes it for a guarantee.
+"what `npm run check` enforces" — every entry cites an `INTENT-n` or `DECISION-n`, and every entry
+is a check in `tools/check.mjs`. Intent that cannot be checked is still written down, but it is
+marked as such so nobody mistakes it for a guarantee.
 
 ---
 
@@ -46,9 +45,9 @@ written down, but it is marked as such so nobody mistakes it for a guarantee.
 1. Read `CLAUDE.md` (the project map) and this file.
 2. Read `docs/INTENT.md` and `docs/DECISIONS.md`. These are short on purpose. Read them fully.
 3. Read the last 2–3 entries of `docs/SESSIONS.md` to see where the previous session stopped.
-4. Run `npm run check`. It tells you, in ~2 seconds, which invariants hold right now. If something
-   is already failing before you touch anything, **say so** — do not silently absorb it into your diff.
-5. If there is an open audit (`PERF-UX-AUDIT-2026-09-14.md`), read only the phase you are working on.
+4. Run `node build.js && npm run check`. It tells you, in ~2 seconds, which invariants hold right
+   now. If something is already failing before you touch anything, **say so** — do not silently
+   absorb it into your diff.
 
 **While working:**
 
@@ -64,28 +63,18 @@ written down, but it is marked as such so nobody mistakes it for a guarantee.
 2. If Hashin expressed a new want, append it to `docs/INTENT.md` with the date, **in his words**.
 3. If you made a non-obvious choice, append an ADR to `docs/DECISIONS.md` — including the
    alternatives you rejected and *what would make you reverse it*.
-4. If any tracked invariant now passes, promote it to `enforced` and tighten the budget ceiling in
-   `tools/check/budget.json`.
+4. If a gzip budget in `tools/check.mjs` moved — down because you shrank something, up because the
+   corpus grew — change the ceiling in the same commit and say why in the commit message.
 5. Run `npm run check` one last time. It must pass.
 
 ---
 
-## Why "tracked" vs "enforced"
+## Why every check is enforced
 
-`tools/check/invariants.mjs` has two statuses, and the distinction is the whole point:
-
-- **`enforced`** — must pass. Exits non-zero. This is a regression guard.
-- **`tracked`** — a known-failing rule tied to an open audit item. Reported, does not fail the run.
-
-A checker that is entirely red gets ignored within a week. A checker that only encodes what already
-passes never drives anything forward. `tracked` lets the same file be both a regression guard *and*
-a live to-do list: as each audit phase lands, its invariant flips from ⏳ to ✅, and the promotion to
-`enforced` is what stops it regressing later.
-
-The budget ratchet works the same way. `budget.json` carries a `ceiling` (today's number plus
-headroom — enforced, so nothing gets worse) and a `target` (where the audit says we are going —
-reported). **When a phase lands, lower the ceiling in the same commit.** A budget that is never
-tightened is a budget that is never met.
+Earlier versions of the checker had a `tracked` status for known-failing rules tied to open audit
+items. There are no open audit items any more (`DECISION-17`), and a rule that is allowed to fail
+is a rule nobody reads. Every check in `tools/check.mjs` fails the run. If a rule stops being true
+on purpose, delete it and say why in `DECISIONS.md`; do not soften it.
 
 ---
 

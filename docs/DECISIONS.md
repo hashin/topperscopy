@@ -109,8 +109,8 @@ locally for the checks to run**, so `node build.js` is a precondition for `npm r
 
 ## DECISION-5 — Copy and question ids must be stable across builds
 *2026-09-09 (partial, as a build stamp) → completed 2026-09-14 by `PERF-UX-AUDIT-2026-09-14.md`
-Phase 4 / I1 — active, not superseded; this decision's own plan was carried out as written. See
-`DECISION-11` for what implementing it actually required.*
+Phase 4 / I1 — SUPERSEDED by DECISION-17 (the mechanism: hashed ids are gone, the PDF URL is the key;
+the intent — a ref can never point at the wrong copy — is kept, and is now true by construction).*
 
 **Decision.** The id on a copy is the join key between three independently-cached files
 (`index.json`, `copies.json`, the question index). It must therefore not change when unrelated data
@@ -160,7 +160,7 @@ Blocking the search box until data lands (worse — it hides a working feature).
 ---
 
 ## DECISION-7 — Search is an inverted index, not a substring scan
-*2026-09-14 · planned, `PERF-UX-AUDIT-2026-09-14.md` Phase 5 · cites INTENT-1, INTENT-2*
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites INTENT-1, INTENT-2*
 
 **Decision.** Ship a token-prefix inverted index (dictionary + delta-varint postings) and fetch
 question *text* separately, only to display matches.
@@ -250,7 +250,7 @@ where the next person will actually read them.
 ---
 
 ## DECISION-10 — Question text and meta are two independently-loaded promises, not one split file
-*2026-09-14 · active · cites INTENT-2, INTENT-3, AUDIT T3*
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites INTENT-2, INTENT-3, AUDIT T3*
 
 **Decision.** `qmeta.json` and `qtext.json` (Phase 3/T3) are fetched by two separate functions
 (`loadQuestionIndex()` / `loadQuestionText()`) with two separate promises (`qiPromise`/`qtPromise`)
@@ -305,7 +305,7 @@ original copy-search "never show a false zero" case.
 
 ## DECISION-11 — Question text/variants are id-keyed `Map`s in memory, id-keyed JSON objects on
 the wire; variant ids are content-hashed too
-*2026-09-14 · active · cites DECISION-5, AUDIT Phase 4/I1*
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites DECISION-5, AUDIT Phase 4/I1*
 
 **Decision.** `data/qtext.json`'s `text` and `variants` are JSON objects keyed by the (now-hashed)
 id, not arrays indexed by it. `assets/app.js` parses them into `Map`s (`QTEXT`, `QVAR`, and their
@@ -371,7 +371,7 @@ payload compactness is in scope, not here.
 
 ## DECISION-12 — `qindex.bin` indexes variants too; postings use local positions; qtext.json
 drops out of the search-gating budget; "superset" only holds for exact-phrase pre-verification
-*2026-09-14 · active · cites DECISION-7, DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 5/E1*
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites DECISION-7, DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 5/E1*
 
 **Decision.** Four things not settled by the audit's E1 section or its Phase-4 addendum:
 
@@ -452,9 +452,8 @@ comment in `tools/check/budget.json`'s `"search"` bucket carries the full measur
 
 ## DECISION-13 — R1's card reuse preserves real open state, not a recomputed default; R3's URL
 sync reads "was empty" fresh, never caches it
-*2026-09-14 · point 1 SUPERSEDED by DECISION-14 (a card's raw `.open` reading was not, on its own,
-a reliable signal of "the user chose this" — see DECISION-14); point 2 active, unchanged · cites
-DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
+*2026-09-14 · point 1 SUPERSEDED by DECISION-14, then by DECISION-17 (the keyed card reconciliation
+it governed is gone); point 2 active, unchanged · cites DECISION-9, PERF-UX-AUDIT-2026-09-14.md Phase 6/R1, R3*
 
 **Decision.** Two rules, both found necessary by testing rather than stated in the audit:
 
@@ -532,8 +531,7 @@ that reproduced the `about:blank` bug; re-run any time `syncUrl()`/`applyUrlToSt
 ## DECISION-14 — Four bugs found in a pre-merge review of the Phases 2–6 PR, fixed in the same
 commit: a card's raw `.open` isn't "the user chose this"; `LAST_QSCORE`'s sign convention;
 Practice's stuck loading state; Back navigation desyncing Browse from the URL across a tab switch
-*2026-09-14 · active — the four findings this decision deferred (see "Rejected" below) were fixed
-in a follow-up session; see DECISION-15 · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites DECISION-9, DECISION-13, PERF-UX-AUDIT-2026-09-14.md
 Phase 6*
 
 **Decision.** Before merging the branch carrying Phases 2–6 into `main`, a genuinely independent
@@ -616,7 +614,7 @@ search→About→Back→Browse sequence, plus a no-regression check that plain t
 ## DECISION-15 — The four findings DECISION-14 deferred are fixed: fallback searches now score,
 name matches outrank text matches, `boot()`'s `DB` race is closed, and the last `INV-16` gap
 (substring fallback before `qtext.json` loads) is covered
-*2026-09-14 · active · cites DECISION-6, DECISION-7, DECISION-9, DECISION-14*
+*2026-09-14 · SUPERSEDED by DECISION-17 · cites DECISION-6, DECISION-7, DECISION-9, DECISION-14*
 
 **Decision.** All four findings DECISION-14 deferred are fixed, each verified by direct
 reproduction before and after (not from the trace alone — the same discipline DECISION-14 itself
@@ -705,7 +703,7 @@ match" label). `tools/perf/search-parity.mjs` (0/210 unexplained regressions) an
 
 ## DECISION-16 — DECISION-15's #4 fix (`SUBSTRING_PENDING`) only covered "All words" mode; "Exact
 phrase" mode had the identical false-zero window, unfixed
-*2026-09-15 · active · cites DECISION-6, DECISION-14, DECISION-15*
+*2026-09-15 · SUPERSEDED by DECISION-17 · cites DECISION-6, DECISION-14, DECISION-15*
 
 **Decision.** Pre-merge review of PR #6 (the branch carrying DECISION-15's four fixes) found one
 more real, reproducible bug in `matchingQidsIndexed()`: the `mode === 'exact'` branch has its own
@@ -762,3 +760,126 @@ resolves correctly on release. Control run in "All words" mode (unaffected by th
 unchanged. `tools/perf/search-parity.mjs` (0/210 unexplained regressions) and
 `tools/perf/history.mjs` (6/6) re-run clean after the fix; `npm run check:all` 24/24 enforced,
 `BUDGET-app_js` 35.2 KB / ceiling 36 KB (no ceiling change needed).
+
+---
+
+## DECISION-17 — Two data shapes, one search engine: the copy URL is the key, question text is
+plain per-paper shards, and search is `indexOf` over the loaded shards
+*2026-09-15 · active · supersedes DECISION-5 (mechanism), DECISION-7, DECISION-10, DECISION-11,
+DECISION-12, DECISION-13 (point 1), DECISION-14, DECISION-15, DECISION-16 · cites INTENT-1, INTENT-2,
+INTENT-3, INTENT-6, INTENT-8*
+
+**Decision.** The site serves two kinds of data file and nothing else:
+
+1. `data/copies.json` — every copy (searchable GS/Essay, link-only, and optional-subject with the
+   subject as its paper), grouped by topper, with AIR / year / marks resolved at build time. A copy
+   row is `[paper, source, url, questions, linkOnly, note?]`. **The PDF URL is the copy's key.**
+   There is no id: nothing to mint, hash, guard or reconcile.
+2. `data/questions-<paper>.json`, one per paper (`gs1 gs2 gs3 gs4 essay other optional`) — deduped
+   question text, each with the copies and pages that answer it as `[urlIndex, page]` into the
+   shard's own URL table, plus syllabus node ids, marks and words. A second array, `fragments`,
+   holds rows that are real parts of a copy but not questions in their own right (GS4 case-study
+   sub-parts, orphan "(b)" rows) — searchable and shown on the copy's card, but no question page,
+   Questions-view entry or Practice slot, exactly the rule `writeQuestions()` always applied.
+
+Dedupe is a containment merge: bucket by paper + the first 60 normalised characters; inside a
+bucket, longest text first, a text that is a substring of an already-kept text merges into it
+and its refs move over — unless the longer text carries on with another numbered question right
+after it (an essay test's topic list is not a longer version of one topic). Every ref survives:
+28,257 in, 28,257 out. There is no variant table; a distinct wording is a distinct question.
+
+The client boots from `copies.json` alone (browse + topper-name search work immediately), then
+prefetches every shard on idle (later on a 2G / Save-Data connection, but never skipped) and at
+once on search focus, first keystroke, card expand, Questions view or Practice. A text query is
+`indexOf` per term over every question in every loaded shard the paper filter allows; "Exact
+phrase" tests the joined query. A shard ref whose URL is not in `copies.json` is dropped when the
+shard is indexed. While a needed shard is still downloading, `#resultmeta` says "Searching inside
+N copies…" and never prints a zero — DECISION-6 is now one boolean, not three flags. "Best match"
+scores a name hit as a large constant, otherwise the number of matched questions in the copy,
+plus 0.5 when one of them contains the whole phrase. Rendering rebuilds the first `state.shown`
+cards on every change and re-opens the ones that were open. `sw.js` is one stale-while-revalidate
+strategy for every same-origin GET, with the shell and `copies.json` precached.
+
+Deleted: `index.json`, `toppers.json`, `qmeta.json`, `qtext.json`, `qindex.bin`, the variant
+table, `stableId()` and its collision guard, the five per-file load state machines, the
+inverted-index reader and its prefix expansion, idf/BM25-lite scoring, the substring fallback and
+its three pending flags, stubs, `CARDMAP`/`cardSig`/`getCard`/`tcTouched`/`reconcileBrowseList`,
+`tools/perf/`, `tools/check/` and the `playwright-core` devDependency. `optionals.json` is no longer
+served — the app reads copies.json.
+
+**Why.** Hashin, 2026-09-15 (INTENT-8): "I genuinely suspect that we have overengineered many
+stuff through the periodic audits… I want to be able to completely read and understand this
+code." The audit had optimised the wrong number. It minimised *bytes before a count can be shown*
+and shipped five independently-cached files — plus DECISION-13 through DECISION-16, all bug-fixes
+to the machinery that kept those five files from lying to each other. The number a student feels
+is *bytes before a complete result is on screen*, and there the old design was worse:
+
+| | before (gzip) | after (gzip) |
+|---|---:|---:|
+| boot data | 89 KB, but only 1,063 of 9,117 copies; the rest arrived later as stubs | 184 KB, every copy, every topper name searchable |
+| full result for a text query | 487 + 171 + 491 + 1,449 = 2,598 KB across four files | one shard: GS1 177 · GS2 162 · GS3 107 · GS4 601 · Essay 23 · Other 26 · Optional 7; all seven 1,102 KB |
+| search engine | inverted index + prefix expansion + BM25-lite + substring fallback, ~400 lines | `indexOf` over ~9.3k strings, ~1 ms per keystroke (the audit's own measurement) |
+| variants | 3,135 negative-id texts | 0 |
+| `app.js` | 2,214 lines, 35.2 KB | 1,177 lines, 20.9 KB |
+| `build.js` | 1,635 lines | 1,325 lines |
+
+`qindex.bin` never made search faster — it made the count appear earlier while *increasing*
+total bytes. Copy ids cost 68 KB gz of the boot file on their own: random 10-digit numbers do not
+compress, URLs (which the file needs anyway) do, and a URL is already unique per copy.
+
+**Rejected.**
+- *Keep the inverted index.* It answered "how many" ~1 s sooner on 3G and cost 479 KB more to get
+  to a result on screen, plus the reader, the fallback, and three pending flags. The 1 ms scan is
+  not the bottleneck; the download is.
+- *Keep the variant table.* It existed because dedupe keyed on the first 110 chars and then had to
+  paper over the texts that key lumped together. Merging on full normalised text with containment
+  needs no variants; a distinct wording becomes its own question (8,183 → 8,654 questions, 3,835 →
+  3,847 indexable pages).
+- *Keep content-hash copy ids (DECISION-5's mechanism).* Measured: −68 KB gz at boot for nothing —
+  a ref keyed by URL cannot point at the wrong copy either, and needs no collision guard.
+- *A search API.* Still DECISION-1: no backend.
+- *Split the Browse tab from the Optionals tab at the data level.* One copies file, one card
+  renderer; the Optionals tab is a subject picker over the same list. Optional-subject copies now
+  also answer the main search box (an "Optionals" paper chip filters to them) — a product-visible
+  change, made because the owner's stated goal is a completely searchable site.
+
+**Reverse if.** The corpus grows past roughly 3× — a per-paper shard no longer fits a phone budget
+(GS4 is already 601 KB gz; past ~1.5 MB split it by year or by syllabus node, still plain text,
+still `indexOf`). Or the `indexOf` scan measurably exceeds ~10 ms per keystroke on a mid-range
+phone. Neither is close.
+
+**Enforced by.** `tools/check.mjs`: INV-3 (a URL appears in exactly one copy), INV-4 (every
+shard ref resolves to a copy — 28,257 refs), the per-shard and boot gzip budgets, and the
+README-honesty check that fails if the README ever names a deleted file or engine again.
+Verified this session (throwaway scripts, not committed): search parity against
+`dataset/questions.csv` for 210 real queries — 138 identical, 71 strict supersets (containment
+recovered a fuller text), 1 exact-phrase query lost 5 copies where the phrase only ever matched a
+missing ")" in one scrape of an otherwise identical question; static pages — the sampled topper
+and question pages byte-identical to the `main` build apart from the timestamp.
+
+---
+
+## DECISION-18 — A query's terms are split between the topper's name and the question text
+*2026-09-15 · active · cites INTENT-8, DECISION-17*
+
+**Decision.** In `filteredCopies()`, the terms a copy's topper name already contains are removed
+from the query and only the *rest* has to be found inside that copy's questions. So `shakti dubey`
+is a plain name hit, `dubey ethics` is Shakti Dubey's copies whose questions mention ethics, and
+`federalism` is every copy with such a question. Text hits are scanned once per distinct "rest"
+(`hitsFor()`), which in practice is one or two scans per keystroke.
+
+**Why.** Hashin's stated need is "questions answered by a specific topper". Before this, every
+term had to match *either* the whole name *or* the text — `dubey ethics` returned **0 copies**
+(verified live on the PR branch, and the same on `main`). The topper `<select>` covered the case,
+but no student discovers a dropdown when the search box says no.
+
+**Rejected.** Leaving it to the topper dropdown (invisible to the user who needs it). A separate
+"topper:" query syntax (nobody would type it). Fuzzy name matching (a different, larger problem).
+
+**Reverse if.** Common-word names cause visible false positives — e.g. a topper called "Ram" making
+`ram temple` rank their copies first. If that happens, require a name-term to match a whole word of
+the name, not a substring.
+
+**Enforced by.** Not statically checkable; verified live: `federalism` 171 copies (unchanged),
+`shakti dubey` 29 by name (unchanged), `dubey ethics` 1 copy · 2 questions, `nehara federalism`
+1 copy · 2 questions, `aditya srivastava federalism` 0 (correct — none of his 25 copies has one).

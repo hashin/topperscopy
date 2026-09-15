@@ -490,3 +490,49 @@ disruptive save-dialog in a sandboxed preview.
 `CLAUDE.md`'s theIAShub note upgraded from "presumed login-gated" to "confirmed architecturally
 unusable, don't re-host." The accidental download (`~/Downloads/RAJESHWARI SUVE M, AIR 2 -
 ESSAY.pdf`) was left in place rather than deleted unilaterally — flagged to the user instead.
+
+## 2026-09-15 — Simplification: two data shapes, one search engine, half the code (DECISION-17)
+**Asked.** "I genuinely suspect that we have overengineered many stuff through the periodic audits… I
+want to be able to completely read and understand this code." Keep every feature; remove machinery.
+Full brief recorded as INTENT-8.
+**Did.** Rewrote `build.js` (1,635 → 1,325 lines, in reading order) to emit two data shapes:
+`data/copies.json` (every copy grouped by topper, AIR/year resolved at build, the PDF URL as the key —
+no ids) and `data/questions-<paper>.json` shards (deduped question text with `[urlIndex, page]` refs
+into a per-shard URL table, plus a `fragments` array for GS4 sub-parts and the like). Deleted
+`index.json`, `toppers.json`, `qmeta.json`, `qtext.json`, `qindex.bin`, the variant table and
+`stableId()`. Rewrote `assets/app.js` (2,214 → 1,177 lines, 35.2 → 20.9 KB gz): one memoised
+`load()`, shards prefetched on idle, `indexOf` search, one card renderer, cards rebuilt per change
+with open ones re-opened; optional-subject copies now answer the main search box (new "Optionals"
+chip) and the Optionals tab is a subject picker over the same list. `sw.js` is one
+stale-while-revalidate strategy. Replaced `tools/perf/` + `tools/check/` with `tools/check.mjs`
+(21 checks incl. per-shard gzip budgets and ref integrity); dropped `playwright-core`. Moved both
+audits, the implementation prompt and the OCR notes to `docs/archive/`. Superseded DECISION-5
+(mechanism), 7, 10, 11, 12, 13 (point 1), 14, 15, 16 with DECISION-17; rewrote CLAUDE.md,
+INVARIANTS.md, README.md. Verified: search parity for 210 real queries against
+`dataset/questions.csv` (138 identical, 71 strict supersets from containment, 1 exact-phrase loss of
+5 copies on a punctuation-only scrape difference), 28,257/28,257 refs resolve, 3 topper + 3 question
+pages byte-identical to the `main` build, browser smoke test with shards artificially delayed 2.5 s
+("Searching inside 9,117 copies…" → partial → final, never a zero).
+**Learned.** Three things. (1) Copy ids were costing 68 KB gz of the boot file: random 10-digit numbers
+do not compress and the URL the file needs anyway is already unique — so the id scheme DECISION-5
+and DECISION-11 spent two sessions perfecting was net negative. (2) A naive containment merge folds a
+single essay topic into the test's whole topic list (the longer text contains the shorter); the
+one-line guard "don't merge when the host continues with another numbered question" halved the
+strict-superset count. (3) The old dedupe key (first 110 chars) displayed the *longest* group member
+as the question page's `<h1>` — often the most garbled scrape ("…(250 words) 15 Examine."). Keying
+on full normalised text fixed ~170 of those pages as a side effect.
+**Left.** `ocr-pipeline.mjs audit-paper` still reads the deleted `qmeta.json`/`qtext.json` (out of
+scope to touch — noted in CLAUDE.md Open items). The sandboxed browser pane refuses service-worker
+registration, so `sw.js` was read, not exercised. `copies.json` is 184 KB gz rather than the brief's
+~163 KB estimate — the difference is the 719 distinct source notes, kept because cards show them.
+
+## 2026-09-15 — Review of the simplification PR (#7): mixed name + question queries
+**Asked.** Verify the cloud agent's PR independently before handing it over.
+**Did.** Rebuilt the branch locally (`node build.js && npm run check` 21/21), then drove it in a
+browser: boot, `federalism` (171 copies), name search, Questions view, Practice, Optionals, theme,
+service worker (registered and serving — the agent's sandbox couldn't). Found that a mixed query
+(`dubey ethics`) returned 0 copies — the exact "questions answered by a specific topper" case
+INTENT-8 names. Fixed in `filteredCopies()` (DECISION-18), re-verified every query above.
+**Learned.** The stale-while-revalidate service worker serves the *previous* `app.js` on the first
+load after an edit — clear the registration before trusting a local test of a code change.
+**Left.** PR #7 open for Hashin's review; not merged.

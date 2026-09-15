@@ -7,17 +7,10 @@
   "license": "MIT",
   "scripts": {
     "build": "node build.js",
-    "extract": "node extract.js",
-    "perf": "node tools/perf/baseline.mjs",
-    "perf:measure": "node tools/perf/measure.mjs",
-    "perf:sizes": "node tools/perf/sizes.mjs",
-    "check": "node tools/check/invariants.mjs",
-    "check:all": "node tools/check/invariants.mjs --all"
+    "check": "node tools/check.mjs",
+    "extract": "node extract.js"
   },
   "dependencies": {
     "pdfjs-dist": "^4.10.38"
-  },
-  "devDependencies": {
-    "playwright-core": "^1.63.0"
   }
 }
