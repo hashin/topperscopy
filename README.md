@@ -1,6 +1,6 @@
 # Toppers Copy
 
-A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **26,621 questions** across **9,082 answer copies** by **1,694 rank-holders**, and open the exact page of each copy.
+A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **28,000+ questions** across **9,100+ answer copies** by **1,700 rank-holders**, and open the exact page of each copy.
 
 Live: **https://topperscopy.hashin.me**
 
@@ -11,7 +11,8 @@ comes from **[upsckata.com — "Topper Copies"](https://toppercopies.upsckata.co
 independent, non-commercial mirror. It adds:
 
 - an **Optionals** section (Sociology, Anthropology, History, PSIR, Geography, …), which the source
-  database doesn't cover — filled entirely from community submissions;
+  database doesn't cover — compiled from institute pages and community submissions, and searchable
+  from the same box;
 - **per-topper tags** — AIR, exam year, subject-wise marks — auto-seeded from source PDF file names
   and topped up by submissions;
 - a **Submit** workflow so students can add missing copies and correct topper data.
@@ -21,31 +22,39 @@ No answer copy is hosted here. Every "Open PDF" link points to the file on the s
 
 ## How it's built
 
-Pure static — no runtime backend, no build step required to serve it.
+Pure static — no runtime backend, no build step for the browser, zero dependencies for the build.
 
 ```
 data/questions.csv          mirror of upsckata.com's questions.csv — only sanctioned hand-edit: fixing a wrong `subject`
 data/submissions.csv        accepted GS/Essay copy submissions (same 7-col schema)
-data/optionals.json         accepted optional-subject copies
+data/ocr-questions.csv      questions read off scanned copies by ocr-pipeline.mjs
+data/link-copies.json       GS/Essay copies that are only a link
+data/optionals.json         optional-subject copies (some with OCR'd questions)
 data/toppers.overrides.json maintainer-verified AIR / marks corrections
         |
   build.js
         |
-        +->  data/copies.json + data/index.json + data/toppers.json   (served by the app)
-        +->  toppers.html, sitemap.xml, llms.txt, robots.txt          (static / SEO)
+        +->  data/copies.json                 every copy, grouped by topper — the only file the app boots from
+        +->  data/questions-<paper>.json      one shard per paper: deduped question text + [url, page] refs
+        +->  topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, llms.txt, robots.txt
         +->  index.html  (<noscript> + JSON-LD between markers)
-        +->  dataset/    (complete consolidated backup — see dataset/README.md — not served)
+        +->  dataset/    (complete consolidated backup — see dataset/README.md — not loaded by the site)
 
 index.html, assets/, sw.js  the app (progressive enhancement over toppers.html)
 ```
 
-Regenerate everything after changing the CSV or overrides:
+The copy's PDF URL is its key everywhere; there are no ids. A question shard is `{ urls: [...],
+questions: [[text, [[urlIndex, page], …], [syllabus node ids], marks, words], …], fragments: [...] }`.
+
+Regenerate everything after changing a source file:
 
 ```bash
 node build.js
+npm run check
 ```
 
-The GitHub Action in `.github/workflows/build.yml` does this automatically on push.
+`.github/workflows/deploy.yml` does the build on every push to `main` and deploys the result;
+nothing generated is committed.
 
 ## Project memory — start here if you are picking this up cold
 
@@ -59,20 +68,15 @@ The repo carries its own context so a new session does not have to re-derive it:
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Why the code is like this — including what was rejected and what would reverse it. |
 | [`docs/INVARIANTS.md`](docs/INVARIANTS.md) | What must never break, and the check that proves each one. |
 | [`docs/SESSIONS.md`](docs/SESSIONS.md) | What each session did and learned. |
-| [`docs/IMPLEMENTATION-PROMPT.md`](docs/IMPLEMENTATION-PROMPT.md) | The prompt to paste into a new session to implement one audit phase. |
+| [`docs/archive/`](docs/archive/) | The 2026-09 audits that shaped the code up to DECISION-17 — history, not architecture. |
 
 ```bash
-npm install          # playwright-core, dev only — not used by build.js or CI
 node build.js        # the checks measure real output, so build first
-npm run check        # ~2s: every invariant, each citing the intent it protects
-npm run check:all    # adds the browser checks
-npm run perf         # the full performance harness
+npm run check        # ~2s, plain Node: every invariant and gzip budget, each citing the intent it protects
 ```
 
-`npm run check` is the honest status of the project at any moment. Checks are either **enforced**
-(must pass) or **tracked** (known-failing, tied to an open audit item) — so the same file is both a
-regression guard and a live to-do list. When a tracked check starts passing, it gets promoted and the
-budget ceiling ratchets down.
+`npm run check` is the honest status of the project at any moment. Every check fails the run; the
+gzip budgets live in a table at the top of `tools/check.mjs`.
 
 ## SEO & AI readability
 
@@ -85,63 +89,37 @@ budget ceiling ratchets down.
 - `toppers.html` is a complete, JS-free, crawlable index of every topper and copy; the SPA is
   progressive enhancement on top. `index.html` also carries a `<noscript>` summary + full topper list.
 
-## Performance — measured, not assumed
+## Performance
 
-Full audit with repro commands: [`PERF-UX-AUDIT-2026-09-14.md`](PERF-UX-AUDIT-2026-09-14.md).
-Every number here comes from `npm run perf` (real Chromium, CPU throttled 4x, network throttled).
+The whole design is two data shapes and one search engine (`docs/DECISIONS.md` DECISION-17):
 
-**What is good today.** First paint is fast: **FCP/LCP 676 ms on 4G**, 1,044 ms on slow 3G, with the
-first 25 cards already painted. Boot fetches `data/index.json` — copy metadata only, ~25 KB gzipped.
-
-**What is not, as measured at the audit's original baseline.** Search was gated on a large download —
-the numbers below are the 2026-09-14 starting point the audit was written against, kept here as the
-problem statement; see the audit's "Phase N landed" sections for what's actually shipped since
-(`data/questions.json` below no longer exists — Phase 3 split it into `data/qmeta.json` +
-`data/qtext.json`, and the P1 fix already stopped the "0 copies" flash this measurement describes):
-
-| | gzip on the wire | gates |
-|---|---:|---|
-| `data/index.json` | 25 KB | the first 25 cards |
-| `data/copies.json` | 330 KB | searching inside copies |
-| `data/questions.json` | **1,639 KB** | searching inside copies |
-| **total before a text query can be answered** | **1,994 KB** | |
-
-Measured consequence at that baseline: typing `federalism` cost **2,670 ms on 4G / 4,455 ms on slow
-3G** before real results appeared — and for most of that wait the interface read `0 copies for
-"federalism"`, for a corpus that had 162 matching copies. That was the top item in the audit (P1).
-
-**Where it is going.** A conventional inverted index over the same corpus is **292 KB gzipped**
-(measured: `node tools/perf/index-proto.mjs`) and answers the same queries; question *text* is only
-needed to display the ~25 matches on screen, not to find them. With the dead `sl` field dropped and
-the text split out, the search-gating payload target is **751 KB on plain gzip (-62 %)**. Progress is
-enforced by a ratcheting budget in `tools/check/budget.json`.
-
-**Techniques actually in the code right now:**
-
-- **Split data load.** Boot fetches `index.json` only. `copies.json` loads on `requestIdleCallback`,
-  or immediately when the user focuses the search box. On `Save-Data` / 2G it is delayed further.
-- **Self-hosted fonts**, latin-subset, variable, no third-party font request. Inter is `font-display:
-  swap` and preloaded; Fraunces is `font-display: optional` and deliberately **not** preloaded — see
-  audit P9(c) for why preloading a font the browser has been told not to use costs 65.8 KB for nothing.
-- **Results paginate** 25 at a time.
-- **Phones (<=680px):** the sticky header/toolbar drop `backdrop-filter` for a solid bar (a known
-  scroll-jank source on mid Android), the colour wash is anchored instead of `fixed`, and inputs are
-  16px so iOS Safari does not zoom on focus.
-- **Service worker** precaches the shell, runtime-caches the heavy data files cache-first with a TTL.
+- **Boot** fetches `data/copies.json` (~184 KB gzip) — every copy, grouped by topper, with AIR / year
+  / marks already resolved. Browse and topper-name search work from that alone.
+- **Question text** lives in one shard per paper, `data/questions-<paper>.json` (GS1 177 · GS2 162 ·
+  GS3 107 · GS4 601 · Essay 23 · Other 26 · Optional 7 KB gzip). All are fetched on
+  `requestIdleCallback` (delayed on 2G / Save-Data, never skipped) and immediately on search focus,
+  first keystroke or card expand. A text query is `indexOf` over every question in the loaded shards
+  the paper filter allows — about a millisecond. While a needed shard is still downloading the
+  result line says "Searching inside N copies…" and never shows a zero.
+- **Self-hosted fonts**, latin-subset. Inter is `font-display: swap` and preloaded; Fraunces is
+  `font-display: optional` and deliberately not preloaded (headings only, never blocks or reflows).
+- **Results paginate** 25 at a time; "Show more" appends in place.
+- **Phones (≤680px):** the sticky header/toolbar drop `backdrop-filter`, and inputs are 16px so iOS
+  Safari does not zoom on focus.
+- **Service worker:** one stale-while-revalidate strategy for every same-origin GET; shell and
+  `copies.json` precached.
 - **GA loads `async`** and never blocks render.
 
-> Previous versions of this section claimed `content-visibility: auto` on result cards, a
-> `copies.json` prefetch, and that both fonts were preloaded. **None of the three existed in the
-> code.** `INV-15` in `tools/check/invariants.mjs` now fails the build if this section describes an
-> optimisation the code does not have.
+Budgets for all of this are enforced by `npm run check`; `INV-6` there fails the build if this section
+ever describes something the code does not have.
 
 ## Analytics
 
 Google Analytics 4, Measurement ID `G-VTL4V9JQBH` (in `index.html` `<head>` and mirrored as `GA_ID`
 in `assets/app.js`). `send_page_view` is off; the app sends SPA page views on tab change plus custom
-events: `search`, `filter_change`, `copy_open`, `pdf_open` (outbound, with topper/paper/source/page),
-`optional_subject_view`, `theme_change`, `tab_view`, `submit_kind`, `submit_issue_open`,
-`click_outbound`, `app_ready`, `data_loaded`.
+events: `search`, `filter_change`, `copy_open`, `question_open`, `pdf_open` (outbound, with
+topper/paper/source/page), `optional_subject_view`, `practice_open`, `practice_question`, `theme_change`,
+`tab_view`, `submit_kind`, `submit_issue_open`, `click_outbound`, `app_ready`, `data_loaded`, `shard_loaded`.
 
 ## Question extraction
 
@@ -174,7 +152,7 @@ and pure-handwriting pages yield nothing. A maintainer always reviews before it 
 
 `build.js` also writes a consolidated, self-contained backup under `dataset/` — every question from
 every copy (GS, Essay **and** optional subjects), plus per-topper AIR / year / marks, **including all
-accepted submissions**, with a `provenance` column (`upsckata` / `submission`). The website never
+accepted submissions**, with a `provenance` column (`upsckata` / `submission` / `ocr` / `link`). The website never
 loads it; it's an archive for reference and reuse (CC BY 4.0). `dataset/questions.csv` is the main
 flat file; `dataset/dataset.json` is everything nested; `dataset/manifest.json` carries SHA-256
 checksums and row counts. Full docs: [`dataset/README.md`](dataset/README.md).
@@ -203,11 +181,10 @@ Appointing a moderator = adding a repo collaborator (Triage role is enough). Det
 
 ## Deploy (GitHub Pages + subdomain)
 
-1. Push this repo to `github.com/hashin/topperscopy`.
-2. Settings → Pages → Source: `Deploy from a branch`, branch `main`, folder `/`.
-3. `CNAME` in the repo already sets the custom domain to `topperscopy.hashin.me`.
-4. DNS (Cloudflare, `hashin.me` zone): add `CNAME  topperscopy  ->  hashin.github.io` (DNS-only / grey cloud).
-5. Wait for the cert, then enable "Enforce HTTPS".
+1. Push to `main` on `github.com/hashin/topperscopy`. `.github/workflows/deploy.yml` runs `node build.js`
+   and deploys the servable subset (Settings → Pages → Source: **GitHub Actions**).
+2. `CNAME` in the repo sets the custom domain to `topperscopy.hashin.me`; DNS at the registrar
+   (Spaceship) has `CNAME  topperscopy  ->  hashin.github.io`. "Enforce HTTPS" is on.
 
 ## Licence
 

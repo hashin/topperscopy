@@ -4,8 +4,7 @@ Append-only. Newest at the bottom of each section. Quote Hashin where possible �
 nuance that a paraphrase loses. Date every entry. Never delete an entry; if intent changes, add a
 new one that supersedes the old and mark the old `SUPERSEDED by INTENT-n`.
 
-Each `INTENT-n` is citable from `docs/INVARIANTS.md` and from the checks in
-`tools/check/invariants.mjs`.
+Each `INTENT-n` is citable from `docs/INVARIANTS.md` and from the checks in `tools/check.mjs`.
 
 ---
 
@@ -50,8 +49,7 @@ any proposed feature whether it deepens the question-level mapping or dilutes it
 The audience is UPSC aspirants in India, many on mid-range Android phones on patchy mobile data.
 A site that is fast on a MacBook and slow on a ₹8,000 phone has failed the actual user.
 
-**Enforced by:** `BUDGET-boot`, `BUDGET-search`, `BUDGET-app_js` in `tools/check/invariants.mjs`,
-with ceilings that ratchet down in `tools/check/budget.json`.
+**Enforced by:** the gzip budgets at the top of `tools/check.mjs` (boot, `app.js`, each question shard).
 
 ---
 
@@ -66,7 +64,8 @@ with ceilings that ratchet down in `tools/check/budget.json`.
 main-thread blocks, no lost keystrokes, no scroll jumps, no false "no results", and screen readers
 that are actually told what happened.
 
-**Enforced by:** `INV-10` through `INV-17`. Measured by `tools/perf/`.
+**Enforced by:** `INV-12` (`#resultmeta` is a live region) in `tools/check.mjs`; the never-a-false-zero rule is
+DECISION-6, kept as one boolean in `renderBrowse()`.
 
 ---
 
@@ -83,8 +82,7 @@ prominently (README, About, footer, JSON-LD, `llms.txt`).
 No backend, no accounts, no paid service in the request path. This is what makes the project cost
 nothing to run and impossible to enshittify.
 
-**Enforced by:** `INV-1` (no self-hosted copy URLs), `INV-2` / `INV-2b` (credit present),
-`DECISION-1`.
+**Enforced by:** `INV-1` (no self-hosted copy URLs), `INV-5` (credit present), `DECISION-1`.
 
 ---
 
@@ -96,8 +94,8 @@ Students submit missing copies and topper corrections through a GitHub issue; a 
 the `approved` label and a workflow merges it. Submitted content reaches the live site, so it is
 treated as hostile input until a human has looked at it.
 
-**Enforced by:** `INV-4` (no script-capable URL schemes reach the data), plus the validation added
-in `AUDIT-2026-09-09.md` B4–B6.
+**Enforced by:** `INV-2` (no script-capable URL schemes reach the data), plus the validation in
+`.github/scripts/apply-submission.mjs`.
 
 ---
 
@@ -113,8 +111,8 @@ The failure this guards against is specific and has already happened twice here:
 three optimisations that did not exist, and `CLAUDE.md` carried a stale number that led a correct
 decision process to the wrong conclusion. Both were only caught by measuring.
 
-**Enforced by:** `INV-15` (README cannot claim absent optimisations), `INV-14b` (docs cannot link to
-files we do not deploy), and the session protocol in `docs/MEMORY.md`.
+**Enforced by:** `INV-6` (README cannot claim absent optimisations or deleted files), `INV-7` (docs cannot
+link to files we do not deploy), and the session protocol in `docs/MEMORY.md`.
 
 ---
 
@@ -130,9 +128,29 @@ And, specifically, that testing must follow from intent rather than float free o
 > "There should be a central source of truth inside the repository that learns from my requests
 > across various chat sessions. The testing must be aligned to the ideas shared there."
 
-**Enforced by:** the structure of `docs/` itself; every check in `tools/check/invariants.mjs` cites
-the `INTENT-n` or `DECISION-n` it exists to protect, so a future session can always ask "why is this
+**Enforced by:** the structure of `docs/` itself; every check in `tools/check.mjs` cites the
+`INTENT-n` or `DECISION-n` it exists to protect, so a future session can always ask "why is this
 rule here" and get an answer.
+
+---
+
+## INTENT-8 — Only the machinery the goals need, and code the owner can read end to end
+
+*Stated 2026-09-15.*
+
+> "I genuinely suspect that we have overengineered many stuff through the periodic audits that we
+> did. I want you to go through them and see that we are only doing the absolutely necessary stuff
+> to meet the goals of the website — which is an easy to load (fastest) website that is completely
+> searchable. Also the searching must support both question plus name of toppers (some students
+> want questions answered by a specific topper). Refactor code if required. I want to be able to
+> completely read and understand this code."
+
+Every product feature stays. What goes is machinery whose only job was to keep other machinery
+honest. The test for any future change: can it be explained in two sentences, and does it make the
+complete result reach the screen sooner — not merely a count?
+
+**Enforced by:** `DECISION-17`; the `app.js` gzip budget in `tools/check.mjs` (growth there means
+machinery crept back); the README-honesty check.
 
 ---
 
@@ -140,12 +158,11 @@ rule here" and get an answer.
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.
 
-- **Hosting.** Whether to leave GitHub Pages (gzip only) or move to a Brotli-serving host for a
-  measured 1,078 KB saving. Three options with different risk profiles are laid out in
-  `PERF-UX-AUDIT-2026-09-14.md` D2. *Not urgent — the format work in Phases 3–5 is
-  hosting-independent and delivers most of the win.*
+- **Hosting.** Whether to leave GitHub Pages (gzip only) or move to a Brotli-serving host. The
+  1,078 KB saving measured in `docs/archive/PERF-UX-AUDIT-2026-09-14.md` D2 was against the old
+  five-file search payload; re-measure against today's one-shard-per-query model first.
 - **Question-first as the default view.** The per-question pages are probably the strongest SEO
   surface, and a student's real query is "how did toppers answer this", not "show me X's GS2 copy".
-  Needs Search Console data before deciding (`PERF-UX-AUDIT-2026-09-14.md` Phase 7).
+  Needs Search Console data before deciding (`docs/archive/PERF-UX-AUDIT-2026-09-14.md` Phase 7).
 - **How far to push Gemini.** Asking for structured JSON (including the syllabus node) in the same
   OCR pass would close the 44 % syllabus-mapping gap at no extra API cost. Not yet green-lit.
