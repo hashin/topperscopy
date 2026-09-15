@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-14T20:39:48.409Z",
+  "generated": "2026-09-15T05:37:12.410Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -3569,6 +3569,20 @@
       "geminiPages": 68,
       "salvaged": 0,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/258f2-1492371_2425_muskan-srivastava_98.pdf",
+      "topper": "MUSKAN SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 12,
       "low": false
     },
     {
