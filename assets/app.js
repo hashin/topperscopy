@@ -220,6 +220,7 @@
     if (pp && PAPERS.concat(['Optional']).indexOf(pp) >= 0) state.paper = pp;
     var sylp = params.get('syl');                     // ?syl=<node id> — a shared syllabus filter
     if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; ensureShards(); ensureSyllabus(); }
+    syncControls();
 
     document.addEventListener('click', function (e) {   // outbound-link tracking for static links
       var a = e.target.closest('a[href^="http"]');
@@ -319,12 +320,16 @@
     var u = urlState();
     state.q = u.q; state.paper = u.paper; state.syl = u.syl; state.shown = PAGE;
     if (state.syl) state.qview = 'questions';
+    syncControls();
+    if (state.q || state.syl) { ensureShards(); ensureSyllabus(); }
+    renderBrowse();
+  }
+  // make the search box, paper chips, Copies/Questions toggle and syllabus select show `state`
+  function syncControls() {
     var qi = $('#q'); if (qi && qi.value !== state.q) qi.value = state.q;
     $$('#papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.paper === state.paper)); });
     $$('#qview button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.qview === state.qview)); });
     var sel = $('#syl'); if (sel) sel.value = state.syl;
-    if (state.q || state.syl) { ensureShards(); ensureSyllabus(); }
-    renderBrowse();
   }
   window.addEventListener('popstate', function () { if (state.view === 'browse') applyUrlToState(); });
 
