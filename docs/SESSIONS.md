@@ -536,3 +536,26 @@ INTENT-8 names. Fixed in `filteredCopies()` (DECISION-18), re-verified every que
 **Learned.** The stale-while-revalidate service worker serves the *previous* `app.js` on the first
 load after an edit — clear the registration before trusting a local test of a code change.
 **Left.** PR #7 open for Hashin's review; not merged.
+
+## 2026-09-15 — PageSpeed Insights mobile: fix CLS, verify the "boot budget" scare was stale data
+**Asked.** Mitigate the mobile PageSpeed report (CrUX field data: LCP 1.7s good, INP 199ms good,
+CLS 0.2 needs-improvement/16% poor, FCP/TTFB borderline good — overall CWV failed on CLS alone).
+**Did.** Traced CLS to `#results-skeleton` ([index.html:158](../index.html)) collapsing into 25 real
+cards once `copies.json` loads — measured live (localhost, `http-server`) at 3680.7px/375px wide and
+3008.3px/1024px wide, then gave `.skeleton` a matching `min-height` in [assets/style.css](../assets/style.css)
+(guarded back to 0 inside `<noscript>` via [build.js](../build.js)'s `writeStaticIndex()`, so no-JS
+visitors don't get a permanent empty gap). Also added an `"Inter Fallback"` `@font-face` with
+ascent/descent/size-adjust overrides computed against Roboto (the real mobile fallback here) from
+`@capsizecss/metrics`, so the `font-display:swap` Inter load doesn't reflow body text. Considered and
+rejected pre-rendering result cards in `build.js` + hydrating (bigger fix, unnecessary complexity for
+what's actually failing) — logged as an open question in `docs/INTENT.md` instead of building it.
+**Learned.** The "boot budget failing at 630 KB / 40% over ceiling" that kicked this off was **not
+real** — it came from stale generated files in the working directory (gitignored, last regenerated
+before PR #7/DECISION-17 merged). A fresh `node build.js` produces `copies.json` at 1,519 KB raw
+(not 2,790 KB), and `npm run check` passes clean at 338.8 KB boot / 450 KB ceiling. Since
+`deploy.yml` always builds fresh on push, production was never actually bloated — always re-run
+`node build.js` before trusting any size/budget number from the working tree, per `CLAUDE.md`'s own
+"if something is red before you touch anything, say so" — it wasn't red, it was stale.
+**Left.** Not re-measured against a live PageSpeed re-run (the shared report link had expired;
+verification here was local measurement + `npm run check`, not a fresh CrUX/Lighthouse pass) — worth
+re-running PageSpeed in a few weeks once this deploys and CrUX's 28-day window rolls forward.

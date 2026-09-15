@@ -940,6 +940,7 @@ function writeStaticIndex(copies, toppers, stats, generated, nameToSlug) {
     `<li><a href="/topper/${nameToSlug.get(n) || slug(n)}/">${esc(n)}</a>${topperMeta(n, toppers) ? ' — ' + esc(topperMeta(n, toppers)) : ''}${telegramLink(n, toppers)}</li>`).join('\n');
 
   const noscript = `<noscript>
+  <style>.skeleton{min-height:0}</style>
   <section class="prose" style="padding:24px 0">
     <h2>UPSC Mains topper answer copies — full index</h2>
     <p>${fmt(stats.questions)} questions from ${fmt(stats.copies)} answer

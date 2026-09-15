@@ -22,6 +22,20 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
     U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Inter is font-display:swap — a local font paints body text until it arrives, then swaps.
+   That swap still reflows the page unless the local stand-in is sized to match Inter. Metrics
+   below are computed against Roboto (the real fallback on most of this site's mobile traffic —
+   Android/Chrome) from @capsizecss/metrics, via the same ascent/descent/size-adjust formula
+   next/font uses: sizeAdjust = InterAvgWidth/RobotoAvgWidth, then ascent/descent% = (metric/
+   unitsPerEm)/sizeAdjust. Reduces the CLS PageSpeed measured from the Inter swap (2026-09-15). */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Roboto"), local("Arial"), local("Helvetica");
+  ascent-override: 90.24%;
+  descent-override: 22.47%;
+  line-gap-override: 0%;
+  size-adjust: 107.35%;
+}
 
 :root {
   color-scheme: light;
@@ -61,7 +75,7 @@
   --glow-2: rgba(246,201,146,.20);
 
   --serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
-  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sans:  "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --w: 1040px;
 }
 
@@ -657,7 +671,12 @@ footer.site a { color: var(--muted); text-decoration: underline; text-underline-
 footer.site a:hover { color: var(--ink); }
 footer.site .spacer { flex: 1; }
 
-.skeleton { color: var(--muted); font-size: 14px; padding: 48px 0; text-align: center; }
+/* min-height ≈ the real first-paint #results (25 cards + 1 yeargroup header + more button,
+   measured live at 1024px) so removing the skeleton once copies.json lands doesn't collapse
+   ~3000px of space — the CLS PageSpeed flagged (2026-09-15). Phone value re-measured at 375px
+   below; both are approximations (card count/heights vary a little with the data), not a promise
+   of zero shift, but they cut the jump from "nothing to full list" down to "close enough". */
+.skeleton { color: var(--muted); font-size: 14px; padding: 48px 0; text-align: center; min-height: 3000px; }
 .q.loading .txt { color: var(--muted); font-style: italic; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -699,4 +718,5 @@ footer.site .spacer { flex: 1; }
   .copy { contain-intrinsic-size: auto 125px; }
   .statline { min-height: 74px; }
   #papers { min-height: 84px; }
+  .skeleton { min-height: 3680px; }   /* measured at 375px — see base .skeleton rule above */
 }

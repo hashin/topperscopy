@@ -166,3 +166,14 @@ Record them here rather than guessing. Move them into an `INTENT-n` once he deci
   Needs Search Console data before deciding (`docs/archive/PERF-UX-AUDIT-2026-09-14.md` Phase 7).
 - **How far to push Gemini.** Asking for structured JSON (including the syllabus node) in the same
   OCR pass would close the 44 % syllabus-mapping gap at no extra API cost. Not yet green-lit.
+- **Pre-rendering the first page of result cards.** PageSpeed's mobile CrUX field data (2026-09-15)
+  showed CLS failing (0.2) but LCP/INP already "Good" — traced to the `#results-skeleton` collapsing
+  into 25 real cards once `copies.json` loads. Fixed for now with a reserved `min-height` on the
+  skeleton (measured live: ~3000px desktop / ~3680px at 375px). Considered instead: have `build.js`
+  render the first page of cards as real HTML (it already computes default sort order and writes a
+  similar block for the `<noscript>` fallback) and have `app.js` hydrate rather than rebuild —
+  would fix LCP/CLS/INP together but needs a second card-summary renderer kept in sync with
+  `copyCard()` in `assets/app.js`. Rejected for this pass: not necessary to fix what's actually
+  failing, and adds ongoing complexity the day after DECISION-17/PR #7 deliberately removed some.
+  Revisit only if CLS is still bad after the skeleton fix, or if Search Console ever shows Core Web
+  Vitals costing rankings.
