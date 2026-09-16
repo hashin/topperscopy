@@ -2289,7 +2289,184 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 1, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"The history of Political theory is written in the light of the hypothesis that theories of politics are themselves a part of Politics\" - Sabine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "\"Social contract theory of the origin of the state is bad history, bad logic and bad philosophy. (10 Marks)\"",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"Power is not the property of an individual, it corresponds to human activities not just to act, but to act in concert\" - Hannah Arendt.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "The end of Ideology was itself a key expression of the Ideology of time and space in which it came across\" Alasdair Macintyre.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 13,
+          "question": "What do you understand by the decline of political theory? Explain the arguments proposed to establish the decline of political theory",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Critically examine Hobbes's methodology to study political science. Compare it with Machiavelli's Methodology.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "\"The Fundamental sense of freedom is freedom from chains, from imprisonment, from enslavement by others. The rest is an extension of this sense or else metaphor.\" Isaiah Berlin. Explain with contemporary examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Liberalism is not a fixed mode of thought but an intellectual movement. Explain.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "The principles of democracy can't be divorced from the principle of equality. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Our epoch, the epoch of the bourgeoisie, possesses, however, this distinct feature: it has simplified class antagonisms\" Marx. Critically examine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Define Cultural relativism and compare the cultural relativist perspective of Human Rights with the universalist perspective of Human Rights. Do you think there can be a way to reconcile these two different perspectives on Human Rights?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the Rationale behind affirmative policies. Do you think that affirmative action policies with respect to women can address the disadvantages faced by them?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "M.N Roy's radical Humanism is a critical reflection on the Marxist approach towards the Revolution. Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "\"A just society is that society in which the ascending sense of reverence and descending sense of contempt is dissolved into the creation of a compassionate society- Ambedkar\". Elucidate",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "\"Truth is not outside power\": Foucault\". Analyse",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Sir Syed Ahmed Khan was a visionary who carved a space for rationalist thought and gave a new direction to education. Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "\"Dharmashastras refer to the science of dharma and are a series of texts which teach the eternal immutable Dharma found in Vedas.\" Discuss",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "For Bhiku Parekh, multiculturalism refers not to the set of liberal policies as the liberal theory of minority rights suggests, but to a certain perspective which allows us to better understand culturally diverse societies. Explain.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Judith Buttler believes that there are no essential qualities that define a person as belonging to a specific gender and she puts forward a more inclusive idea of feminism. Explain.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Discuss distributive equality and its different forms. In what sense is the idea of complex equality a critique of distributive equality?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Foucault's concept of power helps in deepening our understanding of the state in the subject of political science. Critically examine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Explain the salient features of Postmodernism. Can post-modernism be defined as incredulity towards meta-narratives?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "In what ways the conception of the public sphere as theorized by Habermas has undergone a change in India?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Explain Kautilya's Raja Manda theory and it's relevance in contemporary Indian philosophy.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "Examine how the Buddhist statecraft is an expression of the Comprehensive doctrine given by Buddhism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -2300,7 +2477,205 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 2, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"During the freedom struggle the Indian National Congress and other established political groups took an ambivalent position vis-a-vis the working class\". Examine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "\"Constituent assembly members realised that a constitution could not by itself make a new India, but they intended it to light the way.\" Discuss",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"Finance Commission must think afresh conceptually, methodologically, and operationally.\" Explain in the context of the recently constituted 16th Finance Commission.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain how patronage politics and expectations of ethnic favouritism tend to go together.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"At Independence, the project of building a national civic identity, transcending the particularistic identities of caste, tribe, language, religion, and region, was recognized as the most important challenge facing the new nation.\" Explain.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Indian nationalism that confronted British imperialism in the nineteenth century, and celebrated its victory in the formation of the Indian nation-state in 1947, was a product of colonial modernity. Critically Examine.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"While the Constitution did usher in a new order, its claims to have obliterated the past remain unconvincing, even to contemporary observers\". In light of the above statement critically examine the nature of the Indian Constitution.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Democracy in India has not only endured but developed into a vibrant system. Explain.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "\"An overview of India's political trajectory reveals various phases of stresses and strains in the evolution of political parties.\" In light of the above statement discuss the changes in the party system and the electoral process in India over the last 7 decades.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Examine the merits and demerits of a coalition government in the context of India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"There is no greater inequality than the equal treatment of unequals.\" In light of the statement examine the affirmative action policy of the Indian State with respect to reservations.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "\"The Anti-Defection Law needs a relook to plug the loopholes\". Critically examine the efficacy of Anti Defection Law in light of some recent cases.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss how the years since independence have seen agrarian struggles of enormous variety.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Past lack of attention to political ideology contrasts strongly with the recent ubiquity of ideological debates in Indian politics. Examine the role of Ideology in Indian politics.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "The National Commission for Minorities, as an institution, suffers from several major structural inefficiencies and challenges. Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Trace the origins of the Human rights movement in India in pre and post-independent India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Do you agree that the progress that the cooperative movement made in India has fallen far short of the goals set by its early proponents?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Discuss the class approach and economic determinism of the Marxist historians about the Indian freedom struggle.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Analyse the contrasting philosophies of Mahatma Gandhi and Jawaharlal Nehru which have left an essence in Part IV of our constitution.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Discuss boundary disputes between different states . Explain what are different methods available to resolve inter-state disputes.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Whether judicial activism has undermined or strengthened Parliamentary Democracy in India . Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Do you think that the regional political parties are eternal theme on the Indian political scene?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "\"The ongoing processes of social and economic differentiation within caste groups, as well as the migration and dispersion of populations, weaken the possibilities of caste solidarity and therefore caste politics.\" Critically Examine.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Highlight the debates and discussions surrounding the interpretations and understanding of the Basic Structure Doctrine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 69,
+          "question": "Discuss various phases of the women's movement in post-independence India till the end of the 20th century.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "\"Secularism is one of the most central ideological contestations in Indian politics since Independence\" Bring out different perspectives on the nature of Indian Secularism.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Do you think Indian Parliament has yet to live up to the hopes and aspirations of its founding fathers?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "Examine the financial difficulties faced by the Panchayati Raj Institutions.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -3179,7 +3554,65 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 9,
+          "question": "What is Merton's view of relationship between social structure and deviance?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Explain how according to Emile Durkheim, division of labor could be 'functional' as well as 'anomic' for society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "\"Economics must be made the handmaid of sociology.\" Critically analyze.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Examine how Max Weber applies the ideal type construct in establishing a relationship between religion and economy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Compare and contrast the methodology made use of by Emile Durkheim and Max Weber, in their, scientific study of society.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 25,
+          "question": "\"Talcott Parsons' theory of social system has been criticized as a veiled status quoist ideology\". Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Robert K. Merton's significant contribution to functionalism lies in his clarification and codification of functional analysis. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Examine how Weber's characterization of capitalism is different from those of Marx.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Sudhir Kumar",
