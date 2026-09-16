@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-16T17:22:58.452Z",
+  "generated": "2026-09-16T19:46:40.167Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -4222,6 +4222,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e6306-1278123_2422_animesh-verma_rank_38.pdf",
+      "topper": "ANIMESH VERMA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 13,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/8465b-256964_1841_aakip-khan_rank-268.pdf",
       "topper": "Aakip Khan",
       "coaching": "VisionIAS",
@@ -5667,6 +5681,20 @@
       "count": 17,
       "optional": false,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bae11-1304965_2425_shivam_kumar_-rank_19.pdf",
+      "topper": "SHIVAM KUMAR",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 13,
       "low": false
     },
     {
