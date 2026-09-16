@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-15T19:57:32.189Z",
+  "generated": "2026-09-16T05:28:23.893Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -757,6 +757,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ef7ac-1304965_2424_shivam_kumar_-rank_19.pdf",
+      "topper": "SHIVAM KUMAR",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
