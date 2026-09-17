@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-16T19:46:40.167Z",
+  "generated": "2026-09-17T05:35:36.195Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -771,6 +771,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/507a8-1019222_2423_gourav_uppal_rank_174.pdf",
+      "topper": "GOURAV UPPAL",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
