@@ -1,4 +1,4 @@
-/* Toppers Copy — the whole client. A free, open, community-built index of UPSC Mains topper answer copies.
+/* Topper's Copy by Hashin — the whole client. A free, open, community-built index of UPSC Mains topper answer copies.
  *
  * Data it reads (all written by build.js):
  *   data/copies.json              every copy, grouped by topper — the only file needed to boot
@@ -73,7 +73,7 @@
   function track(name, params) { try { ga()('event', name, params || {}); } catch (e) {} }
   function pageView(view) {
     var path = '/' + (view === 'browse' ? '' : view);
-    try { ga()('event', 'page_view', { page_title: 'Toppers Copy — ' + (VIEW_TITLE[view] || view), page_location: location.origin + path, page_path: path }); } catch (e) {}
+    try { ga()('event', 'page_view', { page_title: "Topper's Copy by Hashin — " + (VIEW_TITLE[view] || view), page_location: location.origin + path, page_path: path }); } catch (e) {}
   }
 
   /* ---------- data ---------- */

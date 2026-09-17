@@ -70,6 +70,8 @@ DECISION-6, kept as one boolean in `renderBrowse()`.
 ---
 
 ## INTENT-4 — Free, static, and nothing is re-hosted
+*Credit clause (crediting upsckata.com on the live site) SUPERSEDED by INTENT-10, 2026-09-17 — the
+rest of this entry (no backend, no re-hosting) is still active.*
 
 *Standing, from the project's origin.*
 
@@ -171,6 +173,41 @@ not fuzzy-match candidates to existing toppers, do not assume it should be as ti
 search/SEO as the copies feature, unless Hashin asks for that explicitly. See DECISION-19.
 
 *Not machine-checkable. Guides scope for anything touching the Interviews tab.*
+
+---
+
+## INTENT-10 — Rebrand to "Topper's Copy by Hashin"; stop crediting upsckata on the live site
+
+*Stated 2026-09-17. Supersedes the credit-prominence clause of INTENT-4.*
+
+> "rename the website to 'Topper's Copy by Hashin' and update it in the seo docs and llm.txt and
+> everywhere else. remove links to upsc kata from the website, and don't explicitly mention them in
+> the about section."
+
+Two changes, both scoped to what a site visitor sees — asked and confirmed in the same session:
+
+1. **Brand.** Every user-facing name string — `<title>`, meta/OG/Twitter tags, JSON-LD `name`
+   fields, the manifest, generated static pages (`topper/`, `question/`, `paper/`, `optional/`,
+   `toppers*.html`), `llms.txt`, and the About/footer copy — reads "Topper's Copy by Hashin" (the
+   manifest's `short_name`, which Android truncates on the home screen, stays the shorter
+   "Topper's Copy"). Source comments and `package.json` also updated for consistency, though those
+   are not user-facing.
+2. **Credit.** Hashin confirmed (asked directly, since this contradicts INTENT-4's own "must be
+   credited prominently" and the `INV-5` check as it stood) that the *live site* — `index.html`
+   (About section, Interviews tab, footer), `llms.txt`, and the generated JSON-LD — should no longer
+   name or link upsckata.com, and the About section should describe the question database's origin
+   in generic terms ("earlier open community compilations of these same public answer copies")
+   rather than naming a specific source. He explicitly scoped this to the live site: `README.md`,
+   `CLAUDE.md`, `docs/` and `dataset/README.md` (maintainer-facing, not shown to a visitor) keep the
+   factual upsckata provenance note, so the repo's own history of where the data came from is not
+   lost — consistent with `docs/MEMORY.md`'s rule against documentation that lies about the past.
+
+**Consequence for every future decision:** do not re-add an upsckata name or link to `index.html`,
+`llms.txt`, or any `build.js`-generated page without asking Hashin again first — this was a
+deliberate, confirmed reversal of a standing ethical position (INTENT-4), not an oversight to "fix."
+See DECISION-20 for the mechanics and what was rejected.
+
+*Enforced by the (updated) `INV-5` — now checks `README.md` only.*
 
 ---
 

@@ -674,3 +674,35 @@ existing upsckata-mirrored row tags a Niharika Sinha PDF as paper "GS2" even tho
 "PSIR_COPY_5" — `data/questions.csv` is append-mostly and the only sanctioned hand-edit is fixing a
 wrong `subject`, so this is fixable, just not part of this task; noted for whoever audits that mirror
 next.
+
+## 2026-09-17 — Rebrand to "Topper's Copy by Hashin"; drop the live-site upsckata credit
+**Asked.** "rename the website to 'Topper's Copy by Hashin' and update it in the seo docs and llm.txt
+and everywhere else. remove links to upsc kata from the website, and don't explicitly mention them in
+the about section."
+**Did.** Point 2 directly contradicted a standing, hard-checked invariant (INV-5 required upsckata
+credit in `index.html`/`README.md`/`llms.txt`, per INTENT-4's "must be credited prominently… the
+ethical position"), so asked Hashin to confirm scope before touching it (`AskUserQuestion`) rather
+than assume. He confirmed: live site only (index.html, llms.txt, generated pages, JSON-LD) drops the
+credit; `README.md`/`CLAUDE.md`/`docs/`/`dataset/README.md` keep the factual provenance note; the
+About section's origin story goes generic rather than disappearing. Renamed every user-facing brand
+string (`<title>`, meta/OG/Twitter, JSON-LD names, manifest, header, footer, every `build.js`-
+generated static page, `llms.txt`) to "Topper's Copy by Hashin" (manifest `short_name` and the header
+nav stay the shorter "Topper's Copy" — deliberate, not an inconsistency). Removed the upsckata
+name/link from the About "Credit & sources" paragraph, the Interviews tab's lead paragraph, the
+footer, and `writeLlms()`'s credit block; reworded to generic "earlier open community compilations of
+these same public answer copies" language. Narrowed `INV-5` (`tools/check.mjs`) to check `README.md`
+only, and documented the reversal properly: `INTENT-10` (supersedes the credit clause of INTENT-4)
+and `DECISION-20` in `docs/`. `node build.js && npm run check` — 24/24 — then verified live in the
+browser (Browse header, About, Interviews tab all render correctly, zero console errors, zero
+`upsckata` hits in the served `index.html`/`llms.txt`/static pages via grep).
+**Learned.** The brand string appeared as `Toppers&nbsp;Copy` (HTML entity, not a literal space) in
+the header nav — a plain string-replace across files missed it because it doesn't contain the literal
+substring "Toppers Copy"; caught by re-grepping the rendered header after the fact, not by the
+mechanical replace. Also: renaming a brand containing an apostrophe into JS single-quoted string
+literals (`jsonLd()`'s object properties) breaks syntax silently until `node -c` is run — several
+spots needed switching to double-quoted strings.
+**Left.** `INV-5`'s check comment and `docs/INVARIANTS.md`'s row both now cite `DECISION-20`. If
+Hashin ever wants the on-site credit restored, `DECISION-20`'s "Reverse if" has the exact diff to
+revert. Did not touch `docs/archive/`, or historical quotes inside `INTENT.md`/`DECISIONS.md` that
+say "Toppers Copy" — those are Hashin's own past words and stay verbatim, per this file's own
+append-only convention.

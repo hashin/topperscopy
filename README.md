@@ -1,4 +1,4 @@
-# Toppers Copy
+# Topper's Copy by Hashin
 
 A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **28,000+ questions** across **9,100+ answer copies** by **1,700 rank-holders**, and open the exact page of each copy.
 

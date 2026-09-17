@@ -1,4 +1,4 @@
-# Toppers Copy — project map
+# Topper's Copy by Hashin — project map
 
 Free static site: a searchable directory of UPSC Mains topper answer copies. Live at
 **https://topperscopy.hashin.me** (GitHub Pages; `.github/workflows/deploy.yml` runs `node build.js` on

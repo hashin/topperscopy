@@ -1,4 +1,4 @@
-/* Toppers Copy — browser-side PDF reader for the Submit form.
+/* Topper's Copy by Hashin — browser-side PDF reader for the Submit form.
    Lazy-loaded (only when the user opens the "estimate questions" panel).
 
    Two modes, both 100% in the browser — the file is never uploaded:

@@ -664,18 +664,18 @@ ${samples.map(s => `    <li><a href="${safeHref(s.url + (s.page ? '#page=' + s.p
     const body = `
   <h1>${esc(name)}${telegramLink(name, toppers)}</h1>
   ${meta ? `<p class="lead">${esc(meta)}</p>` : ''}
-  <p class="meta">${total} answer ${total === 1 ? 'copy' : 'copies'} indexed — part of the free, searchable Toppers Copy index.</p>
+  <p class="meta">${total} answer ${total === 1 ? 'copy' : 'copies'} indexed — part of the free, searchable Topper's Copy by Hashin index.</p>
   ${rows ? `<table><thead><tr><th>Paper</th><th>Source</th><th>Questions</th><th>Copy</th></tr></thead><tbody>\n${rows}\n    </tbody></table>` : ''}
   ${optRows ? `<h2>Optional subject copies</h2><table><thead><tr><th>Subject</th><th>Source</th><th>Marks</th><th>Copy</th></tr></thead><tbody>\n${optRows}\n    </tbody></table>` : ''}
   ${samplesHtml}
-  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(name)}">Search ${esc(name)}&rsquo;s answers on Toppers Copy →</a></p>`;
+  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(name)}">Search ${esc(name)}&rsquo;s answers on Topper's Copy by Hashin →</a></p>`;
 
     const html = pageShell({
-      title: `${name} — UPSC Mains answer copies | Toppers Copy`,
+      title: `${name} — UPSC Mains answer copies | Topper's Copy by Hashin`,
       description: `${name}${meta ? ', ' + meta : ''} — ${total} UPSC Mains answer ${total === 1 ? 'copy' : 'copies'} indexed, each linking to the source PDF.`,
       canonical: `${SITE}/topper/${slugId}/`,
       jsonLd,
-      crumbs: `<a href="/">Toppers Copy</a> / <a href="/toppers.html">Toppers</a> / ${esc(name)}`,
+      crumbs: `<a href="/">Topper's Copy by Hashin</a> / <a href="/toppers.html">Toppers</a> / ${esc(name)}`,
       body
     });
     fs.mkdirSync(path.join(dir, slugId), { recursive: true });
@@ -723,7 +723,7 @@ function writeQuestionPages(qList, copyByUrl, nameToSlug, syl) {
       breadcrumb: {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Toppers Copy', item: SITE + '/' },
+          { '@type': 'ListItem', position: 1, name: "Topper's Copy by Hashin", item: SITE + '/' },
           { '@type': 'ListItem', position: 2, name: q.p, item: `${SITE}/paper/${paperSlug(q.p)}/` },
           { '@type': 'ListItem', position: 3, name: dq.slice(0, 80) }
         ]
@@ -744,18 +744,18 @@ function writeQuestionPages(qList, copyByUrl, nameToSlug, syl) {
   <table><thead><tr><th>Topper</th><th>Rank</th><th>Source</th><th>Copy</th></tr></thead><tbody>
 ${rows}
     </tbody></table>
-  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(dq.slice(0, 60))}">See this question on Toppers Copy →</a></p>
+  <p><a class="cta" href="${SITE}/?q=${encodeURIComponent(dq.slice(0, 60))}">See this question on Topper's Copy by Hashin →</a></p>
   <p><a href="${SITE}/paper/${paperSlug(q.p)}/">More ${esc(q.p)} questions →</a></p>`;
 
     const isIndexable = answers.length > 1;
     if (isIndexable) indexable.add(q.slug);
     const html = pageShell({
       robots: isIndexable ? undefined : 'noindex,follow',
-      title: `${dq.slice(0, 78)}${dq.length > 78 ? '…' : ''} | Toppers Copy`,
+      title: `${dq.slice(0, 78)}${dq.length > 78 ? '…' : ''} | Topper's Copy by Hashin`,
       description: `${dq.slice(0, 140)}${dq.length > 140 ? '…' : ''} — ${answers.length} UPSC Mains topper${answers.length === 1 ? '' : 's'} answered this ${q.p} question, each linking to the source PDF.`,
       canonical: `${SITE}/question/${q.slug}/`,
       jsonLd,
-      crumbs: `<a href="/">Toppers Copy</a> / <a href="/paper/${paperSlug(q.p)}/">${esc(q.p)}</a> / Question`,
+      crumbs: `<a href="/">Topper's Copy by Hashin</a> / <a href="/paper/${paperSlug(q.p)}/">${esc(q.p)}</a> / Question`,
       body
     });
     fs.mkdirSync(path.join(dir, q.slug), { recursive: true });
@@ -790,12 +790,12 @@ ${qItems || '    <li>Coming soon.</li>'}
   </ul>
   <h2>Toppers with a ${esc(paper)} copy</h2>
   <p>${tItems}</p>
-  <p><a class="cta" href="${SITE}/?paper=${encodeURIComponent(paper)}">Search all ${esc(paper)} copies on Toppers Copy →</a></p>`;
+  <p><a class="cta" href="${SITE}/?paper=${encodeURIComponent(paper)}">Search all ${esc(paper)} copies on Topper's Copy by Hashin →</a></p>`;
     const html = pageShell({
-      title: `UPSC Mains ${paper} — topper answer copies & questions | Toppers Copy`,
+      title: `UPSC Mains ${paper} — topper answer copies & questions | Topper's Copy by Hashin`,
       description: `Browse ${esc(paper)} questions from UPSC Mains topper answer copies — ${toppersInPaper.length} rankers, each answer linking to the source PDF page.`,
       canonical: `${SITE}/paper/${paperSlug(paper)}/`,
-      crumbs: `<a href="/">Toppers Copy</a> / ${esc(paper)}`,
+      crumbs: `<a href="/">Topper's Copy by Hashin</a> / ${esc(paper)}`,
       body
     });
     fs.mkdirSync(path.join(paperDir, paperSlug(paper)), { recursive: true });
@@ -821,12 +821,12 @@ ${qItems || '    <li>Coming soon.</li>'}
   <table><thead><tr><th>Topper</th><th>Source</th><th>Marks</th><th>Copy</th></tr></thead><tbody>
 ${rows}
     </tbody></table>${practiceCta}
-  <p><a class="cta" href="${SITE}/#optionals">Browse ${esc(subject)} on Toppers Copy →</a></p>`;
+  <p><a class="cta" href="${SITE}/#optionals">Browse ${esc(subject)} on Topper's Copy by Hashin →</a></p>`;
     const html = pageShell({
-      title: `UPSC Mains ${subject} optional — topper answer copies | Toppers Copy`,
+      title: `UPSC Mains ${subject} optional — topper answer copies | Topper's Copy by Hashin`,
       description: `${entries.length} UPSC Mains ${esc(subject)} optional-subject answer copies from ${toppersInSubject.length} rank-holders, each linking to the source PDF.`,
       canonical: `${SITE}/optional/${slug(subject)}/`,
-      crumbs: `<a href="/">Toppers Copy</a> / Optionals / ${esc(subject)}`,
+      crumbs: `<a href="/">Topper's Copy by Hashin</a> / Optionals / ${esc(subject)}`,
       body
     });
     fs.mkdirSync(path.join(optDir, slug(subject)), { recursive: true });
@@ -904,7 +904,7 @@ ${pageLinks}
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} | Toppers Copy</title>
+<title>${title} | Topper's Copy by Hashin</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${SITE}${href(num)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
@@ -950,7 +950,7 @@ ${ldJson(itemList)}
 </head>
 <body>
 <header>
-  <nav class="crumb"><a href="/">Toppers Copy</a> / <a href="/toppers.html">All toppers</a>${isFirst ? '' : ` / Page ${num}`}</nav>
+  <nav class="crumb"><a href="/">Topper's Copy by Hashin</a> / <a href="/toppers.html">All toppers</a>${isFirst ? '' : ` / Page ${num}`}</nav>
   <h1>Every UPSC Mains topper answer copy — full index</h1>
   <p class="lead">${stats.toppers} rankers · ${stats.copies} answer copies · ${fmt(stats.questions)} indexed questions · updated ${generated}</p>
   <p class="lead">This is the static, no-JavaScript index, split into ${totalPages} pages. The <a href="/">main site</a> lets you search inside every copy.
@@ -1035,15 +1035,15 @@ function replaceBlock(html, tag, content) {
 function jsonLd(stats, generated, interviewCount) {
   const graph = [
     {
-      '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name: 'Toppers Copy',
+      '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name: "Topper's Copy by Hashin",
       description: 'Searchable directory of UPSC Civil Services Mains topper answer copies — GS1–4, Essay and optional subjects.',
       inLanguage: 'en', publisher: { '@id': SITE + '/#org' },
       potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: SITE + '/?q={search_term_string}' }, 'query-input': 'required name=search_term_string' }
     },
-    { '@type': 'Organization', '@id': SITE + '/#org', name: 'Toppers Copy', url: SITE + '/', description: 'A free, open, community-built index of UPSC Mains topper answer copies.', founder: { '@id': SITE + '/#hashin' } },
+    { '@type': 'Organization', '@id': SITE + '/#org', name: "Topper's Copy by Hashin", url: SITE + '/', description: 'A free, open, community-built index of UPSC Mains topper answer copies.', founder: { '@id': SITE + '/#hashin' } },
     {
       '@type': 'Person', '@id': SITE + '/#hashin', name: 'Hashin Jithu', url: 'https://blog.hashin.me',
-      description: 'Creator and maintainer of Toppers Copy. Topper of the UPSC Civil Services Examination 2021 with an All India Rank of 553. Built Toppers Copy as a non-commercial way of giving back to the UPSC aspirant community.',
+      description: "Creator and maintainer of Topper's Copy by Hashin. Topper of the UPSC Civil Services Examination 2021 with an All India Rank of 553. Built Topper's Copy by Hashin as a non-commercial way of giving back to the UPSC aspirant community.",
       knowsAbout: ['UPSC Civil Services Examination', 'UPSC Mains answer writing', 'Public policy'],
       award: 'All India Rank 553, UPSC Civil Services Examination 2021'
     },
@@ -1063,8 +1063,8 @@ function jsonLd(stats, generated, interviewCount) {
     {
       '@type': 'FAQPage', '@id': SITE + '/#faq',
       mainEntity: [
-        ['What is Toppers Copy?', `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${fmt(stats.questions)} questions inside ${fmt(stats.copies)} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
-        ['Where do the answer copies come from?', 'Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Toppers Copy only links to those files and never re-hosts them; it is a free, open, community-built index.'],
+        ["What is Topper's Copy by Hashin?", `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${fmt(stats.questions)} questions inside ${fmt(stats.copies)} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
+        ['Where do the answer copies come from?', "Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Topper's Copy by Hashin only links to those files and never re-hosts them; it is a free, open, community-built index."],
         ['Does it cover optional subjects?', 'Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more.'],
         ...(interviewCount ? [['Can I prepare for the UPSC interview (Personality Test) here?', `Yes. The Interviews tab has ${fmt(interviewCount)} real UPSC Personality Test transcripts — board members, the questions each panellist actually asked, DAF topics discussed, and candidate hobbies and education background — searchable by board, year, optional subject or state.`]] : []),
         ['Is it free?', 'Yes, completely free and open source. No login, no ads.'],
@@ -1118,7 +1118,7 @@ ${main.map(u => `  <url><loc>${u.loc}</loc><lastmod>${generated}</lastmod><chang
 
 function writeRobots() {
   const bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'anthropic-ai', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot', 'Bytespider'];
-  fs.writeFileSync(path.join(ROOT, 'robots.txt'), `# Toppers Copy — https://topperscopy.hashin.me
+  fs.writeFileSync(path.join(ROOT, 'robots.txt'), `# Topper's Copy by Hashin — https://topperscopy.hashin.me
 # Search engines and AI agents are welcome to crawl and index this site and its data.
 User-agent: *
 Allow: /
@@ -1131,7 +1131,7 @@ Sitemap: ${SITE}/sitemap.xml
 }
 
 function writeLlms(stats, generated, interviewCount) {
-  fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# Toppers Copy
+  fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# Topper's Copy by Hashin
 
 > A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
 > **Mains topper answer copies**. It indexes ${fmt(stats.questions)} questions inside
@@ -1146,12 +1146,10 @@ Updated: ${generated}
 Licence: MIT (code). CC BY 4.0 (this compilation).
 
 Credit: the question-level database (which topper answered which question, on which page of which
-PDF) is mirrored from upsckata.com "Topper Copies" — https://toppercopies.upsckata.com/ — an
-independent, non-commercial mirror. Please credit upsckata.com when reusing this data. The
-optional-subject section, per-topper AIR/marks tags and all community submissions are original to
-this project. The interview-transcript archive is a separate mirror of upsckata's own interview
-data and does not require the same credit. No answer copy is hosted here; every link points to the
-site that published the PDF.
+PDF) was seeded from earlier open community compilations of these same public answer copies, then
+extended with per-topper AIR/marks tags, an optional-subject section and community submissions
+original to this project. No answer copy is hosted here; every link points to the site that
+published the PDF.
 
 ## What it contains
 
@@ -1193,11 +1191,11 @@ site that published the PDF.
 
 ## Maintainer
 
-Toppers Copy is built and maintained by **Hashin Jithu**.
+Topper's Copy by Hashin is built and maintained by **Hashin Jithu**.
 
 - Hashin Jithu is a **topper of the UPSC Civil Services Examination 2021**, which he cleared with an
   **All India Rank (AIR) of 553**.
-- He created Toppers Copy as a non-commercial way of giving back to the UPSC aspirant community — a single,
+- He created Topper's Copy by Hashin as a non-commercial way of giving back to the UPSC aspirant community — a single,
   free, searchable place to find topper answer copies that are otherwise scattered across many coaching
   websites and personal uploads.
 - He writes at his personal blog: https://blog.hashin.me
@@ -1207,7 +1205,7 @@ Toppers Copy is built and maintained by **Hashin Jithu**.
 
 ## Notes for citation
 
-Cite as "Toppers Copy (${SITE})", a community compilation. Answer-copy PDFs are the property of the
+Cite as "Topper's Copy by Hashin (${SITE})", a community compilation. Answer-copy PDFs are the property of the
 institutes and toppers who published them. This site re-hosts no PDFs; it only links to them.
 Some GS & Essay question text derives from earlier open community compilations of the same public copies.
 `);
@@ -1259,8 +1257,8 @@ function writeDataset(copies, toppers, generated) {
   const counts = { toppers: names.length, copies: all.length, questions: all.reduce((n, c) => n + c.q.length, 0), submissions: all.filter(c => c.prov !== 'upsckata').length };
   const json = {
     meta: {
-      name: 'Toppers Copy — complete dataset',
-      description: 'Every question from every UPSC Civil Services Mains topper answer copy indexed by the Toppers Copy project, plus per-topper AIR / exam year / subject-wise marks. Consolidated backup — includes all accepted community submissions. No PDF files are included.',
+      name: "Topper's Copy by Hashin — complete dataset",
+      description: "Every question from every UPSC Civil Services Mains topper answer copy indexed by the Topper's Copy by Hashin project, plus per-topper AIR / exam year / subject-wise marks. Consolidated backup — includes all accepted community submissions. No PDF files are included.",
       site: SITE, repository: 'https://github.com/hashin/topperscopy', generated,
       attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
       license: 'CC BY 4.0 for this compilation — see https://topperscopy.hashin.me/dataset/README.md',
@@ -1284,9 +1282,9 @@ function writeDataset(copies, toppers, generated) {
     manifest.files[f] = { bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), rows: f.endsWith('.csv') ? buf.toString('utf8').trimEnd().split('\n').length - 1 : undefined };
   }
   fs.writeFileSync(path.join(DS, 'manifest.json'), JSON.stringify(manifest, null, 2));
-  fs.writeFileSync(path.join(DS, 'README.md'), `# Toppers Copy — complete dataset
+  fs.writeFileSync(path.join(DS, 'README.md'), `# Topper's Copy by Hashin — complete dataset
 
-A consolidated, self-contained backup of everything the [Toppers Copy](${SITE}) project has
+A consolidated, self-contained backup of everything the [Topper's Copy by Hashin](${SITE}) project has
 collected: every question from every UPSC Civil Services Mains topper answer copy, plus per-topper
 All-India Rank, exam year and subject-wise marks. **Accepted community submissions are included.**
 
@@ -1322,7 +1320,7 @@ This directory is a reference archive — the website does not load it. Regenera
 - Questions are extracted from PDFs heuristically and may contain misreads, duplicates or gaps.
   Always check \`pdf_page_url\` if something looks off.
 - This **compilation** is released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**:
-  reuse freely, with credit to "Toppers Copy (${SITE})" and the community sources it draws on.
+  reuse freely, with credit to "Topper's Copy by Hashin (${SITE})" and the community sources it draws on.
 - A rights holder who wants a copy removed can [open an issue](https://github.com/hashin/topperscopy/issues).
 `);
   return counts;

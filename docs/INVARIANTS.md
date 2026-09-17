@@ -22,7 +22,7 @@ npm run check        # ~2 seconds, plain Node, no browser
 
 | ID | Rule | Cites |
 |---|---|---|
-| `INV-5` | upsckata.com is credited in `index.html`, `README.md` and `llms.txt` | INTENT-4 |
+| `INV-5` | upsckata.com is credited in `README.md` (repo-level provenance record only — not surfaced on the live site) | DECISION-20 |
 | `INV-6` | `README.md` does not claim an optimisation, data file or engine the code does not have | INTENT-6 |
 | `INV-7` | Nothing `llms.txt` or `index.html` links to is excluded by `deploy.yml` | INTENT-6 |
 

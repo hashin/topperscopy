@@ -1,4 +1,4 @@
-/* Toppers Copy — shared question-extraction heuristic.
+/* Topper's Copy by Hashin — shared question-extraction heuristic.
    Pure, no dependencies. Runs both in the browser (assets/analyse.js feeds it
    text pulled from a PDF via pdf.js) and in Node (extract.js maintainer tool).
 

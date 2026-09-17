@@ -961,3 +961,67 @@ already gets for copies.
 open (no text shard) until a card is expanded, at which point exactly one year's shard loads; search
 "mathematics" returns metadata hits, the `Optionals` dropdown set to "Mathematics" returns exactly the
 73 interviews `interview-list.json`'s own facet count says it should.
+
+---
+
+## DECISION-20 — Rebrand to "Topper's Copy by Hashin"; the live site no longer names or links
+upsckata.com, `INV-5` narrows to `README.md`
+*2026-09-17 · active · supersedes the credit-prominence clause of DECISION-1 (INTENT-4) · cites INTENT-10*
+
+**Decision.** Two independent changes, both requested and scoped in the same session:
+
+1. Every user-facing brand string becomes "Topper's Copy by Hashin": `<title>`, `<meta
+   name=author/og:site_name/og:title/twitter:title>`, the `<link rel=alternate>` title, JSON-LD
+   `WebSite`/`Organization`/`Person`/`FAQPage` names in `jsonLd()`, `manifest.webmanifest`'s `name`
+   (its `short_name` stays "Topper's Copy" — Android truncates long home-screen labels), every
+   generated static page's `<title>`/breadcrumb/CTA text (`topper/`, `question/`, `paper/`,
+   `optional/`, `toppers*.html`), `llms.txt`'s header and body, and the About/footer copy in
+   `index.html`. Source comment headers (`app.js`, `analyse.js`, `extract.js`, `style.css`,
+   `check.mjs`) and `README.md`/`CLAUDE.md`'s own titles were renamed too for consistency, though
+   they are not user-facing.
+2. `index.html` (About section's "Credit & sources", the Interviews tab's lead paragraph, the footer
+   CC BY line) and `writeLlms()`'s credit paragraph no longer name or link upsckata.com. The About
+   section's origin story is now generic: "part of the older GS & Essay text derives from earlier
+   open community compilations of these same public answer copies" — a sentence that was already
+   there, with the specific-source sentence removed rather than reworded, since it was redundant
+   once the named source was gone. `INV-5` (`tools/check.mjs`) now checks only `README.md` for the
+   word "upsckata" — `index.html` and `llms.txt` were dropped from its file list, since requiring
+   them to contain a string this decision just removed would make the check fail by design.
+
+**Why.** Hashin asked directly, in a message that explicitly named both changes together. Point 2 is
+the one worth explaining, because it reverses a standing position: INTENT-4 states the upsckata
+credit "must be credited prominently… that is both the ethical position and the reason publishers
+have not objected," and `INV-5` was a hard-failing check enforcing exactly that. Asked to confirm
+scope before touching a decision with that much weight behind it (per this repo's own rule: never
+silently reverse a `DECISION-n`), Hashin scoped it narrowly: the *live site* drops the credit, but
+`README.md` (and, by the same logic, `CLAUDE.md`/`docs/`/`dataset/README.md`) keep the factual
+provenance note, because those are maintainer-facing repo documentation, not something a site visitor
+sees, and `docs/MEMORY.md`'s own founding rule is that documentation must not lie about how the code
+came to be. The credit is therefore not deleted, only moved off the pages a visitor reaches.
+
+**Rejected.**
+- *Scrub upsckata from every file, including `README.md`, `CLAUDE.md`, `docs/` and
+  `dataset/README.md`.* Offered as the other option; Hashin picked the narrower one. Rejected because
+  it would leave no written record anywhere in the repo of where the GS/Essay question database
+  actually came from — the exact "lost context" failure `docs/MEMORY.md` exists to prevent, for a
+  fact a future session (or a rights-holder inquiry) may need.
+- *Drop the origin story from the About section entirely, rather than reword it generically.*
+  Offered as the other wording option; Hashin picked generic sourcing language instead, so the
+  paragraph still tells a reader the question database wasn't built from nothing.
+- *Leave `INV-5` checking `index.html`/`llms.txt` and let it fail.* This repo's own rule
+  (`docs/MEMORY.md`) is that every check in `tools/check.mjs` must pass — a permanently-red check is
+  worse than no check, because nobody trusts `npm run check`'s output once one line is known-broken.
+  Narrowing the check to what's actually still true is the correct fix, not disabling it.
+- *Give the manifest's `short_name` the full "Topper's Copy by Hashin".* Untested but likely to
+  truncate ungracefully on an Android home screen; "Topper's Copy" is the same brand, shorter.
+
+**Reverse if.** Hashin asks to restore the on-site credit (e.g. if upsckata objects, or if he decides
+the ethical case for crediting outweighs the rebrand). At that point, restore the removed sentences
+in `index.html` and `writeLlms()` verbatim from this diff and put `index.html`/`llms.txt` back in
+`INV-5`'s file list — do not re-derive the wording from scratch, since the original phrasing was
+itself the product of earlier sessions' care (DECISION-1, INTENT-4).
+
+**Enforced by.** `INV-5` (updated — checks `README.md` only). Not otherwise checkable that the brand
+string is consistent everywhere; verified by `grep -rn "Toppers Copy"` returning zero hits outside
+`docs/` history (INTENT/DECISIONS entries quote Hashin verbatim and are never retroactively renamed)
+and `.claude/worktrees/` (an unrelated stale agent worktree, not part of this repo's own content).

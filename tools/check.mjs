@@ -1,4 +1,4 @@
-/* Toppers Copy — the invariant check. `npm run check` (after `node build.js`).
+/* Topper's Copy by Hashin — the invariant check. `npm run check` (after `node build.js`).
  *
  * Every rule here exists because of something in docs/INTENT.md or docs/DECISIONS.md, and
  * docs/INVARIANTS.md lists them with the reason. Prints a table; exits non-zero on any failure.
@@ -78,9 +78,9 @@ check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a c
 });
 
 /* ---- credit and honesty ---- */
-check('INV-5', 'INTENT-4', 'upsckata.com is credited in index.html, README.md and llms.txt', () => {
-  const missing = ['index.html', 'README.md', 'llms.txt'].filter(f => !exists(f) || !/upsckata/i.test(read(f)));
-  return { ok: !missing.length, detail: missing.length ? 'missing from: ' + missing.join(', ') : 'present in all three' };
+check('INV-5', 'DECISION-20', 'upsckata.com is credited in README.md (repo-level provenance record only, per DECISION-20)', () => {
+  const missing = ['README.md'].filter(f => !exists(f) || !/upsckata/i.test(read(f)));
+  return { ok: !missing.length, detail: missing.length ? 'missing from: ' + missing.join(', ') : 'present' };
 });
 check('INV-6', 'INTENT-6', 'README does not claim optimisations the code does not have', () => {
   const css = read('assets/style.css'), html = read('index.html');
@@ -169,7 +169,7 @@ check('BUDGET interview shards', 'INTENT-2', `every interview-text-<year>.json w
 
 /* ---- report ---- */
 const failed = results.filter(r => !r.ok);
-console.log('Toppers Copy — invariant check\n');
+console.log("Topper's Copy by Hashin — invariant check\n");
 for (const r of results) console.log(`  ${r.ok ? 'ok  ' : 'FAIL'} ${r.id.padEnd(16)} ${r.title}\n       ${r.cites.padEnd(12)} ${r.detail}`);
 console.log(`\n${results.length - failed.length}/${results.length} passing`);
 if (failed.length) { console.log('FAILED: ' + failed.map(r => r.id).join(', ')); process.exit(1); }
