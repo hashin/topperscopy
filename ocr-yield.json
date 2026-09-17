@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T17:29:29.121Z",
+  "generated": "2026-09-17T19:52:35.950Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -4126,6 +4126,20 @@
       "salvaged": 0,
       "groupMedian": 20,
       "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/922fa-1167967_2424_saloni_gautam_rank_127.pdf",
+      "topper": "Saloni Gautam",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 12,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/d4855-18322_2220_sonali-mishra_rank-140.pdf",
