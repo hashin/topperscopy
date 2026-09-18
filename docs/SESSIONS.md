@@ -706,3 +706,40 @@ Hashin ever wants the on-site credit restored, `DECISION-20`'s "Reverse if" has 
 revert. Did not touch `docs/archive/`, or historical quotes inside `INTENT.md`/`DECISIONS.md` that
 say "Toppers Copy" — those are Hashin's own past words and stay verbatim, per this file's own
 append-only convention.
+
+## 2026-09-18 — Diagnosed a cancelled `ocr-gemini.yml` run; made the Gemini OCR pass concurrent
+**Asked.** Hashin asked me to watch the currently-running `ocr-gemini.yml` job and report when it
+finished. It got cancelled instead, so he asked for a detailed diagnosis of why, then to fix it, then
+to commit the fix.
+**Did.** Pulled the full log for the cancelled run (`gh run view 35347650774 --log`) rather than
+guessing from the annotation. Found: GitHub's own 350-minute job timeout killed it mid-pass, not a
+code error — zero `minute-limited`/`request failed`/5xx lines anywhere in the log; every Gemini
+`fetch()` that was attempted succeeded. The gap was throughput: ~58s per request against the code's
+own ~1.7s `gapNow()` pacing, because the loop is fully sequential (one job, one page-batch, one
+`fetch()`, awaited, repeat) and real free-tier Gemini vision latency dominates that cycle by ~35×.
+At that rate the run could never reach its own stopping condition (every model's real 500/day quota
+429ing) before the wall-clock timeout — confirmed by the log itself (343 requests done, no model
+anywhere near dead). No data was lost: `Save OCR cache` and `Persist raw-text cache` both ran
+(`if: always()`), and the next scheduled run resumed from that cache and landed cleanly
+(commit `6e567add`, 1h33m, `npm run check` unaffected).
+Refactored `ocr-pipeline.mjs`'s `gemini` command to run several jobs concurrently instead of one
+sequential loop (`DECISION-21` has the full reasoning and the rejected alternative of parallelizing
+page-batches within a job, which would have broken the `<<CUT>>` cross-page stitch). Verified with
+`node --check` and a full `node build.js && npm run check` (24/24) — the latter also incidentally hit
+a stale, gitignored `topper/` directory left over from an earlier interrupted local build
+(`ENOTEMPTY`), unrelated to this change; cleared it and reran clean.
+Also discussed, at Hashin's prompt, whether other Gemini model names or additional API keys could
+raise the daily ceiling further. Answer: `gemini-flash-lite-latest` is untested here and might not
+even be a distinct quota bucket; `gemini-2.5-flash-lite` is gated off on newer keys per the script's
+own comment. The real lever is separate Google Cloud projects, each with an independent
+500/day-per-model bucket — but Hashin asked to hold that off until this concurrency fix's real-world
+effect is visible, so no code was written for multi-key support.
+**Learned.** `ocr-gemini.yml`'s own comment ("~1,400 free req/night") was never validated against
+observed latency — the design assumed the bottleneck would be the per-minute rate limit, but it was
+always the vision call's raw response time. Worth remembering for any future throughput tuning here:
+check the actual log's request cadence before assuming the rate-limit math is what's binding.
+**Left.** Not load-tested with a real key (none available locally) — the next scheduled
+`ocr-gemini.yml` run is the first live proof this helps. If it still times out without draining
+quota, the next thing to check is whether `CONCURRENCY`'s default (`min(MODELS.length, 4)` = 3) needs
+raising via `--concurrency`, not whether the approach itself is wrong. Multi-key/multi-project support
+explicitly deferred per Hashin's instruction — revisit only once this run's throughput is known.

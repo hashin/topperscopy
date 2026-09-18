@@ -238,3 +238,8 @@ Record them here rather than guessing. Move them into an `INTENT-n` once he deci
   in DECISION-19's v1 (metadata-only search; no `interview/<slug>/` pages) — real future value, but
   each is a second data-loading path or a second static-page generator, more than "add a tab" asked
   for. Revisit if Hashin wants the Interviews tab to be as searchable/crawlable as the copies feature.
+- **Multiple `GEMINI_API_KEY`s / Google Cloud projects for `ocr-gemini.yml`.** The free daily quota
+  is per (project × model), so a second key from a separate project would get its own independent
+  500/day-per-model bucket — a real multiplier on top of DECISION-21's concurrency fix. Hashin asked
+  to hold off until the concurrency fix's real-world effect on a single key is known (2026-09-18).
+  If he gets extra keys, `ocr-pipeline.mjs gemini` needs to accept a pool of keys, not just one.

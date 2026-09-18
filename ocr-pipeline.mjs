@@ -1270,6 +1270,10 @@ if (cmd === 'gemini') {
   const baseGap = getArg('gap') ? +getArg('gap') : (PAID ? 250 : 5000);
   const gapNow = () => Math.max(PAID ? 200 : 900, Math.round(baseGap / Math.max(1, live().length)));
   const perReq = 6;                                                  // page images per request
+  // Requests are latency-bound (each fetch() to the free-tier endpoint can take
+  // 30-60s+) far more than they're rate-limited (gapNow() is ~1-5s) — running
+  // several jobs concurrently overlaps that latency instead of idling on it.
+  const CONCURRENCY = getArg('concurrency') ? +getArg('concurrency') : Math.min(MODELS.length, 4);
   const only = getArg('source');
   const unitLimit = getArg('limit') ? +getArg('limit') : Infinity;
   const chunk = getArg('chunk') ? +getArg('chunk') : 0;
@@ -1311,7 +1315,7 @@ if (cmd === 'gemini') {
   let rr = 0;
   const pickModel = () => { const l = live(); return l.length ? l[rr++ % l.length] : null; };
   const redoCount = jobs.filter(j => j.c.redo).length;
-  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units${redoCount ? ` (${redoCount} redo)` : ''} · cap ${perModelCap}/model · ~${gapNow()}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
+  console.log(`gemini [${MODELS.join(', ')}]${PAID ? ' PAID' : ''} · ${jobs.length} units${redoCount ? ` (${redoCount} redo)` : ''} · cap ${perModelCap}/model · concurrency ${CONCURRENCY} · ~${gapNow()}ms gap · ${RENDER_DPI}dpi · shard ${chunk + 1}/${of}`);
 
   const PROMPT = GEMINI_PROMPT;
 
@@ -1319,16 +1323,22 @@ if (cmd === 'gemini') {
   fs.mkdirSync(GRAW, { recursive: true });
   const totalUsed = () => M.reduce((a, m) => a + m.used, 0);
   let unitsDone = 0, allDead = false;
-  for (const job of jobs) {
-    if (allDead || !live().length) break;
+
+  // Concurrency is across JOBS, not page-batches within one job, so a job's
+  // own pages stay strictly in order — the <<CUT>> stitch across a page
+  // boundary (below) depends on that.
+  let cursor = 0;
+  const nextJob = () => (allDead || !live().length || cursor >= jobs.length) ? null : jobs[cursor++];
+
+  async function runJob(job) {
     const { fetchUrl } = resolve(job.c.representative);
-    if (!fetchUrl) { continue; }
+    if (!fetchUrl) return;
     KEEP_PDFS = true;
     const meta = await getPdf(fetchUrl, { needFile: true });
     const pdfPath = path.join(PDFDIR, sha1(fetchUrl) + '.pdf');
     if (meta.error || !fs.existsSync(pdfPath)) {
       fs.writeFileSync(job.outPath, JSON.stringify({ ...job.rec, error: meta.error || 'no-pdf' }));
-      continue;
+      return;
     }
     const heightPts = meta.pageHeightPts || 842;
     const frac = getArg('strip') ? +getArg('strip') : STRIP_BY_PAPER(job.c.paper || job.rec.paper);
@@ -1415,6 +1425,12 @@ if (cmd === 'gemini') {
     fs.writeFileSync(job.outPath, JSON.stringify(job.rec));
     console.log(`  ${(job.c.key || job.c.representative.slice(-42))} · ${job.rec.questions.length} q · ${totalUsed()} req total`);
   }
+
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
+    let job;
+    while ((job = nextJob())) await runJob(job);
+  }));
+
   const leftover = M.filter(m => !m.dead).map(m => `${m.name.replace('gemini-', '')} had ${perModelCap - m.used}+ left`);
   console.log(`\ndone. ${totalUsed()} requests${M.length > 1 ? ' (' + M.map(m => m.name.replace('gemini-', '') + ':' + m.used + (m.dead ? '✓' : '')).join(' ') + ')' : ''} · ${unitsDone} units`);
   if (leftover.length && jobs.length) console.log(`NOTE: stopped with quota unspent — ${leftover.join(', ')}. A catch-up run today will drain it.`);

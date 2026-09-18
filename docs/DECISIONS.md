@@ -1025,3 +1025,41 @@ itself the product of earlier sessions' care (DECISION-1, INTENT-4).
 string is consistent everywhere; verified by `grep -rn "Toppers Copy"` returning zero hits outside
 `docs/` history (INTENT/DECISIONS entries quote Hashin verbatim and are never retroactively renamed)
 and `.claude/worktrees/` (an unrelated stale agent worktree, not part of this repo's own content).
+
+---
+
+## DECISION-21 — `ocr-pipeline.mjs gemini` runs jobs concurrently, not page-batches within a job
+*2026-09-18 · active*
+
+**Decision.** The `gemini` command's request loop (`ocr-pipeline.mjs`) now runs `CONCURRENCY`
+(default `min(MODELS.length, 4)`, override `--concurrency`) workers pulling from a shared job
+queue, instead of one fully sequential `for (const job of jobs)` loop. Concurrency is scoped to
+whole jobs (booklets) — each job is still owned by exactly one worker for its whole lifetime, and
+that worker still processes its own pages strictly in order.
+
+**Why.** Diagnosed run `35347650774` (2026-09-18 12:59–18:50 UTC): GitHub cancelled it for hitting
+`ocr-gemini.yml`'s 350-minute job timeout, mid-pass, with zero errors in the log — no `minute-limited`
+or `request failed` lines anywhere. Every `fetch()` that was made succeeded; there just weren't
+enough of them. Observed throughput was ~58s/request against a designed `gapNow()` pacing gap of only
+~1.7s — the real bottleneck is free-tier Gemini response latency for a 6-image vision request, not
+the code's own rate-limiting sleep. At that pace, draining one model's real 500/day cap would take
+~8 hours per model — the job can never reach its own stopping condition
+(`every model 429'd`) before the wall-clock timeout kills it first, so most of the day's actual free
+quota goes unspent. Running several jobs' requests concurrently overlaps that idle-on-`fetch()` time
+instead of paying it serially.
+
+**Rejected.** *Parallelizing page-batches within a single job.* A job's pages must be visited in
+increasing order because of the `<<CUT>>` stitch (`ocr-pipeline.mjs`'s per-page loop): a question
+that prints past a page's bottom edge is carried as `cut` and completed from the next page's text.
+Two workers racing ahead on the same job's later pages before an earlier page's `cut` resolves would
+silently corrupt that stitch. Scoping concurrency to whole jobs sidesteps this entirely — only one
+worker ever touches a given job's `cut`/`geminiPages`/`questions` state.
+
+**Reverse if.** A future run shows real `minute-limited` 429s appearing where none did before —
+that would mean concurrency pushed the effective per-model request rate high enough to hit the
+free tier's per-minute cap, and `CONCURRENCY`'s default should come down (or `gapNow()`'s divisor
+needs to account for concurrent workers, not just live model count).
+
+**Enforced by.** Not statically checkable — `node --check` only. First real-world validation is
+the next scheduled `ocr-gemini.yml` run; no local `GEMINI_API_KEY` was available to load-test it in
+this session.
