@@ -6,8 +6,13 @@ name: OCR — Gemini vision pass
 # round-robin gives N×500/day at $0. Each model stops clean on its own per-day
 # 429 and is dropped from the rotation. Progress is cached in .ocr/ so each run
 # resumes where it stopped. Only *-flash-lite has the 500/day free quota
-# (full/preview flash = 20/day, pro = 0), so the rotation is 3 flash-lite
-# models → ~1,400 free req/night, backlog ~2 weeks, $0.
+# (full/preview flash = 20/day, pro = 0). The rotation is the 3 confirmed-
+# working flash-lite models plus `gemini-flash-lite-latest` (2026-09-19): that
+# 4th name is an alias, so it's unverified whether it's a real separate
+# 500/day bucket or just points at (and shares quota with) 3.5-flash-lite —
+# harmless either way, since a shared-quota 429 just drops that name from the
+# rotation like any other dead model. `gemini-2.5-flash-lite` was probed and
+# confirmed 404 ("no longer available to new users") — not worth retrying.
 #
 # Draining every model's quota, delay-proof — the per-day counter resets at
 # midnight US-Pacific (07:00 UTC PDT / 08:00 UTC PST). A run drains whatever
@@ -32,7 +37,7 @@ on:
       models:
         description: "Comma-separated model rotation (each has its own 500/day)"
         required: true
-        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview"
+        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview,gemini-flash-lite-latest"
       redo:
         description: "Comma-separated booklet URLs to re-OCR (low-yield fixes; see `yield` report). Blank = normal run."
         required: false
@@ -108,7 +113,7 @@ jobs:
           node ocr-pipeline.mjs plan
           node ocr-pipeline.mjs freepass --concurrency 8
           node ocr-pipeline.mjs gemini \
-            --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview' }}" \
+            --models "${{ github.event.inputs.models || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.1-flash-lite-preview,gemini-flash-lite-latest' }}" \
             --requests ${{ github.event.inputs.requests || '550' }} \
             ${{ github.event.inputs.dpi && format('--dpi {0}', github.event.inputs.dpi) || '' }} \
             ${{ github.event.inputs.strip && format('--strip {0}', github.event.inputs.strip) || '' }}

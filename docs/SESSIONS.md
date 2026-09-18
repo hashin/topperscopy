@@ -743,3 +743,18 @@ check the actual log's request cadence before assuming the rate-limit math is wh
 quota, the next thing to check is whether `CONCURRENCY`'s default (`min(MODELS.length, 4)` = 3) needs
 raising via `--concurrency`, not whether the approach itself is wrong. Multi-key/multi-project support
 explicitly deferred per Hashin's instruction — revisit only once this run's throughput is known.
+
+**2026-09-19 addendum — added `gemini-flash-lite-latest` to the rotation.** Hashin asked me to find
+other usable Gemini models rather than more API keys. Researched the official model catalog and
+Google's own release posts: the Flash-Lite family has stayed at generation 3.5 even as plain Flash
+moved on to 3.6/3.7/3.8 — no undiscovered newer Flash-Lite exists to add. One web search result
+claimed `gemini-3.1-flash-lite-preview` (already in our rotation) was shut down in May 2026; checked
+our own production logs instead of trusting it, and today's completed run shows that model still
+being used successfully across hundreds of booklets, so that claim was wrong for this project's key
+and was disregarded. The one real unused candidate already sitting in `ocr-pipeline.mjs`'s own price
+table was `gemini-flash-lite-latest` — added it as a 4th rotation member in `ocr-gemini.yml` (both the
+`workflow_dispatch` default and the inline fallback). It's an alias, so whether it's a genuinely
+separate 500/day quota bucket or just shares one with `gemini-3.5-flash-lite` is unverified and
+un-verifiable without a live key; documented that honestly in the workflow's comment rather than
+asserting it as free extra capacity. Low-risk either way — the pipeline already treats a daily-quota
+429 on any model name as "drop it, keep going."
