@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T05:23:34.746Z",
+  "generated": "2026-09-18T20:44:10.625Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -154,7 +154,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -383,6 +383,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f230a-25997_1076_anya_das_rank_60.pdf",
+      "topper": "Anya Das",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
@@ -648,7 +662,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -868,7 +882,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -882,7 +896,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -896,7 +910,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -910,7 +924,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -924,7 +938,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -938,7 +952,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -1189,6 +1203,20 @@
       "count": 4,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/65342-972959_3128_utkarsh_pathak_rank_88.pdf",
+      "topper": "Utkarsh Pathak",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 5,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
@@ -1722,6 +1750,20 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/a4911661fb63cf32bd7e1d24c76e3051/25/pttp220235_tc064.pdf",
+      "topper": "GAURAV SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/2ad49-916209_3128_vivek_yadav_rank_487.pdf",
       "topper": "Vivek Yadav",
       "coaching": "VisionIAS",
@@ -2068,7 +2110,7 @@
       "model": null,
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -2284,6 +2326,90 @@
       "optional": true,
       "groupMedian": 7,
       "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2023_unchecked_MT23MACEN218_TC013.pdf",
+      "topper": "Animesh Jain",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/22/pttp221407_tc062.pdf",
+      "topper": "RAJIV AGARWAL",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/48f94f4c58dc4d501f6f42102607e751/14/mt23rcapa081_702.pdf",
+      "topper": "MD ASIM MUJTEBA",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/39/pttp221347_tc063.pdf",
+      "topper": "SANKET KUMAR",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ed439-1174117_4514_anindya-pandey_rank_158.pdf",
+      "topper": "Anindya Pandey",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/a4911661fb63cf32bd7e1d24c76e3051/21/mt23rcapa116_tc701.pdf",
+      "topper": "FARHEEN ZAHID",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
     },
     {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/48f94f4c58dc4d501f6f42102607e751/2/pttp221185_tc062.pdf",
@@ -3192,7 +3318,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -3342,8 +3468,8 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 38,
       "salvaged": 1,
-      "groupMedian": 8,
-      "low": false
+      "groupMedian": 14.5,
+      "low": true
     },
     {
       "url": "https://drive.google.com/file/d/1vsukTnBy-0Xuu2u9Xe-8tXfqtjx3HUzN/view",
@@ -3600,7 +3726,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": true
     },
     {
@@ -3638,7 +3764,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -3652,7 +3778,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -3792,7 +3918,7 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 1,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": true
     },
     {
@@ -3928,7 +4054,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -3956,7 +4082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -4124,7 +4250,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": true
     },
     {
@@ -4138,8 +4264,22 @@
       "model": null,
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7dc2d-323294_1056_gunjan_dwivedi_rank_9.pdf",
+      "topper": "Gunjan Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/922fa-1167967_2424_saloni_gautam_rank_127.pdf",
@@ -4152,7 +4292,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -4446,6 +4586,62 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a5e6c-832681_2220_anunay-anand_rank-185.pdf",
+      "topper": "Anunay Anand",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7d977-1447625_2425_neeraj_songara_rank_964.pdf",
+      "topper": "NEERAJ SONGARA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/dd00d-817626_4513_neeraj-trar_rank_180.pdf",
+      "topper": "Neeraj Trar",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4bb74-514134_1245_karishma-nair_rank_14.pdf",
+      "topper": "Karishma Nair",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/38baf-1361130_2214_zufishan_haque_rank_33.pdf",
       "topper": "ZUFISHAN HAQUE",
       "coaching": "VisionIAS",
@@ -4484,7 +4680,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -4512,7 +4708,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -4680,8 +4876,8 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 20,
-      "low": false
+      "groupMedian": 22,
+      "low": true
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/020f8-579950_2220_mohan-dan_rank-710.pdf",
@@ -4722,6 +4918,34 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 1,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/043ae-35605_861_jay_shivani_rank_81.pdf",
+      "topper": "Jay Shivani",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1f384-656155_1249_vaishnavi-paul_rank-62.pdf",
+      "topper": "Vaishnavi Paul",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
       "groupMedian": 14,
       "low": false
     },
@@ -4876,7 +5100,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -4947,6 +5171,34 @@
       "geminiPages": 64,
       "salvaged": 1,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9030c-282979_2098_pooja_malani_rank_306.pdf",
+      "topper": "POOJA MALANI",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 14,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/02347-206428_1242_raunak-agarwal_rank_13.pdf",
+      "topper": "Raunak Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 15,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5114,7 +5366,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5128,7 +5380,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5142,7 +5394,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5156,7 +5408,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5170,7 +5422,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5184,7 +5436,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5195,6 +5447,118 @@
       "count": 15,
       "optional": false,
       "groupMedian": 3,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6d34f-973996_1528_kushal-jain_rank40.pdf",
+      "topper": "Kushal jain",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 15,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c48d9-146733_1066_khusboo_gupta_rank_80.pdf",
+      "topper": "Khushboo Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/532b1-36962_1451_aditya-bansal_rank_104.pdf",
+      "topper": "Aditya Bansal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/56206-58233_1069_nihal_randhawa_rank_108.pdf",
+      "topper": "Nihal Randhawa",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/910d5-33143_877_ramya_rank_45.pdf",
+      "topper": "RAMYA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0dc87-3452_1448_sidhartha-gupta_rank_102.pdf",
+      "topper": "Sidhartha Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/baa33-6667_1235_nupur-goel_rank_11.pdf",
+      "topper": "Nupur Goel",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c13e3-37460_1057_pratibha-verma_rank_3.pdf",
+      "topper": "Pratibha Verma",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -5292,7 +5656,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5320,7 +5684,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5348,7 +5712,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5362,7 +5726,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -5390,7 +5754,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5446,7 +5810,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5474,7 +5838,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5558,7 +5922,63 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/7/cava25ecl1569_flt2509.pdf",
+      "topper": "Ananya Rana",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/effc5-32718_873_junaid_ahmad_rank_3.pdf",
+      "topper": "Junaid Ahmad",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a82c0-444569_2425_akansha_pathak_rank_85.pdf",
+      "topper": "AKANSHA PATHAK",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4280d-559772_1516_bhuvi-gupta_rank-264.pdf",
+      "topper": "Bhuvi Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -5586,7 +6006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5614,7 +6034,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5656,7 +6076,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5698,7 +6118,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5726,7 +6146,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5754,7 +6174,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5782,7 +6202,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5796,7 +6216,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5824,7 +6244,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5852,7 +6272,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5880,7 +6300,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5978,7 +6398,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6034,7 +6454,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6104,7 +6524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6132,7 +6552,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6146,7 +6566,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6160,7 +6580,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6174,7 +6594,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -6188,7 +6608,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6202,7 +6622,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6216,7 +6636,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6230,7 +6650,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6244,6 +6664,90 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/51099-1310907_1841_vibhor_bhardwaj_rank_19.pdf",
+      "topper": "Vibhor Bhardwaj",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/159c7-22703_1243_abhinav-tyagi_rank_245.pdf",
+      "topper": "Abhinav Tyagi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d30f1-1428670_2928_prateek-yadav_rank_208.pdf",
+      "topper": "Prateek Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/14654_748_Manish_Rank_18.pdf",
+      "topper": "Manish Gurwani",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 71,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 71,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/82/cava25ecl1569_flt2505.pdf",
+      "topper": "Ananya Rana",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d2560-1040829_2424_saurabh-sharma_rank_23.pdf",
+      "topper": "SAURAVH SHARMA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/49fca-972640_1417_jagrati-awasthi_rank_2.pdf",
       "topper": "Jagrati Awasthi",
       "coaching": "VisionIAS",
@@ -6254,7 +6758,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6282,7 +6786,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6324,7 +6828,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6366,7 +6870,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6380,7 +6884,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6408,7 +6912,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6422,7 +6926,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6478,7 +6982,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6506,7 +7010,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6520,7 +7024,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6562,7 +7066,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6576,7 +7080,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6590,7 +7094,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6604,7 +7108,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6618,7 +7122,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6646,7 +7150,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6660,7 +7164,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6674,7 +7178,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6688,7 +7192,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6702,7 +7206,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6716,7 +7220,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6730,7 +7234,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6744,7 +7248,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6758,7 +7262,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6786,7 +7290,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6800,7 +7304,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6814,7 +7318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6828,7 +7332,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6856,7 +7360,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6940,7 +7444,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6968,7 +7472,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6982,7 +7486,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -6996,7 +7500,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7010,7 +7514,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7052,7 +7556,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7080,7 +7584,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7178,7 +7682,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7192,7 +7696,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7220,7 +7724,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7248,7 +7752,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7262,7 +7766,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7276,7 +7780,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7290,7 +7794,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7304,7 +7808,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7318,7 +7822,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7402,7 +7906,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7416,7 +7920,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7444,7 +7948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7458,7 +7962,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7472,7 +7976,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7542,7 +8046,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7556,7 +8060,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7570,7 +8074,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7584,7 +8088,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7598,7 +8102,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7612,7 +8116,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7626,7 +8130,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7640,7 +8144,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7654,7 +8158,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7668,7 +8172,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7682,7 +8186,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7696,7 +8200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7710,7 +8214,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7724,7 +8228,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7738,7 +8242,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7752,7 +8256,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7766,7 +8270,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7780,7 +8284,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7794,7 +8298,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7808,7 +8312,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7822,7 +8326,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7836,7 +8340,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7850,7 +8354,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7864,7 +8368,7 @@
       "model": null,
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7878,7 +8382,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7892,7 +8396,7 @@
       "model": null,
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7906,7 +8410,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7920,7 +8424,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7934,7 +8438,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7948,7 +8452,175 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/97710-1073421_2097_anjali-joy_rank-416.pdf",
+      "topper": "Anjali Joy",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 18,
+      "optional": true,
+      "pages": 45,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 45,
+      "salvaged": 0,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7049f-966377_1417_sai-manasa-n-c_rank_48.pdf",
+      "topper": "Sai Manasa N C",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/89c5a-24773_872_rahul_jain_rank_21.pdf",
+      "topper": "Rahul Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/474c0-1040829_2422_saurabh-sharma_rank_23.pdf",
+      "topper": "SAURAVH SHARMA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/63bd7-125597_1244_gunjan-singh_rank_16.pdf",
+      "topper": "Gunjan Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/75562-670858_1432_ankur-das_rank_52.pdf",
+      "topper": "Ankur Das",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/MT25FLTRA046_FLT2506.pdf",
+      "topper": "Pakshal Secretry",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/8/mts_2025_unchecked_gc25d1b47037_flt2507.pdf",
+      "topper": "Sugandha Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f0051-37670_860_ravi-jain_rank_9.pdf",
+      "topper": "Ravi Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a8e0b-1111885_1513_kunal_rastogi-_rank_15.pdf",
+      "topper": "KUNAL RASTOGI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7889c-976428_2930_ritika-pandey_rank_185.pdf",
+      "topper": "Ritika Pandey",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7881c-106474_1450_rajat-ubhaykar_rank_49.pdf",
+      "topper": "Rajat Ravindra Ubhaykar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7962,7 +8634,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7976,7 +8648,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -7990,7 +8662,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8004,7 +8676,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8018,7 +8690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8046,7 +8718,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8060,7 +8732,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8074,7 +8746,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8102,7 +8774,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8116,7 +8788,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8130,7 +8802,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8144,7 +8816,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8158,7 +8830,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8172,7 +8844,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8200,7 +8872,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8228,7 +8900,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8256,7 +8928,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8270,7 +8942,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8326,7 +8998,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8340,7 +9012,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8354,7 +9026,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8368,7 +9040,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8382,7 +9054,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8396,7 +9068,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8410,7 +9082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8424,7 +9096,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8438,7 +9110,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8466,7 +9138,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8494,7 +9166,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8508,7 +9180,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8522,7 +9194,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8536,7 +9208,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8550,7 +9222,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8564,7 +9236,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8578,7 +9250,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8606,7 +9278,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8620,7 +9292,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8634,7 +9306,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8648,7 +9320,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8676,7 +9348,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8690,7 +9362,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8704,7 +9376,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8718,7 +9390,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8732,7 +9404,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8746,7 +9418,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8760,7 +9432,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8774,7 +9446,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8788,7 +9460,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8816,7 +9488,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8858,7 +9530,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8886,7 +9558,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8914,7 +9586,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8956,7 +9628,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -8998,7 +9670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9026,7 +9698,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9054,7 +9726,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9068,7 +9740,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9082,7 +9754,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9110,7 +9782,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9124,7 +9796,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9138,7 +9810,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9208,7 +9880,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9236,7 +9908,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9250,7 +9922,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9264,7 +9936,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9292,7 +9964,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9306,7 +9978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9334,7 +10006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9348,7 +10020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9488,7 +10160,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9502,7 +10174,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9516,7 +10188,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9530,7 +10202,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9586,7 +10258,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9600,7 +10272,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9628,7 +10300,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9656,7 +10328,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9670,7 +10342,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9684,7 +10356,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9698,7 +10370,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9712,7 +10384,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9726,7 +10398,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9740,7 +10412,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9754,7 +10426,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9768,7 +10440,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9782,7 +10454,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9796,7 +10468,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9824,7 +10496,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9838,7 +10510,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9866,7 +10538,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9880,7 +10552,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9894,7 +10566,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9908,7 +10580,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9922,7 +10594,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 47,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9936,7 +10608,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9950,7 +10622,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9964,7 +10636,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9978,7 +10650,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -9992,7 +10664,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10006,7 +10678,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10020,7 +10692,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10034,7 +10706,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10048,7 +10720,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10062,7 +10734,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10076,7 +10748,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10090,7 +10762,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10104,7 +10776,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10118,7 +10790,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10132,7 +10804,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10160,7 +10832,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10174,7 +10846,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10188,7 +10860,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10202,7 +10874,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10216,7 +10888,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10230,7 +10902,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10284,6 +10956,412 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/36af0-76172_1247_sujit-shankar_rank_122.pdf",
+      "topper": "Sujit Shankar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/143707_875_Keerthi_Vasan_Rank_29.pdf",
+      "topper": "Keerthi Vasan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e915c-417797_1068_kanishak_kataria_rank_1.pdf",
+      "topper": "Kanishak Kataria",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/798a6-49120_1234_mukund-kr_rank_54.pdf",
+      "topper": "Mukund Kr",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/34271_871_Prudhvi_Tej_Rank_24.pdf",
+      "topper": "Prudhvi Tej",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/11/mt25flton033_flt2501.pdf",
+      "topper": "Aditya Mathur",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a98c8-149946_2929_ritwik-_mehta_rank_115.pdf",
+      "topper": "Ritwik Mehta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3a69a-1016167_1515_gamini-singla_rank_03.pdf",
+      "topper": "Gamini Singla",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/31e42-45884948_4512_ankit-jarwal_rank_205.pdf",
+      "topper": "Ankit Jarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2071_1024_Aparna_Gupta_Rank_38.pdf",
+      "topper": "Aparna Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/aa972-1040829_2423_saurabh-sharma_rank_23.pdf",
+      "topper": "SAURABH SHARMA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/143707_874_Keerthi_Vasan_Rank_29.pdf",
+      "topper": "Keerthi Vasan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/16663_845_Anita_Rank_350.pdf",
+      "topper": "Anita Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/5/mts_2025_unchecked_gc25d1b47037_flt2511.pdf",
+      "topper": "Sugandha Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/3/mts_2025_unchecked_mt25fltra012_flt2510.pdf",
+      "topper": "Harsh Santosh Lodha",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/21654_766_Bilal_Rank_10.pdf",
+      "topper": "Bilal Mohi UD Din Bhat",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/103e7-832681_2218_anunay-anand_rank-185.pdf",
+      "topper": "Anunay Anand",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/13784-22534_759_anmol-jain_rank_14.pdf",
+      "topper": "Anmol Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 44,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 44,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/915af-33161_1049_vaishali_singh_rank_8.pdf",
+      "topper": "Vaishali Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f2205-972959_2931_utkarsh_pathak_rank_88.pdf",
+      "topper": "Utkarsh Pathak",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 20,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9d965-610540_4510_ankit-agrawal_rank_217.pdf",
+      "topper": "Ankit Agrawal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8174c-111460_1067_akshansh-yadav_rank-109.pdf",
+      "topper": "Akshansh Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/13955_876_Vishal_Mishra_Rank_49.pdf",
+      "topper": "Vishal Mishra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/984fc-0570255_2217_yogesh-dilhor_rank_55.pdf",
+      "topper": "YOGESH DILHOR",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/396ad-832681_2219_anunay-anand_rank-185.pdf",
+      "topper": "Anunay Anand",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/26262_844_Shweta_Rank_8.pdf",
+      "topper": "Shweta Chauhan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2c24b-1017427_1514_naman-kumar-singla_47.pdf",
+      "topper": "Naman Kumar Singla",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/103781_1071_Gondane_Vaibhav_Sunil_Rank_25.pdf",
+      "topper": "Vaibhav Gondane",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/26262_757_Shweta_Rank_8.pdf",
+      "topper": "Shweta Chauhan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/102f9-1420901_2089_neha_rajput_rank_51.pdf",
       "topper": "NEHA RAJPUT",
       "coaching": "VisionIAS",
@@ -10294,7 +11372,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10308,7 +11386,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10322,7 +11400,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10336,7 +11414,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10350,7 +11428,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10364,7 +11442,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10378,7 +11456,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10392,7 +11470,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10406,7 +11484,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10420,7 +11498,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10434,7 +11512,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10448,7 +11526,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10462,7 +11540,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10476,7 +11554,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10490,7 +11568,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10504,7 +11582,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10518,7 +11596,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10532,7 +11610,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10546,7 +11624,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10560,7 +11638,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10588,7 +11666,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10602,7 +11680,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10616,7 +11694,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10630,7 +11708,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10644,7 +11722,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10672,7 +11750,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10686,7 +11764,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10700,7 +11778,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10714,7 +11792,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10728,7 +11806,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10742,7 +11820,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10770,7 +11848,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10798,7 +11876,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10812,7 +11890,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10826,7 +11904,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10840,7 +11918,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10854,7 +11932,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10868,7 +11946,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10882,7 +11960,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10910,7 +11988,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10924,7 +12002,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10938,7 +12016,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10952,7 +12030,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10980,7 +12058,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10994,7 +12072,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11022,7 +12100,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11036,7 +12114,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11050,7 +12128,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11078,7 +12156,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11092,7 +12170,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11106,7 +12184,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11134,7 +12212,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11148,7 +12226,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11162,7 +12240,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11176,7 +12254,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11190,7 +12268,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11204,7 +12282,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11218,7 +12296,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11232,7 +12310,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11246,7 +12324,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11260,7 +12338,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11274,7 +12352,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11288,7 +12366,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11302,7 +12380,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11316,7 +12394,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11330,7 +12408,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11344,7 +12422,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11358,7 +12436,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11372,7 +12450,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11386,7 +12464,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11400,7 +12478,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11414,7 +12492,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11428,7 +12506,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11442,7 +12520,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11456,7 +12534,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11470,7 +12548,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11484,7 +12562,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11498,7 +12576,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11512,7 +12590,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11526,7 +12604,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11540,7 +12618,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11554,7 +12632,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11568,7 +12646,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11582,7 +12660,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11596,7 +12674,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11624,7 +12702,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11638,7 +12716,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11652,7 +12730,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11666,7 +12744,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11680,7 +12758,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11694,7 +12772,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11708,7 +12786,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11722,7 +12800,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11736,7 +12814,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11750,7 +12828,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11764,7 +12842,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11778,7 +12856,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11792,7 +12870,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11834,7 +12912,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11876,7 +12954,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11890,7 +12968,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11904,7 +12982,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11918,7 +12996,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11960,7 +13038,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11974,7 +13052,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11988,7 +13066,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12002,7 +13080,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12016,7 +13094,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12030,7 +13108,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12058,7 +13136,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12072,7 +13150,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12086,7 +13164,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12100,7 +13178,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12114,7 +13192,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12156,7 +13234,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12170,7 +13248,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12184,7 +13262,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -12212,7 +13290,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12226,7 +13304,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12240,7 +13318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12254,7 +13332,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12268,7 +13346,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12282,7 +13360,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12296,7 +13374,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12310,7 +13388,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12324,7 +13402,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12352,7 +13430,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12366,7 +13444,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12394,7 +13472,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12408,7 +13486,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12422,7 +13500,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12436,7 +13514,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12450,7 +13528,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12464,7 +13542,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12478,7 +13556,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12506,7 +13584,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12534,7 +13612,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12590,7 +13668,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12604,7 +13682,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12618,7 +13696,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12632,7 +13710,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12646,7 +13724,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12674,7 +13752,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12702,7 +13780,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12730,7 +13808,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12744,7 +13822,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12758,7 +13836,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12772,7 +13850,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12786,7 +13864,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12800,7 +13878,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12828,7 +13906,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12842,7 +13920,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12856,7 +13934,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12870,7 +13948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12884,7 +13962,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12898,7 +13976,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12912,7 +13990,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12954,7 +14032,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12968,7 +14046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -12982,7 +14060,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13010,7 +14088,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13024,7 +14102,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13038,7 +14116,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13066,7 +14144,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13094,7 +14172,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13108,7 +14186,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13136,7 +14214,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13150,7 +14228,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13164,7 +14242,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13178,7 +14256,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13192,7 +14270,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13206,7 +14284,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13234,7 +14312,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13248,7 +14326,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13262,7 +14340,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13290,7 +14368,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13304,7 +14382,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13318,7 +14396,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13332,7 +14410,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13346,7 +14424,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13360,7 +14438,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13388,7 +14466,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13402,7 +14480,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13416,7 +14494,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13430,7 +14508,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13444,7 +14522,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13458,7 +14536,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13500,7 +14578,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13514,7 +14592,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13528,7 +14606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13542,7 +14620,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13556,7 +14634,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13570,7 +14648,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13584,7 +14662,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13612,7 +14690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13626,7 +14704,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13640,7 +14718,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13654,7 +14732,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13682,7 +14760,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13696,7 +14774,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13710,7 +14788,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13738,7 +14816,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13752,7 +14830,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13766,7 +14844,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13780,7 +14858,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13794,7 +14872,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13808,7 +14886,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13822,7 +14900,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13836,7 +14914,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13850,7 +14928,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13864,7 +14942,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13878,7 +14956,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13892,7 +14970,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13906,7 +14984,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13920,7 +14998,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13934,7 +15012,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13948,7 +15026,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13962,7 +15040,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -13976,7 +15054,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14018,7 +15096,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14032,7 +15110,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14060,7 +15138,7 @@
       "model": null,
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14074,7 +15152,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14088,7 +15166,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14102,7 +15180,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14130,7 +15208,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14144,7 +15222,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14158,7 +15236,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14172,7 +15250,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14186,7 +15264,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14200,7 +15278,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14228,7 +15306,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14242,7 +15320,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14256,7 +15334,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14284,7 +15362,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14298,7 +15376,7 @@
       "model": null,
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14326,7 +15404,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14340,7 +15418,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14354,7 +15432,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14368,7 +15446,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14382,7 +15460,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14396,7 +15474,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14438,7 +15516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14452,7 +15530,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14466,7 +15544,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14480,7 +15558,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14494,7 +15572,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -14512,6 +15590,20 @@
       "low": false
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_GSMACT24A1108_GSMAC2404.pdf",
+      "topper": "Rishabh Sharma",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 24,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 22,
+      "low": false
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Vikas_AIR_27_2025/Test%201,%20PSIR%20Crash%20Course.pdf",
       "topper": "Vikas",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14523,6 +15615,20 @@
       "geminiPages": 86,
       "salvaged": 1,
       "groupMedian": 26.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/12/mts_2025_unchecked_mt25fltra012_flt2512.pdf",
+      "topper": "Harsh Santosh Lodha",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 27,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14550,7 +15656,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14564,7 +15670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14578,7 +15684,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14592,7 +15698,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14606,7 +15712,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     },
     {
@@ -14620,7 +15726,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 22,
       "low": false
     }
   ]
