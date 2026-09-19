@@ -758,3 +758,59 @@ separate 500/day quota bucket or just shares one with `gemini-3.5-flash-lite` is
 un-verifiable without a live key; documented that honestly in the workflow's comment rather than
 asserting it as free extra capacity. Low-risk either way — the pipeline already treats a daily-quota
 429 on any model name as "drop it, keep going."
+
+## 2026-09-19 — Cloud crawler for new sources (zero found, honestly); fixed a live "Gaurav Kumar"
+identity collision it surfaced
+**Asked.** Hashin asked me to "run this on cloud: write a script to crawl internet to find copies and
+add them all to the site under relevant sections." Flagged before starting that "add them all"
+conflicted with how every past source (VisionIAS, NextIAS, ForumIAS, Shankar IAS, …) was added — a
+manual login-gate check and name-collision check before merge, per `CLAUDE.md`'s own documented
+history and the still-open "Preeti Kumari" item. Asked Hashin to pick scope via `AskUserQuestion`; he
+chose open-ended web search + stage-candidates-for-review (not auto-merge), matching precedent.
+**Did.** Launched a remote cloud agent scoped exactly to that. First two attempts stalled 10 minutes
+with no progress right after startup and had to be killed and relaunched (told the third attempt to
+prefer several small WebFetch/WebSearch calls over one that might hang, which seemed to help). The
+third run completed cleanly: checked 10 new candidate coaching/aggregator sites, verified none both
+public and genuinely new — Toppers IAS had public PDFs but all 6 of its toppers were already in the
+dataset via VisionIAS at the same AIR/year (a re-host, not a new source); the rest were login/Cloudflare-
+gated, JS-only SPAs, or content-farm sites with no verifiable per-topper attribution. Opened
+[PR #12](https://github.com/hashin/topperscopy/pull/12) with the script (`find-new-sources.mjs`) and
+its `docs/candidates/2026-09-19-crawl.*` report; confirmed via `git status` inside its own run that no
+source-of-truth file was touched. Zero new copies is a legitimate, honestly-reported result, not a
+failed task.
+While cross-checking topper names for collisions, the agent's own report surfaced a **live** one:
+`data/optionals.json`'s "Gaurav Kumar" (AIR 34, 2017, Sociology, VisionIAS) and `data/questions.csv`'s
+"Gaurav Kumar" (ForumIAS, Essay/GS2/GS3 — whose own source PDF filename says AIR 377, 2025) are two
+different real people already merged into one topper profile on the live site. Verified this myself
+independently (didn't just trust the subagent's claim) with direct `grep`/`python3` checks against the
+actual data files before acting on it, and separately confirmed `npm run check` is currently 23/24 on
+`main` (`BUDGET shard gs1` over its 200 KB budget from ordinary data growth) — unrelated to anything
+this session touched, flagged to Hashin rather than silently fixed.
+Hashin asked to fix the collision. Renamed the 69 ForumIAS/Essay rows in `data/questions.csv` from
+"Gaurav Kumar" to "Gaurav Kumar (AIR 377)" via a `node -e` regex replace (never opened the 9 MB file
+with a reader, per `CLAUDE.md`'s own instruction) — verified first that all 4 of that person's PDF
+URLs consistently say AIR 377, and that the *other* source of "Gaurav Kumar" rows in
+`data/ocr-questions.csv` shares the same VisionIAS booklet number (`14207_...`) as the AIR-34/2017
+entries, so nothing else needed touching. While wiring up an explicit `toppers.overrides.json` entry
+to lock in the correct air/year for the newly-split name, discovered `fromFilename()`'s AIR/year
+regexes both use a trailing `\b` that fails whenever the number is immediately followed by another
+underscore (`AIR_377_Sample`, `2025_Toppers`) — a real, pre-existing, dataset-wide bug (it even breaks
+the exact example in the function's own comment, `AIR-1_2024_GS1.pdf`) that silently leaves `air`/`year`
+null in a very common filename shape. Did not fix it — out of scope for this ask and its blast radius
+is every copy in the pipeline, not just this one; flagged for Hashin as a separate follow-up. Rebuilt
+and verified directly against `copies.json`: `Gaurav Kumar` → air 34/2017/9 copies, `Gaurav Kumar (AIR
+377)` → air 377/2025/4 copies. `npm run check` still 23/24 (the same pre-existing GS1 budget failure,
+confirmed unaffected by this change). Logged `DECISION-22` and updated `CLAUDE.md`'s `questions.csv`
+row to name name-disambiguation as a second sanctioned hand-edit alongside subject-correction.
+**Learned.** Independently re-verifying a subagent's factual claims against the actual data (not just
+trusting its summary) paid off twice this session: it's what caught the Gaurav Kumar collision as
+real rather than a false positive, and separately caught the `fromFilename()` regex bug as a byproduct
+of checking why the override was needed at all — a claim taken on faith would have stopped at "add an
+override" without ever noticing the auto-detection was broken.
+**Left.** `fromFilename()`'s underscore-boundary regex bug — real but out of scope, needs its own
+session: fixing `\b` to `(?!\d)` (verified to work in this session's ad-hoc testing) would very likely
+surface previously-silent AIR/year values across the dataset dataset-wide, which is a bigger, more
+visible change than a one-name fix and deserves its own deliberate check rather than being bundled in.
+`BUDGET shard gs1` still red on `main` (pre-existing, unrelated) — Hashin hasn't yet said whether to
+raise the `INTENT-2` budget or split the shard further. PR #12 (candidate sources) still open, contains
+zero mergeable candidates this round — fine to close or leave open per Hashin's preference.

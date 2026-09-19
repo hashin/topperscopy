@@ -1063,3 +1063,58 @@ needs to account for concurrent workers, not just live model count).
 **Enforced by.** Not statically checkable — `node --check` only. First real-world validation is
 the next scheduled `ocr-gemini.yml` run; no local `GEMINI_API_KEY` was available to load-test it in
 this session.
+
+---
+
+## DECISION-22 — A `topper` name that collides two different real people is disambiguated by
+hand-editing `questions.csv`, using their AIR as the tag
+*2026-09-19 · active · cites DECISION-17*
+
+**Decision.** `nameKey()`'s canonicalisation only folds *spelling* variants of one name — it can't
+tell two people with the byte-identical name apart, and the toppers table merges every copy with the
+same post-canonicalisation `topper` string into one profile (`buildToppers()`). When two real people
+turn out to share an exact name, the fix is to hand-edit the `topper` field of the source rows for
+*one* of them into a disambiguated string — e.g. `Gaurav Kumar (AIR 377)` — so they naturally become
+two separate topper entries. AIR is the tag because it's already the fact every topper page leads
+with, it's guaranteed unique per person per year, and there was no natural fuller name (middle name,
+surname) printed on the source material to promote instead. The untouched name keeps the plain
+spelling; only the newer/smaller record gets tagged, to disturb as few existing links/pages as
+possible. Pair the rename with an explicit `data/toppers.overrides.json` entry for the new tagged
+name — `fromFilename()`'s AIR/year regexes need a true word boundary after the digits and fail
+whenever a filename immediately follows the number with another underscore (e.g. `AIR_377_Sample`,
+`2025_Toppers`), which is common enough that auto-detection can't be trusted for a freshly split name.
+
+**Why.** Found while independently verifying a background crawler agent's report: `data/optionals.json`
+already had "Gaurav Kumar" AIR 34/2017 (Sociology, VisionIAS), and `data/questions.csv` already had
+"Gaurav Kumar" from ForumIAS (Essay/GS2/GS3) whose own source PDF filename says AIR 377, 2025 — two
+different real people, already merged live on the site under one profile, silently misattributing
+one person's copies to whichever AIR happened to resolve first in source order. This is the same
+failure shape as the still-open "Preeti Kumari" item in `CLAUDE.md`'s Open items, except that one was
+caught *before* merging (so nothing shipped); this one had already shipped.
+
+**Rejected.**
+- *Leave it and just add a `CLAUDE.md` Open item, like Preeti Kumari.* Preeti Kumari was never added,
+  so leaving it unresolved cost nothing. This one was already live and wrong — leaving it merged
+  keeps misattributing a real person's answer copies to a stranger's identity every time the page
+  loads, which is worse than doing nothing.
+- *Extend `nameKey()`/`canonicaliseNames()` to detect and split collisions automatically*, e.g. by
+  AIR mismatch. Rejected: the auto-canonicalisation step runs before AIR is even resolved (AIR comes
+  from `buildCopies()`, which runs after), and teaching it to guess when two same-spelled records are
+  actually different people is exactly the kind of judgment call `CLAUDE.md`'s Open items already
+  says needs a human (see Preeti Kumari) — automating it risks the opposite failure, wrongly
+  splitting one real person into two because of a filename/OCR quirk.
+- *Invent an arbitrary disambiguator instead of AIR* (e.g. append the source name, "Gaurav Kumar
+  (ForumIAS)"). Rejected: two different sources can legitimately host the same real person's copies
+  (this dataset explicitly expects that — "the same topper may appear from several sources"), so a
+  source-based tag would misdescribe the general case even though it happens to be true here. AIR is
+  the one fact this dataset already treats as a stable per-person identifier.
+
+**Reverse if.** Hashin determines these are actually the same person after all (unlikely, given the
+8-year gap and different optional/paper). At that point, revert `questions.csv`'s rename and delete
+the `toppers.overrides.json` entry — do not try to merge them by any other means, since the plain
+"Gaurav Kumar" name already carries the AIR 34/2017 identity.
+
+**Enforced by.** Not statically checkable — verified by rebuilding and reading `copies.json` directly:
+`Gaurav Kumar` → air 34/year 2017/9 copies, `Gaurav Kumar (AIR 377)` → air 377/year 2025/4 copies,
+`node build.js && npm run check` (23/24 — the one failure, `BUDGET shard gs1`, is a pre-existing,
+unrelated regression from ordinary data growth, confirmed present before this change too).

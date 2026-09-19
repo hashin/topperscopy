@@ -36,7 +36,7 @@ with `node -e` / `head` / `wc`. This file is the source of truth for their shape
 
 | File | What | Shape |
 |---|---|---|
-| `data/questions.csv` | mirror of upsckata.com — append-mostly; the one sanctioned hand-edit is correcting a wrong `subject`. CRLF; never reflow rows | `topper,coaching,subject,page_number,question,metadata,url` (subject = GS1..GS4/Essay) |
+| `data/questions.csv` | mirror of upsckata.com — append-mostly; sanctioned hand-edits are correcting a wrong `subject`, and disambiguating a `topper` name that collides two different real people (see DECISION-22) — never reflow rows, keep CRLF | `topper,coaching,subject,page_number,question,metadata,url` (subject = GS1..GS4/Essay) |
 | `data/submissions.csv` | accepted GS/Essay copies **with** extracted question text | same 7 cols |
 | `data/ocr-questions.csv` | questions read off scanned copies by `ocr-pipeline.mjs` (Gemini) | same 7 cols |
 | `data/link-copies.json` | GS/Essay copies that are **only a link** | `{entries:[{topper,paper,url,air?,year?,source?,note?,verified}]}` |

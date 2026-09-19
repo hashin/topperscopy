@@ -238,6 +238,15 @@ Record them here rather than guessing. Move them into an `INTENT-n` once he deci
   in DECISION-19's v1 (metadata-only search; no `interview/<slug>/` pages) — real future value, but
   each is a second data-loading path or a second static-page generator, more than "add a tab" asked
   for. Revisit if Hashin wants the Interviews tab to be as searchable/crawlable as the copies feature.
+- **`fromFilename()`'s AIR/year regexes silently fail on a very common filename shape.** Both
+  `build.js`'s AIR and year patterns end in a trailing `\b`, which requires a non-word character
+  after the digits — but fails whenever the number is immediately followed by another underscore
+  (`AIR_377_Sample`, `2025_Toppers`), which is common. It even breaks the function's own doc-comment
+  example, `Shakti_Dubey_AIR-1_2024_GS1.pdf`. Found 2026-09-19 while fixing the "Gaurav Kumar"
+  collision (DECISION-22). Likely fix: replace `\b` with `(?!\d)` in both regexes (verified to work
+  ad-hoc, not yet applied). Deferred because it's dataset-wide — fixing it will very likely surface
+  previously-null AIR/year on other existing copies, a bigger and more visible change than the
+  one-name fix it was found alongside, and deserves its own deliberate look rather than a drive-by.
 - **Multiple `GEMINI_API_KEY`s / Google Cloud projects for `ocr-gemini.yml`.** The free daily quota
   is per (project × model), so a second key from a separate project would get its own independent
   500/day-per-model bucket — a real multiplier on top of DECISION-21's concurrency fix. Hashin asked
