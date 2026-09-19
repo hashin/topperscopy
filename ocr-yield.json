@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T20:44:10.625Z",
+  "generated": "2026-09-19T05:16:05.743Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -855,6 +855,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2a3ef-1091495_2423_deepti-rohilla_rank_39.pdf",
+      "topper": "DEEPTI ROHILLA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
