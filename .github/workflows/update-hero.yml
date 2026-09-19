@@ -1,0 +1,42 @@
+name: Update hero image & README stats
+
+# Refreshes the numbers baked into assets/og.jpg's pixels and quoted in README.md /
+# index.html's og:image:alt — see update-hero.mjs and DECISION-24. Everything else in
+# og.jpg (the hand-designed artwork, brand mark, illustration) is untouched; this only
+# swaps four number spots in place.
+#
+# "Every ten days" has no native cron equivalent (cron is calendar-based, not interval-based
+# from an arbitrary start), so this approximates it with fixed days of month — close enough
+# for a cosmetic stats refresh, and simpler than a day-counting workaround.
+on:
+  schedule:
+    - cron: "0 6 1,11,21 * *"    # 06:00 UTC on the 1st/11th/21st — ~10 days apart
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-hero:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+      - run: npm install --omit=dev --silent
+      - name: Update hero image and README stats
+        run: node update-hero.mjs
+      - name: Verify the build still passes
+        run: node build.js && npm run check
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/og.jpg README.md index.html
+          if git diff --cached --quiet; then
+            echo "numbers unchanged — nothing to commit"; exit 0
+          fi
+          git commit -m "hero: refresh stats"
+          git pull --rebase --autostash
+          git push

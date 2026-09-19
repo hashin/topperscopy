@@ -857,3 +857,47 @@ mobile latency whether N parallel ~150 KB requests actually behave better than o
 on GitHub Pages' Fastly edge under real-world conditions (see DECISION-23's "Reverse if"). The split
 is re-computed fresh every build, so no other paper needs manual attention if it grows past budget
 later — it'll just start splitting on its own next `node build.js`.
+
+## 2026-09-19 (cont.) — Updated the stale hero image (twice — first attempt rejected), then
+automated it every ~10 days
+**Asked.** "update the hero image with latest data", then — after I regenerated it as a fresh HTML
+recreation — "the original image looks better. just update the numbers by checking the homepage and
+do it", then "save this process, update the hero image and readme every ten days."
+**Did.** First found the problem: `assets/og.jpg` (the social-share/OG image) had 2026-09-11 figures
+baked into its pixels (9,082/20,139/1,694) and the pre-rebrand "Toppers Copy" wordmark, and
+`index.html`'s `og:image:alt` sits outside any of `build.js`'s marker blocks, so nothing auto-updates
+it. First attempt: rebuilt the whole image as an HTML page matching the site's design tokens and
+screenshotted it via Playwright (`--channel chrome`, exact 1200×630). Hashin preferred the original
+artwork and asked for a numbers-only fix instead — a real, specific correction, not a style
+preference to shrug off. Reverted, then did it properly: probed the *existing* `assets/og.jpg` with
+Python/PIL to find the four number regions' exact pixel bounding boxes and background colours,
+rendered just the replacement digits through an actual browser (so the real Fraunces/Inter files
+render correctly, not a PIL font approximation), and composited them over the old numbers with the
+sampled background as an eraser first. The three big stat-tile numbers patched cleanly in place;
+the subtext line's number ("19,000+") turned out to collide with "questions," when patched in
+isolation, because tabular-figure width assumptions were wrong for that smaller inline text — fixed
+by redrawing the whole two-line sentence as one unit instead of patching just the digit, which
+sidesteps any inline-reflow problem entirely. Verified with pixel-level zoom crops before and after
+to confirm no visible seam, not just eyeballing the full image.
+Then built `update-hero.mjs` + `.github/workflows/update-hero.yml` (cron `0 6 1,11,21 * *`, DECISION-24)
+to run that exact same in-place-patch process automatically. Re-derives the replacement snippets'
+bounding boxes fresh every run (since digit count can change) but keeps the erase-box coordinates and
+background colours as fixed constants — they're a property of the static artwork, not the data.
+Added `sharp` as a real (not dev) dependency for the compositing; `npm audit` flagged the version I
+first pinned (`^0.33.5`) for a real high-severity libvips/libheif CVE, so bumped to `^0.35.4` before
+committing — caught before it shipped, not after. README.md's stale stats (a second, independent
+staleness problem found while scoping this — "28,000+ questions" etc., untouched since some earlier
+session) got folded into the same script and schedule, since they're the same kind of drift. Tested
+the full script locally end to end, confirmed the README/alt-text diffs were exactly the intended
+number swaps, then reverted that specific test run's output before committing (it used slightly
+older locally-cached data than what was already live from the manual pass earlier in this session,
+and would have been a visible regression).
+**Learned.** When a design choice gets corrected once ("the original looks better"), a downstream
+automation of "the same task, but scheduled" has to encode the *corrected* approach, not the
+original attempt — it's easy to build the automation around whichever version happens to be in
+context rather than checking which one the human actually approved.
+**Left.** Not yet observed running for real in GitHub Actions — `--channel chrome` assumes
+`ubuntu-latest` ships Chrome (documented, but external to this repo); first real cron firing
+(2026-09-21 or 2026-10-01, whichever the runner clock hits first) is the actual test. If og.jpg is
+ever hand-redesigned, `update-hero.mjs`'s `ERASE`/`PASTE` coordinate tables need re-measuring by
+hand — the script does not know how to find them itself, by design (see DECISION-24's "Reverse if").

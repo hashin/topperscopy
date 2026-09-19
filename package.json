@@ -8,9 +8,11 @@
   "scripts": {
     "build": "node build.js",
     "check": "node tools/check.mjs",
-    "extract": "node extract.js"
+    "extract": "node extract.js",
+    "update-hero": "node update-hero.mjs"
   },
   "dependencies": {
-    "pdfjs-dist": "^4.10.38"
+    "pdfjs-dist": "^4.10.38",
+    "sharp": "^0.35.4"
   }
 }

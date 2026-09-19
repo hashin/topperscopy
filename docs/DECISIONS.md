@@ -1194,3 +1194,62 @@ built site: GS1 (2 parts) and GS4 (5 parts) both fetch every part in parallel
 (`read_network_requests` confirmed 200 OK on each) and return correct, non-zero, correctly-tagged
 search results (GS1 "federalism" → 80 copies/85 questions; GS4 "integrity" → 216 copies/309
 questions) with zero console errors — not just a passing `npm run check`.
+
+---
+
+## DECISION-24 — `assets/og.jpg`'s stats are patched in place on a schedule, not regenerated
+*2026-09-19 · active*
+
+**Decision.** `update-hero.mjs` (run by `.github/workflows/update-hero.yml`, cron `0 6 1,11,21 * *`
+— roughly every 10 days, the closest calendar-cron approximation of a 10-day interval) refreshes
+only the four number spots baked into `assets/og.jpg`'s pixels (answer copies, questions, toppers,
+and the rounded subtext line) plus the matching numbers quoted in `README.md` and `index.html`'s
+`og:image:alt`. It does this by re-running the exact manual process from earlier today: render the
+new digits with an actual browser (`npx playwright screenshot --channel chrome`, so the real
+Fraunces/Inter files are used, not an approximation), measure each rendered snippet's tight pixel
+bounding box, and composite it over the old text with `sharp` — erasing each number's fixed,
+pre-measured region with a matching solid background colour first. The hand-designed artwork,
+brand mark and illustration are untouched; only those four spots change.
+
+**Why.** Hashin asked to "save this process" after watching it done by hand, and to run it "every
+ten days" — the natural cadence for the OCR pipeline's ongoing growth to be worth a refresh without
+being noisy. Earlier the same session, a first attempt regenerated the whole image from scratch with
+fresh artwork and was rejected — "the original image looks better, just update the numbers" (see
+`docs/SESSIONS.md` 2026-09-19). A scheduled job has to reproduce that *narrower* in-place-patch
+approach exactly, not the earlier full regeneration, or every automated run would silently redo the
+same rejected mistake unattended.
+
+**Rejected.**
+- *Regenerate the whole hero image from an HTML template every run.* This is exactly what Hashin
+  rejected by hand a few hours earlier in this same session ("the original image looks better") —
+  automating the rejected approach would just make the same mistake on a schedule instead of once.
+- *A daily cron with a "has it been 10 days" check.* Cron has no native interval-from-arbitrary-start
+  primitive; simulating one means persisting last-run state somewhere (a committed timestamp file, or
+  reading git log for the last `update-hero.yml` commit) for a cosmetic job that doesn't need that
+  precision. Fixed days-of-month (1st/11th/21st) gets within a day or two of "every 10 days" with no
+  state to maintain or drift.
+- *Re-deriving the erase-box coordinates and background colours fresh each run* (e.g. by diffing
+  against a stored "blank template" image). Unnecessary: the artwork itself is static between runs —
+  only the text changes — so the coordinates measured once (this session, via the Python/PIL probe in
+  `docs/SESSIONS.md`) stay valid indefinitely, and re-deriving them adds a failure mode (probe finds
+  the wrong region) for no benefit. They only need re-measuring if the artwork is ever hand-redesigned,
+  which `update-hero.mjs`'s own top comment says explicitly.
+- *Committing `sharp` as a devDependency instead of a real dependency.* The GitHub Actions job installs
+  with `--omit=dev` (matching `ocr-gemini.yml`'s pattern) to keep CI installs fast; `sharp` has to be a
+  real dependency to be present when the workflow actually runs.
+
+**Reverse if.** `og.jpg` is ever hand-redesigned (new layout, different illustration, moved text) —
+at that point every coordinate/colour constant in `update-hero.mjs`'s `ERASE`/`PASTE` tables is stale
+and needs re-measuring against the new artwork before the next scheduled run, or it will patch numbers
+into the wrong place. Also reverse the `--channel chrome` assumption if a run ever fails with "chrome
+not found" — GitHub's `ubuntu-latest` image is documented to ship Chrome, but that's an external
+assumption, not something this repo controls.
+
+**Enforced by.** Not statically checkable by `tools/check.mjs` (it's a scheduled job, not part of the
+build). `update-hero.mjs` runs `node build.js && npm run check` itself after patching, so a broken
+run fails loudly in the workflow rather than silently committing bad output. Verified locally end to
+end before scheduling: ran `node update-hero.mjs` against real (slightly older, locally-cached) data,
+confirmed `README.md`/`index.html` diffs were exactly the intended number swaps and `assets/og.jpg`
+rendered correctly with no visible seams — then reverted that specific test run's output (it would
+have regressed the numbers already live from the manual pass earlier the same session) before
+committing only the new script, workflow and dependency.

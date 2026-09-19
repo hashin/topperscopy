@@ -127,6 +127,9 @@ generated files are gitignored. 4. Push; `deploy.yml` rebuilds and redeploys in 
 GitHub Pages (`build_type: workflow`). **Moderation:** `moderate.yml` — a collaborator adds `approved` to a
 submission issue → `.github/scripts/apply-submission.mjs` writes to the source files → `node build.js`
 validates → commits only the source diff. `ocr.yml` / `ocr-gemini.yml` do the same for OCR output.
+**Hero image:** `update-hero.yml` — runs `update-hero.mjs` roughly every 10 days (DECISION-24) to
+patch the numbers baked into `assets/og.jpg` and quoted in `README.md`/`index.html`'s
+`og:image:alt`, in place, without touching the hand-designed artwork.
 **Maintainer CLI:** `npm install` once (pdfjs-dist, not used by CI), then
 `node extract.js <url|file.pdf> --topper "Name" --paper GS1 [--append|--json]`.
 
