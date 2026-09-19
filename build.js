@@ -29,6 +29,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const zlib = require('zlib');
 
 const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
@@ -445,7 +446,7 @@ function mapSyllabus(text, paper, syl) {
  * 7. Write data/copies.json + data/questions-<paper>.json
  * ====================================================================== */
 
-function writeCopies(copies, toppers, stats, generated) {
+function writeCopies(copies, toppers, stats, generated, shardParts) {
   const out = {};
   for (const name of Object.keys(toppers).sort((a, b) => a.localeCompare(b))) {
     const t = toppers[name], o = {};
@@ -463,13 +464,33 @@ function writeCopies(copies, toppers, stats, generated) {
     });
     out[name] = o;
   }
+  // shardParts: only papers split into more than one file are listed — app.js defaults an
+  // absent name to 1 part (see ensureShard). Keeps copies.json unchanged for the common case.
+  const parts = {};
+  for (const [name, n] of Object.entries(shardParts || {})) if (n > 1) parts[name] = n;
   const file = path.join(DATA, 'copies.json');
-  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, toppers: out }));
+  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, toppers: out }));
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
 // shard: { urls: [copy url, …], questions: [[text, [[urlIndex, page], …], [syllabus node ids], marks, words], …], fragments: [same] }
 // A copy belongs to one paper, so its URL appears in exactly one shard's table, and refs are small ints.
+function chunk(arr, n) {
+  const size = Math.max(1, Math.ceil(arr.length / n));
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(arr.slice(i * size, (i + 1) * size));
+  return out;
+}
+function serializeShardPart(name, generated, syl, questions, fragments) {
+  const urls = [...new Set(questions.concat(fragments).flatMap(q => q[1].map(r => r[0])))].sort();
+  const at = new Map(urls.map((u, i) => [u, i]));
+  const rows = list => list.map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
+  return JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, urls, questions: rows(questions), fragments: rows(fragments) });
+}
+// Ceiling a single part targets — comfortably under tools/check.mjs's per-shard budgets, so
+// ordinary growth doesn't force a re-split every few days (DECISION-23).
+const SHARD_PART_TARGET_KB = 150;
+
 function writeShards(byPaper, syl, generated) {
   const shards = {};
   for (const [paper, P] of Object.entries(byPaper)) {
@@ -479,16 +500,30 @@ function writeShards(byPaper, syl, generated) {
   }
   for (const f of fs.readdirSync(DATA)) if (/^questions-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
   const report = [];
+  const shardParts = {};
   for (const name of Object.keys(shards).sort()) {
     const S = shards[name];
-    const urls = [...new Set(S.questions.concat(S.fragments).flatMap(q => q[1].map(r => r[0])))].sort();
-    const at = new Map(urls.map((u, i) => [u, i]));
-    const rows = list => list.map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
-    const file = path.join(DATA, `questions-${name}.json`);
-    fs.writeFileSync(file, JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, urls, questions: rows(S.questions), fragments: rows(S.fragments) }));
-    report.push(`${name} ${S.questions.length}+${S.fragments.length} (${(fs.statSync(file).size / 1024).toFixed(0)} KB)`);
+    // Split into N roughly-equal parts, re-measuring actual gzip size each time, until every
+    // part clears the target (or N hits a sane cap — a paper this lopsided needs a human look,
+    // not an ever-growing part count). N=1 reproduces the old single-file behaviour exactly.
+    let n = 1, parts, sizesKB;
+    for (;;) {
+      const qChunks = chunk(S.questions, n), fChunks = chunk(S.fragments, n);
+      parts = qChunks.map((qs, i) => ({ qs, fs: fChunks[i] }));
+      sizesKB = parts.map(p => zlib.gzipSync(serializeShardPart(name, generated, syl, p.qs, p.fs)).length / 1024);
+      if (Math.max(...sizesKB) <= SHARD_PART_TARGET_KB || n >= 8) break;
+      n++;
+    }
+    shardParts[name] = n;
+    parts.forEach((p, i) => {
+      const file = path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`);
+      fs.writeFileSync(file, serializeShardPart(name, generated, syl, p.qs, p.fs));
+    });
+    const rawKB = parts.reduce((s, p, i) => s + fs.statSync(path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`)).size, 0) / 1024;
+    report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${rawKB.toFixed(0)} KB)`);
   }
   console.log(`questions-*.json  ${report.join(' · ')}`);
+  return shardParts;
 }
 
 /* ======================================================================
@@ -1367,8 +1402,8 @@ function build() {
   }
   console.log(`questions    ${total} distinct (+${Object.values(byPaper).reduce((n, P) => n + P.fragments.length, 0)} fragments) from ${refs} refs · ${mapped} syllabus-mapped`);
 
-  writeCopies(copies, toppers, stats, generated);
-  writeShards(byPaper, syl, generated);
+  const shardParts = writeShards(byPaper, syl, generated);
+  writeCopies(copies, toppers, stats, generated, shardParts);
   const interviewDocs = loadInterviews();
   writeInterviews(interviewDocs, generated);
 

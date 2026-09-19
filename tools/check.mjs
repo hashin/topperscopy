@@ -17,14 +17,16 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // questions), raise it deliberately in the same commit and say why.
 const BUDGETS = {
   boot: { ceiling: 450, files: ['index.html', 'assets/style.css', 'assets/app.js', 'assets/fonts/inter-latin.woff2', 'assets/fonts/fraunces-latin.woff2', 'data/copies.json'], why: 'everything before the first 25 cards paint — and every topper name is searchable (INTENT-2)' },
-  'app.js': { ceiling: 23, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
-  'shard gs1': { ceiling: 200, files: ['data/questions-gs1.json'], why: 'the largest download a GS1 text query waits on (INTENT-2)' },
-  'shard gs2': { ceiling: 180, files: ['data/questions-gs2.json'], why: '' },
-  'shard gs3': { ceiling: 120, files: ['data/questions-gs3.json'], why: '' },
-  'shard gs4': { ceiling: 690, files: ['data/questions-gs4.json'], why: 'GS4 case studies are long — this is the one to watch' },
-  'shard essay': { ceiling: 25, files: ['data/questions-essay.json'], why: '' },
-  'shard other': { ceiling: 30, files: ['data/questions-other.json'], why: '' },
-  'shard optional': { ceiling: 20, files: ['data/questions-optional.json'], why: 'grows with the optional-subject OCR pass' },
+  // Raised 23 -> 24 KB 2026-09-19 for the shard-splitting logic (DECISION-23) — real feature
+  // code, not a dependency, so it's a deliberate raise, not the "machinery crept back" DECISION-2 warns about.
+  'app.js': { ceiling: 24, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
+  'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
+  'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
+  'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },
+  'shard gs4': { ceiling: 690, shard: 'gs4', why: 'GS4 case studies are long — this is the one to watch' },
+  'shard essay': { ceiling: 25, shard: 'essay', why: '' },
+  'shard other': { ceiling: 30, shard: 'other', why: '' },
+  'shard optional': { ceiling: 20, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
@@ -40,6 +42,15 @@ const INTERVIEW_YEAR_CEILING = 700;
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const exists = f => fs.existsSync(path.join(ROOT, f));
 const gzKb = f => zlib.gzipSync(fs.readFileSync(path.join(ROOT, f)), { level: 9 }).length / 1024;
+// A shard is data/questions-<name>.json, or (once it outgrows one file, DECISION-23) numbered
+// parts data/questions-<name>-1.json, -2.json, … — never both at once, build.js clears the old
+// naming on every run. Returns paths relative to ROOT, sorted, or [] if the shard is missing.
+const shardFiles = name => {
+  const dir = path.join(ROOT, 'data');
+  if (!fs.existsSync(dir)) return [];
+  const rx = new RegExp(`^questions-${name}(-\\d+)?\\.json$`);
+  return fs.readdirSync(dir).filter(f => rx.test(f)).sort().map(f => 'data/' + f);
+};
 const results = [];
 function check(id, cites, title, fn) {
   let ok, detail = '';
@@ -70,9 +81,13 @@ check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a c
   const urls = new Set(copies.map(c => c.u));
   let refs = 0, bad = 0, questions = 0;
   for (const s of SHARDS) {
-    if (!exists(`data/questions-${s}.json`)) return { ok: false, detail: `data/questions-${s}.json missing` };
-    const d = JSON.parse(read(`data/questions-${s}.json`));
-    for (const q of d.questions.concat(d.fragments)) { questions++; for (const [i] of q[1]) { refs++; if (!urls.has(d.urls[i])) bad++; } }
+    // A shard is one file, or (DECISION-23) several numbered parts once it outgrows one.
+    const files = shardFiles(s);
+    if (!files.length) return { ok: false, detail: `data/questions-${s}*.json missing` };
+    for (const f of files) {
+      const d = JSON.parse(read(f));
+      for (const q of d.questions.concat(d.fragments)) { questions++; for (const [i] of q[1]) { refs++; if (!urls.has(d.urls[i])) bad++; } }
+    }
   }
   return { ok: !bad, detail: `${refs} refs across ${questions} questions${bad ? ', ' + bad + ' point at no copy' : ', all resolve'}` };
 });
@@ -151,6 +166,16 @@ check('INV-13', 'DECISION-19', 'Every interview in interview-list.json has its t
 /* ---- budgets ---- */
 for (const [name, b] of Object.entries(BUDGETS)) {
   check('BUDGET ' + name, 'INTENT-2', `${name} within ${b.ceiling} KB gzip`, () => {
+    if (b.shard) {
+      // The client fetches all of a paper's parts together, but as separate parallel
+      // requests, so the ceiling applies to the LARGEST single part, not their sum.
+      const files = shardFiles(b.shard);
+      if (!files.length) return { ok: false, detail: `no questions-${b.shard}*.json found` };
+      const sizes = files.map(f => [f, gzKb(f)]);
+      const max = sizes.reduce((m, s) => (s[1] > m[1] ? s : m), sizes[0]);
+      const label = files.length > 1 ? `${files.length} parts, largest ${max[0]}` : max[0];
+      return { ok: max[1] <= b.ceiling, detail: `${label} at ${max[1].toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
+    }
     const missing = b.files.filter(f => !exists(f));
     if (missing.length) return { ok: false, detail: 'missing: ' + missing.join(', ') };
     const kb = b.files.reduce((s, f) => s + gzKb(f), 0);

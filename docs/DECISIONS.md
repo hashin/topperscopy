@@ -1118,3 +1118,79 @@ the `toppers.overrides.json` entry — do not try to merge them by any other mea
 `Gaurav Kumar` → air 34/year 2017/9 copies, `Gaurav Kumar (AIR 377)` → air 377/year 2025/4 copies,
 `node build.js && npm run check` (23/24 — the one failure, `BUDGET shard gs1`, is a pre-existing,
 unrelated regression from ordinary data growth, confirmed present before this change too).
+
+---
+
+## DECISION-23 — A paper's shard splits into numbered parts, fetched in parallel, once it
+outgrows one file
+*2026-09-19 · active · cites DECISION-17, INTENT-2*
+
+**Decision.** `build.js`'s `writeShards()` now measures each paper's actual gzip size (Node's
+built-in `zlib`, no dependency) and, if it clears a 150 KB per-part target, writes it as before —
+`data/questions-<paper>.json`. If not, it splits that paper's deduped questions/fragments into `N`
+roughly-equal contiguous chunks (re-measuring and bumping `N` until every part clears the target, capped
+at 8), each with its own local `urls` table, written as `data/questions-<paper>-1.json`,
+`…-2.json`, etc. `copies.json` gets a new `shardParts` field (`{gs1: 2, gs4: 5}` — a paper with one
+part is omitted, so the common case is byte-for-byte unaffected) so the client knows how many files
+to ask for. `assets/app.js`'s `ensureShard()` fetches all of a paper's parts together with
+`Promise.all` (parallel requests, not sequential) and merges them into one raw `{urls, questions,
+fragments}` object — shifting each part's ref indices by a running url-count, and letting the same
+url string legitimately appear more than once across parts' tables, since `indexShard()` resolves
+every ref by url string, not table position — before `indexShard()` ever sees it. Every other line
+in `app.js` still treats `SHARDS[name]` exactly as before: one shard, fully loaded or not yet.
+`tools/check.mjs`'s per-shard `BUDGET` checks and `INV-4` now discover whichever files exist for a
+shard (one, or `-1.json`.. `-N.json`) via a shared `shardFiles()` helper, and the budget checks the
+*largest single part*, not the sum — matching the literal wording of what these budgets have always
+claimed to bound ("the largest download a … text query waits on"), now actually true even as the
+underlying paper keeps growing. `assets/app.js`'s own budget was raised 23 → 24 KB in the same
+commit for the real, deliberate feature code this added (not the "machinery crept back" DECISION-2's
+ceiling exists to catch).
+
+**Why.** `BUDGET shard gs1` started failing 2026-09-19 from ordinary OCR-driven data growth (182 KB
+→ 216.5 KB gzip over 4 days, accelerating — see `docs/SESSIONS.md`). Measured what raising the
+ceiling the same way it was originally set (baseline + 10%) would buy: about 1.9 days of runway
+before failing again, and even a generous 2x raise only ~16 days — because growth is ongoing (the
+OCR backlog is weeks from draining, and new sources keep getting added independently of that). The
+budget's own stated purpose is bounding real load time for "UPSC aspirants... on mid-range Android
+phones on patchy mobile data" (INTENT-2) — raising it repeatedly just keeps adding real seconds to
+every search, forever. Splitting bounds the largest *single* download regardless of how large the
+total corpus grows, which is the actual quantity INTENT-2 cares about, and reuses infrastructure the
+app already has: it already loads shards progressively and shows "Searching inside N copies…"
+instead of a false zero while a shard is still in flight — the same mechanism, unmodified, now also
+covers "this shard is two files, both still in flight."
+
+**Rejected.**
+- *A fixed split axis (by year, by source, by syllabus node).* Would need re-balancing logic of its
+  own as one bucket outgrows another, and gains nothing a plain re-computed-every-build chunk count
+  doesn't already provide — the goal is bounding a download's size, not organizing it for a human.
+- *Splitting page-batches within a request, or any unit smaller than "whole paper's shard."* The
+  paper is already the unit the client fetches and searches per (DECISION-17); splitting *inside*
+  that would mean the search code itself needs to know about parts, not just the fetch layer. Keeping
+  the split invisible below `ensureShard()` means every line downstream — search, cards, Practice,
+  the syllabus filter — needed zero changes.
+- *Deduping urls across parts during the client-side merge* (build a cross-part `url -> index` map
+  like `canonicaliseNames()` does for names). Correct but costs real code size for zero behavioural
+  benefit, since a repeated url string across parts' tables is harmless — `indexShard()` was already
+  resolving every ref by the url it points to, never by its position in the table. Simpler and
+  smaller to just let the tables overlap.
+- *Leaving `app.js`'s budget at 23 KB and golfing the new code further.* Tried first — got the net
+  addition down from ~450 to ~256 gzip bytes through several rounds of real simplification (removing
+  a redundant special-case, an unused cross-part dedup map, and two dead fields `indexShard()` never
+  reads). The remaining ~80 bytes needed cutting variable names into unreadable single letters for a
+  savings the check's own methodology already has a deliberate escape hatch for. Not worth it.
+
+**Reverse if.** A paper's content becomes so unevenly distributed that no `N` up to 8 gets every
+part under the per-part target — `writeShards()` accepts the best split it found rather than looping
+forever, so this fails open (a slightly-over-target part) rather than crashing the build; if it ever
+happens, look at *why* one region of a paper's questions is so much larger before just raising `N`'s
+cap. Also reverse (or at least revisit) `SHARD_PART_TARGET_KB = 150` if a future measurement shows
+parallel HTTP/2 requests on the actual audience's networks don't overlap the way assumed here (e.g.
+if GitHub Pages' Fastly edge throttles concurrent same-origin requests in a way that makes N parallel
+150 KB fetches slower than one N×150 KB fetch — not observed, but untested at real mobile latency).
+
+**Enforced by.** The `BUDGET shard <paper>` checks (now per-part) and `INV-4` (ref resolution across
+however many part files exist) in `tools/check.mjs`. Verified live in a browser against the actual
+built site: GS1 (2 parts) and GS4 (5 parts) both fetch every part in parallel
+(`read_network_requests` confirmed 200 OK on each) and return correct, non-zero, correctly-tagged
+search results (GS1 "federalism" → 80 copies/85 questions; GS4 "integrity" → 216 copies/309
+questions) with zero console errors — not just a passing `npm run check`.

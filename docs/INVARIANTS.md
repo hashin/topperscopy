@@ -46,7 +46,7 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
 | `app.js` | `assets/app.js` alone (DECISION-2) | 23 KB |
-| `shard gs1 … optional` | each `data/questions-<paper>.json` — the one download a text query in that paper waits on | 200 · 180 · 120 · 690 · 25 · 30 · 20 KB |
+| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 120 · 690 · 25 · 30 · 20 KB |
 
 ## Not checkable, still true
 

@@ -83,6 +83,7 @@
   var TOPPERS = {};       // name -> { air, year, verified, marks, telegram, copies:[copy] }
   var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
+  var SHARD_PARTS = {};   // shard -> part count (absent = 1, DECISION-23)
   var SYL = null;         // data/syllabus.json
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
   var IV_TEXT = {};       // year -> {id: transcript text}, one shard fetched per year, lazily
@@ -96,11 +97,19 @@
     return LOADS[url];
   }
 
+  // One file, or several numbered parts once split (DECISION-23) — merged before indexShard().
   function ensureShard(name) {
-    var url = 'data/questions-' + name + '.json';
-    if (SHARDS[name] || SHARD_ERR[name] || LOADS[url]) return;
-    load(url).then(function (d) { SHARDS[name] = indexShard(d, name); onShardLoaded(name); },
-      function (e) { SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + String(e && e.message || e).slice(0, 100) }); rerender(); });
+    var n = SHARD_PARTS[name] || 1, urls = [];
+    for (var i = 1; i <= n; i++) urls.push('data/questions-' + name + (n > 1 ? '-' + i : '') + '.json');
+    if (SHARDS[name] || SHARD_ERR[name] || urls.some(function (u) { return LOADS[u]; })) return;
+    Promise.all(urls.map(load)).then(function (parts) {
+      var u = [], qs = [], frags = [];
+      parts.forEach(function (d) {
+        d.questions.concat(d.fragments).forEach(function (r) { r[1].forEach(function (x) { x[0] += u.length; }); });
+        qs = qs.concat(d.questions); frags = frags.concat(d.fragments); u = u.concat(d.urls);
+      });
+      SHARDS[name] = indexShard({ urls: u, questions: qs, fragments: frags }, name); onShardLoaded(name);
+    }, function (e) { SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + String(e && e.message || e).slice(0, 100) }); rerender(); });
   }
   function ensureShards(names) { (names || SHARDS_ALL).forEach(ensureShard); }
   function ensureSyllabus() {
@@ -202,6 +211,7 @@
 
     load('data/copies.json').then(function (d) {
       DB = d;
+      SHARD_PARTS = d.shardParts || {};
       Object.keys(d.toppers).forEach(function (name) {
         var T = d.toppers[name];
         T.marks = T.marks || {}; T.copies = T.copies.map(function (r) {

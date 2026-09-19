@@ -814,3 +814,46 @@ visible change than a one-name fix and deserves its own deliberate check rather 
 `BUDGET shard gs1` still red on `main` (pre-existing, unrelated) — Hashin hasn't yet said whether to
 raise the `INTENT-2` budget or split the shard further. PR #12 (candidate sources) still open, contains
 zero mergeable candidates this round — fine to close or leave open per Hashin's preference.
+
+## 2026-09-19 (cont.) — Raise-vs-split analysis, closed PR #12, implemented the GS1 shard split
+**Asked.** "which is better, raising budget or splitting it? give a quantitative explanation" then
+"go ahead and implement the split", plus "close the PR" for #12.
+**Did.** Closed [PR #12](https://github.com/hashin/topperscopy/pull/12) (the source-crawl, zero
+mergeable candidates). For the budget question: rebuilt the site at 5 past commits via `git worktree`
+to get *real* historical GS1 shard sizes rather than guessing — 182.0 → 182.1 → 191.4 → 205.0 → 216.5
+KB gzip, 2026-09-15 through 09-19, accelerating (~11.5 KB/day over the last 3 days). Showed raising
+the ceiling the same way it was originally set (baseline+10%) buys ~1.9 days before failing again,
+and INTENT-2's own reasoning ("mid-range Android phones on patchy mobile data") means every raise is
+real added wait time, forever, not a one-time fix. Recommended splitting; Hashin agreed.
+Implemented `DECISION-23` in full — see it for the design and rejected alternatives (fixed split
+axis, splitting below the paper level, cross-part url dedup). Summary: `build.js` now measures actual
+gzip size (Node's `zlib`) per paper and splits into re-computed-every-build, roughly-equal parts once
+over a 150 KB/part target; `copies.json` gets a `shardParts` map; `app.js`'s `ensureShard()` fetches
+all of a paper's parts in parallel and merges them below `indexShard()`, invisible to every other
+line in the file; `tools/check.mjs`'s per-shard budgets and `INV-4` now discover however many part
+files exist and check the largest one, not the sum.
+Building this surfaced its own small side-quest: the merge code initially pushed `assets/app.js`
+23.4 KB over its 23 KB budget. Spent several rounds actually simplifying it first — dropped a
+redundant `parts.length===1` special case, a cross-part url-dedup map that turned out unnecessary
+(a repeated url across parts' tables is harmless, since refs resolve by the url string, not table
+position — `indexShard()` already worked that way), and two fields (`paper`, `syllabus_version`) the
+merged object doesn't need because `indexShard()` never reads them from `d`. Got the net addition
+from ~450 down to ~256 gzip bytes that way. The last ~80 bytes would have needed unreadable
+single-letter golfing for no real benefit, so raised `app.js`'s own budget 23→24 KB instead, with the
+same "deliberate, in the same commit, say why" discipline the budgets already ask for — this is real
+feature code, not the "machinery crept back" DECISION-2's ceiling exists to catch.
+Verified beyond `npm run check` (24/24): started the static preview server, searched "federalism"
+with the GS1 filter (2 parts) and "integrity" with the GS4 filter (5 parts, the most of any shard),
+confirmed both parts fetch in parallel via `read_network_requests`, both return real non-zero result
+counts (80/85 and 216/309) with correctly-tagged, correctly-highlighted result cards and zero console
+errors — not just a passing build.
+**Learned.** When a byte budget is tight and the content is genuinely necessary (not accidental
+bloat), the right sequence is: simplify for real first, measure again, and only raise the ceiling —
+deliberately, by a measured amount, with a reason — once actual simplification is exhausted. Golfing
+code into unreadability to dodge a documented budget defeats the budget's own purpose (catching real
+regressions by staying legible enough that a future session can tell the difference).
+**Left.** `SHARD_PART_TARGET_KB = 150` is a judgment call, not a measurement — untested at real
+mobile latency whether N parallel ~150 KB requests actually behave better than one N×150 KB request
+on GitHub Pages' Fastly edge under real-world conditions (see DECISION-23's "Reverse if"). The split
+is re-computed fresh every build, so no other paper needs manual attention if it grows past budget
+later — it'll just start splitting on its own next `node build.js`.
