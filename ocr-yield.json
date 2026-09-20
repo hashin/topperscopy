@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T14:18:57.088Z",
+  "generated": "2026-09-20T19:06:34.262Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -4146,6 +4146,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5970d-30458_2425_wasim-ur-rahman_rank_157.pdf",
+      "topper": "Wasim Ur Rahman",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/MT25FLTRA046_M25GAT02.pdf",
       "topper": "Pakshal Secretry",
       "coaching": "NextIAS",
@@ -4727,6 +4741,20 @@
       "geminiPages": 60,
       "salvaged": 0,
       "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9c7e6-768303_2424_chaitanya_giri_rank_117.pdf",
+      "topper": "CHAITANYA GIRI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 12,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -5773,6 +5801,20 @@
       "geminiPages": 50,
       "salvaged": 0,
       "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4c634-768303_2422_chaitanya_giri_rank_117.pdf",
+      "topper": "CHAITANYA GIRI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 15,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
