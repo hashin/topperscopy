@@ -1,8 +1,50 @@
 {
-  "generated": "2026-09-19T18:54:20.231Z",
+  "generated": "2026-09-20T05:32:53.762Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/993b2-548353_2422_annapurna_singh_rank_99.pdf",
+      "topper": "ANNAPURNA SINGH",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5dd73-444569_2423_akanksha-pathak_rank_85.pdf",
+      "topper": "AKANKSHA PATHAK",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/78b14-364680_2425_rajiv_agarwal_rank_103.pdf",
+      "topper": "RAJIV AGARWAL",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/d209b-548353_2424_annapurna_singh_rank_99.pdf",
       "topper": "ANNAPURNA SINGH",
@@ -663,6 +705,20 @@
       "count": 2,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f243b-1347890_3128_zinnia_arora_rank_156.pdf",
+      "topper": "Zinnia Arora",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
