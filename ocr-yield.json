@@ -1,8 +1,50 @@
 {
-  "generated": "2026-09-20T19:06:34.262Z",
+  "generated": "2026-09-21T05:38:35.674Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4ac07-1157317_2425_nikhil_sharma_rank_104.pdf",
+      "topper": "Nikhil Sharma",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/abbd0-468073_2424_aditi_upadhyay_rank_127.pdf",
+      "topper": "ADITI UPADHYAY",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9e655-364680_2423_rajiv_agarwal-_rank_103.pdf",
+      "topper": "RAJIV AGARWAL",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/0227b-579942_4513_jatin-kumar_rank_191.pdf",
       "topper": "Jatin Kumar",
@@ -719,6 +761,20 @@
       "count": 2,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e7c1e-1064896_3128_srishti-goyal_rank_160.pdf",
+      "topper": "Srishti Goyal",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
