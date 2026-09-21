@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T16:38:58.134Z",
+  "generated": "2026-09-21T20:36:17.123Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -820,6 +820,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/84fab-1360854_3128_sanjeev-kumar_rank_290.pdf",
+      "topper": "Sanjeev Kumar",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/e7c1e-1064896_3128_srishti-goyal_rank_160.pdf",
       "topper": "Srishti Goyal",
       "coaching": "VisionIAS",
@@ -1093,6 +1107,34 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/24f74-0780881_2423_banna_venkatesh_rank_15.pdf",
+      "topper": "Banna Venkatesh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/60d99-1005570_2424_tushar-chauhan_rank_216.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -2083,6 +2125,20 @@
       "count": 6,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5575a-1005570_2422_tushar-chauhan_rank_216.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 7,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
