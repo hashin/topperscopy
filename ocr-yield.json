@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-22T15:43:22.671Z",
+  "generated": "2026-09-22T19:59:14.770Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a020a-1199106_2422_aishwaryam_prajapati_10.pdf",
+      "topper": "AISHWARYAM PRAJAPATI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/d31ea-627862_2122_manisha_rank-522.pdf",
       "topper": "Manisha",
@@ -2212,6 +2226,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/dfd0c-1297803_2424_anupriya_sakya_rank_120.pdf",
+      "topper": "Anupriya Sakya",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 7,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/ea9ce-971641_1413_vaibhav-priya_rank-104.pdf",
       "topper": "Vaibhav Priya",
       "coaching": "VisionIAS",
@@ -4304,6 +4332,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/38/pttp221347_tc062.pdf",
+      "topper": "SANKET KUMAR",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 9,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/3ca85-586044_1449_maliye-sri-pranav_rank-60.pdf",
       "topper": "Maliye Sri Pranav",
       "coaching": "VisionIAS",
@@ -5217,6 +5259,20 @@
       "geminiPages": 60,
       "salvaged": 0,
       "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/388d9-1199106_2423_aishwaryam_prajapati_10.pdf",
+      "topper": "AISHWARYAM PRAJAPATI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 12,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
