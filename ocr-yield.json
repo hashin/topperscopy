@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-21T20:36:17.123Z",
+  "generated": "2026-09-22T05:36:00.404Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/852df-1562827_2425_akanchha-singh_rank_44.pdf",
+      "topper": "AKANCHHA_SINGH",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/6f542-768483_2319_atul_tyagi_rank_62.pdf",
       "topper": "ATUL TYAGI",
@@ -820,6 +834,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/23797-780881_3128_banna_venkatesh_rank_15.pdf",
+      "topper": "Banna Venkatesh",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/84fab-1360854_3128_sanjeev-kumar_rank_290.pdf",
       "topper": "Sanjeev Kumar",
       "coaching": "VisionIAS",
@@ -1107,6 +1135,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 3.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b6ef0-1428670_2930_prateek-yadav_rank_208.pdf",
+      "topper": "Prateek Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
