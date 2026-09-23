@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-22T19:59:14.770Z",
+  "generated": "2026-09-23T05:24:26.972Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3f661-629408_2220_manan-agarwal_-rank-46.pdf",
+      "topper": "Manan Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/a020a-1199106_2422_aishwaryam_prajapati_10.pdf",
       "topper": "AISHWARYAM PRAJAPATI",
@@ -1166,6 +1180,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ae06f-1157317_3128_nikhil_sharma_rank_104.pdf",
+      "topper": "Nikhil Sharma",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/d6c30-613218_3128_prashant_singh_rank_102.pdf",
       "topper": "Prashant Singh",
       "coaching": "VisionIAS",
@@ -2223,6 +2251,20 @@
       "count": 6,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/237af-780881_2930_banna_venkatesh_rank_15.pdf",
+      "topper": "Banna Venkatesh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 7,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
