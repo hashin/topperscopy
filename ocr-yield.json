@@ -1,8 +1,36 @@
 {
-  "generated": "2026-09-23T17:07:53.127Z",
+  "generated": "2026-09-23T19:50:09.768Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e1e9c-1043458_2423_poorva_agrawal_rank_189.pdf",
+      "topper": "POORVA AGRAWAL",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3e33e-1158344_2425_mudita-agarwal_rank_198.pdf",
+      "topper": "Mudita Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/3f661-629408_2220_manan-agarwal_-rank-46.pdf",
       "topper": "Manan Agarwal",
