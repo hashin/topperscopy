@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-24T15:47:20.135Z",
+  "generated": "2026-09-24T20:12:55.717Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/29/igc21la211_tc062.pdf",
+      "topper": "RIJU SHRIVASTAVA",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 23,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/af28f-1043458_2422_poorva_agrawal_rank_189.pdf",
       "topper": "POORVA AGRAWAL",
@@ -2113,6 +2127,20 @@
       "geminiPages": 12,
       "salvaged": 0,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3d7b7-1174117_3128_anindya-pandey_rank_158.pdf",
+      "topper": "Anindya Pandey",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 6,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
@@ -5553,6 +5581,20 @@
       "geminiPages": 60,
       "salvaged": 0,
       "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/af4ce-1167967_2930_saloni_gautam_rank_127.pdf",
+      "topper": "Saloni Gautam",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 12,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": false
     },
     {
