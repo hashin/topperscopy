@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-25T15:14:45.543Z",
+  "generated": "2026-09-25T20:10:09.024Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1306,6 +1306,48 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7ad98-114111_2424_g_akshay_deepak_rank_196.pdf",
+      "topper": "G AKSHAY DEEPAK",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7918f-579225_2220_ruhani-ruhani_rank-159.pdf",
+      "topper": "Ruhani Ruhani",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e601b-207927_2218_vedika-bihani_rank-213.pdf",
+      "topper": "Vedika Bihani",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/00621-9977_758_dileep_mishra_rank_56.pdf",
       "topper": "Dileep Mishra",
       "coaching": "VisionIAS",
@@ -1819,6 +1861,20 @@
       "count": 4,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/16/pttp220280_tc062.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 5,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
