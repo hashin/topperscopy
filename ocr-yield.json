@@ -1,8 +1,36 @@
 {
-  "generated": "2026-09-25T20:10:09.024Z",
+  "generated": "2026-09-26T05:42:05.483Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9533a-1043458_2425_poorva_agrawal_rank_189.pdf",
+      "topper": "POORVA AGRAWAL",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3205b-1158344_2930_mudita-agarwal_rank_198.pdf",
+      "topper": "Mudita Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS3",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/da809-26298_1986_charu_rank_76.pdf",
       "topper": "Charu",
@@ -999,6 +1027,20 @@
       "count": 2,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/465cf-1502746_3128_tanisha-mishra_rank_211.pdf",
+      "topper": "Tanisha Mishra",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 6,
       "low": true
     },
     {
