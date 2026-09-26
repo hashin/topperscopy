@@ -586,7 +586,114 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Sociology and common sense converge at some points, but diverge more often. Evaluate the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Discuss the role of questionnaire as a tool of data collection in sociological research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Explain the institutional ethnography approach with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Examine the utility of reliability and validity in social research by giving suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "'Sociology grew as a product of the reflection of great thinkers reflecting on society'. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "'A good hypothesis should be specific enough to be falsifiable'. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Sociology and political science are so closely related to each other that one becomes meaningless without other. Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Explain the difference between the positivist and interpretative approaches to the scientific method in sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Participant observation has many practical disadvantages.\" Substantiate with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "'Total objectivity in sociological research is an illusion that can never be achieved.' Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "'Though they take very different approaches to study society, both 'micro' and 'macro' sociology aid our ability to understand the social world. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Highlight the various 'Social Pathologies' within Marriage in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Examine the functions and dysfunctions of 'informal sector' in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Critically examine 'cultural lag' theory of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "'Feminization of work has not led to gender equality', Do you agree? Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Yaksh Chaudhary",
@@ -652,7 +759,44 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Sectional Test 2)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 1,
+          "question": "Discuss how counter enlightenment provided goal for sociology",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 3,
+          "question": "Elaborate the main tenets of interpretative perspective in sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "In the context of recent pandemic, how do you think the scope of sociology has evolved. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "What are the limitations of quantitative methods of social research. Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "What is Triangulation and how is it used in research methods?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Aayushi Bansal",
@@ -945,7 +1089,65 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 1, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Explain the difference between political thought, political theory, political philosophy and political ideology? In what way Political Science can be treated as a science? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "\"Unexamined life is not worth living\"-Socrates. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "\"The law of nature is the basis of all morality\". In the light of the statement explain Locke's theory of rights. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "\"The fact is that a man who wants to act virtuously in every way necessarily comes to grief among so many who are not virtuous\" - Machiavelli. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Hobbes's political theory is based on psychological egoism and the social contract. Discuss (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "\"Dear is Plato, but dearer still is truth\"- Aristotle. In the light of the above statement establish that Aristotle is not only the greatest disciple of Plato, but is also his greatest critic. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Locke is the proponent of the doctrine of possessive individualism par excellence. Elaborate (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "\"Like men, like State; governments vary as the characters of men vary ........\"- Plato. Critically Evaluate. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -956,7 +1158,65 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 2, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Inspired by philosophy, Hannah Arendt warned against the dangers of philosophy obfuscating the plurality and reality of our shared world. Comment (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "\"Politics is the place and activity of shared communication based on the distinct perspectives of equal human beings\". HANNAH ARENDT. Comment (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Gramsci saw capitalist state as being made up of two overlapping spheres, a political society and a civil society. Elucidate (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "\"Gramsci gives us ,not the tools with which to solve the puzzle, but the means with which to ask right kinds of questions\". STUART HALL. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "\"Religion is the opium of masses\"-MARX. Discuss (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Marxism consists of three ideas: Theory of history, Critique of capitalism and a vision of ideal society. Evaluate. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "\"The only freedom which deserves the name is that of pursuing our own good in our own way...\"- J.S. MILL. Comment (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Mill was a champion of democracy who failed to bring the idea of democracy to its logical conclusion. Critically examine (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -989,7 +1249,65 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 5, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "What are human rights? Is there any hierarchy of human rights? Explain the relationship between the protection of human rights and sustainable development goals. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "How the term equality differs from equity? Discuss the various forms of equality and their relevance. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Rawls's theory of justice consists of certain distributive principles for the basic structure of society. In light of this statement , critically evaluate Rawls's theory of justice as fairness. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "The policy of affirmative action aims at the politics of inclusion. Explain with reference to India's journey towards building an egalitarian society. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Dworkin's theory of equality is not limited to the realm of abstract theoritization, but aims at harmonizing the principles with concrete practices. Critically evaluate. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Right is simply not reducible to a goal or a policy. In light of the statement explain Dworkin's view that rights are trump. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Amartya Sen's capability approach is a moral framework. Discuss. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Explain the relationship between rights, liberty, equality and justice. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -1000,7 +1318,58 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 6, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "What are the various components of modern Indian political thought? Do you think there is more of a continuity than change? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "The social thought in ancient India not only assures certain fundamental principles of morality but also seeks to direct the material life as well. Comment? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Manusmriti is the storehouse of knowledge in social, political in judicial field of ancient India. Elucidate? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Que.4 What are fundamental principles of order and justice mentioned in Arthashastra? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Sir Syed Ahmed Khan a seminal figure of nineteenth century India continues to surface in all major debates on nationalism, the fate of minorities and democratic values. Discuss (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Do you subscribe to Ambedkar's characterization of Gandhi as mere polemic? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Que.8 M. N Roy's role in freedom movement unearths astonishing similarities and stark differences between him and Gandhi. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -1011,7 +1380,58 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 7, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "The basic structure doctrine is one of the most patent tools of judiciary for maintaining the checks and balances for smooth functioning of democracy. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Individual obligation is meaningful only when rights are guaranteed by the state. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Analyse the recent controversy on Muslim women's headscarf from the perspective of constitutional secularism in India. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Dalit perspective represents an alternative imagination of India based on the views of Phule, Ambedkar and Periyar. Discuss (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "In what way 102nd and 105th amendment acts shape India's policy towards the backward classes? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Define the concept of Judicial review. Critically examine the role of judiciary towards strengthening the rule of law in the country. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "The structural functional pattern of governance in India continues to be based on colonial ideas and philosophy. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -1022,7 +1442,44 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 8, PSIR Sectional",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Critically analyse the role of President in India's Constitutional setup and in actual political process. What trends can be inferred on the basis of the analysis of the nature of the institution? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Discuss the contribution of Indian judiciary towards the goal of India's silent revolution. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Analyse the position of the Prime Minister of India in a coalition regime. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "How do you define grassroot movements? Do you think there is a rise of grassroot activism in India in recent times? Examine the impact of grassroot activism on Indian politics? (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Federalism in India is under strain on several fronts- Constitutional, economic, political and electoral. Comment. (200 words,",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Astha Jain",
@@ -2895,7 +3352,198 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 4, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Examine the role of India in the governance and development of the Global South.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Critically analyse the significance of India and Maldives for each other amid the growing hostilities in their bilateral relations.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"With the passage of time, India-Australia bilateral ties have evolved in the direction of a strategic relationship, alongside the existing economic engagement.\" Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Critically examine the rationale and major pillars of India's Act East Policy (AEP) in the contemporary international scenario.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"India and Russia's strategic partnership has persisted, and indeed in some areas has deepened.\" Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Chinese Belt and Road Initiative (BRI) retains the promise of altering the existing structural arrangements in Asia and beyond. The possibility of such an eventuality has alarmed several regional and global powers which are reflected in their reactions to the BRI. In this context, discuss India's perception and response to the BRI.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Critically analyse India's stand on Israel-Palestine conflict.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Discuss the major challenges in India-China bilateral relations.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Examine the relevance of non-alignment movement (NAM) for India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "\"As the start of the 21st century, China has become major global force, booming economically and militarily. The country's transformation has been blinding and unprecedented with worldwide impact since its taken place in context of globalization.\" In this context, analyse the rise of China in economic and strategic terms.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Give an account of why there is the need to reform the United Nations Security Council (UNSC).",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 37,
+          "question": "Critically analyse the rationale behind adoption of the No-First Use (NFU) by India. Do you think that India should continue with its NFU policy?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "The dramatic developments in Afghanistan have created new geo-strategic and geo-economic concerns for region and have thrown up new challenges for India's engagement in Central Asia and Caucasus, promoting India to recalibrate to the rules of its engagement with region. Elucidate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the factors that led to the economic reforms of 1991.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Examine the significance of Central Asia for India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Describe Northern Sea Route (NSR). What are the driving factors for India to participate in the NSR development?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "India's relations with Latin American and Caribbean (LAC) region are of long-standing but they had had low salience for both sides. During the early 21st century, the salience increased for both. What explains this change?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Discuss the role of the non-governmental factors involved in shaping the foreign policy of India with suitable examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Strong India-US partnership can anchor peace, prosperity and stability in the Indo-Pacific\" Narendra Modi. In the light of above statement explains the challenges and potential areas of cooperation between India and US.",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 57,
+          "question": "Discuss the foremost ideals of India's Foreign policy (IFP) which remained as the corner stone since 1947. Also suggest some ways for making IFP more vibrant and dynamic to deal with existing as well as future geopolitical challenges.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Discuss India's multilateral approach towards counter-terrorism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Discuss the complexities in making of India's foreign policy.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "In just a decade, New Delhi and Tokyo have expanded high-level ministerial and bureaucratic contacts, conducted joint military exercises and concluded military pacts such as the Acquisition and Cross-Servicing Agreement (ACSA) logistics agreement. However, there still exist obstacles in the bilateral relation. Critically examine these obstacles in India-Japan relation.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Discuss India's Arctic Policy in brief. Also analyse the significance of Arctic region for India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "What are the major issues related to Indus Water Treaty (IWT)? Also suggest ways to address these issues.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Discuss the major areas of convergence in India-Africa relations in the contemporary world politics.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "IMEC has immense potential to put India, Middle East and Europe on collective path to grow, triggering regional and global cooperation\". Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -2906,7 +3554,163 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 5, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 13,
+          "question": "Bring out the cultural relative perspective on the human rights framework. Discuss whether the human rights framework would be strengthened or weakened if it made greater recognition of different cultures.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"Marxism offers an analysis of state power that fundamentally challenges the liberal image of the state as a neutral arbiter or umpire.\" Critically examine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Que.2(c) \"Justice is the thread which runs through liberty and equality.\" In the light of the statement discuss the relationship between liberty, Equality and justice.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Que.3(a) Democracy is accepted as the mechanism through which legitimacy is promoted, however, there are reasons for thinking that its effectiveness in this respect may be faltering. Critically Examine.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "\"Intersectionality in feminism brings to light issues of marginalisation and systematic oppression that were previously invisible by using a single-axis approach.\" Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"All who believe in new worlds for old are the disciples of Plato; all those who believe in old worlds made new by the tedious and toilsome use of science are disciples of Aristotle.\" Elaborate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Rawls recognises that liberal utilitarianism marked a progressive, welfare-oriented departure from classical liberalism's preoccupation with individualistic rights. Yet, in Rawls's view, utilitarianism is a morally flawed theory of justice. Explain",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Gandhi's philosophy was a profound engagement with modernity and its pitfalls. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Kautilya is convinced that although a good and wakeful king is necessary, this alone is not sufficient to ensure a well-ordered state. Explain",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Bring out the Marxist perspective on the post-colonial Indian State.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Explain how the DPSP and Fundamental Rights are supplementary and complementary to each other.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Critically examine the role of Rajya Sabha.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Do you agree that the NHRC has failed to deliver its mandate, in particular, to protect the rights of people from marginalized communities, religious minorities, and human rights defenders?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "\"The 73rd and 74th Amendments instructed the state governments to devolve such functions and powers to the local self-governments as would enable them to function as institutions of self-governance.\" Explain to what extent the devolution of functions and powers has been successful in the case of Panchayats?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "There have been demands from Ladakh for the 6th schedule status. What is the Sixth Schedule, and what special provisions are provided with the tag of the Sixth Schedule Area?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "\"Identity Politics has become a prominent subject in Indian politics in the past few years.\" Critically Examine",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "What do you mean by intra-party democracy? Why is it necessary to promote intra-party democracy? Suggest measures which can be taken to increase intra-party democracy.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Explain what are the key trends shaping India's party system, Indian democracy and the changing political landscape?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Explain the role of Deputy Speaker of Lok Sabha",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "\"A robust federal structure needs to be in place to deliver effective governance and development in a country as diverse as India.\" In light of this statement discuss the unique federal design of India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "\"Our parliamentary system does not provide adequate space for Opposition parties in Parliament.\" Discuss in light of the frequent suspension of members of Parliament for disrupting its proceedings.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "\"The most important gain of India's environmental movement is the voice it has given to its citizens.\" Discuss",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -2917,7 +3721,191 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 6, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "What are the limitations of dependency theory?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Critically analyze the difference between neo-liberalism and neo-realism.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "What is Systems Approach? What are its major characteristics?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "What is Judith Ann Ticker's critique of Morgenthau's Six Principles of Political Realism?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Human rights are integral to personality development of human beings whose dignity cannot be compromised. In this context, examine the emerging challenges to human rights protection across the globe.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Critically examine the effectiveness and weaknesses of the United Nations (UN) in promoting multilateralism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Discuss the challenges related to the fulfillment of IMEC. Also, suggest some ways to address those challenges",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "What do you understand by the term \"political regime\"? What are the general characteristics of political regimes?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Critically assess the factors underlying de-globalization in the present international scenario.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Critically analyze the major reasons which are diminishing the role and relevance of Asia-Pacific Economic Cooperation (APEC) in modern times.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Examine the factors that led to the emergence of authoritarian regimes. Also, discuss the salient features of authoritarian regimes.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Explain the concept of non-alignment. What kind of historical situations led to the development of non-alignment?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the major initiatives which have been taken by India and Bangladesh to boost regional connectivity for a stronger South Asia.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "In the last decade, the geopolitical construct of the Indo-Pacific Region (IPR) has emerged as a key strategic location in the twenty-first century. Substantiate.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Discuss the future implications of deepening India-France bilateral ties in a globalized world",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Critically analyze the impediments to India's permanent seat at the UNSC.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "In the backdrop of the UN, and global governance in general, continuing to reflect the power equations at the end of the World War-II, the G20 is recognition of the changed realities and has given a place at the international high table to emerging powers. In light of this statement, give a critical assessment of India's G20 presidency.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 53,
+          "question": "India's interests in the Arctic region has grown steadily over the years, leading to the formulation of its Arctic Policy. In this context, discuss the key aspects of India's Arctic Policy.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "\"Today India's focus must be on emerging as a bridge between the developing and developed world. Because, none of the problems confronting the Global South can be solved without substantive international cooperation between the developed and developing countries.\" C. Raja Mohan. In this context, give an account of how India can be the bridge between the countries of developed north and the developing south? (15 Marks)\"",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "\"India-Russia relations have historically been characterized by close cooperation in various fields, including defense, energy, trade, and diplomacy. However, like any bilateral relationship, there exists various challenges/irritants as well. What are these challenges in India-Russia relations? Also suggest ways to address these challenges for a deeper cooperation in the upcoming decades. (15 Marks)\"",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Examine the factors which have contributed to diminished relevance and effectiveness of SAARC as a regional cooperation platform in South Asia.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "India's SAGAR Initiative holds immense significance for countries of the Indian Ocean Region (IOR). Elucidate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Critically assess the various areas in which India-EU can cooperate to realize full potential of their relations in the contemporary international relations.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Discuss the major aspects of \"north-south divide\" in international politics.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "\"The ongoing rivalry between the US and China presents immense opportunities for New Delhi\". Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "During India's G20 presidency various reforms have been proposed for Multilateral Development Banks (MDBs). In this context, define MDBsand also give a detailed analysis why there is a need to reform the MDBs?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -2928,7 +3916,149 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 7, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 17,
+          "question": "\"Multiculturalists accept an essentially communitarian view of human nature\". Discuss",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "The pluralists believe that Austin's concept of sovereignty cannot be verified from history. Explain",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Democracy and social movements are closely linked like two sides of the same coin. Critically Analyse whether Social Movements increase or decrease democratisation.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "For Hannah Arendt, the three activities of labour, work and action collectively constitute the world of human praxis but they are not equal in 'dignity' and 'rank'. Explain",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Critically examine the \"New Humanism\" as given by MN Roy.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Discuss how Hobbes's psychological egoism, ethical relativism and political absolutism are all supposed to follow logically from the assumptions or principles underlying the physical world which primarily consists of matter and motion.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Bring out Dr B. R. Ambedkar's views on Socialism and communism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Major issues have divided competing traditions and tendencies within socialism. Bring out the faultlines along which there are schism within Socialism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "With the help of relevant Supreme Court judgements, analyze how Climate change threatens the constitutional guarantee of the right to life and equality.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Analyse the Dalit perspective on the nature of the Indian National Movement.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Analyze whether Nationalism was a by-product of British rule in India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Give the socio economic profile of the 18th Lok Sabha. Discuss the changing socio-economic profile of our legislators.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Que.6(b) The 16th Finance Commission is going to face fiscal difficulties faced by the 15th Finance Commission along with new challenges that have emerged in recent past. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Que.6(c) More than thirty years have passed since India's Economic reforms. There is now time for India 'economic reforms 2.0'. Discuss",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Caste continues to play a significant role in Indian politics but some socio-economic differentiation is also taking place that is affecting the voting pattern. Examine in light of recent general elections.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "It is often argued that the Constituent Assembly of India did not represent the masses of India. Do you agree? Bring out the Nature of the constituent assembly's representation",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "\"The Freedom of Speech and Expression is a fundamental right guaranteed to all citizens under the Constitution of India. However, the Constitution does not guarantee an absolute individual right to freedom of expression\". Comment",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "An Independent judiciary protects the philosophy and wisdom of the constitution. Comment",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "In a democracy attracted by power rather than constitutional form, power will continually need to be projected. Critically analyse the declining role of Parliament in light of frequent disruptions and suspension of Members of Parliament.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "\"The degeneration of constitutional political secularism into party-political secularism does not augur well for India\". Discuss",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas",
@@ -2939,7 +4069,191 @@
       "source": "Shubhra Ranjan (PSIR)",
       "by": "shubhraranjan.com",
       "note": "Test 8, PSIR Crash Course",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "What are the advantages and disadvantages of comparative approach in international relations (IR)?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Examine the challenges to democracy in present times across the globe with relevant examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain the basic assumptions of the Marxist approach to International Relations (IR).",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Define \"national interest\". How do sovereign states secure their \"national interests\"?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Critically assess the foremost criticisms leveled against structural realists by post modernist scholars.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "What do you understand by the term eco-feminism? Also, discuss its key principles in international relations (IR).",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "\"The rivalry between the US and China is presenting multifaceted challenges to the existing world order\". Elucidate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "\"Idealism in international relations is a theoretical perspective that emphasizes the importance of norms, values, and ethical principles in shaping the behavior of states and other international actors.\" Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Give a detail explanation of how neo-liberalism presents a break from classical liberalism in international relations?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Critically analyze the role of emerging technologies like Artificial Intelligence (AI), Cyber Warfare, and so on in shaping the nature of warfare in present day international politics.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "What are the key features of interdependence liberalism in international relations?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the basic principles of Modern World System theory of International Relations.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Even though Constructivism is a recent entrant into the club of IR theories, it has succeeded in gaining massive attention from scholars across the world. In this context, discuss the significance of social constructivism as an approach to the study of IR with suitable examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the major pillars of India-France bilateral relation.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "\"Convergences of interests and a mutually beneficial partnership have significantly reshaped the India-UAE relationship.\" Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Examine how deepening \"Russia-China-Pakistan\" Triangle is a cause of concern for India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "What are the challenges and limitations in India's \"Connect Central Asia Policy\"?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "India's active participation in the Quad reflects its evolving foreign policy priorities and its aspirations for a greater role in shaping the geopolitical dynamics of the Indo-Pacific region. In light of this statement, discuss the significance of Quad for India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Critically analyze how India's engagements with the Shanghai Cooperation Organization (SCO) foster regional stability and security in the region.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "\"Despite encountering obstacles, the mutual understanding between India and Bangladesh has fostered the continuation of the \"Golden Chapter\" in their bilateral relations.\" In the light of this statement, examine the dynamics which contribute to this enduring bond between India and Bangladesh.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "What is India's current position in pursuing a permanent seat on the United Nations Security Council (UNSC)? What advantages would a permanent UNSC membership provide? Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "\"The security dilemma in India-China relations is characterized by mutual mistrust, territorial disputes, strategic competition, military modernization, and nuclear deterrence.\" Elucidate",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "\"The current situation puts the diplomatic and political relationship between India and the Maldives at stake, which has been meticulously cultivated over six decades. A constructive way forward for the India-Maldives partnership could entail reducing tensions and recognizing that diplomatic relationships are shaped by shared and sustained interests.\" Discuss",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Discuss the significance of the \"Global South\" for India in contemporary geopolitical scenario.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Discuss the major pillars of India's climate diplomacy in contemporary geopolitical state of affairs.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "\"Regional integration in South Asia faces numerous challenges, hindering the region's ability to fully capitalize on its economic potential and address common developmental goals.\" Substantiate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vikas kundu",
@@ -3782,7 +5096,177 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "\"The project of Dalit capitalism is futile in a society where caste decides the social capital\" Critically analyze.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Critically examine the 'paradox' of India's 'green revolution'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Do you agree that the Constitution of India has weakened the traditional social order in India? Give reasons for your opinion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the nature and social background of the working class in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "\"Education is not only instrumental in bringing about social change, it is also instrumental in maintaining the status quo.\" Comment in the context of Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"Poverty is the root cause of child labour.\" In this context, there is a possibility of more children engaging in child labour due to the loss of jobs during the ongoing pandemic. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "How is the Indian agrarian system witnessing a change in its 'mode of production'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "India's bonded labourers are caught between an entrenched caste system and a dismissive state. Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "\"Gentrification of the cities and ghettoization are the two sides of the same coin in the new urban landscape.\" Examine the statement with reference to the Indian experience of urbanization.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "\"The introduction of reservation policy is not sufficient to empower women and strengthen their role as key stakeholders in local governance.\" Examine the statement in the context of Panchayati Raj in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "\"State intervention is needed to make farming economically and ecologically viable\". Comment with special reference to the problems faced by small and marginal farmers in contemporary India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Pressure groups happen to be an indicator of level of political maturity and accommodation in a political system. In this context critically analyse role of pressure groups in the policy making process in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Explain how the history of dairy cooperatives in India showcases a model for realisation of the goal of 'Atmanirbhar Bharat' (Self-reliant India).",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Infant mortality rate is the most sensitive index for measuring development. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "What do you understand by 'cultural nationalism'? How does it manifest in India? Give some examples from recent times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Briefly discuss D.N. Dhanagare's views on agrarian movements in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Globalisation has given a new lease of life to communalism. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "With rapidly ageing population, India is staring at the prospects of generational socio-economic crisis. In the context of this statement, discuss the challenges of ageing population.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "\"The relationship between NGOs and the women's movement in India has led to a loss of collective feminist politics based on autonomy.\" Comment in the context of the notion of 'NGOization'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Due to pre-existing gender differences, women are experiencing the effects of the COVID crisis in different and often more negative ways. Critically examine the statement in context of Indian women's vulnerability to COVID-19.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Despite a fast-growing economy and the largest anti-malnutrition programme, India has the world's worst level of child malnutrition. Elaborate the social causes as well as consequences of malnutrition in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "\"Population policy 2000 sees population structure through lens of fertility, ignoring important component of migration\". In reference to recent migrant crisis, analyze why there is a need for internal migration policy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "\"Poverty in India has been socially generated and perpetuated\". Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "\"Physiological factors associated with women cannot be a rationale to deny them the right to worship.\" How patriarchy operates through religion, discuss in relation to Sabrimala judgement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Kushal Jain",
@@ -4077,7 +5561,44 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 9,
+          "question": "Explain the difference between social inequality and social stratification. How do the nature and forms of the social stratification system influence social mobility.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Work in industrial and post-industrial society can be alienating for the work force. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Critically discuss the role of social inequality in ensuring that important positions are filled by the most qualified persons.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "\"Religion prevents social change by disguising exploitation and inequality\". Critically evaluate the statement with reference to Marx and Weber's theory of Religion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Compare and contrast the role of religion in various aspects of social life in pluralistic societies like India and USA.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Sudhir Kumar",
@@ -4088,7 +5609,44 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 13,
+          "question": "\"The alternatives to the institution of marriage is leading to its disintegration.\" Comment on the validity of the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Can digitalization of Indian Society be considered as an agent of social change? In what manner can it establish a new social order in India?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Critically discuss the reservation policy as an instrument of social change in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Nuclear Family fits the needs of industrial society\". Critically analyze this statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Methodological pluralism is a panacea that can solve all research problems.\" Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Sudhir Kumar",
@@ -4161,7 +5719,30 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 18,
+          "question": "\"Proliferation of slums is the result of failure of housing policies\". Critically analyze.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Critically analyze to what extent the recent amendments made to Child Labor (Prohibition and Regulation) Act, 1986 will help curbing the menace of child labor in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Law as ar instrument of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Sudhir Kumar",
@@ -4469,7 +6050,114 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Assess Max Weber's concept of \"Ideal Types\" as a unique and distinctive methodological approach in sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Explain how Talcott Parsons AGIL model can be applied to understand and analyze the education system in contemporary societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Examine the consequences of 'social mobility' on both the 'individual' and 'societal' levels within various societal frameworks.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "It has been suggested that a significant portion of Max Weber's theoretical framework was crafted through extensive and prolonged intellectual discourse with the shadow of Marx. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "\"Durkheim's idea of social facts both established sociology as an independent field of study and provided one of the most convincing arguments for studying society as it is before we decide what it should be\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Critically examine 'pattern variables' as a conceptual tool, in understanding social reality.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "The concept of 'latent and manifest functions' evolved by Robert K. Merton, has given greater 'significance and relevance' to the 'functional analysis' in understanding social reality. Elucidate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Emile Durkheim's concept of the division of labor highlight its dual nature, serving as both a functional and potentially anomic force in society.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Utilizing Durkheim's Suicide theory, examine the pattern of elevated suicide rates in present-day Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "\"Pressure groups are the corner stone of a democracy\". Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Robert K. Merton s theory of deviance, was a departure from constructing 'total theoretical systems' in explaining social phenomena. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "In Marx's view, social stratification is created by people's differing relationship to the means of production. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Examine and highlight the similarities and differences between C. Wright Mills' understanding of the elite in the power structure and the perspectives of Pareto and Mosca on the same subject.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "\"What key factors have acted as catalysts for revolutions throughout history\"? Discuss with the help of different sociological perspectives.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Modernity has many children, one of them is 'fundamentalism'. Critically examine the relevance of the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Malavika G Nair",
@@ -4645,7 +6333,107 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Indian state shifted has from socialist state to liberal state post 1991. Analyse the impact of market led approach to development in the last three decades.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "The Constitution of India was adopted to force the pace of social and material renaissance in India as a step towards social change and nation building. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Though slums vary from one type to another, but certain general patterns of slums are universal. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Women's movements in India are often accused of having a narrow middle-class base. Evaluate the statement in terms of leadership & issues of these movements.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "What is the relationship between political elites and the business community in India, and how does this impact economic growth and development in the country?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Although participation of the private sector in education is today the need of the hour, nevertheless certain concerns are expressed regarding the rapid growth of educational institutions under private management. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "The entire family system will be under great stress if marital rape is brought under law. In the light of this statement, critically discuss the necessity of criminalising marital rape in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Planning is commitment to concentrated actions. It is adjustment of social institutions to new social, economic and political conditions. In this context discuss planning as an agent of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Rapid urbanization is antithetical to sustainable development. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Politicisation of religion is threat to Indian democracy. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Child labour is a crime committed by few, but the whole society is responsible. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "\"Manual scavenging is a stink that never washes off\". In the light of this statement, provide the reasons for the unabated existence of manual scavenging in Indian society and suggest possible solutions.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Government accountability for the consequences of state-imposed displacement has been virtually absent. Discuss social and cultural implications of displacement for the displaced communities in India?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Of all the developmental programmes introduced during post-independence period, the Green Revolution is considered to have been the most successful. Critically analyse this statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "ANSHUL HINDAL",
@@ -4667,7 +6455,107 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Considering the impact of globalization, examine the evolving scope of sociology and how it has adapted to study and address contemporary social issues.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Methodology encompasses a system of rules, principles, and procedures that form the basis of scientific investigation. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Discuss the role of socialization and cultural transmission in shaping conformist and deviant behavior among individuals.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the role of reliability and validity in a sociological research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "\"The fate of our times is characterized by rationalization and intellectualization and, above all, by the disenchantment of the world.\" How far is the Weber's statement valid in today's society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "How far do you agree that Euro-centric theories of social stratification have not been able to fully capture the complexities and nuances of India's diverse and stratified society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Social movements are collective actions to bring or to resist social change. Differentiate between Old and new social movements.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 31,
+          "question": "Sampling is a convenient tool to gather information about a population, but it can be grossly misleading as well. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "The process of secularisation was greatly aided by transformation of human consciousness triggered by the popularisation of scientific ideas among common people. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "\"Rising divorce rates are indicative of changing attitudes towards marriage and commitment in contemporary societies.\" In light of this, discuss the reasons behind increasing number of divorces in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Structural functionalism views social change as a gradual process of adaptation and equilibrium restoration in societies. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Artificial intelligence is changing the relationship between man and technology. Elucidate the role of technology as a medium of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Investigate the experiences of transgender individuals in India regarding the negotiation of self-identity. How do cultural attitudes and legal recognition influence their sense of self and belonging?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "The course of human history involves a progressive development of the means of production paralleled by a corresponding increase in human alienation. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vishal Mishra",
@@ -5433,7 +7321,72 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 18,
+          "question": "The \"development of the individual's self, and of his self- consciousness within the field of his experience\" is preeminently social. Discuss in context of G.H Mead.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Critically examine Max Weber's theory of social action and its limitations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Critically assess R K. Merton's views on the contributions of research to the development of sociological theory.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "“Weber’s approach to stratification was built on the analysis developed by Marx, but he modified and elaborated on it”. Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "\"Science investigates; religion interprets. Science gives man knowledge, which is power; religion gives man wisdom, which is control\". Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Briefly discuss the implication of social mobility on individual and societal level in different structures.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "Secularization theory was once the dominant sociological pattern of interpretation to describe and explain religious change in the modern period, however has lately been discredited. Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 59,
+          "question": "Critically discuss 'Value-added theory' with respect to the social movements.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Critically analyze to what extent the sovereignty of the state has been challenged in the wake of Globalization.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Fatima",
@@ -5554,7 +7507,156 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — PSIR I optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 6,
+          "question": "Comment on the following in about 150 words each:",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "How did the behavioural and post-behavioural approaches together contribute to methodological pluralism in political science?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Examine the transformation of the concept of authority from traditional to postmodern societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Feminists argue that the State is not gender-neutral; it actually functions as a patriarchal institution. In this context, discuss the feminist critique of the State.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Examine the evolution of the idea of justice from Plato to Rawls.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Explain the tensions between cultural relativism and the advocacy of universal human rights in global politics.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Distinguish between social equality, political equality, and economic equality. To what extent can they be realised independently?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Do participatory and deliberative democracies offer viable alternatives or necessary complements to liberal constitutional democracy? Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Gandhism and Marxism converge on a moral critique of industrial capitalism despite their methodological differences. Examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "For Machiavelli, religion is a tool for political stability. Discuss this utilitarian view of religion and its implications for secular governance.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "Comment on the following in about 150 words each: The Indian Constitution as an instrument of social revolution.",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Role of the GST council in Fiscal Federalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 56,
+          "question": "How did the nationalist movement reconcile the contradiction between anti-imperialism and the perpetuation of social hierarchies in Indian society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Articles 2 and 3 of the Indian Constitution grant the Union significant powers over state boundaries, raising questions about the federal spirit. Critically examine this assertion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "\"Out of the tussle between the judiciary and executive emerged the basic structure doctrine.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 66,
+          "question": "The evolution of Fundamental Rights jurisprudence in India reflects a shift from a textual to a purposive interpretation. Discuss this transformation with reference to landmark Supreme Court judgements.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "How have the changing education and socio-economic background of Indian legislators affected democracy and political participation in India?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Critically assess whether the current model of Panchayati Raj in India is compatible with the principle of participatory democracy or has it devolved into a mechanism of mere formal decentralisation? (Answer in 150/250 words)",
+          "marks": "",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "The Governor's role in Indian states has often been a contentious issue. Discuss in the context of recent political developments in Indian states.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "Critically examine the impact of economic liberalisation on uneven development among Indian states.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 83,
+          "question": "In post-independence India, caste and politics entered into a dynamic relationship that transformed both. Examine this interplay and its implications for Indian democracy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Rakhi",
@@ -5565,7 +7667,198 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — PSIR II optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 6,
+          "question": "Discuss the 'Peace by Pieces' Approach to International Relations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Analyse the historical approach to studying comparative politics.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "How does the weaponization of AI in cyber warfare challenge existing international norms and legal frameworks?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Explain the concept of 'Balance of Power' and discuss its relevance in contemporary international relations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "The New International Economic Order (NIEO) was an unfinished revolution, but its normative claims are making a comeback. Discuss in the context of post-pandemic global governance.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "In the context of rising global divisions and the decline of multilateralism, the United Nations faces challenges to reclaim its leadership role in global governance. Analyse by using contemporary examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Big Tech may be stateless, but it is not powerless. Keeping this in context, evaluate the impact of transnational digital corporations on the autonomy of post-colonial states.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the complex relationship between terrorism and human rights. How do counter-insurgency measures, while aiming to combat terrorism, often exacerbate human rights violations?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "While realism focuses on the mechanisms of state behaviour, Marxism focuses on the underlying economic and social forces. Evaluate the statement using examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "How has the advancement of technology reshaped the traditional concepts of 'deterrence' and 'national interest' in the context of contemporary international relations?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Discuss whether an active non-alignment provides a viable foreign policy option for middle powers amid great power rivalries.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "The U.S. has maintained its hegemonic role in global politics, as demonstrated by its influence in the Iran-Israel conflict and India-Pakistan tensions. Discuss critically amid the claims of declining U.S. hegemony in the 21st century.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Evaluate the effectiveness of the IMF and World Bank in addressing the debt vulnerabilities of low- and middle-income countries.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "How have feminist scholars critiqued traditional security paradigms in International Relations and what alternative perspectives on security have they proposed?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "How do state governments influence foreign policy under cooperative federalism? Discuss with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Examine India's relations with Nepal and Bhutan in the context of historical treaties and aid.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "Discuss India's integration with ASEAN and East Asian economies under the Act East Policy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Examine the evolution of India's role in development diplomacy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "NAM allowed India to maximise its autonomy without maximising confrontation. In light of this, assess India’s balancing behaviour in the contemporary world order.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "It is often argued that despite intense conflicts, nuclear parity has prevented full-scale war between India and Pakistan. Critically assess this claim.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "How do China's increasing ties with South Asian countries affect regionalism, particularly in terms of SAARC and other sub-regional groupings?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 66,
+          "question": "While Indo-US ties have expanded in breadth, they continue to suffer from a lack of strategic depth. Critically evaluate this statement with reference to recent developments.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Despite shared democratic values and economic complementarities, the India–EU partnership has struggled to acquire strategic traction. Examine the impediments and the recent efforts to recalibrate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Despite symbolic summits and high-level visits, India's Africa engagement lacks strategic depth. Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "How has India navigated its diplomatic position on the Israel-Palestine conflict since 2020, particularly regarding its stance on terrorism and humanitarian issues in Gaza?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "India's nuclear doctrine is more about political signalling than operational planning. Critically examine this assertion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 83,
+          "question": "Examine how India's growing ties with the United States and involvement in the QUAD under a broader Indo-Pacific strategy are influencing its traditional strategic relationship with Russia.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Minal Negi",
@@ -6890,7 +9183,93 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Discuss Merton's four institutional imperatives of science.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Economics must be made the handmaid of sociology. Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Emile Durkheim had argued that the function of division of labour in society is promotion of social solidarity. Discuss the statement and critically analyse Durkheim's Division of labour theory, with reference to contemporary trends.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Examine how Weber's characterization of capitalism is different from those of Marx.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "What is the importance of Merton's Middle Range Theory in Sociology? Critically discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Dorothy Smith gives the method of institutional ethnography and stand point theory which suggest to study social institutions from the point of view of the marginalised to understand their condition.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Critically examine the features of 'critical social research'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Discuss the importance of 'Pilot studies' in sociological research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "\"In the sociology of deviance, no single theory has emerged as dominant.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Enumerate the characteristics of 'informally organised work' in certain types of societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "What do you mean by Ethnocentrism? Discuss its advantages and disadvantages in Sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Briefly analyse the role of ideology as an essential component of social movement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Prakhar Jain",
@@ -6901,7 +9280,58 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 12,
+          "question": "Social institutions in India have undergone change owing to modernization but still has streaks of tradition embedded in them. Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Explain the evolution of land tenure system and its impact on the agrarian structure.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Briefly discuss the impact of Buddhism on Indian society",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Compare the evolution of backward class movement in north and south India.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 40,
+          "question": "Discuss Davis and Blake perspective on \"relationship between fertility and social structure.\"",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "\"A toxic social environment leads to vulnerability and impairs resilience.\" Discuss the statement in context of growing suicide among youth in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "The latest National Health Mission report has flagged the 'uneven burden' women bear in family planning. Discuss the reasons for this imbalance and other socio-cultural barriers for family planning in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Vaibhav Kumar",
@@ -8652,7 +11082,121 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"Constitution of India is not just a political document but a source of social change\". Explain in this context, Yogendra Singh's perspective on law and social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "\"Paid menstrual leaves for women will reinforce existing stereotypes\". Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"Caste must be counted because it counts\". Discuss the statement in light of the recent debates over caste- based census.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "\"The trajectory of urban development is the major reason for environmental issues in urban areas\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"While education is a tool of social change, it's commercialization is leading to the opposite\". Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "\"Green revolution led to profound structural and cultural changes in rural and agrarian societies in India\". Analyse the various functional and dysfunctional changes brought by green revolution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "The modern working class came into being with the rise of capitalist mode of production. In light of this, discuss the emergence and consolidation of working class in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "To what extent do you agree with the assertion that the processes of industrialization and urbanization in India have reduced the significance of caste differences while strengthening the influence of class dynamics? Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Explain the changes brought by globalisation in the modes of production in Indian agriculture?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Evaluate the concept of new social movements in the context of Indian society, considering their reflection on societal changes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the role of indigenous communities and traditional knowledge systems in promoting environmental conservation and sustainable practices in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Analyze the various perspectives on comprehending the concept of \"ethnicity\".",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "In your opinion, has the allocation of seats for women in local governance contributed to the enhancement of Indian democracy?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the challenges to secularism posed by rising religious nationalism and communal tensions. What are the possible strategies for promoting religious tolerance and social harmony?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Analyze the social and economic determinants of child and infant mortality in India, and suggest interventions to improve maternal and child health outcomes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Pressure groups play a significant role in influencing policy agendas. Analyze the strategies and effectiveness of pressure groups in the Indian political landscape.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Anupriya Rai",
@@ -8788,7 +11332,142 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"The politicization of caste identities has led to a deepening of democratic processes in India.\" Critically evaluate. (Answer in 150 words)",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "\"The Indological perspective on Indian society tends to emphasize cultural continuity and overlooks the dynamics of social change.\" Discuss. (Answer in 150 words)",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Critically examine Daniel Thorner's approach to study Indian agrarian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Ghurye's analysis of tribes was based on tribe caste continuum. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the importance of the theory of Little Tradition and Great Tradition in comprehending social change in Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "The hallmark of Srinivas perspective on Indian society was to break out from confines of textual authority. In this context critically analyse the structural-functionalist perspective in the analysis of Indian Society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"The application of Historical Materialism provided a new method in understanding Indian social reality\". Discuss the statement in context of A. R. Desai's understanding of Indian nationalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Comment on how Brahminical Patriarchy represents the convergence of two major issues: casteism and sexism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "The concept of paternity leave challenges the patriarchal notion that child-rearing is solely a woman's responsibility. In this context, discuss the challenges associated with implementing paternity leave provisions.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Though the credit to establish Indian sociological tradition goes to G S Ghurye, but it was M N Srinivas who led it to maturity. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "\"Family is an imagination while household is a reality\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Analyze and critique how women are represented in Indian media.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "\"Each caste is demanding superiority to equals and equality to superiors\". Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Political parties essentially emerge from social movements. Support your view with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 39,
+          "question": "How much can the rise of communalism in India be attributed to the period of colonial rule?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "\"Climate change is not just an environmental issue but also a social justice issue,\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "According to NFHS-5, women have outnumbered men in India for the first time in history. Do you believe this reflects the success of family planning in India? Provide a critical analysis of the situation.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Secularism is the cardinal principle of Indian constitution. Discuss the problems faced by religious minorities in India, in the light of secular framework in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Unemployment among the educated has significant social consequences that extend beyond the individual to affect families, and society as a whole. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Farhaan Irfan",
@@ -9173,7 +11852,121 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "How is Sociological approach to human actions different from that of psychological approach?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Although the interview method has few technicalities associated with it, the simplicity of the format can be deceptive. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Sociological theories provide us with a framework for explaining the social world around us. Discuss the role of theory in guiding social research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "To what extent does Marx's theory of historical materialism explain the dynamics of modern capitalism?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Critically examine the concept of pattern variable as a tool in understanding social reality.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "\"Although Durkheim and Weber both recognized the cultural significance of religion, their respective \"theories of religion\" diverge in their perspectives. Critically examine the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"Merton's middle-range theory provides a useful link between theoretical concepts and empirical data\". Do you agree with the statement? Substantiate your answer with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "\"The union of anthropology and sociology is considered to be desirable and favorable, despite their distinctive areas of specialization\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Sociology is a systematic study of society, distinct from philosophical and religious reflections, as well as from our everyday common-sense observations about society. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Discuss the significance of comparative method in the study of society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Discuss how gender affects access to resources and opportunities in the labour market.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "\"In the sociology of deviance, no single theory has emerged as dominant.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Despite the acceptance of Weber's understanding of power by many, some believed it is too narrow. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Comment on the trend of increasing numbers of sects and cults particularly in modern societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Using Merton's concept of manifest and latent functions, explain the persistence of dowry in Indian Society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "\"Civil society is the oxygen of democracy, and without it, democracy suffocates.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "SAMEER GOEL",
@@ -9239,7 +12032,107 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Sanstritition Sanscritization involves 'positional change' in caste system without any 'structural' change. Analyze.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 4,
+          "question": "Explain the Interactional approach to study of caste in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Discuss various sociology sociological perspective on tribal integration and autonomy in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Within the informal workforce, there is persistent gender-based occupational segregation. In this context, analyze the feminization of informal labour.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "The idea of Indian villages as simple, static and self-sufficient provided by colonial administrators has been criticised by many scholars. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "G.S. Ghurye liberated the study of Indian society from the colonial biases and laid the true foundation of the discipline of sociology in India. Substantiate this statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Tribes are said to have accepted ethos of caste structures and absorbed within it. Critically analyse the changing dynamics between caste and tribe.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Poverty in India has been socially generated and perpetuated. Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Slum is the lifeline of urbanity.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Highlight the difference between secularism and secularisation, discuss the nature of secularism in Indian context.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Analyse M.S.A Rao's views on factors relating to the origins of social movements.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Critically examine the approaches to understand the concept of 'ethnicity'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "It is argued that industrialisation and urbanisation has diminished caste distinction and made class dimensions more powerful in India. How far do you agree with this view?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Elite accomodation has often been a features of modern political societies. Critically discuss in context of India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Rahul Patil",
@@ -9679,7 +12572,177 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"Common sense is sociological nonsense.\" How far do you agree with the assertion in context of 21st century sociology?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Examine the growth of the gig economy as a new form of informal work. What implications does it have for job security and labor rights?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"Modernization does not necessarily lead to development.\" Analyze.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain the concept of fictive kinship and its significance in forming social bonds. How does it operate in modern societies?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss how has the information revolution impacted social change in developing societies?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Compare and contrast evolutionary and conflict theories of social change. What does each perspective reveal about societal transformation?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Explain the concept of triangulation in research. How does it enhance the validity and reliability of sociological studies?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Analyse the relationship between sociology and welfare economics, with special reference to Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the concepts of fact, value, and objectivity in sociological research. Can sociology ever be entirely value-free?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Discuss the role of education as an agent of social change, with reference to issues of social mobility, equality, and empowerment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Examine the impact of automation and artificial intelligence on the future of work. What are its implications for developing economies?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "\"One is not born a woman, but becomes one.\" In this context discuss feminist challenge of traditional kinship and family systems.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Define Ulrich Beck's concept of the 'risk society.' How does the concept of risk influence contemporary social change?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "\"Scientific method can be effectively applied to study social phenomena.\" Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "\"Alienation remains a relevant concept in understanding modern workplace dynamics.\" Comment with reference to digital workspaces.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "\"Phenomenology represents the most radical departure from the 'scientific' methodology\". Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "How modernity influenced the intellectual development of sociology or shaped sociology's focus on issues of social order and change?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "Examine the strengths and limitations of ethnography as a research method in sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Discuss how the integration of qualitative and quantitative approaches (mixed methods) can enhance sociological research. Give examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "With the rise of nuclear modern families, the relevance of kinship studies in the sociological analysis is reducing. Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 71,
+          "question": "Analyze the relationship between division of labor and social solidarity in industrial societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Discuss Max Weber's theory of rationalization and its impact on social change in modern society. Provide contemporary examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Discuss how the traditional functions of marriage are increasingly replaced by contractual and consumer-driven roles.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "Critically analyze the Dependency Theory in understanding social change in developing countries. How does it explain the global inequalities in development?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Akash Deep",
@@ -10825,7 +13888,114 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 7,
+          "question": "A.R. Desai's understanding of Indian nationalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 11,
+          "question": "G.S Ghurye liberated the study of Indian society from the colonial biases & laid the true foundation of the disciple of sociology in India. Substantiate this statement",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Discuss the role of social reform movements in preparing the background of Indian nationalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Analyse the changing nexus between caste and tribe.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "\"Patriarchy is a result of socialization\". Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Family as an \"agent of social control\". Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Q5 (c) Emergence of working class.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 25,
+          "question": "Explain reasons behind the growth of sects and cults in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Examine the role of 'middle class' in contemporary world.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Caste as a social capital is functional as well as dysfunctional in society. Illustrate with examples & observations from Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "\"Modern society is characterized by departure from tradition & religion to individualism & rational organization of society.\" In this context, discuss to what extend the Q7 (c) \"The household study of family offers a new dimension to sociological research, at the same time it has certain limitations.\" Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "\"The household study of family offers a new dimension to sociological research, at the same time it has certain limitations.\" Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "\"Untouchability has often been termed as the inhuman institution of Indian society.\" In this context, discuss the social problems of untouchability from different perspectives.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "\"The pluralist and multi-religious character of the Indian society is facing constant challenges.\" Discuss the statement in context of problems of religious minorities.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Critically analyse the issue of 'Isolation - Integration - Autonomy' of tribal communities in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "JAHNAVI",
@@ -14187,7 +17357,135 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 PSIR - TEST 2 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "How can the United States, as a hegemon, strengthen the international world order? (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Analyze the factors contributing to nuclear proliferation in the post-Cold War era and the challenges it poses to the international community. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "To what extent did the Bretton Woods system contribute to the postwar economic boom and subsequent transition to neoliberalism? (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Assess the criticisms of the IMF's policies and practices and their implications for its effectiveness in promoting global financial stability and growth. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Critically examine the factors responsible for the Cold War and discuss their impact on global politics, citing relevant examples. (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Can China replace the USA as a hegemon in the emerging world order? Analyze China's potential to become a regional hegemon in Asia. (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "How can ASEAN ensure its relevance and centrality in the Indo-Pacific region amidst the emergence of the Quad and the AUKUS? Discuss the factors influencing ASEAN's approach and the potential areas of collaboration. (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the relevance and potential role of the Non-Aligned Movement (NAM) in the contemporary international order. How can NAM act as a soft balancing mechanism against powerful states? (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "What are the key outcomes of COP27 climate summit? (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Explain the evolving security dimension of the Quad and its implications for regional stability in the Indo-Pacific. (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Examine the significance of the Comprehensive Nuclear-Test-Ban Treaty (CTBT) in the context of global nuclear arms control and the prevention of proliferation. Discuss the challenges and criticisms associated with the treaty. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "What are the major obstacles to Southeast Asian Integration with reference to ASEAN. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the limitations of the European Union (EU) in exerting political influence and its impact on its role as a global actor. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "How has regionalism emerged as a response to globalization in the economic, political, and cultural spheres? (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Elaborate on India's contribution to the United Nations and its role in promoting global peace and development. (10 marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the politics of financing the United Nations and its implications for the organization's functioning and decision-making process. (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "How has the role of the United Nations changed in the post-Cold War period, and what new challenges has it faced?. (15 marks, 200 words)",
+          "marks": "15",
+          "words": "200",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Assess the rise of multipolarity in the global order and its implications for international politics and security. Provide examples of emerging powers and their role in shaping the new power dynamics (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "REKULWAR SHUBAM",
@@ -14848,7 +18146,44 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "PSIR optional — test-series copy (Paper 1 – Chapters 1, 2 & 3)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Discuss with examples how Marx is cited as one of the principal architects of modern social science",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 4,
+          "question": "Elaborate the efforts made by Durkheim for the acceptance of sociology as a legitimate science. How far do you think he succeeded in his endeavours",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "How Weber and Marx seem to be in contrast when they consider the interplay of between Religion & Capitalism",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "What are unanticipated consequences? How are they different from Latent functions? Explain using examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Since GH Mead focusses on the developement of the self for an individual, a very subjective phenomenon, does it signify there cannot be any objectivity in studying the social world? Elaborate your answer.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Shruti Uttam Shrote",
@@ -14962,7 +18297,44 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "PSIR optional — test-series copy (Paper 1 – Chapters 7, 8 & 9)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "What is Uniform Civil Code? Can it become a reality in India? If so, What Implications will it have on women & religious minorities?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 4,
+          "question": "Define the concept of 'Foster Families'. How is it different from Adoption ? Has India truly accepted the concept?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "How has the pandemic led to the increase in child sexual abuse online? What can be possible prevention strategies or measures that can help curb the menace?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Does social media still qualify as an agent of free speech? What impact does it continue to have on democracy?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "While the constitution explicitly gives its citizens liberty to choose their religion, it's the states, today, that are changing course & making it harder to make that choice. Critically discuss the issue of anti-conversion laws in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Shruti Uttam Shrote",
