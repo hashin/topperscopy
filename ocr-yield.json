@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-26T15:23:22.663Z",
+  "generated": "2026-09-26T19:23:42.956Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1373,6 +1373,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a2ee6-834009_2424_aditya_srivastava_rank_01.pdf",
+      "topper": "ADITYA SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -2772,6 +2786,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bf2a1-615676_2423_prajnanandan-giri_rank_24.pdf",
+      "topper": "PRAJNANDAN GIRI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 7,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/4c9a7e5e5edac112d75ba3bb128c426a/14/gspm23b10138_anv2403.pdf",
       "topper": "Nancy Singh",
       "coaching": "NextIAS",
@@ -3571,6 +3599,20 @@
       "count": 7,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e12e2-1557138_2422_ayush_shrotriya_rank_109.pdf",
+      "topper": "AYUSH SHROTRIYA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
