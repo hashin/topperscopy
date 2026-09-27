@@ -1,8 +1,50 @@
 {
-  "generated": "2026-09-26T19:23:42.956Z",
+  "generated": "2026-09-27T05:58:16.240Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/cfd12-1195934_2218_aayushi_bansal_rank_97.pdf",
+      "topper": "AAYUSHI BANSAL",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8396f-207927_2220_vedika-bihani_rank-213.pdf",
+      "topper": "Vedika Bihani",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a7ed8-834009_2425_aditya_srivastava_rank_01.pdf",
+      "topper": "ADITYA SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/7bc70-392450_4514_abhigyan-khaund_rank_187.pdf",
       "topper": "Abhigyan Khaund",
