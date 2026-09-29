@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-29T16:14:51.584Z",
+  "generated": "2026-09-29T21:04:15.765Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1541,6 +1541,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/19/pttp220724_tc062.pdf",
+      "topper": "RAJAT TRIPATHI",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 23,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -3094,6 +3108,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/46ce0-1295265_2424_rishendra_singh_rank_113.pdf",
+      "topper": "RISHENDRA SINGH",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 7,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/214ee-974747_2218_aranksha-yadav_rank-201.pdf",
       "topper": "Aranksha Yadav",
       "coaching": "VisionIAS",
@@ -3950,6 +3978,20 @@
       "optional": true,
       "groupMedian": 7,
       "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/da288-998375_3128_nitisha_thakwani_rank_133.pdf",
+      "topper": "Nitisha Thakwani",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/2b204-551604_2422_mrinalika_rathore_rank_125.pdf",
@@ -5992,6 +6034,20 @@
       "salvaged": 0,
       "groupMedian": 14,
       "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1c097-971237_2423_surabhi-srivastava_rank_56.pdf",
+      "topper": "SURABHI SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/3e2ae-171485_1024_neha-bandhu_rank_121.pdf",
