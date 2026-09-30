@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-30T16:30:03.936Z",
+  "generated": "2026-09-30T21:01:49.497Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f1147-971237_2425_surabhi_srivastava_rank_56.pdf",
+      "topper": "SURABHI SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/29275-0145271_2422_venkateshwaran_r_rank_152.pdf",
       "topper": "VENKATESHWARAN R",
@@ -3178,6 +3192,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/12412-1195934_2220_aayushi-bansal_rank-188.pdf",
+      "topper": "Aayushi Bansal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 7,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/17ef4fb3aefb378e39a7d318fca39819/44/pttp221500_tc064.pdf",
       "topper": "SHOIAB",
       "coaching": "NextIAS",
@@ -4104,6 +4132,20 @@
       "optional": true,
       "groupMedian": 7,
       "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/21/pttp220437_tc062.pdf",
+      "topper": "ANUPRIYA RAI",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 18,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
     },
     {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/MT25FLTRA046_TC001.pdf",
@@ -6384,6 +6426,20 @@
       "salvaged": 0,
       "groupMedian": 14,
       "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bf89a-291804_2218_prashant-sharma_rank-259.pdf",
+      "topper": "Prashant Sharma",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/MT25FLTRA046_M25GAT03.pdf",
