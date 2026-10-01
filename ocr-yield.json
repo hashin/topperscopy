@@ -1,8 +1,50 @@
 {
-  "generated": "2026-10-01T17:48:38.868Z",
+  "generated": "2026-10-01T21:21:21.752Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5dd0c-289567_2423_abhijnan_hazarika_rank_172.pdf",
+      "topper": "ABHIJNAN HAZARIKA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9ab84-1146808_2930_sanskriti_trivedy_rank_17.pdf",
+      "topper": "Sanskriti Trivedy",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b38da-971237_2424_surabhi-srivastava_rank_56.pdf",
+      "topper": "SURABHI SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/35fbd-1295818_2321_ishwar_lal_gurjar_rank_483.pdf",
       "topper": "Ishwar Lal Gurjar",
