@@ -6455,7 +6455,16 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 36,
+          "question": "\"The impoverishment of the Indian peasantry was a consequence of the transformation of the agrarian structure\". In the context of this statement, analyze the nature and the extent of the peasant movements in pre- independence period.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Swapnil Khare",
@@ -8076,6 +8085,20 @@
         {
           "page": 41,
           "question": "Gramsci extended the Marxist ideas on Power and State by developing the concept of hegemony. Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "\"Durkheim's understanding of religion, like any other social theory, emerged and had greater relevance in a particular 'social context'.\" Critically analyze the statement",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Protests and agitation are symptomatic of skewed development in society. Discuss in context of India along with relevant examples",
           "marks": "",
           "words": "",
           "salvaged": false
@@ -12701,6 +12724,69 @@
           "marks": "",
           "words": "",
           "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "\"The resurgence of regionalism in various parts of the country has emerged as a threat to unity and integrity of the nation.\" In the light of this statement, critically analyze the reasons for its emergence and how such divisive tendencies needs to be addressed.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Critically discuss the role of education in the process of nation-building with particular reference to India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Briefly discuss the role of backward class movement in strengthening the process of social mobility among lower caste.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "\"Reservation of women in the legislature is must for ensuring more participative, inclusive and egalitarian society\". Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "What is the relationship between fertility and social structure as viewed by Davis and Blake.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Critically discuss the challenges faced by 'persons with disability' in accessing the Indian labor market.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "\"The prime victim of economic liberalization has been environmental sustainability.\" In the context of this statement, discuss the past and present of Indian Environmentalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "Briefly analyze the interplay between the economic status, gender, and social status in influencing the use of and access to maternal and reproductive health care in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "Extensive urbanization has led to dysfunctional consequences in context of India. Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
         }
       ]
     },
@@ -12893,7 +12979,135 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Give a sociological account of the ideas of Sociology of India and sociology in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 4,
+          "question": "Patriarchy is the least notiched yet the most significant structure of social inequality. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Child malnutrition is a chronic problem and a longstanding challenge for India. Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "The practice of untouchability, though declining, still persists in India. Discuss its manifestation and reasons for persistence.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Comment on the notion of social change from a cognitive historical viewpoint as postulated by Dumont.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "India has completed 75 years since Independence, but modernisation of Indian tradition is still an unfinished task. Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "A two-way relationship is observed between folk-society and the urban society which is coming in contact with each other and inheriting as well as losing some of its their traits. Discuss w.r.t little tradition and Great tradition theory.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "\"Tribal conflicts based on ethnic differences often camouflage a struggle for political and economic advantage.\" Substantiate with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Growth of modern industries has macro as well as micro implication on Indian society. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "To what extent decentralization of power has been effective and equitable in case of India?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Discuss the crisis of development and need for sustainable development in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Give a sociological analysis of Youth Unrest and Student Movement in recent times in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 30,
+          "question": "Gender equality is a threat to the institution of \"family\". Critically discuss the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Distinguish between social unrest and social protest and social movements? Examine their sociological significance to explain social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Gender equality and environmental justice should go hand in hard. Discuss Eco-feminism in this regard.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "India's educational landscape is extremely unequal and the inequalities manifests themselves in the form of differences based on caste, class and, in some cases, gender. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "The dominant castes notion has been used to deny the validity of reservation for BCs and played a role in determining certain political strategies. In this context explain the decay of dominant caste today.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Recently Supreme Court said that sex work is a profession whose practitioners are entitled to dignity and equal protection under law. In this context, discuss exclusion and marginalisation faced by sex workers in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "SHUBHAM",
@@ -18075,7 +18289,100 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 7,
+          "question": "\"Bureaucracy is a rational form of organization.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"Authority is based on legitimate domination.\" Explain Weber's typology of authority with suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Compare Merton's concept of deviance with Durkheim's idea of anomie. How do they differ in explaining deviant behavior?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "What does Karl Marx mean by 'alienation'? How does alienation impact workers in a capitalist mode of production?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "\"The informal sector serves as both a safety net and a trap in developing economies.\" Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "Examine the role of ideology in driving social transformation in a democracy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "How does reference group lead to relative deprivation and eventually criminal behaviour?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "\"A study of power inevitably involves an investigation of social class\". Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Discuss how religious fundamentalism and extremism influence political ideologies and conflict in society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "\"Social inequality is both a cause and a consequence of social stratification.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "As per Max Weber, differences in prestige and power are as important as differences in economic reward. Discuss how women are systematically disadvantaged in economic terms.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Analyze the the concept of secularization and discuss how does secularization impact religious institutions and the public sphere?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "What is Social Action? And how is Parsons Social Action different from Weber's Social Action?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Sana Azmi",
@@ -18086,7 +18393,79 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "2(a) While demographic dividend is seen as a driver of economic growth, the growing elderly population in India poses potential challenges that could undermine these efforts. Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 9,
+          "question": "2(c). How do poverty and economic inequalities persist in India despite various poverty alleviation schemes?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 19,
+          "question": "7(a). Examine the tension between National Integration and the assertion of regional identities in Indian democratic processes.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 22,
+          "question": "7(b). What have been the social and policy outcomes of environmental movements in India, considering both successes and limitations?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 25,
+          "question": "\"Farm laws and their subsequent withdrawal reflect the complex relationship between agriculture and polices.\" Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Discuss how contemporary farmers' movement reflect or diverge from traditional peasant struggles in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "What challenges does the concept of secularism face in the context of Indian diverse religious landscapes?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "1(e). Critically examine the shift from welfare to right-based approach in rural development programs.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 43,
+          "question": "Do traditional structure of caste and kinship play a functional role in urban settlements? Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Platform economy has provided a mode of empowerment to the women working in the informal sector. Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "PULKIT BAJAJ",
