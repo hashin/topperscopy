@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-30T21:01:49.497Z",
+  "generated": "2026-10-01T06:41:15.931Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/979a7-1004873_2931_harsita_agrawal_rank_163.pdf",
+      "topper": "Harsita Agrawal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/f1147-971237_2425_surabhi_srivastava_rank_56.pdf",
       "topper": "SURABHI SRIVASTAVA",
@@ -960,6 +974,34 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/847bb-90800_3128_abhishek_vashishtha_rank_14.pdf",
+      "topper": "Abhishek Vashishtha",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 6,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/17643-71337_1245_paritosh-pankaj_rank_142.pdf",
+      "topper": "Paritosh Pankaj",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/5b8d9-15915_759_namrata_jain_rank_12.pdf",
       "topper": "Namrata Jain",
       "coaching": "VisionIAS",
@@ -1583,6 +1625,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/38/pttp220360_tc062.pdf",
+      "topper": "ASHISH BISHNOI",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
