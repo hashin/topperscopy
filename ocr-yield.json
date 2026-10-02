@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-02T16:24:04.390Z",
+  "generated": "2026-10-02T20:59:17.705Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ae4d3-962608_2425_shivang_srivastava_rank_102.pdf",
+      "topper": "SHIVANG SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/8290e-157121_1457_gagan-singh-meena_rank-120.pdf",
       "topper": "Gagan Singh Meena",
