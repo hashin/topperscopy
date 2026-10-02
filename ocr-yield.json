@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-01T21:21:21.752Z",
+  "generated": "2026-10-02T06:25:20.154Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/29e4c-625229_2218_chaitanya-awasthi_rank-37.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5c9a5-962608_2422_shivang_srivastava_rank_102.pdf",
+      "topper": "SHIVANG SRIVASTAVA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/5dd0c-289567_2423_abhijnan_hazarika_rank_172.pdf",
       "topper": "ABHIJNAN HAZARIKA",
