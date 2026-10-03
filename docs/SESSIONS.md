@@ -919,3 +919,18 @@ the data survive skew; positions don't.
 **Left.** `BUDGET shard essay` (28.5 > 25 KB) and `BUDGET shard optional` (47.5 > 20 KB) were already failing
 before this session and still are — the ceilings are stale, raise them deliberately. Audit items F3 (cache
 headers / hashed filenames / Cloudflare), F4 (text payload), F6 (Fraunces) are not done.
+
+## 2026-10-03 (cont.) — Deploy verification, then the mismatch guard and the llms.txt fix
+**Asked.** "commit this, wait for the deploy to finish and test to ensure that there is no new bugs", then "fix the
+llms.txt link and add the mismatch guard".
+**Did.** Pushed DECISION-25, watched the deploy go green, regression-tested production (counts identical to before;
+old-vs-new shard mapping proven identical for all 12,648 questions). That testing found one real regression: any
+app.js/data version mismatch showed a false "0 copies". Fixed with DECISION-26 (stale-shard heal in app.js,
+one-time tab migration in sw.js tc-v29, search says "unavailable" instead of zero). Tightening INV-7 to "the file
+must exist" immediately caught `llms.txt` **and** `index.html` linking the long-dead `questions-gs1.json`; both fixed.
+**Learned.** The first heal draft let every one of 15 stale shards start its own heal (three cache wipes, three
+reload requests) because the in-page flag was only set in `sessionStorage`. Server-side request counting (index
+loads: 3, not 5) is what showed it; the UI looked fine either way. Also: the browser pane can't register a service
+worker on localhost, so the worker logic is verified on the live site after deploy, not locally.
+**Left.** Remove the `fromV27` branch in `sw.js` after a few weeks. Audit items F3, F4, F6 still open;
+`BUDGET shard essay` / `optional` ceilings still stale.

@@ -25,7 +25,7 @@ npm run check        # ~2 seconds, plain Node, no browser
 |---|---|---|
 | `INV-5` | upsckata.com is credited in `README.md` (repo-level provenance record only — not surfaced on the live site) | DECISION-20 |
 | `INV-6` | `README.md` does not claim an optimisation, data file or engine the code does not have | INTENT-6 |
-| `INV-7` | Nothing `llms.txt` or `index.html` links to is excluded by `deploy.yml` | INTENT-6 |
+| `INV-7` | Every `data/` or `dataset/` path `llms.txt` or `index.html` links to is written by the build and not excluded by `deploy.yml` (a dead `questions-gs1.json` link shipped for two weeks before this covered "written") | INTENT-6, DECISION-26 |
 
 ## Architecture
 
@@ -47,7 +47,7 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 | Budget | Covers | Ceiling |
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
-| `app.js` | `assets/app.js` alone (DECISION-2) | 23 KB |
+| `app.js` | `assets/app.js` alone (DECISION-2) | 25 KB |
 | `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 120 · 690 · 25 · 30 · 20 KB |
 
 ## Not checkable, still true

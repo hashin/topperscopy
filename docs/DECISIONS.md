@@ -1298,3 +1298,47 @@ so a hash collision becomes plausible (INV-14 fails: change the seed in `copyId(
 `INV-14` (no collisions), `INV-13` (every interview has its `iv/` file), `BUDGET interview text` (largest single
 transcript ≤ 60 KB gzip). The fetch-timing behaviour (no pre-`copies.json` shard request, nothing prefetched on
 3G/Save-Data, one `iv/` request per opened card) was verified in a browser, not by `check.mjs`.
+
+---
+
+## DECISION-26 — A stale shard heals the page once, or says so; it never shows a false "0 copies"
+*2026-10-03 · active · cites INTENT-2, DECISION-25, `docs/PERF-AUDIT-2026-10-03.md`*
+
+**Decision.** DECISION-25 changed the shard format (`urls` → `ids`) and the interview text location. Testing the
+live deploy showed that any app.js/data mismatch — old app + new data, or new app + old data — rendered
+"0 copies for “ethics”" and "Transcript unavailable": a confident wrong answer. Three layers now:
+
+1. **`assets/app.js` detects a stale shard** — a part without `ids` (wrong format), a shard where fewer than half
+   the rows resolve to a copy in `copies.json`, or a shard part that 404s (copies.json names parts that no
+   longer exist). It calls `healStale()`, which — once per session, remembered in `sessionStorage` — drops
+   Cache Storage, re-reads `./`, `style.css`, `app.js` and `copies.json` with `cache:'reload'`, and reloads.
+   After a heal every data fetch also bypasses the HTTP cache (`max-age=600`). If the heal was already tried, or
+   `sessionStorage` is unavailable (so a loop could not be prevented), nothing reloads and the UI says
+   "Search is unavailable — reload to retry" instead of a zero. Only an HTTP 404 triggers it: a network failure
+   must never wipe the offline cache.
+2. **`sw.js` (tc-v29) migrates the old-app population.** The old `app.js` cannot be patched, but it registers
+   `sw.js` on load, and the browser fetches the *current* one. If the activating worker finds a `tc-v27` cache it
+   is replacing the worker that served the pre-DECISION-25 app, so it `navigate()`s the open tabs once to load the
+   new app. It also precaches the shell with `cache:'reload'` so the precache is never older than the deploy.
+3. **`tools/check.mjs` INV-7** now fails on any linked data file the build did not write. This is what caught
+   `llms.txt` and `index.html` pointing at `data/questions-gs1.json`, which had returned 404 since the GS1 split
+   (DECISION-23). `llms.txt` now lists the shard files actually on disk, and `index.html` points at `llms.txt`.
+
+**Rejected.**
+- *Compare `generated` stamps between `copies.json` and each shard.* It is a date, not a build id, so two deploys
+  on one day look identical; a real build id would make every file change on every deploy and defeat caching.
+- *Heal on every failed fetch.* An offline visitor would have their cache wiped and then reload into nothing.
+- *Keep serving the old-format files for a few days.* Fixes old-app tabs but doubles the shard payload in the
+  repo and deploy for a ≤10-minute / one-pageview exposure; the worker migration covers the same people.
+- *Navigating tabs on every SW update.* Only the one-time `tc-v27` case is a known-broken page; reloading
+  tabs routinely would lose a student's half-typed query. Delete the `fromV27` branch once `tc-v27` caches are gone
+  (a few weeks).
+
+**Reverse if.** The `fromV27` navigate surprises users (it should fire once per visitor, ever), or a heal ever loops
+(the `sessionStorage` guard and `HEALED` flag are what prevent it; both were exercised against a server that is never
+fixed). The `app.js` ceiling was raised 24 → 25 KB for this (~0.8 KB after trimming).
+
+**Enforced by.** INV-7 for the link class. The runtime behaviour was verified in a browser against a purpose-built
+server that serves old-format shards and switches to new ones when the heal's cache-bypassing request arrives:
+healthy deploy → 0 reloads; self-fixing → exactly 1 reload, correct 680 / 1,155 result; never fixed → exactly
+1 reload (three index loads: page, heal fetch, reload), then "Search is unavailable — reload to retry".

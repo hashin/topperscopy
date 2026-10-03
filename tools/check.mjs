@@ -19,7 +19,9 @@ const BUDGETS = {
   boot: { ceiling: 450, files: ['index.html', 'assets/style.css', 'assets/app.js', 'assets/fonts/inter-latin.woff2', 'assets/fonts/fraunces-latin.woff2', 'data/copies.json'], why: 'everything before the first 25 cards paint — and every topper name is searchable (INTENT-2)' },
   // Raised 23 -> 24 KB 2026-09-19 for the shard-splitting logic (DECISION-23) — real feature
   // code, not a dependency, so it's a deliberate raise, not the "machinery crept back" DECISION-2 warns about.
-  'app.js': { ceiling: 24, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
+  // Raised 24 -> 25 KB 2026-10-03 for the stale-shard self-heal (DECISION-26, ~0.8 KB) after trimming it to the bone —
+  // a correctness guard (no false "0 copies" under cache skew), not machinery creeping back.
+  'app.js': { ceiling: 25, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
   'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
   'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },
@@ -125,8 +127,11 @@ check('INV-7', 'INTENT-6', 'Nothing we serve links to a file we do not deploy', 
   const dep = read('.github/workflows/deploy.yml');
   const excluded = p => new RegExp("--exclude='/?" + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "'").test(dep);
   const broken = [];
-  if (exists('llms.txt')) for (const m of read('llms.txt').matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g)) if (excluded(m[1])) broken.push('llms.txt -> ' + m[1]);
-  for (const m of read('index.html').matchAll(/(?:href|src|contentUrl)="\/?((?:data|dataset)\/[^"]+)"/g)) if (excluded(m[1])) broken.push('index.html -> ' + m[1]);
+  // Excluded from the deploy OR simply not written by this build (a 404 — llms.txt once linked questions-gs1.json
+  // for two weeks after that shard was split into parts).
+  const dead = p => /^(data|dataset)\//.test(p) && (excluded(p) || !exists(p.replace(/[?#].*$/, '')));
+  if (exists('llms.txt')) for (const m of read('llms.txt').matchAll(/https:\/\/topperscopy\.hashin\.me\/([^\s)]+)/g)) if (dead(m[1]) || excluded(m[1])) broken.push('llms.txt -> ' + m[1]);
+  for (const m of read('index.html').matchAll(/(?:href|src|contentUrl)="\/?((?:data|dataset)\/[^"]+)"/g)) if (dead(m[1]) || excluded(m[1])) broken.push('index.html -> ' + m[1]);
   return { ok: !broken.length, detail: broken.length ? broken.join(', ') : 'every linked data path is deployed' };
 });
 

@@ -1184,6 +1184,10 @@ Sitemap: ${SITE}/sitemap.xml
 }
 
 function writeLlms(stats, generated, interviewCount) {
+  // Every data link below must point at a file this build wrote (tools/check.mjs INV-7 verifies it) — list
+  // what is on disk rather than guessing names, since shards split into parts as the corpus grows.
+  const shardFiles = fs.readdirSync(DATA).filter(f => /^questions-.*\.json$/.test(f)).sort();
+  const ivSample = (fs.readdirSync(path.join(DATA, 'iv')).sort()[0] || 'none.json').replace(/\.json$/, '');
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# Topper's Copy by Hashin
 
 > A free, open, community-maintained directory of UPSC Civil Services Examination (CSE)
@@ -1219,11 +1223,12 @@ published the PDF.
 ## Machine-readable data
 
 - Every copy, grouped by topper, with AIR / year / marks (JSON): https://topperscopy.hashin.me/data/copies.json
-- Deduped question text per paper, each with the copies and pages that answer it (JSON):
-  https://topperscopy.hashin.me/data/questions-gs1.json (also -gs2, -gs3, -gs4, -essay, -other, -optional)
+- Deduped question text per paper, each with the copies and pages that answer it (JSON). A large paper is
+  split into numbered parts; the files in this build are:
+${shardFiles.map(f => '  ' + SITE + '/data/' + f).join('\n')}
 - Every interview transcript's metadata (JSON): https://topperscopy.hashin.me/data/interview-list.json
 - Full text of one interview transcript (a JSON string), one file per interview id from interview-list.json:
-  https://topperscopy.hashin.me/data/iv/csetranscripts-1775.json
+  ${SITE}/data/iv/${ivSample}.json
 
 ## Complete dataset (backup, includes all accepted submissions)
 

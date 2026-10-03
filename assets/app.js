@@ -97,9 +97,23 @@
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
   var LOADS = {};         // url -> promise; one fetch per file, ever
 
+  // Stale shard (wrong format, mostly-unresolved refs, or 404) = cache skew with copies.json/app.js (DECISION-26): heal once per session, else say so.
+  var HEALED = false;
+  try { HEALED = !!sessionStorage.getItem('tc-heal'); } catch (e) {}
+  function healStale(why) {
+    track('data_error', { message: 'stale ' + why });
+    if (HEALED) return;
+    try { sessionStorage.setItem('tc-heal', '1'); } catch (e) { return; }   // can't remember it => no reload loop
+    HEALED = true;   // every stale shard of this page view calls in here; only the first may heal
+    (window.caches ? caches.keys() : Promise.resolve([])).then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })
+      .then(function () { return Promise.all(['./', 'assets/style.css', 'assets/app.js', 'data/copies.json'].map(function (u) { return fetch(u, { cache: 'reload' }).catch(function () {}); })); })
+      .then(function () { location.reload(); });
+  }
+
   function load(url, low) {
     if (!LOADS[url]) {
-      LOADS[url] = fetch(url, low ? { priority: 'low' } : undefined).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); })
+      var opts = {}; if (low) opts.priority = 'low'; if (HEALED) opts.cache = 'reload';
+      LOADS[url] = fetch(url, opts).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); })
         .catch(function (e) { delete LOADS[url]; throw e; });
     }
     return LOADS[url];
@@ -117,13 +131,21 @@
     if (SHARDS[name] || SHARD_ERR[name] || urls.some(function (u) { return LOADS[u]; })) return;
     return Promise.all(urls.map(function (u) { return load(u, low); })).then(function (parts) {
       var u = [], qs = [], frags = [];
+      if (parts.some(function (d) { return !d.ids; })) return staleShard(name, 'format');
       parts.forEach(function (d) {
         d.questions.concat(d.fragments).forEach(function (r) { r[1].forEach(function (x) { x[0] += u.length; }); });
         qs = qs.concat(d.questions); frags = frags.concat(d.fragments); u = u.concat(d.ids);
       });
-      SHARDS[name] = indexShard({ ids: u, questions: qs, fragments: frags }, name); onShardLoaded(name);
-    }, function (e) { SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + String(e && e.message || e).slice(0, 100) }); rerender(); });
+      var sh = indexShard({ ids: u, questions: qs, fragments: frags }, name);
+      if (sh.all.length < (qs.length + frags.length) / 2) return staleShard(name, 'refs');
+      SHARDS[name] = sh; onShardLoaded(name);
+    }, function (e) {
+      var msg = String(e && e.message || e);
+      SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + msg.slice(0, 100) }); rerender();
+      if (/^HTTP 404/.test(msg)) healStale(name + ' 404');   // only a 404: a network failure must not wipe the offline cache
+    });
   }
+  function staleShard(name, why) { SHARD_ERR[name] = true; rerender(); healStale(name + ' ' + why); }
   function ensureShards(names) { (names || SHARDS_ALL).forEach(function (n) { ensureShard(n); }); }
   function ensureSyllabus() {
     if (SYL || LOADS['data/syllabus.json']) return;
@@ -574,6 +596,8 @@
     // Never print a zero we are not sure of: while a needed shard is still downloading, say so.
     if (state.q && res.loading && !list.length) {
       meta.textContent = 'Searching inside ' + fmt(COPIES.length) + ' copies…';
+    } else if (state.q && res.failed && !list.length) {
+      meta.textContent = 'Search is unavailable — reload to retry';
     } else {
       var extra = '';
       if (state.q) {

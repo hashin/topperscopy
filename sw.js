@@ -3,7 +3,7 @@
    shard refers to copies by cid(url) — a hash of the URL — so a copies.json and a shard from different
    builds still agree; a ref to a copy the cached copies.json does not know is simply skipped.
    Bump VERSION on any shell change to force a full refresh. */
-var VERSION = 'tc-v28';
+var VERSION = 'tc-v29';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
@@ -15,14 +15,25 @@ var SHELL = [
 self.addEventListener('install', function (e) {
   self.skipWaiting();
   e.waitUntil(caches.open(VERSION).then(function (c) {
-    return Promise.all(SHELL.map(function (u) { return c.add(u).catch(function () {}); }));
+    // cache:'reload' — precache what the server has now, not whatever the HTTP cache (max-age=600) still holds.
+    return Promise.all(SHELL.map(function (u) { return c.add(new Request(u, { cache: 'reload' })).catch(function () {}); }));
   }));
 });
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    return Promise.all(keys.filter(function (k) { return k !== VERSION; }).map(function (k) { return caches.delete(k); }));
-  }).then(function () { return self.clients.claim(); }));
+    // One-time migration (DECISION-26): a tab still running the pre-DECISION-25 app.js reads the new data in the old
+    // format and shows a false "0 copies". tc-v27 is how we know this worker is replacing the one that served it.
+    var fromV27 = keys.indexOf('tc-v27') >= 0;
+    return Promise.all(keys.filter(function (k) { return k !== VERSION; }).map(function (k) { return caches.delete(k); }))
+      .then(function () { return self.clients.claim(); })
+      .then(function () {
+        if (!fromV27) return;
+        return self.clients.matchAll({ type: 'window' }).then(function (cs) {
+          return Promise.all(cs.map(function (c) { return c.navigate(c.url).catch(function () {}); }));
+        });
+      });
+  }));
 });
 
 self.addEventListener('fetch', function (e) {
