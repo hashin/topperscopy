@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-03T14:43:14.646Z",
+  "generated": "2026-10-03T19:24:45.233Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/35546-1505652_2931_abhishek-chaudhary_rank_64.pdf",
+      "topper": "Abhishek Chaudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1fea6-1505652_2930_abhishek_chaudhary_rank_64.pdf",
+      "topper": "Abhishek Chaudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/2fd1e-109506_1078_sunil-dhanwanta_rank_22.pdf",
       "topper": "Sunil Kumar Dhanwanta",
@@ -1933,6 +1961,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/59f90-1154589_2425_harishankar_ganesan_rank_107.pdf",
+      "topper": "HARISHANKAR GANESAN",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 14,
       "low": true
     },
     {
