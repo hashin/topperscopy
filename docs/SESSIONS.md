@@ -901,3 +901,21 @@ context rather than checking which one the human actually approved.
 (2026-09-21 or 2026-10-01, whichever the runner clock hits first) is the actual test. If og.jpg is
 ever hand-redesigned, `update-hero.mjs`'s `ERASE`/`PASTE` coordinate tables need re-measuring by
 hand — the script does not know how to find them itself, by design (see DECISION-24's "Reverse if").
+
+## 2026-10-03 — Performance audit, then implemented its first four fixes
+**Asked.** "do a detailed performance audit ... the number of questions have grown", then "implement items
+1-3 and the URL table cut".
+**Did.** Audit in `docs/PERF-AUDIT-2026-10-03.md` (growth curve from 7 historic builds, live-site timings,
+Node CPU benchmark). Implemented DECISION-25: shard requests wait for `copies.json`; idle prefetch skipped on
+Save-Data/2G/3G and low-priority/2-at-a-time otherwise; interview transcripts split to `data/iv/<id>.json`
+(1.6 MB year shard → ~1.4 KB per open); shard url tables replaced by 48-bit `copyId` hashes (−72 KB gz).
+Added INV-14, rewrote INV-13 and the interview budget, bumped `sw.js` to `tc-v28`.
+Verified in a browser against a local build: `?q=ethics` → 680 copies / 1,155 questions (identical to
+production), zero 404s; 3G and Save-Data fetch no shards until the box is used, then "ethics" gives the same
+count; one transcript open = one 1.4 KB request.
+**Learned.** The tempting shortcut (positional refs into `copies.json`) is unsafe with a stale-while-revalidate
+service worker — cache skew would silently attach questions to the wrong copy. Keys that are pure functions of
+the data survive skew; positions don't.
+**Left.** `BUDGET shard essay` (28.5 > 25 KB) and `BUDGET shard optional` (47.5 > 20 KB) were already failing
+before this session and still are — the ceilings are stale, raise them deliberately. Audit items F3 (cache
+headers / hashed filenames / Cloudflare), F4 (text payload), F6 (Fraunces) are not done.

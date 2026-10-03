@@ -1253,3 +1253,48 @@ confirmed `README.md`/`index.html` diffs were exactly the intended number swaps 
 rendered correctly with no visible seams — then reverted that specific test run's output (it would
 have regressed the numbers already live from the manual pass earlier the same session) before
 committing only the new script, workflow and dependency.
+
+---
+
+## DECISION-25 — Shards are fetched only when needed, name copies by hash, and interviews are one file each
+*2026-10-03 · active · cites INTENT-2, DECISION-17, DECISION-19, DECISION-23, `docs/PERF-AUDIT-2026-10-03.md`*
+
+**Decision.** Four changes from the 2026-10-03 performance audit (findings F1, F2, F5 and the URL-table cut):
+
+1. **No shard request before `copies.json` has loaded.** The part count (`shardParts`) lives in `copies.json`,
+   so `ensureShard()` parks early requests (`?q=`, `?syl=`, typing before boot) in `SHARD_WAIT` and replays
+   them once it is known. Before, those requests guessed the unsplit names and 404'd (`questions-gs1.json`,
+   `-gs2`, `-gs4`: 3 × 9 KB), set `SHARD_ERR`, and fired `data_error` GA events.
+2. **Idle prefetch only for visitors who can afford it.** `scheduleShards()` does nothing on Save-Data, 2G or
+   3G (`navigator.connection`); search then starts the download it needs on focus/typing, limited to the papers
+   the filter allows. Everyone else gets a `priority:'low'` trickle, two shards at a time, instead of 21
+   parallel requests at +100 ms. Browsers without `navigator.connection` (Safari, Firefox) are treated as able.
+3. **Interview transcripts are `data/iv/<id>.json`**, one bare JSON string per interview (avg 1.3 KB gzip),
+   replacing `interview-text-<year>.json` (up to 651 KB gzip to read a ~1 KB transcript).
+4. **Shards name copies by `copyId(url)`**, a 48-bit hash (base36, ~10 chars), instead of carrying a table of
+   full PDF URLs. `build.js` `copyId()` and `assets/app.js` `cid()` are the same function; the browser builds the
+   `cid → copy` map lazily on the first shard, so visitors who never search never hash 9k URLs.
+   Shards 1,530 → 1,458 KB gzip (−72 KB).
+
+**Rejected.**
+- *Positional refs (index into `copies.json`'s order)* — would have saved ~109 KB, but the service worker serves
+  stale-while-revalidate, so a visitor can hold a new shard with an old `copies.json` (a never-cached part is
+  fetched fresh while `copies.json` is served from cache). Positions would then point at the *wrong copy*,
+  silently. A hash of the URL is a pure function of the key, so skew can only drop a ref (the existing,
+  harmless behaviour), never misattribute one.
+- *32-bit hash* — ~1 % chance of a collision per build over 9k copies. 48 bits is ~10⁻⁷, and `build.js` also
+  throws on a collision and INV-14 re-checks it.
+- *Year-chunked or hash-bucketed interview shards (~64 files)* — fewer files, but still ~30 KB per open and a
+  second copy of the bucketing function in the client. One file per id needs no client logic and the repo already
+  deploys ~12k small pages.
+- *Prefetch on 3G too.* The audience is explicitly phones on patchy data (INTENT-2); 1.5 MB is ~8 s on slow 3G,
+  and a first keystroke now costs only the shards that paper filter needs.
+
+**Reverse if.** A browser reports `effectiveType` `3g` for connections that are in fact fast enough (then
+searches there pay a cold-start wait they didn't before — measure, then widen the allow-list), or the corpus grows
+so a hash collision becomes plausible (INV-14 fails: change the seed in `copyId()` and `cid()` together).
+
+**Enforced by.** `INV-4` (every shard ref resolves through the browser's own `cid`, lifted from `app.js`),
+`INV-14` (no collisions), `INV-13` (every interview has its `iv/` file), `BUDGET interview text` (largest single
+transcript ≤ 60 KB gzip). The fetch-timing behaviour (no pre-`copies.json` shard request, nothing prefetched on
+3G/Save-Data, one `iv/` request per opened card) was verified in a browser, not by `check.mjs`.

@@ -26,7 +26,7 @@ an ADR to `docs/DECISIONS.md` for any non-obvious choice, and `npm run check` mu
 
 ## Do not open these with a file reader — large, generated, gitignored
 
-`data/copies.json`, `data/questions-*.json`, `data/interview-list.json`, `data/interview-text-*.json`,
+`data/copies.json`, `data/questions-*.json`, `data/interview-list.json`, `data/iv/`,
 `toppers*.html`, `topper/`, `question/`, `paper/`, `optional/`, `sitemap*.xml`, `llms.txt`, `robots.txt`,
 `dataset/` (all written by `build.js`), and the big source files `data/questions.csv` (9 MB),
 `data/link-copies.json` (2.4 MB), `data/optionals.json`, `data/interviews.json` (11.5 MB). Inspect them
@@ -66,9 +66,10 @@ orphan sub-parts, stray fragments) are deduped separately as `fragments`. 5. **S
 
 - `data/copies.json` — `{generated, attribution, stats, toppers:{"<name>":{air?,year?,verified?,marks?,telegram?,sources?,
   copies:[[paper, source, url, nQuestions, linkOnly, note?], …]}}}`. Every copy. The only file the app boots from.
-- `data/questions-<gs1|gs2|gs3|gs4|essay|other|optional>.json` — `{generated, paper, urls:[…], questions:[[text,
-  [[urlIndex,page],…], [syllabusNodeIds], marks, words], …], fragments:[same]}`. Refs index the shard's own
-  `urls` table; a copy's URL appears in exactly one shard. `optional` holds every optional subject.
+- `data/questions-<gs1|gs2|gs3|gs4|essay|other|optional>[-N].json` — `{generated, paper, ids:[…], questions:[[text,
+  [[idIndex,page],…], [syllabusNodeIds], marks, words], …], fragments:[same]}`. Refs index the shard's own
+  `ids` table of `copyId(url)` values (48-bit hash of the PDF URL, base36; `cid()` in app.js is the same
+  function, INV-14 proves they agree); a copy appears in exactly one shard. `optional` holds every optional subject.
 - `stats` = GS/Essay searchable index (JSON-LD, llms.txt, noscript); `stats.all` = the homepage headline.
 
 7b. **Interviews** — `writeInterviews()` maps `data/interviews.json` straight through (facet counts for
@@ -76,8 +77,8 @@ board/year/optional/state recomputed from the docs, not trusted from the source 
 
 - `data/interview-list.json` — `{generated, total, boards, years, optionals, states, interviews:[{i,b,n,d,y,
   s,o,st,k,h,e,mk,marks,q,w,v,u}]}`, no transcript text — the Interviews tab's one boot file.
-- `data/interview-text-<year>.json` — `{generated, year, text:{"<id>": "<full transcript>"}}`, one shard per
-  year, fetched only when a specific interview card is opened.
+- `data/iv/<id>.json` — one file per interview: the transcript as a bare JSON string (~1.3 KB gzip), fetched
+  only when that interview card is opened. (Was one shard per year, ~640 KB gzip to read one transcript.)
 
 7. **Static pages** — `topper/<slug>/` (one per person; `dedupeSlug()` handles same-name collisions and the
 returned name→slug map is used by every other writer), `question/<slug>/` (one per deduped GS/Essay question,
@@ -114,7 +115,7 @@ either if Hashin asks.
   opens — never prefetched on idle the way copy shards are (DECISION-19). Filters: board, year, optional
   subject, state. Free-text search matches candidate name, board, DAF topics, hobbies and education —
   **not** the transcript text, which is never loaded until a specific card is opened
-  (`data/interview-text-<year>.json`, one shard per year). Not linked to `TOPPERS`/`COPIES` — a candidate's
+  (`data/iv/<id>.json`, one small file per interview). Not linked to `TOPPERS`/`COPIES` — a candidate's
   name here is never matched to a topper profile (see DECISION-19's "Rejected").
 
 ## Workflow for any data change

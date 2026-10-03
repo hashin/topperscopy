@@ -39,9 +39,9 @@ data/interviews.json        mirror of upsckata's Personality Test interview tran
   build.js
         |
         +->  data/copies.json                 every copy, grouped by topper — the only file the app boots from
-        +->  data/questions-<paper>.json      one shard per paper: deduped question text + [url, page] refs
+        +->  data/questions-<paper>.json      one shard per paper: deduped question text + [copy id, page] refs
         +->  data/interview-list.json         every interview's metadata — the Interviews tab's boot file
-        +->  data/interview-text-<year>.json  one shard per year: {id: transcript text}, fetched per interview
+        +->  data/iv/<id>.json                one file per interview: the transcript text, fetched when its card is opened
         +->  topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, llms.txt, robots.txt
         +->  index.html  (<noscript> + JSON-LD between markers)
         +->  dataset/    (complete consolidated backup — see dataset/README.md — not loaded by the site)
@@ -49,8 +49,9 @@ data/interviews.json        mirror of upsckata's Personality Test interview tran
 index.html, assets/, sw.js  the app (progressive enhancement over toppers.html)
 ```
 
-The copy's PDF URL is its key everywhere; there are no ids. A question shard is `{ urls: [...],
-questions: [[text, [[urlIndex, page], …], [syllabus node ids], marks, words], …], fragments: [...] }`.
+The copy's PDF URL is its key everywhere. A question shard names a copy by `cid(url)` — a 48-bit hash of
+the URL, so a shard and a `copies.json` from different builds still agree — and is `{ ids: [...],
+questions: [[text, [[idIndex, page], …], [syllabus node ids], marks, words], …], fragments: [...] }`.
 
 Regenerate everything after changing a source file:
 

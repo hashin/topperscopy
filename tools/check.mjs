@@ -30,15 +30,22 @@ const BUDGETS = {
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
-const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/data/interview-list.json', '/data/interview-text-*.json',
+const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/data/interview-list.json', '/data/iv/',
   '/toppers.html', '/toppers-*.html', '/sitemap.xml',
   '/sitemap-main.xml', '/sitemap-toppers.xml', '/sitemap-questions.xml', '/sitemap-hubs.xml', '/llms.txt', '/robots.txt',
   '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
 const SHARDS = ['gs1', 'gs2', 'gs3', 'gs4', 'essay', 'other', 'optional'];
-// Largest interview-text shard, whichever year that is this build — one ceiling covers all of them,
-// the same way BUDGET-shard-gs4 covers GS4 without a separate rule per paper.
-const INTERVIEW_YEAR_CEILING = 700;
+// Largest single data/iv/<id>.json transcript. Opening a card downloads exactly one of these, so the
+// ceiling is on the biggest one (a normal transcript is ~1 KB gzip; the longest are a few tens of KB).
+const INTERVIEW_TEXT_CEILING = 60;
 
+// The browser's copy-id function, lifted verbatim out of assets/app.js, so the check proves the code
+// that ships (not a second copy of it) agrees with what build.js wrote into the shards.
+const cid = (() => {
+  const m = fs.readFileSync(path.join(ROOT, 'assets/app.js'), 'utf8').match(/function cid\(u\) \{[\s\S]*?\n  \}\n/);
+  if (!m) throw new Error('function cid(u) not found in assets/app.js');
+  return new Function(m[0] + '; return cid;')();
+})();
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const exists = f => fs.existsSync(path.join(ROOT, f));
 const gzKb = f => zlib.gzipSync(fs.readFileSync(path.join(ROOT, f)), { level: 9 }).length / 1024;
@@ -78,7 +85,7 @@ check('INV-3', 'DECISION-17', 'A PDF URL appears in exactly one copy', () => {
   return { ok: urls.size === copies.length, detail: `${urls.size}/${copies.length}` };
 });
 check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
-  const urls = new Set(copies.map(c => c.u));
+  const ids = new Set(copies.map(c => cid(c.u)));
   let refs = 0, bad = 0, questions = 0;
   for (const s of SHARDS) {
     // A shard is one file, or (DECISION-23) several numbered parts once it outgrows one.
@@ -86,13 +93,18 @@ check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a c
     if (!files.length) return { ok: false, detail: `data/questions-${s}*.json missing` };
     for (const f of files) {
       const d = JSON.parse(read(f));
-      for (const q of d.questions.concat(d.fragments)) { questions++; for (const [i] of q[1]) { refs++; if (!urls.has(d.urls[i])) bad++; } }
+      for (const q of d.questions.concat(d.fragments)) { questions++; for (const [i] of q[1]) { refs++; if (!ids.has(d.ids[i])) bad++; } }
     }
   }
   return { ok: !bad, detail: `${refs} refs across ${questions} questions${bad ? ', ' + bad + ' point at no copy' : ', all resolve'}` };
 });
 
 /* ---- credit and honesty ---- */
+check('INV-14', 'DECISION-17', 'cid(url) — the browser\'s copy id — is collision-free over every copy', () => {
+  const seen = new Map();
+  for (const c of copies) { const id = cid(c.u); if (seen.has(id) && seen.get(id) !== c.u) return { ok: false, detail: `${id} is both ${seen.get(id)} and ${c.u}` }; seen.set(id, c.u); }
+  return { ok: true, detail: `${seen.size} distinct ids over ${copies.length} copies` };
+});
 check('INV-5', 'DECISION-20', 'upsckata.com is credited in README.md (repo-level provenance record only, per DECISION-20)', () => {
   const missing = ['README.md'].filter(f => !exists(f) || !/upsckata/i.test(read(f)));
   return { ok: !missing.length, detail: missing.length ? 'missing from: ' + missing.join(', ') : 'present' };
@@ -148,19 +160,11 @@ check('INV-12', 'INTENT-3', '#resultmeta is a live region', () => {
   const m = read('index.html').match(/<p[^>]*id="resultmeta"[^>]*>/);
   return { ok: !!(m && /aria-live/.test(m[0])), detail: m ? m[0] : 'element not found' };
 });
-check('INV-13', 'DECISION-19', 'Every interview in interview-list.json has its text in its year\'s shard', () => {
+check('INV-13', 'DECISION-19', 'Every interview in interview-list.json has its own data/iv/<id>.json transcript', () => {
   if (!exists('data/interview-list.json')) return { ok: false, detail: 'data/interview-list.json missing' };
   const L = JSON.parse(read('data/interview-list.json'));
-  const years = new Set(L.interviews.map(x => x.y));
-  let bad = 0;
-  const shards = {};
-  for (const y of years) {
-    const f = `data/interview-text-${y}.json`;
-    if (!exists(f)) { bad += L.interviews.filter(x => x.y === y).length; continue; }
-    shards[y] = JSON.parse(read(f)).text;
-  }
-  for (const x of L.interviews) if (!shards[x.y] || !(x.i in shards[x.y])) bad++;
-  return { ok: !bad, detail: bad ? `${bad}/${L.interviews.length} have no matching text` : `${L.interviews.length}/${L.interviews.length} resolve` };
+  const bad = L.interviews.filter(x => !/^[A-Za-z0-9_-]+$/.test(x.i) || !exists(`data/iv/${x.i}.json`) || typeof JSON.parse(read(`data/iv/${x.i}.json`)) !== 'string');
+  return { ok: !bad.length, detail: bad.length ? `${bad.length}/${L.interviews.length} have no matching text, e.g. ${bad[0].i}` : `${L.interviews.length}/${L.interviews.length} resolve` };
 });
 
 /* ---- budgets ---- */
@@ -183,13 +187,13 @@ for (const [name, b] of Object.entries(BUDGETS)) {
   });
 }
 
-check('BUDGET interview shards', 'INTENT-2', `every interview-text-<year>.json within ${INTERVIEW_YEAR_CEILING} KB gzip`, () => {
-  const files = fs.readdirSync(path.join(ROOT, 'data')).filter(f => /^interview-text-\d+\.json$/.test(f)).map(f => 'data/' + f);
-  if (!files.length) return { ok: false, detail: 'no interview-text-*.json found' };
-  const sizes = files.map(f => [f, gzKb(f)]);
-  const over = sizes.filter(([, kb]) => kb > INTERVIEW_YEAR_CEILING);
-  const max = sizes.reduce((m, [f, kb]) => (kb > m[1] ? [f, kb] : m), ['', 0]);
-  return { ok: !over.length, detail: `${files.length} shards, largest ${max[0]} at ${max[1].toFixed(1)} KB — fetched one at a time, only when a transcript from that year is opened` };
+check('BUDGET interview text', 'INTENT-2', `every data/iv/<id>.json within ${INTERVIEW_TEXT_CEILING} KB gzip`, () => {
+  const dir = path.join(ROOT, 'data/iv');
+  if (!fs.existsSync(dir)) return { ok: false, detail: 'no data/iv/ found' };
+  const files = fs.readdirSync(dir);
+  let max = ['', 0];
+  for (const f of files) { const kb = gzKb('data/iv/' + f); if (kb > max[1]) max = [f, kb]; }
+  return { ok: max[1] <= INTERVIEW_TEXT_CEILING, detail: `${files.length} files, largest ${max[0]} at ${max[1].toFixed(1)} KB — fetched one at a time, only when that transcript is opened` };
 });
 
 /* ---- report ---- */

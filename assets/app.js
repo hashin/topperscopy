@@ -2,16 +2,18 @@
  *
  * Data it reads (all written by build.js):
  *   data/copies.json              every copy, grouped by topper — the only file needed to boot
- *   data/questions-<paper>.json   one shard per paper: a table of copy URLs, then
- *                                 [text, [[urlIndex, page], …], [syllabus ids], marks, words] per question
+ *   data/questions-<paper>[-N].json  one shard per paper (numbered parts once split): a table of copy ids
+ *                                 (cid(url), see below), then
+ *                                 [text, [[idIndex, page], …], [syllabus ids], marks, words] per question
  *   data/syllabus.json            the hand-written syllabus tree, for filter labels
  *   data/interview-list.json      every interview transcript's metadata — fetched only when the
  *                                 Interviews tab opens, never part of boot
- *   data/interview-text-<year>.json  one shard per year, {id: transcript text} — fetched only when
- *                                 a specific transcript card is opened
+ *   data/iv/<id>.json             one interview's transcript as a JSON string — fetched only when
+ *                                 that transcript card is opened
  *
- * A copy's URL is its key everywhere. A shard ref whose URL is not in copies.json is skipped
- * when the shard is indexed — the only thing a cache skew between the two files can do.
+ * A copy's URL is its key everywhere; a shard names a copy by cid(url), a 48-bit hash of it, so a
+ * shard and a copies.json from different builds still agree. A shard ref whose copy is not in
+ * copies.json is skipped when the shard is indexed — the only thing a cache skew can do.
  *
  * Search: a topper-name match comes from the copies (always in memory); a text match is an
  * indexOf() over every question in every loaded shard the paper filter allows. While a needed
@@ -65,6 +67,12 @@
   var dispQ = function (t) { return String(t || '').replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[.\):\-]?\s+/i, ''); };
   // a small stable hash for a question (Practice's "seen" list, card open-state) — collisions are harmless
   function fnv(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  // A copy's short id as written into the question shards (48 bits, base36) — must match copyId() in build.js.
+  function cid(u) {
+    var a = 2166136261, b = 5381;
+    for (var i = 0; i < u.length; i++) { var c = u.charCodeAt(i); a = Math.imul(a ^ c, 16777619); b = (Math.imul(b, 33) ^ c) >>> 0; }
+    return ((a >>> 0) * 65536 + (b >>> 16)).toString(36);
+  }
   function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'unknown'; } }
 
   /* ---------- analytics ---------- */
@@ -80,38 +88,43 @@
   var DB = null;          // parsed data/copies.json
   var COPIES = [];        // every copy: { t, p, c, u, n, link, note, T (its topper), tlc (name lowercased) }
   var COPYBYURL = {};
+  var COPYBYID = null;    // cid(url) -> copy; built on the first shard, so visitors who never search never hash 9k URLs
   var TOPPERS = {};       // name -> { air, year, verified, marks, telegram, copies:[copy] }
   var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
   var SHARD_PARTS = {};   // shard -> part count (absent = 1, DECISION-23)
   var SYL = null;         // data/syllabus.json
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
-  var IV_TEXT = {};       // year -> {id: transcript text}, one shard fetched per year, lazily
   var LOADS = {};         // url -> promise; one fetch per file, ever
 
-  function load(url) {
+  function load(url, low) {
     if (!LOADS[url]) {
-      LOADS[url] = fetch(url).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); })
+      LOADS[url] = fetch(url, low ? { priority: 'low' } : undefined).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); })
         .catch(function (e) { delete LOADS[url]; throw e; });
     }
     return LOADS[url];
   }
 
   // One file, or several numbered parts once split (DECISION-23) — merged before indexShard().
-  function ensureShard(name) {
+  // The part count comes from copies.json, so a request that arrives before it (?q=, early typing)
+  // is parked in SHARD_WAIT and replayed once it has loaded — never guessed as an unsplit name (404).
+  // Returns the in-flight promise when it starts a download, else undefined. `low` = background fetch.
+  var SHARD_WAIT = {};
+  function ensureShard(name, low) {
+    if (!DB) { SHARD_WAIT[name] = 1; return; }
     var n = SHARD_PARTS[name] || 1, urls = [];
     for (var i = 1; i <= n; i++) urls.push('data/questions-' + name + (n > 1 ? '-' + i : '') + '.json');
     if (SHARDS[name] || SHARD_ERR[name] || urls.some(function (u) { return LOADS[u]; })) return;
-    Promise.all(urls.map(load)).then(function (parts) {
+    return Promise.all(urls.map(function (u) { return load(u, low); })).then(function (parts) {
       var u = [], qs = [], frags = [];
       parts.forEach(function (d) {
         d.questions.concat(d.fragments).forEach(function (r) { r[1].forEach(function (x) { x[0] += u.length; }); });
-        qs = qs.concat(d.questions); frags = frags.concat(d.fragments); u = u.concat(d.urls);
+        qs = qs.concat(d.questions); frags = frags.concat(d.fragments); u = u.concat(d.ids);
       });
-      SHARDS[name] = indexShard({ urls: u, questions: qs, fragments: frags }, name); onShardLoaded(name);
+      SHARDS[name] = indexShard({ ids: u, questions: qs, fragments: frags }, name); onShardLoaded(name);
     }, function (e) { SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + String(e && e.message || e).slice(0, 100) }); rerender(); });
   }
-  function ensureShards(names) { (names || SHARDS_ALL).forEach(ensureShard); }
+  function ensureShards(names) { (names || SHARDS_ALL).forEach(function (n) { ensureShard(n); }); }
   function ensureSyllabus() {
     if (SYL || LOADS['data/syllabus.json']) return;
     load('data/syllabus.json').then(function (s) { SYL = s; fillSyllabus(); fillPracticeSyl(); }, function () {});
@@ -123,18 +136,26 @@
     load('data/interview-list.json').then(function (d) { IV = d; fillInterviewFacets(); renderInterviews(); },
       function (e) { track('data_error', { message: 'interview-list ' + String(e && e.message || e).slice(0, 100) }); renderInterviews(); });
   }
-  // One shard per year; a transcript is only ever read when its own card is opened.
+  // One small file per interview; a transcript is only ever read when its own card is opened.
   function interviewText(iv, cb) {
-    if (IV_TEXT[iv.y]) { cb(IV_TEXT[iv.y][iv.i]); return; }
-    load('data/interview-text-' + iv.y + '.json').then(function (d) { IV_TEXT[iv.y] = d.text; cb(d.text[iv.i]); }, function () { cb(null); });
+    load('data/iv/' + iv.i + '.json').then(cb, function () { cb(null); });
   }
-  // Prefetch every shard once the page is idle, so a search that comes later is already answered.
-  // On a metered or 2G connection wait longer, but still fetch — search is the product.
+  // Warm the shards once the page is idle, so a search that comes later is already answered — but
+  // only for visitors who can afford it. On Save-Data, 2G or 3G nothing is prefetched: the shards
+  // download when the search box is focused or typed in instead. Elsewhere it is a low-priority
+  // trickle, two shards at a time, so it never competes with the visitor's own taps, fonts or GA.
   function scheduleShards() {
     var c = navigator.connection || {};
-    var slow = !!c.saveData || c.effectiveType === 'slow-2g' || c.effectiveType === '2g';
-    var go = function () { ensureShards(); ensureSyllabus(); };
-    if (slow) { setTimeout(go, 6000); return; }
+    if (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
+    var queue = SHARDS_ALL.slice(), active = 0;
+    function pump() {
+      while (active < 2 && queue.length) {
+        var p = ensureShard(queue.shift(), true);
+        if (p) { active++; p.then(done, done); }
+      }
+    }
+    function done() { active--; pump(); }
+    var go = function () { pump(); ensureSyllabus(); };
     (window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); })(go, { timeout: 4000 });
   }
 
@@ -142,11 +163,12 @@
   // copies here (a URL copies.json does not know is dropped) and the text is lowercased once, so
   // a keystroke never re-lowercases the corpus. byCopy is the reverse map a copy card uses.
   function indexShard(d, name) {
+    if (!COPYBYID) { COPYBYID = {}; COPIES.forEach(function (c) { COPYBYID[cid(c.u)] = c; }); }
     var sh = { questions: [], fragments: [], all: [], byCopy: {} };
     function add(rows, kind, into) {
       (rows || []).forEach(function (r) {
         var refs = [];
-        r[1].forEach(function (ref) { var c = COPYBYURL[d.urls[ref[0]]]; if (c) refs.push({ c: c, page: ref[1] }); });
+        r[1].forEach(function (ref) { var c = COPYBYID[d.ids[ref[0]]]; if (c) refs.push({ c: c, page: ref[1] }); });
         if (!refs.length) return;
         var q = { txt: r[0], lc: r[0].toLowerCase(), refs: refs, s: r[2] || [], m: r[3] || '', w: r[4] || '', kind: kind,
           p: name === 'optional' ? refs[0].c.p : SHARD_PAPER[name] };
@@ -221,6 +243,7 @@
         });
         TOPPERS[name] = T;
       });
+      Object.keys(SHARD_WAIT).forEach(function (n) { ensureShard(n); });   // requested before the part counts were known
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       onData();
       track('data_loaded', { copies: COPIES.length });
@@ -365,10 +388,10 @@
 
   /* ---------- browse: controls ---------- */
   function wireBrowse() {
-    $('#q').addEventListener('focus', function () { ensureShards(); ensureSyllabus(); }, { once: true });
+    $('#q').addEventListener('focus', function () { ensureShards(shardsFor(state.paper)); ensureSyllabus(); }, { once: true });
     $('#q').addEventListener('input', debounce(function (e) {
       state.q = e.target.value.trim(); state.shown = PAGE;
-      if (state.q) ensureShards();
+      if (state.q) ensureShards(shardsFor(state.paper));
       renderBrowse();
     }, 160));
     $('#q').addEventListener('input', debounce(function (e) {   // log the settled query, not every keystroke

@@ -16,7 +16,8 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-1` | No answer copy URL points at our own domain — nothing is re-hosted | INTENT-4 |
 | `INV-2` | Every copy link is `http(s):` — no `javascript:`/`data:` from a submission | INTENT-5 |
 | `INV-3` | A PDF URL appears in exactly one copy (the URL is the copy's key) | DECISION-17 |
-| `INV-4` | Every `[urlIndex, page]` ref in every question shard resolves to a copy in `copies.json` | DECISION-17 |
+| `INV-4` | Every `[idIndex, page]` ref in every question shard resolves (via `cid(url)` from `assets/app.js`) to a copy in `copies.json` | DECISION-17, DECISION-25 |
+| `INV-14` | `cid(url)` — the browser's copy id — is collision-free over every copy | DECISION-25 |
 
 ## Credit and honesty
 
@@ -35,6 +36,7 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-10` | Every path `build.js` writes is gitignored and untracked | DECISION-4 |
 | `INV-11` | `tools/` and the source-only data files are excluded from the deployed site | DECISION-8 |
 | `INV-12` | `#resultmeta` is an `aria-live` region — screen readers hear result counts | INTENT-3 |
+| `INV-13` | Every interview in `interview-list.json` has its own `data/iv/<id>.json` transcript | DECISION-19, DECISION-25 |
 
 ## Gzip budgets — INTENT-2, speed is the product
 

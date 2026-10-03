@@ -13,7 +13,7 @@
  *   data/copies.json                     every copy, grouped by topper — the only file the app needs to boot
  *   data/questions-<paper>.json          one shard per paper: deduped question text + which copy/page answers it
  *   data/interview-list.json             every interview transcript's metadata (no text) — the Interviews tab boots from this
- *   data/interview-text-<year>.json      one shard per year: {id: full transcript text}, fetched only when a transcript is opened
+ *   data/iv/<id>.json                    one file per interview: the transcript as a JSON string, fetched only when that transcript is opened
  *   topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, robots.txt, llms.txt   (SEO)
  *   index.html                           the <!-- STATIC --> / <!-- LD --> / <!-- META --> markers are refilled
  *   dataset/                             CC-BY backup of everything (not loaded by the site)
@@ -466,6 +466,12 @@ function writeCopies(copies, toppers, stats, generated, shardParts) {
   }
   // shardParts: only papers split into more than one file are listed — app.js defaults an
   // absent name to 1 part (see ensureShard). Keeps copies.json unchanged for the common case.
+  const seenIds = new Map();
+  for (const c of copies) {
+    const id = copyId(c.u);
+    if (seenIds.has(id) && seenIds.get(id) !== c.u) throw new Error(`copyId collision: ${c.u} vs ${seenIds.get(id)} — change the hash seed in copyId() and cid() together`);
+    seenIds.set(id, c.u);
+  }
   const parts = {};
   for (const [name, n] of Object.entries(shardParts || {})) if (n > 1) parts[name] = n;
   const file = path.join(DATA, 'copies.json');
@@ -473,8 +479,17 @@ function writeCopies(copies, toppers, stats, generated, shardParts) {
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
-// shard: { urls: [copy url, …], questions: [[text, [[urlIndex, page], …], [syllabus node ids], marks, words], …], fragments: [same] }
-// A copy belongs to one paper, so its URL appears in exactly one shard's table, and refs are small ints.
+// shard: { ids: [copy id, …], questions: [[text, [[idIndex, page], …], [syllabus node ids], marks, words], …], fragments: [same] }
+// A copy's id is copyId(url): a 48-bit hash of its PDF URL, base36 (~10 chars vs a ~100-char URL — the url
+// tables were 7 % of the shard payload). It is a pure function of the URL, so a shard and a copies.json
+// from different builds still agree (service-worker cache skew), which a positional index would not.
+// assets/app.js carries the same function as cid(); tools/check.mjs INV-14 proves they agree.
+function copyId(u) {
+  let a = 2166136261, b = 5381;
+  for (let i = 0; i < u.length; i++) { const c = u.charCodeAt(i); a = Math.imul(a ^ c, 16777619); b = (Math.imul(b, 33) ^ c) >>> 0; }
+  return ((a >>> 0) * 65536 + (b >>> 16)).toString(36);
+}
+// A copy belongs to one paper, so its id appears in exactly one shard's table, and refs are small ints.
 function chunk(arr, n) {
   const size = Math.max(1, Math.ceil(arr.length / n));
   const out = [];
@@ -485,7 +500,7 @@ function serializeShardPart(name, generated, syl, questions, fragments) {
   const urls = [...new Set(questions.concat(fragments).flatMap(q => q[1].map(r => r[0])))].sort();
   const at = new Map(urls.map((u, i) => [u, i]));
   const rows = list => list.map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
-  return JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, urls, questions: rows(questions), fragments: rows(fragments) });
+  return JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, ids: urls.map(copyId), questions: rows(questions), fragments: rows(fragments) });
 }
 // Ceiling a single part targets — comfortably under tools/check.mjs's per-shard budgets, so
 // ordinary growth doesn't force a re-split every few days (DECISION-23).
@@ -548,8 +563,9 @@ function countBy(docs, get) {
 }
 
 // data/interview-list.json  — every interview's metadata, no transcript text (the Interviews tab's
-// one boot file, loaded only when that tab opens). data/interview-text-<year>.json — one shard per
-// year, {id: full text}, fetched only when a specific transcript is expanded.
+// one boot file, loaded only when that tab opens). data/iv/<id>.json — one file per interview, the
+// transcript as a bare JSON string, fetched only when that transcript is expanded. (It used to be one
+// shard per year, ~640 KB gzip to read a ~1 KB transcript.)
 function writeInterviews(docs, generated) {
   const interviews = docs.map(d => ({
     i: d.i, b: d.b, n: d.n || null, d: d.d || null, y: d.y, s: d.s || null,
@@ -564,17 +580,19 @@ function writeInterviews(docs, generated) {
   };
   fs.writeFileSync(path.join(DATA, 'interview-list.json'), JSON.stringify(list));
 
-  for (const f of fs.readdirSync(DATA)) if (/^interview-text-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
-  const byYear = new Map();
-  for (const d of docs) { if (!byYear.has(d.y)) byYear.set(d.y, {}); byYear.get(d.y)[d.i] = d.t || ''; }
-  const report = [];
-  for (const year of [...byYear.keys()].sort()) {
-    const file = path.join(DATA, `interview-text-${year}.json`);
-    fs.writeFileSync(file, JSON.stringify({ generated, year, text: byYear.get(year) }));
-    report.push(`${year} (${(fs.statSync(file).size / 1024).toFixed(0)} KB)`);
+  for (const f of fs.readdirSync(DATA)) if (/^interview-text-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));   // retired per-year shards
+  const ivDir = path.join(DATA, 'iv');
+  fs.rmSync(ivDir, { recursive: true, force: true });
+  fs.mkdirSync(ivDir, { recursive: true });
+  let textBytes = 0;
+  for (const d of docs) {
+    if (!/^[A-Za-z0-9_-]+$/.test(String(d.i))) throw new Error('interview id is not filename-safe: ' + d.i);
+    const body = JSON.stringify(d.t || '');
+    textBytes += body.length;
+    fs.writeFileSync(path.join(ivDir, d.i + '.json'), body);
   }
   console.log(`interview-list.json  ${interviews.length} interviews · ${list.boards.length} boards · ${(fs.statSync(path.join(DATA, 'interview-list.json')).size / 1024).toFixed(0)} KB raw`);
-  console.log(`interview-text-*.json  ${report.join(' · ')}`);
+  console.log(`iv/<id>.json  ${docs.length} files · ${(textBytes / 1024).toFixed(0)} KB raw in total · ${(textBytes / docs.length / 1024).toFixed(1)} KB avg`);
 }
 
 /* ======================================================================
@@ -1204,8 +1222,8 @@ published the PDF.
 - Deduped question text per paper, each with the copies and pages that answer it (JSON):
   https://topperscopy.hashin.me/data/questions-gs1.json (also -gs2, -gs3, -gs4, -essay, -other, -optional)
 - Every interview transcript's metadata (JSON): https://topperscopy.hashin.me/data/interview-list.json
-- Full interview transcript text, one shard per year (JSON): https://topperscopy.hashin.me/data/interview-text-2025.json
-  (also -2017 through -2026)
+- Full text of one interview transcript (a JSON string), one file per interview id from interview-list.json:
+  https://topperscopy.hashin.me/data/iv/csetranscripts-1775.json
 
 ## Complete dataset (backup, includes all accepted submissions)
 

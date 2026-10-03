@@ -9,7 +9,7 @@ _site/
 /data/copies.json
 /data/questions-*.json
 /data/interview-list.json
-/data/interview-text-*.json
+/data/iv/
 /toppers.html
 /toppers-*.html
 /sitemap.xml

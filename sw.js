@@ -1,9 +1,9 @@
 /* Offline cache. Every same-origin GET is stale-while-revalidate: serve what is cached, refresh
    it in the background. The shell and data/copies.json are precached on install. A question
-   shard refers to copies by URL, so a copies.json and a shard from different builds still agree —
-   a ref to a URL the cached copies.json does not know is simply skipped.
+   shard refers to copies by cid(url) — a hash of the URL — so a copies.json and a shard from different
+   builds still agree; a ref to a copy the cached copies.json does not know is simply skipped.
    Bump VERSION on any shell change to force a full refresh. */
-var VERSION = 'tc-v27';
+var VERSION = 'tc-v28';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
