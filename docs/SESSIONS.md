@@ -956,3 +956,9 @@ cache that does not revalidate it. (2) Partitioning by a text hash looked ideal 
 questions; partitioning by the question's anchor *copy* kept most of the locality for +2 %. Measure the compression side of
 any "stable split".
 **Left.** Cloudflare in front (DNS); the F4 decision; `dataset/` weight.
+
+## 2026-10-04 (cont.) — Wrap-up: F4 explained, Netlify ruled out, handoff written
+**Asked.** "explain f4", "i don't want to set netlify", "push it", "document your work ... and stop".
+**Did.** Explained F4 to Hashin (options A–D, now in `docs/PERF-AUDIT-2026-10-03.md` §7 with the practice-id catch on option B);
+recorded INTENT-11 (stay on GitHub Pages, no Netlify; CDN option parked); pushed everything (last deploy green at `5fa0689`).
+**Left.** Only F4, and only if Hashin wants it — start with the §7 handoff, ask about `q.id`/practice history before building option B.

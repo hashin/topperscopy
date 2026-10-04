@@ -232,3 +232,45 @@ Expected effect (measured with `node tools/perf/sizes.mjs`): idle prefetch 1,498
 *without* a service worker stops re-downloading unchanged parts after each deploy. Visitors **with** the service worker already get that
 from DECISION-27; the CDN only adds brotli for them on first visit. Verify with
 `curl -sI -H 'Accept-Encoding: br' https://topperscopy.hashin.me/data/copies.json` → `content-encoding: br`.
+
+## 7. Handoff — for the next agent (written 2026-10-04)
+
+**State.** Everything in §3 is done and deployed except F4 and the CDN. `npm run check` is 28/28. Decisions: DECISION-25
+(prefetch gating, `iv/` transcripts, `copyId` hashes), DECISION-26 (stale-shard self-heal, `tc-v29` migration, dead data links),
+DECISION-27 (byte-stable `?v=` shard parts, cache-first SW `tc-v30`, Fraunces subset, lazy `gtag.js`). Constraint: **INTENT-11 —
+stay on GitHub Pages, no Netlify** (don't propose Vercel either; Cloudflare only if Hashin raises it).
+
+**F4 — the only open item, and it needs Hashin's decision.** Question text is 1,189 KB of the 1,491 KB gzip prefetch (78 %), growing
+~20 KB/day. 965 questions over 800 chars (mostly GS4 case studies) hold 40 % of it (~480 KB). Options, none built:
+- *A. truncate long questions + load the rest on demand* — saves ~480 KB, but search stops matching deep inside a case study. Changes behaviour.
+- *B. companion "deep text" file for long bodies, fetched only when someone searches* — keeps search results complete (the
+  "still scanning…" state already exists), saves ~480 KB for people who only browse. **Catch:** `q.id = fnv(paper|full text)` keys
+  `localStorage tc-practice` (`seen`), so either ids must be carried in the build output (+bytes) or users lose practice history;
+  cards show truncated text until the file arrives. This is the one to build if the first visit gets slow — ask about the id question first.
+- *C. build-time token index* (~475 KB gz, DECISION-17 measured it) — flat growth, days of work, previously rejected; revisit at ~3× corpus.
+- *D. merge near-duplicate OCR rows* — measured, not worth it (476 groups / 1,234 rows share a 70-char prefix, ~496 KB raw, mostly
+  already cheap under gzip; merging rewrites question identity).
+Trigger to revisit: `BUDGET prefetch total` (ceiling 1,650 KB, measured 1,491) goes red, or Hashin reports slow first visits.
+
+**Also still true / not done.** `dataset/` is 46 MB per deploy (cost is deploy time, not visitors; `index.html` links `/dataset/questions.csv`, so
+moving it is a product call). The SEO `<noscript>` block (12 KB gz) is left on purpose. `sw.js`'s `fromV27` branch should be deleted a few weeks
+after 2026-10-03. No Lighthouse/throttled-CPU run was possible (see below) — a real-device 4× CPU / Slow-4G pass is still worth doing.
+
+**Gotchas learned the hard way (all verified, not guessed).**
+- GitHub Pages' ETag is the deploy mtime, so it changes on every deploy even for identical bytes. Byte-stable files only help when the
+  URL changes iff the bytes do *and* the cache doesn't revalidate (hence `?v=` + cache-first). Pages is fixed at `max-age=600`, gzip only.
+- A positional shard index (refs into `copies.json` order) looks cheaper (−109 KB) but is unsafe with a stale-while-revalidate SW: cache skew
+  would silently attach questions to the wrong copy. Name copies by a pure function of the URL (`copyId`).
+- Partitioning shards by plain text hash costs +6 % gzip; by *anchor copy* +2 %. Always measure the compression side of a "stable split".
+- A fix for any app.js/data format change must cover the *old* app.js still in browsers: it can't be patched, only superseded by a new
+  service worker that navigates the tab (the `tc-v27` marker trick) — and every format change creates this problem again.
+- Healing code must set its in-page "already healing" flag, not just `sessionStorage`; 15 stale shards each started a heal until it did.
+- Tooling limits: the Claude-in-Chrome extension was not connected, so the built-in browser pane was used. It cannot throttle CPU/network, cannot
+  register a service worker on `localhost`, and its JS tool hangs while the pane is hidden or the page navigates mid-script (a hang right after
+  registering a worker is evidence the worker reloaded the tab). Test SW logic with a mock (`caches`/`fetch`) locally and on the live site after deploy.
+- `node build.js` rewrites marker blocks in the tracked `index.html` (stats drift). Revert that churn (`git checkout index.html`) unless the
+  markers genuinely should change, then re-apply any intentional edit.
+
+**Reproduce the numbers.** `node build.js && node tools/perf/sizes.mjs` (bytes by stage, raw/gzip/brotli); `npm run check` (budgets + INV-1…16);
+growth curve: build historic commits in `git worktree`s and sum gzip of generated `data/*.json` (see §1 table for method).
+
