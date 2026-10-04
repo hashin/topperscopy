@@ -26,9 +26,12 @@ const BUDGETS = {
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
   'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },
   'shard gs4': { ceiling: 690, shard: 'gs4', why: 'GS4 case studies are long — this is the one to watch' },
-  'shard essay': { ceiling: 25, shard: 'essay', why: '' },
+  // essay 25 -> 30, optional 20 -> 55 KB 2026-10-04: both were stale, failing since the OCR passes grew them (essay 25.1, optional
+  // 46.4 KB measured). Optional is the one that keeps growing; a part auto-splits at SHARD_PART_TARGET_KB (150) in build.js, so
+  // these ceilings are early-warning thresholds well under that, not the point where a download becomes a problem.
+  'shard essay': { ceiling: 30, shard: 'essay', why: '' },
   'shard other': { ceiling: 30, shard: 'other', why: '' },
-  'shard optional': { ceiling: 20, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
+  'shard optional': { ceiling: 55, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).

@@ -934,3 +934,12 @@ loads: 3, not 5) is what showed it; the UI looked fine either way. Also: the bro
 worker on localhost, so the worker logic is verified on the live site after deploy, not locally.
 **Left.** Remove the `fromV27` branch in `sw.js` after a few weeks. Audit items F3, F4, F6 still open;
 `BUDGET shard essay` / `optional` ceilings still stale.
+
+## 2026-10-04 — Stale essay / optional shard budgets
+**Asked.** "fix the essay and optional shard budgets".
+**Did.** Both had been failing `npm run check` since before the perf work: essay measured 25.1 KB against a 25 ceiling,
+optional 46.4 KB against 20 (the 20 was never realistic once the optional-subject OCR landed). Raised to 30 and 55 KB
+(~20 % headroom, per the file's own rule), with the reasoning in `tools/check.mjs`. `npm run check` is 25/25.
+**Learned.** Two red checks that everyone has learned to ignore are worse than a loose ceiling: they hid that the
+hash-id change had actually *shrunk* essay (28.5 → 25.1 KB). A budget only works while it is green.
+**Left.** Ceilings are per part; optional will auto-split at 150 KB, so this one should not need touching again until then.
