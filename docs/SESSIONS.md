@@ -1041,3 +1041,11 @@ corrected, and re-run from the committed `og.jpg` (not on top of the patched one
 Ran the fixed workflow by hand: first ever green run. It still committed (`a720307`): index.html's build markers (harmless,
 now current) and an `og.jpg` re-encoded with unchanged numbers. Fixed: `update-hero.mjs` re-patches the image only when the alt
 text — always updated together with it — changed (`--force` to override); restored the single-encode `og.jpg`.
+
+## 2026-10-04 (night, cont.) — dataset/README.md stats
+**Asked.** "update the dataset README stats too". **Did.** The counts were already computed at build time and current, but one was
+wrong: "8,063 copies came from community submissions" counted every copy not from the upsckata mirror (link-only 4,761 and OCR'd
+2,251 included) — `submissions.csv` is empty. Replaced with a per-`provenance` breakdown (link 4,761 · ocr 2,251 · upsckata 1,063 ·
+submission 1,051 = optional-subject copies), documented all five provenance values, and swapped `counts.submissions` for
+`counts.byProvenance` in `manifest.json` / `dataset.json` (schema_version 2 → 3; nothing in the repo read the old field).
+Toppers stay 1,708 there vs 1,709 on the site: the dataset leaves out the placeholder "Unknown".

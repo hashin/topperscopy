@@ -1397,6 +1397,14 @@ Some GS & Essay question text derives from earlier open community compilations o
  * 10. dataset/ — the CC-BY backup (not loaded by the site)
  * ====================================================================== */
 
+// What each copy `provenance` value means, for dataset/README.md.
+const PROV_LABEL = {
+  upsckata: 'with question text from the upstream mirror (upsckata.com)',
+  ocr: 'with questions read off the scanned PDF by OCR',
+  submission: 'optional-subject copies and accepted community submissions',
+  link: 'link only — no question text yet',
+  mixed: 'with text from more than one of these'
+};
 function writeDataset(copies, toppers, generated) {
   const DS = path.join(ROOT, 'dataset');
   fs.mkdirSync(DS, { recursive: true });
@@ -1436,7 +1444,11 @@ function writeDataset(copies, toppers, generated) {
   }
   fs.writeFileSync(path.join(DS, 'toppers.csv'), tLines.join('\n') + '\n');
 
-  const counts = { toppers: names.length, copies: all.length, questions: all.reduce((n, c) => n + c.q.length, 0), submissions: all.filter(c => c.prov !== 'upsckata').length };
+  // byProvenance replaced `submissions` (schema 3, 2026-10-04): that counted every copy not from the mirror — OCR'd and link-only
+  // copies included — as a "community submission" (8,063 of 9,126, when submissions.csv was empty).
+  const byProvenance = {};
+  for (const c of all) byProvenance[c.prov] = (byProvenance[c.prov] || 0) + 1;
+  const counts = { toppers: names.length, copies: all.length, questions: all.reduce((n, c) => n + c.q.length, 0), byProvenance };
   const json = {
     meta: {
       name: "Topper's Copy by Hashin — complete dataset",
@@ -1444,7 +1456,7 @@ function writeDataset(copies, toppers, generated) {
       site: SITE, repository: 'https://github.com/hashin/topperscopy', generated,
       attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
       license: 'CC BY 4.0 for this compilation — see https://topperscopy.hashin.me/dataset/README.md',
-      schema_version: 2, counts
+      schema_version: 3, counts
     },
     toppers: names.map(name => {
       const T = toppers[name] || {}, a = agg[name];
@@ -1458,7 +1470,7 @@ function writeDataset(copies, toppers, generated) {
   };
   fs.writeFileSync(path.join(DS, 'dataset.json'), JSON.stringify(json));
 
-  const manifest = { generated, schema_version: 2, counts, files: {} };
+  const manifest = { generated, schema_version: 3, counts, files: {} };
   for (const f of ['questions.csv', 'copies.csv', 'toppers.csv', 'dataset.json']) {
     const buf = fs.readFileSync(path.join(DS, f));
     manifest.files[f] = { bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), rows: f.endsWith('.csv') ? buf.toString('utf8').trimEnd().split('\n').length - 1 : undefined };
@@ -1474,7 +1486,7 @@ This directory is a reference archive — the website does not load it. Regenera
 
 - **Snapshot:** ${generated}
 - **${fmt(counts.questions)}** questions · **${fmt(counts.copies)}** answer copies · **${fmt(counts.toppers)}** toppers
-- **${fmt(counts.submissions)}** copies came from community submissions (the rest from the upstream mirror)
+- Where the copies come from (\`provenance\`): ${Object.entries(byProvenance).sort((a, b) => b[1] - a[1]).map(([k, n]) => `**${fmt(n)}** ${PROV_LABEL[k] || k}`).join(' · ')}
 
 ## Files
 
@@ -1489,7 +1501,7 @@ This directory is a reference archive — the website does not load it. Regenera
 ### \`questions.csv\` columns
 
 \`copy_id\`, \`topper\`, \`air\`, \`year\`, \`paper\`, \`optional\` (0/1), \`source\`, \`provenance\`
-(\`upsckata\` \\| \`submission\` \\| \`mixed\`), \`page\`, \`marks\`, \`word_limit\`, \`question\`,
+(\`upsckata\` \\| \`ocr\` \\| \`submission\` \\| \`link\` \\| \`mixed\` — counts above), \`page\`, \`marks\`, \`word_limit\`, \`question\`,
 \`pdf_url\` (the copy), \`pdf_page_url\` (deep link to the page).
 
 ## Provenance & licence
@@ -1573,7 +1585,7 @@ function build() {
   writeLlms(stats, generated, interviewDocs.length);
   writeRobots();
   const ds = writeDataset(copies, toppers, generated);
-  console.log(`dataset/     ${ds.copies} copies, ${ds.questions} questions, ${ds.toppers} toppers, ${ds.submissions} from submissions`);
+  console.log(`dataset/     ${ds.copies} copies, ${ds.questions} questions, ${ds.toppers} toppers · ${Object.entries(ds.byProvenance).map(([k, n]) => n + ' ' + k).join(', ')}`);
   console.log(`index.html markers, toppers.html, sitemaps, llms.txt, robots.txt written`);
 }
 
