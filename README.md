@@ -39,7 +39,8 @@ data/interviews.json        mirror of upsckata's Personality Test interview tran
   build.js
         |
         +->  data/copies.json                 every copy, grouped by topper — the only file the app boots from
-        +->  data/questions-<paper>.json      one shard per paper: deduped question text + [copy id, page] refs
+        +->  data/questions-<paper>[-N].json  one shard per paper (numbered parts once large): deduped question text + [copy id, page] refs
+        +->  data/questions-…-deep.json       the rest of each long question (>500 chars), fetched only on search / card / practice
         +->  data/interview-list.json         every interview's metadata — the Interviews tab's boot file
         +->  data/iv/<id>.json                one file per interview: the transcript text, fetched when its card is opened
         +->  topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, llms.txt, robots.txt
@@ -51,7 +52,9 @@ index.html, assets/, sw.js  the app (progressive enhancement over toppers.html)
 
 The copy's PDF URL is its key everywhere. A question shard names a copy by `cid(url)` — a 48-bit hash of
 the URL, so a shard and a `copies.json` from different builds still agree — and is `{ ids: [...],
-questions: [[text, [[idIndex, page], …], [syllabus node ids], marks, words], …], fragments: [...] }`.
+questions: [[text, [[idIndex, page], …], [syllabus node ids], marks, words, key?], …], fragments: [...] }`. A question
+longer than 500 characters carries only its first ~250 and a `key` (its id in the app); the rest is in the part's
+`-deep.json` companion as `{ tails: [[key, rest], …] }` (DECISION-28).
 
 Regenerate everything after changing a source file:
 
@@ -102,12 +105,14 @@ The whole design is two data shapes and one search engine (`docs/DECISIONS.md` D
 
 - **Boot** fetches `data/copies.json` (~184 KB gzip) — every copy, grouped by topper, with AIR / year
   / marks already resolved. Browse and topper-name search work from that alone.
-- **Question text** lives in one shard per paper, `data/questions-<paper>.json` (GS1 177 · GS2 162 ·
-  GS3 107 · GS4 601 · Essay 23 · Other 26 · Optional 7 KB gzip). All are fetched on
-  `requestIdleCallback` (delayed on 2G / Save-Data, never skipped) and immediately on search focus,
-  first keystroke or card expand. A text query is `indexOf` over every question in the loaded shards
-  the paper filter allows — about a millisecond. While a needed shard is still downloading the
-  result line says "Searching inside N copies…" and never shows a zero.
+- **Question text** lives in one shard per paper, split into hash-stable `?v=`-versioned parts once a paper
+  is large (DECISION-23/27). Near-duplicate OCR wordings of one question are merged at build time, and the
+  long tail of every question over 500 characters (mostly GS4 case studies) sits in a separate `-deep` file
+  (DECISION-28). On a fast connection the parts (~970 KB gzip) download in the background once the page is idle; on Save-Data / 2G / 3G
+  nothing is. A search, an opened card or Practice queues what it needs — two papers at a time, smallest
+  first, then the `-deep` files. A text query is `indexOf` over every question in the loaded shards the paper
+  filter allows — about a millisecond. Until every needed file is in, the result line says "still scanning…"
+  and never shows a zero. `node tools/perf/sizes.mjs` prints the current bytes per stage.
 - **Self-hosted fonts**, latin-subset. Inter is `font-display: swap` and preloaded; Fraunces is
   `font-display: optional` and deliberately not preloaded (headings only, never blocks or reflows).
 - **Results paginate** 25 at a time; "Show more" appends in place.

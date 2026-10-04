@@ -1320,6 +1320,8 @@ live deploy showed that any app.js/data mismatch — old app + new data, or new 
    `sw.js` on load, and the browser fetches the *current* one. If the activating worker finds a `tc-v27` cache it
    is replacing the worker that served the pre-DECISION-25 app, so it `navigate()`s the open tabs once to load the
    new app. It also precaches the shell with `cache:'reload'` so the precache is never older than the deploy.
+   *(Mechanism superseded by DECISION-28: `cache:'no-cache'` keeps "never older than the deploy" — it always asks the
+   server — but accepts a 304, so a first visit no longer downloads the shell and `copies.json` twice.)*
 3. **`tools/check.mjs` INV-7** now fails on any linked data file the build did not write. This is what caught
    `llms.txt` and `index.html` pointing at `data/questions-gs1.json`, which had returned 404 since the GS1 split
    (DECISION-23). `llms.txt` now lists the shard files actually on disk, and `index.html` points at `llms.txt`.
@@ -1376,10 +1378,11 @@ keeps a copy's questions and its id entries together (5,109 id entries vs 5,609 
 - *Cloudflare (or any CDN) in front.* The real fix for non-service-worker visitors (brotli: shards 1,498 → 1,085 KB, copies.json
   188 → 136 KB; `immutable` caching of `?v=` URLs; ETags that survive deploys) but it is a DNS change only Hashin can make.
   Options (and the iCloud-mail risk of moving nameservers, which an earlier draft of this note missed) are in `docs/PERF-AUDIT-2026-10-03.md` §6.
-- *Lazy long case-study bodies (F4.1).* Saves ~480 KB gzip but silently stops matching words deep inside a case study; a
+- *SUPERSEDED by DECISION-28 (Hashin, 2026-10-04: build both; a one-time practice-history reset is acceptable).*
+  *Lazy long case-study bodies (F4.1).* Saves ~480 KB gzip but silently stops matching words deep inside a case study; a
   "deep text" companion file would keep semantics but must change `q.id` or truncate display (ids key localStorage practice
   history). Needs a product decision, not an optimisation.
-- *Near-duplicate OCR cleanup (F4.4).* Measured: 476 groups / 1,234 rows share a 70-char prefix with a longer sibling, ~496 KB
+- *SUPERSEDED by DECISION-28.* *Near-duplicate OCR cleanup (F4.4).* Measured: 476 groups / 1,234 rows share a 70-char prefix with a longer sibling, ~496 KB
   raw text, but most is already cheap under gzip and merging them rewrites question identity. Not worth the data risk.
 - *Moving `dataset/` (46 MB) to a release asset.* `index.html` links `/dataset/questions.csv`; changing where the backup lives
   is a product decision. It costs deploy time only, not visitors.
@@ -1394,3 +1397,55 @@ raising N).
 **Enforced by.** INV-15 (`shardV` matches bytes), INV-16 (no date stamp), INV-9 (GA lazy), BUDGET prefetch total. The service
 worker's cache-first/prune logic was unit-tested against a mock `caches`/`fetch` (hit → no network; new version → fetch + prune
 old; copies.json still revalidates). Single-row stability was measured by deleting rows from `ocr-questions.csv` and diffing `shardV`.
+
+## DECISION-28 — Near-duplicate OCR wordings merge at build time; long questions ship their first 250 characters, the rest on demand
+*2026-10-04 · active · supersedes DECISION-27's "Rejected" bullets on F4.1 / F4.4 and DECISION-26's `cache:'reload'` precache ·
+cites INTENT-2, INTENT-3, DECISION-17, DECISION-23, DECISION-27, `docs/PERF-AUDIT-2026-10-04.md` G1–G5*
+
+**Asked.** Hashin, 2026-10-04, after the second audit: "Implement everything and it's okay if the question for the student the
+… question history is reset for once now. And also do five also properly." — five being F4 option B (long bodies on demand).
+
+**Decision.**
+1. **Merge near-duplicates** (`mergeNearDuplicates()` in `build.js`, after the containment dedupe, questions only). Two questions
+   of one paper are one question when their word sets (normalised, ≥ 3 letters, minus a short stop list) overlap ≥ 60 % —
+   a word that matches the other side's within edit distance 1 (2 for 6+ letters) counts as shared — and the side with fewer
+   words of its own has none (or one, if both have ≥ 15 words). Never: under 5 words on either side, two questions answered
+   in the same copy, or an unmatched word containing a digit on both sides ("28th"/"29th" COP). Most-answered wording wins;
+   the others are kept as `aka` — they still match `syllabus-overrides.json`, and their old `question/<slug>/` pages become
+   noindex redirect pages. 11,983 → 10,800 questions; 52,306 refs in, 52,306 out (INV-18).
+2. **Split long questions.** A row longer than 500 characters keeps its first ~250 (cut at a space) plus a key; the rest goes to
+   the part's `-deep.json`. The key is `fnv(paper|full text)` in base 36 — exactly the `q.id` the app always computed — so the
+   practice history of long questions survives (INV-17 proves it with app.js's own `fnv`), and a rest can only attach to its
+   own question even under service-worker cache skew (the DECISION-25 lesson: positional joins are unsafe). `copies.json`
+   gains `shardDV`; `-deep` files are `?v=`-versioned and cache-first like the parts.
+3. **One download queue** in `app.js` (`need()`): smallest first, 4 papers at a time for a visitor's request (measured
+   against 2 and 3), 2 for the idle prefetch; a visitor's request jumps the idle
+   prefetch and adds `-deep` files after every paper's parts; the idle prefetch never fetches `-deep`. Search runs over what
+   is loaded and says "still scanning…" until every needed part *and* `-deep` file is in; cards show "…" until then.
+4. **Render less.** Shard arrivals within 150 ms share one re-render; a plain browse list (no query, topic or open card) is
+   not re-rendered by a shard at all. `fmt()` uses one `Intl.NumberFormat`.
+5. **`sw.js` (tc-v31)** precaches with `cache:'no-cache'` instead of `'reload'`; **`gtag.js`** loads 3 s after `load` + idle.
+
+**Measured** (2026-10-04, `node tools/perf/sizes.mjs` / `npm run check`): idle prefetch 1,498 → 975 KB gzip; everything a cold
+all-papers search waits for 1,498 → 1,358 KB; GS4 6 → 3 parts; first visit −~290 KB of duplicate precache. Browser A/B on
+throttled Chrome is in `docs/PERF-AUDIT-2026-10-04.md` §6.
+
+**Cost.** Practice history resets once for the ~1,180 merged-away wordings (their id was the hash of a text that no longer
+exists). Splitting costs ~2 % gzip overall (rests compress without their leads). Search counts move by a copy or two on some
+queries, both ways: a copy now matches through its question's kept wording rather than its own OCR spelling ("federalism"
+316 → 317). A merged wording's old question page redirects only if its slug had no "-2"-style suffix.
+
+**Rejected.**
+- *Truncate long questions with no `-deep` file (F4 option A).* Search would silently stop matching inside case studies.
+- *Key rests by row position.* Smaller, but a cached `copies.json` with a fresh part would attach text to the wrong question.
+- *Merge by prefix or by Jaccard alone.* Prefix matching found little (DECISION-27); Jaccard alone merged "role of women in the
+  freedom struggle" with "…tribals…" and the 28th and 29th COP sessions. The own-words, digit and minimum-length rules exist for those.
+- *Fetch `-deep` on idle too.* Then nobody who only browses saves anything; it is ~390 KB.
+
+**Reverse if.** A merged pair is reported as two different questions — look at which rule let it through before loosening or
+tightening thresholds (`docs/PERF-AUDIT-2026-10-04.md` has sampled pairs). Raise `LONG_Q`/`LEAD_Q` if students say the "…"
+state is visible long enough to matter. If GitHub Pages ever gets brotli or a CDN, the split still pays off for browse-only visitors.
+
+**Enforced by.** INV-15 (shardDV matches bytes), INV-17 (every cut row has its rest, key = app.js `fnv`), INV-18 (no ref lost),
+BUDGET prefetch total (1,100) / search total (1,500) / deep part (160) / app.js (26).
+

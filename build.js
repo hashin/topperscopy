@@ -393,6 +393,75 @@ function dedupe(rows) {
   return out;
 }
 
+// Second pass, questions only (DECISION-28): OCR spells one question many ways — "earthquack", "Q.10)" vs "a10",
+// "NEP" vs "National Education Policy (NEP)" — and containment cannot see that. Two questions of one paper merge when
+// their word sets overlap by ≥ 60 % (a word matching the other side's up to an OCR typo still counts) and one of the
+// two has no word of its own (at most one if both have 15+ words), so "role of women in the freedom struggle" never
+// swallows "role of tribals in the freedom struggle". Never under 5 words, never two questions answered in the same
+// copy (a copy does not answer one question twice). The most-answered spelling is kept; the others survive as `aka`
+// (their syllabus overrides still apply, and their old question pages redirect to the kept one).
+const NEAR_STOP = new Set(('the and for are its with from that this which what how why does has have their your you into upon ' +
+  'discuss examine explain analyse analyze critically comment words marks elucidate evaluate').split(' '));
+const nearWords = t => [...new Set(norm(t).split(' ').filter(w => w.length > 2 && !NEAR_STOP.has(w) && !/^\d+$/.test(w)))];
+function typoClose(a, b) {   // edit distance ≤ 1 (≤ 2 for words of 6+ letters), banded so it stays cheap
+  const k = Math.min(a.length, b.length) >= 6 ? 2 : 1;
+  if (Math.abs(a.length - b.length) > k) return false;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    if (Math.min(...cur) > k) return false;
+    prev = cur;
+  }
+  return prev[b.length] <= k;
+}
+function nearSame(A, B) {   // A, B: word arrays -> true if they read as one question
+  if (Math.min(A.length, B.length) < 5) return false;   // too short to tell a rewording from a different question
+  const setB = new Set(B), onlyA = A.filter(w => !setB.has(w));
+  const setA = new Set(A), onlyB = B.filter(w => !setA.has(w));
+  let paired = 0;
+  const left = onlyB.slice();
+  const ownA = [];
+  for (const w of onlyA) {   // a number is never a typo: "28th session of the COP" is not "29th"
+    const i = /\d/.test(w) ? -1 : left.findIndex(x => !/\d/.test(x) && typoClose(w, x));
+    if (i >= 0) { left.splice(i, 1); paired++; } else ownA.push(w);
+  }
+  if (ownA.some(w => /\d/.test(w)) && left.some(w => /\d/.test(w))) return false;
+  const inter = A.length - onlyA.length + paired;
+  if (inter / (A.length + B.length - inter) < 0.6) return false;
+  return Math.min(ownA.length, left.length) <= (Math.min(A.length, B.length) >= 15 ? 1 : 0);
+}
+function mergeNearDuplicates(list) {   // list: dedupe() output, most-answered first
+  const kept = [], byWord = new Map();
+  for (const e of list) {
+    const words = nearWords(e.text);
+    let host = null;
+    if (words.length >= 5) {
+      const shared = new Map();
+      for (const w of words) for (const k of byWord.get(w) || []) shared.set(k, (shared.get(k) || 0) + 1);
+      const urls = new Set(e.refs.map(r => r[0]));
+      for (const [k, n] of [...shared].sort((a, b) => b[1] - a[1] || a[0] - b[0])) {
+        if (n < words.length * 0.3) break;   // too few exact words in common to reach 60 % even if the rest are typos
+        const h = kept[k];
+        if (h.refs.some(r => urls.has(r[0])) || !nearSame(words, h.words)) continue;
+        host = h; break;
+      }
+    }
+    if (!host) {
+      for (const w of words) { if (!byWord.has(w)) byWord.set(w, []); byWord.get(w).push(kept.length); }
+      kept.push(Object.assign(e, { words, aka: [] }));
+      continue;
+    }
+    host.refs.push(...e.refs);
+    host.aka.push(e.text);
+    if (e.m && !host.m) host.m = e.m;
+    if (e.w && !host.w) host.w = e.w;
+    e.yrs.forEach(y => host.yrs.add(y));
+  }
+  for (const e of kept) { e.refs.sort((a, b) => a[0].localeCompare(b[0]) || a[1] - b[1]); delete e.words; }
+  return kept.sort((a, b) => b.refs.length - a.refs.length || a.text.localeCompare(b.text));
+}
+
 // -> { <paper>: { questions: [...], fragments: [...] } } for every paper/subject with text
 function dedupeAll(copies) {
   const byPaper = {};
@@ -404,7 +473,7 @@ function dedupeAll(copies) {
     }
   }
   for (const p of Object.keys(byPaper)) {
-    byPaper[p] = { questions: dedupe(byPaper[p].questions), fragments: dedupe(byPaper[p].fragments) };
+    byPaper[p] = { questions: mergeNearDuplicates(dedupe(byPaper[p].questions)), fragments: dedupe(byPaper[p].fragments) };
   }
   return byPaper;
 }
@@ -426,11 +495,12 @@ function loadSyllabus() {
 }
 
 // Score a question against its own paper's syllabus nodes by keyword hits (a longer phrase is a
-// stronger signal); keep the top two above a small threshold. data/syllabus-overrides.json pins.
-function mapSyllabus(text, paper, syl) {
+// stronger signal); keep the top two above a small threshold. data/syllabus-overrides.json pins —
+// by the kept wording or any wording merged into it (`aka`, DECISION-28).
+function mapSyllabus(text, paper, syl, aka) {
   if (!syl) return [];
-  const key = qKey(text);
-  if (syl.overrides[key]) return syl.overrides[key];
+  const key = [text].concat(aka || []).map(qKey).find(k => syl.overrides[k]);
+  if (key) return syl.overrides[key];
   const t = String(text || '').toLowerCase();
   const scored = [];
   for (const n of syl.byPaper[paper] || []) {
@@ -447,7 +517,7 @@ function mapSyllabus(text, paper, syl) {
  * ====================================================================== */
 
 function writeCopies(copies, toppers, stats, generated, shards) {
-  const { shardParts, shardV } = shards;
+  const { shardParts, shardV, shardDV } = shards;
   const out = {};
   for (const name of Object.keys(toppers).sort((a, b) => a.localeCompare(b))) {
     const t = toppers[name], o = {};
@@ -476,7 +546,7 @@ function writeCopies(copies, toppers, stats, generated, shards) {
   const parts = {};
   for (const [name, n] of Object.entries(shardParts || {})) if (n > 1) parts[name] = n;
   const file = path.join(DATA, 'copies.json');
-  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, shardV, toppers: out }));
+  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, shardV, shardDV, toppers: out }));
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
@@ -494,12 +564,34 @@ function copyId(u) {
 // A part is a pure function of the questions assigned to it: no build date, rows sorted by text, ids sorted by URL.
 // So a part's bytes — and the ?v= hash copies.json publishes for it — change only when one of ITS questions does, and a
 // returning visitor's service worker keeps every untouched part across deploys (DECISION-27).
+// Long questions (DECISION-28): a part carries only the first ~LEAD_Q characters of a question longer than LONG_Q, plus
+// a key as the row's 6th field; the rest is in a companion part, questions-<p>[-N]-deep.json { paper, tails: [[key, rest]] },
+// which the app fetches only when someone searches, opens a card or practises — never on idle. ~1,060 rows (2026-10-04),
+// mostly GS4 case studies, hold ~390 KB gzip the idle prefetch no longer downloads. The key is the question's id in the app,
+// fnv(paper|full text) in base 36 (fnv() in assets/app.js, INV-17), so a rest can only attach to its own question even when
+// a cached copies.json and a fresh part disagree, and practice history keyed by that id survives the split.
+const LONG_Q = 500, LEAD_Q = 250;
+function fnv(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+// rows: [text, refs, syllabus ids, marks, words, paper]. -> { body, deep } (deep = null when no row is long)
 function serializeShardPart(name, questions, fragments) {
   const urls = [...new Set(questions.concat(fragments).flatMap(q => q[1].map(r => r[0])))].sort();
   const at = new Map(urls.map((u, i) => [u, i]));
   const byText = (a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
-  const rows = list => list.slice().sort(byText).map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
-  return JSON.stringify({ paper: name, ids: urls.map(copyId), questions: rows(questions), fragments: rows(fragments) });
+  const tails = new Map();
+  const rows = list => list.slice().sort(byText).map(q => {
+    const row = [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]];
+    const key = q[0].length > LONG_Q && fnv(q[5] + '|' + q[0]).toString(36);
+    if (key && !tails.has(key)) {   // a repeated key (same text twice, or a hash collision) just stays whole
+      let cut = q[0].lastIndexOf(' ', LEAD_Q);
+      if (cut < LEAD_Q * 0.6) cut = LEAD_Q;   // no space near the end of the lead: cut mid-word, the rest rejoins it exactly
+      tails.set(key, q[0].slice(cut));
+      row[0] = q[0].slice(0, cut); row.push(key);
+    }
+    return row;
+  });
+  const body = JSON.stringify({ paper: name, ids: urls.map(copyId), questions: rows(questions), fragments: rows(fragments) });
+  const deep = tails.size ? JSON.stringify({ paper: name, tails: [...tails].sort((a, b) => (a[0] < b[0] ? -1 : 1)) }) : null;
+  return { body, deep };
 }
 // Ceiling a single part targets — comfortably under tools/check.mjs's per-shard budgets, so
 // ordinary growth doesn't force a re-split every few days (DECISION-23).
@@ -520,12 +612,12 @@ function writeShards(byPaper, syl, generated) {
   const shards = {};
   for (const [paper, P] of Object.entries(byPaper)) {
     const S = shards[shardOf(paper)] || (shards[shardOf(paper)] = { questions: [], fragments: [] });
-    for (const q of P.questions) S.questions.push([q.text, q.refs, q.s || [], q.m, q.w]);
-    for (const q of P.fragments) S.fragments.push([q.text, q.refs, [], q.m, q.w]);
+    for (const q of P.questions) S.questions.push([q.text, q.refs, q.s || [], q.m, q.w, paper]);
+    for (const q of P.fragments) S.fragments.push([q.text, q.refs, [], q.m, q.w, paper]);
   }
   for (const f of fs.readdirSync(DATA)) if (/^questions-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
   const report = [];
-  const shardParts = {}, shardV = {};
+  const shardParts = {}, shardV = {}, shardDV = {};
   for (const name of Object.keys(shards).sort()) {
     const S = shards[name];
     // Split into N parts by text hash, re-measuring actual gzip size each time, until every part clears the
@@ -537,18 +629,20 @@ function writeShards(byPaper, syl, generated) {
       for (const q of S.questions) qs[partOf(anchor(q), n)].push(q);
       for (const q of S.fragments) fs_[partOf(anchor(q), n)].push(q);
       bodies = qs.map((x, i) => serializeShardPart(name, x, fs_[i]));
-      if (Math.max(...bodies.map(b => zlib.gzipSync(b).length / 1024)) <= SHARD_PART_TARGET_KB || n >= 8) break;
+      if (Math.max(...bodies.map(b => zlib.gzipSync(b.body).length / 1024)) <= SHARD_PART_TARGET_KB || n >= 8) break;
       n++;
     }
     shardParts[name] = n;
-    shardV[name] = bodies.map((b, i) => {
-      fs.writeFileSync(path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`), b);
-      return crypto.createHash('sha1').update(b).digest('hex').slice(0, 8);
-    });
-    report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${(bodies.reduce((t, b) => t + b.length, 0) / 1024).toFixed(0)} KB)`);
+    const hash = b => crypto.createHash('sha1').update(b).digest('hex').slice(0, 8);
+    const base = i => path.join(DATA, n === 1 ? `questions-${name}` : `questions-${name}-${i + 1}`);
+    shardV[name] = bodies.map((b, i) => { fs.writeFileSync(base(i) + '.json', b.body); return hash(b.body); });
+    // '' = this part has no long question, so no -deep file
+    shardDV[name] = bodies.map((b, i) => { if (!b.deep) return ''; fs.writeFileSync(base(i) + '-deep.json', b.deep); return hash(b.deep); });
+    const kb = k => (bodies.reduce((t, b) => t + (b[k] || '').length, 0) / 1024).toFixed(0);
+    report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${kb('body')}+${kb('deep')} KB)`);
   }
-  console.log(`questions-*.json  ${report.join(' · ')}`);
-  return { shardParts, shardV };
+  console.log(`questions-*.json  ${report.join(' · ')}   (lead + deep)`);
+  return { shardParts, shardV, shardDV };
 }
 
 /* ======================================================================
@@ -826,6 +920,26 @@ ${rows}
   }
   console.log(`question/   ${qList.length} pages written · ${indexable.size} indexable, ${qList.length - indexable.size} noindex (single answer)`);
   return indexable;
+}
+
+// A wording merged into another question (DECISION-28) had its own page in earlier builds, and search engines
+// still hold those URLs. Each gets a small noindex page that sends the reader to the kept question. Written only
+// where the old slug is not taken by a live page; the "-2" suffixes an older build may have used are not recreated.
+function writeQuestionAliases(qList, usedSlugs) {
+  const dir = path.join(ROOT, 'question');
+  let n = 0;
+  for (const q of qList) for (const t of q.aka || []) {
+    const s = slug(q.p + '-' + dispQ(t).slice(0, 70)) || 'x';
+    if (usedSlugs.has(s)) continue;
+    usedSlugs.add(s);
+    const to = `${SITE}/question/${q.slug}/`;
+    fs.mkdirSync(path.join(dir, s), { recursive: true });
+    fs.writeFileSync(path.join(dir, s, 'index.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(dispQ(q.text).slice(0, 78))}</title>` +
+      `<meta name="robots" content="noindex,follow"><link rel="canonical" href="${to}"><meta http-equiv="refresh" content="0; url=${to}"></head>` +
+      `<body><p>This question has moved: <a href="${to}">${esc(dispQ(q.text))}</a></p></body></html>\n`);
+    n++;
+  }
+  console.log(`question/   ${n} redirect pages for merged wordings`);
 }
 
 // paper/<gs1…>/ and optional/<subject>/ — topic hubs: most-answered questions + every topper.
@@ -1429,7 +1543,7 @@ function build() {
   const syl = loadSyllabus();
   let mapped = 0, total = 0, refs = 0;
   for (const [paper, P] of Object.entries(byPaper)) {
-    for (const q of P.questions) { q.s = mapSyllabus(q.text, paper, syl); q.p = paper; if (q.s.length) mapped++; total++; }
+    for (const q of P.questions) { q.s = mapSyllabus(q.text, paper, syl, q.aka); q.p = paper; if (q.s.length) mapped++; total++; }
     for (const q of P.fragments) { q.p = paper; }
     refs += P.questions.concat(P.fragments).reduce((n, q) => n + q.refs.length, 0);
   }
@@ -1453,6 +1567,7 @@ function build() {
   writeStaticIndex(gs, toppers, stats, generated, nameToSlug, interviewDocs.length);
   const topperIndexPages = writeToppersPages(gs, toppers, stats, generated, nameToSlug);
   const indexableQuestionSlugs = writeQuestionPages(qList, copyByUrl, nameToSlug, syl);
+  writeQuestionAliases(qList, usedSlugs);
   writeHubPages(qList, optQuestions, copies, nameToSlug);
   writeSitemaps(generated, indexableQuestionSlugs, topperIndexPages);
   writeLlms(stats, generated, interviewDocs.length);

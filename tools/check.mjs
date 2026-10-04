@@ -22,7 +22,9 @@ const BUDGETS = {
   // code, not a dependency, so it's a deliberate raise, not the "machinery crept back" DECISION-2 warns about.
   // Raised 24 -> 25 KB 2026-10-03 for the stale-shard self-heal (DECISION-26, ~0.8 KB) after trimming it to the bone —
   // a correctness guard (no false "0 copies" under cache skew), not machinery creeping back.
-  'app.js': { ceiling: 25, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
+  // Raised 25 -> 26 KB 2026-10-04 for DECISION-28: the download queue, the -deep loader and the render throttle (~1.1 KB
+  // after cutting the comments down) — feature code that took ~500 KB off the idle prefetch.
+  'app.js': { ceiling: 26, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
   'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
   'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },
@@ -34,9 +36,15 @@ const BUDGETS = {
   'shard other': { ceiling: 30, shard: 'other', why: '' },
   'shard optional': { ceiling: 55, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
   // Everything a visitor on a fast connection downloads in the background after boot: all shard parts + syllabus.
-  // Measured 1,458 KB on 2026-10-03 (DECISION-25); this is the number that grows with the corpus (PERF-AUDIT-2026-10-03 F1/F4).
+  // Measured 1,458 KB on 2026-10-03 (DECISION-25); 969 KB on 2026-10-04 once long questions moved to -deep files and
+  // near-duplicates merged (DECISION-28). This is the number that grows with the corpus (~12 KB/day at the 2026-10 OCR pace).
   // Raise it deliberately, with the corpus growth that forced it, never to silence a red check.
-  'prefetch total': { ceiling: 1650, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
+  'prefetch total': { ceiling: 1100, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
+  // What a first-visit search with no paper filter waits for before its result is complete: every part, every -deep file,
+  // syllabus. 1,358 KB on 2026-10-04 (DECISION-28). On a 1.6 Mbps phone each 100 KB here is ~0.5 s (PERF-AUDIT-2026-10-04).
+  'search total': { ceiling: 1500, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
+  // A -deep file is fetched on its own (two papers at a time), so the ceiling is per file, like the part budgets.
+  'deep part': { ceiling: 160, files: [], deepPart: true, why: 'largest single questions-*-deep.json (GS4 case studies)' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
@@ -49,13 +57,15 @@ const SHARDS = ['gs1', 'gs2', 'gs3', 'gs4', 'essay', 'other', 'optional'];
 // ceiling is on the biggest one (a normal transcript is ~1 KB gzip; the longest are a few tens of KB).
 const INTERVIEW_TEXT_CEILING = 60;
 
-// The browser's copy-id function, lifted verbatim out of assets/app.js, so the check proves the code
+// The browser's copy-id and question-id functions, lifted verbatim out of assets/app.js, so the check proves the code
 // that ships (not a second copy of it) agrees with what build.js wrote into the shards.
-const cid = (() => {
-  const m = fs.readFileSync(path.join(ROOT, 'assets/app.js'), 'utf8').match(/function cid\(u\) \{[\s\S]*?\n  \}\n/);
-  if (!m) throw new Error('function cid(u) not found in assets/app.js');
-  return new Function(m[0] + '; return cid;')();
-})();
+const lift = (name, rx) => {
+  const m = fs.readFileSync(path.join(ROOT, 'assets/app.js'), 'utf8').match(rx);
+  if (!m) throw new Error(`function ${name} not found in assets/app.js`);
+  return new Function(m[0] + '; return ' + name + ';')();
+};
+const cid = lift('cid', /function cid\(u\) \{[\s\S]*?\n  \}\n/);
+const fnv = lift('fnv', /function fnv\(s\) \{.*\}\n/);
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const exists = f => fs.existsSync(path.join(ROOT, f));
 const gzKb = f => zlib.gzipSync(fs.readFileSync(path.join(ROOT, f)), { level: 9 }).length / 1024;
@@ -68,6 +78,8 @@ const shardFiles = name => {
   const rx = new RegExp(`^questions-${name}(-\\d+)?\\.json$`);
   return fs.readdirSync(dir).filter(f => rx.test(f)).sort().map(f => 'data/' + f);
 };
+// A part's long-question companion (DECISION-28): data/questions-<name>[-N]-deep.json, or null when the part has none.
+const deepFile = part => (exists(part.replace(/\.json$/, '-deep.json')) ? part.replace(/\.json$/, '-deep.json') : null);
 const results = [];
 function check(id, cites, title, fn) {
   let ok, detail = '';
@@ -109,24 +121,51 @@ check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a c
   return { ok: !bad, detail: `${refs} refs across ${questions} questions${bad ? ', ' + bad + ' point at no copy' : ', all resolve'}` };
 });
 
+check('INV-18', 'DECISION-28', 'Merging questions never loses an answer: shard refs = question rows counted per copy in copies.json', () => {
+  let rows = 0, refs = 0;
+  for (const name in DB.toppers) for (const r of DB.toppers[name].copies) rows += r[3];
+  for (const f of SHARDS.flatMap(shardFiles)) { const d = JSON.parse(read(f)); for (const q of d.questions.concat(d.fragments)) refs += q[1].length; }
+  return { ok: rows === refs, detail: `${refs} refs in the shards, ${rows} question rows in copies.json` };
+});
+
 /* ---- credit and honesty ---- */
 check('INV-14', 'DECISION-17', 'cid(url) — the browser\'s copy id — is collision-free over every copy', () => {
   const seen = new Map();
   for (const c of copies) { const id = cid(c.u); if (seen.has(id) && seen.get(id) !== c.u) return { ok: false, detail: `${id} is both ${seen.get(id)} and ${c.u}` }; seen.set(id, c.u); }
   return { ok: true, detail: `${seen.size} distinct ids over ${copies.length} copies` };
 });
-check('INV-15', 'DECISION-27', 'copies.json\'s shardV names every shard part and matches its bytes — the ?v= the service worker caches by', () => {
-  let parts = 0;
+check('INV-15', 'DECISION-27', 'copies.json\'s shardV / shardDV name every part and -deep file and match their bytes — the ?v= the service worker caches by', () => {
+  let parts = 0, deeps = 0;
+  const sha = f => crypto.createHash('sha1').update(fs.readFileSync(path.join(ROOT, f))).digest('hex').slice(0, 8);
   for (const s of SHARDS) {
-    const files = shardFiles(s), v = (DB.shardV || {})[s];
+    const files = shardFiles(s), v = (DB.shardV || {})[s], dv = (DB.shardDV || {})[s];
     if (!v || v.length !== files.length) return { ok: false, detail: `${s}: ${files.length} files but shardV has ${v ? v.length : 'none'}` };
+    if (!dv || dv.length !== files.length) return { ok: false, detail: `${s}: ${files.length} parts but shardDV has ${dv ? dv.length : 'none'}` };
     for (let i = 0; i < files.length; i++) {
-      const h = crypto.createHash('sha1').update(fs.readFileSync(path.join(ROOT, files[i]))).digest('hex').slice(0, 8);
-      if (h !== v[i]) return { ok: false, detail: `${files[i]} hashes to ${h}, copies.json says ${v[i]}` };
-      parts++;
+      if (sha(files[i]) !== v[i]) return { ok: false, detail: `${files[i]} hashes to ${sha(files[i])}, copies.json says ${v[i]}` };
+      const d = deepFile(files[i]);   // '' in shardDV <=> no -deep file for that part
+      if (!d !== !dv[i] || (d && sha(d) !== dv[i])) return { ok: false, detail: `${files[i]}: -deep ${d ? 'hashes to ' + sha(d) : 'missing'}, shardDV says '${dv[i]}'` };
+      parts++; if (d) deeps++;
     }
   }
-  return { ok: true, detail: `${parts} parts, every hash matches` };
+  return { ok: true, detail: `${parts} parts + ${deeps} -deep files, every hash matches` };
+});
+check('INV-17', 'DECISION-28', 'Every cut question has exactly one rest, keyed by app.js\'s own fnv(paper|full text) — its practice id', () => {
+  let cut = 0;
+  for (const s of SHARDS) for (const f of shardFiles(s)) {
+    const d = JSON.parse(read(f)), df = deepFile(f), tails = new Map(df ? JSON.parse(read(df)).tails : []);
+    const rows = d.questions.concat(d.fragments).filter(r => r[5]);
+    if (rows.length !== tails.size) return { ok: false, detail: `${f}: ${rows.length} cut rows, ${tails.size} rests` };
+    for (const r of rows) {
+      const rest = tails.get(r[5]);
+      if (rest == null) return { ok: false, detail: `${f}: no rest for key ${r[5]}` };
+      // the optional shard holds every subject; build.js keys a row by its own subject, which is its first copy's paper
+      const paper = s === 'optional' ? copies.find(c => cid(c.u) === d.ids[r[1][0][0]]).p : { gs1: 'GS1', gs2: 'GS2', gs3: 'GS3', gs4: 'GS4', essay: 'Essay', other: 'Other' }[s];
+      if (fnv(paper + '|' + r[0] + rest).toString(36) !== r[5]) return { ok: false, detail: `${f}: key ${r[5]} is not fnv(${paper}|full text)` };
+      cut++;
+    }
+  }
+  return { ok: true, detail: `${cut} long questions cut, every rest present and keyed by its practice id` };
 });
 check('INV-16', 'DECISION-27', 'A shard part carries no build date — its bytes change only when one of its questions does', () => {
   const bad = SHARDS.flatMap(shardFiles).filter(f => /"generated"/.test(read(f).slice(0, 200)));
@@ -212,8 +251,14 @@ for (const [name, b] of Object.entries(BUDGETS)) {
       const label = files.length > 1 ? `${files.length} parts, largest ${max[0]}` : max[0];
       return { ok: max[1] <= b.ceiling, detail: `${label} at ${max[1].toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
     }
+    if (b.deepPart) {
+      const sizes = SHARDS.flatMap(shardFiles).map(deepFile).filter(Boolean).map(f => [f, gzKb(f)]);
+      const max = sizes.reduce((m, x) => (x[1] > m[1] ? x : m), ['none', 0]);
+      return { ok: max[1] <= b.ceiling, detail: `${sizes.length} files, largest ${max[0]} at ${max[1].toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
+    }
     if (b.prefetch) {
-      const fl = SHARDS.flatMap(shardFiles).concat(['data/syllabus.json']);
+      const parts = SHARDS.flatMap(shardFiles);
+      const fl = parts.concat(b.deep ? parts.map(deepFile).filter(Boolean) : [], ['data/syllabus.json']);
       const kb = fl.reduce((t, f) => t + gzKb(f), 0);
       return { ok: kb <= b.ceiling, detail: `${kb.toFixed(1)} KB over ${fl.length} files` + (b.why ? ' — ' + b.why : '') };
     }

@@ -65,13 +65,16 @@
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'G-VTL4V9JQBH', { send_page_view: false, anonymize_ip: true });
-  /* gtag.js (~90 KB) is fetched after the page has loaded and the browser is idle, so it never competes with copies.json /
-     app.js for the connection. Events fired before it arrives wait in dataLayer and are replayed by it. */
+  /* gtag.js (~170 KB) is fetched 3 s after the page has loaded, once the browser is idle, so it never competes with
+     copies.json / app.js for the connection, and its ~150 ms of script (on a mid-range phone) does not land on a returning
+     visitor's first keystrokes. Events fired before it arrives wait in dataLayer and are replayed by it. */
   addEventListener('load', function () {
-    (window.requestIdleCallback || function (f) { setTimeout(f, 2000); })(function () {
-      var s = document.createElement('script'); s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VTL4V9JQBH'; document.head.appendChild(s);
-    }, { timeout: 4000 });
+    setTimeout(function () {
+      (window.requestIdleCallback || function (f) { setTimeout(f, 2000); })(function () {
+        var s = document.createElement('script'); s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VTL4V9JQBH'; document.head.appendChild(s);
+      }, { timeout: 4000 });
+    }, 3000);
   });
 </script>
 

@@ -37,8 +37,10 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-11` | `tools/` and the source-only data files are excluded from the deployed site | DECISION-8 |
 | `INV-12` | `#resultmeta` is an `aria-live` region — screen readers hear result counts | INTENT-3 |
 | `INV-13` | Every interview in `interview-list.json` has its own `data/iv/<id>.json` transcript | DECISION-19, DECISION-25 |
-| `INV-15` | `copies.json`'s `shardV` lists every shard part and each hash matches the file's bytes (the `?v=` the service worker caches by) | DECISION-27 |
+| `INV-15` | `copies.json`'s `shardV` / `shardDV` list every shard part and `-deep` file and each hash matches the file's bytes (the `?v=` the service worker caches by) | DECISION-27, DECISION-28 |
 | `INV-16` | A shard part carries no build date — its bytes change only when one of its questions does | DECISION-27 |
+| `INV-17` | Every cut long question has exactly one rest in its `-deep` file, keyed by app.js's own `fnv(paper\|full text)` — its practice id | DECISION-28 |
+| `INV-18` | Merging questions never loses an answer: refs across all shards = question rows counted per copy in `copies.json` | DECISION-28 |
 
 ## Gzip budgets — INTENT-2, speed is the product
 
@@ -49,8 +51,10 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 | Budget | Covers | Ceiling |
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
-| `app.js` | `assets/app.js` alone (DECISION-2) | 25 KB |
-| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27) | 1,650 KB |
+| `app.js` | `assets/app.js` alone (DECISION-2) | 26 KB |
+| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,100 KB |
+| `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 1,500 KB |
+| `deep part` | the largest single `questions-*-deep.json` | 160 KB |
 | `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 120 · 690 · 30 · 30 · 55 KB |
 
 ## Not checkable, still true

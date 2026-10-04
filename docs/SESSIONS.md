@@ -962,3 +962,35 @@ any "stable split".
 **Did.** Explained F4 to Hashin (options A–D, now in `docs/PERF-AUDIT-2026-10-03.md` §7 with the practice-id catch on option B);
 recorded INTENT-11 (stay on GitHub Pages, no Netlify; CDN option parked); pushed everything (last deploy green at `5fa0689`).
 **Left.** Only F4, and only if Hashin wants it — start with the §7 handoff, ask about `q.id`/practice history before building option B.
+
+## 2026-10-04 (later) — Second performance audit, in real Chrome with throttling
+**Asked.** "do a detailed performance audit ... the number of questions have grown ... also use chrome extension to test it".
+**Did.** `docs/PERF-AUDIT-2026-10-04.md`. Extension still not connected, so drove installed Chrome 154 via Playwright/CDP
+(`tools/perf/browser.cjs`) with 4× CPU + 4G / slow-4G. Growth curve rebuilt with today's code over 4 OCR snapshots
+(+16.5 KB gz per 1,000 OCR rows, ~19 KB/day; `copies.json` flat). Verified one fix locally (SW precache `no-cache`, −289 KB per
+first visit). No site code changed.
+**Learned.** CDP network throttling does not apply to the service worker's own fetches — with the worker allowed, slow-4G cold
+search looked like 3.5 s instead of the real 11 s. Block the worker for cold runs. Also: CDP throttling leaves
+`navigator.connection.effectiveType` at `4g`, so the Save-Data/3G prefetch gate cannot be exercised this way.
+**Left.** G2/G3/G4 are small and safe to implement; G1 (near-dupe merge, F4 option B) waits on Hashin's answer about
+practice-history ids. `BUDGET prefetch total` will go red in ~8 days at the current OCR pace.
+
+## 2026-10-04 (later still) — Implemented the whole second audit (DECISION-28)
+**Asked.** "Implement everything and it's okay if the … question history is reset for once now. And also do five also properly."
+**Did.** DECISION-28: near-duplicate merge in `build.js` (11,983 → 10,800 questions, refs 52,306 → 52,306, 567 redirect pages
+for merged wordings); long questions (>500 chars) ship their first ~250 + a key, the rest in `…-deep.json` keyed by the
+question's own practice id; one smallest-first download queue in `app.js` with `-deep` only on search/card/practice; render
+throttle + no re-render of a plain list; one `Intl.NumberFormat`; `sw.js` tc-v31 precache `no-cache`; `gtag.js` +3 s.
+INV-17/18, budgets re-baselined (prefetch 1,100, new search total 1,500, deep part 160, app.js 26). Functional pass in Chrome
+on a local build: no `-deep` on idle, "…" rows fill in when a card opens, search counts within a copy of production, Practice
+and Questions view fine. A/B timing old-vs-new on throttled Chrome: see `docs/PERF-AUDIT-2026-10-04.md` §6.
+**Learned.** (1) Jaccard alone is not a "same question" test: it merged the 28th and 29th COP sessions and two short GS4 case
+sub-parts; the useful signal is whether *both* sides have words the other lacks, plus "a number is never a typo". Eyeballing
+~60 sampled pairs found both. (2) Calling `need([name])` per shard from inside a render loop reversed the queue (each call
+prepends); one batched call per render keeps smallest-first. Found only by logging request order, not by any count.
+(3) Keying the long-text rests by the existing `fnv(paper|full text)` id made the practice-history reset almost unnecessary —
+only merged-away wordings lose history.
+Service-worker upgrade tc-v30 → v31 and `-deep` cache-first verified on one local origin with Playwright's Chrome (unlike
+the built-in pane, it runs service workers on localhost). Queue concurrency measured 2/3/4: visitor jobs run 4 at a time.
+**Left.** Not deployed — commit + push, then re-run `tools/perf/browser.cjs` against production. Sampled merges looked right
+but ~1,180 were not all read; a "Report a problem" on a wrongly merged question is the signal to tighten `nearSame()`.

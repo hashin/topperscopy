@@ -61,19 +61,24 @@ table** — every copy `{t,c,p,u,y,r,q,prov,link,optional,note}`; optional-subje
 `p`; AIR/year resolve once per topper (first copy in source order that carries one, then overrides).
 4. **Dedupe questions** per paper — containment merge: bucket by the first 60 normalised chars, longest text
 first, a text that is a substring of a kept text merges into it (refs move over) unless the kept text
-continues with another numbered question. Rows that are not standalone questions (GS4 "(a)/(b)" sub-parts,
-orphan sub-parts, stray fragments) are deduped separately as `fragments`. 5. **Syllabus mapping.** 6. **Write**:
+continues with another numbered question. Then `mergeNearDuplicates()` (DECISION-28) merges OCR spellings of one
+question (word-set overlap ≥ 60 % counting typos, ≤ 1 word of its own, ≥ 5 words, never two from one copy, numbers
+never typos); the merged wordings stay on the kept question as `aka` (syllabus overrides, redirect pages under
+`question/`). Rows that are not standalone questions (GS4 "(a)/(b)" sub-parts, orphan sub-parts, stray
+fragments) are deduped separately as `fragments` (containment only). 5. **Syllabus mapping.** 6. **Write**:
 
 - `data/copies.json` — `{generated, attribution, stats, toppers:{"<name>":{air?,year?,verified?,marks?,telegram?,sources?,
   copies:[[paper, source, url, nQuestions, linkOnly, note?], …]}}}`. Every copy. The only file the app boots from.
-- `data/questions-<gs1|gs2|gs3|gs4|essay|other|optional>[-N].json` — `{generated, paper, ids:[…], questions:[[text,
-  [[idIndex,page],…], [syllabusNodeIds], marks, words], …], fragments:[same]}`. Refs index the shard's own
+- `data/questions-<gs1|gs2|gs3|gs4|essay|other|optional>[-N].json` — `{paper, ids:[…], questions:[[text,
+  [[idIndex,page],…], [syllabusNodeIds], marks, words, key?], …], fragments:[same]}`. A question over 500 chars keeps
+  only its first ~250 and `key` = `fnv(paper|full text)` base36 (its practice id); the rest is in
+  `…[-N]-deep.json` = `{paper, tails:[[key, rest],…]}`, fetched only on search / card / Practice (DECISION-28, INV-17). Refs index the shard's own
   `ids` table of `copyId(url)` values (48-bit hash of the PDF URL, base36; `cid()` in app.js is the same
   function, INV-14 proves they agree); a copy appears in exactly one shard. `optional` holds every optional subject.
   A paper is split into N parts by `partOf(anchor(question))` — a hash of the question's smallest copy URL — never by
   position, and a part carries no date, so one changed question changes one part (DECISION-27). `copies.json` carries
-  `shardParts` (N per paper) and `shardV` (a content hash per part): the app requests `…-N.json?v=<hash>` and the
-  service worker serves that URL cache-first for good. `node tools/perf/sizes.mjs` prints the payload by stage.
+  `shardParts` (N per paper), `shardV` (a content hash per part) and `shardDV` (per part, the `-deep` file's hash or
+  `''`): the app requests `…-N.json?v=<hash>` and the service worker serves that URL cache-first for good. `node tools/perf/sizes.mjs` prints the payload by stage.
 - `stats` = GS/Essay searchable index (JSON-LD, llms.txt, noscript); `stats.all` = the homepage headline.
 
 7b. **Interviews** — `writeInterviews()` maps `data/interviews.json` straight through (facet counts for
@@ -99,7 +104,9 @@ either if Hashin asks.
 - **Boot:** `load('data/copies.json')` → `COPIES` (flat, each with its topper `T` attached), `COPYBYURL`, facets,
   first 25 cards. Then, on 4G without Save-Data, every shard is prefetched on idle (low priority, two papers at a time);
   on Save-Data/2G/3G nothing is prefetched and shards load when the search box is focused or typed in, limited to the
-  papers the filter needs (DECISION-25). Shard requests wait for `copies.json` (it names the parts); a stale or
+  papers the filter needs (DECISION-25). Every download goes through `need()`'s queue — smallest first, 4 at a time for a
+  visitor (2 for the idle prefetch), a visitor's request ahead of the idle prefetch, `-deep` files after all parts and never on idle (DECISION-28).
+  Shard arrivals within 150 ms share one re-render, and a plain browse list is not re-rendered at all. Shard requests wait for `copies.json` (it names the parts); a stale or
   404 shard heals the page once or says "Search is unavailable" (DECISION-26). `load(url)` memoises one fetch per URL.
 - **Search:** `terms = q.toLowerCase().split(/\s+/)`. A topper-name hit comes from `COPIES` (always ready). A
   text hit is `indexOf` per term over every question in every loaded shard the paper filter allows ("Exact
@@ -116,7 +123,8 @@ either if Hashin asks.
   Tesseract from CDN only on click), URL sync (`?q=` `?paper=` `?syl=`; one `pushState` on empty→non-empty),
   theme toggle (`localStorage tc-theme`), GA4 `G-VTL4V9JQBH` events.
 - **`sw.js`:** stale-while-revalidate for every same-origin GET, except `data/questions-*.json?v=<hash>` which is
-  cache-first and pruned when its hash changes (DECISION-27); shell + `copies.json` precached with `cache:'reload'`.
+  cache-first and pruned when its hash changes (DECISION-27; `-deep` files too); shell + `copies.json` precached with
+  `cache:'no-cache'` — revalidated, so a first visit gets 304s instead of downloading them twice (DECISION-28).
   Bump `VERSION` on shell changes. The `fromV27` branch in `activate` is a one-time migration (DECISION-26) — delete it
   once `tc-v27` caches are gone.
 - **Interviews tab:** a wholly separate corpus (`data/interview-list.json`), loaded only when that tab

@@ -3,7 +3,7 @@
  * Plain Node, no browser, ~1 s. Prints raw / gzip / brotli for the boot path, the idle prefetch and the lazy files,
  * so a corpus-growth regression is visible as a number before it is felt as a wait. GitHub Pages serves gzip only
  * (brotli is what a CDN in front would add — PERF-AUDIT-2026-10-03 F3). The same sums are enforced as budgets by
- * `npm run check` (BUDGET boot / prefetch total / interview list); this is the readable version.
+ * `npm run check` (BUDGET boot / prefetch total / search total / interview list); this is the readable version.
  * Append `--json` for one machine-readable line (e.g. to log the growth curve per commit).
  */
 import fs from 'node:fs';
@@ -20,7 +20,9 @@ const size = f => {
 const data = fs.readdirSync(path.join(ROOT, 'data'));
 const stages = {
   'boot (blocks the first 25 cards)': ['index.html', 'assets/style.css', 'assets/app.js', 'assets/fonts/inter-latin.woff2', 'data/copies.json'],
-  'idle prefetch (fast connections only)': data.filter(f => /^questions-.*\.json$/.test(f)).sort().map(f => 'data/' + f).concat('data/syllabus.json'),
+  'idle prefetch (fast connections only)': data.filter(f => /^questions-.*\.json$/.test(f) && !/-deep\.json$/.test(f)).sort().map(f => 'data/' + f).concat('data/syllabus.json'),
+  // the rest of every long question (DECISION-28): only when someone searches, opens a card or practises
+  'on first search / card / practice': data.filter(f => /^questions-.*-deep\.json$/.test(f)).sort().map(f => 'data/' + f),
   'later, on demand': ['assets/fonts/fraunces-latin.woff2', 'data/interview-list.json']
 };
 const out = {};
