@@ -353,7 +353,16 @@
       if (host && host !== location.hostname) track('click_outbound', { link_domain: host, link_url: a.href.slice(0, 200), transport_type: 'beacon' });
     });
     var localDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '[::1]';
-    if ('serviceWorker' in navigator && (location.protocol === 'https:' || localDev)) navigator.serviceWorker.register('sw.js').catch(function () {});
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || localDev)) {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+      // Shard files fetched before the worker took control were never kept by it (DECISION-29): once it does, ask again —
+      // it finds them in the HTTP cache (max-age 600) and keeps them. No bytes, and only after each download has finished.
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        Object.keys(LOADS).forEach(function (u) {
+          if (/\?v=/.test(u)) LOADS[u].then(function () { fetch(u, { priority: 'low' }).catch(function () {}); }, function () {});
+        });
+      });
+    }
   }
 
   function onData() {

@@ -59,6 +59,9 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 
 ## Not checkable, still true
 
+- When the service worker takes control, the shard files the page already loaded end up in its cache without being
+  downloaded again (DECISION-29). Verified in Chrome with a counting server and the HTTP cache cleared between visits.
+
 - Search never prints "0 copies" while a needed shard is still downloading (DECISION-6). One boolean
   in `renderBrowse()`; verify by serving with the shards delayed (see `docs/SESSIONS.md` 2026-09-15).
 - Search semantics: "All words" = every term is a substring of the question text or topper name;

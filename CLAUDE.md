@@ -125,7 +125,9 @@ either if Hashin asks.
   theme toggle (`localStorage tc-theme`), GA4 `G-VTL4V9JQBH` events.
 - **`sw.js`:** stale-while-revalidate for every same-origin GET, except `data/questions-*.json?v=<hash>` which is
   cache-first and pruned when its hash changes (DECISION-27; `-deep` files too); shell + `copies.json` precached with
-  `cache:'no-cache'` — revalidated, so a first visit gets 304s instead of downloading them twice (DECISION-28).
+  `cache:'no-cache'` — revalidated, so a first visit gets 304s instead of downloading them twice (DECISION-28). On
+  `controllerchange` app.js re-requests its loaded `?v=` files through the worker so it keeps the ones fetched before it took
+  control — served from the HTTP cache, no bytes (DECISION-29).
   Bump `VERSION` on shell changes. The `fromV27` branch in `activate` is a one-time migration (DECISION-26) — delete it
   once `tc-v27` caches are gone.
 - **Interviews tab:** a wholly separate corpus (`data/interview-list.json`), loaded only when that tab

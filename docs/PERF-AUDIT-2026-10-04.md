@@ -222,3 +222,20 @@ On production after the deploy: first visit 11 parts, 0 `-deep`; return visit 11
 priority), parts from cache; third visit `?q=ethics` 0 question-file downloads, complete in 0.88 s; Save-Data never prefetches;
 the cold-visit suite (counts, card fill-in, request order, Questions view, Practice) unchanged; no page errors.
 The one case not fixed — a second visit arriving on a `?q=` link — can only be, by spending the bytes on every first visit.
+
+### 6d. The pre-claim cache gap (DECISION-29)
+
+Question files a first visit downloads *before* the service worker controls the page were never stored by it, so after the HTTP
+cache expired (10 min, or any deploy) the next visit downloaded them again. Fix: on `controllerchange`, app.js re-requests them
+through the worker (served from the HTTP cache — no bytes). `tools/perf/claim.cjs`, HTTP cache cleared between visits:
+
+| | live (`8af5f1f`) | fixed |
+|---|---|---|
+| first visit `/` — parts the worker keeps | 6–8 of 11 | **11 of 11** |
+| return visit `/` — question files re-sent | 3 parts | **0** |
+| first visit via `?q=ethics` — worker keeps | 0 parts, 8 of 11 `-deep` | **11 + 11** |
+| … then return `?q=federalism` — re-sent | **11 parts + 3 `-deep` (~1 MB)** | **0** |
+| after a worker upgrade (`VERSION` bump) — next visit re-sends | 11 parts + 11 `-deep` | **0** |
+
+Same results on unthrottled, 4G and slow-4G shaped links; no file was sent twice in any run (the re-request waits for the original
+download); regression suite (counts, cards, order, Questions view, Practice) unchanged; no page errors.

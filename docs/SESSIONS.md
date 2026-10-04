@@ -1007,3 +1007,13 @@ files confirmed `Low`; first visits fetch none even after the worker claims the 
 so repeat-visit timing needs throttling at the server, not in the browser. Also visible in every build: parts a first visit fetched
 before the worker took control are not in its cache and are re-downloaded on the second visit (orig 6–12 parts, now 2–4).
 **Left.** That pre-claim re-download is a separate, older gap (DECISION-27) — a candidate follow-up.
+
+## 2026-10-04 (night) — The pre-claim service-worker cache gap (DECISION-29)
+**Asked.** "yes, fix the pre-claim cache gap and test fully".
+**Did.** `app.js`: on `controllerchange`, re-request every loaded `?v=` file through the worker after its download settles — the
+HTTP cache answers, the worker keeps it. Saved the test as `tools/perf/claim.cjs` + `tools/perf/shaped-server.cjs` (counting,
+link-shaping, `/__swbump` for an upgrade). Live vs fixed, 3 links: return visits re-send 0 question files (was up to ~1 MB after a
+first visit via a search link); worker upgrades refill from the HTTP cache; nothing ever sent twice.
+**Learned.** Clearing only the HTTP cache (`Network.clearBrowserCache`) between visits is what exposes this — with a warm HTTP cache
+the gap is invisible, which is why the earlier live check (8 parts "re-fetched" at 0 bytes) looked fine.
+**Left.** app.js is 25.92 / 26 KB — the next feature needs a deliberate budget raise.

@@ -1460,3 +1460,34 @@ exists for). Not fixed by this and not fixable without spending those bytes: a *
 still downloads `-deep` at that moment. `sw.js` is not bumped: the new `app.js` reads the same data, and a bump would wipe every
 returning visitor's cached parts.
 
+## DECISION-29 — When the service worker takes control, the page re-requests its shard files through it
+*2026-10-04 · active · completes DECISION-27 · cites INTENT-2, DECISION-28*
+
+**Asked.** Hashin, 2026-10-04: "yes, fix the pre-claim cache gap and test fully".
+
+**Decision.** `app.js` listens for `controllerchange`. When the worker takes control (end of a first visit's install, or a new
+worker after a `VERSION` bump), every `?v=` URL in `LOADS` is fetched once more — after its own download has settled, at low
+priority. The request now goes through the worker's cache-first branch, misses, and is answered by the HTTP cache (downloaded
+seconds ago, `max-age=600`), and the worker keeps it. No `sw.js` change.
+
+**Why.** DECISION-27's cache-first only ever stored what passed *through* the worker. On a first visit most shard files are
+fetched before it controls the page, so it kept 0–8 of 11 parts (a first visit via a `?q=` link: 0 parts, 8 of 11 `-deep`). Once
+the HTTP cache had expired — 10 minutes, or any deploy, since GitHub Pages' ETag changes on every deploy — the next visit downloaded
+them all again: ~1 MB for a visitor who first came via a search link. Measured (link-shaping server, Chrome, HTTP cache cleared
+between visits; `docs/PERF-AUDIT-2026-10-04.md` §6d): worker keeps 11/11 parts (+ 11/11 `-deep` when fetched); the return visit
+sends 0 question files in every scenario, on unthrottled, 4G and slow-4G links; no file is ever sent twice; after a worker upgrade
+the new cache is refilled from the HTTP cache too.
+
+**Rejected.**
+- *Worker-side: precache every part on install.* Downloads ~1 MB the visitor may never need — the opposite of DECISION-25.
+- *Page posts its URL list to the worker (`postMessage`), worker fetches them.* Same effect, more code on both sides.
+- *Bump `VERSION` / `clients.claim()` earlier.* Claiming earlier still leaves the parts fetched before the claim.
+
+**Reverse if.** GitHub Pages ever serves shard files without a usable `max-age` (then the re-request would go to the network:
+bytes, though still no more than the next visit would have spent), or the browser's HTTP cache stops being shared between a page
+and its worker.
+
+**Enforced by.** A browser test, not `npm run check`: `tools/perf/claim.cjs` against `tools/perf/shaped-server.cjs` (counts every
+file the server sends, clears the HTTP cache between visits, covers a first visit via `/` and via `?q=`, and a worker upgrade) —
+listed under "Not checkable, still true" in `docs/INVARIANTS.md`.
+
