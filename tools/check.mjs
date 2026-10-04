@@ -24,7 +24,9 @@ const BUDGETS = {
   // a correctness guard (no false "0 copies" under cache skew), not machinery creeping back.
   // Raised 25 -> 26 KB 2026-10-04 for DECISION-28: the download queue, the -deep loader and the render throttle (~1.1 KB
   // after cutting the comments down) — feature code that took ~500 KB off the idle prefetch.
-  'app.js': { ceiling: 26, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
+  // Raised 26 -> 28 KB 2026-10-04 at Hashin's request: DECISION-29 left it at 25.92, so any next change would have failed.
+  // Headroom for planned feature code, not a licence for machinery — DECISION-2 still applies.
+  'app.js': { ceiling: 28, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
   'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
   'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },

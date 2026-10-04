@@ -51,7 +51,7 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 | Budget | Covers | Ceiling |
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
-| `app.js` | `assets/app.js` alone (DECISION-2) | 26 KB |
+| `app.js` | `assets/app.js` alone (DECISION-2) | 28 KB |
 | `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,100 KB |
 | `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 1,500 KB |
 | `deep part` | the largest single `questions-*-deep.json` | 160 KB |

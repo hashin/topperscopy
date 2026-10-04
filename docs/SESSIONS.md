@@ -1017,3 +1017,7 @@ first visit via a search link); worker upgrades refill from the HTTP cache; noth
 **Learned.** Clearing only the HTTP cache (`Network.clearBrowserCache`) between visits is what exposes this — with a warm HTTP cache
 the gap is invisible, which is why the earlier live check (8 parts "re-fetched" at 0 bytes) looked fine.
 **Left.** app.js is 25.92 / 26 KB — the next feature needs a deliberate budget raise.
+
+## 2026-10-04 (night, cont.) — app.js budget 26 → 28 KB
+**Asked.** "raise the app.js budget to 28 KB". **Did.** Ceiling raised in `tools/check.mjs` (reason in the comment) and `docs/INVARIANTS.md`;
+measured 25.92 KB. No code change.
