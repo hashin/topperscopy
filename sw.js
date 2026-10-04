@@ -2,8 +2,12 @@
    it in the background. The shell and data/copies.json are precached on install. A question
    shard refers to copies by cid(url) — a hash of the URL — so a copies.json and a shard from different
    builds still agree; a ref to a copy the cached copies.json does not know is simply skipped.
+   Exception (DECISION-27): a question-shard part is requested as questions-<paper>[-N].json?v=<content hash>, where the
+   hash comes from copies.json. The URL changes iff the bytes do, so those are cache-first — an unchanged part is never
+   fetched again, not even to revalidate (GitHub Pages' ETag changes on every deploy, so revalidating re-downloads it).
+   When a part's hash changes, the superseded copy is deleted from the cache.
    Bump VERSION on any shell change to force a full refresh. */
-var VERSION = 'tc-v29';
+var VERSION = 'tc-v30';
 var SHELL = [
   './', './index.html',
   './assets/style.css', './assets/app.js',
@@ -41,6 +45,23 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(e.request.url);
   if (url.origin !== location.origin) return;              // never touch PDF / GA / CDN requests
   if (url.pathname.indexOf('/gtag/') !== -1) return;
+  if (/\/data\/questions-[a-z0-9-]+\.json$/.test(url.pathname) && /^\?v=[0-9a-f]+$/.test(url.search)) {
+    e.respondWith(caches.open(VERSION).then(function (c) {
+      return c.match(e.request).then(function (hit) {
+        if (hit) return hit;
+        return fetch(e.request).then(function (res) {
+          if (res && res.ok) {
+            c.put(e.request, res.clone());
+            c.keys().then(function (ks) {
+              ks.forEach(function (k) { var u = new URL(k.url); if (u.pathname === url.pathname && u.search !== url.search) c.delete(k); });
+            });
+          }
+          return res;
+        });
+      });
+    }));
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(function (hit) {
       var net = fetch(e.request).then(function (res) {

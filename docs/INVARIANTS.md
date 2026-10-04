@@ -32,11 +32,13 @@ npm run check        # ~2 seconds, plain Node, no browser
 | ID | Rule | Cites |
 |---|---|---|
 | `INV-8` | No framework, module or bundler syntax reaches `assets/app.js` | DECISION-2 |
-| `INV-9` | No blocking third-party `<script>` in `<head>` (GA may be `async`) | DECISION-3 |
+| `INV-9` | No external `<script>` in `<head>`; `gtag.js` is injected after `load` + idle | DECISION-3, DECISION-27 |
 | `INV-10` | Every path `build.js` writes is gitignored and untracked | DECISION-4 |
 | `INV-11` | `tools/` and the source-only data files are excluded from the deployed site | DECISION-8 |
 | `INV-12` | `#resultmeta` is an `aria-live` region — screen readers hear result counts | INTENT-3 |
 | `INV-13` | Every interview in `interview-list.json` has its own `data/iv/<id>.json` transcript | DECISION-19, DECISION-25 |
+| `INV-15` | `copies.json`'s `shardV` lists every shard part and each hash matches the file's bytes (the `?v=` the service worker caches by) | DECISION-27 |
+| `INV-16` | A shard part carries no build date — its bytes change only when one of its questions does | DECISION-27 |
 
 ## Gzip budgets — INTENT-2, speed is the product
 
@@ -48,6 +50,7 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
 | `app.js` | `assets/app.js` alone (DECISION-2) | 25 KB |
+| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27) | 1,650 KB |
 | `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 120 · 690 · 30 · 30 · 55 KB |
 
 ## Not checkable, still true

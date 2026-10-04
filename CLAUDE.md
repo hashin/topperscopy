@@ -70,6 +70,10 @@ orphan sub-parts, stray fragments) are deduped separately as `fragments`. 5. **S
   [[idIndex,page],…], [syllabusNodeIds], marks, words], …], fragments:[same]}`. Refs index the shard's own
   `ids` table of `copyId(url)` values (48-bit hash of the PDF URL, base36; `cid()` in app.js is the same
   function, INV-14 proves they agree); a copy appears in exactly one shard. `optional` holds every optional subject.
+  A paper is split into N parts by `partOf(anchor(question))` — a hash of the question's smallest copy URL — never by
+  position, and a part carries no date, so one changed question changes one part (DECISION-27). `copies.json` carries
+  `shardParts` (N per paper) and `shardV` (a content hash per part): the app requests `…-N.json?v=<hash>` and the
+  service worker serves that URL cache-first for good. `node tools/perf/sizes.mjs` prints the payload by stage.
 - `stats` = GS/Essay searchable index (JSON-LD, llms.txt, noscript); `stats.all` = the homepage headline.
 
 7b. **Interviews** — `writeInterviews()` maps `data/interviews.json` straight through (facet counts for

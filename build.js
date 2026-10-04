@@ -446,7 +446,8 @@ function mapSyllabus(text, paper, syl) {
  * 7. Write data/copies.json + data/questions-<paper>.json
  * ====================================================================== */
 
-function writeCopies(copies, toppers, stats, generated, shardParts) {
+function writeCopies(copies, toppers, stats, generated, shards) {
+  const { shardParts, shardV } = shards;
   const out = {};
   for (const name of Object.keys(toppers).sort((a, b) => a.localeCompare(b))) {
     const t = toppers[name], o = {};
@@ -475,7 +476,7 @@ function writeCopies(copies, toppers, stats, generated, shardParts) {
   const parts = {};
   for (const [name, n] of Object.entries(shardParts || {})) if (n > 1) parts[name] = n;
   const file = path.join(DATA, 'copies.json');
-  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, toppers: out }));
+  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, shardV, toppers: out }));
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
@@ -490,22 +491,31 @@ function copyId(u) {
   return ((a >>> 0) * 65536 + (b >>> 16)).toString(36);
 }
 // A copy belongs to one paper, so its id appears in exactly one shard's table, and refs are small ints.
-function chunk(arr, n) {
-  const size = Math.max(1, Math.ceil(arr.length / n));
-  const out = [];
-  for (let i = 0; i < n; i++) out.push(arr.slice(i * size, (i + 1) * size));
-  return out;
-}
-function serializeShardPart(name, generated, syl, questions, fragments) {
+// A part is a pure function of the questions assigned to it: no build date, rows sorted by text, ids sorted by URL.
+// So a part's bytes — and the ?v= hash copies.json publishes for it — change only when one of ITS questions does, and a
+// returning visitor's service worker keeps every untouched part across deploys (DECISION-27).
+function serializeShardPart(name, questions, fragments) {
   const urls = [...new Set(questions.concat(fragments).flatMap(q => q[1].map(r => r[0])))].sort();
   const at = new Map(urls.map((u, i) => [u, i]));
-  const rows = list => list.map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
-  return JSON.stringify({ generated, paper: name, syllabus_version: syl && syl.version || null, ids: urls.map(copyId), questions: rows(questions), fragments: rows(fragments) });
+  const byText = (a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
+  const rows = list => list.slice().sort(byText).map(q => [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]]);
+  return JSON.stringify({ paper: name, ids: urls.map(copyId), questions: rows(questions), fragments: rows(fragments) });
 }
 // Ceiling a single part targets — comfortably under tools/check.mjs's per-shard budgets, so
 // ordinary growth doesn't force a re-split every few days (DECISION-23).
 const SHARD_PART_TARGET_KB = 150;
 
+// Which of n parts a question belongs to: a hash of its text, NOT its position in a sorted list — so adding or
+// removing a question only ever changes the one part it lands in (consecutive chunks shift every boundary).
+function partOf(text, n) {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0) % n;
+}
+// The key a question is partitioned by: its lexicographically smallest copy URL. Questions from one copy then land in
+// one part, so a part's id table stays short and its text compresses like a run from the same exam (a plain text hash
+// scattered them: +6 % gzip). Still stable — it moves only when a question gains a ref with a smaller URL.
+const anchor = q => q[1].reduce((m, r) => (r[0] < m ? r[0] : m), q[1][0][0]);
 function writeShards(byPaper, syl, generated) {
   const shards = {};
   for (const [paper, P] of Object.entries(byPaper)) {
@@ -515,30 +525,30 @@ function writeShards(byPaper, syl, generated) {
   }
   for (const f of fs.readdirSync(DATA)) if (/^questions-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
   const report = [];
-  const shardParts = {};
+  const shardParts = {}, shardV = {};
   for (const name of Object.keys(shards).sort()) {
     const S = shards[name];
-    // Split into N roughly-equal parts, re-measuring actual gzip size each time, until every
-    // part clears the target (or N hits a sane cap — a paper this lopsided needs a human look,
-    // not an ever-growing part count). N=1 reproduces the old single-file behaviour exactly.
-    let n = 1, parts, sizesKB;
+    // Split into N parts by text hash, re-measuring actual gzip size each time, until every part clears the
+    // target (or N hits a sane cap — a paper this lopsided needs a human look, not an ever-growing part count).
+    // N=1 reproduces the old single-file behaviour exactly.
+    let n = 1, bodies;
     for (;;) {
-      const qChunks = chunk(S.questions, n), fChunks = chunk(S.fragments, n);
-      parts = qChunks.map((qs, i) => ({ qs, fs: fChunks[i] }));
-      sizesKB = parts.map(p => zlib.gzipSync(serializeShardPart(name, generated, syl, p.qs, p.fs)).length / 1024);
-      if (Math.max(...sizesKB) <= SHARD_PART_TARGET_KB || n >= 8) break;
+      const qs = Array.from({ length: n }, () => []), fs_ = Array.from({ length: n }, () => []);
+      for (const q of S.questions) qs[partOf(anchor(q), n)].push(q);
+      for (const q of S.fragments) fs_[partOf(anchor(q), n)].push(q);
+      bodies = qs.map((x, i) => serializeShardPart(name, x, fs_[i]));
+      if (Math.max(...bodies.map(b => zlib.gzipSync(b).length / 1024)) <= SHARD_PART_TARGET_KB || n >= 8) break;
       n++;
     }
     shardParts[name] = n;
-    parts.forEach((p, i) => {
-      const file = path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`);
-      fs.writeFileSync(file, serializeShardPart(name, generated, syl, p.qs, p.fs));
+    shardV[name] = bodies.map((b, i) => {
+      fs.writeFileSync(path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`), b);
+      return crypto.createHash('sha1').update(b).digest('hex').slice(0, 8);
     });
-    const rawKB = parts.reduce((s, p, i) => s + fs.statSync(path.join(DATA, n === 1 ? `questions-${name}.json` : `questions-${name}-${i + 1}.json`)).size, 0) / 1024;
-    report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${rawKB.toFixed(0)} KB)`);
+    report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${(bodies.reduce((t, b) => t + b.length, 0) / 1024).toFixed(0)} KB)`);
   }
   console.log(`questions-*.json  ${report.join(' · ')}`);
-  return shardParts;
+  return { shardParts, shardV };
 }
 
 /* ======================================================================
@@ -1425,8 +1435,8 @@ function build() {
   }
   console.log(`questions    ${total} distinct (+${Object.values(byPaper).reduce((n, P) => n + P.fragments.length, 0)} fragments) from ${refs} refs · ${mapped} syllabus-mapped`);
 
-  const shardParts = writeShards(byPaper, syl, generated);
-  writeCopies(copies, toppers, stats, generated, shardParts);
+  const shards = writeShards(byPaper, syl, generated);
+  writeCopies(copies, toppers, stats, generated, shards);
   const interviewDocs = loadInterviews();
   writeInterviews(interviewDocs, generated);
 

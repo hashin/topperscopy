@@ -93,6 +93,7 @@
   var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
   var SHARD_PARTS = {};   // shard -> part count (absent = 1, DECISION-23)
+  var SHARD_V = {};       // shard -> [content hash per part]; the ?v= that lets the service worker keep an unchanged part for good
   var SYL = null;         // data/syllabus.json
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
   var LOADS = {};         // url -> promise; one fetch per file, ever
@@ -126,8 +127,8 @@
   var SHARD_WAIT = {};
   function ensureShard(name, low) {
     if (!DB) { SHARD_WAIT[name] = 1; return; }
-    var n = SHARD_PARTS[name] || 1, urls = [];
-    for (var i = 1; i <= n; i++) urls.push('data/questions-' + name + (n > 1 ? '-' + i : '') + '.json');
+    var n = SHARD_PARTS[name] || 1, urls = [], v = SHARD_V[name] || [];
+    for (var i = 1; i <= n; i++) urls.push('data/questions-' + name + (n > 1 ? '-' + i : '') + '.json' + (v[i - 1] ? '?v=' + v[i - 1] : ''));
     if (SHARDS[name] || SHARD_ERR[name] || urls.some(function (u) { return LOADS[u]; })) return;
     return Promise.all(urls.map(function (u) { return load(u, low); })).then(function (parts) {
       var u = [], qs = [], frags = [];
@@ -255,7 +256,7 @@
 
     load('data/copies.json').then(function (d) {
       DB = d;
-      SHARD_PARTS = d.shardParts || {};
+      SHARD_PARTS = d.shardParts || {}; SHARD_V = d.shardV || {};
       Object.keys(d.toppers).forEach(function (name) {
         var T = d.toppers[name];
         T.marks = T.marks || {}; T.copies = T.copies.map(function (r) {

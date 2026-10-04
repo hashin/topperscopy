@@ -1342,3 +1342,55 @@ fixed). The `app.js` ceiling was raised 24 → 25 KB for this (~0.8 KB after tri
 server that serves old-format shards and switches to new ones when the heal's cache-bypassing request arrives:
 healthy deploy → 0 reloads; self-fixing → exactly 1 reload, correct 680 / 1,155 result; never fixed → exactly
 1 reload (three index loads: page, heal fetch, reload), then "Search is unavailable — reload to retry".
+
+---
+
+## DECISION-27 — Shard parts are byte-stable and versioned; the service worker never re-fetches an unchanged one
+*2026-10-04 · active · cites INTENT-2, DECISION-23, DECISION-25, DECISION-26, `docs/PERF-AUDIT-2026-10-03.md` F3/F6/F7*
+
+**Decision.**
+1. **Stable parts.** `writeShards()` assigns a question to part `hash(anchor) % N`, where `anchor` is its smallest copy URL
+   (`partOf` / `anchor` in `build.js`), replacing "N consecutive chunks of a sorted list". Parts carry no `generated`/
+   `syllabus_version`, rows are sorted by text, ids by URL. Measured: dropping any single OCR row changes **1 of 15** parts
+   (before: every part of that paper, plus the date stamp changed all 15 daily).
+2. **Versioned URLs.** `copies.json` gains `shardV` (sha1[:8] of each part). `app.js` requests `questions-<p>-<n>.json?v=<hash>`.
+   Plain names remain valid files, so a cached DECISION-25/26 `app.js` keeps working through the deploy.
+3. **Cache-first in `sw.js` (tc-v30)** for exactly those `?v=` URLs, deleting the superseded version of the same path.
+   Why this and not "stable bytes + ETag": GitHub Pages' ETag is the deploy mtime-size (`W/"6ac114b8-acbf"`), so it changes
+   on every deploy even for identical bytes; a revalidation after the 10-minute `max-age` re-downloads the whole file, and
+   the old stale-while-revalidate worker did exactly that for all 15 parts on every visit after a deploy.
+4. **Fraunces** (66 → 45 KB): `fontTools.varLib.instancer` limited `wght` to 400–600 and `opsz` to 9–48 (the CSS maximum
+   is 48 px at `font-optical-sizing:auto`), then subset to the glyphs in `unicode-range`. Not preloaded: it is
+   `font-display:optional`, and a preload would put 45 KB ahead of `copies.json` on exactly the slow links where optional
+   skips it anyway. It still downloads at ~1.7 s and caches for the next view.
+5. **`gtag.js`** is injected after `load` + idle instead of an `async` tag in `<head>` (and the two preconnects are gone), so
+   ~90 KB of third-party script no longer races `copies.json`/`app.js`. Events queue in `dataLayer` and replay.
+6. **Budget + tool.** `BUDGET prefetch total` (1,650 KB) puts the corpus-growth number under a ceiling; `tools/perf/sizes.mjs`
+   prints boot / prefetch / lazy bytes (raw, gzip, brotli).
+
+**Cost, measured.** Partitioning by anchor instead of position: shards 1,458 → 1,487 KB gzip (+2 %), because similar
+questions are no longer adjacent. A plain text-hash partition cost +6 % (1,548 KB) and was rejected; anchoring on the copy
+keeps a copy's questions and its id entries together (5,109 id entries vs 5,609 originally).
+
+**Rejected / not done.**
+- *Cloudflare (or any CDN) in front.* The real fix for non-service-worker visitors (brotli: shards 1,498 → 1,085 KB, copies.json
+  188 → 136 KB; `immutable` caching of `?v=` URLs; ETags that survive deploys) but it is a DNS change only Hashin can make.
+  Steps are in `docs/PERF-AUDIT-2026-10-03.md` §6.
+- *Lazy long case-study bodies (F4.1).* Saves ~480 KB gzip but silently stops matching words deep inside a case study; a
+  "deep text" companion file would keep semantics but must change `q.id` or truncate display (ids key localStorage practice
+  history). Needs a product decision, not an optimisation.
+- *Near-duplicate OCR cleanup (F4.4).* Measured: 476 groups / 1,234 rows share a 70-char prefix with a longer sibling, ~496 KB
+  raw text, but most is already cheap under gzip and merging them rewrites question identity. Not worth the data risk.
+- *Moving `dataset/` (46 MB) to a release asset.* `index.html` links `/dataset/questions.csv`; changing where the backup lives
+  is a product decision. It costs deploy time only, not visitors.
+- *Preloading Fraunces; dropping the `<noscript>` SEO block from `index.html`.* See point 4; the block is 12 KB gzip in a file
+  every crawler wants.
+
+**Reverse if.** A returning visitor is ever seen holding a stale shard under a fresh `?v=` (the cache key is the hash, so only a
+server serving different bytes under the same hash could do it — INV-15 guards the build side), or part sizes become so uneven
+that the largest part trips `SHARD_PART_TARGET_KB` while the others are tiny (look at how a few anchor copies dominate before
+raising N).
+
+**Enforced by.** INV-15 (`shardV` matches bytes), INV-16 (no date stamp), INV-9 (GA lazy), BUDGET prefetch total. The service
+worker's cache-first/prune logic was unit-tested against a mock `caches`/`fetch` (hit → no network; new version → fetch + prune
+old; copies.json still revalidates). Single-row stability was measured by deleting rows from `ocr-questions.csv` and diffing `shardV`.

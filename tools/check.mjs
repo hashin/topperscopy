@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
@@ -32,6 +33,10 @@ const BUDGETS = {
   'shard essay': { ceiling: 30, shard: 'essay', why: '' },
   'shard other': { ceiling: 30, shard: 'other', why: '' },
   'shard optional': { ceiling: 55, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
+  // Everything a visitor on a fast connection downloads in the background after boot: all shard parts + syllabus.
+  // Measured 1,458 KB on 2026-10-03 (DECISION-25); this is the number that grows with the corpus (PERF-AUDIT-2026-10-03 F1/F4).
+  // Raise it deliberately, with the corpus growth that forced it, never to silence a red check.
+  'prefetch total': { ceiling: 1650, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
@@ -110,6 +115,23 @@ check('INV-14', 'DECISION-17', 'cid(url) — the browser\'s copy id — is colli
   for (const c of copies) { const id = cid(c.u); if (seen.has(id) && seen.get(id) !== c.u) return { ok: false, detail: `${id} is both ${seen.get(id)} and ${c.u}` }; seen.set(id, c.u); }
   return { ok: true, detail: `${seen.size} distinct ids over ${copies.length} copies` };
 });
+check('INV-15', 'DECISION-27', 'copies.json\'s shardV names every shard part and matches its bytes — the ?v= the service worker caches by', () => {
+  let parts = 0;
+  for (const s of SHARDS) {
+    const files = shardFiles(s), v = (DB.shardV || {})[s];
+    if (!v || v.length !== files.length) return { ok: false, detail: `${s}: ${files.length} files but shardV has ${v ? v.length : 'none'}` };
+    for (let i = 0; i < files.length; i++) {
+      const h = crypto.createHash('sha1').update(fs.readFileSync(path.join(ROOT, files[i]))).digest('hex').slice(0, 8);
+      if (h !== v[i]) return { ok: false, detail: `${files[i]} hashes to ${h}, copies.json says ${v[i]}` };
+      parts++;
+    }
+  }
+  return { ok: true, detail: `${parts} parts, every hash matches` };
+});
+check('INV-16', 'DECISION-27', 'A shard part carries no build date — its bytes change only when one of its questions does', () => {
+  const bad = SHARDS.flatMap(shardFiles).filter(f => /"generated"/.test(read(f).slice(0, 200)));
+  return { ok: !bad.length, detail: bad.length ? `${bad[0]} still has a generated stamp` : 'none do' };
+});
 check('INV-5', 'DECISION-20', 'upsckata.com is credited in README.md (repo-level provenance record only, per DECISION-20)', () => {
   const missing = ['README.md'].filter(f => !exists(f) || !/upsckata/i.test(read(f)));
   return { ok: !missing.length, detail: missing.length ? 'missing from: ' + missing.join(', ') : 'present' };
@@ -148,7 +170,9 @@ check('INV-9', 'DECISION-3', 'No blocking third-party script in <head>', () => {
   const head = read('index.html').split('</head>')[0];
   const ext = [...head.matchAll(/<script[^>]*\ssrc=["']([^"']+)["'][^>]*>/g)];
   const bad = ext.filter(m => /^https?:\/\//.test(m[1]) && !(/googletagmanager/.test(m[1]) && /\basync\b/.test(m[0])));
-  return { ok: !bad.length, detail: bad.length ? 'blocking: ' + bad[0][1] : `${ext.length} external head script(s), all async GA` };
+  // GA is injected after `load` + idle (PERF-AUDIT-2026-10-03 F7), so the head should have no external script at all.
+  const lazyGa = /addEventListener\('load'[\s\S]*googletagmanager\.com\/gtag\/js/.test(head);
+  return { ok: !bad.length && lazyGa, detail: bad.length ? 'blocking: ' + bad[0][1] : !lazyGa ? 'gtag.js is no longer loaded after the load event' : `${ext.length} external head script(s); gtag.js loads after load + idle` };
 });
 check('INV-10', 'DECISION-4', 'Every generated path is gitignored and untracked', () => {
   const ig = read('.gitignore');
@@ -187,6 +211,11 @@ for (const [name, b] of Object.entries(BUDGETS)) {
       const max = sizes.reduce((m, s) => (s[1] > m[1] ? s : m), sizes[0]);
       const label = files.length > 1 ? `${files.length} parts, largest ${max[0]}` : max[0];
       return { ok: max[1] <= b.ceiling, detail: `${label} at ${max[1].toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
+    }
+    if (b.prefetch) {
+      const fl = SHARDS.flatMap(shardFiles).concat(['data/syllabus.json']);
+      const kb = fl.reduce((t, f) => t + gzKb(f), 0);
+      return { ok: kb <= b.ceiling, detail: `${kb.toFixed(1)} KB over ${fl.length} files` + (b.why ? ' — ' + b.why : '') };
     }
     const missing = b.files.filter(f => !exists(f));
     if (missing.length) return { ok: false, detail: 'missing: ' + missing.join(', ') };

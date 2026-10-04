@@ -202,3 +202,30 @@ and an interview read from ~845 KB to ~240 KB (list + one chunk).
 - Throttled run: `Chrome DevTools → Performance → 4× CPU, Slow 4G` on `/`, then type "ethics";
   record LCP, time-to-"680 copies", longest task. (Not possible from this audit's tooling.)
 - Lighthouse mobile on `/`, `/question/<slug>/`, `/topper/<slug>/`.
+
+## 6. Status of every finding (updated 2026-10-04)
+
+| Finding | Status | Where |
+|---|---|---|
+| F1 unconditional prefetch | **done** | DECISION-25 |
+| F2 interview transcripts | **done** | DECISION-25 |
+| F3 cache invalidation | **done for service-worker visitors**; CDN step left for Hashin | DECISION-27 |
+| F4 question text | URL tables cut (DECISION-25); lazy bodies / token index **not done — needs a decision** | DECISION-27 "Rejected" |
+| F5 shard 404s on deep links | **done** | DECISION-25/26 |
+| F6 Fraunces | **done** (66 → 45 KB, not preloaded — see DECISION-27) | DECISION-27 |
+| F7 GA, harness | **done** (GA lazy, `tools/perf/sizes.mjs`, `prefetch total` budget); `dataset/` 46 MB and the `<noscript>` block deliberately left | DECISION-27 |
+
+### Putting Cloudflare in front (the one step that needs your DNS)
+
+GitHub Pages cannot set headers or serve brotli. A free Cloudflare proxy can, with no change to the repo:
+
+1. Add `hashin.me` (or just the `topperscopy` record) to Cloudflare and switch the registrar's nameservers.
+2. Keep `topperscopy` as a **proxied** CNAME to `hashin.github.io`; set SSL/TLS to **Full** (GitHub Pages already presents a certificate).
+3. Rules → Cache Rules: `URI Path contains /data/questions-` and `Query String contains v=` → **Cache eligibility: eligible,
+   Edge TTL 1 year, Browser TTL 1 year**. These URLs are content-addressed (DECISION-27), so this is safe. Leave everything else on defaults.
+4. Speed → Optimization: Brotli **on** (default), HTTP/3 **on**.
+5. Expected effect (measured sizes, `node tools/perf/sizes.mjs`): idle prefetch 1,498 → 1,085 KB, `copies.json` 188 → 136 KB, and a
+   visitor *without* a service worker stops re-downloading unchanged shard parts after every deploy.
+6. Verify: `curl -sI -H 'Accept-Encoding: br' https://topperscopy.hashin.me/data/copies.json` shows `content-encoding: br`.
+   If a deploy ever serves something wrong, "Purge Everything" in the Cloudflare dashboard is the undo.
+

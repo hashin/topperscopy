@@ -43,8 +43,6 @@
 <!-- as="fetch" preloads in CORS mode; without crossorigin the credentials mode never
      matches app.js's fetch() and the browser throws the preloaded copy away. -->
 <link rel="preload" as="fetch" type="application/json" href="data/copies.json" crossorigin>
-<link rel="preconnect" href="https://www.googletagmanager.com">
-<link rel="preconnect" href="https://www.google-analytics.com">
 
 <script>
   (function () {
@@ -62,12 +60,19 @@
 <link rel="manifest" href="manifest.webmanifest">
 
 <!-- Google Analytics 4 (Measurement ID also mirrored as GA_ID in assets/app.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VTL4V9JQBH"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'G-VTL4V9JQBH', { send_page_view: false, anonymize_ip: true });
+  /* gtag.js (~90 KB) is fetched after the page has loaded and the browser is idle, so it never competes with copies.json /
+     app.js for the connection. Events fired before it arrives wait in dataLayer and are replayed by it. */
+  addEventListener('load', function () {
+    (window.requestIdleCallback || function (f) { setTimeout(f, 2000); })(function () {
+      var s = document.createElement('script'); s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VTL4V9JQBH'; document.head.appendChild(s);
+    }, { timeout: 4000 });
+  });
 </script>
 
 </head>

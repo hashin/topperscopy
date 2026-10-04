@@ -943,3 +943,16 @@ optional 46.4 KB against 20 (the 20 was never realistic once the optional-subjec
 **Learned.** Two red checks that everyone has learned to ignore are worse than a loose ceiling: they hid that the
 hash-id change had actually *shrunk* essay (28.5 → 25.1 KB). A budget only works while it is green.
 **Left.** Ceilings are per part; optional will auto-split at 150 KB, so this one should not need touching again until then.
+
+## 2026-10-04 — Remaining audit items (F3, F6, F7; F4 deliberately not)
+**Asked.** "do the remaining audit items".
+**Did.** DECISION-27: byte-stable, hash-partitioned and `?v=`-versioned shard parts + a cache-first service worker (tc-v30);
+Fraunces subset 66 → 45 KB; `gtag.js` loaded after `load` + idle; INV-15/INV-16, a `prefetch total` budget and
+`tools/perf/sizes.mjs`. F4 (question text) was measured and split into what is safe (nothing further) and what changes
+search semantics (needs Hashin's call). The Cloudflare step needs DNS access I don't have.
+**Learned.** (1) Content-stable bytes are *not* enough on GitHub Pages: its ETag is the deploy mtime, so a revalidation
+re-downloads identical files after every deploy. Stability only pays off together with a URL that changes iff the bytes do and a
+cache that does not revalidate it. (2) Partitioning by a text hash looked ideal and cost +6 % gzip, because it scattered similar
+questions; partitioning by the question's anchor *copy* kept most of the locality for +2 %. Measure the compression side of
+any "stable split".
+**Left.** Cloudflare in front (DNS); the F4 decision; `dataset/` weight.
