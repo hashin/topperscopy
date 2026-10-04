@@ -1254,6 +1254,17 @@ rendered correctly with no visible seams — then reverted that specific test ru
 have regressed the numbers already live from the manual pass earlier the same session) before
 committing only the new script, workflow and dependency.
 
+**Amended 2026-10-04** (Hashin: "update the README stats, create a new updated hero image", then "commit, push and run the
+workflow"). The scheduled job had **never succeeded**: it ran `update-hero.mjs` before `node build.js`, and the stats come from
+`data/copies.json`, which is generated and gitignored — ENOENT on 2026-09-21 and 2026-10-01. The workflow now builds first, then
+patches, then runs `npm run check`. Two further fixes from the first green run: (1) the subtext erase colour was `[19,30,32]` on a
+`[17,28,30]` background — a faint lighter rectangle; re-sampled around all four boxes (all flat `17,28,30`) and corrected;
+(2) the job re-patched — i.e. re-encoded — `og.jpg` even when no number had changed, losing a little JPEG quality and committing
+on every run. It now patches the image only when `og:image:alt` changed, because the script always updates the two together
+(`--force` overrides). A JPEG is still re-encoded once per real change; if that ever shows, keep a pristine base image and patch
+from it instead. Side effect, accepted: the bot's commit also carries `index.html`'s refreshed build markers (the deploy rebuilds
+them anyway). Verified with two manual `workflow_dispatch` runs: the first committed the refresh, the second found nothing to do.
+
 ---
 
 ## DECISION-25 — Shards are fetched only when needed, name copies by hash, and interviews are one file each

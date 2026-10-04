@@ -96,7 +96,8 @@ surface), `paper/<gs1…>/` and `optional/<subject>/` hubs, `toppers.html` + `to
 200 per page), and the `<!-- STATIC -->` / `<!-- LD -->` / `<!-- META -->` marker blocks in the tracked
 `index.html`. 8. **Sitemaps, robots.txt, llms.txt.** 9. **`dataset/`** — CC-BY backup (`questions.csv`,
 `copies.csv`, `toppers.csv`, `dataset.json`, `manifest.json`, `README.md`); `copy_id` there is a row number.
-Interviews are not part of `dataset/` or the SEO static pages — see 7b above; a future session can add
+`manifest.json`/`dataset.json` `counts.byProvenance` (schema 3) splits copies by `upsckata`/`ocr`/`submission`/`link`/`mixed`;
+`submission` today means optional-subject copies (`submissions.csv` is empty). Interviews are not part of `dataset/` or the SEO static pages — see 7b above; a future session can add
 either if Hashin asks.
 
 ## The app — `index.html` + `assets/app.js` + `assets/style.css` + `sw.js`, vanilla, no build step
@@ -147,9 +148,12 @@ generated files are gitignored. 4. Push; `deploy.yml` rebuilds and redeploys in 
 GitHub Pages (`build_type: workflow`). **Moderation:** `moderate.yml` — a collaborator adds `approved` to a
 submission issue → `.github/scripts/apply-submission.mjs` writes to the source files → `node build.js`
 validates → commits only the source diff. `ocr.yml` / `ocr-gemini.yml` do the same for OCR output.
-**Hero image:** `update-hero.yml` — runs `update-hero.mjs` roughly every 10 days (DECISION-24) to
-patch the numbers baked into `assets/og.jpg` and quoted in `README.md`/`index.html`'s
-`og:image:alt`, in place, without touching the hand-designed artwork.
+**Hero image:** `update-hero.yml` — on the 1st/11th/21st (and `workflow_dispatch`) runs `node build.js` → `update-hero.mjs` →
+`npm run check` (DECISION-24 + amendment) to patch the numbers baked into `assets/og.jpg` and quoted in `README.md`/`index.html`'s
+`og:image:alt`, in place, without touching the hand-designed artwork. It re-encodes the image only when the numbers changed
+(`--force` overrides). Run locally: `npm install`, `node build.js`, `git checkout index.html`, `node update-hero.mjs`.
+**Perf tools:** `tools/perf/README.md` — byte sizes, throttled-Chrome timings, a link-shaping server, and service-worker tests,
+plus the measurement traps that produced wrong numbers before.
 **Maintainer CLI:** `npm install` once (pdfjs-dist, not used by CI), then
 `node extract.js <url|file.pdf> --topper "Name" --paper GS1 [--append|--json]`.
 
@@ -192,6 +196,11 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 ## Open items
 
+- **Performance (2026-10-04):** everything in `docs/PERF-AUDIT-2026-10-04.md` is done — read its §7 handoff first. Still true:
+  a *second* visit that lands straight on a `?q=` link downloads the long-question `-deep` files (~390 KB) at that moment (only
+  fixable by spending those bytes on every first visit); ~1,180 near-duplicate merges were sampled, not all read — a "Report a
+  problem" about two different questions shown as one means `nearSame()` in `build.js` needs tightening; `app.js` is ~25.9 / 28 KB.
+
 - **Preeti Kumari name collision** (2026-09-15) — ForumIAS's PSIR toppers page lists a "Preeti Kumari,
   AIR 130, UPSC 2022"; the dataset already has a different Preeti Kumari at AIR 301/2024 (Anthropology
   optional). Not added — needs Hashin to confirm whether these are the same person (re-attempted with
@@ -231,7 +240,7 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
       2026-09-14.** It counted only the *boot* payload. Measured end-to-end against a real brotli origin the
       saving on the old five-file search payload was **1,078 KB (2,220 KB → 1,142 KB, −49 %)**; re-measure
       against today's one-shard-per-query model before deciding anything.
-    - **Also wrong:** the choice is not only "move the nameservers". Netlify and Vercel both serve brotli
+    - **Also wrong (but see INTENT-11 — Hashin ruled out Netlify, 2026-10-04):** the choice is not only "move the nameservers". Netlify and Vercel both serve brotli
       on their free tiers and attach a custom domain via **a single CNAME added at Spaceship** — the zone
       stays put, every MX/SPF/apple-domain record is untouched, and the iCloud-mail risk is zero. Check
       their ~100 GB/month free-tier bandwidth caps against real traffic first.

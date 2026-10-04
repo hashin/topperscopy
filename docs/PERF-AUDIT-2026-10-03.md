@@ -210,7 +210,7 @@ and an interview read from ~845 KB to ~240 KB (list + one chunk).
 | F1 unconditional prefetch | **done** | DECISION-25 |
 | F2 interview transcripts | **done** | DECISION-25 |
 | F3 cache invalidation | **done for service-worker visitors**; CDN step left for Hashin | DECISION-27 |
-| F4 question text | URL tables cut (DECISION-25); lazy bodies / token index **not done — needs a decision** | DECISION-27 "Rejected" |
+| F4 question text | URL tables cut (DECISION-25); lazy long bodies + near-duplicate merge **done 2026-10-04** | DECISION-28, `PERF-AUDIT-2026-10-04.md` |
 | F5 shard 404s on deep links | **done** | DECISION-25/26 |
 | F6 Fraunces | **done** (66 → 45 KB, not preloaded — see DECISION-27) | DECISION-27 |
 | F7 GA, harness | **done** (GA lazy, `tools/perf/sizes.mjs`, `prefetch total` budget); `dataset/` 46 MB and the `<noscript>` block deliberately left | DECISION-27 |
@@ -234,6 +234,10 @@ from DECISION-27; the CDN only adds brotli for them on first visit. Verify with
 `curl -sI -H 'Accept-Encoding: br' https://topperscopy.hashin.me/data/copies.json` → `content-encoding: br`.
 
 ## 7. Handoff — for the next agent (written 2026-10-04)
+
+> **Superseded the same day by `docs/PERF-AUDIT-2026-10-04.md` §7.** F4 (option B, plus the near-duplicate merge) was built
+> as DECISION-28 after Hashin accepted a one-time practice-history reset; the practice-id question below was solved by keying
+> the long-question rests with the existing id, so long questions kept their history.
 
 **State.** Everything in §3 is done and deployed except F4 and the CDN. `npm run check` is 28/28. Decisions: DECISION-25
 (prefetch gating, `iv/` transcripts, `copyId` hashes), DECISION-26 (stale-shard self-heal, `tc-v29` migration, dead data links),

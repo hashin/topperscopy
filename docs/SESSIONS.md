@@ -1049,3 +1049,12 @@ wrong: "8,063 copies came from community submissions" counted every copy not fro
 submission 1,051 = optional-subject copies), documented all five provenance values, and swapped `counts.submissions` for
 `counts.byProvenance` in `manifest.json` / `dataset.json` (schema_version 2 → 3; nothing in the repo read the old field).
 Toppers stay 1,708 there vs 1,709 on the site: the dataset leaves out the placeholder "Unknown".
+
+## 2026-10-04/05 — Wrap-up: documentation
+**Asked.** "Document your work in detail, commit and push".
+**Did.** `docs/PERF-AUDIT-2026-10-04.md`: status banner + §7 handoff (commit table, how build/app/worker fit now, how to
+re-measure, open items with triggers); `PERF-AUDIT-2026-10-03.md` §6/§7 point forward (F4 done). `tools/perf/README.md` indexes
+the five scripts and the measurement traps; saved the repeat-visit harness as `tools/perf/repeat.cjs`. DECISION-24 amended (the
+hero workflow had never succeeded; build-first, erase colour, no needless re-encode). CLAUDE.md: hero workflow, perf tools,
+dataset `byProvenance`, a performance open item, and an INTENT-11 note on the old Netlify suggestion.
+**State for the next session.** Everything is on `main` and deployed; `npm run check` 32/32. Start with `PERF-AUDIT-2026-10-04.md` §7.

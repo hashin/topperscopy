@@ -9,6 +9,10 @@ that is growing ~19 KB/day. On a mid-range phone on slow 4G a cold search takes 
 100 KB adds ~0.5 s. Repeat visits are fast (13 KB, ~1 s) thanks to the service worker. Three cheap fixes below take seconds
 off the first visit without touching search semantics; the bytes themselves need the F4 decision from the last audit.
 
+> **Status (end of 2026-10-04): everything below is implemented and live** — DECISION-28 (+ amendment) and DECISION-29.
+> Outcome on a mid-range phone, slow 4G: first search results 5 → 3 s; a browse-only visit downloads ~1.5 MB instead of
+> ~2 MB; a returning student's search is served from cache. Results: §6–§6d. **Next agent: start at §7.**
+
 ## How this was measured
 
 The Claude-in-Chrome extension was not connected (`list_connected_browsers` empty, 3 tries), so the installed **Google
@@ -239,3 +243,55 @@ through the worker (served from the HTTP cache — no bytes). `tools/perf/claim.
 
 Same results on unthrottled, 4G and slow-4G shaped links; no file was sent twice in any run (the re-request waits for the original
 download); regression suite (counts, cards, order, Questions view, Practice) unchanged; no page errors.
+
+## 7. Handoff — for the next agent (written 2026-10-04, end of day)
+
+### What shipped, in order
+
+| Commit | What | Where it is explained |
+|---|---|---|
+| `399f7d9` | Near-duplicate merge (`mergeNearDuplicates`), long questions split into lead + `-deep`, smallest-first download queue (`need()`), render throttle, `Intl.NumberFormat`, `sw.js` tc-v31 `no-cache` precache, gtag +3 s, INV-17/18, budgets | DECISION-28, §6 |
+| `4dd384a` | Live before/after; found the return-then-search regression on 4G | §6b |
+| `8af5f1f` | Returning visitors (page already worker-controlled at start) also prefetch `-deep` on idle | DECISION-28 amendment, §6c |
+| `48c64bc` | Three-way repeat-visit measurements | §6c |
+| `bde3b45` | `controllerchange` → re-request loaded `?v=` files through the worker (pre-claim cache gap) | DECISION-29, §6d |
+| `897a554` | `app.js` budget 26 → 28 KB (Hashin's call) | `tools/check.mjs` comment |
+| `8cb52e2` | Removed the one-time `fromV27` tab migration from `sw.js` (one day after it shipped, at Hashin's request) | DECISION-26 note |
+| `7c3b865`, `a720307`, `cba72b6` | Hero/README stats refresh; `update-hero.yml` now builds first (it had never succeeded); subtext erase colour; no re-encode when numbers are unchanged | DECISION-24 amendment |
+| `12eb4bc` | `dataset/README.md` provenance breakdown replaces the false "8,063 community submissions"; `counts.byProvenance`, schema 3 | `docs/SESSIONS.md` |
+
+### How the pieces fit now (read this before touching shard loading)
+
+- **Build:** `dedupe()` (containment) → `mergeNearDuplicates()` (questions only; merged wordings kept as `aka` for syllabus
+  overrides and `question/` redirect pages) → `writeShards()` partitions by anchor copy (DECISION-27) → `serializeShardPart()`
+  cuts rows > `LONG_Q` (500) at a space near `LEAD_Q` (250); the rest goes to `…-deep.json` keyed by `fnv(paper|full text)`
+  base 36 = the app's `q.id`. `copies.json` names parts and deep files by hash: `shardParts`, `shardV`, `shardDV` (`''` = none).
+- **App:** every shard download goes through `need(names, low, deep)` → `QUEUE` → `pump()`: smallest paper first (`BY_SIZE`),
+  4 concurrent for visitor requests, 2 for the idle prefetch; `-deep` jobs come after all parts. Idle prefetch = parts only,
+  plus `-deep` when `RETURNING`. `ensureDeep()` attaches rests by key (`sh.cut[key]`), so a stale `-deep` leaves "…", never
+  wrong text. Search treats a paper as loading until both parts and `-deep` are in ("still scanning…"). Call `need()` once per
+  render with every missing paper — per-paper calls reverse the queue. Re-render after data arrives goes through
+  `rerenderSoon()` (150 ms); a plain list with no query/topic/open card is not re-rendered at all.
+- **Service worker (`sw.js`, tc-v31):** precache with `cache:'no-cache'`; `?v=` part and `-deep` URLs cache-first + prune old
+  versions; everything else stale-while-revalidate. `app.js` re-requests loaded `?v=` URLs on `controllerchange` so the worker
+  keeps what was fetched before it took control. Bumping `VERSION` wipes the cached parts for every returning visitor —
+  only do it when the old `app.js` cannot read the new data.
+
+### Reproduce / re-measure
+`tools/perf/README.md` lists every script and the measurement traps. Typical loop: `node build.js && npm run check && node
+tools/perf/sizes.mjs`; timings with `tools/perf/browser.cjs` (cold, against production or a local server); anything involving the
+service worker with `tools/perf/shaped-server.cjs` + `repeat.cjs` / `claim.cjs`. Build an older commit for an A/B in a
+`git worktree` (`node build.js` inside it) and serve each on its own port.
+
+### Open, and what would trigger it
+- **A second visit that arrives on a `?q=` link** still downloads `-deep` (~390 KB) at that moment: 4G 1.27 s before DECISION-28,
+  ~1.4 s now (slow 4G is faster than before). Only fixable by prefetching `-deep` on first visits — the bytes the split saves.
+- **Near-duplicate merge thresholds** (`nearSame()` in `build.js`): ~60 of ~1,180 merges were read; two wrong rules were caught
+  (digits, minimum length). A report of two different questions shown as one → look at which rule let the pair through.
+- **Growth:** `BUDGET prefetch total` 1,100 KB (measured ~975 + OCR growth ~12 KB/day in parts) and `search total` 1,500 KB
+  (~1,360 + ~19 KB/day). When either goes red, re-run §2's growth table before raising it; the next structural step is a
+  build-time token index (DECISION-17's option C), not more splitting.
+- **`app.js`** is ~25.9 / 28 KB gzip.
+- **Not measured:** real phones (everything here is desktop Chrome with CPU/network throttling), and Lighthouse.
+- Brotli/CDN stays parked (INTENT-11: GitHub Pages, no Netlify).
+
