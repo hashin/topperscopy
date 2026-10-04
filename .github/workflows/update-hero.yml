@@ -25,10 +25,14 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version: 20 }
       - run: npm install --omit=dev --silent
+      # data/copies.json is generated (gitignored), so it must be built before update-hero.mjs reads the stats from it —
+      # without this step every scheduled run failed with ENOENT (2026-09-21, 2026-10-01).
+      - name: Build the data the stats come from
+        run: node build.js
       - name: Update hero image and README stats
         run: node update-hero.mjs
       - name: Verify the build still passes
-        run: node build.js && npm run check
+        run: npm run check
       - name: Commit and push if anything changed
         run: |
           git config user.name  "github-actions[bot]"

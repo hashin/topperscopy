@@ -1,6 +1,6 @@
 # Topper's Copy by Hashin
 
-A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **28,000+ questions** across **9,100+ answer copies** by **1,700 rank-holders**, and open the exact page of each copy.
+A free, static, community-maintained directory of **UPSC Civil Services Mains topper answer copies** — GS1–4, Essay, and optional subjects. Search **52,000+ questions** across **9,000+ answer copies** by **1,700+ rank-holders**, and open the exact page of each copy.
 
 Live: **https://topperscopy.hashin.me**
 
@@ -103,7 +103,7 @@ gzip budgets live in a table at the top of `tools/check.mjs`.
 
 The whole design is two data shapes and one search engine (`docs/DECISIONS.md` DECISION-17):
 
-- **Boot** fetches `data/copies.json` (~184 KB gzip) — every copy, grouped by topper, with AIR / year
+- **Boot** fetches `data/copies.json` (~188 KB gzip) — every copy, grouped by topper, with AIR / year
   / marks already resolved. Browse and topper-name search work from that alone.
 - **Question text** lives in one shard per paper, split into hash-stable `?v=`-versioned parts once a paper
   is large (DECISION-23/27). Near-duplicate OCR wordings of one question are merged at build time, and the

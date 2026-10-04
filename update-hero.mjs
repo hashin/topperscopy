@@ -67,7 +67,7 @@ const ERASE = {
   copies:    { box: [60, 472, 165, 512], bg: [17, 28, 30] },
   questions: { box: [195, 472, 305, 512], bg: [17, 28, 30] },
   toppers:   { box: [334, 472, 420, 512], bg: [17, 28, 30] },
-  sub:       { box: [60, 390, 545, 442], bg: [19, 30, 32] },
+  sub:       { box: [60, 390, 545, 442], bg: [17, 28, 30] },   // was [19,30,32]: a faint lighter box (re-sampled 2026-10-04)
 };
 // where each rendered snippet's top-left lands once cropped to its own tight bbox
 const PASTE = { copies: [67, 477], questions: [201, 477], toppers: [340, 477], sub: [67, 395] };

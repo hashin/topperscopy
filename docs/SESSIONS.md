@@ -1027,3 +1027,14 @@ measured 25.92 KB. No code change.
 CLAUDE.md note the removal. No `VERSION` bump (the byte change alone updates the worker; a bump would wipe cached shard parts).
 **Note.** Removed one day after it shipped, not after the "few weeks" DECISION-26 planned: a visitor last seen before 2026-10-03
 gets one stale view (old app.js, new data) on return, until a reload.
+
+## 2026-10-04 (night, cont.) — README stats + hero image refresh; the scheduled refresh had never worked
+**Asked.** "update the README stats, create a new updated hero image".
+**Did.** Ran `update-hero.mjs` (DECISION-24's in-place number patch — the full redesign was rejected before): README 28,000+ →
+52,000+ questions, 9,000+ copies, 1,700+ rank-holders; `og:image:alt` exact counts; `og.jpg` 35,798 → 52,306 questions. README
+`copies.json` size ~184 → ~188 KB. Found and fixed two bugs: (1) `update-hero.yml` ran the script before `node build.js`, so
+`data/copies.json` (gitignored) did not exist and both scheduled runs (09-21, 10-01) failed with ENOENT; (2) the subtext erase
+colour constant was `[19,30,32]` on a `[17,28,30]` background, leaving a faint lighter rectangle — measured around all four boxes,
+corrected, and re-run from the committed `og.jpg` (not on top of the patched one, to avoid a second JPEG generation).
+**Learned.** A scheduled job that has never succeeded looks identical to one that has nothing to do — check its run history.
+**Left.** The workflow fix is untested in Actions until its next run (11th) or a manual `workflow_dispatch`.
