@@ -186,3 +186,22 @@ shard or `-deep` file at all (cache-first).
 
 **Not measured:** real devices, and the live site (this is not deployed yet).
 
+
+### 6b. Live, after the deploy (`399f7d9`, same harness, same profiles, production vs production this morning)
+
+| | slow 4G before → after | 4G before → after |
+|---|---:|---:|
+| cold `?q=ethics` — first results | 4.95 → **3.09 s** | 1.27 → **1.00 s** |
+| cold `?q=ethics` — complete | 11.0 → **10.7 s** | 2.40 → 2.51 s (noise) |
+| `/` — bytes after idle | 2,036 → **1,505 KB** | 2,036 → **1,504 KB** |
+| total blocking time, cold `?q=` | 251 → **209 ms** | 274 → 259 ms |
+| **repeat** `?q=ethics` after a browse-only first visit — complete | 1.04 → **0.83 s** | 1.12 → **1.80 s** ✗ |
+
+The ✗ is the trade-off in §6, now measured on the real CDN: a 4G visitor who browsed first and searches on a later visit
+downloads the long-question rests then (412 KB), so that one search completes ~0.7 s later than before (results start at
+once). On slow 4G it is still faster, because the parts it did prefetch are smaller. Longest task went up ~30 ms (fewer,
+larger parts: GS2 is now one 127 KB part). Functional checks on production: identical counts to the local build, 0 `-deep`
+on idle, cut rows fill in, redirect pages resolve, no page errors.
+
+**If the ✗ matters:** prefetch the `-deep` files on idle *on a repeat visit only* (the parts already cached ⇒ this visitor
+has been here before), keeping the saving for first-time browse-only visitors. Not done — a product call.
