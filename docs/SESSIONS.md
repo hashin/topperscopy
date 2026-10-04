@@ -1021,3 +1021,9 @@ the gap is invisible, which is why the earlier live check (8 parts "re-fetched" 
 ## 2026-10-04 (night, cont.) — app.js budget 26 → 28 KB
 **Asked.** "raise the app.js budget to 28 KB". **Did.** Ceiling raised in `tools/check.mjs` (reason in the comment) and `docs/INVARIANTS.md`;
 measured 25.92 KB. No code change.
+
+## 2026-10-04 (night, cont.) — Removed the `fromV27` migration from `sw.js`
+**Asked.** "remove the fromV27 branch from sw.js". **Did.** `activate` now just deletes old caches and claims; DECISION-26 and
+CLAUDE.md note the removal. No `VERSION` bump (the byte change alone updates the worker; a bump would wipe cached shard parts).
+**Note.** Removed one day after it shipped, not after the "few weeks" DECISION-26 planned: a visitor last seen before 2026-10-03
+gets one stale view (old app.js, new data) on return, until a reload.

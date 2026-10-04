@@ -29,17 +29,8 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    // One-time migration (DECISION-26): a tab still running the pre-DECISION-25 app.js reads the new data in the old
-    // format and shows a false "0 copies". tc-v27 is how we know this worker is replacing the one that served it.
-    var fromV27 = keys.indexOf('tc-v27') >= 0;
     return Promise.all(keys.filter(function (k) { return k !== VERSION; }).map(function (k) { return caches.delete(k); }))
-      .then(function () { return self.clients.claim(); })
-      .then(function () {
-        if (!fromV27) return;
-        return self.clients.matchAll({ type: 'window' }).then(function (cs) {
-          return Promise.all(cs.map(function (c) { return c.navigate(c.url).catch(function () {}); }));
-        });
-      });
+      .then(function () { return self.clients.claim(); });
   }));
 });
 

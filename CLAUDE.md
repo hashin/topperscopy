@@ -128,8 +128,8 @@ either if Hashin asks.
   `cache:'no-cache'` — revalidated, so a first visit gets 304s instead of downloading them twice (DECISION-28). On
   `controllerchange` app.js re-requests its loaded `?v=` files through the worker so it keeps the ones fetched before it took
   control — served from the HTTP cache, no bytes (DECISION-29).
-  Bump `VERSION` on shell changes. The `fromV27` branch in `activate` is a one-time migration (DECISION-26) — delete it
-  once `tc-v27` caches are gone.
+  Bump `VERSION` on shell changes (it wipes every cache, shard parts included — skip it when the old shell reads the new
+  data fine). The one-time `fromV27` tab migration (DECISION-26) was removed 2026-10-04.
 - **Interviews tab:** a wholly separate corpus (`data/interview-list.json`), loaded only when that tab
   opens — never prefetched on idle the way copy shards are (DECISION-19). Filters: board, year, optional
   subject, state. Free-text search matches candidate name, board, DAF topics, hobbies and education —

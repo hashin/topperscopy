@@ -1333,7 +1333,9 @@ live deploy showed that any app.js/data mismatch — old app + new data, or new 
 - *Keep serving the old-format files for a few days.* Fixes old-app tabs but doubles the shard payload in the
   repo and deploy for a ≤10-minute / one-pageview exposure; the worker migration covers the same people.
 - *Navigating tabs on every SW update.* Only the one-time `tc-v27` case is a known-broken page; reloading
-  tabs routinely would lose a student's half-typed query. Delete the `fromV27` branch once `tc-v27` caches are gone
+  tabs routinely would lose a student's half-typed query. *(Removed 2026-10-04 at Hashin's request, one day after it shipped
+  rather than after the planned few weeks: a visitor whose last visit predates 2026-10-03 now gets one stale page view —
+  the old app.js against new data — until they reload.)* Delete the `fromV27` branch once `tc-v27` caches are gone
   (a few weeks).
 
 **Reverse if.** The `fromV27` navigate surprises users (it should fire once per visitor, ever), or a heal ever loops
