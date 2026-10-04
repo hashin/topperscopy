@@ -211,6 +211,15 @@ See DECISION-20 for the mechanics and what was rejected.
 
 ---
 
+## INTENT-11 — Stay on GitHub Pages; no Netlify
+*2026-10-04 · Hashin, in chat*
+
+Hashin does not want to move hosting to Netlify ("i don't want to set netlify"). Do not propose it again. The
+brotli / long-cache gap that a CDN would close (PERF-AUDIT-2026-10-03 §6) is therefore handled in-repo only:
+DECISION-27's content-hashed shard URLs + cache-first service worker. The remaining CDN options — Vercel (same shape as
+Netlify) and Cloudflare (whole-domain nameserver move, iCloud-mail risk) — are listed in the audit but are **not**
+wanted unless Hashin raises them himself.
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.

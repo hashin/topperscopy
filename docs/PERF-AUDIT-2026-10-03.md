@@ -215,7 +215,7 @@ and an interview read from ~845 KB to ~240 KB (list + one chunk).
 | F6 Fraunces | **done** (66 → 45 KB, not preloaded — see DECISION-27) | DECISION-27 |
 | F7 GA, harness | **done** (GA lazy, `tools/perf/sizes.mjs`, `prefetch total` budget); `dataset/` 46 MB and the `<noscript>` block deliberately left | DECISION-27 |
 
-### Getting brotli and long caching for visitors without a service worker (needs your DNS decision)
+### Getting brotli and long caching for visitors without a service worker — **parked** (INTENT-11: no Netlify; Hashin hasn't asked for the others)
 
 GitHub Pages cannot set headers or serve brotli. Read `CLAUDE.md` → "Open items" first: **`hashin.me` DNS is at Spaceship, not
 Cloudflare, and the domain runs iCloud custom-domain mail** (`MX mx01/mx02.mail.icloud.com`, the SPF TXT, `apple-domain=` TXT).
