@@ -97,8 +97,10 @@ either if Hashin asks.
 ## The app — `index.html` + `assets/app.js` + `assets/style.css` + `sw.js`, vanilla, no build step
 
 - **Boot:** `load('data/copies.json')` → `COPIES` (flat, each with its topper `T` attached), `COPYBYURL`, facets,
-  first 25 cards. Then every shard is prefetched on idle (delayed on 2G/Save-Data, never skipped) and at once on
-  search focus / first keystroke / card expand / Questions view / Practice. `load(url)` memoises one fetch per URL.
+  first 25 cards. Then, on 4G without Save-Data, every shard is prefetched on idle (low priority, two papers at a time);
+  on Save-Data/2G/3G nothing is prefetched and shards load when the search box is focused or typed in, limited to the
+  papers the filter needs (DECISION-25). Shard requests wait for `copies.json` (it names the parts); a stale or
+  404 shard heals the page once or says "Search is unavailable" (DECISION-26). `load(url)` memoises one fetch per URL.
 - **Search:** `terms = q.toLowerCase().split(/\s+/)`. A topper-name hit comes from `COPIES` (always ready). A
   text hit is `indexOf` per term over every question in every loaded shard the paper filter allows ("Exact
   phrase" = the joined query). If a needed shard is still loading, `#resultmeta` says "Searching inside N
@@ -113,8 +115,10 @@ either if Hashin asks.
   text once the `optional` shard is in), **Submit tab** (lazy `assets/extract.js` + `assets/analyse.js`; pdf.js /
   Tesseract from CDN only on click), URL sync (`?q=` `?paper=` `?syl=`; one `pushState` on empty→non-empty),
   theme toggle (`localStorage tc-theme`), GA4 `G-VTL4V9JQBH` events.
-- **`sw.js`:** one stale-while-revalidate strategy for every same-origin GET; shell + `copies.json` precached.
-  Bump `VERSION` on shell changes.
+- **`sw.js`:** stale-while-revalidate for every same-origin GET, except `data/questions-*.json?v=<hash>` which is
+  cache-first and pruned when its hash changes (DECISION-27); shell + `copies.json` precached with `cache:'reload'`.
+  Bump `VERSION` on shell changes. The `fromV27` branch in `activate` is a one-time migration (DECISION-26) — delete it
+  once `tc-v27` caches are gone.
 - **Interviews tab:** a wholly separate corpus (`data/interview-list.json`), loaded only when that tab
   opens — never prefetched on idle the way copy shards are (DECISION-19). Filters: board, year, optional
   subject, state. Free-text search matches candidate name, board, DAF topics, hobbies and education —

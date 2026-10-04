@@ -1375,7 +1375,7 @@ keeps a copy's questions and its id entries together (5,109 id entries vs 5,609 
 **Rejected / not done.**
 - *Cloudflare (or any CDN) in front.* The real fix for non-service-worker visitors (brotli: shards 1,498 → 1,085 KB, copies.json
   188 → 136 KB; `immutable` caching of `?v=` URLs; ETags that survive deploys) but it is a DNS change only Hashin can make.
-  Steps are in `docs/PERF-AUDIT-2026-10-03.md` §6.
+  Options (and the iCloud-mail risk of moving nameservers, which an earlier draft of this note missed) are in `docs/PERF-AUDIT-2026-10-03.md` §6.
 - *Lazy long case-study bodies (F4.1).* Saves ~480 KB gzip but silently stops matching words deep inside a case study; a
   "deep text" companion file would keep semantics but must change `q.id` or truncate display (ids key localStorage practice
   history). Needs a product decision, not an optimisation.

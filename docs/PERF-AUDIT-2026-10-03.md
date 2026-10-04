@@ -215,17 +215,20 @@ and an interview read from ~845 KB to ~240 KB (list + one chunk).
 | F6 Fraunces | **done** (66 → 45 KB, not preloaded — see DECISION-27) | DECISION-27 |
 | F7 GA, harness | **done** (GA lazy, `tools/perf/sizes.mjs`, `prefetch total` budget); `dataset/` 46 MB and the `<noscript>` block deliberately left | DECISION-27 |
 
-### Putting Cloudflare in front (the one step that needs your DNS)
+### Getting brotli and long caching for visitors without a service worker (needs your DNS decision)
 
-GitHub Pages cannot set headers or serve brotli. A free Cloudflare proxy can, with no change to the repo:
+GitHub Pages cannot set headers or serve brotli. Read `CLAUDE.md` → "Open items" first: **`hashin.me` DNS is at Spaceship, not
+Cloudflare, and the domain runs iCloud custom-domain mail** (`MX mx01/mx02.mail.icloud.com`, the SPF TXT, `apple-domain=` TXT).
+Putting Cloudflare in front means moving the *whole domain's* nameservers; if those mail records don't carry over exactly, mail
+breaks silently. So there are two real options:
 
-1. Add `hashin.me` (or just the `topperscopy` record) to Cloudflare and switch the registrar's nameservers.
-2. Keep `topperscopy` as a **proxied** CNAME to `hashin.github.io`; set SSL/TLS to **Full** (GitHub Pages already presents a certificate).
-3. Rules → Cache Rules: `URI Path contains /data/questions-` and `Query String contains v=` → **Cache eligibility: eligible,
-   Edge TTL 1 year, Browser TTL 1 year**. These URLs are content-addressed (DECISION-27), so this is safe. Leave everything else on defaults.
-4. Speed → Optimization: Brotli **on** (default), HTTP/3 **on**.
-5. Expected effect (measured sizes, `node tools/perf/sizes.mjs`): idle prefetch 1,498 → 1,085 KB, `copies.json` 188 → 136 KB, and a
-   visitor *without* a service worker stops re-downloading unchanged shard parts after every deploy.
-6. Verify: `curl -sI -H 'Accept-Encoding: br' https://topperscopy.hashin.me/data/copies.json` shows `content-encoding: br`.
-   If a deploy ever serves something wrong, "Purge Everything" in the Cloudflare dashboard is the undo.
+| Option | What changes | Risk |
+|---|---|---|
+| **A. Netlify or Vercel free tier** | One CNAME for `topperscopy` at Spaceship; the zone and all mail records stay put. They serve brotli and let you set `Cache-Control: immutable` on `/data/questions-*.json?v=*` via a `_headers` / `vercel.json` file in the repo. | Check their ~100 GB/month free bandwidth cap against real traffic. Deploy workflow changes. |
+| **B. Cloudflare, full setup** | Move nameservers to Cloudflare; proxied CNAME for `topperscopy`; Cache Rule on `/data/questions-` + `v=` (edge + browser TTL 1 year); brotli/HTTP3 on. | Mail. Snapshot every Spaceship record first and diff after import. Only worth it if you want the whole domain on Cloudflare anyway. |
 
+Either way the repo side is already done: `?v=<hash>` URLs are content-addressed (DECISION-27), so a year-long cache on them is safe.
+Expected effect (measured with `node tools/perf/sizes.mjs`): idle prefetch 1,498 → 1,085 KB, `copies.json` 188 → 136 KB, and a visitor
+*without* a service worker stops re-downloading unchanged parts after each deploy. Visitors **with** the service worker already get that
+from DECISION-27; the CDN only adds brotli for them on first visit. Verify with
+`curl -sI -H 'Accept-Encoding: br' https://topperscopy.hashin.me/data/copies.json` → `content-encoding: br`.
