@@ -109,7 +109,8 @@ The whole design is two data shapes and one search engine (`docs/DECISIONS.md` D
   is large (DECISION-23/27). Near-duplicate OCR wordings of one question are merged at build time, and the
   long tail of every question over 500 characters (mostly GS4 case studies) sits in a separate `-deep` file
   (DECISION-28). On a fast connection the parts (~970 KB gzip) download in the background once the page is idle; on Save-Data / 2G / 3G
-  nothing is. A search, an opened card or Practice queues what it needs — two papers at a time, smallest
+  nothing is; for a returning visitor that background download also takes the `-deep` files. A search, an opened card or Practice queues
+  what it needs — four papers at a time, smallest
   first, then the `-deep` files. A text query is `indexOf` over every question in the loaded shards the paper
   filter allows — about a millisecond. Until every needed file is in, the result line says "still scanning…"
   and never shows a zero. `node tools/perf/sizes.mjs` prints the current bytes per stage.

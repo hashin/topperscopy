@@ -105,7 +105,8 @@ either if Hashin asks.
   first 25 cards. Then, on 4G without Save-Data, every shard is prefetched on idle (low priority, two papers at a time);
   on Save-Data/2G/3G nothing is prefetched and shards load when the search box is focused or typed in, limited to the
   papers the filter needs (DECISION-25). Every download goes through `need()`'s queue — smallest first, 4 at a time for a
-  visitor (2 for the idle prefetch), a visitor's request ahead of the idle prefetch, `-deep` files after all parts and never on idle (DECISION-28).
+  visitor (2 for the idle prefetch), a visitor's request ahead of the idle prefetch, `-deep` files after all parts — on idle only for a
+  returning visitor, i.e. a page already controlled by the service worker when it started (DECISION-28 + amendment).
   Shard arrivals within 150 ms share one re-render, and a plain browse list is not re-rendered at all. Shard requests wait for `copies.json` (it names the parts); a stale or
   404 shard heals the page once or says "Search is unavailable" (DECISION-26). `load(url)` memoises one fetch per URL.
 - **Search:** `terms = q.toLowerCase().split(/\s+/)`. A topper-name hit comes from `COPIES` (always ready). A

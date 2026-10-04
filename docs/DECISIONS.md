@@ -1449,3 +1449,14 @@ state is visible long enough to matter. If GitHub Pages ever gets brotli or a CD
 **Enforced by.** INV-15 (shardDV matches bytes), INV-17 (every cut row has its rest, key = app.js `fnv`), INV-18 (no ref lost),
 BUDGET prefetch total (1,100) / search total (1,500) / deep part (160) / app.js (26).
 
+**Amended 2026-10-04 (same day, Hashin: "prefetch the long text on repeat visits").** Measured live after the deploy
+(`PERF-AUDIT-2026-10-04` §6b): a 4G visitor who browsed once and searched on a later visit waited 1.1 → 1.8 s for a complete
+result, because the `-deep` files were fetched only at search time. Now the idle prefetch *also* queues every `-deep` file, at low
+priority after the parts, when the page was already controlled by our service worker as it started (`RETURNING` in `app.js`,
+read before this visit registers anything) — an earlier visit happened. First visits, Save-Data, 2G and 3G are unchanged.
+Rejected: a `localStorage` "seen" flag (another stored key for the same fact, and true even where no cache survives); prefetching
+`-deep` once a first visit has lasted N seconds (a guess at intent, and it spends bytes on exactly the browse-only visitors the split
+exists for). Not fixed by this and not fixable without spending those bytes: a *second* visit that arrives straight on a `?q=` link
+still downloads `-deep` at that moment. `sw.js` is not bumped: the new `app.js` reads the same data, and a bump would wipe every
+returning visitor's cached parts.
+

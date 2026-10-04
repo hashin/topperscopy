@@ -994,3 +994,16 @@ Service-worker upgrade tc-v30 → v31 and `-deep` cache-first verified on one lo
 the built-in pane, it runs service workers on localhost). Queue concurrency measured 2/3/4: visitor jobs run 4 at a time.
 **Left.** Not deployed — commit + push, then re-run `tools/perf/browser.cjs` against production. Sampled merges looked right
 but ~1,180 were not all read; a "Report a problem" on a wrongly merged question is the signal to tighten `nearSame()`.
+
+## 2026-10-04 (evening) — Returning visitors prefetch the long-question text
+**Asked.** "yes, prefetch the long text on repeat visits and test fully".
+**Did.** `app.js`: `RETURNING` = page already controlled by our service worker when the script starts; then the idle prefetch also
+queues every `-deep` file (low priority, after the parts). Amended DECISION-28. No `sw.js` bump (same data; a bump wipes cached parts).
+Tested with a new link-shaping server (all bytes, page *and* service worker, share one throttled link) over 3 builds × 2 links × 2 runs:
+return-then-search on slow 4G 2.45 s (live) → ~1.0–1.4 s (orig 0.87); first visits and Save-Data unchanged; a second visit that
+arrives on a `?q=` link still fetches `-deep` at that moment (4.4 s slow 4G vs orig 5.4). Request priority of the prefetched `-deep`
+files confirmed `Low`; first visits fetch none even after the worker claims the page.
+**Learned.** CDP network throttling does not cover service-worker fetches *and* Playwright's `page.route()` disables the HTTP cache —
+so repeat-visit timing needs throttling at the server, not in the browser. Also visible in every build: parts a first visit fetched
+before the worker took control are not in its cache and are re-downloaded on the second visit (orig 6–12 parts, now 2–4).
+**Left.** That pre-claim re-download is a separate, older gap (DECISION-27) — a candidate follow-up.

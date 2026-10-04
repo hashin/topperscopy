@@ -100,6 +100,9 @@
   var SHARD_V = {};       // shard -> [content hash per part]; the ?v= that lets the service worker keep an unchanged part for good
   var SHARD_DV = {};      // shard -> [content hash of each part's -deep file, '' = none] (DECISION-28)
   var DEEP = {};          // shard -> true once the rest of its long questions is attached (or it has none)
+  // Already controlled by our service worker when the page starts = an earlier visit installed it: a returning visitor.
+  // Read now — on a first visit the new worker claims the page a second or two later.
+  var RETURNING = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
   var SYL = null;         // data/syllabus.json
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
   var LOADS = {};         // url -> promise; one fetch per file, ever
@@ -155,11 +158,11 @@
   }
   function staleShard(name, why) { SHARD_ERR[name] = true; rerender(); healStale(name + ' ' + why); }
   // The rest of a paper's long questions, keyed by question id: a stale -deep file leaves questions cut ("…"), never mixed.
-  function ensureDeep(name) {
+  function ensureDeep(name, low) {
     var urls = [];
     (SHARD_DV[name] || []).forEach(function (v, i) { if (v) urls.push(partUrl(name, i, true)); });
     if (DEEP[name] || SHARD_ERR[name] || !SHARD_P[name] || urls.some(function (u) { return LOADS[u]; })) return;
-    return Promise.all(urls.map(function (u) { return load(u); }).concat([SHARD_P[name]])).then(function (parts) {
+    return Promise.all(urls.map(function (u) { return load(u, low); }).concat([SHARD_P[name]])).then(function (parts) {
       var sh = SHARDS[name]; if (!sh) return;
       parts.pop();
       parts.forEach(function (d) {
@@ -173,14 +176,14 @@
   }
   // One download queue, a few papers at a time, smallest first, so a cold search shows results after the small papers
   // instead of after all 15 parts have shared the line (PERF-AUDIT-2026-10-04 G2). A visitor's request jumps the idle
-  // prefetch (`low`) and adds each paper's -deep file after all the parts; the idle prefetch never fetches -deep.
+  // prefetch (`low`) and adds each paper's -deep file after all the parts; the idle prefetch adds them only when `deep`.
   var BY_SIZE = ['essay', 'other', 'optional', 'gs3', 'gs2', 'gs1', 'gs4'], QUEUE = [], ACTIVE = 0, WAITING = [];
-  function need(names, low) {
+  function need(names, low, deep) {
     names = names || SHARDS_ALL;
-    if (!DB) { WAITING.push([names, low]); return; }
+    if (!DB) { WAITING.push([names, low, deep]); return; }
     var order = BY_SIZE.filter(function (n) { return names.indexOf(n) >= 0; });
     var jobs = order.map(function (n) { return { name: n, low: low }; });
-    if (!low) jobs = jobs.concat(order.map(function (n) { return { name: n, deep: true }; }));
+    if (!low || deep) jobs = jobs.concat(order.map(function (n) { return { name: n, deep: true, low: low }; }));
     var same = function (a, b) { return a.name === b.name && !a.deep === !b.deep; };
     QUEUE = QUEUE.filter(function (q) { return !jobs.some(function (j) { return same(j, q); }); });
     QUEUE = low ? QUEUE.concat(jobs) : jobs.concat(QUEUE);
@@ -188,7 +191,7 @@
   }
   function pump() {
     while (QUEUE.length && ACTIVE < (QUEUE[0].low ? 2 : 4)) {   // 4 for a visitor (−0.4 s to a complete slow-4G search vs 2)
-      var j = QUEUE.shift(), p = j.deep ? ensureDeep(j.name) : ensureShard(j.name, j.low);
+      var j = QUEUE.shift(), p = j.deep ? ensureDeep(j.name, j.low) : ensureShard(j.name, j.low);
       if (p) { ACTIVE++; p.then(done, done); }
     }
     function done() { ACTIVE--; pump(); }
@@ -212,10 +215,12 @@
   // only for visitors who can afford it. On Save-Data, 2G or 3G nothing is prefetched: the shards
   // download when the search box is focused or typed in instead. Elsewhere it is a low-priority
   // trickle through need()'s queue, so it never competes with the visitor's own taps, fonts or GA.
+  // The rest of the long questions (-deep, ~390 KB) only for a returning visitor — likely to search — so a first visit
+  // that only browses stays light (PERF-AUDIT-2026-10-04 §6b).
   function scheduleShards() {
     var c = navigator.connection || {};
     if (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
-    var go = function () { need(SHARDS_ALL, true); ensureSyllabus(); };
+    var go = function () { need(SHARDS_ALL, true, RETURNING); ensureSyllabus(); };
     (window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); })(go, { timeout: 4000 });
   }
 
@@ -310,7 +315,7 @@
         });
         TOPPERS[name] = T;
       });
-      WAITING.splice(0).forEach(function (w) { need(w[0], w[1]); });   // requested before the part counts were known
+      WAITING.splice(0).forEach(function (w) { need(w[0], w[1], w[2]); });   // requested before the part counts were known
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       onData();
       track('data_loaded', { copies: COPIES.length });
