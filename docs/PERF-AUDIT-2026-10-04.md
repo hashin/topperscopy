@@ -205,3 +205,20 @@ on idle, cut rows fill in, redirect pages resolve, no page errors.
 
 **If the ✗ matters:** prefetch the `-deep` files on idle *on a repeat visit only* (the parts already cached ⇒ this visitor
 has been here before), keeping the saving for first-time browse-only visitors. Not done — a product call.
+
+### 6c. Returning visitors prefetch `-deep` (`8af5f1f`, DECISION-28 amendment)
+
+Measured with the service worker live, on a link-shaping local server (page *and* worker share one throttled link — CDP throttling
+skips worker fetches), 4× CPU, 2 runs. orig = `78ace72` (before DECISION-28), live = `399f7d9`, new = `8af5f1f`.
+
+| | 4G: orig / live / new | slow 4G: orig / live / new |
+|---|---|---|
+| return visit, land, search after 4 s — complete | 0.87 / 0.86 / 0.87 s | 0.87 / **2.45** / **1.0–1.4** s |
+| return visit straight from a `?q=` link — complete | 1.27 / 1.35–1.90 / 1.40 s | 5.37 / 4.43 / 4.41 s |
+| first visit, browse only — bytes | 2,122 / 1,319 / 1,319 KB | same |
+| Save-Data first + return — bytes (no question files) | 624 / 344 / 344 KB | same |
+
+On production after the deploy: first visit 11 parts, 0 `-deep`; return visit 11 `-deep` in the background (394 KB, `Low`
+priority), parts from cache; third visit `?q=ethics` 0 question-file downloads, complete in 0.88 s; Save-Data never prefetches;
+the cold-visit suite (counts, card fill-in, request order, Questions view, Practice) unchanged; no page errors.
+The one case not fixed — a second visit arriving on a `?q=` link — can only be, by spending the bytes on every first visit.
