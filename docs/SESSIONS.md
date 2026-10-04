@@ -1038,3 +1038,6 @@ colour constant was `[19,30,32]` on a `[17,28,30]` background, leaving a faint l
 corrected, and re-run from the committed `og.jpg` (not on top of the patched one, to avoid a second JPEG generation).
 **Learned.** A scheduled job that has never succeeded looks identical to one that has nothing to do — check its run history.
 **Left.** The workflow fix is untested in Actions until its next run (11th) or a manual `workflow_dispatch`.
+Ran the fixed workflow by hand: first ever green run. It still committed (`a720307`): index.html's build markers (harmless,
+now current) and an `og.jpg` re-encoded with unchanged numbers. Fixed: `update-hero.mjs` re-patches the image only when the alt
+text — always updated together with it — changed (`--force` to override); restored the single-encode `og.jpg`.

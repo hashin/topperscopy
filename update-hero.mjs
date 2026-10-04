@@ -59,6 +59,7 @@ function patchAlt() {
   );
   fs.writeFileSync(file, s);
   console.log(before === s ? 'index.html og:image:alt: already current' : 'index.html og:image:alt: updated');
+  return before !== s;
 }
 
 /* ---- 3. assets/og.jpg — patch the four number spots in place ---- */
@@ -141,5 +142,7 @@ async function patchOgImage() {
 }
 
 patchReadme();
-patchAlt();
-await patchOgImage();
+// The alt text carries the same exact numbers as the image and is only ever changed together with it, so "alt already
+// current" means the image is too. Re-patching anyway re-encodes the JPEG for nothing — a little quality lost every run.
+if (patchAlt() || process.argv.includes('--force')) await patchOgImage();
+else console.log('assets/og.jpg: numbers already current — not re-encoded (--force to patch anyway)');
