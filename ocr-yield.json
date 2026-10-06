@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-06T09:16:32.268Z",
+  "generated": "2026-10-06T15:17:29.113Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/462d6-246382_2424_janhavi_balasaheb_shekhar_rank_145.pdf",
+      "topper": "JANHAVI BALASAHEB SHEKHAR",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/93733-532747_2423_sushir_shrikrushna_shriram_rank_155.pdf",
+      "topper": "SUSHIR SHRIKRUSHNA SHRIRAM",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://drive.google.com/file/d/1bZ-zCpsS5nR7S6a1TgoWt92sas4uZqHs/view",
       "topper": "Gyanendra Bharti",
