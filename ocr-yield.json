@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T18:06:35.329Z",
+  "generated": "2026-10-07T21:34:59.195Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1520,6 +1520,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1IHYjzFBbTjGX_MnVSlrJSkjVGKGHwir3/view",
+      "topper": "Vikas",
+      "coaching": "UnlockIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 18,
+      "low": true
+    },
+    {
       "url": "https://sleepyclasses.com/wp-content/uploads/2026/04/Aakriti-RTR-HLT-5.pdf",
       "topper": "Aakriti",
       "coaching": "Sleepy Classes",
@@ -1544,7 +1558,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -5772,6 +5786,34 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1JNEcZ_rO2NW-EYf1mz85mP67JerwS3dH/view",
+      "topper": "Nisar Dishant",
+      "coaching": "UnlockIAS",
+      "subject": "GS2",
+      "count": 8,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 18,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/VIKAS_SS_GS_2_AIR_27_ae48d764de.pdf",
+      "topper": "Vikas",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 8,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1jNOtmI134-cJPTA6iUCNZohlK29MkGul/view",
       "topper": "Komal Punia",
       "coaching": "UnlockIAS",
@@ -5782,7 +5824,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": true
     },
     {
@@ -8164,7 +8206,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": true
     },
     {
@@ -9430,8 +9472,8 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
+      "groupMedian": 18,
+      "low": false
     },
     {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/fb243fd857196ecf8b8ba6ee4f9c28b7/7/mt25ptmr057_pm2512.pdf",
@@ -17608,7 +17650,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
@@ -21178,7 +21220,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
@@ -21248,7 +21290,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
@@ -21290,7 +21332,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
@@ -26408,7 +26450,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
@@ -26562,7 +26604,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -26604,7 +26646,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18,
       "low": false
     },
     {
