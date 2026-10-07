@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-06T21:14:47.439Z",
+  "generated": "2026-10-07T06:41:06.900Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/05c36-1014160_2220_gautam-vivekanandan_rank-211.pdf",
+      "topper": "Gautam Vivekanandan",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0af52-1237341_2218_sri-sai-ashrith-shakhamuri_40.pdf",
+      "topper": "Sri Sai Ashrith Shakhamuri",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/4db5c-22835_2219_siddharth-singh-dangi_rank-230.pdf",
       "topper": "Siddharth Singh Dangi",
@@ -1461,6 +1489,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8ea34-654693_1245_narwade-vinayak-karbhari_rank_37.pdf",
+      "topper": "Vinayak Narwade Karbhari",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
       "low": true
     },
     {
