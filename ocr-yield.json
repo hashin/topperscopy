@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08T17:21:42.612Z",
+  "generated": "2026-10-08T21:31:07.458Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1534,6 +1534,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/11C797Ltco5OwSaor1H407DDko_UtmFIJ/view",
+      "topper": "Madhavi R",
+      "coaching": "UnlockIAS",
+      "subject": "GS3",
+      "count": 2,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1uFkKRGBv126fxoUVbkeVqbYnmUiD-gJe/view",
       "topper": "Tejasvi Deshpande",
       "coaching": "UnlockIAS",
@@ -1558,7 +1572,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -2122,6 +2136,20 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHEETAL_CHAUHAN_SS_GS_3_AIR_405_0ab1cb5a62.pdf",
+      "topper": "Sheetal Chauhan",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 3,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
+    {
       "url": "https://sleepyclasses.com/wp-content/uploads/2026/04/Aakriti-Polity-LAW-RTR.pdf",
       "topper": "Aakriti",
       "coaching": "Sleepy Classes",
@@ -2577,6 +2605,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ASEEM_MAHAJAN_SS_MAINS_CAMP_GS_3_AIR_408_a7261b4c89.pdf",
+      "topper": "Aseem Mahajan",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -3512,7 +3554,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -10270,7 +10312,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -10284,7 +10326,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -21822,7 +21864,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -21836,7 +21878,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -26982,7 +27024,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -26996,7 +27038,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -27108,7 +27150,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 12,
       "low": false
     },
     {
