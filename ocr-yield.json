@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-09T17:50:53.346Z",
+  "generated": "2026-10-09T21:17:18.978Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/PRADUMAN_BIJALWAN_SS_GS_4_AIR_501_2025_21e28d726e.pdf",
+      "topper": "Praduman Bijalwan",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AKHILESH_GUNDU_SS_GS_3_TEST_3_AIR_464_2025_3a6d153bd7.pdf",
       "topper": "Akhilesh Gundu",
@@ -2220,6 +2234,20 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SANJEEV_GUPTA_SS_GS_4_AIR_495_4603eeb2b7.pdf",
+      "topper": "Sanjeev Gupta",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 3,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHEETAL_CHAUHAN_SS_GS_3_AIR_405_0ab1cb5a62.pdf",
       "topper": "Sheetal Chauhan",
       "coaching": "Vajiram & Ravi",
@@ -2689,6 +2717,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1OOiZLn1ZkWCq6K2jpudDEb7UCGUr946f/view",
+      "topper": "Gore Akash",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": true
     },
     {
