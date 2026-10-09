@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-08T21:31:07.458Z",
+  "generated": "2026-10-09T06:56:24.475Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/INDHUJA_U_S_SS_GS_3_AIR_459_2025_4b1983d2dc.pdf",
+      "topper": "Indhuja U S",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 1,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
     {
       "url": "https://drive.google.com/file/d/1Jn1z7unY6guCHVgVN3cpyYq1Y2e5s29K/view",
       "topper": "Tejasvi Deshpande",
@@ -1531,6 +1545,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1Z7lsdcgGgwDPJBHBG8pxRbkgzLRx5ygs/view",
+      "topper": "Vandita",
+      "coaching": "UnlockIAS",
+      "subject": "GS3",
+      "count": 2,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
