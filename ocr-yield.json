@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-09T06:56:24.475Z",
+  "generated": "2026-10-09T17:50:53.346Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AKHILESH_GUNDU_SS_GS_3_TEST_3_AIR_464_2025_3a6d153bd7.pdf",
+      "topper": "Akhilesh Gundu",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 1,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 1,
+      "groupMedian": 20,
+      "low": true
+    },
     {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/INDHUJA_U_S_SS_GS_3_AIR_459_2025_4b1983d2dc.pdf",
       "topper": "Indhuja U S",
@@ -14,7 +28,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -28,7 +42,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 22,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -1548,6 +1562,48 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ARPIT_SINGH_SS_GS_4_AIR_386_2025_cad376447e.pdf",
+      "topper": "Arpit Singh",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/PRINCE_SETHI_SS_GS_4_TEST_4_AIR_313_70869e4780.pdf",
+      "topper": "Prince Sethi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1PwU6iqKPGcJWzuw466-U61eWqAv_M0Ww/view",
+      "topper": "Shailputri",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1Z7lsdcgGgwDPJBHBG8pxRbkgzLRx5ygs/view",
       "topper": "Vandita",
       "coaching": "UnlockIAS",
@@ -1558,7 +1614,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -1572,7 +1628,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -1600,7 +1656,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -2174,7 +2230,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -2646,7 +2702,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -3572,6 +3628,34 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAM_KISHANKUMAR_LAKHMANBHAI_SS_GS_4_AIR_474_2025_61c32dbd79.pdf",
+      "topper": "Ram Kishankumar Lakhmanbhai",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1OdWl30SceHR6xSfcZiKb3bRfAFW-i1HL/view",
+      "topper": "Kumud Mishra",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 4,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/YARASI_TUSHARIKA_SS_GS_3_TEST_7_AIR_393_2025_4409eb9529.pdf",
       "topper": "Yarasi Tusharika",
       "coaching": "Vajiram & Ravi",
@@ -3582,7 +3666,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": true
     },
     {
@@ -4254,7 +4338,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -4268,7 +4352,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -4813,6 +4897,20 @@
       "geminiPages": 61,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/NITISH_KUMAR_SINGH_GS_4_AIR_305_2025_4daf38949c.pdf",
+      "topper": "Nitish Kumar Singh",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 7,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8364,6 +8462,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1ukjKEBFjkJVop3n7TVDhctzjq9j7dy5b/view",
+      "topper": "Kumud Mishra",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 9,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 5,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/14GN8UzNrDsv48lVkD0XV9WRLjSxaME5V/view",
       "topper": "Hassan Khan",
       "coaching": "UnlockIAS",
@@ -8934,6 +9046,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DAINAMPELLY_PRAVEEN_SS_GS_3_AIR_793_c5f4cf7ce1.pdf",
+      "topper": "Dainampelly Praveen",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 30,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1k_GElc7JTou830kr06iJbF6kTP20OGOx/view",
+      "topper": "Monika Srivastava",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DAINAMPELLY_PRAVEEN_SS_GS_2_AIR_793_48b89e7060.pdf",
       "topper": "Dainampelly Praveen",
       "coaching": "Vajiram & Ravi",
@@ -8958,7 +9098,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -8972,7 +9112,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -9640,7 +9780,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 10,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -9650,7 +9790,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 10,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -9660,7 +9800,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 10,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -9670,7 +9810,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 10,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -9725,6 +9865,34 @@
       "geminiPages": 46,
       "salvaged": 5,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1C2cRCKGqzKhhaFYskywlFvdO7eRXuU9F/view",
+      "topper": "Vikas",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SURE_SHORT_2024_GS_PAPER_GS_4_2024_ANNU_KOUSHIK_AIR_225_T_8_T_882d4f50aa.pdf",
+      "topper": "Annu Koushik",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10330,6 +10498,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/HIMANSHU_JAIN_GS_4_PROGRAMME_AIR_482_2025_2110035825.pdf",
+      "topper": "Himanshu Jain",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/VIKAS_SS_GS_4_AIR_27_d603e68673.pdf",
+      "topper": "Vikas",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/M_VENKATESH_PRASAD_SAGAR_SS_GS_3_AIR_358_709f827964.pdf",
       "topper": "M Venkatesh Prasad Sagar",
       "coaching": "Vajiram & Ravi",
@@ -10340,7 +10536,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -10354,7 +10550,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -11247,6 +11443,34 @@
       "count": 12,
       "optional": true,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1dSAFrKyhvNbjGcJK0__OYYaMdM6tW5D7/view",
+      "topper": "Shakti Dubey",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_GS_PAPER_GS_4_T_08_SHAKTI_DUBEY_AIR_01_aeb5119b93.pdf",
+      "topper": "Shakti Dubey",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12328,6 +12552,48 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1TQDrvkutlCTWPjJFVIvaEBfN-tIkuX1s/view",
+      "topper": "Ranga Manju",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1CJFfE_F7deszKLcsTss6LyZGcgDLE76V/view",
+      "topper": "Komal Punia",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHIKSHA_PATHAK_SS_GS_4_AIR_453_2025_2c4a971348.pdf",
+      "topper": "Shiksha Pathak",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1rEa2PHWrWp2sF3MKf3JkfCPE3-AITR2D/view",
       "topper": "Akshat Jain",
       "coaching": "UnlockIAS",
@@ -13406,6 +13672,174 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1-44_L-wCws85kxGaYRA6lKRVGoS3D97u/view",
+      "topper": "Aakash Garg",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/KRISHNA_GOYAL_SS_ETHICS_MODULE_GS_4_TEST_2_AIR_300_88c1495c5f.pdf",
+      "topper": "Krishna Goyal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/M_VENKATESH_PRASAD_SAGAR_SS_GS_4_AIR_358_22ab970e82.pdf",
+      "topper": "M Venkatesh Prasad Sagar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAHUL_SHEKHAR_GS_4_AIR_75_2025_d5a4a7ce63.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1STVfHaLzxHCxJ_7snluuedZE36Incyqz/view",
+      "topper": "Nandanaa G P",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1HBv8X2YBsIOCFRroRMwTL1yTgUh6NoOm/view",
+      "topper": "Shakti Dubey",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/PURU_DUBEY_ETHICS_c7f9bc9c89.pdf",
+      "topper": "Puru Dubey",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHIVANSH_TIRPATHI_GS_4_AIR_293_2025_cd51164bef.pdf",
+      "topper": "Shivansh Tripathi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_AJINK_KUMAR_AIR_135_83de512f07.pdf",
+      "topper": "Ajink Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1C-HaGLQc2KTVUTku7-1tyfwHy4-QR8EW/view",
+      "topper": "Ravula Jayasimha Reddy",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_2_akash_kumar_ed15135158.pdf",
+      "topper": "Akash Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1s7jHZFSldvmod2nx0JXxK8DwIOEIUGbt/view",
+      "topper": "Komal Punia",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1iMo9ki4YLYPQYHs--YJ5cWl7_PebBMEM/view",
       "topper": "Kanishak Kataria",
       "coaching": "UnlockIAS",
@@ -14435,6 +14869,146 @@
       "geminiPages": 44,
       "salvaged": 2,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1KMu5xyl5BEYOrq19MDx58IZXSxsK7vLI/view",
+      "topper": "Komal Punia",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_POORVA_AGRAWAL_AIR_65_bad23c6aef.pdf",
+      "topper": "Poorva Agrawal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1NmBiogjYiG0iEuxUHB_90ZPux7AuwHdm/view",
+      "topper": "Ranga Manju",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SURE_SHORT_GS_PAPER_GS_4_AIR_327_T_4_DEV_DUDEJA_pdf_17053fe618.pdf",
+      "topper": "Dev Dudeja",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1we_FDgHPAkX5G8_q9jwC-maiii9_uoDG/view",
+      "topper": "Sandeep Badad",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/KOMAL_PUNIA_GS_PAPER_GS_4_T_4_AIR_6_bf958710b9.pdf",
+      "topper": "Komal Punia",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_NANDANAA_G_P_AIR_47_5039f6c4f2.pdf",
+      "topper": "Nandanaa G P",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1C3KUzB3TrWy_jh7gOGwCPEdqsX2IMgpl/view",
+      "topper": "Raghav Jhunjhunwala",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1dB69EWxNZ96Ibu0b7fHexKbIBlRSd1sU/view",
+      "topper": "Ranga Manju",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1t-UFDojorkwQ7MO-VlQCr_2chhKaky_m/view",
+      "topper": "Sachin B G",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -15765,6 +16339,76 @@
       "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1M7dEDgpRTD2GKDk_zfQKmvIxhv4M6xL8/view",
+      "topper": "Madhavi R",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1iUrqYJsRmsAy3NLTDf-CFfi0XgqxxEeO/view",
+      "topper": "Raghav Jhunjhunwala",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1VQEzHn-hwQU9tv9R_iaXRr3VF19hQ4GD/view",
+      "topper": "Shubham Kumar",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/PRAKHYA_GS_4_TEST_2_AIR_265_2025_5ae598620a.pdf",
+      "topper": "Prakhya",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1fdKtpEf32OErYxpXDKb05K38Ez7yh1gm/view",
+      "topper": "Aakash Om Trivedi",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17920,6 +18564,118 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1sq7sfwrl8PPV-zOutK1gfWg0eervIwa3/view",
+      "topper": "Komal Punia",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/19aknS9roY__rCH9gvDhmeVlaGcDZvdCe/view",
+      "topper": "Gyanendra Bharti",
+      "coaching": "UnlockIAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1vq6SuZn3Tenk1nYvKfXX-m6J5naMUKg1/view",
+      "topper": "Madhavi R",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1j2Rc-_-SXYnOzBtwNDTFKLQ63wC3ecL9/view",
+      "topper": "Poorva Agrawal",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1e_pAS2exTU5X3m6rLgdYLTVO-HMmeaKq/view",
+      "topper": "Gore Akash",
+      "coaching": "UnlockIAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1sWgnMnS3AerEmpCNHkjQ-vBCcttvOIK6/view",
+      "topper": "Jagrati Awasthi",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1lLDKYRwjpoSrIwrz8uTM4mbVqzpQDJ__/view",
+      "topper": "Vandita",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Azeem_Ahmad_SST_GS_3_Test_7_AIR_588_2025_1_4c05fc917b.pdf",
+      "topper": "Azeem Ahmad",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1Hcg5SmW5VjSZXELETYAXWC6tDrR6bLgI/view",
       "topper": "Aakash Garg",
       "coaching": "UnlockIAS",
@@ -17930,7 +18686,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -21588,6 +22344,76 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1KgnA6O7tCZRmaN4WSFEnODP1wsQwJONK/view",
+      "topper": "Puru Dubey",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SANJEEV_GUPTA_SS_MAINS_TEST_SERIES_GS_3_AIR_495_a73c550aad.pdf",
+      "topper": "Sanjeev Gupta",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1qR3qbfj2Bp-2Cxc5DKl9Rj5hW6VaDcY4/view",
+      "topper": "Diksha Rai",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHUBHAM_MEENA_SS_GS_3_AIR_929_2025_e03344b4fa.pdf",
+      "topper": "Shubham Meena",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1Zv61M70A4Z8TjfPYX6izkfVP7q7tILzj/view",
+      "topper": "Madhavi R",
+      "coaching": "UnlockIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1Ki1rOpuwXjOx6ciC9vjZT5Usc3RLemxD/view",
       "topper": "Madhavi R",
       "coaching": "UnlockIAS",
@@ -21612,7 +22438,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -21626,7 +22452,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -21738,7 +22564,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -21892,7 +22718,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -21906,7 +22732,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -27042,6 +27868,174 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SAUMYA_MEHRA_SS_GS_3_AIR_883_2025_eb5f68f0e5.pdf",
+      "topper": "Saumya Mehra",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SRINJAY_KUMAR_SS_GS_3_TEST_7_AIR_616_2025_a2d08edf4a.pdf",
+      "topper": "Srinjay Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Azeem_Ahmad_SST_GS_3_Test_3_AIR_588_2025_25db28f066.pdf",
+      "topper": "Azeem Ahmad",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/KUMAR_SHIVRAJ_SS_GS_3_AIR_496_2025_dd14fd0402.pdf",
+      "topper": "Kumar Shivraj",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AYUSH_SEMWAL_SS_GS_3_AIR_851_2025_bcff3d115b.pdf",
+      "topper": "Ayush Semwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SANJEEV_GUPTA_SS_GS_3_AIR_495_d91b195381.pdf",
+      "topper": "Sanjeev Gupta",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SANJAY_KUMAR_SS_GS_3_AIR_502_4e12ca1f86.pdf",
+      "topper": "Sanjay Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/BASAVARAJ_JAWALI_SS_GS_3_AIR_664_2025_428ea5598f.pdf",
+      "topper": "Basavaraj Jawali",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1bKBLpn3utf2uWqVVwb2tzP7bR9UvWK_6/view",
+      "topper": "Diksha Rai",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 20,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SAUMYA_MEHRA_SS_GS_3_AIR_883_2025_f2cce043f3.pdf",
+      "topper": "Saumya Mehra",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHIWANI_KUMARI_SS_GS_3_AIR_578_426d8c13f6.pdf",
+      "topper": "Shiwani Kumari",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/JEETKUMAR_NAMHA_SS_GS_3_AIR_606_72de74d3d6.pdf",
+      "topper": "Jeetkumar Namha",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SANDEEP_BADAD_GS_3_AIR_82_2025_3ac495eaf2.pdf",
       "topper": "Sandeep Badad",
       "coaching": "Vajiram & Ravi",
@@ -27052,7 +28046,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -27066,7 +28060,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -27094,7 +28088,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -27178,7 +28172,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 20,
       "low": false
     },
     {
@@ -27192,7 +28186,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -27206,7 +28200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -27248,7 +28242,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -27276,7 +28270,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -38004,6 +38998,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1j0ObZQESofwUaHGZoNH5wqd3bqyt1ZsT/view",
+      "topper": "Animesh Jain",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 21,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1bDTS3HQi0HbOsQyUVS7WiqqiN3Dnp7bZ/view",
       "topper": "Kumud Mishra",
       "coaching": "UnlockIAS",
@@ -38014,7 +39022,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -38158,6 +39166,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/BASAVARAJ_JAWALI_SS_GS_3_TEST_3_AIR_664_2025_e6fc0996fb.pdf",
+      "topper": "Basavaraj Jawali",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 22,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1DLYcjnIod0q24ky5eAEfZr6NIZpwP2G3/view",
+      "topper": "Diksha Rai",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 22,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/ca25b-13508_762_h-s-bhavana_rank-55.pdf",
       "topper": "H S Bhavana",
       "coaching": "VisionIAS",
@@ -38253,6 +39289,20 @@
       "geminiPages": 86,
       "salvaged": 0,
       "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1z6HHl0BKTpoyFl9divhC5H8JUp-4ax_p/view",
+      "topper": "Nisar Dishant",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 23,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -38533,6 +39583,20 @@
       "geminiPages": 86,
       "salvaged": 0,
       "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1RXwD92BVZ1DU3jhrnfvEqD1lE2yjPpeF/view",
+      "topper": "Pakshal Secretry",
+      "coaching": "UnlockIAS",
+      "subject": "GS4",
+      "count": 29,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": false
     },
     {
