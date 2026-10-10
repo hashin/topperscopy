@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-10T16:06:12.393Z",
+  "generated": "2026-10-10T20:20:25.343Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1629,6 +1629,48 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4af1c-1045939_1838_aniket_dnyaneshwar_hirde_rank_81.pdf",
+      "topper": "ANIKET DNYANESHWAR HIRDE",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1e9c9-854826_1503_tanuj-pathak_rank_72.pdf",
+      "topper": "TANUJ PATHAK",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/77962-1045939_2419_aniket_dnyaneshwar_hirde_rank_81.pdf",
+      "topper": "ANIKET DNYANESHWAR HIRDE",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
