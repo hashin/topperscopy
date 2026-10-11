@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-11T16:22:08.991Z",
+  "generated": "2026-10-11T20:35:14.399Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/88ed6-974747_1697_aranksha-yadav_rank-201.pdf",
+      "topper": "Aranksha Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ec883-1267413_1824_vibhore-mendiratta_rank-209.pdf",
+      "topper": "Vibhore Mendiratta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 50,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/a4a19-473817_1457_sandeep_kumar_meena_rank_952.pdf",
       "topper": "SANDEEP KUMAR MEENA",
