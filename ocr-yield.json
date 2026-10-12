@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-12T19:17:42.418Z",
+  "generated": "2026-10-12T23:15:26.437Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -9522,6 +9522,48 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/976cf-635609_1249_bhanu-pratap-singh_rank_372.pdf",
+      "topper": "Bhanu Pratap Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/41fab-35567_1420_vipin-kumar-dwivedi_rank_557.pdf",
+      "topper": "Vipin Kumar Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bbe4e-635609_1245_bhanu-pratap-singh_rank_372.pdf",
+      "topper": "Bhanu Pratap Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DAINAMPELLY_PRAVEEN_SS_GS_3_AIR_793_c5f4cf7ce1.pdf",
       "topper": "Dainampelly Praveen",
       "coaching": "Vajiram & Ravi",
@@ -10342,6 +10384,20 @@
       "salvaged": 5,
       "groupMedian": 14,
       "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5d768-35567_1414_vipin-kumar-dwivedi_rank_557.pdf",
+      "topper": "Vipin Kumar Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 11,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ANSHUL_SINGH_SS_GS_4_AIR_873_c47492502f.pdf",
