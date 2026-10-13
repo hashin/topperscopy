@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-12T23:15:26.437Z",
+  "generated": "2026-10-13T08:14:59.365Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f0c1e-109506_1078_sunil-kumar-dhanwanta_rank_683.pdf",
+      "topper": "Sunil Kumar Dhanwanta",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8e6bd-32354_771_shivam-ashutosh_rank_220.pdf",
+      "topper": "Shivam Ashutosh",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/1907c-256964_1460_aakip-khan_rank-268.pdf",
       "topper": "Aakip Khan",
@@ -56,7 +84,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -252,7 +280,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -546,7 +574,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -602,7 +630,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -616,7 +644,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -756,7 +784,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -770,7 +798,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -812,7 +840,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -896,7 +924,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -910,7 +938,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -938,7 +966,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -994,7 +1022,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1078,7 +1106,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1092,7 +1120,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1134,7 +1162,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1190,7 +1218,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1232,7 +1260,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1274,7 +1302,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1358,7 +1386,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1568,7 +1596,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1582,7 +1610,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1596,7 +1624,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1624,7 +1652,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1638,7 +1666,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1652,7 +1680,7 @@
       "model": null,
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2020,7 +2048,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2174,7 +2202,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2188,7 +2216,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2202,7 +2230,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2230,7 +2258,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2258,7 +2286,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2342,7 +2370,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2440,7 +2468,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2776,7 +2804,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2790,7 +2818,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2804,7 +2832,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2832,7 +2860,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2846,7 +2874,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2860,7 +2888,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2874,7 +2902,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2888,7 +2916,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2902,7 +2930,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2916,7 +2944,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2930,7 +2958,7 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3164,7 +3192,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3290,7 +3318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3346,7 +3374,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3402,7 +3430,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3556,7 +3584,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 46,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3598,7 +3626,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3724,7 +3752,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3752,7 +3780,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3766,7 +3794,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3794,7 +3822,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3808,7 +3836,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3822,7 +3850,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3836,7 +3864,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3850,7 +3878,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3864,7 +3892,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4072,7 +4100,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4128,7 +4156,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4296,7 +4324,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 86,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4310,7 +4338,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4324,7 +4352,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4338,7 +4366,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4352,7 +4380,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4366,7 +4394,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4380,7 +4408,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4394,7 +4422,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4408,7 +4436,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4422,7 +4450,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4436,7 +4464,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4450,7 +4478,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4464,7 +4492,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4478,7 +4506,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4492,7 +4520,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4506,7 +4534,7 @@
       "model": null,
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4520,7 +4548,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4534,7 +4562,7 @@
       "model": null,
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4884,7 +4912,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4968,7 +4996,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5010,7 +5038,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 47,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5136,7 +5164,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5164,7 +5192,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5192,7 +5220,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5400,7 +5428,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5484,7 +5512,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5512,7 +5540,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5582,7 +5610,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5596,7 +5624,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5680,7 +5708,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5960,7 +5988,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5974,7 +6002,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5988,7 +6016,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6002,7 +6030,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6030,7 +6058,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6044,7 +6072,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6058,7 +6086,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6072,7 +6100,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6086,7 +6114,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6114,7 +6142,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6128,7 +6156,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6156,7 +6184,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6468,7 +6496,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7182,7 +7210,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7196,7 +7224,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7224,7 +7252,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7406,7 +7434,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 5,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7448,7 +7476,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8260,7 +8288,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 6,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8302,7 +8330,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8344,7 +8372,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8372,7 +8400,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8414,7 +8442,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8484,7 +8512,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8512,7 +8540,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8526,7 +8554,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8582,7 +8610,7 @@
       "model": null,
       "geminiPages": 57,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8624,7 +8652,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8652,7 +8680,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8694,7 +8722,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -9186,7 +9214,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9200,7 +9228,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9228,7 +9256,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9242,7 +9270,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9312,7 +9340,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9354,7 +9382,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9382,7 +9410,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9424,7 +9452,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9438,7 +9466,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9466,7 +9494,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9532,7 +9560,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9546,7 +9574,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9560,7 +9588,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9770,7 +9798,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9798,7 +9826,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9910,7 +9938,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9924,7 +9952,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9938,7 +9966,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9952,7 +9980,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9980,7 +10008,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9994,7 +10022,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10022,7 +10050,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10064,7 +10092,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10078,7 +10106,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10120,7 +10148,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10148,7 +10176,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10176,7 +10204,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10190,7 +10218,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10204,7 +10232,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10232,7 +10260,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10260,7 +10288,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10274,7 +10302,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10288,7 +10316,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10494,7 +10522,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10550,7 +10578,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10564,7 +10592,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10578,7 +10606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10606,7 +10634,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10620,7 +10648,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10634,7 +10662,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10648,7 +10676,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10662,7 +10690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10690,7 +10718,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10704,7 +10732,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10718,7 +10746,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10732,7 +10760,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10746,7 +10774,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10760,7 +10788,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10788,7 +10816,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10802,7 +10830,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10830,7 +10858,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10858,7 +10886,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10872,7 +10900,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10886,7 +10914,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10900,7 +10928,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10914,7 +10942,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10928,7 +10956,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10942,7 +10970,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10956,7 +10984,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10970,7 +10998,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 3,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10984,7 +11012,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10998,7 +11026,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11068,7 +11096,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11096,7 +11124,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11278,7 +11306,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11292,7 +11320,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11334,7 +11362,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11348,7 +11376,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11362,7 +11390,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11376,7 +11404,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11390,7 +11418,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11404,7 +11432,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11418,7 +11446,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11432,7 +11460,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11446,7 +11474,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11474,7 +11502,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11488,7 +11516,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11502,7 +11530,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11516,7 +11544,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11544,7 +11572,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11572,7 +11600,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11586,7 +11614,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11600,7 +11628,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11628,7 +11656,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11642,7 +11670,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11656,7 +11684,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11684,7 +11712,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11712,7 +11740,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11726,7 +11754,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11754,7 +11782,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11768,7 +11796,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11782,7 +11810,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11796,7 +11824,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11810,7 +11838,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11824,7 +11852,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11838,7 +11866,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11852,7 +11880,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11866,7 +11894,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11880,7 +11908,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11894,7 +11922,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11908,7 +11936,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11922,7 +11950,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11936,7 +11964,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11964,7 +11992,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11978,7 +12006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11992,7 +12020,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12006,7 +12034,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12020,7 +12048,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12062,6 +12090,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3a42d-17265_1149_awahare_manisha_rank_33.pdf",
+      "topper": "Manisha Awhale",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/b60e7-106474_1695_rajat-ravindra-ubhaykar_rank_49.pdf",
       "topper": "Rajat Ravindra Ubhaykar",
       "coaching": "VisionIAS",
@@ -12072,7 +12114,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12086,7 +12128,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12226,7 +12268,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12240,7 +12282,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12268,7 +12310,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12282,7 +12324,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12296,7 +12338,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12310,7 +12352,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12324,7 +12366,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12352,7 +12394,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12366,7 +12408,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12394,7 +12436,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12422,7 +12464,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12436,7 +12478,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12464,7 +12506,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12478,7 +12520,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12492,7 +12534,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12506,7 +12548,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12534,7 +12576,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12548,7 +12590,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12562,7 +12604,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12576,7 +12618,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12590,7 +12632,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12604,7 +12646,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12618,7 +12660,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12632,7 +12674,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12646,7 +12688,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12702,7 +12744,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12716,7 +12758,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12730,7 +12772,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12744,7 +12786,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12758,7 +12800,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12772,7 +12814,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12786,7 +12828,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12800,7 +12842,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12814,7 +12856,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12842,7 +12884,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12856,7 +12898,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12870,7 +12912,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12884,7 +12926,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12898,7 +12940,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12912,7 +12954,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12940,7 +12982,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12968,7 +13010,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12982,7 +13024,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12996,7 +13038,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13010,7 +13052,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13024,7 +13066,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13038,7 +13080,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13052,7 +13094,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13066,7 +13108,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13080,7 +13122,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13094,7 +13136,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13108,7 +13150,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13136,7 +13178,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13150,7 +13192,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13164,7 +13206,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13224,6 +13266,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2723a-104395_1056_pawan-kumar-goel_rank_131.pdf",
+      "topper": "Pawan Kumar Goel",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/2966f-850984_1488_shreya-shree_rank_71.pdf",
       "topper": "Shreya Shree",
       "coaching": "VisionIAS",
@@ -13248,7 +13304,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13262,7 +13318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13276,7 +13332,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13290,7 +13346,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13304,7 +13360,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13318,7 +13374,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13332,7 +13388,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13346,7 +13402,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13374,7 +13430,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13444,7 +13500,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13458,7 +13514,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 44,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13500,7 +13556,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13528,7 +13584,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13542,7 +13598,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13556,7 +13612,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13570,7 +13626,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13584,7 +13640,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13598,7 +13654,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13612,7 +13668,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13626,7 +13682,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13654,7 +13710,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13668,7 +13724,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13682,7 +13738,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13696,7 +13752,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13724,7 +13780,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13738,7 +13794,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13766,7 +13822,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13822,7 +13878,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13850,7 +13906,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13864,7 +13920,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13878,7 +13934,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13892,7 +13948,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13920,7 +13976,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13934,7 +13990,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13948,7 +14004,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13962,7 +14018,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13976,7 +14032,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13990,7 +14046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14060,7 +14116,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14074,7 +14130,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14088,7 +14144,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14102,7 +14158,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14116,7 +14172,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14130,7 +14186,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14144,7 +14200,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14172,7 +14228,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14186,7 +14242,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14200,7 +14256,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14214,7 +14270,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14228,7 +14284,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14242,7 +14298,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14256,7 +14312,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14270,7 +14326,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14284,7 +14340,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14298,7 +14354,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14312,7 +14368,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14326,7 +14382,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14354,7 +14410,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14368,7 +14424,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14382,7 +14438,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14396,7 +14452,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14410,7 +14466,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14498,6 +14554,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f2297-30591_1235_shruti-srivastava_rank_82.pdf",
+      "topper": "Shruti Srivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/a5f20-166005_2034_anjali-shrotriya_rank_44.pdf",
       "topper": "Anjali Shrotriya",
       "coaching": "VisionIAS",
@@ -14508,7 +14578,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14522,7 +14592,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14536,7 +14606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14564,7 +14634,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14578,7 +14648,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14592,7 +14662,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14928,7 +14998,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14970,7 +15040,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14984,7 +15054,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15026,7 +15096,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15040,7 +15110,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15054,7 +15124,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15082,7 +15152,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15096,7 +15166,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15110,7 +15180,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15124,7 +15194,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15138,7 +15208,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15152,7 +15222,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15236,7 +15306,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15250,7 +15320,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15264,7 +15334,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15306,7 +15376,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15320,7 +15390,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15334,7 +15404,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15376,7 +15446,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15390,7 +15460,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15404,7 +15474,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15446,7 +15516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15460,7 +15530,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15474,7 +15544,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15488,7 +15558,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15502,7 +15572,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15558,7 +15628,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15586,7 +15656,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15600,7 +15670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15614,7 +15684,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15642,7 +15712,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15656,7 +15726,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15670,7 +15740,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15684,7 +15754,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15698,7 +15768,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15712,7 +15782,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15726,7 +15796,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15740,7 +15810,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15754,7 +15824,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15768,7 +15838,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15782,7 +15852,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15936,6 +16006,90 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/41efc-44930_1225_nidhi-thakur_rank_180.pdf",
+      "topper": "Nidhi Thakur",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9d256-11704_748_karnati_varun_reddy_rank_7.pdf",
+      "topper": "Karnati Varun Reddy",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 72,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 72,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9b2ed-109506_1073_sunil-kumar-dhanwanta_rank_683.pdf",
+      "topper": "Sunil Kumar Dhanwanta",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3f349-35133_1392_sohan-lal_rank_201.pdf",
+      "topper": "Sohan Lal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0d592-214713_1433_darpan-ahluwalia_rank_80.pdf",
+      "topper": "Darpan Ahluwalia",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6f42b-23528_1066_trupti_ankush_dhodmise_rank_16.pdf",
+      "topper": "Trupti Ankush Dhodmise",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/cdba5-256964_1403_aakip-khan_rank-268.pdf",
       "topper": "Aakip Khan",
       "coaching": "VisionIAS",
@@ -15988,7 +16142,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16016,7 +16170,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16030,7 +16184,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16044,7 +16198,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16058,7 +16212,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16072,7 +16226,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16086,7 +16240,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16100,7 +16254,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16156,7 +16310,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16380,7 +16534,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16436,7 +16590,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16464,7 +16618,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16478,7 +16632,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16562,7 +16716,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16576,7 +16730,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16660,7 +16814,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16730,7 +16884,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16786,7 +16940,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16814,7 +16968,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16828,7 +16982,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16842,7 +16996,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16856,7 +17010,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16870,7 +17024,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16926,7 +17080,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16982,7 +17136,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16996,7 +17150,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17010,7 +17164,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17038,7 +17192,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17052,7 +17206,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17066,7 +17220,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17080,7 +17234,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17094,7 +17248,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17108,7 +17262,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17122,7 +17276,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17136,7 +17290,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17164,7 +17318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17178,7 +17332,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17192,7 +17346,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17220,7 +17374,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17234,7 +17388,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17248,7 +17402,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17262,7 +17416,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17276,7 +17430,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17290,7 +17444,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17304,7 +17458,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17318,7 +17472,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17346,7 +17500,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17374,7 +17528,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17416,7 +17570,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17444,7 +17598,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17458,7 +17612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17472,7 +17626,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17500,7 +17654,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17528,7 +17682,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17542,7 +17696,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17556,7 +17710,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17570,7 +17724,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17584,7 +17738,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17672,6 +17826,76 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9eb18-371410_1145_pari-bishnoi_rank_30.pdf",
+      "topper": "Pari Bishnoi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 47,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 47,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ac7e2-295520_1227_vishakha-yadav_rank_6.pdf",
+      "topper": "Vishakha Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/13b22-125597_1404_gunjan-singh_rank_16.pdf",
+      "topper": "Gunjan Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9e880-168117_1439_ravi-kumar-sihag_rank_317.pdf",
+      "topper": "Ravi Kumar Sihag",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d3887-41040_873_subhash-chandra-meena_rank_737.pdf",
+      "topper": "Subhash Chandra Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/bd0bd-850984_1489_shreya-shree_rank_71.pdf",
       "topper": "Shreya Shree",
       "coaching": "VisionIAS",
@@ -17710,7 +17934,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 41,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17724,7 +17948,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17766,7 +17990,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17780,7 +18004,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17794,7 +18018,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17808,7 +18032,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17822,7 +18046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17878,7 +18102,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17892,7 +18116,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18130,7 +18354,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18158,7 +18382,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18200,7 +18424,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18242,7 +18466,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18256,7 +18480,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18270,7 +18494,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18312,7 +18536,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18326,7 +18550,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18340,7 +18564,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18382,7 +18606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18396,7 +18620,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18410,7 +18634,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18466,7 +18690,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18550,7 +18774,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18634,7 +18858,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18760,7 +18984,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18844,7 +19068,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18886,7 +19110,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18900,7 +19124,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18914,7 +19138,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18956,7 +19180,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18970,7 +19194,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19012,7 +19236,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19040,7 +19264,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19054,7 +19278,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19068,7 +19292,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19138,7 +19362,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19166,7 +19390,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19180,7 +19404,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19194,7 +19418,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19236,7 +19460,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19250,7 +19474,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19278,7 +19502,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19292,7 +19516,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19306,7 +19530,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19320,7 +19544,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19334,7 +19558,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19376,7 +19600,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19390,7 +19614,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19404,7 +19628,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19418,7 +19642,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19446,7 +19670,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19474,7 +19698,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19488,7 +19712,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19516,7 +19740,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19530,7 +19754,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19558,7 +19782,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19586,7 +19810,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19614,7 +19838,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19656,7 +19880,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19684,7 +19908,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19712,7 +19936,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19740,7 +19964,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19754,7 +19978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19768,7 +19992,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19782,7 +20006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19796,7 +20020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19810,7 +20034,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19838,7 +20062,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19852,7 +20076,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19866,7 +20090,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19908,7 +20132,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19922,7 +20146,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19936,7 +20160,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19964,7 +20188,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20174,6 +20398,76 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/681ae-681197_1448_kumar-biswaranjan_rank_182.pdf",
+      "topper": "Kumar Biswaranjan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8aa6c-97237_1243_nongjai-mohd-ali-akram-shah_rank_188.pdf",
+      "topper": "Nongjai MOHD Ali Akram Shah",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/092ea-14092_757_saurabh_suman_yadav_rank_55.pdf",
+      "topper": "Saurabh Suman Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7e7c0-11704_747_karnati_varun_reddy_rank_7.pdf",
+      "topper": "Karnati Varun Reddy",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b1868-317130_1525_ravindra-kumar-meena_rank_628.pdf",
+      "topper": "Ravindra Kumar Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/a24bb-674865_1815_jatin-parashar_rank-605.pdf",
       "topper": "Jatin Parashar",
       "coaching": "VisionIAS",
@@ -20226,7 +20520,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20352,7 +20646,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20464,7 +20758,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20562,7 +20856,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20604,7 +20898,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21024,7 +21318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21052,7 +21346,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21066,7 +21360,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21108,7 +21402,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21122,7 +21416,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21164,7 +21458,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21290,7 +21584,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21332,7 +21626,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21346,7 +21640,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21402,7 +21696,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21416,7 +21710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21430,7 +21724,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21458,7 +21752,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21486,7 +21780,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21528,7 +21822,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21626,7 +21920,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21808,7 +22102,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22102,7 +22396,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22284,7 +22578,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22354,7 +22648,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22396,7 +22690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22410,7 +22704,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22424,7 +22718,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22452,7 +22746,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22522,7 +22816,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22536,7 +22830,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22550,7 +22844,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22620,7 +22914,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22718,7 +23012,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22746,7 +23040,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22760,7 +23054,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22788,7 +23082,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22802,7 +23096,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22844,7 +23138,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22886,7 +23180,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22900,7 +23194,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22914,7 +23208,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22942,7 +23236,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22984,7 +23278,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22998,7 +23292,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23222,7 +23516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23292,7 +23586,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23320,7 +23614,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23334,7 +23628,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23348,7 +23642,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23362,7 +23656,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23376,7 +23670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23404,7 +23698,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23488,7 +23782,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23516,7 +23810,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23544,7 +23838,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23558,7 +23852,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23572,7 +23866,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23586,7 +23880,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23600,7 +23894,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23614,7 +23908,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23656,7 +23950,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23684,7 +23978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23782,7 +24076,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23796,7 +24090,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23810,7 +24104,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23824,7 +24118,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23838,7 +24132,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23880,7 +24174,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23936,7 +24230,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23950,7 +24244,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23964,7 +24258,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23978,7 +24272,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24444,6 +24738,300 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/46988-168117_1248_ravi-kumar-sihag_rank_317.pdf",
+      "topper": "Ravi Kumar Sihag",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2b9c9-97237_1245_nongjai-mohd-ali-akram-shah_rank_188.pdf",
+      "topper": "Nongjai MOHD Ali Akram Shah",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a621e-101322_1054_akshat_jain_rank_2.pdf",
+      "topper": "Akshat Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/63264-30591_1228_shruti-srivastava_rank_82.pdf",
+      "topper": "Shruti Srivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c324f-25538_843_chandrima-attri_rank_72.pdf",
+      "topper": "Chandrima Attri",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2e773-101322_1052_akshat_jain_rank_2.pdf",
+      "topper": "Akshat Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d5a62-15577_755_arushi-mishra_rank_229.pdf",
+      "topper": "Arushi Mishra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/515be-681197_1450_kumar-biswaranjan_rank_182.pdf",
+      "topper": "Kumar Biswaranjan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/7c7b5-30591_1236_shruti-srivastava_rank_82.pdf",
+      "topper": "Shruti Srivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 45,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 45,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c2f17-135596_1055_neha-bhosle_rank_15.pdf",
+      "topper": "Neha Bhosle",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5eed6-317130_1524_ravindra-kumar-meena_rank_628.pdf",
+      "topper": "Ravindra Kumar Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b7a3c-429074_1241_hardik_rank_96.pdf",
+      "topper": "Hardik",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e7ced-149136_1232_aprajit_rank_174.pdf",
+      "topper": "Aprajit",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/89511-168117_1440_ravi-kumar-sihag_rank_317.pdf",
+      "topper": "Ravi Kumar Sihag",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4a9e8-11916_1440_abhinav-choudhary_rank_238.pdf",
+      "topper": "Abhinav Choudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e9408-214713_1431_darpan-ahluwalia_rank_80.pdf",
+      "topper": "Darpan Ahluwalia",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bff4d-295520_1324_vishakha-yadav_rank_6.pdf",
+      "topper": "Vishakha Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c3ee8-60279_1237_sanjita-mohapatra_rank_10.pdf",
+      "topper": "Sanjita Mahapatra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/431eb-125597_1400_gunjan-singh_rank_16.pdf",
+      "topper": "Gunjan Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/26cf7-9596_1432_singa-reddy-rushikesh-reddy_rank_95.pdf",
+      "topper": "Singa Reddy Rushikesh Reddy",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/65dd6-317130_1417_ravindra-kumar-meena_rank_628.pdf",
+      "topper": "Ravindra Kumar Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/90e22-1018150_1984_anand-malhotra_rank_67.pdf",
       "topper": "Anand Malhotra",
       "coaching": "VisionIAS",
@@ -24552,7 +25140,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24734,7 +25322,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25028,7 +25616,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25070,7 +25658,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25084,7 +25672,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25098,7 +25686,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25224,7 +25812,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26036,7 +26624,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26078,7 +26666,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26106,7 +26694,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26162,7 +26750,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26232,7 +26820,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26484,7 +27072,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26512,7 +27100,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26554,7 +27142,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26708,7 +27296,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27128,7 +27716,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27240,7 +27828,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27310,7 +27898,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27352,7 +27940,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27660,7 +28248,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27772,7 +28360,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27814,7 +28402,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27898,7 +28486,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28052,7 +28640,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28066,7 +28654,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28094,7 +28682,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28276,7 +28864,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28304,7 +28892,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28416,7 +29004,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28542,7 +29130,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28598,7 +29186,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28696,7 +29284,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28724,7 +29312,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28794,7 +29382,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28962,7 +29550,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29172,7 +29760,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29312,7 +29900,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29340,7 +29928,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29354,7 +29942,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29382,7 +29970,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29438,7 +30026,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29452,7 +30040,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29522,7 +30110,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29606,7 +30194,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29662,7 +30250,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29676,7 +30264,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29690,7 +30278,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29732,7 +30320,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29788,7 +30376,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29830,7 +30418,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29872,7 +30460,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29900,7 +30488,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29914,7 +30502,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29942,7 +30530,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29956,7 +30544,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30054,7 +30642,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30068,7 +30656,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30082,7 +30670,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30124,7 +30712,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30152,7 +30740,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30808,6 +31396,734 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a0b68-14177_749_dipankar-choudhary_rank_42.pdf",
+      "topper": "Dipankar Choudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ba7e8-97237_874_nongjai-mohd-ali-akram-shah_rank_188.pdf",
+      "topper": "Nongjai MOHD Ali Akram Shah",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/02932-29481_844_vishakha-dabral_rank_134.pdf",
+      "topper": "Vishakha Dabral",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/19ecf-39215_1437_sonakshi-saxena_rank_189.pdf",
+      "topper": "Sonakshi Saxena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/36cf5-104282_1325_archit-nigam_rank_270.pdf",
+      "topper": "Archit Nigam",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2bb91-200072_1049_makarandu-manda_rank_110.pdf",
+      "topper": "Makarandu Manda",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6a5b6-23384_846_varun-singhal_rank_262.pdf",
+      "topper": "Varun Singhal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c87af-24773_848_rahul_jain_rank_21.pdf",
+      "topper": "Rahul Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d48bb-9596_871_singa-reddy-rushikesh-reddy_rank_95.pdf",
+      "topper": "Singa Reddy Rushikesh Reddy",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f0eec-198493_870_abhishek-saraf_rank_8.pdf",
+      "topper": "Abhishek Saraf",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 65,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 65,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d8028-14092_758_saurabh_suman_yadav_rank_55.pdf",
+      "topper": "Saurabh Suman Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/55764-799516_1418_bharti-meena_rank_669.pdf",
+      "topper": "Bharti Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bf3f8-24844_854_rishi-anand_rank_145.pdf",
+      "topper": "Rishi Anand",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8f8e5-37670_937_ravi-jain_rank_9.pdf",
+      "topper": "Ravi Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0b5c3-39860_851_padmini-narayan_152.pdf",
+      "topper": "Padmini Narayan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d12b6-13309_876_rangashree_t-k_rank_50.pdf",
+      "topper": "Rangashree T.K",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0ac52-325713_1150_patil-yogesh-ashokrao_rank_63.pdf",
+      "topper": "Patil Yogesh Ashokrao",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ae19b-104395_1060_pawan-kumar-goel_rank_131.pdf",
+      "topper": "Pawan Kumar Goel",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/347f4-318523_1152_punit-dwivedi_rank_123.pdf",
+      "topper": "Punit Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/103781_1070_Gondane_Vaibhav_Sunil_Rank_25.pdf",
+      "topper": "Vaibhav Gondane",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/37ea1-11916_875_abhinav-choudhary_rank_238.pdf",
+      "topper": "Abhinav Choudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c722e-24773_852_rahul_jain_rank_21.pdf",
+      "topper": "Rahul Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/01843-109506_1072_sunil-kumar-dhanwanta_rank_683.pdf",
+      "topper": "Sunil Kumar Dhanwanta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/64b10-30591_1329_shruti-srivastava_rank_82.pdf",
+      "topper": "Shruti Srivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1fecc-317130_1523_ravindra-kumar-meena_rank_628.pdf",
+      "topper": "Ravindra Kumar Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a2d22-18816_863_piyush-sinha_rank_175.pdf",
+      "topper": "Piyush Sinha",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a341c-74631_1058_deepak_kumar_dubey_rank_46.pdf",
+      "topper": "Deepak Kumar Dubey",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/cc39f-154939_1059_nikhil-agarwal_rank_181.pdf",
+      "topper": "Nikhil Agarwal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6d5c3-23528_762_trupti_ankush_dhodmise_rank_16.pdf",
+      "topper": "Trupti Ankush Dhodmise",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/eb079-13709_1024_yashni-nagarjan_rank_57.pdf",
+      "topper": "Yashni Nagarjan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f3b28-30591_1229_shruti-srivastava_rank_82.pdf",
+      "topper": "Shruti Srivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/17265_745_Awahare_Manisha_Rank_33.pdf",
+      "topper": "Manisha Awhale",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/759ae-9977_743_dileep_mishra_rank_56.pdf",
+      "topper": "Dileep Mishra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/61c49-11704_824_karnati_varun_reddy_rank_7.pdf",
+      "topper": "Karnati Varun Reddy",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/0eca6-55401_1449_riddhima-shrivastava_rank_74.pdf",
+      "topper": "Riddhima Shrivastava",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e2a56-16838_763_bishakha-jain_rank_101.pdf",
+      "topper": "Bishakha Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9283e-109506_1070_sunil-kumar-dhanwanta_rank_683.pdf",
+      "topper": "Sunil Kumar Dhanwanta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a78b6-292569_1246_shashank-shekhar-singh_rank_208.pdf",
+      "topper": "Shashank Shekhar Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5a780-4680_874_reecha-ratnam_rank_274.pdf",
+      "topper": "Reecha Ratnam",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 42,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/039cc-23528_1068_trupti_ankush_dhodmise_rank_16.pdf",
+      "topper": "Trupti Ankush Dhodmise",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5eea2-377569_1429_chandrajyoti-singh_rank_28.pdf",
+      "topper": "ChandraJyoti Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6dc87-41040_876_subhash-chandra-meena_rank_737.pdf",
+      "topper": "Subhash Chandra Meena",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f0a44-49120_1231_mukund-kr_rank_54.pdf",
+      "topper": "Mukund Kr",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/acb5d-15577_756_arushi-mishra_rank_229.pdf",
+      "topper": "Arushi Mishra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d5114-28393_1020_mukul-jamloki_rank_260.pdf",
+      "topper": "Mukul Jamloki",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3d133-319972_1103_parikshit-khatana_rank_184.pdf",
+      "topper": "Parikshit Khatana",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/93108-26074_1065_kumar_anurag_rank_48.pdf",
+      "topper": "Kumar Anurag",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/77748-23528_1067_trupti_ankush_dhodmise_rank_16.pdf",
+      "topper": "Trupti Ankush Dhodmise",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e22fe-319972_1107_parikshit-khatana_rank_184.pdf",
+      "topper": "Parikshit Khatana",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b6d8f-15915_741_namrata_jain_rank_12.pdf",
+      "topper": "Namrata Jain",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1f3bc-57549_1063_shrestha-anupam_rank_19.pdf",
+      "topper": "Shrestha Anupam",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b0a86-506755_1326_aishwarya-sheoran_rank_93.pdf",
+      "topper": "Aishwarya Sheoran",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/ea0fb-660130_2212_mithlesh-kumari-meena_rank-826.pdf",
       "topper": "Mithlesh Kumari Meena",
       "coaching": "VisionIAS",
@@ -31098,7 +32414,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -31686,7 +33002,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -31952,7 +33268,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -33534,7 +34850,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -33758,7 +35074,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34164,7 +35480,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34206,7 +35522,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34528,7 +35844,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -35200,7 +36516,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -37412,7 +38728,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -37762,7 +39078,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -38196,7 +39512,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -38504,7 +39820,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -38602,7 +39918,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -38644,7 +39960,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -39008,7 +40324,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -39638,7 +40954,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40674,7 +41990,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40898,7 +42214,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40982,7 +42298,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41234,7 +42550,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41416,7 +42732,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41514,7 +42830,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41780,7 +43096,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41794,7 +43110,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43292,7 +44608,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43306,7 +44622,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43348,7 +44664,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43418,7 +44734,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43488,7 +44804,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43600,7 +44916,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14,
+      "groupMedian": 15,
       "low": false
     },
     {
