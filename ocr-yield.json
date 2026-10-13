@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T16:07:24.176Z",
+  "generated": "2026-10-13T21:33:30.826Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1755,6 +1755,62 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e07c3-30566_1072_g_surya_sai_praveenchand_rank_64.pdf",
+      "topper": "GSS Praveenchand",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bbee4-30566_1154_g_surya_sai_praveenchand_rank_64.pdf",
+      "topper": "GSS Praveenchand",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e2f39-11009_873_anand_kumar_sharma_rank_62.pdf",
+      "topper": "Anand Kumar Sharma",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bc5b8-30566_1071_g_surya_sai_praveenchand_rank_64.pdf",
+      "topper": "GSS Praveenchand",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
