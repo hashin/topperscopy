@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-14T05:37:39.433Z",
+  "generated": "2026-10-14T14:55:22.148Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/rank_12_11747_768_ashima_mittal.pdf",
+      "topper": "Ashima Mittal",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/f0c1e-109506_1078_sunil-kumar-dhanwanta_rank_683.pdf",
       "topper": "Sunil Kumar Dhanwanta",
@@ -14,7 +28,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -28,7 +42,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -42,7 +56,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -56,7 +70,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -70,7 +84,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -84,7 +98,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -112,7 +126,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -126,7 +140,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -140,7 +154,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -154,7 +168,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 35,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -168,7 +182,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 17,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -280,7 +294,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -574,7 +588,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -602,7 +616,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -616,7 +630,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 22,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -630,7 +644,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -644,7 +658,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -658,7 +672,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -672,7 +686,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 29,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -756,7 +770,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -770,7 +784,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 35,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -784,7 +798,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -798,7 +812,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -840,7 +854,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -882,7 +896,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 31,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -896,7 +910,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -924,7 +938,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -938,7 +952,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -952,7 +966,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -966,7 +980,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1008,7 +1022,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1022,7 +1036,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1106,7 +1120,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1120,7 +1134,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1148,7 +1162,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1162,7 +1176,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1176,7 +1190,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1190,7 +1204,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1204,7 +1218,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 22,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1218,7 +1232,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1260,7 +1274,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1302,7 +1316,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1330,7 +1344,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1344,7 +1358,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 16,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1358,7 +1372,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1372,7 +1386,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1386,7 +1400,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1400,7 +1414,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1414,7 +1428,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 21,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1428,7 +1442,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1442,7 +1456,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1456,7 +1470,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1470,7 +1484,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 29,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1484,7 +1498,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 20,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1498,7 +1512,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1554,7 +1568,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1582,7 +1596,7 @@
       "model": null,
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1596,7 +1610,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1610,7 +1624,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1624,7 +1638,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1638,7 +1652,7 @@
       "model": null,
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1652,7 +1666,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1666,7 +1680,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1680,7 +1694,7 @@
       "model": null,
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1758,6 +1772,34 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_605_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_604_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 30,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/6e981-30566_1069_g_surya_sai_praveenchand_rank_64.pdf",
       "topper": "GSS Praveenchand",
       "coaching": "VisionIAS",
@@ -1768,7 +1810,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1782,7 +1824,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1824,7 +1866,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1838,7 +1880,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -1880,7 +1922,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1922,7 +1964,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -1936,7 +1978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2006,7 +2048,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 23,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2160,7 +2202,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2272,7 +2314,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2314,7 +2356,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2328,7 +2370,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2342,7 +2384,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2356,7 +2398,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2370,7 +2412,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2398,7 +2440,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2412,7 +2454,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 23,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2440,7 +2482,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2454,7 +2496,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2468,7 +2510,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2482,7 +2524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2496,7 +2538,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2510,7 +2552,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 29,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2524,7 +2566,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 23,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2552,7 +2594,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 29,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2566,7 +2608,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2580,7 +2622,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2668,6 +2710,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/rank_12_11747_771_ashima_mittal.pdf",
+      "topper": "Ashima Mittal",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/6447c-1295818_2319_ishwar_lal_gurjar_rank_555.pdf",
       "topper": "ISHWAR LAL GURJAR",
       "coaching": "VisionIAS",
@@ -2678,7 +2734,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 35,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2748,7 +2804,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2790,7 +2846,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2804,7 +2860,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 21,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2818,7 +2874,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2846,7 +2902,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2860,7 +2916,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2874,7 +2930,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2888,7 +2944,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2902,7 +2958,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -2916,7 +2972,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2930,7 +2986,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2944,7 +3000,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2972,7 +3028,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2986,7 +3042,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3000,7 +3056,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3014,7 +3070,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3028,7 +3084,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3042,7 +3098,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3056,7 +3112,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3070,7 +3126,7 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3192,7 +3248,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3318,7 +3374,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3444,7 +3500,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3500,7 +3556,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3556,7 +3612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3640,7 +3696,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3654,7 +3710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3710,7 +3766,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 46,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3752,7 +3808,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3850,7 +3906,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 23,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3878,7 +3934,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3892,7 +3948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3906,7 +3962,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3920,7 +3976,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3934,7 +3990,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 19,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -3948,7 +4004,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3962,7 +4018,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3976,7 +4032,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -3990,7 +4046,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4004,7 +4060,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4018,7 +4074,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4032,7 +4088,7 @@
       "model": null,
       "geminiPages": 17,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4226,7 +4282,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4254,7 +4310,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4282,7 +4338,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4324,7 +4380,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4352,7 +4408,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4366,7 +4422,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4422,7 +4478,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4436,7 +4492,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4450,7 +4506,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 86,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4464,7 +4520,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4478,7 +4534,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4492,7 +4548,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4506,7 +4562,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4520,7 +4576,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4534,7 +4590,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4548,7 +4604,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4562,7 +4618,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4576,7 +4632,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4590,7 +4646,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4604,7 +4660,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4618,7 +4674,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4632,7 +4688,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4646,7 +4702,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4660,7 +4716,7 @@
       "model": null,
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4674,7 +4730,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4688,7 +4744,7 @@
       "model": null,
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -4870,7 +4926,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4912,7 +4968,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4954,7 +5010,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4968,7 +5024,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4982,7 +5038,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -4996,7 +5052,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5010,7 +5066,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5024,7 +5080,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5038,7 +5094,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5052,7 +5108,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5066,7 +5122,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5080,7 +5136,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5108,7 +5164,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5122,7 +5178,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5136,7 +5192,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5164,7 +5220,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 47,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5178,7 +5234,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5192,7 +5248,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5206,7 +5262,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5220,7 +5276,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5234,7 +5290,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5262,7 +5318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5276,7 +5332,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5290,7 +5346,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5304,7 +5360,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5318,7 +5374,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5346,7 +5402,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5360,7 +5416,7 @@
       "model": null,
       "geminiPages": 31,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5456,7 +5512,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5554,7 +5610,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5610,7 +5666,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5638,7 +5694,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5652,7 +5708,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5666,7 +5722,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5736,7 +5792,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5750,7 +5806,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5806,7 +5862,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5820,7 +5876,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5834,7 +5890,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -5904,7 +5960,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5932,7 +5988,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5960,7 +6016,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -5988,7 +6044,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6016,7 +6072,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6044,7 +6100,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6072,7 +6128,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6114,7 +6170,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6128,7 +6184,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6142,7 +6198,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6156,7 +6212,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6170,7 +6226,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6184,7 +6240,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6198,7 +6254,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6212,7 +6268,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6226,7 +6282,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6240,7 +6296,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6254,7 +6310,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6268,7 +6324,7 @@
       "model": null,
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6282,7 +6338,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6310,7 +6366,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6636,7 +6692,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6650,7 +6706,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -6664,7 +6720,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7098,7 +7154,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7126,7 +7182,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7308,7 +7364,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7350,7 +7406,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7364,7 +7420,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7392,7 +7448,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7574,7 +7630,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 5,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7616,7 +7672,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -7630,7 +7686,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7658,7 +7714,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7756,7 +7812,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7854,7 +7910,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7896,7 +7952,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7924,7 +7980,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -7980,7 +8036,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8064,7 +8120,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8120,7 +8176,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8134,7 +8190,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8204,7 +8260,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8218,7 +8274,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8302,7 +8358,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8316,7 +8372,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8330,7 +8386,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8386,7 +8442,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8428,7 +8484,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 6,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8442,7 +8498,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8456,7 +8512,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8470,7 +8526,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8512,7 +8568,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8540,7 +8596,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8554,7 +8610,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8582,7 +8638,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8610,7 +8666,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8638,7 +8694,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8652,7 +8708,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8680,7 +8736,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8694,7 +8750,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8750,7 +8806,7 @@
       "model": null,
       "geminiPages": 57,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8792,7 +8848,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8806,7 +8862,7 @@
       "model": null,
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -8820,7 +8876,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8862,7 +8918,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -8890,7 +8946,7 @@
       "model": null,
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -9354,7 +9410,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9368,7 +9424,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9396,7 +9452,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9410,7 +9466,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9424,7 +9480,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -9480,7 +9536,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9522,7 +9578,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9550,7 +9606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9592,7 +9648,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 4,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9606,7 +9662,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9620,7 +9676,7 @@
       "model": null,
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 4,
       "low": false
     },
     {
@@ -9634,7 +9690,7 @@
       "model": null,
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9700,7 +9756,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9714,7 +9770,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9728,7 +9784,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9938,7 +9994,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -9966,7 +10022,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10078,7 +10134,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10092,7 +10148,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10106,7 +10162,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10120,7 +10176,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10148,7 +10204,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10162,7 +10218,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10190,7 +10246,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10232,7 +10288,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10246,7 +10302,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10288,7 +10344,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10316,7 +10372,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10344,7 +10400,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10358,7 +10414,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10372,7 +10428,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10400,7 +10456,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 5,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10428,7 +10484,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10442,7 +10498,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10456,7 +10512,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10662,7 +10718,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10718,7 +10774,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10732,7 +10788,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10746,7 +10802,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10774,7 +10830,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10788,7 +10844,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10802,7 +10858,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10816,7 +10872,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10830,7 +10886,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10858,7 +10914,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10872,7 +10928,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10886,7 +10942,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10900,7 +10956,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10914,7 +10970,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10928,7 +10984,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10956,7 +11012,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10970,7 +11026,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -10998,7 +11054,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11026,7 +11082,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11040,7 +11096,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11054,7 +11110,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11068,7 +11124,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11082,7 +11138,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11096,7 +11152,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11110,7 +11166,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11124,7 +11180,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11138,7 +11194,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 3,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11152,7 +11208,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11166,7 +11222,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11236,7 +11292,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11264,7 +11320,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11446,7 +11502,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11460,7 +11516,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11502,7 +11558,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11516,7 +11572,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11530,7 +11586,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11544,7 +11600,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11558,7 +11614,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11572,7 +11628,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11586,7 +11642,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11600,7 +11656,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11614,7 +11670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11642,7 +11698,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11656,7 +11712,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11670,7 +11726,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11684,7 +11740,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11712,7 +11768,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11740,7 +11796,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11754,7 +11810,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11768,7 +11824,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11796,7 +11852,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11810,7 +11866,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11824,7 +11880,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11852,7 +11908,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11880,7 +11936,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11894,7 +11950,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11922,7 +11978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11936,7 +11992,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11950,7 +12006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11964,7 +12020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11978,7 +12034,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -11992,7 +12048,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12006,7 +12062,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12020,7 +12076,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12034,7 +12090,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12048,7 +12104,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12062,7 +12118,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12076,7 +12132,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12090,7 +12146,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12104,7 +12160,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12132,7 +12188,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12146,7 +12202,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12160,7 +12216,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12174,7 +12230,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12188,7 +12244,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12230,6 +12286,62 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_9582_634_Artika.pdf",
+      "topper": "ARTIKA SHUKLA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 13,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/9faa8-168117_1069_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_634_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 13,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/73047-13245_860_kartik_jivani_nagjibhai_rank_94.pdf",
+      "topper": "Kartik Jivani Nagjibhai",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 63,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 63,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/3a42d-17265_1149_awahare_manisha_rank_33.pdf",
       "topper": "Manisha Awhale",
       "coaching": "VisionIAS",
@@ -12240,7 +12352,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12254,7 +12366,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12268,7 +12380,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12408,7 +12520,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12422,7 +12534,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12450,7 +12562,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12464,7 +12576,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12478,7 +12590,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12492,7 +12604,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12506,7 +12618,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12534,7 +12646,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12548,7 +12660,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12576,7 +12688,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12604,7 +12716,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12618,7 +12730,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12646,7 +12758,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12660,7 +12772,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12674,7 +12786,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12688,7 +12800,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12716,7 +12828,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12730,7 +12842,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12744,7 +12856,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12758,7 +12870,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12772,7 +12884,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12786,7 +12898,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12800,7 +12912,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12814,7 +12926,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12828,7 +12940,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12884,7 +12996,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12898,7 +13010,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12912,7 +13024,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12926,7 +13038,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12940,7 +13052,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12954,7 +13066,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12968,7 +13080,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12982,7 +13094,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -12996,7 +13108,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13024,7 +13136,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13038,7 +13150,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13052,7 +13164,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13066,7 +13178,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13080,7 +13192,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13094,7 +13206,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13122,7 +13234,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13150,7 +13262,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13164,7 +13276,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13178,7 +13290,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13192,7 +13304,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13206,7 +13318,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13220,7 +13332,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13234,7 +13346,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13248,7 +13360,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13262,7 +13374,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13276,7 +13388,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13290,7 +13402,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13318,7 +13430,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13332,7 +13444,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13346,7 +13458,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13406,6 +13518,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a6f70-10605_1057_himadree_kaushik_rank_97.pdf",
+      "topper": "Himadree Kaushik",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/2723a-104395_1056_pawan-kumar-goel_rank_131.pdf",
       "topper": "Pawan Kumar Goel",
       "coaching": "VisionIAS",
@@ -13416,7 +13542,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13444,7 +13570,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13458,7 +13584,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13472,7 +13598,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13486,7 +13612,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13500,7 +13626,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13514,7 +13640,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13528,7 +13654,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13542,7 +13668,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13570,7 +13696,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13640,7 +13766,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13654,7 +13780,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 44,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13696,7 +13822,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13724,7 +13850,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13738,7 +13864,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13752,7 +13878,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13766,7 +13892,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13780,7 +13906,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13794,7 +13920,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13808,7 +13934,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13822,7 +13948,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13850,7 +13976,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13864,7 +13990,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13878,7 +14004,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13892,7 +14018,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13920,7 +14046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13934,7 +14060,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -13962,7 +14088,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14018,7 +14144,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14046,7 +14172,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14060,7 +14186,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14074,7 +14200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14088,7 +14214,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14116,7 +14242,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14130,7 +14256,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14144,7 +14270,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14158,7 +14284,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14172,7 +14298,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14186,7 +14312,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14256,7 +14382,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14270,7 +14396,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14284,7 +14410,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14298,7 +14424,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14312,7 +14438,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14326,7 +14452,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14340,7 +14466,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14368,7 +14494,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14382,7 +14508,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14396,7 +14522,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14410,7 +14536,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14424,7 +14550,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14438,7 +14564,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14452,7 +14578,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14466,7 +14592,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14480,7 +14606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14494,7 +14620,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14508,7 +14634,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14522,7 +14648,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14550,7 +14676,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14564,7 +14690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14578,7 +14704,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14592,7 +14718,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14606,7 +14732,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14704,7 +14830,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14718,7 +14844,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14732,7 +14858,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14746,7 +14872,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14774,7 +14900,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14788,7 +14914,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -14802,7 +14928,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15138,7 +15264,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15180,7 +15306,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15194,7 +15320,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15236,7 +15362,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15250,7 +15376,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15264,7 +15390,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15292,7 +15418,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15306,7 +15432,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15320,7 +15446,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15334,7 +15460,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15348,7 +15474,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15362,7 +15488,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15446,7 +15572,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15460,7 +15586,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15474,7 +15600,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15516,7 +15642,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15530,7 +15656,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15544,7 +15670,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15586,7 +15712,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15600,7 +15726,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15614,7 +15740,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15656,7 +15782,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15670,7 +15796,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15684,7 +15810,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15698,7 +15824,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15712,7 +15838,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15768,7 +15894,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15796,7 +15922,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15810,7 +15936,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15824,7 +15950,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15852,7 +15978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15866,7 +15992,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15880,7 +16006,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15894,7 +16020,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15908,7 +16034,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15922,7 +16048,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15936,7 +16062,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15950,7 +16076,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15964,7 +16090,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15978,7 +16104,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -15992,7 +16118,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16146,6 +16272,76 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2cf9d-25483_877_pradeep_kumar_dwivedi_rank_74.pdf",
+      "topper": "Pradeep Kumar Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_622_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_621_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5653b-168117_1066_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4f2bb-42370_860_kanta_rank_632.pdf",
+      "topper": "Kanta Jagir",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/41efc-44930_1225_nidhi-thakur_rank_180.pdf",
       "topper": "Nidhi Thakur",
       "coaching": "VisionIAS",
@@ -16170,7 +16366,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16184,7 +16380,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16212,7 +16408,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16282,7 +16478,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16310,7 +16506,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16324,7 +16520,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16338,7 +16534,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16352,7 +16548,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16366,7 +16562,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16380,7 +16576,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16394,7 +16590,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16450,7 +16646,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16674,7 +16870,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16730,7 +16926,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16758,7 +16954,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16772,7 +16968,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16856,7 +17052,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16870,7 +17066,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -16954,7 +17150,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17024,7 +17220,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17080,7 +17276,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17108,7 +17304,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17122,7 +17318,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17136,7 +17332,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17150,7 +17346,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17164,7 +17360,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17220,7 +17416,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17276,7 +17472,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17290,7 +17486,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17304,7 +17500,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17332,7 +17528,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17346,7 +17542,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17360,7 +17556,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17374,7 +17570,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17388,7 +17584,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17402,7 +17598,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17416,7 +17612,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17430,7 +17626,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17458,7 +17654,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17472,7 +17668,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17486,7 +17682,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17514,7 +17710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17528,7 +17724,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17542,7 +17738,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17556,7 +17752,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17570,7 +17766,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17584,7 +17780,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17598,7 +17794,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17612,7 +17808,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17640,7 +17836,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17668,7 +17864,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17710,7 +17906,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17738,7 +17934,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17752,7 +17948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17766,7 +17962,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17794,7 +17990,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17822,7 +18018,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17836,7 +18032,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17850,7 +18046,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17864,7 +18060,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17878,7 +18074,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -17966,6 +18162,48 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/c027c-26216_747_kanchan_kumar_rank_263.pdf",
+      "topper": "Kachan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3af4d-168117_1154_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2f5c5-29042_764_veer_pratap_singh_rank_92.pdf",
+      "topper": "Veer Pratap Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/9eb18-371410_1145_pari-bishnoi_rank_30.pdf",
       "topper": "Pari Bishnoi",
       "coaching": "VisionIAS",
@@ -17990,7 +18228,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18018,7 +18256,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18032,7 +18270,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18074,7 +18312,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 41,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18088,7 +18326,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18130,7 +18368,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18144,7 +18382,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18158,7 +18396,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18172,7 +18410,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18186,7 +18424,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18242,7 +18480,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18256,7 +18494,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18494,7 +18732,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18522,7 +18760,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18564,7 +18802,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18606,7 +18844,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18620,7 +18858,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18634,7 +18872,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18676,7 +18914,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18690,7 +18928,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18704,7 +18942,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18746,7 +18984,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18760,7 +18998,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18774,7 +19012,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18830,7 +19068,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18914,7 +19152,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -18998,7 +19236,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19124,7 +19362,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19208,7 +19446,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19250,7 +19488,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19264,7 +19502,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19278,7 +19516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19320,7 +19558,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19334,7 +19572,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19376,7 +19614,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19404,7 +19642,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19418,7 +19656,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19432,7 +19670,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19502,7 +19740,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19530,7 +19768,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19544,7 +19782,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19558,7 +19796,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19600,7 +19838,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19614,7 +19852,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19642,7 +19880,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19656,7 +19894,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19670,7 +19908,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19684,7 +19922,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19698,7 +19936,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19740,7 +19978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19754,7 +19992,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19768,7 +20006,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19782,7 +20020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19810,7 +20048,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19838,7 +20076,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19852,7 +20090,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19880,7 +20118,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19894,7 +20132,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19922,7 +20160,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19950,7 +20188,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -19978,7 +20216,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20020,7 +20258,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20048,7 +20286,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20076,7 +20314,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20104,7 +20342,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20118,7 +20356,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20132,7 +20370,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20146,7 +20384,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20160,7 +20398,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20174,7 +20412,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20202,7 +20440,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20216,7 +20454,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20230,7 +20468,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20272,7 +20510,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20286,7 +20524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20300,7 +20538,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20328,7 +20566,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20538,6 +20776,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_9582_624_Artika.pdf",
+      "topper": "ARTIKA SHUKLA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/681ae-681197_1448_kumar-biswaranjan_rank_182.pdf",
       "topper": "Kumar Biswaranjan",
       "coaching": "VisionIAS",
@@ -20590,7 +20842,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20604,7 +20856,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20660,7 +20912,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20786,7 +21038,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20898,7 +21150,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -20996,7 +21248,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21038,7 +21290,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21458,7 +21710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21486,7 +21738,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21500,7 +21752,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21542,7 +21794,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21556,7 +21808,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21598,7 +21850,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21724,7 +21976,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21766,7 +22018,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21780,7 +22032,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21836,7 +22088,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21850,7 +22102,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21864,7 +22116,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21892,7 +22144,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21920,7 +22172,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21962,7 +22214,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22060,7 +22312,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22242,7 +22494,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22536,7 +22788,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22718,7 +22970,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22788,7 +23040,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22830,7 +23082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22844,7 +23096,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22858,7 +23110,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22886,7 +23138,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22956,7 +23208,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22970,7 +23222,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -22984,7 +23236,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23054,7 +23306,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23152,7 +23404,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23180,7 +23432,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23194,7 +23446,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23222,7 +23474,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23236,7 +23488,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23278,7 +23530,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23320,7 +23572,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23334,7 +23586,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23348,7 +23600,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23376,7 +23628,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23418,7 +23670,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23432,7 +23684,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23656,7 +23908,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23726,7 +23978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23754,7 +24006,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23768,7 +24020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23782,7 +24034,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23796,7 +24048,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23810,7 +24062,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23838,7 +24090,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23922,7 +24174,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23950,7 +24202,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23978,7 +24230,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23992,7 +24244,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24006,7 +24258,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24020,7 +24272,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24034,7 +24286,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24048,7 +24300,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24090,7 +24342,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24118,7 +24370,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24216,7 +24468,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24230,7 +24482,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24244,7 +24496,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24258,7 +24510,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24272,7 +24524,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24314,7 +24566,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24370,7 +24622,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24384,7 +24636,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24398,7 +24650,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24412,7 +24664,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -24878,6 +25130,62 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_704_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e77a2-10605_1106_himadree_kaushik_rank_97.pdf",
+      "topper": "Himadree Kaushik",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/474b3-13245_872_kartik_jivani_nagjibhai_rank_94.pdf",
+      "topper": "Kartik Jivani Nagjibhai",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/22d33-26216_843_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/46988-168117_1248_ravi-kumar-sihag_rank_317.pdf",
       "topper": "Ravi Kumar Sihag",
       "coaching": "VisionIAS",
@@ -24902,7 +25210,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25280,7 +25588,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25462,7 +25770,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25756,7 +26064,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25798,7 +26106,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25812,7 +26120,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25826,7 +26134,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25952,7 +26260,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26764,7 +27072,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26806,7 +27114,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26834,7 +27142,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26890,7 +27198,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26960,7 +27268,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27212,7 +27520,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27240,7 +27548,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27282,7 +27590,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27436,7 +27744,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27856,7 +28164,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27968,7 +28276,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28038,7 +28346,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28080,7 +28388,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28388,7 +28696,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28500,7 +28808,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28542,7 +28850,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28626,7 +28934,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28780,7 +29088,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28794,7 +29102,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -28822,7 +29130,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29004,7 +29312,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29032,7 +29340,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29144,7 +29452,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29270,7 +29578,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29326,7 +29634,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29424,7 +29732,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29452,7 +29760,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29522,7 +29830,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29690,7 +29998,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -29900,7 +30208,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30040,7 +30348,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30068,7 +30376,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30082,7 +30390,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30110,7 +30418,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30166,7 +30474,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30180,7 +30488,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30250,7 +30558,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30334,7 +30642,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30390,7 +30698,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30404,7 +30712,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30418,7 +30726,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30460,7 +30768,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30516,7 +30824,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30558,7 +30866,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30600,7 +30908,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30628,7 +30936,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30642,7 +30950,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30670,7 +30978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30684,7 +30992,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30782,7 +31090,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30796,7 +31104,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30810,7 +31118,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30852,7 +31160,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30880,7 +31188,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -31533,6 +31841,510 @@
       "geminiPages": 52,
       "salvaged": 1,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/38275-26216_844_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kamar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d95a0-25483_849_pradeep_kumar_dwivedi_rank_74.pdf",
+      "topper": "Pradeep Kumar Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8e840-42370_1021_kanta_rank_632.pdf",
+      "topper": "Kanta Jagir",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/ae2f0-30622_758_anirudh_kumar_rank_146.pdf",
+      "topper": "Anirudh Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/40dfa-25609_1109_khushboo_lather_rank_98.pdf",
+      "topper": "Khushboo Lather",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/2b180-35605_864_jay_shivani_rank_81.pdf",
+      "topper": "Jay Shivani",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a4892-25483_853_pradeep_kumar_dwivedi_rank_74.pdf",
+      "topper": "Pradeep Kumar Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/1cea1-35605_856_jay_shivani_rank_81.pdf",
+      "topper": "Jay Shivani",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/17524_740_Pratham_Kaushik_Rank_5.pdf",
+      "topper": "Pratham Kaushik",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e468d-23965_754_pankaj_yadav_rank_642.pdf",
+      "topper": "Pankaj Yadav",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e4790-13245_927_kartik_jivani_nagjibhai_rank_94.pdf",
+      "topper": "Kartik Jivani Nagjibhai",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/45629-42370_1023_kanta_rank_632.pdf",
+      "topper": "Kanta Jagir",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/12269_632_Anand_Rank_7.pdf",
+      "topper": "Anand Vardhan",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/560e7-42370_1025_kanta_rank_632.pdf",
+      "topper": "Kanta Jagir",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/48857-13245_867_kartik_jivani_nagjibhai_rank_94.pdf",
+      "topper": "Kartik Jivani Nagjibhai",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/13955_981_Vishal_Mishra_Rank_49.pdf",
+      "topper": "Vishal Mishra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/35234_862_Tapasya_Parihar_Rank_23.pdf",
+      "topper": "Tapasya Parihar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e1917-168117_1153_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/67343-10605_1105_himadree_kaushik_rank_97.pdf",
+      "topper": "Himadree Kaushik",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d653c-168117_1068_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5649_1025_Vikramaditya_Malik_Rank_48.pdf",
+      "topper": "Vikramaditya Malik",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/e7f41-168117_1067_ravi_kumar_sihag_rank_337.pdf",
+      "topper": "Ravi Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_633_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/79df5-42370_1022_kanta_rank_632.pdf",
+      "topper": "Kanta Jagir",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/d8f14-26216_845_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6dfc3-21175_825_ayushi_singh_rank_86.pdf",
+      "topper": "Ayushi Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_707_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/6906b-146733_1022_khusboo_gupta_rank_80.pdf",
+      "topper": "Khushboo Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/35234_855_Tapasya_Parihar_Rank_23.pdf",
+      "topper": "Tapasya Parihar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/85176-146733_1021_khusboo_gupta_rank_80.pdf",
+      "topper": "Khushboo Gupta",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/18c20-29253_766_dilip_pratap_singh_rank_72.pdf",
+      "topper": "Dilip Pratap Singh Shekhawat",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/a8a30-26216_824_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_706_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/51fe5-35605_928_jay-shivani_rank_81.pdf",
+      "topper": "Jay Shivani",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/8aa8d-26216_760_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 20,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/b47b8-30622_762_anirudh_kumar_rank_146.pdf",
+      "topper": "Anirudh Kumar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -32554,7 +33366,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -33142,7 +33954,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -33408,7 +34220,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34990,7 +35802,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -35214,7 +36026,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -35620,7 +36432,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -35662,7 +36474,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -35984,7 +36796,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -36656,7 +37468,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -38868,7 +39680,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -39218,7 +40030,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -39652,7 +40464,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 2,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -39960,7 +40772,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40058,7 +40870,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40100,7 +40912,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40464,7 +41276,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41094,7 +41906,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42130,7 +42942,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42354,7 +43166,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42438,7 +43250,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42690,7 +43502,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42872,7 +43684,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -42970,7 +43782,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43236,7 +44048,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -43250,7 +44062,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -44738,6 +45550,34 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/cee2f-26216_766_kanchan_kumar_rank_263.pdf",
+      "topper": "Kanchan Kumar Kandpal",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 21,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/30f55-29253_845_dilip_pratap_singh_rank_72.pdf",
+      "topper": "Dilip Pratap Singh Shekhawat",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 21,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/849fb-74007_2366_siddharth_kumar_meena_rabk_873.pdf",
       "topper": "Siddharth Kumar Meena",
       "coaching": "VisionIAS",
@@ -44748,7 +45588,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -44762,7 +45602,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -44804,7 +45644,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -44874,7 +45714,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -44934,6 +45774,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_705_Tina.pdf",
+      "topper": "Tina Dabi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 22,
+      "optional": false,
+      "pages": 78,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/e8d38-74007_2370_siddharth_kumar_meena_rabk_873.pdf",
       "topper": "Siddharth Kumar Meena",
       "coaching": "VisionIAS",
@@ -44944,7 +45798,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -45056,7 +45910,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 14.5,
+      "groupMedian": 15,
       "low": false
     },
     {
