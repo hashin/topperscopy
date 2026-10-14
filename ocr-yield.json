@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-14T14:55:22.148Z",
+  "generated": "2026-10-14T20:21:12.349Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_16813_605_Shashank.pdf",
+      "topper": "SHASHANK TRIPATHI",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 30,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/rank_12_11747_768_ashima_mittal.pdf",
       "topper": "Ashima Mittal",
@@ -4916,6 +4930,20 @@
       "low": true
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_9582_635_Artika.pdf",
+      "topper": "ARTIKA SHUKLA",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 6,
+      "optional": false,
+      "pages": 78,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/7f949-1101662_3128_abhishek_anjani_singh_rank_87ermark.pdf",
       "topper": "Abhishek Anjani Singh",
       "coaching": "VisionIAS",
@@ -6665,6 +6693,20 @@
       "count": 7,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_15633_622_Ashish.pdf",
+      "topper": "ASHISH TIWARI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
