@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-15T14:36:30.863Z",
+  "generated": "2026-10-15T20:02:39.687Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/4ca03-ajay-dwivedi_17_2014_gs_booklet_1.pdf",
+      "topper": "Ajay Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/5dc55-ayush-prasad_24_2014_gs_booklet_1.pdf",
+      "topper": "Ayush Prasad",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/23_Prathamesh%20kumar_13402_604_Essay.pdf",
       "topper": "PRATHAMESH KUMAR",
@@ -1839,6 +1867,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/3d043-muhammed-abdaal-akhtar_35_2014_gs_booklet_1.pdf",
+      "topper": "Muhammed Abdaal Akhtar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
