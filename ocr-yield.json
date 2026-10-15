@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-14T20:21:12.349Z",
+  "generated": "2026-10-15T05:24:35.056Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -1783,6 +1783,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_15633_634_Ashish.pdf",
+      "topper": "ASHISH TIWARI",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
