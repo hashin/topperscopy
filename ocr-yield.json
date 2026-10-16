@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-16T14:31:06.946Z",
+  "generated": "2026-10-16T19:44:32.777Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -5249,6 +5249,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/14/mts_2025_unchecked_aim24gcra017_slt2502.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 6,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
