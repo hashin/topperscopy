@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-17T13:24:44.616Z",
+  "generated": "2026-10-17T18:49:26.824Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -658,7 +658,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -672,7 +672,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 46,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -2524,7 +2524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -2552,7 +2552,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -2580,7 +2580,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -3518,6 +3518,20 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/7/essay-test3.pdf",
+      "topper": "Aayush Swami",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/7/essay-test1.pdf",
       "topper": "Aayush Swami",
       "coaching": "NextIAS",
@@ -3570,7 +3584,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -4618,7 +4632,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -5336,6 +5350,20 @@
       "low": true
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/74/mts_2023_unchecked_pttp221500_tc078.pdf",
+      "topper": "Shoiab",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 6,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": true
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/81/mts_2023_unchecked_aim24gcl1025_tc319.pdf",
       "topper": "Mansi Gupta",
       "coaching": "NextIAS",
@@ -5346,7 +5374,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -5374,7 +5402,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -7238,7 +7266,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 25,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -10418,7 +10446,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -11436,7 +11464,7 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -11740,7 +11768,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 34,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -12286,7 +12314,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -12300,7 +12328,7 @@
       "model": null,
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -12622,7 +12650,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -13472,7 +13500,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -13822,7 +13850,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -13976,7 +14004,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -14690,7 +14718,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -14802,7 +14830,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -14816,7 +14844,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -15516,7 +15544,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -16314,7 +16342,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -17056,7 +17084,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -17238,7 +17266,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -17420,7 +17448,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -17822,7 +17850,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -17836,7 +17864,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -18564,7 +18592,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19572,7 +19600,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19866,7 +19894,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19908,7 +19936,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19922,7 +19950,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19936,7 +19964,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -19950,7 +19978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -21630,7 +21658,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -22498,7 +22526,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -23684,7 +23712,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -23852,7 +23880,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -29326,7 +29354,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -30698,7 +30726,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -34192,7 +34220,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -40436,7 +40464,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -46246,7 +46274,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48500,7 +48528,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48626,7 +48654,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48752,7 +48780,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48836,7 +48864,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48850,7 +48878,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48920,7 +48948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48948,7 +48976,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48962,7 +48990,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -48990,7 +49018,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49004,7 +49032,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49018,7 +49046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49172,7 +49200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49186,7 +49214,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49200,7 +49228,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49242,7 +49270,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49256,7 +49284,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49298,7 +49326,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49354,7 +49382,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49368,7 +49396,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49382,7 +49410,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49396,7 +49424,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49410,7 +49438,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49424,7 +49452,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49438,7 +49466,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 67,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49452,7 +49480,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49466,7 +49494,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49480,7 +49508,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49494,7 +49522,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49508,7 +49536,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49522,7 +49550,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -49536,7 +49564,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17.5,
+      "groupMedian": 17,
       "low": false
     }
   ]
