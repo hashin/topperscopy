@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-17T05:11:40.066Z",
+  "generated": "2026-10-17T13:24:44.616Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/30/mts_2023_unchecked_aim24gcl1025_tc304.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 14,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 14,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/64202-bhavesh-mishra_58_2014_essay_booklet_3.pdf",
       "topper": "Bhavesh Mishra",
@@ -644,7 +658,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -658,7 +672,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 46,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -672,7 +686,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 61,
       "salvaged": 1,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -2510,7 +2524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -2538,7 +2552,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -2566,7 +2580,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -2945,6 +2959,20 @@
       "geminiPages": 7,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/145/mts_2024_unchecked_mt25ptmr052_pme2502.pdf",
+      "topper": "Aditya Talwar",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 3,
+      "optional": false,
+      "pages": 22,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 22,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -3490,6 +3518,34 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/7/essay-test1.pdf",
+      "topper": "Aayush Swami",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/141/mts_2024_unchecked_mt25ptmr052_pme2501.pdf",
+      "topper": "Aditya Talwar",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 18,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/210c9-gaurav-agrawal_1_2013_essay_booklet_2.pdf",
       "topper": "Gaurav Agrawal",
       "coaching": "VisionIAS",
@@ -3514,7 +3570,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -4538,6 +4594,34 @@
       "low": true
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/2/mts_2023_unchecked_mt23avea018_tc118.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 5,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/62/mts_2024_unchecked_mt25ptmr052_pm2512.pdf",
+      "topper": "Aditya Talwar",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 36,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/6d9e1-635609_1247_bhanu-pratap-singh_rank_372.pdf",
       "topper": "Bhanu Pratap Singh",
       "coaching": "VisionIAS",
@@ -5252,6 +5336,48 @@
       "low": true
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/81/mts_2023_unchecked_aim24gcl1025_tc319.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 6,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/99/mts_2025_unchecked_mt25ptmr052_pme2503.pdf",
+      "topper": "Aditya Talwar",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 6,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/68/mts_2023_unchecked_aim24gcl1025_tc320.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 6,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": true
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/14/mts_2025_unchecked_aim24gcra017_slt2502.pdf",
       "topper": "Mohit Gupta",
       "coaching": "NextIAS",
@@ -5262,7 +5388,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -7057,6 +7183,62 @@
       "count": 7,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/14/mts_2023_unchecked_aim24gcl1025_tc302.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/47/mts_2023_unchecked_aim24gcl1025_st001.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/GSMACT24A1558_TC001.pdf",
+      "topper": "Srajit Kumar",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 30,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/67/mts_2023_unchecked_aim24gcl1025_tc321.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 8,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 25,
+      "salvaged": 1,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -9610,6 +9792,48 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/23/mts_2023_unchecked_aim24gcl1025_tc307.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 9,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/4/mts_2023_unchecked_aim24gcl1025_tc315.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 9,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/3/mts_2023_unchecked_aim24gcl1025_tc301.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 9,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c4e79303c48f91abba2d44d6bdc66684/1/gsmact24a1746_gatb02-2501.pdf",
       "topper": "Shubham Singh",
       "coaching": "NextIAS",
@@ -9858,7 +10082,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -10194,7 +10418,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -10236,6 +10460,146 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/40/cava25ecl1569_m25gat05.pdf",
+      "topper": "Ananya Rana",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/55/mts_2023_unchecked_pttp221500_tc077.pdf",
+      "topper": "Shoiab",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/37/cava25ecl1569_m25gat04.pdf",
+      "topper": "Ananya Rana",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/7/mts_2024_unchecked_cava25ecl1169_gat2501.pdf",
+      "topper": "Mohit Aggarwal Nadbaiwalla",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 29,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 29,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/12/mts_2023_unchecked_aim24gcl1025_tc303.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/49/cava25ecl1569_m25gat03.pdf",
+      "topper": "Ananya Rana",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/69/mts_2023_unchecked_aim24gcl1025_tc308.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/29/mts_2023_unchecked_aim24gcl1025_tc305.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/21/aim_2024_unchecked_aim25gca2043_aimbii017.pdf",
+      "topper": "Aditi Arora",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/149/aim_2024_unchecked_aim25gca1018_aim2516.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/fb243fd857196ecf8b8ba6ee4f9c28b7/8/mt25ptmr057_pm2505.pdf",
       "topper": "Deeksha Chourasiya",
       "coaching": "NextIAS",
@@ -10246,7 +10610,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -10260,7 +10624,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -10876,7 +11240,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": true
     },
     {
@@ -11072,7 +11436,7 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": true
     },
     {
@@ -11376,8 +11740,8 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 34,
       "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
+      "groupMedian": 17.5,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/950c0-168117_1072_ravi_kumar_sihag_rank_337.pdf",
@@ -11922,8 +12286,8 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
+      "groupMedian": 17.5,
+      "low": false
     },
     {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/MT25FLTRA046_FLT2504.pdf",
@@ -11936,8 +12300,8 @@
       "model": null,
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
+      "groupMedian": 17.5,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/11995_820_Benson_Rank_90.pdf",
@@ -12258,7 +12622,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -13098,6 +13462,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/121/mts_2024_unchecked_gspm24a12028_anv2404.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/20_Vipin%20Garg_4952_423_GS.pdf",
       "topper": "VIPIN GARG",
       "coaching": "VisionIAS",
@@ -13444,7 +13822,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -13598,7 +13976,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -14312,7 +14690,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -14411,6 +14789,34 @@
       "geminiPages": 45,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/136/mts_2023_unchecked_mt23rcapa056_tc710.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2023_unchecked_MT23MACEN218_TC042.pdf",
+      "topper": "Animesh Jain",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -15110,7 +15516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -15898,6 +16304,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/64/mts_2023_unchecked_pttp221500_tc074.pdf",
+      "topper": "Shoiab",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/82_P%20Pravinya_12594_622_GS.pdf",
       "topper": "P PRAVINYA",
       "coaching": "VisionIAS",
@@ -16636,7 +17056,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -16818,7 +17238,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -17000,7 +17420,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -17392,6 +17812,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/128/mts_2024_unchecked_mt24flton005_flt012.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/0cdd845bfd11188b1b735788d0b54a20/2/mts_2023_unchecked_mt23rtra004_tc158.pdf",
       "topper": "Akansh Dhull",
       "coaching": "NextIAS",
@@ -17402,7 +17836,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -18130,7 +18564,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -18158,7 +18592,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -18438,7 +18872,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -19138,7 +19572,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -19408,6 +19842,132 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/33/mts_2023_unchecked_mt23rcapa056_tc708.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/105/mts_2023_unchecked_mt23rcapa056_tc706.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/60/mts_2023_unchecked_pttp221500_tc076.pdf",
+      "topper": "Shoiab",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/66/mts_2023_unchecked_aim24gcl1025_tc309.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/159/mts_2025_unchecked_mt25fltra012_flt2508.pdf",
+      "topper": "Harsh Santosh Lodha",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/46/mts_2024_unchecked_mt24flton005_flt008.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT012.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/15/mts_2024_unchecked_pttp220124_gsmac2408.pdf",
+      "topper": "Dommeti Vinay",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/155/mts_2023_unchecked_mt23avea018_tc116.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/be5e721dea2db6194b0d6e2683fb6135/11/mts_2023_unchecked_mt23flton013_tc002_260308_012506.pdf",
       "topper": "Surabhi Yadav",
       "coaching": "NextIAS",
@@ -19432,7 +19992,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -21070,7 +21630,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -21280,7 +21840,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -21938,7 +22498,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -22089,6 +22649,90 @@
       "geminiPages": 88,
       "salvaged": 1,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/119/mts_2023_unchecked_pttp220280_tc072.pdf",
+      "topper": "Ankit Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/2/mts_2025_unchecked_aim24gcra017_slt2506.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/21/mts_2025_unchecked_aim24gcra017_slt2509.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/49/mts_2025_unchecked_gc25d1b47037_fpnc2502.pdf",
+      "topper": "Sugandha Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/79/mts_2024_unchecked_mt24flton005_flt003.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/123/mts_2023_unchecked_mt23rcapa056_tc705.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -23040,7 +23684,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -23208,7 +23852,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -24090,7 +24734,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -24734,7 +25378,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -26499,6 +27143,202 @@
       "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 18,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/112/mts_2024_unchecked_mt24flton005_flt010.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/34/aim_2025_unchecked_aim25gca1018_amt2506.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/21/mts_2023_unchecked_aim24gcl1025_tc306.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/156/mts_2025_unchecked_mt24flton005_flt2505.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/137/mts_2023_unchecked_pttp220280_tc071.pdf",
+      "topper": "Ankit Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/40/mts_2025_unchecked_gspm24a12028_flt2509.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/154/mts_2025_unchecked_mt24flton005_flt2511.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT004.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/129/mts_2024_unchecked_mt24flton005_flt006.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/13/mts_2025_unchecked_aim24gcra017_slt2503.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/8753a84a20ad78852d2f922fc896d837/13/mts_2023_unchecked_aim24gcl1025_tc316.pdf",
+      "topper": "Mansi Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT001.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/158/mts_2025_unchecked_mt24flton005_flt2507.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/150/mts_2023_unchecked_mt23avea018_tc117.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -28486,7 +29326,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -28500,7 +29340,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -29256,7 +30096,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -29802,7 +30642,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -29844,7 +30684,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -29858,7 +30698,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -30390,7 +31230,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -31230,7 +32070,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -31286,7 +32126,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -31958,7 +32798,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -32182,7 +33022,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -32448,7 +33288,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -32798,7 +33638,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -33283,6 +34123,426 @@
       "geminiPages": 52,
       "salvaged": 1,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT003.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/92/mts_2023_unchecked_mt23rcapa056_tc703.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/18/mts_2024_unchecked_mt24flton005_flt011.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2023_unchecked_MT23MACEN218_TC037.pdf",
+      "topper": "Animesh Jain",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/38/mts_2025_unchecked_gs25d1b39001_eef2506.pdf",
+      "topper": "Aman Jhanwar",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 20,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/11/mts_2025_unchecked_cava25ecl1169_anv2503.pdf",
+      "topper": "Mohit Aggarwal Nadbaiwalla",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/130/mts_2024_unchecked_mt24flton005_flt007.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT006.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/7/mts_2025_unchecked_aim24gcra017_slt2504.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/70/mts_2023_unchecked_pttp221500_tc075.pdf",
+      "topper": "Shoiab",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/32/aim_2025_unchecked_aim25gca1018_amt2505.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/8/mts_2025_unchecked_aim24gcra017_slt2510.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/6/mts_2025_unchecked_aim24gcra017_slt2505.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/120/mts_2023_unchecked_mt23rcapa056_tc707.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/5/mts_2025_unchecked_aim24gcra017_slt2511.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/36/aim_2025_unchecked_aim25gca1018_amt2501.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/151/mts_2025_unchecked_mt24flton005_flt2510.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/8/mts_2025_unchecked_cava25ecl1169_anv2502.pdf",
+      "topper": "Mohit Aggarwal Nadbaiwalla",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/106/mts_2023_unchecked_pttp220280_tc073.pdf",
+      "topper": "Ankit Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/102/mts_2024_unchecked_gspm24a12028_anv2401.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/146/mts_2025_unchecked_mt24flton005_flt2501.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/73/mts_2024_unchecked_gspm24a12028_anv2403.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/10/mts_2025_unchecked_aim24gcra017_slt2501.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2026/3/mts_2024_unchecked_MT24SLTON011_SLT005.pdf",
+      "topper": "Chiranshu Taneja",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/15/mts_2024_unchecked_mt24flton005_flt009.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/27/mts_2023_unchecked_mt23rcapa056_tc709.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/781770142252687b4750b386de5a9f2e/29/aim_2025_unchecked_aim25gca1018_amt2504.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/111/mts_2024_unchecked_mt24flton005_flt005.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 19.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/103/mts_2024_unchecked_mt24flton072_anv2402.pdf",
+      "topper": "Somya Jain",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/138/mts_2023_unchecked_mt23rcapa056_tc704.pdf",
+      "topper": "Muhammed Swalah T A",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -37314,7 +38574,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -37342,7 +38602,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -37356,7 +38616,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -37426,7 +38686,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -38028,7 +39288,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -38070,7 +39330,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -39176,7 +40436,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -39190,7 +40450,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -39274,7 +40534,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -39288,7 +40548,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -40198,7 +41458,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -40268,7 +41528,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -41906,7 +43166,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -41962,7 +43222,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -42760,7 +44020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -43768,7 +45028,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -44650,7 +45910,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -44734,7 +45994,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -44986,7 +46246,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -45140,7 +46400,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -45798,7 +47058,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -45924,7 +47184,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -46176,7 +47436,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -47072,7 +48332,7 @@
       "model": null,
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -47114,7 +48374,7 @@
       "model": null,
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -47227,6 +48487,20 @@
       "geminiPages": 86,
       "salvaged": 0,
       "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/20/mts_2024_unchecked_gspm24a12028_gsmac2404.pdf",
+      "topper": "Darshana Singh Baghel",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 21,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47352,7 +48626,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47366,7 +48640,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19.5,
       "low": false
     },
     {
@@ -47468,6 +48742,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/28/mts_2025_unchecked_gs25d1b39001_eef2504.pdf",
+      "topper": "Aman Jhanwar",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 22,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/visionias_13773_705_Tina.pdf",
       "topper": "Tina Dabi",
       "coaching": "VisionIAS",
@@ -47548,7 +48836,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47562,7 +48850,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47622,6 +48910,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/113/mts_2024_unchecked_mt24flton005_flt004.pdf",
+      "topper": "Himanshu Singh Nimoria",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 23,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1z6HHl0BKTpoyFl9divhC5H8JUp-4ax_p/view",
       "topper": "Nisar Dishant",
       "coaching": "UnlockIAS",
@@ -47646,7 +48948,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47660,7 +48962,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47688,7 +48990,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47702,7 +49004,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47716,7 +49018,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47860,6 +49162,34 @@
       "low": false
     },
     {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/20/mts_2025_unchecked_cava25ecl1169_anv2504.pdf",
+      "topper": "Mohit Aggarwal Nadbaiwalla",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 26,
+      "optional": false,
+      "pages": 68,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/c85cb55fcb443ff744279fa10d00b627/3/mts_2025_unchecked_aim24gcra017_slt2512.pdf",
+      "topper": "Mohit Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 26,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/51/mts_2025_unchecked_pttp220826_eef2504.pdf",
       "topper": "Rahul",
       "coaching": "NextIAS",
@@ -47870,7 +49200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47912,7 +49242,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47926,7 +49256,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -47955,6 +49285,20 @@
       "geminiPages": 88,
       "salvaged": 0,
       "groupMedian": 24,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/cc80e7c81f00eaa4f15f78533b4a4ad5/27/mts_2025_unchecked_mt25ptmr052_pm2514.pdf",
+      "topper": "Aditya Talwar",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 28,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48010,7 +49354,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48024,7 +49368,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48038,7 +49382,21 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/6/mts_2023_unchecked_mt23avea018_tc119.pdf",
+      "topper": "Tushar Chauhan",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 30,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48052,7 +49410,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48066,7 +49424,21 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-cf.nextias.com/file_library/pdf/original/d64273bf3cefb73af9bf1580d4ff1a6f/153/mts_2025_unchecked_mt25flton102_flt2512.pdf",
+      "topper": "Pranshu Gupta",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 31,
+      "optional": false,
+      "pages": 67,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 67,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48080,7 +49452,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48094,7 +49466,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48108,7 +49480,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48122,7 +49494,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48136,7 +49508,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48150,7 +49522,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -48164,7 +49536,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 17.5,
       "low": false
     }
   ]
