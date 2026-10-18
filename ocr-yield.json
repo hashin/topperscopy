@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T13:53:44.201Z",
+  "generated": "2026-10-18T18:59:10.804Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2035,6 +2035,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/priyanshu-agrawal-test-7-1747467995066.pdf",
+      "topper": "Priyanshu Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -5501,6 +5515,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/priyanshu-agrawal-test-6-1747467979814.pdf",
+      "topper": "Priyanshu Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 6,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
