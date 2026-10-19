@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T17:20:04.572Z",
+  "generated": "2026-10-19T21:15:52.760Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2035,6 +2035,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/rahul-shekhar-test-4-1747726694222.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
