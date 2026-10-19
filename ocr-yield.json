@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T18:59:10.804Z",
+  "generated": "2026-10-19T05:30:25.717Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -5515,6 +5515,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/priyanshu-agrawal-test-8-1747468008486.pdf",
+      "topper": "Priyanshu Agrawal",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 6,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
       "low": true
     },
     {
