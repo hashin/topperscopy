@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-20T16:28:17.597Z",
+  "generated": "2026-10-20T20:13:42.250Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2035,6 +2035,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/71/pttp221371_tc074-test-4-gs-4.pdf",
+      "topper": "ARFA USMANI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -4911,7 +4925,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
-      "salvaged": 2,
+      "salvaged": 0,
       "groupMedian": 10,
       "low": true
     },
@@ -12332,6 +12346,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/73/pttp221371_tc075-test-5-gs-1.pdf",
+      "topper": "ARFA USMANI",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 11,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/75/pttp221371_tc072-test-2-gs-2.pdf",
       "topper": "ARFA USMANI",
       "coaching": "NextIAS",
@@ -14313,6 +14341,20 @@
       "count": 12,
       "optional": true,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/72/pttp221371_tc076-test-6-gs-2.pdf",
+      "topper": "ARFA USMANI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 13,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -17197,6 +17239,34 @@
       "geminiPages": 50,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/77/pttp221371_tc077-test-7-gs-3.pdf",
+      "topper": "ARFA USMANI",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 15,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/76/pttp221371_tc074-test-4-gs-4.pdf",
+      "topper": "ARFA USMANI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 1,
+      "groupMedian": 17,
       "low": false
     },
     {
