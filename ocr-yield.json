@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T21:15:52.760Z",
+  "generated": "2026-10-20T05:31:24.341Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2038,6 +2038,20 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/rahul-shekhar-test-5-1747726710441.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 2,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/rahul-shekhar-test-4-1747726694222.pdf",
       "topper": "Rahul Shekhar",
       "coaching": "NextIAS",
@@ -3700,6 +3714,20 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/rahul-shekhar-test-2-1747726668358.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 18,
+      "low": true
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/ritika-test-11-1747226220030.pdf",
       "topper": "Ritika Chitlangia",
       "coaching": "NextIAS",
@@ -4801,6 +4829,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/rahul-shekhar-test-3-1747726679708.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
