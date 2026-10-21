@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-21T15:41:13.320Z",
+  "generated": "2026-10-21T20:23:09.425Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/93/mt23fltpa004_tc039-flt-5-gs-1.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
     {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/136/nias2300020762_tc038-test-4-gs-4.pdf",
       "topper": "ANNA SINHA",
