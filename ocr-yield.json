@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-22T15:33:23.021Z",
+  "generated": "2026-10-22T20:20:13.360Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/41/mt23rcapa074_tc708-test-06-gs-2.pdf",
+      "topper": "AFZAL ALI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/93/mt23fltpa004_tc039-flt-5-gs-1.pdf",
       "topper": "ANIKET KUMAR DWIVEDI",
@@ -3910,6 +3924,34 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/38/mt23rcapa074_tc704-test-02-gs-2.pdf",
+      "topper": "AFZAL ALI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/39/mt23rcapa074_tc706-test-04-gs-4.pdf",
+      "topper": "AFZAL ALI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/90/mt23fltpa004_tc036-flt-2-gs-2.pdf",
       "topper": "ANIKET KUMAR DWIVEDI",
       "coaching": "NextIAS",
@@ -5079,7 +5121,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
-      "salvaged": 2,
+      "salvaged": 0,
       "groupMedian": 19,
       "low": true
     },
@@ -5093,7 +5135,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
-      "salvaged": 2,
+      "salvaged": 0,
       "groupMedian": 19,
       "low": true
     },
@@ -5107,7 +5149,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
-      "salvaged": 1,
+      "salvaged": 0,
       "groupMedian": 19,
       "low": true
     },
@@ -10697,7 +10739,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
-      "salvaged": 1,
+      "salvaged": 0,
       "groupMedian": 20,
       "low": true
     },
