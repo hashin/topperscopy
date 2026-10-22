@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T05:35:43.463Z",
+  "generated": "2026-10-22T15:33:23.021Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -28,7 +28,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -798,7 +798,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -812,7 +812,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 46,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2080,6 +2080,48 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/6df7f0dd101cb9fb1519ae4c086aa556/122/mt23flton014_tc008-test-08-gs-4.pdf",
+      "topper": "PRIYANSHU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 46,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/142/mt23aven011_tc117-test-02-gs-2.pdf",
+      "topper": "ARUSHI BABBAR",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/62/mt23fltra004_tc004-test-04-gs-4.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/24/nias2300020762_tc038-test-4-gs-4.pdf",
       "topper": "ANNA SINHA",
       "coaching": "NextIAS",
@@ -2090,7 +2132,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2104,7 +2146,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2118,7 +2160,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2132,7 +2174,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2202,7 +2244,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2230,7 +2272,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 45,
       "salvaged": 2,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2832,7 +2874,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2860,7 +2902,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 49,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -2888,7 +2930,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -3270,6 +3312,20 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/81/flt-test-12-gs-4.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 3,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/96/aim24gcra040_tc054-test-8-gs-4.pdf",
       "topper": "MAHI SHARMA",
       "coaching": "NextIAS",
@@ -3280,7 +3336,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -3878,7 +3934,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -3962,7 +4018,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -4986,6 +5042,76 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/225/pttp221071_tc072-test-02-gs-2.pdf",
+      "topper": "JAHNAVI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/3/pttp220767_tc072-test-02-gs-2.pdf",
+      "topper": "PRIYANKA PRIYADARSHINI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/45/pttp220280_-test-02-gs-2.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/308/mt23macen232_tc036-test-02-gs-2.pdf",
+      "topper": "KIRTI YADAV",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/115/mt23rcapa111_tc708-test-06-gs-2.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/86/flt-test-6-gs-2.pdf",
       "topper": "ANIKET KUMAR DWIVEDI",
       "coaching": "NextIAS",
@@ -5122,7 +5248,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -5878,7 +6004,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -5892,7 +6018,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -5920,7 +6046,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -6535,6 +6661,20 @@
       "geminiPages": 61,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/13/mt23fltpa004_tc016.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -7760,6 +7900,62 @@
       "low": true
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/14/mt23fltpa004_tc017.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/124/pttp220889_tc073-test-03-gs-3.pdf",
+      "topper": "POOJA MALANI",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 8,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/33/mt23aven011_tc115.pdf",
+      "topper": "ARUSHI BABBAR",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 19,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 19,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/65d93cae1265db5ffeffd2e87a3f6506/6/mt23rtra001_tc159.pdf",
+      "topper": "ANAND SHARMA",
+      "coaching": "NextIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/110/mt23macen224_tc073-test-3-gs-3.pdf",
       "topper": "DEEPESH GAUR",
       "coaching": "NextIAS",
@@ -7784,7 +7980,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -7938,7 +8134,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 25,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -10492,6 +10688,62 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/198/next-ias-test-summary-report-1-gs-3.pdf",
+      "topper": "ANAND SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 9,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 1,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/52/mt23fltpn007_tc041-test-7-gs-3.pdf",
+      "topper": "KAANCHI SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 9,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/80/mt23fltra004_tc001-test-01-gs-1.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 9,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/122/mt23rcapa111_tc709-test-07-gs-3.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 9,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 2,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/116/mt23macen224_tc071-test-1-gs-1.pdf",
       "topper": "DEEPESH GAUR",
       "coaching": "NextIAS",
@@ -11300,7 +11552,7 @@
       "model": null,
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": true
     },
     {
@@ -11340,6 +11592,20 @@
       "salvaged": 0,
       "groupMedian": 14,
       "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/6df7f0dd101cb9fb1519ae4c086aa556/172/pttp220724_tc076-test-06-gs-2.pdf",
+      "topper": "RAJAT TRIPATHI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 10,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/82/aim24gcra040_tc047-test-01-gs-1.pdf",
@@ -12528,8 +12794,8 @@
       "model": null,
       "geminiPages": 66,
       "salvaged": 1,
-      "groupMedian": 17,
-      "low": true
+      "groupMedian": 16,
+      "low": false
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/40aa3-1330430_2931_pavithra-p_rank_42.pdf",
@@ -12888,7 +13154,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 34,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -13434,7 +13700,7 @@
       "model": null,
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -13448,7 +13714,7 @@
       "model": null,
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -13466,6 +13732,34 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/4/mt23rcapa111_tc710-test-08-gs-4.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/146/mt23aven011_tc117-test-02-gs-2.pdf",
+      "topper": "ARUSHI BABBAR",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 12,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/92/aim24gcra017_tc053-test-07gs-4.pdf",
       "topper": "MOHIT GUPTA",
       "coaching": "NextIAS",
@@ -13476,7 +13770,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -13504,7 +13798,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -13840,7 +14134,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -14680,6 +14974,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/138/etrc23on016_tc152-test-02-gs-4.pdf",
+      "topper": "AKHIL T",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 13,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/85/pttp220077_tc071-test-01-gs-1.pdf",
       "topper": "SALONI VATS",
       "coaching": "NextIAS",
@@ -14718,7 +15026,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -14732,7 +15040,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -14746,7 +15054,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -14760,7 +15068,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -15110,7 +15418,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -15264,7 +15572,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -15978,7 +16286,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16080,6 +16388,76 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/11/mt23rcapa111_tc706-test-04-gs-4.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/176/aim24gcl1006_tc054-test-08-gs-4.pdf",
+      "topper": "ARYAN SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/40/pttp220889_tc074-test-04-gs-4.pdf",
+      "topper": "POOJA MALANI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 61,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/141/pttp220767_tc074-test-04-gs-4.pdf",
+      "topper": "PRIYANKA PRIYADARSHINI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/83/igc21la211_tc074-test-04-gs-4.pdf",
+      "topper": "RIJU SHRIVASTAVA",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/12/pttp220590_tc074-test-4-gs-4.pdf",
       "topper": "MADHAV AGARWAL",
       "coaching": "NextIAS",
@@ -16090,7 +16468,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16104,7 +16482,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16118,7 +16496,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16132,7 +16510,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16146,7 +16524,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16160,7 +16538,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -16860,7 +17238,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17648,6 +18026,104 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/67/mt23fltra004_tc006-test-06-gs-2.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 15,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/39/pttp220280_tc074-test-4-gs-4.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 63,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 63,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/18/mt23rcapa011_tc710-test-08-gs-4.pdf",
+      "topper": "NAZISH UMAR ANSARI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/28/mt23macen208_tc038-test-4-gs-4.pdf",
+      "topper": "SIVASAKTHIVEL C",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/202/mt23rtra001_tc158-test-04-gs-4.pdf",
+      "topper": "ANAND SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/66/mt23fltra004_tc004-test-04-gs-4.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 34,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 34,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/92/mt23fltpa004_tc038-flt-4-gs-4.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/3/pttp220074_tc074-test-04-gs-4.pdf",
       "topper": "RIA AGGARWAL",
       "coaching": "NextIAS",
@@ -17658,7 +18134,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17672,7 +18148,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17686,7 +18162,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 61,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17700,7 +18176,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17714,7 +18190,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17742,7 +18218,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17756,7 +18232,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17784,7 +18260,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17826,7 +18302,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -17840,7 +18316,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -18582,7 +19058,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -18764,7 +19240,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -18946,7 +19422,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19338,6 +19814,48 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/135/aim24gcra071_tc053-test-07-gs-4.pdf",
+      "topper": "ANUSHKA KARNWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/64/mt23fltra004_tc003-test-03-gs-3.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 16,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/148/etrc23on016_tc151-test-01-gs-4.pdf",
+      "topper": "AKHIL T",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 61,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/60/mt23fltra027_tc004-test-4-gs-4.pdf",
       "topper": "JASWANT MALIK",
       "coaching": "NextIAS",
@@ -19348,7 +19866,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19362,7 +19880,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19376,7 +19894,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19390,7 +19908,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19404,7 +19922,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19418,7 +19936,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19432,7 +19950,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19460,7 +19978,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -19474,7 +19992,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -20202,7 +20720,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21210,7 +21728,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21480,6 +21998,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/96/mt23fltpa004_tc043-flt-9-gs-1.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/204/pttp220196_tc072-test-02-gs-2.pdf",
       "topper": "SIDDHARTH SRIVASTAVA",
       "coaching": "NextIAS",
@@ -21504,7 +22036,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21518,7 +22050,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21532,7 +22064,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21560,7 +22092,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21574,7 +22106,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21602,7 +22134,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21616,7 +22148,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21644,7 +22176,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21672,7 +22204,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21714,7 +22246,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21728,7 +22260,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21742,7 +22274,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -21756,7 +22288,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -23436,7 +23968,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24304,7 +24836,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24458,6 +24990,90 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/157/pttp221071_tc072-test-02-gs-2.pdf",
+      "topper": "JAHNAVI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/262932451353683940_PDF_ORIGINAL.pdf",
+      "topper": "KAANCHI SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/20/mt23rcapa011_tc704-test-02-gs-2.pdf",
+      "topper": "NAZISH UMAR ANSARI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/41/pttp220280_tc078-test-8-gs-4.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 1,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/40/pttp220280_tc072-test-2-gs-2.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/37/pttp220280_tc071-test-01-gs-1.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/64/mt23fltra027_tc007-test-7-gs-3.pdf",
       "topper": "JASWANT MALIK",
       "coaching": "NextIAS",
@@ -24510,7 +25126,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24524,7 +25140,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24622,7 +25238,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24692,7 +25308,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24720,7 +25336,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -24734,7 +25350,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -25812,7 +26428,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -25980,7 +26596,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29274,6 +29890,118 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/97/mt23fltpa004_tc044-flt-10-gs-2.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/19/mt23rcapa011_tc708-test-06-gs-2.pdf",
+      "topper": "NAZISH UMAR ANSARI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/31/mt23rcapa111_tc708-test-06-gs-2.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/26/mt23macen208_tc039-test-05-gs-1.pdf",
+      "topper": "SIVASAKTHIVEL C",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/18/mt23macen208_tc035-test-01-gs-1.pdf",
+      "topper": "SIVASAKTHIVEL C",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/174/aim24gcl1006_tc056-test-10-gs-2.pdf",
+      "topper": "ARYAN SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/69/mt23fltra004_tc007-test-07-gs-3.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 29,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 29,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/94/mt23fltpa004_tc040-flt-6-gs-2.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/5/pttp221113_tc704-test-02-gs-2.pdf",
       "topper": "SYED ADEEL MOHSIN",
       "coaching": "NextIAS",
@@ -29298,7 +30026,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29354,7 +30082,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29368,7 +30096,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 1,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29396,7 +30124,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29564,7 +30292,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -29592,7 +30320,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -31776,7 +32504,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -33148,7 +33876,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -36576,6 +37304,244 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/9/mt23fltpn007_tc037-test-03-gs-3.pdf",
+      "topper": "KAANCHI SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/29/mt23rcapa111_tc705-test-03-gs-3.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/95/mt23fltpa004_tc041-flt-7-gs-3.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/19/mt23macen208_tc036-test-02-gs-2.pdf",
+      "topper": "SIVASAKTHIVEL C",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/6/mt23rcapa111_tc709-test-07-gs-3.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/163/pttp220767_tc072-test-02-gs-2.pdf",
+      "topper": "PRIYANKA PRIYADARSHINI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/98/mt23fltpa004_tc045-flt-11-gs-3.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/7/mt23fltpn007_tc041-test-7-gs-3.pdf",
+      "topper": "KAANCHI SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/ff162fc0430025272826e0c794787a7c/41/pttp220889_tc073-test-03-gs-3.pdf",
+      "topper": "POOJA MALANI",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/38/pttp220280_tc073-test-3-gs-3.pdf",
+      "topper": "ANKIT AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/23/mt23rcapa011_tc707-test-05-gs-1.pdf",
+      "topper": "NAZISH UMAR ANSARI",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/63/mt23fltra004_tc001-test-01-gs-1.pdf",
+      "topper": "JIGYASU AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/83810dd59efd30c0b535c81e08a356c1/2/mt23rcapa111_tc707-test-05-gs-1.pdf",
+      "topper": "AREEBA NOMAAN",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/212/mt23rtra001_tc155-test-01-gs-1.pdf",
+      "topper": "ANAND SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/748520c30390b56bbbd3f8693a3b3ea3/8/mt23fltpn007_tc035-test-01-gs-1.pdf",
+      "topper": "KAANCHI SINGHAL",
+      "coaching": "NextIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/205/mt23rtra001_tc157-test-03-gs-3.pdf",
+      "topper": "ANAND SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 55,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/161/mt23rcapa116_tc705-test-3-gs-3.pdf",
+      "topper": "FARHEEN ZAHID",
+      "coaching": "NextIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/218/aim24gcra017_tc050-test-04gs-2.pdf",
       "topper": "MOHIT GUPTA",
       "coaching": "NextIAS",
@@ -37524,7 +38490,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -37594,7 +38560,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -37748,7 +38714,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -38126,7 +39092,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -38210,7 +39176,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -44454,7 +45420,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -50264,7 +51230,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52546,7 +53512,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52672,7 +53638,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52798,7 +53764,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52812,7 +53778,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52826,7 +53792,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52910,7 +53876,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52924,7 +53890,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -52994,7 +53960,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53008,7 +53974,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53022,7 +53988,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53036,7 +54002,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53064,7 +54030,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53078,7 +54044,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53106,7 +54072,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53120,7 +54086,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53134,7 +54100,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53180,6 +54146,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/483e3cadc792e8104ef0e81a3406ba04/178/aim24gcl1006_tc058-test-12-gs-4.pdf",
+      "topper": "ARYAN SHARMA",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 25,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/sidaq-singh-test-3-1747638499423.pdf",
       "topper": "Sidaq Singh",
       "coaching": "NextIAS",
@@ -53190,7 +54170,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53204,7 +54184,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53306,6 +54286,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/99/mt23fltpa004_tc046-flt-12-gs-4.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 26,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": false
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/sahil-test-2-1747726918791.pdf",
       "topper": "Sahil",
       "coaching": "NextIAS",
@@ -53316,7 +54310,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53330,7 +54324,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53344,7 +54338,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53358,7 +54352,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53400,7 +54394,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53414,7 +54408,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53428,7 +54422,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53470,7 +54464,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53526,7 +54520,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53540,7 +54534,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53554,7 +54548,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53568,7 +54562,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53582,7 +54576,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53596,7 +54590,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53610,7 +54604,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53624,7 +54618,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53638,7 +54632,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 67,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53652,7 +54646,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53666,7 +54660,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53680,7 +54674,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53694,7 +54688,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53708,7 +54702,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53722,7 +54716,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53736,7 +54730,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     },
     {
@@ -53750,7 +54744,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 16,
       "low": false
     }
   ]
