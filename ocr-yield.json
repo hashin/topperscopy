@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-21T20:23:09.425Z",
+  "generated": "2026-10-22T05:35:43.463Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -4983,6 +4983,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/86/flt-test-6-gs-2.pdf",
+      "topper": "ANIKET KUMAR DWIVEDI",
+      "coaching": "NextIAS",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 1,
+      "groupMedian": 19,
       "low": true
     },
     {
