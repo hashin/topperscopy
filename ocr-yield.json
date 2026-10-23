@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-22T20:20:13.360Z",
+  "generated": "2026-10-23T05:34:36.308Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/43/mt23rcapa074_tc710-test-08-gs-4.pdf",
+      "topper": "AFZAL ALI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 16,
+      "low": true
+    },
     {
       "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/41/mt23rcapa074_tc708-test-06-gs-2.pdf",
       "topper": "AFZAL ALI",
@@ -7939,6 +7953,20 @@
       "count": 7,
       "optional": true,
       "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/022c58f3f0988adf83a584c53e9d0ac5/36/mt23rcapa074_tc710-test-08-gs-4.pdf",
+      "topper": "AFZAL ALI",
+      "coaching": "NextIAS",
+      "subject": "GS4",
+      "count": 8,
+      "optional": false,
+      "pages": 5,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 5,
+      "salvaged": 0,
+      "groupMedian": 16,
       "low": true
     },
     {
