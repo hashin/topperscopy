@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T15:10:49.814Z",
+  "generated": "2026-10-23T20:10:32.895Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -5135,7 +5135,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 5,
-      "salvaged": 1,
+      "salvaged": 0,
       "groupMedian": 20,
       "low": true
     },
@@ -6061,6 +6061,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Ashish-Singhal-MGP-Copy-GS-Paper.pdf",
+      "topper": "Ashish Kumar",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 6,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 9,
       "low": true
     },
     {
@@ -7726,7 +7740,7 @@
       "subject": "GS1",
       "count": 7,
       "optional": false,
-      "groupMedian": 13.5,
+      "groupMedian": 9,
       "low": true
     },
     {
@@ -8077,7 +8091,7 @@
       "pages": 5,
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 5,
-      "salvaged": 1,
+      "salvaged": 0,
       "groupMedian": 20,
       "low": true
     },
@@ -11800,7 +11814,7 @@
       "subject": "GS1",
       "count": 9,
       "optional": false,
-      "groupMedian": 13.5,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -25644,7 +25658,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 13.5,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -30726,7 +30740,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 13.5,
+      "groupMedian": 9,
       "low": false
     },
     {
