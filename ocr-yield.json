@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T20:10:32.895Z",
+  "generated": "2026-10-24T05:13:32.777Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2040,7 +2040,7 @@
       "subject": "GS4",
       "count": 1,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -2105,6 +2105,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Ashish-Singhal-MGP-Copy-Ethics-Paper.pdf",
+      "topper": "Ashish Kumar",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 2,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -3296,7 +3310,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -3306,7 +3320,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -3874,7 +3888,7 @@
       "subject": "GS4",
       "count": 3,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -5046,7 +5060,7 @@
       "subject": "GS4",
       "count": 4,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": true
     },
     {
@@ -11884,7 +11898,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": false
     },
     {
@@ -13218,7 +13232,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": false
     },
     {
@@ -20160,7 +20174,7 @@
       "subject": "GS4",
       "count": 15,
       "optional": false,
-      "groupMedian": 3.5,
+      "groupMedian": 3,
       "low": false
     },
     {
