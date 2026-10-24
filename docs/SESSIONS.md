@@ -1058,3 +1058,17 @@ the five scripts and the measurement traps; saved the repeat-visit harness as `t
 hero workflow had never succeeded; build-first, erase colour, no needless re-encode). CLAUDE.md: hero workflow, perf tools,
 dataset `byProvenance`, a performance open item, and an INTENT-11 note on the old Netlify suggestion.
 **State for the next session.** Everything is on `main` and deployed; `npm run check` 32/32. Start with `PERF-AUDIT-2026-10-04.md` §7.
+
+## 2026-10-23 — Performance audit after the OCR pass
+**Asked.** "do a performance audit … with relevant metrics, and also through the chrome extension, and give a detailed plan … Don't over do it."
+**Did.** Measured only (no code change): `sizes.mjs`, `browser.cjs` against production, and Claude-in-Chrome on the live site.
+Written up in `docs/PERF-AUDIT-2026-10-23.md`. **Found red on arrival:** `npm run check` 27/32. Five size budgets are over
+because OCR took the index from 54k to 76k questions. Cold slow-4G search now completes in 10.7 → 13.4 s; `/` after idle
+1.5 → 1.9 MB. Boot, CLS, input delay and repeat visits are unchanged and fine.
+**Left.** Plan: (1) re-baseline the budgets so `update-hero.yml` doesn't fail on Nov 1; (2) a build-time prefix token index
+(DECISION-17 option C) before the next large OCR batch. That one needs Hashin's OK, because word-start matching replaces substring matching.
+
+## 2026-10-23 (cont.) — Budgets re-baselined
+**Asked.** "Yes, re-baseline the five budgets as the audit proposes." **Did.** `tools/check.mjs` + `docs/INVARIANTS.md`: gs3 120→150,
+essay 30→36, other 30→48, prefetch total 1,100→1,550, search total 1,500→2,100 KB, each with its measured value and reason.
+`npm run check` 32/32. Nothing else changed. **Left.** Step 2 of `PERF-AUDIT-2026-10-23.md` (token index) — awaiting Hashin.

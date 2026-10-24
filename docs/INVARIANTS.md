@@ -46,16 +46,17 @@ npm run check        # ~2 seconds, plain Node, no browser
 
 The table at the top of `tools/check.mjs` is the source of truth. Each ceiling is the value measured
 on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus grows past one
-(the OCR pass adds questions), raise the ceiling deliberately in the same commit and say why.
+(the OCR pass adds questions), raise the ceiling deliberately in the same commit and say why. Last re-baselined 2026-10-23
+(gs3, essay, other, prefetch total, search total) after the OCR pass — see `PERF-AUDIT-2026-10-23.md`.
 
 | Budget | Covers | Ceiling |
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
 | `app.js` | `assets/app.js` alone (DECISION-2) | 28 KB |
-| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,100 KB |
-| `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 1,500 KB |
+| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,550 KB |
+| `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 2,100 KB |
 | `deep part` | the largest single `questions-*-deep.json` | 160 KB |
-| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 120 · 690 · 30 · 30 · 55 KB |
+| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 150 · 690 · 36 · 48 · 55 KB |
 
 ## Not checkable, still true
 

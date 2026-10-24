@@ -29,22 +29,27 @@ const BUDGETS = {
   'app.js': { ceiling: 28, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
   'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
-  'shard gs3': { ceiling: 120, shard: 'gs3', why: '' },
+  // gs3 120 -> 150, essay 30 -> 36, other 30 -> 48 KB 2026-10-23: the Gemini OCR pass grew the index 54k -> 76k questions
+  // (gs3 137.3, essay 31.8, other 43.3 KB measured). gs3 now sits at SHARD_PART_TARGET_KB — past it, build.js splits it.
+  'shard gs3': { ceiling: 150, shard: 'gs3', why: '' },
   'shard gs4': { ceiling: 690, shard: 'gs4', why: 'GS4 case studies are long — this is the one to watch' },
   // essay 25 -> 30, optional 20 -> 55 KB 2026-10-04: both were stale, failing since the OCR passes grew them (essay 25.1, optional
   // 46.4 KB measured). Optional is the one that keeps growing; a part auto-splits at SHARD_PART_TARGET_KB (150) in build.js, so
   // these ceilings are early-warning thresholds well under that, not the point where a download becomes a problem.
-  'shard essay': { ceiling: 30, shard: 'essay', why: '' },
-  'shard other': { ceiling: 30, shard: 'other', why: '' },
+  'shard essay': { ceiling: 36, shard: 'essay', why: '' },
+  'shard other': { ceiling: 48, shard: 'other', why: '' },
   'shard optional': { ceiling: 55, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
   // Everything a visitor on a fast connection downloads in the background after boot: all shard parts + syllabus.
   // Measured 1,458 KB on 2026-10-03 (DECISION-25); 969 KB on 2026-10-04 once long questions moved to -deep files and
   // near-duplicates merged (DECISION-28). This is the number that grows with the corpus (~12 KB/day at the 2026-10 OCR pace).
   // Raise it deliberately, with the corpus growth that forced it, never to silence a red check.
-  'prefetch total': { ceiling: 1100, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
+  // 1100 -> 1550 KB 2026-10-23: 1,380 KB measured after the OCR pass took the index 54k -> 76k questions (PERF-AUDIT-2026-10-23).
+  'prefetch total': { ceiling: 1550, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
   // What a first-visit search with no paper filter waits for before its result is complete: every part, every -deep file,
   // syllabus. 1,358 KB on 2026-10-04 (DECISION-28). On a 1.6 Mbps phone each 100 KB here is ~0.5 s (PERF-AUDIT-2026-10-04).
-  'search total': { ceiling: 1500, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
+  // 1500 -> 2100 KB 2026-10-23: 1,883 KB after the same OCR pass; cold slow-4G search 10.7 -> 13.4 s. The fix for this growth
+  // is a token index (PERF-AUDIT-2026-10-23 step 2), not more raises.
+  'search total': { ceiling: 2100, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
   // A -deep file is fetched on its own (two papers at a time), so the ceiling is per file, like the part budgets.
   'deep part': { ceiling: 160, files: [], deepPart: true, why: 'largest single questions-*-deep.json (GS4 case studies)' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
