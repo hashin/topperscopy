@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25T14:26:49.683Z",
+  "generated": "2026-10-25T19:16:48.592Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2175,6 +2175,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/NITESH-KUMAR-MISHRA-UPSC-2023-Rank-158-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Nitesh Kumar Mishra",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
