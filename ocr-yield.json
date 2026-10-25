@@ -1,8 +1,36 @@
 {
-  "generated": "2026-10-24T19:02:51.792Z",
+  "generated": "2026-10-25T05:30:14.495Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Rohit-Tyagi-UPSC-2023-Rank-74-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Rohit Tyagi",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 65,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AKSHYA-DOSHI-UPSC-2023-Rank-75-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Akshya Doshi",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
     {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AKSHYA-DOSHI-UPSC-2023-Rank-75-MGP-Answer-Copy-GS-Paper.pdf",
       "topper": "Akshya Doshi",
@@ -42,7 +70,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -2082,7 +2110,7 @@
       "subject": "GS4",
       "count": 1,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -2150,6 +2178,20 @@
       "low": true
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AKSHYA-DOSHI-UPSC-2023-Rank-75-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Akshya Doshi",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 18,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Rohit-Tyagi-UPSC-2023-Rank-74-MGP-Answer-Copy-GS-Paper-2.pdf",
       "topper": "Rohit Tyagi",
       "coaching": "ForumIAS",
@@ -2174,7 +2216,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -3366,7 +3408,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -3376,7 +3418,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -3386,7 +3428,7 @@
       "subject": "Essay",
       "count": 2,
       "optional": false,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -3434,7 +3476,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -3958,7 +4000,7 @@
       "subject": "GS4",
       "count": 3,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -4036,6 +4078,20 @@
       "low": true
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AKSHYA-DOSHI-UPSC-2023-Rank-75-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Akshya Doshi",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 5.5,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Rohit-Tyagi-UPSC-2023-Rank-74-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Rohit Tyagi",
       "coaching": "ForumIAS",
@@ -4046,7 +4102,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -4074,7 +4130,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 16,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -4088,7 +4144,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -4102,7 +4158,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -4116,7 +4172,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 38,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -5214,7 +5270,7 @@
       "subject": "GS4",
       "count": 4,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": true
     },
     {
@@ -6954,7 +7010,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": true
     },
     {
@@ -8204,7 +8260,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -8218,7 +8274,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -8232,7 +8288,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 25,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -8246,7 +8302,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -8260,7 +8316,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -8274,7 +8330,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -11202,7 +11258,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 5.5,
       "low": false
     },
     {
@@ -12136,7 +12192,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 2,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -12150,7 +12206,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -12192,7 +12248,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -13526,7 +13582,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -13602,7 +13658,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -13616,7 +13672,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -13630,7 +13686,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -14442,7 +14498,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -14456,7 +14512,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -14470,7 +14526,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -14484,7 +14540,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -14498,7 +14554,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15782,7 +15838,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15796,7 +15852,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15810,7 +15866,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15824,7 +15880,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15838,7 +15894,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15852,7 +15908,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15866,7 +15922,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -15880,7 +15936,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -17350,7 +17406,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -17364,7 +17420,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -20748,7 +20804,7 @@
       "subject": "GS4",
       "count": 15,
       "optional": false,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -20818,7 +20874,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -20846,7 +20902,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -20860,7 +20916,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -31664,7 +31720,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -39694,7 +39750,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -39764,7 +39820,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -56970,7 +57026,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -57418,7 +57474,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 12,
       "low": false
     },
     {
