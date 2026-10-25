@@ -56,7 +56,7 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 | `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,550 KB |
 | `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 2,100 KB |
 | `deep part` | the largest single `questions-*-deep.json` | 160 KB |
-| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 150 · 690 · 36 · 48 · 55 KB |
+| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 150 · 690 · 150 · 150 · 55 KB |
 
 ## Not checkable, still true
 

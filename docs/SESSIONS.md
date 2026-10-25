@@ -1072,3 +1072,10 @@ because OCR took the index from 54k to 76k questions. Cold slow-4G search now co
 **Asked.** "Yes, re-baseline the five budgets as the audit proposes." **Did.** `tools/check.mjs` + `docs/INVARIANTS.md`: gs3 120→150,
 essay 30→36, other 30→48, prefetch total 1,100→1,550, search total 1,500→2,100 KB, each with its measured value and reason.
 `npm run check` 32/32. Nothing else changed. **Left.** Step 2 of `PERF-AUDIT-2026-10-23.md` (token index) — awaiting Hashin.
+
+## 2026-10-25 — `shard other` and `shard essay` budgets → 150 KB
+**Asked.** "raise the Other budget to 150 KB like GS3, commit and push". **Did.** Three OCR commits after the 10-23 re-baseline took
+`questions-other.json` 43 → 78 KB; ceiling now equals `SHARD_PART_TARGET_KB` (build.js splits past it). Essay (36.1 / 36 KB after four more OCR commits) raised the same way. **Note.** The 10-23 push
+went out with this check red (the push wasn't gated on the check) — fixed here. Other is the fastest-growing paper; its rows are
+worth a look to see whether they belong in Other. Totals at 1,488 / 1,550 and 2,003 / 2,100 KB — when they go red, build the token index
+(PERF-AUDIT-2026-10-23 step 2) rather than raising them again.
