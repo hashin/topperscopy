@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-26T17:43:04.758Z",
+  "generated": "2026-10-26T21:13:49.621Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SAMEER-GOEL-UPSC-2023-Rank-222-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Sameer Goel",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 1,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
     {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DIPTI-MONALI-UPSC-2023-Rank-184-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Dipti Monali",
@@ -5532,6 +5546,20 @@
       "low": true
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SAMEER-GOEL-UPSC-2023-Rank-222-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Sameer Goel",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 5,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ANAKHA-K-VIJAY-UPSC-2023-Rank-220-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Anakha K Vijay",
       "coaching": "ForumIAS",
@@ -7291,6 +7319,20 @@
       "geminiPages": 61,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ANAKHA-K-VIJAY-UPSC-2023-Rank-220-MGP-Answer-Copy-Ethics-Paper-2.pdf",
+      "topper": "Anakha K Vijay",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 7,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 12,
       "low": true
     },
     {
