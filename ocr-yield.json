@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-27T16:26:21.798Z",
+  "generated": "2026-10-27T20:59:51.398Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -5686,6 +5686,34 @@
       "low": true
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ANKUR-KUMAR-UPSC-2023-Rank-286-MGP-Answer-Copy-GS-Paper-4.pdf",
+      "topper": "Ankur Kumar",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AJAY-YADAV-UPSC-2023-Rank-290-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Ajay Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 5,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SAMEER-GOEL-UPSC-2023-Rank-222-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Sameer Goel",
       "coaching": "ForumIAS",
@@ -7473,6 +7501,34 @@
       "geminiPages": 61,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ANKUR-KUMAR-UPSC-2023-Rank-286-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Ankur Kumar",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 7,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AJAY-YADAV-UPSC-2023-Rank-290-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Ajay Yadav",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 7,
       "low": true
     },
     {
