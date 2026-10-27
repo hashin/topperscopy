@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26T21:13:49.621Z",
+  "generated": "2026-10-27T05:49:17.199Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2217,6 +2217,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHUBHAM-UPSC-2023-Rank-223-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Shubham",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -5543,6 +5557,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SAMEER-GOEL-UPSC-2023-Rank-222-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Sameer Goel",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 12,
       "low": true
     },
     {
