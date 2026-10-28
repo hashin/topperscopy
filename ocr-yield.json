@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T17:11:40.780Z",
+  "generated": "2026-10-28T21:20:27.300Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2259,6 +2259,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Harseerat-Kaur-UPSC-2023-Rank-328-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Harseerat Kaur",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 38,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
