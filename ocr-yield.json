@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-27T20:59:51.398Z",
+  "generated": "2026-10-28T06:27:09.184Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/AJAY-YADAV-UPSC-2023-Rank-290-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Ajay Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
     {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/HARSHIT-VERMA-UPSC-2023-Rank-272-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Harshit Verma",
@@ -4271,6 +4285,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SURAJ-KUMAR-UPSC-2023-Rank-294-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Suraj Kumar",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 7,
       "low": true
     },
     {
