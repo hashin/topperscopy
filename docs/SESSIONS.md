@@ -1120,3 +1120,11 @@ ForumIAS answers; `?syl=bogus` → URL cleaned, 340 ethics questions; interview 
 and Browse tab sit 16 px in, no sideways scroll; no console errors. The Practice hover fix was checked by its selector, not a real
 hover (the pane's hover landed off the chip). `sw.js` VERSION not bumped — stale-while-revalidate delivers the new shell on the
 next visit and the old shell reads the new data fine.
+
+## 2026-10-29 (cont.) — Chemistry copies from DIAS India
+**Asked.** "add chemistry topper's copy from https://diasindia.com/Toppers_copy". **Did.** Five link-only Chemistry test-series
+copies appended to `data/optionals.json` (source "DIAS India", all five PDFs return 200 `application/pdf`): Navneet Mishra (Test 5),
+Sagar Jain (Test 5), Pawan Kumar Pandey (Tests 1, 3, 4). `year: 2024` is from the filenames. **Not set:** AIR (the page gives none) and
+`marks` — the number in each filename (152–161) is unlabeled on the page, so it sits in `note` only. `npm run check` 32/32.
+**Open.** `nameKey()` merged the DIAS Pawan Kumar Pandey into the existing VisionIAS one (Essay/GS, URL says rank 138) — assumed the same
+person (exact name), not confirmed. If not, disambiguate the name (DECISION-22). The page's other optionals (Physics, Maths) were not added — not asked.
