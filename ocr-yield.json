@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T17:59:01.130Z",
+  "generated": "2026-10-29T21:27:05.439Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -28,7 +28,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -42,7 +42,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2360,6 +2360,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1O7B84J29PbNtKahl19Qpniwix7_UjXDr/view",
+      "topper": "Prashant Raj",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 47,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1PhZ7PyMzk5X6EeAKPnF4eoJtOO8U_TyY/view",
       "topper": "Akanchha Singh",
       "coaching": "Community sheet",
@@ -4416,7 +4430,7 @@
       "subject": "GS1",
       "count": 3,
       "optional": false,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -7058,6 +7072,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1CTQEt8sgzFo6VnpkqVycR7FxYt8dqS6Z/view",
+      "topper": "Kush Motwani",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 6,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARPIT-KUMAR-UPSC-2023-Rank-136-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Arpit Kumar",
       "coaching": "ForumIAS",
@@ -9356,6 +9384,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1usgJpoaH63EyuCk9wnJmwVmA1I8BKe3C/view",
+      "topper": "Rahul Srivastava",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1SZQ96px6vgw2Ce2COyRfkUR8Mm5uSt2R/view",
       "topper": "Apurv Anand",
       "coaching": "Community sheet",
@@ -9408,8 +9450,8 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 17,
-      "low": true
+      "groupMedian": 11,
+      "low": false
     },
     {
       "url": "https://drive.google.com/file/d/1q_3TzpJwdxnckN4HJXmRW8Mwa9EHzLHu/view",
@@ -15605,6 +15647,20 @@
       "geminiPages": 46,
       "salvaged": 5,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1DLzL-tQPxTq34FNtBrBYAAj5tNfgpQj3/view",
+      "topper": "Priyansha Garg",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 11,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23716,7 +23772,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -26068,7 +26124,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -35290,7 +35346,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -35332,7 +35388,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -35360,7 +35416,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -35374,7 +35430,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -35402,7 +35458,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 17,
+      "groupMedian": 11,
       "low": false
     },
     {
