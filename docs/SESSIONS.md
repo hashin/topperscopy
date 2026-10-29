@@ -1079,3 +1079,44 @@ essay 30→36, other 30→48, prefetch total 1,100→1,550, search total 1,500�
 went out with this check red (the push wasn't gated on the check) — fixed here. Other is the fastest-growing paper; its rows are
 worth a look to see whether they belong in Other. Totals at 1,488 / 1,550 and 2,003 / 2,100 KB — when they go red, build the token index
 (PERF-AUDIT-2026-10-23 step 2) rather than raising them again.
+
+## 2026-10-27 — UI bug hunt on the live site (Claude-in-Chrome + built-in browser at 375 px)
+**Asked.** "go through the chrome extension to spot any UI hiccups or bugs. test thoroughly". **Did.** Tested only, no code change.
+No console errors anywhere. Search edge cases, URL sync, paper chips, filters, Practice, Optionals, Interviews, Submit, About,
+static pages, dark/light, mobile all work. **Found:** (1) Questions view ignores the topper/source/year/sort filters
+(`renderQuestions()` never reads them) though they stay visible and count in the Filters badge; (2) Source dropdown splits
+institutes by spelling (ForumIAS 706 / Forumias 482, NextIAS/Nextias, VisionIAS/Visionias/Vision, Lukmaan×3) — the variants come
+from `questions.csv`'s coaching column; (3) 4 polluted topper names split people ("Anmol Rathore UPSC IAS 2023 Topper AIR 7",
+"Yogesh Dilhor UPSC IAS 2023 Topper AIR 5", "Gaurav Kumar (AIR 377)", "PRAGATI Rank"); (4) dead links: all 17 aptiplus.in (IAS Gyan)
+copies 404, 9 of 40 IMS4Maths 404/redirect to an HTML page; (5) Practice paper chip text vanishes on hover when selected (CSS
+specificity, style.css:627 beats :628); (6) a query in quotes ("federalism") or with punctuation ("women; empowerment") finds 0;
+(7) "Report a problem" glued to question text in Questions view; (8) Submit: button says "link above", the field is below, its
+own error says "below"; (9) no custom 404 page; (10) unknown `?syl=` shows "0 questions … in bogus"; (11) 277 interviews show a
+"0 questions" badge; (12) mobile header logo/Browse tab flush to the left edge; (13) 35 Essay rows are OCR'd essay outlines
+("1) What is winter? 2) …"). Also: CLAUDE.md still says upsckata is credited on About — DECISION (2026-09-17, d4f68b7) dropped it.
+
+## 2026-10-29 — Fixed all 13 findings from the 10-27 UI review
+**Asked.** "fix all 13", show before committing. **Did.**
+- `app.js`: Questions view applies topper/source/year (a question stays if a chosen copy answered it; the card lists only those
+  answers) and the sort (newest year, best AIR, A–Z, else most answers). `terms()` strips quotes and list punctuation
+  (`"` `“”‘’` `;,!?()[]{}`; apostrophes and hyphens kept). An unknown `?syl=` is dropped once the syllabus loads. An interview whose
+  source count is 0 (notes written as "Q) …" with no "?") shows its word count instead of "0 questions".
+- `style.css`: mobile header `padding: 10px 0` zeroed `.wrap`'s gutter → top/bottom only; "Report a problem" on its own line in
+  question cards; Practice chip hover rule excludes the selected chip. `index.html`: Submit says "link below". New root `404.html`.
+- `build.js`: `SOURCE_ALIAS` folds the coaching spellings (Forumias, Nextias, Vision/Visionias, Lukmaan/Lukmaanias, Insights,
+  Vajiram, Gsscore, Raus, "Unknown"→none) into one Source entry each. `cleanName()` cuts "… UPSC … Topper …" captions and a
+  trailing " Rank" before canonicalisation (Anmol Rathore, Yogesh Dilhor, PRAGATI each now one profile). **"Gaurav Kumar (AIR 377)"
+  was left alone** — it is DECISION-22's deliberate tag for a second Gaurav Kumar (AIR 34/2017 is a different person); 10-27's
+  finding was wrong about it. "UnlockIAS (aggregator)", "Mgp", "Iasprepkit" left as they are (unsure they are the same institute).
+- Data: re-checked the 26 dead links (17 aptiplus.in 404; IMS4Maths 5×404 + 4 redirecting to HTML pages) and removed them from
+  `link-copies.json` (17) and `optionals.json` (9) — 9,126 → 9,100 copies, 1,709 → 1,701 toppers (those toppers' `/topper/`
+  pages now 404 to the new page). `questions.exclude.json`: 16 essay-outline/answer-opening keys (19 rows; the essay index has 17 fewer distinct
+  questions) — the 10-27 "35" was an overcount that included the essay papers' printed topic lists, which are real. One outline
+  ("1 Philosophical underpinnings …") is kept: it is the only row of Kiran Kamate's Essay copy, and excluding it dropped the copy.
+- CLAUDE.md: upsckata credit lines now say README + dataset/README only.
+**Verified.** `node build.js && npm run check` 32/32. Local server in the built-in browser: `"federalism"` 492 copies;
+"women; empowerment" 41 questions; Questions view "federalism" 101 → 20 with Source=ForumIAS, AIR sort lists AIR 7 first, only
+ForumIAS answers; `?syl=bogus` → URL cleaned, 340 ethics questions; interview badge "257 words"; 404 page renders; at 375 px the logo
+and Browse tab sit 16 px in, no sideways scroll; no console errors. The Practice hover fix was checked by its selector, not a real
+hover (the pane's hover landed off the chip). `sw.js` VERSION not bumped — stale-while-revalidate delivers the new shell on the
+next visit and the old shell reads the new data fine.

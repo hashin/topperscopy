@@ -4,8 +4,8 @@ Free static site: a searchable directory of UPSC Mains topper answer copies. Liv
 **https://topperscopy.hashin.me** (GitHub Pages; `.github/workflows/deploy.yml` runs `node build.js` on
 every push to `main` and deploys the result — nothing generated is committed). No backend. Everything free.
 
-Origin: a re-skin + extension of **upsckata.com "Topper Copies"** (credit it everywhere — README, About,
-`llms.txt`, `dataset/README.md`). Its `questions.csv` is the GS/Essay searchable core. We add optional
+Origin: a re-skin + extension of **upsckata.com "Topper Copies"** (credited in `README.md` (INV-5) and
+`dataset/README.md` — deliberately not on the live site since 2026-09-17, DECISION-20). Its `questions.csv` is the GS/Essay searchable core. We add optional
 subjects, per-topper AIR/marks, link-only copies from other coaching sites, a submission workflow, dark
 mode, and a dataset backup.
 
@@ -253,5 +253,5 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 - Vanilla ES5-ish in `app.js`, no frameworks, no bundler, no TypeScript. `build.js` has zero runtime deps.
 - Keep it free and static. No paid services in the request path. Analyser/OCR libs load from CDN, lazily.
 - Every "Open PDF/copy" link points to a third-party host — **nothing is re-hosted**. Keep credit to
-  upsckata.com where it is (README, About, `llms.txt`, `dataset/README.md`).
+  upsckata.com where it is (`README.md`, `dataset/README.md`).
 - Comments say *why*; a reader should never need `docs/archive/` to understand a line.

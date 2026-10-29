@@ -208,7 +208,15 @@ function loadSources() {
 // and every source row is rewritten to it before anything else runs.
 const nameKey = s => String(s || '').trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 
+// Some sources put a caption in the name field ("Anmol Rathore UPSC IAS 2023 Topper AIR 7",
+// "PRAGATI Rank"), which split one person into two profiles. Only those caption shapes are cut:
+// a bare "(AIR 377)" tag is a deliberate disambiguation of two people (DECISION-22) and stays.
+const cleanName = s => String(s || '').replace(/\s+UPSC\b.*\bTopper\b.*$/i, '').replace(/\s+Rank$/i, '').trim();
+
 function canonicaliseNames({ rows, optionals, links }) {
+  rows.forEach(r => { r.topper = cleanName(r.topper); });
+  optionals.forEach(o => { if (o && o.topper) o.topper = cleanName(o.topper); });
+  links.forEach(e => { if (e && e.topper) e.topper = cleanName(e.topper); });
   const counts = new Map();
   const bump = s => { const t = String(s || '').trim(); if (t) counts.set(t, (counts.get(t) || 0) + 1); };
   rows.forEach(r => bump(r.topper)); optionals.forEach(o => bump(o.topper)); links.forEach(e => bump(e.topper));
@@ -308,9 +316,18 @@ function buildCopies({ rows, optionals, links }) {
   }
   if (optNowSearchable) console.log(`info: ${optNowSearchable} optionals.json PDFs are also question-searchable via OCR — fine, but the OCR pipeline should fold their questions into optionals.json.`);
 
+  // One institute, one Source filter entry: the mirror's coaching column spells some institutes
+  // several ways, and picking "ForumIAS" silently hid the 482 copies filed as "Forumias".
+  for (const c of copies) c.c = SOURCE_ALIAS[c.c.toLowerCase()] ?? c.c;
   copies.forEach((c, i) => { c.idx = i; });   // source order — the toppers table and the hub pages read it
   return copies;
 }
+
+const SOURCE_ALIAS = {
+  forumias: 'ForumIAS', nextias: 'NextIAS', vision: 'VisionIAS', visionias: 'VisionIAS',
+  lukmaan: 'Lukmaan IAS', lukmaanias: 'Lukmaan IAS', insights: 'Insights IAS', vajiram: 'Vajiram & Ravi',
+  gsscore: 'GS SCORE', raus: "Rau's IAS", unknown: ''
+};
 
 // One entry per display name. AIR / year resolve here, once: the first copy in source order that
 // carries one (file-name parse, then the link/optional entry's own value), then maintainer

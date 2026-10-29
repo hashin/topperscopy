@@ -572,7 +572,9 @@
   }
 
   /* ---------- browse: search ---------- */
-  function terms() { return state.q.toLowerCase().split(/\s+/).filter(Boolean); }
+  // Quotes and list punctuation are how people type a query, not part of the words they want:
+  // '"federalism"' and 'women; empowerment' should find what 'federalism' and 'women empowerment' do.
+  function terms() { return state.q.toLowerCase().replace(/["“”‘’;,!?()\[\]{}]+/g, ' ').split(/\s+/).filter(Boolean); }
   // "All words": every term is a substring; "Exact phrase": the joined query is a substring.
   function matches(lc, ts, mode) {
     if (mode === 'exact') return lc.indexOf(ts.join(' ')) >= 0;
@@ -800,9 +802,18 @@
   }
 
   /* ---------- questions view ---------- */
+  function refOk(c) {
+    return (!state.topper || c.t === state.topper) && (!state.source || c.c === state.source) && (!state.year || String(yearOf(c)) === state.year);
+  }
+  function best(q) { return Math.min.apply(null, q.refs.map(function (r) { return airOf(r.c) || 1e9; })); }
+  function newest(q) { return Math.max.apply(null, q.refs.map(function (r) { return yearOf(r.c); })); }
   function renderQuestions() {
     var box = $('#results'), meta = $('#resultmeta'), ts = terms(), list = [], loading = false, failed = false, missing = [];
+    var byCopyFilter = state.topper || state.source || state.year;
     ensureSyllabus();
+    // An old or mistyped ?syl= would otherwise read "0 questions … in bogus"; once the syllabus is
+    // in, a topic it does not have is dropped.
+    if (SYL && state.syl && sylLabel(state.syl) === state.syl) { state.syl = ''; var ss = $('#syl'); if (ss) ss.value = ''; syncUrl(); }
     shardsFor(state.paper).forEach(function (name) {
       var sh = SHARDS[name];
       if (!sh || !DEEP[name]) { if (SHARD_ERR[name]) failed = true; else { loading = true; missing.push(name); } }
@@ -810,11 +821,19 @@
       sh.questions.forEach(function (q) {
         if (state.syl && q.s.indexOf(state.syl) < 0) return;
         if (ts.length && !matches(q.lc, ts, state.mode)) return;
-        list.push(q);
+        // The topper/source/year filters keep a question that one of the chosen copies answered,
+        // and the card then lists only those answers.
+        var refs = byCopyFilter ? q.refs.filter(function (r) { return refOk(r.c); }) : q.refs;
+        if (refs.length) list.push(refs === q.refs ? q : Object.assign({}, q, { refs: refs }));
       });
     });
     if (missing.length) need(missing);
-    list.sort(function (a, b) { return b.refs.length - a.refs.length || a.txt.localeCompare(b.txt); });
+    list.sort(function (a, b) {
+      if (state.sort === 'year') return newest(b) - newest(a) || best(a) - best(b);
+      if (state.sort === 'air') return best(a) - best(b) || b.refs.length - a.refs.length;
+      if (state.sort === 'name') return a.txt.localeCompare(b.txt);
+      return b.refs.length - a.refs.length || a.txt.localeCompare(b.txt);
+    });
     var sylTxt = state.syl ? ' in ' + sylLabel(state.syl) : '';
     if (loading && !list.length) meta.textContent = 'Loading questions…';
     else meta.textContent = fmt(list.length) + (list.length === 1 ? ' question' : ' questions') + (state.q ? ' for “' + state.q + '”' : '') + sylTxt + (loading ? ' · still loading…' : '');
@@ -1155,7 +1174,9 @@
   function interviewCard(iv, forceOpen) {
     var summary = el('summary', {}, [
       el('span', { class: 'name' }, [iv.n || 'Anonymous candidate']),
-      el('span', { class: 'qn' }, [fmt(iv.q) + (iv.q === 1 ? ' question' : ' questions')]),
+      // The source counts question marks; 277 notes list questions as "Q) …" without one, and
+      // "0 questions" on those reads as an empty transcript, so they show their length instead.
+      el('span', { class: 'qn' }, [iv.q ? fmt(iv.q) + (iv.q === 1 ? ' question' : ' questions') : fmt(iv.w) + ' words']),
       el('span', { class: 'tags' }, [el('span', { class: 'tag' }, ['Board: ' + iv.b])].concat(interviewTags(iv)))
     ]);
     var body = el('div', { class: 'qlist' });
