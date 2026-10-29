@@ -1,8 +1,106 @@
 {
-  "generated": "2026-10-29T06:37:58.433Z",
+  "generated": "2026-10-29T17:59:01.130Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://drive.google.com/file/d/1H_rSqxSAWG3li50VFzu2VCU0ybkEqW1B/view",
+      "topper": "Ishita Kishore",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1eKlSdWVbfwk8ukv2ialUb1fYF_OZNm_o/view",
+      "topper": "Nausheen",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1TV0aRpgX4Sg9uN4XZgNt7MCMfTBOuIQP/view",
+      "topper": "Nausheen",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/ROMIT-BHATT-UPSC-2023-Rank-390-MGP-Answer-Copy-Essay-Paper-2.pdf",
+      "topper": "Romit Bhatt",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1KzHsnFmKmlmLoUQ4QhVkKszh13qu0znL/view",
+      "topper": "Rahul Shrivastava",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1BV70gJlzgberovakFJIAov0iC_UN-xka/view",
+      "topper": "Garima Lohia",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Jigyasu-Agrawal-UPSC-IAS-2023-Toppers-AIR-326-Sample-MGP-Essay-Copy.pdf",
+      "topper": "Jigyasu Agrawal",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
     {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SAMIKSHA-MHETRE-UPSC-2023-Rank-302-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Samiksha Mhetre",
@@ -14,7 +112,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 44,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -28,7 +126,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -56,7 +154,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -98,7 +196,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -112,7 +210,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2194,7 +2292,7 @@
       "subject": "GS4",
       "count": 1,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2204,7 +2302,7 @@
       "subject": "Essay",
       "count": 1,
       "optional": false,
-      "groupMedian": 1,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -2214,7 +2312,7 @@
       "subject": "Essay",
       "count": 1,
       "optional": false,
-      "groupMedian": 1,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -2224,7 +2322,7 @@
       "subject": "Essay",
       "count": 1,
       "optional": false,
-      "groupMedian": 1,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -2234,7 +2332,7 @@
       "subject": "Essay",
       "count": 1,
       "optional": false,
-      "groupMedian": 1,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -2259,6 +2357,48 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1PhZ7PyMzk5X6EeAKPnF4eoJtOO8U_TyY/view",
+      "topper": "Akanchha Singh",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/PRAGATI-RANI-UPSC-2023-Rank-355-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Pragati Rani",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/LINDHIYA-L-AN-UPSC-2023-Rank-354-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Lindhiya l AN",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -2300,7 +2440,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2314,7 +2454,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2328,7 +2468,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -2356,7 +2496,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -2370,7 +2510,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -2426,7 +2566,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -2440,7 +2580,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -2454,7 +2594,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -3636,7 +3776,7 @@
       "subject": "GS2",
       "count": 2,
       "optional": false,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -3646,7 +3786,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -3656,7 +3796,7 @@
       "subject": "GS4",
       "count": 2,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -4266,7 +4406,7 @@
       "subject": "GS4",
       "count": 3,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -4276,7 +4416,7 @@
       "subject": "GS1",
       "count": 3,
       "optional": false,
-      "groupMedian": 3,
+      "groupMedian": 17,
       "low": true
     },
     {
@@ -4341,6 +4481,48 @@
       "count": 3,
       "optional": true,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1iDnVRPKw6jhSAEM9xvW4DNQpymTd97P-/view",
+      "topper": "Ruhani",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 17,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 17,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Areeba-Nomaan-UPSC-IAS-2023-Toppers-AIR-339-Sample-MGP-Essay-Copy.pdf",
+      "topper": "Areeba Nomaan",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHIKHAR-NAUTIYAL-UPSC-2023-Rank-371-MGP-Answer-Copy-Essay-Paper-2.pdf",
+      "topper": "Shikhar Nautiyal",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 4,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
       "low": true
     },
     {
@@ -4634,7 +4816,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 38,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -5722,7 +5904,7 @@
       "subject": "GS2",
       "count": 4,
       "optional": false,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -5732,7 +5914,7 @@
       "subject": "GS4",
       "count": 4,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -5822,7 +6004,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -5850,7 +6032,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -6886,7 +7068,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -6914,7 +7096,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -7630,6 +7812,76 @@
       "low": true
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/KSHITIJ-ADITYA-SHARMA-UPSC-2023-Rank-384-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Kshitij Aditya Sharma",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 7,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHIKHAR-NAUTIYAL-UPSC-2023-Rank-371-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Shikhar Nautiyal",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1GqgX--RT67xur4xVg0--XDFnwXFx-6MQ/view",
+      "topper": "Samiksha Sarwari",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/APARAJITA-ARYAN-UPSC-2023-Rank-381-MGP-Answer-Copy-Essay-Paper-2.pdf",
+      "topper": "Aparajita Aryan",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVDARSHDEEP-SINGH-UPSC-2023-Rank-340-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Devdarshdeep Singh",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": true
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JAHNAVI-UPSC-2023-Rank-324-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Jahnavi",
       "coaching": "ForumIAS",
@@ -7724,7 +7976,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -7794,7 +8046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -8842,7 +9094,7 @@
       "subject": "GS2",
       "count": 7,
       "optional": false,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -9104,6 +9356,216 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1SZQ96px6vgw2Ce2COyRfkUR8Mm5uSt2R/view",
+      "topper": "Apurv Anand",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1D83ld5ZtqwRr3T7RhUlF1X2ujGsPeTLc/view",
+      "topper": "Nausheen",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1TbRosqsKzs_KBsKa67IgnKfIepsKTjd7/view",
+      "topper": "Ayushi Pradhan",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1_gYZ5iVYeBH0msrRsZZ8ULW5_N6lrYrJ/view",
+      "topper": "Ashish Singhal",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1q_3TzpJwdxnckN4HJXmRW8Mwa9EHzLHu/view",
+      "topper": "Smriti Mishra",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 23,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 23,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RISHABH-BHATT-UPSC-2023-Rank-363-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Rishabh Bhatt",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1aXSxxk35o8lW3HS5u17d01P1pKYp4lxN/view",
+      "topper": "Animesh Pradhan",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1cWmmJ4kl4uMX1OmV6W3UgRt5NQTp0rUJ/view",
+      "topper": "Devashish Bindal",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/BISWAJIT-PANDA-UPSC-2023-Rank-343-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Biswajit Panda",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARAVIND-KUMAR-T-UPSC-2023-Rank-348-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Aravind Kumar T",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 8,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RAHUL-KANWARIA-UPSC-2023-Rank-350-MGP-Answer-Copy-Essay-Paper.pdf",
+      "topper": "Rahul Kanwaria",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/12SEWfFYwE6JigFmyxjUZZ_jPRMLV5nn7/view",
+      "topper": "Aditya Srivastava",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/SHUBHAM-SINGLA-UPSC-2023-Rank-420-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Shubham Singla",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 8,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1v59Q6zu729Dd_64d39ZkTsow2Xctaf4t/view",
+      "topper": "Nausheen",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Md-Tabish-Hasan-UPSC-IAS-2023-Toppers-AIR-374-Sample-MGP-Essay-Copy.pdf",
+      "topper": "Md Tabish Hasan",
+      "coaching": "ForumIAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 36,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVESH-CHATURVEDI-UPSC-2023-Rank-305-MGP-Answer-Copy-Essay-Paper.pdf",
       "topper": "Devesh Chaturvedi",
       "coaching": "ForumIAS",
@@ -9184,7 +9646,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -9394,7 +9856,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -9422,7 +9884,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -12438,6 +12900,48 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1PAMSFUav5EznFSdX5j0GwPH5UvKa9aY-/view",
+      "topper": "Animesh Verma",
+      "coaching": "Community sheet",
+      "subject": "Essay",
+      "count": 9,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/SHUBHAM-SINGLA-UPSC-2023-Rank-420-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Shubham Singla",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 9,
+      "optional": false,
+      "pages": 20,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 20,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JHA-SAMIXA-SATYENDRA-UPSC-2023-Rank-362-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Jha Samixa Satyendra",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 9,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ISHWARI-DEKA-UPSC-2023-Rank-320-MGP-Answer-Copy-GS-Paper.pdf",
       "topper": "Ishwari Deka",
       "coaching": "ForumIAS",
@@ -12462,7 +12966,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -12504,7 +13008,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -12518,7 +13022,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -12532,7 +13036,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13470,6 +13974,62 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/VIVEK-YADAV-UPSC-2023-Rank-361-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Vivek Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 66,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 66,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVDARSHDEEP-SINGH-UPSC-2023-Rank-340-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Devdarshdeep Singh",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/SHUBHAM-SINGLA-UPSC-2023-Rank-420-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Shubham Singla",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 23,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 23,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/APARAJITA-ARYAN-UPSC-2023-Rank-381-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Aparajita Aryan",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 63,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 63,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHUBHANSHI-SINGH-UPSC-2023-Rank-298-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Shubhanshi Singh",
       "coaching": "ForumIAS",
@@ -13480,7 +14040,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13522,7 +14082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13536,7 +14096,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13550,7 +14110,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13578,7 +14138,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 26,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -13592,7 +14152,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13606,7 +14166,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13620,7 +14180,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 2,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13634,7 +14194,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -13676,7 +14236,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15000,7 +15560,7 @@
       "subject": "GS2",
       "count": 10,
       "optional": false,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": true
     },
     {
@@ -15010,7 +15570,7 @@
       "subject": "GS4",
       "count": 10,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15048,6 +15608,48 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/BISWAJIT-PANDA-UPSC-2023-Rank-343-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Biswajit Panda",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 63,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 63,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/LINDHIYA-L-AN-UPSC-2023-Rank-354-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Lindhiya l AN",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RAHUL-KANWARIA-UPSC-2023-Rank-350-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Rahul Kanwaria",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ISHWARI-DEKA-UPSC-2023-Rank-320-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Ishwari Deka",
       "coaching": "ForumIAS",
@@ -15058,7 +15660,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15072,7 +15674,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15086,7 +15688,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15100,7 +15702,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15114,7 +15716,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15128,7 +15730,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15142,7 +15744,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15156,7 +15758,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15170,7 +15772,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15184,7 +15786,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15198,7 +15800,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15212,7 +15814,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15226,7 +15828,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15240,7 +15842,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15254,7 +15856,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15268,7 +15870,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15282,7 +15884,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15296,7 +15898,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15338,7 +15940,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15352,7 +15954,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -15366,7 +15968,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16168,6 +16770,34 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JHA-SAMIXA-SATYENDRA-UPSC-2023-Rank-362-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Jha Samixa Satyendra",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 12,
+      "optional": false,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARCHIT-DEVA-UPSC-2023-Rank-357-MGP-Answer-Copy-Ethics-Paper.pdf",
+      "topper": "Archit Deva",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVASHISH-BINDAL-UPSC-2023-Rank-301-MGP-Answer-Copy-Ethics-Paper.pdf",
       "topper": "Devashish Bindal",
       "coaching": "ForumIAS",
@@ -16178,7 +16808,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16192,7 +16822,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16206,7 +16836,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16220,7 +16850,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16234,7 +16864,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16248,7 +16878,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16262,7 +16892,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16276,7 +16906,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16290,7 +16920,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16304,7 +16934,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16332,7 +16962,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16346,7 +16976,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16360,7 +16990,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16374,7 +17004,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16388,7 +17018,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16402,7 +17032,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16416,7 +17046,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16430,7 +17060,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16444,7 +17074,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16458,7 +17088,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17742,7 +18372,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17756,7 +18386,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17770,7 +18400,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17784,7 +18414,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17798,7 +18428,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17812,7 +18442,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17826,7 +18456,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 63,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17840,7 +18470,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17854,7 +18484,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17868,7 +18498,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17882,7 +18512,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17896,7 +18526,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17910,7 +18540,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 61,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17924,7 +18554,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -17938,7 +18568,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19408,7 +20038,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -19422,7 +20052,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -19436,7 +20066,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19450,7 +20080,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19464,7 +20094,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19478,7 +20108,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 63,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19506,7 +20136,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 65,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19520,7 +20150,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -21162,6 +21792,20 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARAVIND-KUMAR-T-UPSC-2023-Rank-348-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Aravind Kumar T",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 15,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHAHIDA-BEGUM-S-UPSC-2023-Rank-323-MGP-Answer-Copy-GS-Paper-2.pdf",
       "topper": "Shahida Begum",
       "coaching": "ForumIAS",
@@ -21172,7 +21816,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -21186,7 +21830,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -21200,7 +21844,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 58,
       "salvaged": 1,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -21214,7 +21858,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -21228,7 +21872,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 62,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -22974,7 +23618,7 @@
       "subject": "GS4",
       "count": 15,
       "optional": false,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23034,6 +23678,62 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RISHABH-BHATT-UPSC-2023-Rank-363-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Rishabh Bhatt",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 16,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/SHUBHAM-SINGLA-UPSC-2023-Rank-420-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Shubham Singla",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 16,
+      "optional": false,
+      "pages": 42,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1z4-4eJVLdLlEoLD3nXKzCJDz3IACglX5/view",
+      "topper": "Ishita Kishore",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Areeba-Nomaan-UPSC-IAS-2023-Toppers-AIR-339-Sample-MGP-Ethics-Copy.pdf",
+      "topper": "Areeba Nomaan",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JAHNAVI-UPSC-2023-Rank-324-MGP-Answer-Copy-GS-Paper.pdf",
       "topper": "Jahnavi",
       "coaching": "ForumIAS",
@@ -23072,7 +23772,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23086,7 +23786,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23100,7 +23800,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 57,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23114,7 +23814,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -23128,7 +23828,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23142,7 +23842,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -25344,6 +26044,34 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Jakhar-UPSC-IAS-2023-Toppers-AIR-337-Sample-MGP-GS-Copy-3.pdf",
+      "topper": "Ayush Jakhar",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 17,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/18vB3aYFHRYjZP49erUi_QPfGmGxbEc2A/view",
+      "topper": "Aditya Srivastava",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ANUBHAV-UPSC-2023-Rank-309-MGP-Answer-Copy-GS-Paper-2.pdf",
       "topper": "Anubhav",
       "coaching": "ForumIAS",
@@ -25354,7 +26082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -25382,7 +26110,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 66,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -25396,7 +26124,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28462,6 +29190,188 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JHA-SAMIXA-SATYENDRA-UPSC-2023-Rank-362-MGP-Answer-Copy-GS-Paper-4.pdf",
+      "topper": "Jha Samixa Satyendra",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVDARSHDEEP-SINGH-UPSC-2023-Rank-340-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Devdarshdeep Singh",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHIKHAR-NAUTIYAL-UPSC-2023-Rank-371-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Shikhar Nautiyal",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Devansh-Mohan-Dwivedi-UPSC-2023-Rank-333-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Devansh Mohan Dwivedi",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARAVIND-KUMAR-T-UPSC-2023-Rank-348-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Aravind Kumar T",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 50,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/BISWAJIT-PANDA-UPSC-2023-Rank-343-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Biswajit Panda",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/APARAJITA-ARYAN-UPSC-2023-Rank-381-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Aparajita Aryan",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Agrawal-UPSC-IAS-2023-Toppers-AIR-341-Sample-MGP-GS-Copy-2.pdf",
+      "topper": "Ayush Agrawal",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/TWINKLE-DAHIYA-UPSC-2023-Rank-367-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Twinkle Dahiya",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/KSHITIJ-ADITYA-SHARMA-UPSC-2023-Rank-384-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Kshitij Aditya Sharma",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/DEVDARSHDEEP-SINGH-UPSC-2023-Rank-340-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Devdarshdeep Singh",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/VIVEK-YADAV-UPSC-2023-Rank-361-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Vivek Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RISHABH-BHATT-UPSC-2023-Rank-363-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Rishabh Bhatt",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SURAJ-KUMAR-UPSC-2023-Rank-294-MGP-Answer-Copy-GS-Paper-2.pdf",
       "topper": "Suraj Kumar",
       "coaching": "ForumIAS",
@@ -28472,7 +29382,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28500,7 +29410,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 43,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28528,7 +29438,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28570,7 +29480,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28584,7 +29494,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -28612,7 +29522,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28626,7 +29536,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28668,7 +29578,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28696,7 +29606,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -28710,7 +29620,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28724,7 +29634,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28738,7 +29648,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 64,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -28752,7 +29662,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28794,7 +29704,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28822,7 +29732,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28836,7 +29746,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28878,7 +29788,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28934,7 +29844,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28948,7 +29858,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -28962,7 +29872,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -28990,7 +29900,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29074,7 +29984,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29088,7 +29998,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29144,7 +30054,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29172,7 +30082,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29186,7 +30096,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -29200,7 +30110,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34328,6 +35238,174 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/KSHITIJ-ADITYA-SHARMA-UPSC-2023-Rank-384-MGP-Answer-Copy-GS-Paper-4.pdf",
+      "topper": "Kshitij Aditya Sharma",
+      "coaching": "ForumIAS",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARCHIT-DEVA-UPSC-2023-Rank-357-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Archit Deva",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Jakhar-UPSC-IAS-2023-Toppers-AIR-337-Sample-MGP-GS-Copy-2.pdf",
+      "topper": "Ayush Jakhar",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 19,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1L51T5WMuf_IpUL_XCKAitN6LlA8rF1TD/view",
+      "topper": "Aditi Upadhyay",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RISHABH-BHATT-UPSC-2023-Rank-363-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Rishabh Bhatt",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Agrawal-UPSC-IAS-2023-Toppers-AIR-341-Sample-MGP-GS-Copy.pdf",
+      "topper": "Ayush Agrawal",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 19,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1mp8Rmf4KZvHIBTFw0mDmdYL0pxKb0RSE/view",
+      "topper": "Anmol Rathore",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SHIKHAR-NAUTIYAL-UPSC-2023-Rank-371-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Shikhar Nautiyal",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1J_etLaaFnrgFE95TOhUzGDA0NTfjWVmh/view",
+      "topper": "Kasturi Panda",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1XUTvvVN63MAK9MVxQnFOhYf7Haaxwy3z/view",
+      "topper": "Animesh Pradhan",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Agrawal-UPSC-IAS-2023-Toppers-AIR-341-Sample-MGP-GS-Copy-3.pdf",
+      "topper": "Ayush Agrawal",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1jF39A08yQP-yPc0az-I1WsZfLByBAQSh/view",
+      "topper": "Aishwaryam Prajapati",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/VAIBHAV-RAWAT-UPSC-2023-Rank-295-MGP-Answer-Copy-GS-Paper-3.pdf",
       "topper": "Vaibhav Rawat",
       "coaching": "ForumIAS",
@@ -34366,7 +35444,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -34450,7 +35528,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34492,7 +35570,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34534,7 +35612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34632,7 +35710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34646,7 +35724,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34660,7 +35738,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34688,7 +35766,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34716,7 +35794,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34758,7 +35836,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34772,7 +35850,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34786,7 +35864,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34828,7 +35906,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34870,7 +35948,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34898,7 +35976,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34912,7 +35990,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34954,7 +36032,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -34982,7 +36060,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35010,7 +36088,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35024,7 +36102,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35052,7 +36130,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35122,7 +36200,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35164,7 +36242,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -35220,7 +36298,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -43030,6 +44108,230 @@
       "low": false
     },
     {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/ARAVIND-KUMAR-T-UPSC-2023-Rank-348-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Aravind Kumar T",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/JHA-SAMIXA-SATYENDRA-UPSC-2023-Rank-362-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Jha Samixa Satyendra",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/APARAJITA-ARYAN-UPSC-2023-Rank-381-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Aparajita Aryan",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/VIVEK-YADAV-UPSC-2023-Rank-361-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Vivek Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/TWINKLE-DAHIYA-UPSC-2023-Rank-367-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Twinkle Dahiya",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/TWINKLE-DAHIYA-UPSC-2023-Rank-367-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Twinkle Dahiya",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Areeba-Nomaan-UPSC-IAS-2023-Toppers-AIR-339-Sample-MGP-GS-Copy.pdf",
+      "topper": "Areeba Nomaan",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RAHUL-KANWARIA-UPSC-2023-Rank-350-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Rahul Kanwaria",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Devansh-Mohan-Dwivedi-UPSC-2023-Rank-333-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Devansh Mohan Dwivedi",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/Devansh-Mohan-Dwivedi-UPSC-2023-Rank-333-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Devansh Mohan Dwivedi",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Ayush-Jakhar-UPSC-IAS-2023-Toppers-AIR-337-Sample-MGP-GS-Copy.pdf",
+      "topper": "Ayush Jakhar",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/Md-Tabish-Hasan-UPSC-IAS-2023-Toppers-AIR-374-Sample-MGP-GS-Copy.pdf",
+      "topper": "Md Tabish Hasan",
+      "coaching": "ForumIAS",
+      "subject": "Other",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/VIVEK-YADAV-UPSC-2023-Rank-361-MGP-Answer-Copy-GS-Paper-2.pdf",
+      "topper": "Vivek Yadav",
+      "coaching": "ForumIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 18.5,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/RAHUL-KANWARIA-UPSC-2023-Rank-350-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Rahul Kanwaria",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/BISWAJIT-PANDA-UPSC-2023-Rank-343-MGP-Answer-Copy-GS-Paper.pdf",
+      "topper": "Biswajit Panda",
+      "coaching": "ForumIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/05/KSHITIJ-ADITYA-SHARMA-UPSC-2023-Rank-384-MGP-Answer-Copy-GS-Paper-3.pdf",
+      "topper": "Kshitij Aditya Sharma",
+      "coaching": "ForumIAS",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2024/04/SURAJ-KUMAR-UPSC-2023-Rank-294-MGP-Answer-Copy-GS-Paper.pdf",
       "topper": "Suraj Kumar",
       "coaching": "ForumIAS",
@@ -43222,7 +44524,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43250,7 +44552,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43320,7 +44622,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43390,7 +44692,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43516,7 +44818,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43586,7 +44888,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43600,7 +44902,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43614,7 +44916,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43698,7 +45000,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43712,7 +45014,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43796,7 +45098,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43810,7 +45112,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43852,7 +45154,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43936,7 +45238,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43950,7 +45252,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -43978,7 +45280,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -44006,7 +45308,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -44034,7 +45336,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -44048,7 +45350,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -44132,7 +45434,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -44160,7 +45462,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -44202,7 +45504,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -44622,7 +45924,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 19,
+      "groupMedian": 18.5,
       "low": false
     },
     {
@@ -61408,7 +62710,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -61506,7 +62808,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 60,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -61870,7 +63172,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 59,
       "salvaged": 0,
-      "groupMedian": 12,
+      "groupMedian": 11,
       "low": false
     },
     {
