@@ -1,8 +1,22 @@
 {
-  "generated": "2026-10-29T21:27:05.439Z",
+  "generated": "2026-10-30T06:42:49.772Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://drive.google.com/file/d/16p5cgv02HUcgIPwqVWe2sm81jL9d5vSq/view",
+      "topper": "Ruhani",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 1,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
     {
       "url": "https://drive.google.com/file/d/1H_rSqxSAWG3li50VFzu2VCU0ybkEqW1B/view",
       "topper": "Ishita Kishore",
@@ -28,7 +42,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -42,7 +56,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -2360,6 +2374,20 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/19gWu_AmNRVqstkYdWEHpueA0LTgeYBhN/view",
+      "topper": "Rahul Srivastava",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1O7B84J29PbNtKahl19Qpniwix7_UjXDr/view",
       "topper": "Prashant Raj",
       "coaching": "Community sheet",
@@ -2370,7 +2398,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -4430,7 +4458,7 @@
       "subject": "GS1",
       "count": 3,
       "optional": false,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -4495,6 +4523,20 @@
       "count": 3,
       "optional": true,
       "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1z7E-tPFeqTpjRRztp5wGx3s6lbHDrUlL/view",
+      "topper": "Rohit Kumar",
+      "coaching": "Community sheet",
+      "subject": "GS1",
+      "count": 4,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -7082,7 +7124,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -9394,7 +9436,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -9450,7 +9492,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -15660,7 +15702,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -23772,7 +23814,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -26124,7 +26166,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -35346,7 +35388,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -35388,7 +35430,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -35416,7 +35458,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -35430,7 +35472,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -35458,7 +35500,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 8,
       "low": false
     },
     {
