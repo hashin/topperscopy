@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-30T16:50:02.558Z",
+  "generated": "2026-10-30T21:08:22.225Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2388,6 +2388,20 @@
       "low": true
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%203%20Copy%202.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "GS3",
+      "count": 2,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1FVCP1TIK0TpiE2mOlSrOBtglpBq8pfGf/view",
       "topper": "Garima Lohia",
       "coaching": "Community sheet",
@@ -3966,7 +3980,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 4.5,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -4620,7 +4634,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 4.5,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -4634,7 +4648,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 4.5,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -6162,6 +6176,20 @@
       "low": true
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%20Copy%201.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "Other",
+      "count": 5,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 9,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/ESSAY-1.pdf",
       "topper": "Rupam Arora",
       "coaching": "Drishti IAS",
@@ -6172,7 +6200,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 4.5,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -7237,6 +7265,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/ESSAY.pdf",
+      "topper": "Amar Baghel",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 6,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -9566,59 +9608,17 @@
       "low": true
     },
     {
-      "url": "https://www.drishtiias.com/images/pdf/Copy%201.pdf",
+      "url": "https://www.drishtiias.com/images/pdf/Copy%202.pdf",
       "topper": "Amar Baghel",
       "coaching": "Drishti IAS",
       "subject": "Other",
       "count": 8,
       "optional": false,
       "pages": 56,
-      "model": "gemini-3.1-flash-lite",
+      "model": "gemini-3.5-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 10,
-      "low": false
-    },
-    {
-      "url": "https://www.drishtiias.com/images/pdf/ESSAY-4.pdf",
-      "topper": "Rupam Arora",
-      "coaching": "Drishti IAS",
-      "subject": "Essay",
-      "count": 8,
-      "optional": false,
-      "pages": 30,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 30,
-      "salvaged": 0,
-      "groupMedian": 4.5,
-      "low": false
-    },
-    {
-      "url": "https://www.drishtiias.com/images/pdf/ESSAY-7.pdf",
-      "topper": "Rupam Arora",
-      "coaching": "Drishti IAS",
-      "subject": "Essay",
-      "count": 8,
-      "optional": false,
-      "pages": 28,
-      "model": "gemini-3.1-flash-lite",
-      "geminiPages": 28,
-      "salvaged": 0,
-      "groupMedian": 4.5,
-      "low": false
-    },
-    {
-      "url": "https://drive.google.com/file/d/1etk35n_d_LITxnwE1eo9u-d68R8ElayX/view",
-      "topper": "SHASHIKANT NARWADE",
-      "coaching": "IAS Delhi Institute",
-      "subject": "Other",
-      "count": 8,
-      "optional": false,
-      "pages": 29,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 29,
-      "salvaged": 0,
-      "groupMedian": 2,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -9633,6 +9633,62 @@
       "geminiPages": 22,
       "salvaged": 0,
       "groupMedian": 10,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Copy%201.pdf",
+      "topper": "Amar Baghel",
+      "coaching": "Drishti IAS",
+      "subject": "Other",
+      "count": 8,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 9,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/ESSAY-4.pdf",
+      "topper": "Rupam Arora",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 30,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/ESSAY-7.pdf",
+      "topper": "Rupam Arora",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 8,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1etk35n_d_LITxnwE1eo9u-d68R8ElayX/view",
+      "topper": "SHASHIKANT NARWADE",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Other",
+      "count": 8,
+      "optional": false,
+      "pages": 29,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 29,
+      "salvaged": 0,
+      "groupMedian": 2,
       "low": false
     },
     {
@@ -14352,20 +14408,6 @@
       "low": false
     },
     {
-      "url": "https://www.drishtiias.com/images/pdf/Ravi%20Raj-Copy%201.pdf",
-      "topper": "Ravi Raj",
-      "coaching": "Drishti IAS",
-      "subject": "Other",
-      "count": 10,
-      "optional": false,
-      "pages": 28,
-      "model": "gemini-flash-lite-latest",
-      "geminiPages": 28,
-      "salvaged": 0,
-      "groupMedian": 10,
-      "low": false
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%202,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14433,6 +14475,20 @@
       "geminiPages": 31,
       "salvaged": 0,
       "groupMedian": 10,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Ravi%20Raj-Copy%201.pdf",
+      "topper": "Ravi Raj",
+      "coaching": "Drishti IAS",
+      "subject": "Other",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -18891,6 +18947,20 @@
       "count": 12,
       "optional": true,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Sonali-jha-rank-89.pdf",
+      "topper": "Sonali Jha",
+      "coaching": "Drishti IAS",
+      "subject": "Other",
+      "count": 13,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -45308,7 +45378,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 10,
+      "groupMedian": 9,
       "low": false
     },
     {
