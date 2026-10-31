@@ -1,8 +1,176 @@
 {
-  "generated": "2026-10-31T06:30:45.197Z",
+  "generated": "2026-10-31T16:27:10.267Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%205.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Preeti%20Suman_Essay.pdf",
+      "topper": "Preeti Suman",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gore%20Akash_Essay%20Copy%202.pdf",
+      "topper": "Gore Akash",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%206.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 10,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 10,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_Essay.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gore%20Akash_Essay%20Copy%201.pdf",
+      "topper": "Gore Akash",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Laxman%20Meena_Essay.pdf",
+      "topper": "Laxman Meena",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 29,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 29,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%204.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gore%20Akash_Essay%20Copy%203.pdf",
+      "topper": "Gore Akash",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%202.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 27,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%203.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 1,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UTKARSH_AGARWAL_2022_IAS_Exam_Rank_286_VTS_4_Mains_3_Redacted_2ac99ca29e.pdf",
+      "topper": "Utkarsh Agarwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 1,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
     {
       "url": "https://drive.google.com/file/d/1vkiNZP4UfX0Zqa5FTpZw9W07k_YRw-XN/view",
       "topper": "ANURAG GHUGE",
@@ -840,7 +1008,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -854,7 +1022,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -2388,6 +2556,48 @@
       "low": true
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_Essay%20Copy%201.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_Essay%201.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 25,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 25,
+      "salvaged": 0,
+      "groupMedian": 1,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UTKARSH_AGARWAL_2022_IAS_Exam_Rank_286_VTS_4_Mains_2_Redacted_e9fa2ab7a8.pdf",
+      "topper": "Utkarsh Agarwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 2,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%201.pdf",
       "topper": "Aakash Garg",
       "coaching": "Drishti IAS",
@@ -2398,7 +2608,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 10,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -2412,7 +2622,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 2,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -2426,7 +2636,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -3434,7 +3644,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -3998,6 +4208,20 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHREYANSH_SURANA_2022_IAS_Exam_Rank_413_VTS_4_Mains_4_Redacted_cee121d423.pdf",
+      "topper": "Shreyansh Surana",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 3,
+      "optional": false,
+      "pages": 10,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 10,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/ESSAY-6.pdf",
       "topper": "Rupam Arora",
       "coaching": "Drishti IAS",
@@ -4008,7 +4232,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": true
     },
     {
@@ -4190,7 +4414,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -4662,7 +4886,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 9.5,
+      "groupMedian": 13,
       "low": true
     },
     {
@@ -4676,7 +4900,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": true
     },
     {
@@ -4690,7 +4914,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": true
     },
     {
@@ -5292,7 +5516,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -6228,7 +6452,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -6256,7 +6480,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": true
     },
     {
@@ -6662,7 +6886,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -7334,7 +7558,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 32,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": true
     },
     {
@@ -9664,6 +9888,34 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_1_Redac_d93f414d76.pdf",
+      "topper": "Tanmai Khanna",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 8,
+      "optional": false,
+      "pages": 14,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 14,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHREYANSH_SURANA_2022_IAS_Exam_Rank_413_VTS_4_Mains_3_Redacted_f01ee7374d.pdf",
+      "topper": "Shreyansh Surana",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 8,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2011,%20GS%20Crash%20Course.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -9716,7 +9968,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": false
     },
     {
@@ -9730,7 +9982,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 28,
       "salvaged": 0,
-      "groupMedian": 5,
+      "groupMedian": 1,
       "low": false
     },
     {
@@ -9758,7 +10010,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 9.5,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -13334,6 +13586,20 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_1_AIR_32_f6a18f27b2.pdf",
+      "topper": "Utkarsh Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 9,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%209,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14436,6 +14702,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_3_AIR_32_7a7b34b8ec.pdf",
+      "topper": "Utkarsh Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Ethics_FLT_1_Monika_S_11zon_1_5ed0e9fc2a.pdf",
+      "topper": "Monika Srivastava",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%203,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14518,6 +14812,20 @@
       "salvaged": 0,
       "groupMedian": 10,
       "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_4_Redact_dc2386f8a7.pdf",
+      "topper": "Tanmai Khanna",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
     },
     {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%201,%20GS%20Sectional.pdf",
@@ -15370,7 +15678,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -16182,6 +16490,48 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHREYANSH_SURANA_2022_IAS_Exam_Rank_413_VTS_4_Mains_2_Redacted_1942f3e9db.pdf",
+      "topper": "Shreyansh Surana",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 11,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SHREYANSH_SURANA_2022_IAS_Exam_Rank_413_VTS_4_Mains_1_Redacted_fe48071067.pdf",
+      "topper": "Shreyansh Surana",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 11,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_GS%204%20Copy%201.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "GS4",
+      "count": 11,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/GS-IV.pdf",
       "topper": "Rupam Arora",
       "coaching": "Drishti IAS",
@@ -16192,7 +16542,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 9.5,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -17400,6 +17750,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AAKASH_TRIVEDI_GS_4_AIR_73_2025_9cc4bacd05.pdf",
+      "topper": "Aakash Om Trivedi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Other",
+      "count": 12,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2024_GS_PAPER_4_RAHUL_SHEKHAR_AIR_242_T_8_19472b3e0e.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 12,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1woxHWdgxKUkfmnyKrHrj4RQuh4t3Aw7B/view",
       "topper": "ANSHUL HINDAL",
       "coaching": "Community sheet",
@@ -18096,7 +18474,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -18110,7 +18488,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 30,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -20700,6 +21078,34 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_SOURABH_KUMAR_GS_PAPER_T_04_AIR_260_77a337746a.pdf",
+      "topper": "Sourabh Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UNCK_GS_SSTS_VTS_2025_T04_DEV_DEDEJA_c9358a3ffc.pdf",
+      "topper": "Dev Dudeja",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 14,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1_esK7GSKHZx02dE5ar1suKIoxr2hC8ze/view",
       "topper": "Ashish Singhal",
       "coaching": "Community sheet",
@@ -22520,6 +22926,48 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_GS_PAPER_4_T_12_SHAKTI_DUBEY_AIR_01_a4856b93ff.pdf",
+      "topper": "Shakti Dubey",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 57,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 57,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAMESWAR_SHINDE_SS_GS_4_AIR_705_2025_b5760c48b2.pdf",
+      "topper": "Shinde Rameshwar Mahadu",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gore%20Akash_GS%204.pdf",
+      "topper": "Gore Akash",
+      "coaching": "Drishti IAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1nWz0S4RSCrtz8oIu_x99VlkNh-083qgs/view",
       "topper": "Aditya Srivastava",
       "coaching": "Community sheet",
@@ -22572,7 +23020,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 9.5,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -24501,6 +24949,90 @@
       "geminiPages": 44,
       "salvaged": 2,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_RAVULA_JAYASIMHA_Reddy_AIR_46_ba46a50c98.pdf",
+      "topper": "Ravula Jayasimha Reddy",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 59,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_RANGA_MANJU_AIR_24_94237bda6b.pdf",
+      "topper": "Ranga Manju",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_SACHIN_B_G_AIR_41_ae4e25bab2.pdf",
+      "topper": "Sachin",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAMNE_SRISHTI_AIR_145_9d81f2d4c5.pdf",
+      "topper": "Srishti",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UNCK_SSTS_FLT_2025_T8_SANDEEP_BADAD_1_6d18b7623c.pdf",
+      "topper": "Sandeep Badad",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_2024_RAJAT_KUMAR_RAI_AIR_351_513a2bc667.pdf",
+      "topper": "Rajat Kumar Rai",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 16,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -26937,6 +27469,104 @@
       "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_3_Redacted_eccc2a5474.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHAITANYA_AWASTHI_2022_IAS_Exam_Rank_37_VTS_Focussed_3_Redacted_b9a9aabe65.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/JATIN_JAIN_2022_IAS_Exam_Rank_91_VTS_4_Mains_3_Redacted_bf8ade0edf.pdf",
+      "topper": "Jatin Jain",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 47,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 47,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UTKARSH_AGARWAL_2022_IAS_Exam_Rank_286_VTS_4_Mains_1_Redacted_483f6af2ff.pdf",
+      "topper": "Utkarsh Agarwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 17,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/vaji_gs3_560b2c9b36.pdf",
+      "topper": "Kanishak Aggarwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Other",
+      "count": 17,
+      "optional": false,
+      "pages": 44,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 44,
+      "salvaged": 0,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_GS%204%20Copy%202.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "GS4",
+      "count": 17,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/19pbhl3iH2lwuigUNi03cIscx_qnjUQKa/view",
+      "topper": "Pallavi Mishra",
+      "coaching": "Lukmaan IAS",
+      "subject": "Other",
+      "count": 17,
+      "optional": false,
+      "pages": 50,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -30226,6 +30856,118 @@
       "low": false
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Gore%20Akash_GS%203.pdf",
+      "topper": "Gore Akash",
+      "coaching": "Drishti IAS",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHAITANYA_AWASTHI_2022_IAS_Exam_Rank_37_VTS_Focussed_5_Redacted_e3ab604c18.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHAITANYA_AWASTHI_2022_IAS_Exam_Rank_37_VTS_Focussed_6_Redacted_4b0d196cd2.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Vandita_GS%204.pdf",
+      "topper": "Vandita",
+      "coaching": "Drishti IAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_1_Redacted_1_fec7623805.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Ravish%20Mittal_GS%202.pdf",
+      "topper": "Ravish Mittal",
+      "coaching": "Drishti IAS",
+      "subject": "GS2",
+      "count": 18,
+      "optional": false,
+      "pages": 50,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_2_Redacted_1_6f187daa45.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_GS%201.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1cxbX_kZYtzBkxOCRYpqcwmgoz3y4NnCY/view",
       "topper": "Kunal Rastogi",
       "coaching": "Community sheet",
@@ -30278,7 +31020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 10,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -32672,7 +33414,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -36344,6 +37086,160 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_5_Redacted_9ae99b846e.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_6_Redacted_68079cc3d1.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_GS_PAPER_3_T_11_SHAKTI_DUBEY_AIR_01_2d890a7415.pdf",
+      "topper": "Shakti Dubey",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHAITANYA_AWASTHI_2022_IAS_Exam_Rank_37_VTS_Focussed_4_Redacted_c712b6ac96.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_GS_PAPER_2_T_10_SHAKTI_DUBEY_AIR_01_f49f437f48.pdf",
+      "topper": "Shakti Dubey",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Vandita_%20GS%203.pdf",
+      "topper": "Vandita",
+      "coaching": "Drishti IAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHAITANYA_AWASTHI_2022_IAS_Exam_Rank_37_VTS_Focussed_1_Redacted_a805c9e176.pdf",
+      "topper": "Chaitanya Awasthi",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_GS%203.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Vandita_%20GS%202.pdf",
+      "topper": "Vandita",
+      "coaching": "Drishti IAS",
+      "subject": "GS2",
+      "count": 19,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Vajiram_GS_3_Test1_compressed_c89e42e13b.pdf",
+      "topper": "Monika Srivastava",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 19,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ETHICS_PROGRAME_AAYUSHI_BANSAL_AIR_7_43359d9bb0.pdf",
+      "topper": "Aayushi Bansal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 19,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1uPoY-TNuaJFgBpe7ZMTCzchDN21d5QfV/view",
       "topper": "Rahul Srivastava",
       "coaching": "Community sheet",
@@ -39868,7 +40764,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -39896,7 +40792,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -40218,7 +41114,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 1,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -40232,7 +41128,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -45368,6 +46264,244 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Sure_Shot_2024_Sourabh_Kumar_GS_PAPER_1_T_01_AIR_260_b30bc36666.pdf",
+      "topper": "Sourabh Kumar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/JATIN_JAIN_2022_IAS_Exam_Rank_91_VTS_4_Mains_2_Redacted_ada64c1df0.pdf",
+      "topper": "Jatin Jain",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_GS%201%201.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DEV_DUEJA_SS_GS_2_AIR_152_2025_dda0b7fc20.pdf",
+      "topper": "Dev Dudeja",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_GS%201.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/UTKARSH_AGARWAL_2022_IAS_Exam_Rank_286_VTS_4_Mains_4_Redacted_6f0d72e0a4.pdf",
+      "topper": "Utkarsh Agarwal",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ZUPISHAN_HAQUE_2022_IAS_Exam_Rank_193_VTS_4_Mains_Redacted_42789aa8be.pdf",
+      "topper": "Zupishan Haque",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SURE_SHORT_GS_PAPER_1_AADITI_CHHAPARIA_GS_AIR_97_new_db4b4ce834.pdf",
+      "topper": "Aaditi Chhaparia",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_4_Redacted_96eeb4a9cb.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_GS%202.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 51,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/JATIN_JAIN_2022_IAS_Exam_Rank_91_VTS_4_Mains_1_Redacted_663bd07df7.pdf",
+      "topper": "Jatin Jain",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/ADITI_VARSHNEY_2022_IAS_Exam_Rank_57_VTS_Focussed_2_Redacted_1_86f470e594.pdf",
+      "topper": "Aditi Varshney",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Kumud%20Mishra_GS%202%201.pdf",
+      "topper": "Kumud Mishra",
+      "coaching": "Drishti IAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 1,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_2_Redac_243a5e5d38.pdf",
+      "topper": "Tanmai Khanna",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Gyanendra%20Bharti_GS%201%20Copy%202.pdf",
+      "topper": "Gyanendra Bharti",
+      "coaching": "Drishti IAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DEV_DUEJA_SS_GS_3_AIR_152_2025_98e51b18d5.pdf",
+      "topper": "Dev Dudeja",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DEV_DUEJA_SS_GS_1_AIR_152_2025_fe04108b86.pdf",
+      "topper": "Dev Dudeja",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1EVTFJ4qgjUVRFl8Mz9qR60uXTJrSNNoA/view",
       "topper": "Sushir Srikrushna",
       "coaching": "Community sheet",
@@ -45616,7 +46750,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -45700,7 +46834,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52672,7 +53806,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52686,7 +53820,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52700,7 +53834,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52714,7 +53848,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52728,7 +53862,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 55,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52742,7 +53876,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52756,7 +53890,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52770,7 +53904,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52798,7 +53932,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52812,7 +53946,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52826,7 +53960,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52840,7 +53974,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52854,7 +53988,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -52966,7 +54100,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -64166,7 +65300,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 58,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 19,
       "low": false
     },
     {
