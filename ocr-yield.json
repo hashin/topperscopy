@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T16:27:10.267Z",
+  "generated": "2026-10-31T20:19:04.238Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2553,6 +2553,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 1.5,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/GHAZALPREET_KAUR_2022_IAS_Exam_Rank_529_VTS_Focussed_1_582b31e34b.pdf",
+      "topper": "Ghazalpreet Kaur",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 44,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -6442,6 +6456,48 @@
       "low": true
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/GHAZALPREET_KAUR_2022_IAS_Exam_Rank_529_VTS_Focussed_4_7834c60748.pdf",
+      "topper": "Ghazalpreet Kaur",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 5,
+      "optional": false,
+      "pages": 44,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/GHAZALPREET_KAUR_2022_IAS_Exam_Rank_529_VTS_Focussed_2_318c2360fe.pdf",
+      "topper": "Ghazalpreet Kaur",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 5,
+      "optional": false,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/GHAZALPREET_KAUR_2022_IAS_Exam_Rank_529_VTS_Focussed_3_c14817263c.pdf",
+      "topper": "Ghazalpreet Kaur",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS2",
+      "count": 5,
+      "optional": false,
+      "pages": 48,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%203%20Copy%201.pdf",
       "topper": "Aakash Garg",
       "coaching": "Drishti IAS",
@@ -9888,6 +9944,20 @@
       "low": true
     },
     {
+      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2011,%20GS%20Crash%20Course.pdf",
+      "topper": "Aakriti",
+      "coaching": "Shubhra Ranjan (PSIR)",
+      "subject": "Other",
+      "count": 8,
+      "optional": false,
+      "pages": 22,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 22,
+      "salvaged": 0,
+      "groupMedian": 10,
+      "low": false
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_1_Redac_d93f414d76.pdf",
       "topper": "Tanmai Khanna",
       "coaching": "Vajiram & Ravi",
@@ -9914,20 +9984,6 @@
       "salvaged": 0,
       "groupMedian": 19,
       "low": true
-    },
-    {
-      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2011,%20GS%20Crash%20Course.pdf",
-      "topper": "Aakriti",
-      "coaching": "Shubhra Ranjan (PSIR)",
-      "subject": "Other",
-      "count": 8,
-      "optional": false,
-      "pages": 22,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 22,
-      "salvaged": 0,
-      "groupMedian": 10,
-      "low": false
     },
     {
       "url": "https://www.drishtiias.com/images/pdf/Copy%202.pdf",
@@ -13586,20 +13642,6 @@
       "low": false
     },
     {
-      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_1_AIR_32_f6a18f27b2.pdf",
-      "topper": "Utkarsh Yadav",
-      "coaching": "Vajiram & Ravi",
-      "subject": "GS1",
-      "count": 9,
-      "optional": false,
-      "pages": 28,
-      "model": "gemini-3.1-flash-lite-preview",
-      "geminiPages": 28,
-      "salvaged": 0,
-      "groupMedian": 20,
-      "low": true
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%209,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -13626,6 +13668,20 @@
       "salvaged": 0,
       "groupMedian": 10,
       "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_1_AIR_32_f6a18f27b2.pdf",
+      "topper": "Utkarsh Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 9,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
     },
     {
       "url": "https://drive.google.com/file/d/1PAMSFUav5EznFSdX5j0GwPH5UvKa9aY-/view",
@@ -14702,34 +14758,6 @@
       "low": false
     },
     {
-      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_3_AIR_32_7a7b34b8ec.pdf",
-      "topper": "Utkarsh Yadav",
-      "coaching": "Vajiram & Ravi",
-      "subject": "GS3",
-      "count": 10,
-      "optional": false,
-      "pages": 28,
-      "model": "gemini-3.1-flash-lite-preview",
-      "geminiPages": 28,
-      "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
-    },
-    {
-      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Ethics_FLT_1_Monika_S_11zon_1_5ed0e9fc2a.pdf",
-      "topper": "Monika Srivastava",
-      "coaching": "Vajiram & Ravi",
-      "subject": "GS4",
-      "count": 10,
-      "optional": false,
-      "pages": 32,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 32,
-      "salvaged": 0,
-      "groupMedian": 15,
-      "low": false
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%203,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14814,20 +14842,6 @@
       "low": false
     },
     {
-      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_4_Redact_dc2386f8a7.pdf",
-      "topper": "Tanmai Khanna",
-      "coaching": "Vajiram & Ravi",
-      "subject": "GS1",
-      "count": 10,
-      "optional": false,
-      "pages": 28,
-      "model": "gemini-3.1-flash-lite-preview",
-      "geminiPages": 28,
-      "salvaged": 0,
-      "groupMedian": 20,
-      "low": true
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%201,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -14840,6 +14854,48 @@
       "salvaged": 0,
       "groupMedian": 10,
       "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/SS_2025_Utkarsh_Yadav_GS_PAPER_T_3_AIR_32_7a7b34b8ec.pdf",
+      "topper": "Utkarsh Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS3",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/Ethics_FLT_1_Monika_S_11zon_1_5ed0e9fc2a.pdf",
+      "topper": "Monika Srivastava",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS4",
+      "count": 10,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/TANMAI_KHANNA_2022_IAS_Exam_Rank_61_VTS_Online_GS_Mains_Test_Series_4_Redact_dc2386f8a7.pdf",
+      "topper": "Tanmai Khanna",
+      "coaching": "Vajiram & Ravi",
+      "subject": "GS1",
+      "count": 10,
+      "optional": false,
+      "pages": 28,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
     },
     {
       "url": "https://www.drishtiias.com/images/pdf/Ravi%20Raj-Copy%201.pdf",
