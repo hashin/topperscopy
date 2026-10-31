@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-30T21:08:22.225Z",
+  "generated": "2026-10-31T06:30:45.197Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2388,6 +2388,34 @@
       "low": true
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%201.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "GS1",
+      "count": 2,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 10,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%202.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "GS2",
+      "count": 2,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 6,
+      "salvaged": 0,
+      "groupMedian": 2,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%203%20Copy%202.pdf",
       "topper": "Aakash Garg",
       "coaching": "Drishti IAS",
@@ -2398,7 +2426,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 12.5,
       "low": true
     },
     {
@@ -4624,6 +4652,20 @@
       "low": true
     },
     {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%204%20Copy%202.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "GS4",
+      "count": 4,
+      "optional": false,
+      "pages": 60,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 9.5,
+      "low": true
+    },
+    {
       "url": "https://www.drishtiias.com/images/pdf/ESSAY-2.pdf",
       "topper": "Rupam Arora",
       "coaching": "Drishti IAS",
@@ -6173,6 +6215,20 @@
       "geminiPages": 11,
       "salvaged": 0,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Aakash%20Garg_GS%203%20Copy%201.pdf",
+      "topper": "Aakash Garg",
+      "coaching": "Drishti IAS",
+      "subject": "GS3",
+      "count": 5,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 12,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": true
     },
     {
@@ -9608,20 +9664,6 @@
       "low": true
     },
     {
-      "url": "https://www.drishtiias.com/images/pdf/Copy%202.pdf",
-      "topper": "Amar Baghel",
-      "coaching": "Drishti IAS",
-      "subject": "Other",
-      "count": 8,
-      "optional": false,
-      "pages": 56,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 18,
-      "salvaged": 0,
-      "groupMedian": 9,
-      "low": false
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2011,%20GS%20Crash%20Course.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -9633,6 +9675,20 @@
       "geminiPages": 22,
       "salvaged": 0,
       "groupMedian": 10,
+      "low": false
+    },
+    {
+      "url": "https://www.drishtiias.com/images/pdf/Copy%202.pdf",
+      "topper": "Amar Baghel",
+      "coaching": "Drishti IAS",
+      "subject": "Other",
+      "count": 8,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 9,
       "low": false
     },
     {
@@ -9702,7 +9758,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 18,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 9.5,
       "low": false
     },
     {
@@ -16136,7 +16192,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 24,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 9.5,
       "low": false
     },
     {
@@ -22516,7 +22572,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 36,
       "salvaged": 0,
-      "groupMedian": 11,
+      "groupMedian": 9.5,
       "low": false
     },
     {
@@ -30222,7 +30278,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 18,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -45560,7 +45616,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -45644,7 +45700,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 20,
+      "groupMedian": 12.5,
       "low": false
     },
     {
