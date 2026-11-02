@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-02T21:03:02.755Z",
+  "generated": "2026-11-02T23:44:45.387Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -6506,20 +6506,6 @@
       "low": true
     },
     {
-      "url": "https://drive.google.com/file/d/19urocAjBkORcvfyOkYM3m8PDuKzLMTi3/view",
-      "topper": "Harsh Nehara",
-      "coaching": "Level Up IAS",
-      "subject": "Anthropology",
-      "count": 4,
-      "optional": true,
-      "pages": 52,
-      "model": "gemini-flash-lite-latest",
-      "geminiPages": 24,
-      "salvaged": 0,
-      "groupMedian": 12.5,
-      "low": true
-    },
-    {
       "url": "https://sleepyclasses.com/wp-content/uploads/2026/04/hlt-3-a1-b6_lyst1753372115321-compressed.pdf",
       "topper": "Devyanshi Verma",
       "coaching": "Sleepy Classes",
@@ -7626,6 +7612,20 @@
       "optional": true,
       "pages": 36,
       "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 36,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/19urocAjBkORcvfyOkYM3m8PDuKzLMTi3/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 5,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
       "geminiPages": 36,
       "salvaged": 0,
       "groupMedian": 14,
@@ -15258,7 +15258,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -15272,7 +15272,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -15300,7 +15300,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -17130,7 +17130,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -17158,7 +17158,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -18460,7 +18460,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -18488,7 +18488,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -23791,20 +23791,6 @@
       "geminiPages": 62,
       "salvaged": 0,
       "groupMedian": 14,
-      "low": false
-    },
-    {
-      "url": "https://drive.google.com/file/d/1P1RyiQSS1NVpkSzcUQhRpsNIh_Efes9-/view",
-      "topper": "Harsh Nehara",
-      "coaching": "Level Up IAS",
-      "subject": "Anthropology",
-      "count": 14,
-      "optional": true,
-      "pages": 84,
-      "model": "gemini-3.1-flash-lite-preview",
-      "geminiPages": 60,
-      "salvaged": 1,
-      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -31986,7 +31972,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 83,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -38398,7 +38384,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -47814,7 +47800,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 82,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -47828,7 +47814,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -47870,7 +47856,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -47884,7 +47870,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -47912,7 +47898,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 81,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 14,
       "low": false
     },
     {
@@ -66981,6 +66967,20 @@
       "geminiPages": 54,
       "salvaged": 0,
       "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1P1RyiQSS1NVpkSzcUQhRpsNIh_Efes9-/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 20,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 2,
+      "groupMedian": 14,
       "low": false
     },
     {

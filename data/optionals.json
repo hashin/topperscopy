@@ -19047,6 +19047,48 @@
           "marks": "15",
           "words": "",
           "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "\"Culture is both overt and covert, explicit and implicit.\" Discuss this statement anthropologically with suitable illustrations.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "The impact of globalization on indigenous peoples has been complex and multifaceted, ranging from economic and political marginalization to cultural commodification and appropriation. Elaborate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Elucidate the relevance of the concept of cultural relativism in the context of ethnographic fieldwork.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "The origins and practice of modern anthropology are bound up with the colonial era. Discuss.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Compare economic and political systems of the Nuer and Trobrianders.",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 80,
+          "question": "Explain the concept of \"household\" in anthropology and its distinction from \"family\".",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
         }
       ]
     },
@@ -19259,6 +19301,13 @@
           "page": 20,
           "question": "Discuss the role of forensic anthropology in criminal investigation and disaster victim identification.",
           "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "How does menarche and menopause timing reflect a population's health, environmental health and resources.",
+          "marks": "20",
           "words": "",
           "salvaged": false
         }
