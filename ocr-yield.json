@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-02T06:59:10.373Z",
+  "generated": "2026-11-02T21:03:02.755Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2612,7 +2612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -2636,7 +2636,7 @@
       "subject": "Medical Science",
       "count": 1,
       "optional": true,
-      "groupMedian": 1.5,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -4296,13 +4296,27 @@
       "low": true
     },
     {
+      "url": "https://www.defactolaw.in/_files/ugd/f721f3_ca50621479d2497284794ab0fd448655.pdf",
+      "topper": "Avinash V",
+      "coaching": "De Facto Law",
+      "subject": "Law",
+      "count": 2,
+      "optional": true,
+      "pages": 36,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 36,
+      "salvaged": 1,
+      "groupMedian": 2,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/15P_ASx_JeUGjLhY6vg9g4zyQlxX3RNMw/view",
       "topper": "REKHA MEENA",
       "coaching": "IAS Delhi Institute",
       "subject": "Medical Science",
       "count": 2,
       "optional": true,
-      "groupMedian": 1.5,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -4921,20 +4935,6 @@
       "count": 3,
       "optional": false,
       "groupMedian": 16.5,
-      "low": true
-    },
-    {
-      "url": "https://drive.google.com/file/d/1o9NkmRENCbf048MKI1f3XSNmxJ60LiXY/view",
-      "topper": "Surabhi Yadav",
-      "coaching": "Level Up IAS",
-      "subject": "History",
-      "count": 3,
-      "optional": true,
-      "pages": 48,
-      "model": "gemini-flash-lite-latest",
-      "geminiPages": 18,
-      "salvaged": 0,
-      "groupMedian": 12.5,
       "low": true
     },
     {
@@ -6503,6 +6503,20 @@
       "geminiPages": 63,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/19urocAjBkORcvfyOkYM3m8PDuKzLMTi3/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 4,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": true
     },
     {
@@ -8512,6 +8526,20 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T1-ABHI-JAIN-34-1750231377627.pdf",
+      "topper": "Abhi Jain",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 6,
+      "optional": true,
+      "pages": 18,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 0,
+      "groupMedian": 12,
+      "low": true
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/14207_939_Gaurav_Kumar_Rank_34.pdf",
       "topper": "Gaurav Kumar",
       "coaching": "VisionIAS",
@@ -9912,7 +9940,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10020,13 +10048,27 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1BPPyaX8eOBoCLQh6Lv9lVppnotlkN4ef/view",
+      "topper": "P SRIJA",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 7,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1c6DSsZRWutgcWQVi8wD1bNkPVgtmHclh/view",
       "topper": "Riya Saini",
       "coaching": "Level Up IAS",
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10036,7 +10078,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10054,13 +10096,27 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1v57pCsTiKoBfbe_TGajVFJ6JIeN4FUHA/view",
+      "topper": "Deeksha Chourasiya",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 7,
+      "optional": true,
+      "pages": 48,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1cfVWDSuMbd0zXFmLOyDqcEg_49kSC9ED/view",
       "topper": "Mudita Bansal",
       "coaching": "Level Up IAS",
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10070,7 +10126,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10080,7 +10136,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10114,7 +10170,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10124,7 +10180,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -10134,7 +10190,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": true
     },
     {
@@ -13794,6 +13850,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1o9NkmRENCbf048MKI1f3XSNmxJ60LiXY/view",
+      "topper": "Surabhi Yadav",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 8,
+      "optional": true,
+      "pages": 48,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
       "url": "https://www.shankariasparliament.com/uploads/downloads/SRUTHI_R_P3.pdf",
       "topper": "Sruthi R",
       "coaching": "Shankar IAS Parliament",
@@ -13801,6 +13871,62 @@
       "count": 8,
       "optional": true,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Nikita_Verma_AIR_30_2025/Test%2011,%20PSIR%20Sectional.pdf",
+      "topper": "Nikita Verma",
+      "coaching": "Shubhra Ranjan (PSIR)",
+      "subject": "PSIR",
+      "count": 8,
+      "optional": true,
+      "pages": 30,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Nikita_Verma_AIR_30_2025/Test%2015,%20PSIR%20Sectional.pdf",
+      "topper": "Nikita Verma",
+      "coaching": "Shubhra Ranjan (PSIR)",
+      "subject": "PSIR",
+      "count": 8,
+      "optional": true,
+      "pages": 30,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Nikita_Verma_AIR_30_2025/Test%2016,%20PSIR%20Sectional.pdf",
+      "topper": "Nikita Verma",
+      "coaching": "Shubhra Ranjan (PSIR)",
+      "subject": "PSIR",
+      "count": 8,
+      "optional": true,
+      "pages": 30,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Nikita_Verma_AIR_30_2025/Test%2017,%20PSIR%20Sectional.pdf",
+      "topper": "Nikita Verma",
+      "coaching": "Shubhra Ranjan (PSIR)",
+      "subject": "PSIR",
+      "count": 8,
+      "optional": true,
+      "pages": 30,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -13818,13 +13944,41 @@
       "low": true
     },
     {
+      "url": "https://drive.google.com/file/d/1RGucqS__UMUASxOXds0sgm9UJQ_Rwrvu/view",
+      "topper": "Samiksha Dwivedi",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 8,
+      "optional": true,
+      "pages": 27,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 27,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1p1FQwSPdfK-qO005D7PUChGX7okOpXMK/view",
+      "topper": "Samiksha Dwivedi",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 8,
+      "optional": true,
+      "pages": 48,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 48,
+      "salvaged": 1,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
       "url": "https://drive.google.com/file/d/1vsukTnBy-0Xuu2u9Xe-8tXfqtjx3HUzN/view",
       "topper": "Neelesh Goyal",
       "coaching": "Level Up IAS",
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -13834,7 +13988,7 @@
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -13884,7 +14038,7 @@
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -15094,6 +15248,34 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1Oz4GDUBH06T9fyAxRhae8Wgox2FeYe-k/view",
+      "topper": "Utkarsh Yadav",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 9,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1G6A-MYd1fPUs5ciAkEwtnlQzMCtobLn3/view",
+      "topper": "Ayushi Pradhan",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 9,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/18610_938_Fatima_Rank_62.pdf",
       "topper": "Fatima",
       "coaching": "VisionIAS",
@@ -15105,6 +15287,20 @@
       "geminiPages": 64,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1PubNNKugruimH_VTcSGmwuOaWI9emwlK/view",
+      "topper": "Utkarsh Ujjwal",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 9,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -16910,7 +17106,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 1,
-      "groupMedian": 12.5,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -16921,6 +17117,48 @@
       "count": 10,
       "optional": true,
       "groupMedian": 10,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1jYxYdON72a4kRqfZD-EZQTpsPu3ljciJ/view",
+      "topper": "Zufishan Haque",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 10,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 51,
+      "salvaged": 1,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAHUL_SHEKHAR_UPSC_IFS_2024_AIR_46_GS_4_T_12_491cbaba48.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 10,
+      "optional": true,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 59,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/1xUc6Bc8lgyGjKLTljo9D02bTfT6OIP_D/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 10,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -18195,6 +18433,62 @@
       "geminiPages": 45,
       "salvaged": 0,
       "groupMedian": 12,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1ochz5FEsdxBWPAriLxRM7evABCv9Ke4O/view",
+      "topper": "P SRIJA",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 11,
+      "optional": true,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/116TlU7qBeH01ro1pLKuG9NXPFy4oLyjU/view",
+      "topper": "Srujana Gudelli",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 11,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 1,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1E2m3fjsJjdhz2RYSTLp40d5e9Ry4eJgY/view",
+      "topper": "AKSHITA GUPTA",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 11,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1nipWmyFxU1_hsPFXQQQRaZAo6HAhr9Ld/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 11,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -19832,6 +20126,20 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 2,
+      "groupMedian": 12,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T4-ABHI-JAIN-34-1750231405318.pdf",
+      "topper": "Abhi Jain",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 12,
+      "optional": true,
+      "pages": 41,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 41,
+      "salvaged": 0,
       "groupMedian": 12,
       "low": false
     },
@@ -21593,6 +21901,20 @@
       "geminiPages": 46,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1vXftQ0kJ-x3AHLBRLjNWprWhKrNn7TxG/view",
+      "topper": "Deeksha Chourasiya",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 13,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 50,
+      "salvaged": 1,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -23469,6 +23791,20 @@
       "geminiPages": 62,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1P1RyiQSS1NVpkSzcUQhRpsNIh_Efes9-/view",
+      "topper": "Harsh Nehara",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 14,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 60,
+      "salvaged": 1,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -25536,7 +25872,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 2,
-      "groupMedian": 12.5,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -28084,7 +28420,35 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 12.5,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/125O5lGEVuuMZ5vwkRD-qvlqItQAsSJg5/view",
+      "topper": "Bhavika",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 16,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1Po39sBX9KJEJ2cn-Hsnegw1nWuheGP8m/view",
+      "topper": "Deeksha Chourasiya",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -28099,6 +28463,34 @@
       "geminiPages": 54,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1oKbp3JkuTuo1FmqZ6eDA8oq4XBhv9efv/view",
+      "topper": "Samiksha Dwivedi",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/156twVBbxqOXmtyG3_vos2-351g3HoPDp/view",
+      "topper": "Samiksha Dwivedi",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -31524,7 +31916,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": false
     },
     {
@@ -31538,21 +31930,63 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 8,
       "low": false
     },
     {
-      "url": "https://drive.google.com/file/d/127JInS9TwH61kwfbxEwvFXCdkU9c_Jnu/view",
-      "topper": "Ananya",
-      "coaching": "Level Up IAS",
+      "url": "https://drive.google.com/file/d/1IkPWkv5K1NsuE8LfyDjYkhdcm_da3HtL/view",
+      "topper": "P SRIJA",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 17,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1HYpiWRjX5y5tYS4fyUYAaKaJJbEhJzTU/view",
+      "topper": "P SRIJA",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 17,
+      "optional": true,
+      "pages": 43,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 43,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://forumias.com/blog/wp-content/uploads/2024/04/K-N-CHANDANA-JAHNAVI-UPSC-2023-Rank-48-MGP-Answer-Copy-Sociology-Paper.pdf",
+      "topper": "K N CHANDANA JAHNAVI",
+      "coaching": "ForumIAS",
       "subject": "Sociology",
       "count": 17,
       "optional": true,
-      "pages": 46,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 42,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1pQT6OZSuNoiqo2TeAU-efn7huA9oH_3K/view",
+      "topper": "Rajput Neha",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 17,
+      "optional": true,
+      "pages": 83,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 83,
+      "salvaged": 0,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -37926,6 +38360,48 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/127JInS9TwH61kwfbxEwvFXCdkU9c_Jnu/view",
+      "topper": "Ananya",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 18,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1_1fVCnoNWp3zvn5WdMb7zBdhLS7JZE0F/view",
+      "topper": "Wardah Khan",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 18,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1kU-Ko4yPgKIHoatfUjirLS3atS5Wyz6C/view",
+      "topper": "Sachin BG",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 18,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/8a9ae-1039940_2100_shubham_rank_223.pdf",
       "topper": "SHUBHAM",
       "coaching": "VisionIAS",
@@ -37964,7 +38440,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 18,
+      "groupMedian": 12,
       "low": false
     },
     {
@@ -47297,6 +47773,146 @@
       "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DIVYANSHU_PAL_NAGAR_UPSC_IFS_2024_AIR_18_GS_2_15799a45c7.pdf",
+      "topper": "Divyanshu Pal Nagar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 19,
+      "optional": true,
+      "pages": 43,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 43,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/DIVYANSHU_PAL_NAGAR_UPSC_IFS_2024_AIR_18_GS_3_a4f75e6dbf.pdf",
+      "topper": "Divyanshu Pal Nagar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 19,
+      "optional": true,
+      "pages": 45,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 45,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1crFHdar_IFfMqV236mnOj7nec_l8fRXQ/view",
+      "topper": "R Rangamanju",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 19,
+      "optional": true,
+      "pages": 82,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 82,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/13sCFWByy_Q_Ol9d3QMbSn6F6SxKBXj5x/view",
+      "topper": "Tharun Patnaik",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 19,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 1,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHERUKU_AVINASH_REDDY_UPSC_IFS_2024_AIR_40_GS_2_c908d55222.pdf",
+      "topper": "Cheruku Avinash Reddy",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 19,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHERUKU_AVINASH_REDDY_UPSC_IFS_2024_AIR_40_GS_3_c07dd1a5e1.pdf",
+      "topper": "Cheruku Avinash Reddy",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 19,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1g_gyhPM5GleqIFM_yRu0f0TSdFTY1qx2/view",
+      "topper": "Aniket Ranjan",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 19,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/18WDHtQ4XhLAD2ngAyEQ9bJ4t9uQWanmd/view",
+      "topper": "Aniket Ranjan",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 19,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 12.5,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AMRISH_YADAV_UPSC_IFS_2024_AIR_72_GS_3_copy_ae6b46f7a7.pdf",
+      "topper": "Amrish Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 19,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1i4CvFhhnYIzbV6Hl1S4sVnrcUkvRTwZW/view",
+      "topper": "Tanuj Pathak",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 19,
+      "optional": true,
+      "pages": 81,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 81,
+      "salvaged": 1,
+      "groupMedian": 12.5,
       "low": false
     },
     {
@@ -66270,6 +66886,104 @@
       "low": false
     },
     {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/CHERUKU_AVINASH_REDDY_UPSC_IFS_2024_AIR_40_GS_1_ab2b12b34b.pdf",
+      "topper": "Cheruku Avinash Reddy",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/KISHLAY_JHA_UPSC_IFS_2024_AIR_44_SS_GS_2_dc7782101a.pdf",
+      "topper": "Kishlay Jha",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 55,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 55,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/KISHLAY_JHA_UPSC_IFS_2024_AIR_44_SS_GS_3_dd320e7376.pdf",
+      "topper": "Kishlay Jha",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAHUL_SHEKHAR_UPSC_IFS_2024_AIR_46_GS_2_Vaji_1_compressed_3f0b53e638.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAHUL_SHEKHAR_UPSC_IFS_2024_AIR_46_GS_3_Vaji_2_39f57d413c.pdf",
+      "topper": "Rahul Shekhar",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AMRISH_YADAV_UPSC_IFS_2024_AIR_72_GS_1_T_1_copy_c6305d570d.pdf",
+      "topper": "Amrish Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AMRISH_YADAV_UPSC_IFS_2024_AIR_72_GS_2_copy_8443db21fc.pdf",
+      "topper": "Amrish Yadav",
+      "coaching": "Vajiram & Ravi",
+      "subject": "Forest Service (IFS)",
+      "count": 20,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 54,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
       "url": "https://forumias.com/blog/wp-content/uploads/2025/05/BIPUL-GUPTA-UPSC-2024-Rank-368-MGP-Sample-Copy.pdf",
       "topper": "BIPUL GUPTA",
       "coaching": "ForumIAS",
@@ -66547,6 +67261,20 @@
       "geminiPages": 82,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T02-R-SRI-RUSAT-R52-1750226670263.pdf",
+      "topper": "R Sri Rusat",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 21,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 2,
+      "groupMedian": 24,
       "low": false
     },
     {
@@ -66984,6 +67712,20 @@
       "low": false
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T1-R-SRI-RUSAT-R52-1750226697320.pdf",
+      "topper": "R Sri Rusat",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 24,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 24,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/49ee3-869775_3343_priya_kumari_rank_232.pdf",
       "topper": "Priya kumari",
       "coaching": "VisionIAS",
@@ -67152,6 +67894,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1TQvXx4vN6QT-lJbegHb1hWHurZQQ-0gE/view",
+      "topper": "Geetika",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 25,
+      "optional": true,
+      "pages": 72,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 72,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Vikas_AIR_27_2025/Test%201,%20PSIR%20Crash%20Course.pdf",
       "topper": "Vikas",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -67162,6 +67918,20 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 86,
       "salvaged": 1,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1o6_gMDz3iHUlTC1z5r6tfQJvGciigija/view",
+      "topper": "Mohit",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 25,
+      "optional": true,
+      "pages": 72,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 72,
+      "salvaged": 0,
       "groupMedian": 8,
       "low": false
     },
@@ -67250,6 +68020,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1tHCpBlvvAuVT89j87l7ypi421ifZXpYE/view",
+      "topper": "Geetika",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 26,
+      "optional": true,
+      "pages": 72,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 72,
+      "salvaged": 1,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/Vikas_AIR_27_2025/Test%206,%20PSIR%20Crash%20Course.pdf",
       "topper": "Vikas",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -67273,6 +68057,34 @@
       "pages": 86,
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 86,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T4-R-SRI-RUSAT-R52-1750226754181.pdf",
+      "topper": "R Sri Rusat",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 26,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 84,
+      "salvaged": 2,
+      "groupMedian": 24,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1o2LJY2A267Q0D26C0r6lQoXSEaKndI4G/view",
+      "topper": "Mohit",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 26,
+      "optional": true,
+      "pages": 72,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 72,
       "salvaged": 0,
       "groupMedian": 8,
       "low": false
@@ -67331,6 +68143,20 @@
       "geminiPages": 84,
       "salvaged": 2,
       "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T3-R-SRI-RUSAT-R52-1750226729617.pdf",
+      "topper": "R Sri Rusat",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 27,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 24,
       "low": false
     },
     {
