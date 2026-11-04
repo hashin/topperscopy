@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T19:00:38.095Z",
+  "generated": "2026-11-04T22:14:34.741Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2672,6 +2672,20 @@
       "low": true
     },
     {
+      "url": "https://www.defactolaw.in/_files/ugd/9bce74_51baf40309a1463a8df82e38ba43f44d.pdf",
+      "topper": "Rhythm Kataria",
+      "coaching": "De Facto Law",
+      "subject": "Law",
+      "count": 1,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 6,
+      "salvaged": 1,
+      "groupMedian": 2,
+      "low": true
+    },
+    {
       "url": "https://drive.google.com/file/d/1z6qyGLim0Y-IdWGvSsk_86MgJZ0x2_ur/view",
       "topper": "REKHA MEENA",
       "coaching": "IAS Delhi Institute",
@@ -4348,7 +4362,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 36,
       "salvaged": 1,
-      "groupMedian": 7,
+      "groupMedian": 2,
       "low": true
     },
     {
@@ -4363,6 +4377,20 @@
       "geminiPages": 26,
       "salvaged": 2,
       "groupMedian": 4,
+      "low": true
+    },
+    {
+      "url": "https://www.defactolaw.in/_files/ugd/9bce74_94b56225acc743dfaf946ba0f2a1b43a.pdf",
+      "topper": "Rhythm Kataria",
+      "coaching": "De Facto Law",
+      "subject": "Law",
+      "count": 2,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 12,
+      "salvaged": 2,
+      "groupMedian": 2,
       "low": true
     },
     {
@@ -8761,20 +8789,6 @@
       "geminiPages": 12,
       "salvaged": 0,
       "groupMedian": 5,
-      "low": true
-    },
-    {
-      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T5-MANISH-R356-1750227191901.pdf",
-      "topper": "Manish",
-      "coaching": "NextIAS",
-      "subject": "Geography",
-      "count": 6,
-      "optional": true,
-      "pages": 53,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 18,
-      "salvaged": 0,
-      "groupMedian": 13,
       "low": true
     },
     {
@@ -15724,20 +15738,6 @@
       "low": false
     },
     {
-      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/3/eco-3_-ayush-agrawal_.pdf",
-      "topper": "AYUSH AGRAWAL",
-      "coaching": "NextIAS",
-      "subject": "Economics",
-      "count": 9,
-      "optional": true,
-      "pages": 68,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 42,
-      "salvaged": 0,
-      "groupMedian": 24,
-      "low": true
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%203,%20GS%20Sectional.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -17733,6 +17733,20 @@
       "geminiPages": 32,
       "salvaged": 0,
       "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://www.defactolaw.in/_files/ugd/9bce74_c32022c79dab4d55a1c54d798027aba8.pdf",
+      "topper": "Rhythm Kataria",
+      "coaching": "De Facto Law",
+      "subject": "Law",
+      "count": 10,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 9,
+      "groupMedian": 2,
       "low": false
     },
     {
@@ -20896,7 +20910,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 78,
       "salvaged": 0,
-      "groupMedian": 7,
+      "groupMedian": 2,
       "low": false
     },
     {
@@ -20980,7 +20994,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 42,
       "salvaged": 6,
-      "groupMedian": 13,
+      "groupMedian": 13.5,
       "low": false
     },
     {
@@ -22825,6 +22839,20 @@
       "geminiPages": 54,
       "salvaged": 0,
       "groupMedian": 12,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T5-MANISH-R356-1750227191901.pdf",
+      "topper": "Manish",
+      "coaching": "NextIAS",
+      "subject": "Geography",
+      "count": 13,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 42,
+      "salvaged": 0,
+      "groupMedian": 13.5,
       "low": false
     },
     {
@@ -24760,6 +24788,20 @@
       "low": false
     },
     {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/3/eco-3_-ayush-agrawal_.pdf",
+      "topper": "AYUSH AGRAWAL",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 14,
+      "optional": true,
+      "pages": 68,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 68,
+      "salvaged": 0,
+      "groupMedian": 24,
+      "low": true
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T1-MANISH-R356-1750226863455.pdf",
       "topper": "Manish",
       "coaching": "NextIAS",
@@ -24770,7 +24812,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 13.5,
       "low": false
     },
     {
@@ -33316,7 +33358,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 88,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 13.5,
       "low": false
     },
     {

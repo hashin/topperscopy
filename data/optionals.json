@@ -36960,6 +36960,41 @@
           "marks": "",
           "words": "",
           "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Explain the steps taken for improvement of small scale industries till 1991.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Examine the evolution of poverty measures in India till 1991.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Elaborate on trends of GDP growth in India from independence till 1991.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "Examine the trends of savings and investment growth with India's policy response regarding them till 1991.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Explain how yellow revolution emerged from the throes of green revolution but they were not identical.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
         }
       ]
     },
@@ -37256,6 +37291,55 @@
           "marks": "15",
           "words": "",
           "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Describe the inter-relationship of man and marine resources. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Discuss the concept of 'Human Development' as defined by the United Nations Development Programme and the justification for developing Human Development Index. [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Discuss the concept of Heartland and Rimland and examine their present-day validity. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Discuss System approach and its applicability in Geography. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Define and describe induced mass wasting with suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Explain how human geography in the early twentieth century has become more integrative and interdisciplinary?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "How does a ridge and valley landscape arise? Explain the formation of the ridges and valleys.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
         }
       ]
     },
@@ -37312,7 +37396,79 @@
       "source": "De Facto Law",
       "by": "defactolaw.in",
       "note": "Law optional — Constitutional Law, Test 01",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Q.1(b). Rule of Law has no fixed or articulate connotation though the Indian courts refer to this phrase time and again. Comment in light of Judicial Decisions (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 7,
+          "question": "Q.1(c). Discuss the utility of Preamble in the Indian Constitution. (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 13,
+          "question": "Q.2(a). Secularism as the basic feature of the Indian Constitution. What was implicit in the Constitution until then became explicit after the 42nd Amendment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 20,
+          "question": "Q.2(c). Discuss major features of the Legal Service Authority act. How far it has been effective?",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 27,
+          "question": "Q.4(b). Examine the scope of parliamentary privileges in light of the recent decision of Sita Soren V. UOI delivered by the Supreme Court.",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 30,
+          "question": "Q.4(c). Discuss meaning and scope of 'Office of profit' under Article 102 of the Constitution of India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 35,
+          "question": "Q.5(b). What are the major constitutional provisions ensuring independence of the Supreme Court of India? (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 37,
+          "question": "Supreme Court recognised the right to die with dignity as a fundamental right. Discuss in light of the decided case. (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Q.5(d). Local governance in India needs to be constitutionally revitalised. Suggest measures for the same. (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 41,
+          "question": "Q.5(e). What are the major provisions under the constitution governing legislative power division between union and state? (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Rhythm Kataria",
@@ -37323,7 +37479,23 @@
       "source": "De Facto Law",
       "by": "defactolaw.in",
       "note": "Law optional — Constitutional Law, Test 02",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 8,
+          "question": "Q.1(d). Discuss the circumstances under which 'Financial Emergency' can be proclaimed by the President of India and effects thereof. (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 12,
+          "question": "Q.2(a). \"Imposition of Emergency in a State under Article 356 has always been a matter of controversy.\" In this backdrop, explain the consequences of proclamation of Emergency in a State.",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Rhythm Kataria",
@@ -37334,7 +37506,16 @@
       "source": "De Facto Law",
       "by": "defactolaw.in",
       "note": "Law optional — International Law, Test 03",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Q.1(a). Examine the evolution of the 'Right of Asylum' in international law. What are its different types of Asylum? (10 Marks, 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Rhythm Kataria",
