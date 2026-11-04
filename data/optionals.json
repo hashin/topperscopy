@@ -30263,7 +30263,86 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-1",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 7,
+          "question": "Environmental solution to urbanism has led to development of variety of types of Sustainable cities. Highlight.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "City CBD is losing its relevance in recent times. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"Marxian theory of population lacks practical utility.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Discuss Nelson's method of functional classification of towns.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Increasing Counter-Urbanization is causing chaos in both the Urban and Rural spheres of Life. Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Throw light on various Migration Models.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 27,
+          "question": "\"The compact city model of sustainable urban development is impractical.\" Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Growing interconnectedness between places of the earth is creating cultural fusion\". Explain in the context of Socio-spatial dialectic.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the major environmental issues in rural settlements.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Explain the evolution of rural-urban fringe.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Elaborate the phenomena of \"The Great Climate Migration\" with reference to the most recent diaspora. Suggest appropriate policies and programmes for their resettlement.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Muthuarasi M",
@@ -30274,7 +30353,86 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-2",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Illustrate the significance of walker cells.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Describe the various types of waterfalls.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Comment on marine heat budget and the oceanic circulation system.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Explain the influence of global warming on the jet stream.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "How does law of sea help in controlling the marine pollution?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Examine the impact of volcanic eruptions on the earth's climate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "The earth's surface is outcome of operation of both diastrophic as well as catastrophic forces. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "The variety of coral reefs is outcome of evolution. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Give a reasoned account on how the impact of Global Warming differs from one part of the Earth to the other.",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 44,
+          "question": "Examine the pattern of anomalous temperatures found on the earth surface.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Salinity variations due to global warming will impact the global oceanic circulations. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Muthuarasi M",
@@ -30285,7 +30443,86 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-3",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 7,
+          "question": "Highlight the space relationship of India with its neighbouring Island countries",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain the role of rural markets in the regional development of the country.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Analyse the problem of Land Squeeze & Land Inequality in case of India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Smart urban transport is the need of the hour. Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Artificial Intelligence will reshape the current industrial landscape in india. Elaborate.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Explain the significance of 'National Mission on Natural Farming'.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Examine the energy crisis faced by Indian cities amid a sizzling summers of the year 2024. (10 Marks )",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Critically examine the role of industrial houses and complexes in tackling the problem of backwardness in india.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Inland waterways can be transportation game changer. In this context, discuss the potential and prospects of developing inland water transportation in the N-E region of India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Examine the problems and prospects of agro-based industries in the North - East region of India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Explain the contemporary agricultural scenario in the context of rapid urbanization in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Muthuarasi M",
@@ -30296,7 +30533,93 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-4",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Climate crisis is driving the change in global trade pattern. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Highlight the major environmental assessment techniques.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Evaluate how soil acidity will affect soil fertility and suggest some remedies for increasing fertility.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Regions, like nations, mustactively trade if they are to be prosperous. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Non-formal environmental education is more effective than formal education in India. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "What are gene pool centres and how they help in conserving biodiversity?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Bring out the relationship between climate and vegetation in the steppe grassland biome.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Examine the spatial pattern of development disparity prevailing in the world.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Analyse the major environmental issues faced by rural settlements.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Critically examine the concept of carbon neutrality and enumerate the efforts taken by various countries to achieve it.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "Examine the urbanisation characteristics of the southern continents and reasons for the same.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Give an account of spatial pattern of decline in food resource with increase in population leading to food access crisis over the world.",
+          "marks": "15",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Priyadarshini",
@@ -30384,7 +30707,58 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 5,
+          "question": "Ethnomethodology is a way of doing phenomenological Sociology. Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Positivism holds that only those phenomena that can be perceived by our senses constitute 'real' knowledge and therefore, the methods used in the natural sciences can be used in the social sciences. What could be the possible limitations of this approach? Give examples. (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Modernization led to new problems that needed new solutions. How can Sociology help us explain these problems? (20 marks,250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "If common sense is reality familiarized, Sociology is common sense defamiliarized. Critically examine the validity of the statement. (10 marks,250 words)",
+          "marks": "10",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "A Daily newspaper reported, 'higher unemployment rates are the source of higher crime rates'. Which theoretical strand of research methodology would support this proposition? Is this proposition scientific? (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Differentiating between personal troubles and public issues, Sociological imagination helps us in discovering how social world shapes our life. Discuss 'access to health care in Indian society' using Sociological imagination. (20 marks, 250 words)",
+          "marks": "20",
+          "words": "250",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "What do you understand by Value-neutrality? to what extent is it possible and advisable to exercise value-neutrality in social research? (10 marks,250 words)",
+          "marks": "10",
+          "words": "250",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Mukul Khandelwal",
@@ -30395,7 +30769,79 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Half Length Test 1)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Question 1. Examine the basic postulates of positivism and post-positivism.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 2. Discuss how the sociological imagination helps us understand the connection between history and biography within a society.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 3. Outline Talcott Parsons' functional prerequisites of a social system and evaluate them in the context of a university as a social system.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 4. Explain how qualitative and quantitative methods complement each other in sociological research.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 5. Analyze the dialectics present in each mode of production as proposed by Karl Marx.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 6. Evaluate whether common sense serves as the starting point for social research, and discuss its advantages and limitations.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 7. Explain the stages in the formation of gender identity using Mead's theory of symbolic interactionism.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 8. Discuss how Weber's concept of bureaucracy is derived from the historical experiences of Europe.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 9. Discuss whether the scientific method qualifies Sociology as a science, using Durkheim's method as an example.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 10. Discuss how globalization has been influencing the scope of Sociology in India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Mukul Khandelwal",
@@ -30406,7 +30852,79 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Half Length Test 2)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Question 1. Discuss how technology has accelerated both the process of development and dependency.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Question 2. Cultural lag can also be seen very prominently in contemporary society. Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Question 3. Do all major world religions exhibit patriarchal nature? Illustrate your answer with examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Question 4. Discuss ways in which caste ideology contributes to strengthening democracy.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Question 5. Explain how capitalism has contributed to the rising informalization of work in society.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Question 6. Can we consider 'poverty' to be the same as 'living in poor conditions'? Elaborate",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "Question 7. Davis and Moore argued that social stratification is essential for society's functioning and operates as an unconscious device. Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Question 8. What are the key characteristics of the social organization of work in a slave society, and how do they differ from those in a feudal society?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Question 9. Comment on Mills' assertion that the elite's rule operates in institutional terms rather than psychological terms.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Question 10. Analyze the impact of protest movements on the status of Dalits in India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Mukul Khandelwal",
@@ -30417,7 +30935,72 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Half Length Test 3)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Question 1. Explain the dynamics of religious change within tribal societies. Support your argument with examples from both colonial period and the post-independence era.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Question 2. Assess Andre Beteille's study of Tanjore village regarding its reflection of fundamental Indian societal values beyond being merely a residential space.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Question 3. Explain Yogendra Singh's model of social change in modern India, using appropriate diagrams.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Question 4. What are the challenges of integrating tribal communities into mainstream society while preserving their ethnic identities and cultural heritage?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Points are valid and good, but you need to divide this question in three parts. First, discuss the common problem. Then discuss the specific problem and then discuss the velocities well of community in the minority and also discuss the problem of untouchability and caste discrimination within the community.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Question 6. Examine M.N. Srinivas's critique of Indology as a theoretical construct of Indian Society and elaborate his views on field studies.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Question 7. Though Indology seems to be a method of the past for the study of Indian sociology, but it is and will be relevant for the times to come. Critically analyze.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Question 8. Examine the sociological perspective of A. R. Desai's characterisation of leadership of Indian freedom movement.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Question 10. Discuss the significance of lineage and descent in kinship and family structures.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Mukul Khandelwal",
@@ -30642,7 +31225,51 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Sectional Test 7)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Question 1. What are the key challenges of development planning in a mixed economy like India? Discuss in detail.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 2. Did the Green Revolution contribute to the emergence of a new power elite in rural India? Elaborate your answer.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 3. Why is child labour more prevalent in urban areas than in rural areas? Discuss",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 4. Analyze the issues related to the citizenship in contemporary India. Give suitable illustrations.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 2,
+          "question": "Question 5. Examine the influence of industrialization on caste. (10 Marks) (All the Questions shall be answered in not more than 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Question 5. Examine the influence of industrialization on caste.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Mukul Khandelwal",
@@ -30653,7 +31280,44 @@
       "source": "Sleepy Classes",
       "by": "sleepyclasses.com",
       "note": "Sociology optional — test-series copy (Sectional Test 8)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 2,
+          "question": "Sociology Mains Test Series Test - 8 (C 5, C 6 & C 7) Question 1. Critically analyze the evolution of India's feminist movement in pre- and post-independence era. (10 Marks) Question 2. Discuss the implications of declining fertility rates on India's demographic dividend. (10 Marks) Question 3. Evaluate the impact of anthropogenic influence on climate in India and examine the environmental movements that have arisen as a result. (10 Marks) Question 4. Give an account of the consequences and remedies of chronic malnutrition in India. (10 Marks) Question 5. Write a short note on ethnicity and sub-ethnicity. Substantiate with examples. (10 Marks) (All the Questions shall be answered in not more than 150 words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 3,
+          "question": "Question 1. Critically analyze the evolution of India's feminist movement in pre- and post-independence era.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Question 2. Discuss the implications of declining fertility rates on India's demographic dividend.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Question 3. Evaluate the impact of anthropogenic influence on climate in India and examine the environmental movements that have arisen as a result.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Question 5. Write a short note on ethnicity and sub-ethnicity. Substantiate with examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Valluru Kranthi",
@@ -30675,7 +31339,142 @@
       "source": "Level Up IAS",
       "note": "Anthropology optional answer copy",
       "by": "levelupias.com",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 11,
+          "question": "Problems of Hunter gatherers in India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 13,
+          "question": "What are the two main schools in economic anthropology? What are the fundamental differences in their approach to the study of economic systems in simple societies?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Elucidate the determinants of kinship terminology.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Discuss different form of preferential marriages with examples from tribal societies in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the impact of globalization on indigenous economy.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Discuss the impact of Feminist and Women liberation movements on Marriage and Family.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Critically analyse Functional Theory of Social Stratification.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "What are the main socio-cultural attributes of hunters-gatherers, pastoralists and intensive agriculturists?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Explain the approaches of studying family in Anthropology.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "\"Social Institutions are adaptive in nature.\" Substantiate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Discuss various types of Family in brief. Explain causes of various residence pattern of family.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Discuss the characteristics of tribal economy. Also discuss typology of tribal economy in India by L.P. Vidyarthi and Majumdar.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Discuss the statement, \"Culture is Superorganic\".",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Briefly describe the factors responsible for decline in marriage in the world and also give anthropological interpretations of live in relationships.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Culture is unique to human beings. Do you agree? Present arguments in favour and against the statement.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Briefly discuss the characteristics of Food Producing Societies with appropriate examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Describe the problems of Universal definition of marriage.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "Incest taboo is a pre-social social fact. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 79,
+          "question": "What is the basis of Gender stratification? Also highlight the reasons for near universality of male dominance in societies across the world.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Priya kumari",
@@ -30878,7 +31677,114 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-1",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "\"D.M. Smith transformed geography from a science of location to a science of distributional justice.\" Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "\"Famine is as much a socio-political event as it is an environmental hazard.\" Discuss with suitable examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "How does rural-to-urban migration affect the environmental conditions in the source villages?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "What are the limitations of applying growth pole theory in agrarian-dominated economies like India? Suggest alternatives.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the concept and application of systems analysis in human geography.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Arctic region is an emerging frontier for marine resource exploitation. Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Evaluate the potential of Human Development Index (HDI) as a tool to measure social well-being.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Primate cities are outcomes of concentrated opportunity and constrained peripheries. Elucidate.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Examine the contribution of Boudeville to the theory of Growth Poles.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Humanistic geography transforms 'space' into 'place' by infusing it with meaning.\" Examine this transformation, especially with reference to sacred places.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Evaluate the role of the Indo-Pacific region in validating the geostrategic foresight of Spykman's Rimland theory in the 21st century.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Differentiate between boundaries and frontiers. How do they reflect the evolution of political geography?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "How do the processes of hierarchical and contagious diffusion contribute to spatial integration in imbalanced regions? Illustrate with examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Examine how demographic transition stages impact the size and structure of the workforce.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Weber's model fails to capture the spatial logic of industries in the information economy. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Akash Deep",
@@ -30889,7 +31795,114 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-2",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 11,
+          "question": "The linguistic landscape of Northeast India reflects deep ethnic undercurrents. Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Compare the functional classification of Ashok Mitra with that of M.K. Jain.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 15,
+          "question": "\"India's suspension of the Indus Waters Treaty signals a new phase in transboundary hydropolitics.\" Examine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Migration is both a cause and consequence of regional imbalance in India. Comment. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Urban regeneration in India often caters to capital accumulation rather than inclusive development. Examine. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Caste is not only a social institution but also a spatial blueprint in Indian villages. Elucidate. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "The unresolved India-China boundary tension is rooted as much in geography as in geopolitics. Examine. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "\"Watershed management is the frontline adaptation strategy against climate induced water stress.\" Justify. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "\"Urban floods are more a result of planning failures than natural rainfall variability.\" Examine the validity of this statement with examples from Indian cities.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "With increasing threats from Middle East conflict spillovers to strategic rivalry with China—how should India evolve its geopolitical strategy of Indian Ocean?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Examine the spatial variability in the TFR decline across states (e.g., urban Kerala vs rural Bihar) and discuss its implications for India's population stability.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Critically examine the environmental and social implications of large infrastructure projects in tribal and forested regions of India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Analyse how multi-sectoral convergence is key to achieve integrated rural development.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Examine the role of spatial variability of rainfall and river regimes in justifying the inter-basin transfer of water in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "What are the implications of climate change and sea-level rise for regional planning for India's island territories? Propose adaptive planning strategies.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Akash Deep",
@@ -30900,7 +31913,114 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-3",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Explain the characteristics of doldrums. How does it affect the world climates?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "\"Currents of Indian Ocean reflect complete harmony with the prevailing climate.\" Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain the formation and distribution of 'Pedocals.'",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "\"Environmental hazards are place-specific but globally interconnected.\" Discuss.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Explain the 'epeirogenetic forces' and their role in landscape development.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"UNCLOS has failed to prevent the emergence of new maritime disputes in geopolitically sensitive regions.\" Examine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "How does deforestation exacerbate the frequency and severity of natural hazards?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "\"Environmental governance in India relies more on judicial activism than legislative foresight.\" Examine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "How does the interaction between global climate change and urban heat islands exacerbate local climate extremes?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Examine the distribution of biogenous deposits in the oceans.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "\"Regions with ecological abundance are often those facing the highest ecological degradation.\" Examine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Elucidate the variability of Steppe biomes across the world.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "\"Human ecological adaptations are mediated by cultural development.\" Discuss.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "Explain the role of biological factors and processes in distribution of species.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "\"Variations in climate regimes affect the slope development.\" Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Disha Dhankhar",
@@ -30922,7 +32042,163 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 SOCIOLOGY - TEST 5 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 6,
+          "question": "Elaborate the Main Tenets of Positivism in Sociology with its Critique.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "According to Marx, social stratification is caused by people's varying relationships to the means of production. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "In sociological study, the concept of absolute objectivity is considered outmoded. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Discuss the relationship between poverty and social exclusion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Describe how the social, economic, political, and intellectual context in Europe throughout the 18th century contributed to the development of sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Do you believe that phenomenology reestablishes the importance of human experience and meaning-giving activities of human consciousness?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "\"No society can be absolutely open or absolutely closed\". Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Analyse the pattern of high suicide rates in contemporary Indian society using Durkheim's Suicide Theory.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "What, in Max Weber's view, is the subject matter of sociology? Which principal techniques did he advocate for social science research?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Discuss the significance of hypotheses in social research as well as their sources.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "The theories of action or \"action approach\" that Parsons uses are based on the ideas of his predecessors. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "What significance does Merton's Middle Range Theory play in sociology? Critically discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "Examine the Focus Group Discussion (FGD) method of data collection using appropriate examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Discuss the feminist critique of structural functionalist family theory. Show this in the context of India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "The formal organisation of work has recently suffered due to the tertiary sector's growing importance. Examine the statement",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "'Research is seeing what everyone else has seen and thinking what nobody else has pondered.' Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "\"Marx's conception of 'class-in-itself' and 'class-for-itself' has been questioned on the basis of 'empirical studies.' Elucidate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 71,
+          "question": "\"Merton's theory of anomie is a borrowing but essentially different from that of Durkheim\". Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Are social movements both primordial in their means and progressive in their agenda? Explain",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "Education serves as a tool for socialisation and social control in addition to being a force for social change. Discuss",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "Highlight the various 'Social pathologies' within Marriage in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 83,
+          "question": "What exactly is social closure? What are various forms of social closure in society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Swapnil Khare",
@@ -30944,7 +32220,114 @@
       "source": "LotusArise",
       "by": "lotusarise.com",
       "note": "Geography optional — MT-2",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 12,
+          "question": "The linguistic landscape of Northeast India reflects deep ethnic undercurrents. Comment.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Compare the functional classification of Ashok Mitra with that of M.K. Jain.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 16,
+          "question": "\"India's suspension of the Indus Waters Treaty signals a new phase in transboundary hydropolitics.\" Examine.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Migration is both a cause and consequence of regional imbalance in India. Comment. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Urban regeneration in India often caters to capital accumulation rather than inclusive development. Examine. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Caste is not only a social institution but also a spatial blueprint in Indian villages. Elucidate. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "The unresolved India-China boundary tension is rooted as much in geography as in geopolitics. Examine. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "\"Watershed management is the frontline adaptation strategy against climate induced water stress.\" Justify. (10 Marks, 150 Words)",
+          "marks": "10",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Urban floods are more a result of planning failures than natural rainfall variability.\" Examine the validity of this statement with examples from Indian cities.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "With increasing threats--from Middle East conflict spillovers to strategic rivalry with China--how should India evolve its geopolitical strategy of Indian Ocean?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Examine the spatial variability in Total Fertility Rate (TFR) across states (e.g., urban vs. rural, Bihar vs. Kerala) and discuss its implications for India's population stability.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Examine the role of spatial variability of rainfall and river regimes in justifying the inter-basin transfer of water in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "What are the implications of climate change and sea-level rise for regional planning for India's island territories? Propose adaptive planning strategies.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "Population problems intersect with food security, water scarcity, and ecological degradation in India. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 55,
+          "question": "With growing urban agglomerations, critically evaluate the need to shift from city-centric planning to regional urban planning models in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Bhagat Raj",
@@ -31000,7 +32383,30 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 13,
+          "question": "Has caste system hindered democracy and adult franchise in India? (20 marks) (b) What do you understand by new middle class? How has Digital India Mission affected the lifestyle and life-chances of new middle class in India? (20 marks) (c) Elaborate the concept of constitutional morality as given by B.R Ambedkar.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Is wage for housework (WFH) solution to existing disparity in entitlement? Will it empower women or reproduce status quo? Examine. (20 marks) (b) What are the problems related to religious minorities in India? Highlight. (20 marks) (c) Bring out comparison between north and South Indian kinship system. Illustrate with examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "What do you understand by discrete castes and muddled hierarchies? (20 marks) (b) Clarify the distinction between 'Household' and 'Family' and evaluate whether joint families have completely disintegrated. (20 marks) (c) Describe the changes in the working-class structure with the coming of Gig economy. What are the measures undertaken by government to address the working class in this sector?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Rahul Bansal",
@@ -31033,7 +32439,86 @@
       "source": "Level Up IAS",
       "note": "Anthropology optional — Test 02",
       "by": "levelupias.com",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "Comment on the following in about 150 words each: 10x5=50 (a) Differentiate between sociolinguistics and ethnolinguistics.",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Explain the basic features of Post-Modernism in anthropology highlighting the work done by Jaques Derrida and Michel Foucault.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Explain the significance of Malinowski's participant observation in shaping fieldwork methodology.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "How do anthropologists interpret accusations of witchcraft in the context of gender, power, and marginalization?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "Contribution of David Schneider to school of Symbolic Anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 33,
+          "question": "How does religious fundamentalism challenge the idea of cultural pluralism? Discuss with anthropological insight.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss Lewis Henry Morgan's evolutionary framework in anthropology. How did his theories reflect Western biases and assumptions about cultural superiority and progress?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Briefly describe James Frazer's evolutionary model of magic, religion, and science.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "How does cultural materialism explain seemingly irrational practices in traditional societies? Use Harris's ethnographic case studies.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Rather than dreaming up large, all-encompassing theories Boas wanted to put the discipline on a sound inductive footing. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "How do symbols act as instruments of social integration and differentiation in tribal societies? Illustrate with examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Drishti Jaiswal",
@@ -31473,7 +32958,135 @@
       "source": "ForumIAS",
       "by": "forumias.com",
       "note": "MGP answer copy — Ishita Pandey, UPSC IAS 2023 Toppers, AIR 273",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 3,
+          "question": "How have the political developments in Europe influenced the emergence and development of sociology as a discipline?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Describe the interpretive approach used in sociological research, and briefly explain how researchers strive to maintain objectivity within this methodology.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "How would you define the term \"hypothesis\", and what makes a well-formulated hypothesis crucial in social research?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Highlight the significance of ethnography in the realm of social research.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "What measures can be employed to minimize the potential influence of the re- searcher in the process of collecting data through interviews?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Critically analyze the functionalist tradition within the field of sociology, specially attending to its theoretical foundations and its contributions to understanding social phenomena.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "What are the various types of probability and non-probability sampling techniques used in sociological research? Provide relevant examples to support your answer.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "How does the sociological approach to human action diverge from the psychological approach in terms of theoretical perspectives, methodologies, and levels of analysis?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "According to non-positivists, what are the limitations of applying scientific methods in sociology?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Can sociology be considered a value-neutral science? Illustrate with relevant examples to support your answer.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Analyse the strengths and weaknesses of participant observation method in social research.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Describe, with the aid of an illustrative example, the significance of variables in sociological research.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "How can the combination of qualitative and quantitative methods enhance the quality of sociological research? Provide a detailed discussion with appropriate examples to illustrate their respective strengths and weaknesses.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "To what extent do phenomenological perspectives in sociology challenge and reject the assumptions of positivism? Provide a comprehensive commentary with supporting arguments and examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "What is the rationale behind considering random sampling as a method that offers higher reliability and validity in research?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "The emergence of sociology can be attributed to the transformative forces of modernity and social change in Europe. Analyze this statement, exploring the historical context, key sociological thinkers, and the impact of modernity on the development of sociology as a distinct discipline.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "How does the scope of sociology compare to other social sciences, such as history or economics, and in what ways does sociology have a broader scope than these disciplines? Provide relevant examples to substantiate your arguments.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "What do you understand by reliability and validity in research? Provide relevant examples to illustrate their application in research methodology.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Ishita Pandey",
@@ -31484,7 +33097,114 @@
       "source": "ForumIAS",
       "by": "forumias.com",
       "note": "MGP answer copy — Ishita Pandey, UPSC IAS 2023 Toppers, AIR 273",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Explain with reference to Robert K. Merton's theory, how does the social structure produce strain and lead to anomie and deviant behaviour?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "What do you understand by the term 'Relative Deprivation' and Inter-generational mobility? Illustrate with examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "How does Max Weber define and characterize the concept of an 'ideal type'. What is the purpose and significance of employing this concept in social science research?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "How does Emile Durkheim's sociological analysis prioritize a specific aspect or area of study, Provide an illustration of this emphasis by giving reference to one of Durkheim's notable contributions?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "What did Robert K. Merton mean by Manifest and Latent functions? Elaborate on the manifest and latent functions of the Indian competitive examinations in which a significant percentage of the young population participates.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "What is Karl Marx's theoretical framework concerning the concept of class-antagonism, and how have the proponents of functionalist perspective responded to his perspectives?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "Analyse the sociological concept of the sacred and the profane. Critically examine the implications of this dichotomy on various cultural and religious beliefs.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "What is the role of Talcott Parsons' pattern variables in shaping social behaviour within a society?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "How do the concepts of \"class-in-itself\" and \"class-for-itself\" in sociological theory highlight the transformation of social classes from objective economic categories to subjective collective identities?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "How does the nature of the social stratification system, whether it is based on ascribed characteristics or achieved positions, affect the patterns of social mobility within a society?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "To what extent does the concept of anomie, as formulated by R.K. Merton, provide a comprehensive framework for understanding the theoretical relationship between the nature of anomie and the various types of social deviations?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "How does Emile Durkheim's theory of the relationship between religion and society contribute to our understanding of the contemporary religious landscape and social dynamics in Asia?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "How does the conflict perspective on social stratification inform our analysis of social inequality in India? Explore the interplay between the rigid social stratification system based on caste and the mechanisms through which it perpetuates and reinforces social inequality?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Compare and contrast the Marxian and Parsonian perspectives on social change, highlighting their respective conceptual frameworks and underlying assumptions. Furthermore, evaluate the relevance of each perspective in understanding and addressing social development in contemporary India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "How does George Herbert Mead's concept of self contribute to our understanding of the social construction of individual identity and the role of social interaction in shaping the development of selfhood?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Prakhar Kumar",
@@ -31495,7 +33215,219 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 7,
+          "question": "Describe the changing equation of sociology with other disciplines.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Critically examine how does Sociology enrich common sense.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "How well do you think Tonnies, Durkheim, Weber and Marx predicted the character of modern society? Critique.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "In what way 'interpretative' method is different from 'positivist' approach in the study of social phenomena?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Examine the basic postulates of positivism and post-positivism.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "What makes Durkheim's research on Suicide rate a positivist research. Clarify.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "The division between Sociology & Social anthropology was a colonial project which needs to be revisited today. Why?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "C Discuss the role of objectivity in sociology.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 33,
+          "question": "Examine the problems of maintaining objectivity and value neutrality in social science research?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Phenomenology and Ethnomethodology establish that social order is an illusion. Describe how they do it.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "What do you understand by Ethnography? Describe challenges associated with Ethnography.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "While economics is about how people make choice, sociology is about they don't have any choice to make. What do you understand by the given statement?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "D How does Hypothesis help in formulating laws of social world?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 51,
+          "question": "E Describe the significance of comparative method in Sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 53,
+          "question": "Explain the different types of non-probability sampling techniques. Bring out the conditions of their usage with appropriate examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Discuss the challenges involved in collecting data through Survey.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "B Discuss the basic postulates of scientific method. How far are these followed in sociological research?",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 73,
+          "question": "Is Sociology a Science? Give reasons for your answer.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 91,
+          "question": "Why is M.N. Srinivas's account of Indian society regarded as Structural functional-ist in nature?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 93,
+          "question": "Describe the significance of village studies in Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 95,
+          "question": "How do you describe the continuous interaction between Great & Little Tradition in Indian society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 97,
+          "question": "Peasants and tribal insurgents should not be considered as 'objects 'of history but as 'makers' of their own history. Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 100,
+          "question": "Is Indian society moving from \"hierarchy\" towards \"differentiation\". Illustrate your answer with suitable examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 103,
+          "question": "C Differentiate between Ghurye and Elwin's approach on Tribal policy.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 105,
+          "question": "Sanskritization emerged as a field view concept to counter the then book view of Indian society but it has become another book view of contemporary Indian society. Do you agree? How far is relevant in understanding contemporary Indian society.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 108,
+          "question": "B Critically evaluate Louis Dumont's Homo Hierarchicus.",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 111,
+          "question": "In the context of changing Indian society, how do you view Andre Beteille's conceptions of harmonic and disharmonic social structures?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 113,
+          "question": "Caste system studies in India have been dominated by the 'book view' initially. How did the entry of 'field view' bring about a balance in the study of Indian caste system?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 116,
+          "question": "Indian system may be understood as system of cognitive structures. How far do you agree with this statement?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 119,
+          "question": "What do you understand by Agrarian social structure? How do sociologists describe it.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Arshad Muhammed",
@@ -31660,7 +33592,16 @@
       "source": "ForumIAS",
       "by": "forumias.com",
       "note": "MGP answer copy — Ananya Rana, UPSC IAS 2023 Toppers, AIR 280,",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 15,
+          "question": "What are primates? Discuss primate taxonomy and brief description of living major primates.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Anushka Jain",
@@ -31682,7 +33623,135 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 2,
+          "question": "Comment on the following in about 150 words each: 10x5=50 (a) Middle Paleolithic culture in India",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Modernity has entered Indian character and society, but it has done so through assimilation, not replacement. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Examine the colonial administrator\\'s view that Indian villages can be considered as \\'little republics\\'.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Discuss the sociocultural, economic and psychological constraints responsible for low literacy in tribal areas.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Discuss the contributions of M.N. Srinivas towards the understanding of the Indian village.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "How have modem democratic institutions influenced the Indian tribal societies? Assess.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Discuss the context, process and consequences of involuntary displacement among tribal communities in India and analyse the problems of rehabilitation.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Describe ethnic elements in the Indian population focusing Guha's classification.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Describe the evolutionary significance of the fossil finds of the Narmada Basin.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Critically examine the concepts of little and Great Traditions for understanding the Indian Villages.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "What do you understand by dynamics of caste mobility? How did the concept of Sanskritization contribute to its functionality?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "\"Tribes in India are not homogeneous group.\" Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 59,
+          "question": "What is regionalism? Evaluate how regionalism has stimulated political movements in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Discuss the impact of Globalization on the livelihood of the tribal populations.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 69,
+          "question": "The tribal movements have transformed in their form since colonial times. Elaborate.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 72,
+          "question": "Discuss the causes of exploitation and constitutional safeguards for the SCs and STs.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "Explain how Islam influenced the economic and cultural transformations of Indian society.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 79,
+          "question": "Evaluate the relationship between tribal identity and demand for new states.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "NITISH GUPTA",
@@ -31693,7 +33762,72 @@
       "source": "IAS Delhi Institute",
       "by": "iasdelhi.org",
       "note": "General Medicine, Paediatrics, Dermatology, Psychiatry",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "What do you understand by tropical splenomegaly syndrome? (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "(a) Give causes of arrested growth? (3m) (b) How will you investigate such child? (7m)",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 22,
+          "question": "Unmarried young lady 28 years old complaints of milky patches over sun exposed body parts, she also complaints of depigmentation of body hairs on patches. What is provisional diagnosis? Discuss etiopathogenesis of this disorder. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Discuss clinical management iron deficiency anaemia in children. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Discuss clinical features and treatment of chickenpox in children. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "What do you understand by self care medicine/treatment? What are self care components available in India? Discuss WHO guidelines on self-care. What are problems and prospects of self-care in India. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Discuss in detail Acute Encephalities Syndrome (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Discuss Anti retro viral prophylaxis for a neonate born to HIV+ mother. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "What do you understand by Nephrotic syndrome? Classify Nephrotic syndrome as per etiology? Give management/treatment of nephrotic syndrome in 12 yrs child. (15m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "NITISH GUPTA",
@@ -31704,7 +33838,107 @@
       "source": "IAS Delhi Institute",
       "by": "iasdelhi.org",
       "note": "Pathology, Microbiology, Pharmacology, FMT",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Describe morphology of Giardia intenstinalis with suitable diagram. (5m) b) Describe mechanism of action of Insulin producing hypoglycemia. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "II. a) Describe pharmacological actions of digitalis on heart. (5m) b) Describe factors influencing antibody production. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Describe cultural characteristics and biochemical reactions exhibited by salmonella. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Describe laboratory diagnosis of staphylococcus oureus. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Describe various routes of drugs administration giving their merits and demerits. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Describe adverse drug reactions of ACE inhibitors (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Enumerate fungi causing superficial skin infection. Give laboratory diagnosis of any one. (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Explain in detail various opportunistic infections in AIDS. Give laboratory diagnosis and treatment of any two. (15m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "III. a. Explain role of major histocompatibility complex in maintenance of immune response. (5m) b. Describe in detail lab diagnosis of poliovirus. (5m) c. Write short of Aspergillosis (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Describe vascular and cellular changes/events in acute inflammation. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Describe histopathological features seen in milliary tuberculosis. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "How would you distinguish between antemortem and postmortem burns. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Enumerate various grounds enumerated for abortions under Medical Termination of Pregnancy Act 1971 (5m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "How will you diagnose death from organophosphate poisoning. (10m)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "NITISH GUPTA",
@@ -31715,7 +33949,86 @@
       "source": "IAS Delhi Institute",
       "by": "iasdelhi.org",
       "note": "Surgery, PSM, OBS, Gynaecology",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "What do you understand by Endoscopy. Explain scope of endoscopy in clinical diagnosis.\\t5M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "What are causes of wound infection in hospital? What measures will you take to prevent it? 5M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Describe in brief grading and staging of malignant tumours. Write in brief about TNM classification. 10M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Enumerate various signs and symptoms of antepartum hemorrhage. 5M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "How would you treat complications of third stage of labour. 10M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Enumerate risk and causative factors for Ca cervix. 5M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Discuss various sexually transmitted diseases. How will you treat pt with candidiasis. 10M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "What are causes of high risk pregnancy? How will you treat lady of 34 wks of amenorrhea with 160/110 mm Hg BP, proteinuria ++, and 2 episodes of convulsions. 15M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "What are risk factors for anemia in pregnancy? What complications can be expected to child of anemic mother? How would you treat folate deficiency anemia.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "What do you understand by dysmenorrhea. How will you investigate the 18 year girl with painful heavy menses. Give clinical management of dysmenorrheal. 10M",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Ii) Write short note on Placenta.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Ajay Yadav",
@@ -31726,7 +34039,135 @@
       "source": "Level Up IAS",
       "note": "Anthropology optional answer copy",
       "by": "levelupias.com",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 12,
+          "question": "What are the defining characteristics of Iron Age cultures and how did it impacted the life of people?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "\"Europeans are closer to Neanderthals.\" Critically discuss in view of the African origin of humankind.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Ecological factors led to flow and ebb of Harappan civilization. Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 22,
+          "question": "Discuss impact of Ethnoarchaeology in reconstructing the past citing Indian examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "What is Synthetic Theory of Evolution? Discuss how this theory helps us in understanding the evolutionary mechanism.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Comment briefly on the physical features and phylogenetic position of Australopithecines.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Human Evolution is bio-cultural in nature. Explain.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Will it be proper to consider the megaliths to represent a single, homogeneous or contemporaneous culture? What kind of material life and cultural system is revealed in the megalithic cultures in India?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Describe different types of dating methods used in Archaeology, Highlighting the importance of each method.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "Discuss the Characteristic feature of Mesolithic culture in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 55,
+          "question": "Discuss with suitable examples typo-technological problems in Indian Paleolithic industry with reference to environmental hypothesis.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "Why are Neanderthals called Pre-modern humans? The Upper Palaeolithic period provides evidence of their coexistence with modern man. Discuss.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Why is the Neolithic phase of culture in Europe called revolution? Describe its distinctive features.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 65,
+          "question": "Discuss primate locomotion with special reference to adaptation to arboreal life.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "Briefly describe features of Narmada Man. Also highlight the debate related to its phylogenic status.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 72,
+          "question": "Highlight different theories of emergence of Homo sapiens with evidence.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 75,
+          "question": "Enumerate evidence of Animal domestication in Indian Microlithic Industry.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 78,
+          "question": "Briefly explain Darwin's Theory of Evolution. What does 'survival of the fittest' mean in the coronavirus pandemic?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Tiwari Anoop",
@@ -31737,7 +34178,184 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 2,
+          "question": "Highlight the conceptual issues around the concept of Dominant Caste.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "Describe the issues associated with same sex marriage.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Is social democracy a precondition for political democracy? Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "What is Medical TP act? How does recent amendment bring justice to women?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "What is POSH Act? \"Identification of tormentor by women at workplace does not come easily even today.\" Examine the statement with substantive examples from India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "What are the basic tenets of Hindu religion? Is Hinduism based on monotheism or polytheism?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Analyse the idea of developmental planning in India.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Has caste system hindered democracy and adult franchise in India?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Elaborate the concept of constitutional morality as given by B.R Ambedkar.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Is wage for housework (WFH) solution to existing disparity in entitlement? Will it empower women or reproduce status quo? Examine.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "B What are the problems related to religious minorities in India? Highlight.",
+          "marks": "20",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 34,
+          "question": "C Bring out comparison between north and South Indian kinship system. Illustrate with examples.",
+          "marks": "10",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 38,
+          "question": "Has green revolution led to the formation of new power elite in rural India? Elaborate your answer.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "What do you understand by LGBTQ? Comment on the issues concerning their marriage right.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "Identify the reasons for the resilience of democratic system in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 44,
+          "question": "E Despite multiple poverty alleviation schemes, it persists in Indian society. What could be the possible reasons?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 46,
+          "question": "How have the struggles against untouchability changed their forms and perspectives from Gandhian to Ambedkarite positions?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "How can Ayushman Bharat address disparities in the public health infrastructure in India? Briefly discuss.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "What are the issues associated with commercial surrogacy?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Elucidate the concepts of 'majoritarianism' and 'minoritarianism' in accentuating communal tensions in India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "What is ethno-nationalism? Examine the critical factors responsible for tribal discontent in India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Discuss role of pressure group in a democracy.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "What do you understand by discrete castes and muddled hierarchies?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 65,
+          "question": "Clarify the distinction between 'Household' and 'Family' and evaluate whether joint families have completely disintegrated.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "Describe the changes in the working-class structure with the coming of Gig economy. What are the measures undertaken by government to address the working class in this sector?",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Abinash Kumar",
@@ -31759,7 +34377,107 @@
       "source": "IAS Delhi Institute",
       "by": "iasdelhi.org",
       "note": "Anatomy, Physiology & Biochemistry",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 11,
+          "question": "How locking and unlocking mechanism stabilize knee joints. Draw labelled diagram of knee joint. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Discuss surgical anatomy of thyroid glands. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Define translation. What is the role of m-RNA? Describe the structure of t-RNA. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "Discuss the role of van der berg test. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Discuss developmental anomalies of testis. Add note on descent of testis. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Explain the boundaries, communications of fourth ventricles with labelled diagram. Also add note on CSF circulation. (10+5 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Describe gross anatomy of perineum. (10 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Describe the dermatomes of lower limb. Draw well labelled diagram of cutaneous innervation of lower limb. (10+5 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Describe gross anatomy blood supply and lymphatic drainage of mammary glands. What is \"Peau D'orange\"? (10+5 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Describe in detail about origin, distribution of Sciatic nerve along with clinical anatomy. (15 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "Describe corpus luteum. Write down in short menstrual cycle. (4+6 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Ii. What is the role of Vasopressin? What is SIADH? (5+5 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 56,
+          "question": "Define enzymes with examples. What is Km? What is the role of Na-K ATPase? (5+2+3 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Why TB patient on anti-tubercular drugs is advised to supplement vitamin B 6? (5 M)",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "SURAJ KUMAR",
@@ -31770,7 +34488,184 @@
       "source": "IAS Delhi Institute",
       "by": "iasdelhi.org",
       "note": "Medicine, Paediatrics, Dermatology & Psychiatry",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 13,
+          "question": "A 8 month old infant with Tetralogy of Fallot was brought to the OP with excessive crying, dyspnea, Bluish discoloration (i) What is the likely diagnosis? What are the other conditions that cause cyanotic spells? (ii) Describe the pathophysiology behind the condition? (iii) Discuss the management of the child in the emergency room? Describe about the long term solution. 2+3+5=10",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "A 28 week old preterm baby had tachypnea immediately after birth, with grunting, flaring of nostrils and chest retraction. (i) What is the likely diagnosis? What are the other differential diagnosis? (ii) Enumerate the investigations that are needed to confirm the diagnosis (iii) How will you manage the child? What are the preventive measures for this condition? 2+3+5=10",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "A 12 year old girl presented with complaints of milky white patches around the lips and near the eyes. (i) What are the theories behind the pathophysiology of this condition? (ii) Classify the disorder? (iii) Describe the line of treatment for this condition? What are the side effects of the treatment? 4+2+4=10",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "What are the risk factors and pre disposing involved in Schizophrenia?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 19,
+          "question": "How will you manage a patient with schizophrenia?What are the indicators of good prognosis? 4+6=10",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "How will you investigate the patient?What are the Electron microscopic findings?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Describe the pathogenesis behind the condition?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Discuss the lines of management of the patient?What are the complications?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "A 55 year old lady presented with a 1 year duration of itchy erythematous scaly plaques over bilateral knee, elbows and extensor areas (i) What is the most likely diagnosis? What are the differential diagnosis?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Elaborate the variants of psoariasis? What is inverse psoariasis?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "What is the histopathological finding? Add a note on PUVA therapy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "An 8 month child presented with several episodes of loose stools for the past 2 days. O/E the child was lethargic, sunken eyes and decreased skin turgor (i) What are the causes of Acute Diarrhoea? Enumerate the pathogens involved. (ii) How will you classify the condition of the child? (iii) Explain the line of management in the first 1 hr of admission. 5+7+8=20",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "What are the Clinical signs elicited in meningitis? Elaborate the lab investigation.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "What are the complications associated with the condition? Write briefly about recurrent meningitis?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Q5 (a) (i) How will you Investigate a patient with Hyperthyroidism? Why is TSH more sensitive than T4?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 37,
+          "question": "What are the eye signs present in Graves Ophthalmopathy? How will you treat it?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "How will you manage the patient? What is the long term management?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "What are the non-pharmacological management of anxiety?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "What is the most likely diagnosis? Enlist the differential diagnosis?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "What is the diagnostic test to confirm the diagnosis?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "How will you manage the patient? What is allergic desensitisation?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "How will you evaluate a case of Neonatal jaundice? What is the most common cause of Pathogiacal jaundice?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 45,
+          "question": "How will you grade the extent of Jaundice? Draw a diagram depicting it.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "A 3 year old male had sudden onset of acute diarrhoea for the past 16 days days (i) What is the most common organism involved? Explain the structure of Cryptosporidium (ii) Discuss the investigation. How will you manage the child? (iii) What is the diet prescribed for the above condition? 2+8+5=15",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "What are the Essential Components of IMNCI strategy? Write about the principles of Integrated Care? (ii) Describe briefly about IMNCI case management process. What are the advantages and Disadvantages of IMNCI?",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        }
+      ]
     },
     {
       "topper": "Shivika Hans",
@@ -31781,7 +34676,121 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "verified": true,
-      "note": "Sociology optional answer copy"
+      "note": "Sociology optional answer copy",
+      "questions": [
+        {
+          "page": 2,
+          "question": "According to Durkheim, 'the essense of religion is division of the world into sacred & profane'. Why did he say so?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 4,
+          "question": "Describe the major theoretical perspectives on family.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Describe relevance of cultural lag in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "What is cult? Explain the growth of cults in the contemporary world.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Describe the interplay of globalisation and nation state in present-day societies. Has globalisation weakened the autonomy of nation-states?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 15,
+          "question": "Explain how the pattern of patriarchy is being altered in a family and at the workplace in the present context.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "Social conflict is both a cause and a consequence of social change. Explain.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Describe the life cycle of a social movement. Describe various factors that lead to decline of a social movement?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Are all world religions patriarchal? Substantiate your answer with examples.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 25,
+          "question": "Discuss AM Shah's household dimension to family.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Does the institution of marriage continue to be sacred in Indian society?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Describe circulation of elites and its relevance in Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "What do you understand by Froebel's notion of 'New International Division of labor'? What is New about it?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 35,
+          "question": "Feminist scholars argue that 'New media' is masculine and hence reinforces structural hierarchies rather than reconfiguring them. Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "What is new in 'new social movements? Elaborate your answer with special reference to India.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Discuss the importance of 'power elite' in democracy.",
+          "marks": "10",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "DEVASHISH BINDAL",
@@ -31958,7 +34967,114 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 - ECONOMICS - TEST 7 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Use IS LM model to explain trade as an engine of growth.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "\"Agriculture contributes to development and also gets contributed to by it\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "Explain the differences between Kaldor's and Kalecki's model of distribution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "\"Monopoly power exists in all imperfect competition markets, only the degree is different.\" Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "How does per unit subsidy create dead weight loss? Do you think a direct subsidy is better?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "How will a monopoly reach equilibrium if government regulates pricing?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "\"Baumol and Keynes included interest rate as a factor affecting money demand, but treated it differently.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "What is the role of public expenditure in development?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Explain how Neo Keynesian solutions will emerge for underemployment situation?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Q.5 (d) Explain Schumpeter's theory of development.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 34,
+          "question": "How is general equilibrium solution reached in an economy with two people, two commodities and one factor of production?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Explain the quantitative and qualitative methods of credit control. Which one is better for inflation targeting?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Examine the impact of favorable supply shock when expectations adjust gradually in an adaptive manner.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Monopolist has more power if elasticity of demand is low but it has its limit. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Explain trade adjustments and protectionism if one country has advantage due to external economies of scale and first mover advantage.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Abhilasha Abhinav",
@@ -32068,7 +35184,72 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 1 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "Do you agree with the view that family is a 'universal association'? Using suitable case examples, critically examine the above statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "How does Julian Steward's concept of cultural ecology enhance our understanding of human-environment interactions?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "How does Marvin Harris explain food taboos and preferences across different cultures.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Describe the structural features of social life as suggested by Radcliffe Brown in his theory of social structure.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "Anthropology grew out of the intersection of European discovery, colonialism, and natural science. Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Discuss the nature of law and justice in simple societies citing suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "How do Descent and Alliance theories differ in their approach to understanding kinship systems in anthropology?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "How do development anthropology and the anthropology of development differ in terms of their focus and approach.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Discuss the contribution of Franz Boas and his followers on nature-nurture debate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Amit Meena",
@@ -32079,7 +35260,65 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 2 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "How have Mendelian principles influenced our understanding of human variation and evolution?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Explain various genetic mechanisms of microevolution and macroevolution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "What is the role of Serogenetics & Cytogenetics in reproductive biology? Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "What is an Anthropometric Somatotype? How Heath & Carter's method of Somatotyping was an improvement over Sheldon's method?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Human evolution is characterized by several morphological, developmental, physiological, and behavioural changes\". Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "\"Humans have unique ability to adapt to varied environmental conditions due to the innate biological ability as well as through cultural means\". Elaborate with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "\"Study of primates have widened our understanding of human evolution\". Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "The transition of humans from quadrupedal to bipedal locomotion had wide scale implications on biological and cultural evolution of man. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Amit Meena",
@@ -32090,7 +35329,72 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 3 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 12,
+          "question": "Analyse Indological and Structural-functionalists perspective on caste system.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Discuss briefly the salient features and distribution of Neolithic cultures from south India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Assess the contributions of D.N. Mazumdar towards Indian Anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Evaluate the contribution of American anthropologists to Indian anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Describe social Q.6 (b) Describe the significant contributions of village studies in India to the understanding of social transformations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Discuss the contributions of Iravati Karve to the Indian anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Bring out the various features and the importance of the \"Dominant Caste\" in present context",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Critically examine concept of sacred complex for understanding cultural continuity and change in Indian civilization.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "What do you understand about the dynamics of Caste mobility? How does the concept of Sanskritization contribute to its functionality?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Amit Meena",
@@ -32101,7 +35405,58 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 4 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "Discuss the rise of ethno-nationalism among Indian communities with specific examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Due to modernisation, urban industrialisation the extended kinship bonds had broken down and nuclear family had emerged as main alternative.\" Discuss various consequences of this change in context of Indian tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Critically examine the role of NGOs in promoting health & Education in tribal areas.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Critically assess the role of anthropology in rural development.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Critically examine the various structural constraints in the development of education among Scheduled Tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Discuss the concept of \"indigenous people\" in context of Indian tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "GS Ghurye described Indian tribes as backward Hindus. Discuss the impact of Hinduism on tribal populations of India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Amit Meena",
@@ -32112,7 +35467,72 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 5 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "Discuss the role of the Tribal Advisory Council (TAC) in safeguarding the rights and welfare of Scheduled Tribes in India. Also discuss various challenges faced by them, and what reforms could enhance their effectiveness?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "The health status of tribal communities in India is significantly poorer compared to the general population. Discuss various factors that contribute to this disparity.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "To what extent could you distinguish continuity and change between Palaeolithic and Neolithic cultures? Illustrate the answer with appropriate examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Critically analyse the racial elements in Indian population as opined by B.S Guha.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"The concept of Sanskritisation as well as Tribe-caste concept explains the changes within Indian civilisation, but both differs from one another in a significant way\". Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Critically analyse the working of constitutional safeguards for the minority communities in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Analyse the concept of the 'Sacred Complex' in Indian anthropology. How does it help in understanding the interaction between religion, culture, and society in India?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Indian Paleolithic culture can neither be conceived chronologically homogenous nor as a uniform cultural phase. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "What are the problems in application of the concept of indigenous people on Indian Tribes? Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Amit Meena",
@@ -32123,7 +35543,72 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 7 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "Critically assess the role of Panchayati Raj Institutions as a facilitator of social inclusion in rural society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Explain the impact of development induced displacement among the tribal people in India with suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "To what extent could the Mesolithic culture be attributed to a phase of transition between Palaeolithic and Neolithic cultures? Illustrate the answer with appropriate examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Supreme court of India in its recent judgement noted that, \"Scheduled castes not a homogeneous class, sub-classification one of the means to achieve substantive equality.\" Discuss the possible implications of sub-classification of Scheduled Cates.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Critically examine the contributions of Makhan Jha and BN Saraswati to the study of sacred complexes in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "How is the process of tribe-caste continuum different from Sanskritization? Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Identify the main types of problems that arise out of contacts between tribal people and more advanced sections of Indian population. What measures do you suggest to mitigate the same?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Using suitable examples, bring out the historical processes of social exclusion of Denotified tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Discuss the criticism levelled against Anthropology in the context of 'isolation and assimilation debate' on tribal populations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "JAHNAVI",
@@ -32274,7 +35759,114 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "note": "PSIR optional — Paper 1",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 7,
+          "question": "Discuss India's new approach to its relations with China.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Comment on the Role of cross-border terrorism in threatening peace and cooperation in South Asia.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Emergence of India and Australia as close partners.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 13,
+          "question": "What are the key elements of India's Nuclear doctrine? In the prevailing geopolitical environment, should India go for revision of its nuclear doctrine?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Discuss the key factors behind the shift from Look East Policy to Act East Policy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "How can India's G20 presidency help in providing solution to challenges being faced by the global couth? Discuss the achievements of India as the Voice of Global South.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "BIMSTEC provides confluence of Neighbourhood First Policy and Act East Policy. Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 29,
+          "question": "Discuss India's concerns about Belt and Road Initiative",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "In the changed geopolitical scenario, how has New Delhi remained engaged with Afghanistan?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Explain is the significance of Indian Ocean region. In the face of emerging challenges, what steps has India taken to maintain its primacy in the Indian Ocean Region?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the bases of India's claim to the permanent seat in the UN Security Council. How far does the goal of permanent seat seem achievable?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Discuss the convergences and divergences in India-USA relations. Mention some of the recent steps taken to provide depth to this partnership.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss the important areas of cooperation between India and Africa. Compare India-Africa engagement vis-à-vis China-Africa engagement.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "What are the main drivers of India-France relations? Discuss the scope for India-France cooperation in the Indo-Pacific region.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Critically examine the role of India in shaping the emerging world order in the 21st century.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Priyasha Verma",
@@ -32285,7 +35877,191 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "note": "PSIR optional — Paper 1 (A)",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "103rd constitutional Amendment Act expands the idea of backwardness. comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 7,
+          "question": "Examine Fundamental rights in the Indian constitution as instrument of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Discuss the efficacy of Parliamentary committees.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the manner in which the nationalist leadership tried to integrate the dalits within the mainstream of the national movement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "Critically examine the role of Indian parliament in the socio-economic transformation of the nation.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Analyse the regionalisation of Indian politics. How has it impacted the functioning of federal structure?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Examine the nature of relationship between the executive and the judiciary in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "\"The tension in the relationship between the Governor and the State government is inherent in constitutional framework but gets exacerbated due to political exigencies.\" Critically analyse the statement.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Discuss the emerging contradictions between the economics of liberalisation and the politics of empowerment in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "National movement in India was anti-imperialist and increasingly radical in its socio-economic and political programmes. Examine.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "For effective decentralisation, Panchayats and urban local bodies need to be given political, administrative, and financial autonomy. Comment.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "How far is it correct that the Doctrine of Basic Structure has been the saviour of the Indian Constitution, democracy, and the Rule of Law? Substantiate your answer with suitable examples.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Examine the re-emergence of role of religion in the Indian politics. How does it differ from previous instances?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 45,
+          "question": "Examine the idea of Secularism in the Indian Constitution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Analyse the Marxist understanding of Indian national movement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 49,
+          "question": "The Indian constitution is an amalgamation of multiple competing ideals of its time. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "India has entered to a new era of one-party dominant system. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Indian National Movement went from cooperation to non-cooperation to delegitimization of British rule in India. Elucidate.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Examine the role of social media in influencing voters' behaviour in India. How far has it nudged the voters to make rational choices?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "Discuss the factors behind upsurge in women participation in electoral process in recent times in India.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Beyond ethnic conflicts, economic backwardness and political alienation are key factors behind continued instability in the North-Eastern region of India. Examine.",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Though the peasants' movements weren't focused on ending the British rule in India, they were critical to generating national consciousness. Comment.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Explain the phenomena of \"Decline of Parliament.\" How has it impacted the governance in India?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Discuss the role and functions of Central Information Commission. How does recent amendments to the Right to Information Act impact its functioning?",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 77,
+          "question": "With the growing regionalization and federalization of the Indian political system, the federal relevance of the Rajya Sabha has only increased. Discuss.",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "Examine the changing nature of party system in India. Is the era of coalition politics over?",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Satvik Sharma",
@@ -32307,7 +36083,135 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 1 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "What are the major socio-economic problems faced by the SCs? Point out the criteria for diagnosis and suggest the remedial Measures.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Critically examine the concept of communalism and its relevance for multi-religious and multi- ethnic country like India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Discuss the Significance of cultural and administrative factors in tribal development.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Critically assess the existing constitutional safeguards the plans and policies for tribal welfare.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "\"Tribals in India had never been isolated communities\" Comment",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Anthropological inquiry presents a holistic picture of complex realities about simple societies. Do you think this knowledge generated through anthropological inquiry can be useful for their welfare? Justify with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Discuss the rise of ethno-nationalism among Indian communities with specific examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Due to modernisation, urban industrialisation the extended kinship bonds had broken down and nuclear family had emerged as main alternative.\" Discuss various consequences of this change in context of Indian tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Critically examine the role of NGOs in promoting health & Education in tribal areas.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "With suitable examples, describe the impact of displacement on the health and nutritional status of the tribal communities.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "\"Forces of change both indigenous and exogenous, has serious implications on the lifestyle and culture of tribal communities.\" Elaborate with suitable examples from Indian tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "Critically examine various changes in tribal governance during pre and post independent India. What is more needed for their holistic development? Suggest.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "Critically assess the role of anthropology in rural development.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "\"Decentralised and self-governance is essence of democracy.\" In light of this statement discuss the salient features of PESA Act of 1996 and its role in promotion of self-governance.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 71,
+          "question": "Classify the tribal movements in contemporary India in a regional perspective and analyse the contributing factors.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 74,
+          "question": "Critically examine the various structural constraints in the development of education among Scheduled Tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 78,
+          "question": "Discuss the concept of \"indigenous people\" in context of Indian tribes.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "GS Ghurye described Indian tribes as backward Hindus. Discuss the impact of Hinduism on tribal populations of India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Pankaj Patle",
@@ -32318,7 +36222,142 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 2 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 12,
+          "question": "Analyse Indological and Structural-functionalists perspective on caste system.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "What do you mean by Modernisation? Write a note on modernisation of Indian Tradition and social structure.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Describe the characteristics and distribution of upper palaeolithic cultures in India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Discuss the contribution of civilizational school in understanding Indian society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Discuss briefly the salient features and distribution of Neolithic cultures from south India.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "Q.3 (b) Delineate the main features of prehistoric rock art of Central India.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 31,
+          "question": "Assess the contributions of D.N. Mazumdar towards Indian Anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "\"India is a mosaic of various races, languages, cultures.\" Discuss various challenges posed by this diversity and suggest anthropological measures to deal with it.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "Do you think westernisation and Sanskritization are complementary to each other? Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "With suitable examples, discuss the role of PRIs as an agent of social change.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Evaluate the contribution of American anthropologists to Indian anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 57,
+          "question": "Describe the significant contributions of village studies in India to the understanding of social transformations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "Discuss the contributions of Iravati Karve to the Indian anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "Define Jajmani system. Discuss various factors and forces which are responsible for changes in this system.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "Describe the distribution and salient features of Jorwe culture.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 71,
+          "question": "Define endangered language and discuss various reasons and consequences due to the extinction of native languages.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 74,
+          "question": "Bring out the various features and the importance of the \"Dominant Caste\" in present context",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 78,
+          "question": "Critically examine concept of sacred complex for understanding cultural continuity and change in Indian civilization.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "What do you understand about the dynamics of Caste mobility? How does the concept of Sanskritization contribute to its functionality?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Pankaj Patle",
@@ -32329,7 +36368,135 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Anthropology Test 3 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "Do you agree with the view that family is a 'universal association'? Using suitable case examples, critically examine the above statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "How does Julian Steward's concept of cultural ecology enhance our understanding of human-environment interactions?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Define the concept of Basic Personality Structure and discuss its relevance in contemporary anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "What are various theories explaining culture change? Discuss any one of them in detail.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "How does Claude Lévi-Strauss argue that myths and totemic systems bridge the gap between nature and culture? Illustrate with suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Critically examine the contribution of anthropologists in the interpretation of Symbols.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "How do you relate the concepts of 'Sacred' and 'Profane' in Durkheim's theory of Religion with a focus on the role of Totem?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "How does Marvin Harris explain food taboos and preferences across different cultures.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Describe the structural features of social life as suggested by Radcliffe Brown in his theory of social structure.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "Anthropology grew out of the intersection of European discovery, colonialism, and natural science. Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "How do anthropologists understand the incest taboo, and to what extent is it considered a universal phenomenon?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "How did Malinowski's study of the Trobriand Islanders refute Freud's concept of the Oedipus complex?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "How did American diffusionists utilize the concept of \"culture area\" to explain cultural change, and what are the main critiques of their approach?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "Explain with examples, how ecology, economy and various social institutions are embedded into one another.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "What is netnography? Discuss its scope and relevance in the contemporary digital ecosystem.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 74,
+          "question": "Discuss the nature of law and justice in simple societies citing suitable examples. 15 Q.8 (a) How do Descent and Alliance theories differ in their approach to understanding kinship systems in anthropology?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 78,
+          "question": "How do development anthropology and the anthropology of development differ in terms of their focus and approach.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "Discuss the contribution of Franz Boas and his followers on nature-nurture debate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Akhilesh Kumar Singh",
@@ -32340,7 +36507,30 @@
       "source": "Level Up IAS",
       "by": "levelupias.com",
       "note": "PSIR optional — Paper 1 & 2",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 1,
+          "question": "Trace the evolution of western political thought from ancient to contemporary period",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 5,
+          "question": "Plato was an enemy of open society. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Explain the Aristotelian view of politics. To what extent do you think it has contributed to the development of modern day constitutional democracies?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "AYUSH AGRAWAL",
@@ -32351,7 +36541,205 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 - ECONOMICS - TEST 1 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Substitution effect is the deciding factor about the nature of goods. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "\"Marshallian stability ensures Walrasian stability.\" Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "What are the different measures of monopoly power?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Explain if diminishing marginal productivity is necessary or sufficient for diminishing MRS, responsible for convexity of isoquant.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Examine the Kaldor's equation of distribution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Explain the difference between Cournot model of duopoly with similar product and differentiated product.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Examine how the profit, wage and rent in Ricardian system move differently with the movements in the level of income.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Explain the impact of elasticity of demand and supply curves on stability in Cobweb Model.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "\"Prices can be over and above MC only in Monopoly market structure\". Analyse the statement.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Explain the role of returns to scale in determining the shape Long Run Average Cost Curve.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 28,
+          "question": "How did Kalecki utilize Lerner's Index of Monopoly power in his theory of distribution? Examine the conclusions drawn by his theory.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "Examine the validity of Arrow's Impossibility Theorem in the light of its criticisms.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "A single firm monopolizes the entire market for widgets and can produce at constant average and marginal costs of AC = MC = 10 Originally, the firm faces a market demand curve given by Q = 60 - P. Calculate the profit-maximizing price-quantity combination for the firm. What are the firm's profits ? Now assume that the market demand curve shifts outward (becoming steeper) and is given by Q = 45 - 0.5P What is the firm's profit-maximizing price-quantity combination now ? What are the firm's profits. Explain why there is no real supply curve for a monopoly.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Is it always true that direct subsidy makes an individual better off than indirect subsidy of the same amount?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "\"Monetarists and Classicals draw same conclusions in both short run as well as long run.\" Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 42,
+          "question": "Define Sacrifice Ratio. What was its utility as stated by Okun ?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "What is the role of low interest sensitivity of investment in determining effectiveness of monetary and fiscal policy?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "How does the autonomous multiplier get affected if investment is also a function of income?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Explain Classical Dichotomy. What is its relevance to neutrality of money?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Explain the shape of AS curve in long run in Neo- Classical Model. How is it different from Short run AS curve?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 53,
+          "question": "Does government borrowing always crowd out private investments? Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 55,
+          "question": "Examine why classical theory couldn't explain paradox of thrift? What were the different assumptions under Keynes that it could be explained? What was its role in explaining great depression.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "Explain transmission mechanism and how is it impacted by autonomous multiplier and income sensitivity of money demand. Does it get affected by endogenous money supply.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 61,
+          "question": "\"Transaction demand for money is always dependent on income.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "How did Keynesians differ from monetarists?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 67,
+          "question": "Explain the impact of technological improvement in a gradual monetarist model.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Explain how New Keynesians defined rigidity in the market?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Policy ineffectiveness proposition in rational expectations can be applied in long run, but not always in the short run. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "AYUSH AGRAWAL",
@@ -32362,7 +36750,142 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 - ECONOMICS - TEST 2 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 6,
+          "question": "How a mutually beneficial trade between two nations can be explained in case of increasing returns to scale, assuming the two nations is identical in every respect?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "Explain the impact of tariff in a small country using general equilibrium framework.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Explain the policy issues in case of Keynesian Open Economy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "\"Trade is always growth promoting.\" Do you agree? Substantiate your arguments on the basis of established theories.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "In an open economy, with high capital mobility, fiscal management is as best as doing nothing. Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Devaluation of currency is a conditional policy instrument to increase exports. Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Explain the concept of Optimum tariff in general equilibrium framework.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "WTO has started losing its relevance, the result of which is protectionist tendencies across the world. Substantiate your arguments with proper reasons.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "How does an economy reach full employment level of output if it is presently facing unemployment in a flexible exchange rate system and imperfect capital mobility?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Explain Salter Swan diagram. Define the zones of equilibrium and disequilibrium. What policy prescriptions would you suggest for the situations pertaining to unemployment and inflation vis a vis BOP deficit.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Economic growth in underdeveloped and over populated countries is possible only when a sufficient minimum effort is made to transition from a state of backwardness to secular growth. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 58,
+          "question": "Examine the problem of free ridership in environment degradation. How can it be corrected?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 62,
+          "question": "Explain the five stages of Rostow's growth model.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "The peak of the Kuznet's inequality curve can be reduced with proactive role of state in the economy. Do you agree?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 68,
+          "question": "The impact of savings in Solow model differs from that in Harrod Domar Model. Analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "\"In view of resource constraints and economic uncertainties in developing economies, the Hirschman's Model makes more sense.\" Discuss in the background of limitations of Balanced growth theory.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 74,
+          "question": "The markets and state have complementary role to play in development of an economy. Critically analyse this statement in the light of Washington Consensus.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 78,
+          "question": "The Endogenous growth model on Technology is developed as an improvement over static understanding of the Solow Model. Explain. Analyse the conclusions drawn by the Romer's Model.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 81,
+          "question": "What are the core requirements of strategy of agricultural and rural development?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "AYUSH AGRAWAL",
@@ -32373,7 +36896,72 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "CSE 2023 - ECONOMICS - TEST 3 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 14,
+          "question": "What is endogenous money multiplier? Examine its impact on transmission mechanism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Critically examine how Keynesian speculative demand for money is different from Cambridge incorporation of k ?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "What is the role of behavioral coefficients in money multiplier?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Explain the logic of pricing of club goods? Do you apply the same provision on merit goods?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "How is pricing of public goods different from private goods? Are public utilities priced in same manner?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "How is efficiency achieved when property rights are defined and externalities have quasi linear preferences?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Critically examine the functional utility of Pigouvian tax.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Examine the distribution of burden of indirect tax between buyers and sellers.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "What is the impact of proportional tax on wage? Explain the burden offset.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Anita Yadav",
@@ -32417,7 +37005,107 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Geography Test 1 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 6,
+          "question": "Define earthquake and discuss its geographical distribution.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 8,
+          "question": "What do you understand by Marine heat waves? Discuss how it impacts the marine ecosystem.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Describe different types of oceanographic conditions that produce up-welling and down-welling.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Discuss the concept of isostasy and explain the global isostatic adjustment. [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Examine critically the drawbacks of Koppen's classification of climates. Explain how Thornthwaite attempted to overcome Koppen's limitations. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Bring out the relevance of Seismic study in determining the structure of the interior of the earth. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Q.5 (b) Write short note on Desert Ecosystem.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 28,
+          "question": "Why volcanic eruptions are environmental hazards?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Explain frontal depressions and its associated impacts on weather conditions. [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "Discuss the importance of the ITCZ as a climatic control throughout the tropical regions. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Highlight major causes of soil degradation and methods of soil conservation. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "\"How do social forestry empower local communities to actively participate in forest management, and what benefits do they bring in terms of livelihood, environmental conservation, and sustainable resource use?\" [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Explain how the hypothesis of sea floor spreading forms the basis of the new theory of plate tectonic. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Examine relationship between slope and soil development. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Manish",
@@ -32428,7 +37116,93 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Geography Test 2 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Q.1 (a) Write notes on the following in about 150 words each: Eco-tourism is the solution to over-tourism. Comment.",
+          "marks": "",
+          "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 6,
+          "question": "Q.1 (b) Write explanatory note on cultural ecology.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 8,
+          "question": "Q.1 (c) Distinguish between Administrative and cultural settlements.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 10,
+          "question": "\"Rural - Urban Fringe\" is ecologically the most fragile region\". Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Q.1 (e) Write short note on population as social capital.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 21,
+          "question": "Throw light on Demographic Characteristics of developing and developed countries.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 28,
+          "question": "Q.5 (c) Throw light on Areal Differentiation school of thought in Geography.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 30,
+          "question": "The global cities act as the command and control centres of the world system. Elaborate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 32,
+          "question": "Economic landscape is not a static but dynamic element. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Examine the causes of migrations and the socio-economic and political problems generated by them.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 38,
+          "question": "The environmental issues are not adequately addressed in Regional planning. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Examine Hartshorne genetic classification of boundaries.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Manish",
@@ -32439,7 +37213,51 @@
       "source": "NextIAS",
       "by": "nextias.com",
       "note": "Geography Test 3 — NextIAS test series",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 4,
+          "question": "Explain why evapotranspiration is geomorphically important. (Answer in 150 words)",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 6,
+          "question": "How do settlement patterns relate to the concept of sustainability and environmental impact? (Answer in 150 words)",
+          "marks": "",
+          "words": "150",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "How does the thermohaline circulation induce deep ocean currents?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "How does atmospheric stability affect pollution concentrations?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Highlight the shortcomings of Continental Drift Theory, explain how Plate tectonics emerged as a much widely accepted theory. [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 18,
+          "question": "Discuss Denudation Chronology and its importance in geomorphology. [15 Marks]",
+          "marks": "15",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Ramteke Sumit Sudhakar",
