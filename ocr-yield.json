@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T22:14:34.741Z",
+  "generated": "2026-11-05T07:31:24.750Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2672,20 +2672,6 @@
       "low": true
     },
     {
-      "url": "https://www.defactolaw.in/_files/ugd/9bce74_51baf40309a1463a8df82e38ba43f44d.pdf",
-      "topper": "Rhythm Kataria",
-      "coaching": "De Facto Law",
-      "subject": "Law",
-      "count": 1,
-      "optional": true,
-      "pages": 51,
-      "model": "gemini-3.5-flash-lite",
-      "geminiPages": 6,
-      "salvaged": 1,
-      "groupMedian": 2,
-      "low": true
-    },
-    {
       "url": "https://drive.google.com/file/d/1z6qyGLim0Y-IdWGvSsk_86MgJZ0x2_ur/view",
       "topper": "REKHA MEENA",
       "coaching": "IAS Delhi Institute",
@@ -4387,7 +4373,21 @@
       "count": 2,
       "optional": true,
       "pages": 51,
-      "model": "gemini-flash-lite-latest",
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 18,
+      "salvaged": 2,
+      "groupMedian": 2,
+      "low": true
+    },
+    {
+      "url": "https://www.defactolaw.in/_files/ugd/9bce74_51baf40309a1463a8df82e38ba43f44d.pdf",
+      "topper": "Rhythm Kataria",
+      "coaching": "De Facto Law",
+      "subject": "Law",
+      "count": 2,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite",
       "geminiPages": 12,
       "salvaged": 2,
       "groupMedian": 2,
@@ -20984,20 +20984,6 @@
       "low": false
     },
     {
-      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T2-MANISH-R356-1750227173893.pdf",
-      "topper": "Manish",
-      "coaching": "NextIAS",
-      "subject": "Geography",
-      "count": 12,
-      "optional": true,
-      "pages": 53,
-      "model": "gemini-3.1-flash-lite-preview",
-      "geminiPages": 42,
-      "salvaged": 6,
-      "groupMedian": 13.5,
-      "low": false
-    },
-    {
       "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P1.pdf",
       "topper": "Nishanth T",
       "coaching": "Shankar IAS Parliament",
@@ -22839,20 +22825,6 @@
       "geminiPages": 54,
       "salvaged": 0,
       "groupMedian": 12,
-      "low": false
-    },
-    {
-      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T5-MANISH-R356-1750227191901.pdf",
-      "topper": "Manish",
-      "coaching": "NextIAS",
-      "subject": "Geography",
-      "count": 13,
-      "optional": true,
-      "pages": 53,
-      "model": "gemini-flash-lite-latest",
-      "geminiPages": 42,
-      "salvaged": 0,
-      "groupMedian": 13.5,
       "low": false
     },
     {
@@ -24812,7 +24784,21 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 13.5,
+      "groupMedian": 14.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T2-MANISH-R356-1750227173893.pdf",
+      "topper": "Manish",
+      "coaching": "NextIAS",
+      "subject": "Geography",
+      "count": 14,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 48,
+      "salvaged": 6,
+      "groupMedian": 14.5,
       "low": false
     },
     {
@@ -27035,6 +27021,20 @@
       "geminiPages": 52,
       "salvaged": 1,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T5-MANISH-R356-1750227191901.pdf",
+      "topper": "Manish",
+      "coaching": "NextIAS",
+      "subject": "Geography",
+      "count": 15,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 48,
+      "salvaged": 0,
+      "groupMedian": 14.5,
       "low": false
     },
     {
@@ -33358,7 +33358,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 88,
       "salvaged": 1,
-      "groupMedian": 13.5,
+      "groupMedian": 14.5,
       "low": false
     },
     {

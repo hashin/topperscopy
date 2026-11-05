@@ -37236,6 +37236,20 @@
           "marks": "",
           "words": "",
           "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Discuss the views of Thomas Malthus on theory of population growth with its limitations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Critically examine ideographic versus nomothetic dualism in Geography.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
         }
       ]
     },
@@ -37338,6 +37352,20 @@
           "page": 42,
           "question": "How does a ridge and valley landscape arise? Explain the formation of the ridges and valleys.",
           "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "The process of demographic transition is not uniform. Examine this statement in the context of demographic transition theory. [20 Marks]",
+          "marks": "20",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "Discuss the relevance of Von Thunen's model of agricultural location in the contemporary context. [15 Marks]",
+          "marks": "15",
           "words": "",
           "salvaged": false
         }
@@ -37513,6 +37541,13 @@
           "question": "Q.1(a). Examine the evolution of the 'Right of Asylum' in international law. What are its different types of Asylum? (10 Marks, 150 words)",
           "marks": "10",
           "words": "150",
+          "salvaged": true
+        },
+        {
+          "page": 12,
+          "question": "Q.3(a). What are the various theories prevalent for deciding the relationship between International Law and Domestic Law? How do the National Courts in India apply the International Law?",
+          "marks": "20",
+          "words": "",
           "salvaged": true
         }
       ]
