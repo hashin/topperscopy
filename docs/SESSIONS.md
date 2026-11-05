@@ -1130,9 +1130,11 @@ Sagar Jain (Test 5), Pawan Kumar Pandey (Tests 1, 3, 4). `year: 2024` is from th
 person (exact name), not confirmed. If not, disambiguate the name (DECISION-22). The page's other optionals (Physics, Maths) were not added — not asked.
 
 ## 2026-11-05 — Hero image refresh
-**Asked.** "update the hero image with upto date numbers". **Did.** `node build.js`, `git checkout index.html`, `node update-hero.mjs`
-(DECISION-24): `assets/og.jpg` now reads 9,105 copies · 83,800 questions · 1,703 toppers, tagline "83,500+ questions, inside 9,000+";
-README headline (76,000+ → 83,500+) and `index.html` `og:image:alt` patched to match. `npm run check` 32/32. Not committed.
+**Asked.** "update the hero image with upto date numbers" (then: "we have 91000+ questions"). **Did.** `assets/og.jpg` now reads
+9,111 copies · 91,744 questions · 1,703 toppers, tagline "91,500+ questions, inside 9,000+"; README headline (76,000+ → 91,500+)
+and `index.html` `og:image:alt` patched to match, via `update-hero.mjs` (DECISION-24). **Trap.** This checkout was a week behind
+`origin/main` (the `ocr: gemini vision pass` commits add ~8k questions): a first run here said 83,800. The numbers above come from a
+scratch clone built at `origin/main` 6ee317e — they match the live site. Pull before the next local hero run. Not committed.
 
 ## 2026-11-05 — VisionIAS PDFs "Access Denied"
 **Asked.** A `cdn.visionias.in/toppersanswerbooklet/…sudipa_dutta_rank_41.pdf` link shows access denied — "fix it". **Found.** Not our bug:
