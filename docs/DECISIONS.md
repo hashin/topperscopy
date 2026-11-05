@@ -1504,3 +1504,15 @@ and its worker.
 file the server sends, clears the HTTP cache between visits, covers a first visit via `/` and via `?q=`, and a worker upgrade) —
 listed under "Not checkable, still true" in `docs/INVARIANTS.md`.
 
+
+## DECISION-30 — Copies on a host that answers 403 keep their link but carry an "unavailable" notice
+**Context.** 2026-11-05: every `cdn.visionias.in/toppersanswerbooklet/*.pdf` returns S3 `AccessDenied` (HTTP 403 via CloudFront) — to
+curl and to a real browser, 13 of 13 URLs tried across the dataset (~3,800 link-only copies plus every VisionIAS-sourced row in
+`questions.csv`). Cause on VisionIAS's side (files removed, bucket made private, or referrer/signature gating) is unknown.
+**Decision.** `DOWN` in `app.js` lists such hosts. For those copies the "Open PDF" button stays (dashed, muted, with a tooltip) and the
+expanded card opens with one line saying the host is refusing access and the questions are still searchable. No data is removed.
+**Rejected.** *Hiding the links / the copies* — the question text is still the useful part and the links may come back. *Spoofing a
+Referer or User-Agent to get past the block* — circumvents the publisher's access control; and nothing is re-hosted (README).
+*Showing the notice on the JS-free static pages* — not done; they are SEO surface and the outage may be temporary.
+**Reverse if.** VisionIAS PDFs open again (empty `DOWN`), or VisionIAS confirms the files are gone for good (then drop the link and
+mark the copy question-only).

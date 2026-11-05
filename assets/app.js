@@ -728,8 +728,13 @@
     }
     return out;
   }
+  // Hosts whose PDFs currently answer 403 AccessDenied to everyone (checked 2026-11-05, DECISION-30).
+  // The links stay — they are the only way to the copy — but say so. Empty this object if access returns.
+  var DOWN = { 'cdn.visionias.in': 'VisionIAS' };
+  var DOWN_MSG = ' is currently refusing access to its copies, so the PDF may show “Access Denied”. The questions below are still searchable.';
   function pdfLink(c, page, label, extra) {
-    var a = el('a', { class: 'open', href: safeHref(c.u + (page ? '#page=' + page : '')), target: '_blank', rel: 'noopener' }, [label]);
+    var down = DOWN[hostOf(c.u)];
+    var a = el('a', { class: down ? 'open down' : 'open', title: down ? down + DOWN_MSG : null, href: safeHref(c.u + (page ? '#page=' + page : '')), target: '_blank', rel: 'noopener' }, [label]);
     a.addEventListener('click', function () {
       track('pdf_open', Object.assign({ topper: c.t, paper: c.p, source: c.c || 'unknown', page: page || 0, link_domain: hostOf(c.u), outbound: true, transport_type: 'beacon' }, extra || {}));
     });
@@ -747,8 +752,11 @@
       el('span', { class: 'tags' }, tags)
     ]);
     var ql = el('div', { class: 'qlist' });
+    var downName = DOWN[hostOf(c.u)];
+    function downNote() { if (downName) ql.appendChild(el('div', { class: 'downnote' }, [downName + DOWN_MSG])); }
     var d = el('details', { class: 'copy', 'data-i': c.u, open: openIt ? '' : null }, [summary, ql]);
     if (c.link) {
+      downNote();
       ql.appendChild(el('div', { class: 'q' }, [el('div', { class: 'txt' }, [c.note || 'Scanned answer copy — not text-searchable. Open it to read.']), pdfLink(c, 0, 'Open copy', { link_only: true })]));
       return d;
     }
@@ -757,6 +765,7 @@
       if (filled) return;
       var rows = qs.length ? qs : copyRows(c);
       ql.innerHTML = '';
+      downNote();
       if (!rows) {   // shard still downloading — the re-render on arrival fills this in
         ql.appendChild(el('div', { class: 'q loading' }, [el('div', { class: 'txt' }, ['Loading questions…']), pdfLink(c, 0, 'Open PDF')]));
         return;

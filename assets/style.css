@@ -462,6 +462,8 @@ a.tag.tg:hover { background: var(--teal-line); }
   border-radius: 9px; padding: 7px 12px; transition: background .12s, color .12s;
 }
 .q .open:hover { text-decoration: none; background: var(--teal-fill); color: #fff; border-color: transparent; }
+.q .open.down { color: var(--muted); background: transparent; border-style: dashed; }
+.downnote { margin: 0 0 8px; padding: 8px 12px; font-size: 12.5px; line-height: 1.45; color: var(--muted); background: var(--sand-weak); border-radius: 9px; }
 @media (max-width: 560px) {
   .q { flex-direction: column; gap: 10px; }
   .q .open { align-self: stretch; text-align: center; }

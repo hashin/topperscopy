@@ -1128,3 +1128,16 @@ Sagar Jain (Test 5), Pawan Kumar Pandey (Tests 1, 3, 4). `year: 2024` is from th
 `marks` — the number in each filename (152–161) is unlabeled on the page, so it sits in `note` only. `npm run check` 32/32.
 **Open.** `nameKey()` merged the DIAS Pawan Kumar Pandey into the existing VisionIAS one (Essay/GS, URL says rank 138) — assumed the same
 person (exact name), not confirmed. If not, disambiguate the name (DECISION-22). The page's other optionals (Physics, Maths) were not added — not asked.
+
+## 2026-11-05 — Hero image refresh
+**Asked.** "update the hero image with upto date numbers". **Did.** `node build.js`, `git checkout index.html`, `node update-hero.mjs`
+(DECISION-24): `assets/og.jpg` now reads 9,105 copies · 83,800 questions · 1,703 toppers, tagline "83,500+ questions, inside 9,000+";
+README headline (76,000+ → 83,500+) and `index.html` `og:image:alt` patched to match. `npm run check` 32/32. Not committed.
+
+## 2026-11-05 — VisionIAS PDFs "Access Denied"
+**Asked.** A `cdn.visionias.in/toppersanswerbooklet/…sudipa_dutta_rank_41.pdf` link shows access denied — "fix it". **Found.** Not our bug:
+the CDN returns S3 `AccessDenied` (403) for every VisionIAS URL tried (13/13 incl. the one given, in curl and the built-in browser).
+Could not tell why; did not spoof headers to get around it. **Did (Hashin chose "add unavailable notice").** `DOWN` map in `app.js` →
+those links get class `down` + tooltip, and an expanded card starts with a `.downnote` line (`style.css`). DECISION-30. `npm run check` 32/32;
+checked locally on `?q=sudipa`: note + 24 dimmed links, no console errors. **Not done:** static pages (`topper/`, `question/`, `toppers*.html`)
+carry no notice; `sw.js` VERSION not bumped. **Open.** Recheck the CDN later; if it is back, empty `DOWN`. Not committed.
