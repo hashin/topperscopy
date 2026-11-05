@@ -1143,3 +1143,8 @@ Could not tell why; did not spoof headers to get around it. **Did (Hashin chose 
 those links get class `down` + tooltip, and an expanded card starts with a `.downnote` line (`style.css`). DECISION-30. `npm run check` 32/32;
 checked locally on `?q=sudipa`: note + 24 dimmed links, no console errors. **Not done:** static pages (`topper/`, `question/`, `toppers*.html`)
 carry no notice; `sw.js` VERSION not bumped. **Open.** Recheck the CDN later; if it is back, empty `DOWN`. Not committed.
+
+## 2026-11-05 (cont.) — Budgets raised after the OCR bot's pass
+After rebasing onto the bot's 20 `ocr: gemini vision pass` commits, `npm run check` was 29/32 on `origin/main` alone (not my change). Raised in
+`tools/check.mjs` (Hashin said yes): shard optional 55 → 150 KB (78.5 measured), prefetch total 1550 → 1950 (1,763), search total 2100 → 2550
+(2,305). 32/32. The real fix for the totals is still a token index (PERF-AUDIT-2026-10-23), not more raises.

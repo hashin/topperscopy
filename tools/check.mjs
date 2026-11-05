@@ -42,18 +42,22 @@ const BUDGETS = {
   // other 48 -> 150 KB 2026-10-25: one OCR batch took it 43 -> 78 KB (the unlabelled Analytics/AIM booklets). Like gs3, the
   // ceiling is now SHARD_PART_TARGET_KB — past it build.js splits the file.
   'shard other': { ceiling: 150, shard: 'other', why: '' },
-  'shard optional': { ceiling: 55, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
+  // optional 55 -> 150 KB 2026-11-05: the OCR bot's 20-commit pass (54k -> 91.7k questions) took the biggest part to 78.5 KB (2 parts).
+  // Same reasoning as essay/other: ceiling = SHARD_PART_TARGET_KB, past which build.js splits the file.
+  'shard optional': { ceiling: 150, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
   // Everything a visitor on a fast connection downloads in the background after boot: all shard parts + syllabus.
   // Measured 1,458 KB on 2026-10-03 (DECISION-25); 969 KB on 2026-10-04 once long questions moved to -deep files and
   // near-duplicates merged (DECISION-28). This is the number that grows with the corpus (~12 KB/day at the 2026-10 OCR pace).
   // Raise it deliberately, with the corpus growth that forced it, never to silence a red check.
   // 1100 -> 1550 KB 2026-10-23: 1,380 KB measured after the OCR pass took the index 54k -> 76k questions (PERF-AUDIT-2026-10-23).
-  'prefetch total': { ceiling: 1550, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
+  // 1550 -> 1950 KB 2026-11-05: 1,763 KB measured after the OCR bot's pass took the index to 91.7k questions.
+  'prefetch total': { ceiling: 1950, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
   // What a first-visit search with no paper filter waits for before its result is complete: every part, every -deep file,
   // syllabus. 1,358 KB on 2026-10-04 (DECISION-28). On a 1.6 Mbps phone each 100 KB here is ~0.5 s (PERF-AUDIT-2026-10-04).
   // 1500 -> 2100 KB 2026-10-23: 1,883 KB after the same OCR pass; cold slow-4G search 10.7 -> 13.4 s. The fix for this growth
   // is a token index (PERF-AUDIT-2026-10-23 step 2), not more raises.
-  'search total': { ceiling: 2100, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
+  // 2100 -> 2550 KB 2026-11-05: 2,305 KB measured, same pass. Still a token index, not more raises, that fixes this.
+  'search total': { ceiling: 2550, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
   // A -deep file is fetched on its own (two papers at a time), so the ceiling is per file, like the part budgets.
   'deep part': { ceiling: 160, files: [], deepPart: true, why: 'largest single questions-*-deep.json (GS4 case studies)' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
