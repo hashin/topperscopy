@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-06T07:30:51.326Z",
+  "generated": "2026-11-06T17:46:55.537Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2612,7 +2612,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 6,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -2735,6 +2735,20 @@
       "count": 1,
       "optional": true,
       "groupMedian": 13,
+      "low": true
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/NIHARIKA.pdf",
+      "topper": "Niharika Sinha",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 1,
+      "optional": true,
+      "pages": 54,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 54,
+      "salvaged": 1,
+      "groupMedian": 11.5,
       "low": true
     },
     {
@@ -4586,6 +4600,20 @@
       "low": true
     },
     {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T2-SANJEEV-KUMAR-R583-1750232267625.pdf",
+      "topper": "Sanjeev kumar",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 2,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 2,
+      "groupMedian": 17,
+      "low": true
+    },
+    {
       "url": "https://sleepyclasses.com/wp-content/uploads/2023/06/Yash-Vishen-Sectional-Test-5-Paper-2-Part-A1-A2-B1-B2.pdf",
       "topper": "Shruti Uttam Shrote",
       "coaching": "Sleepy Classes",
@@ -4596,7 +4624,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 7,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -5258,7 +5286,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -6886,7 +6914,21 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 31,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2024/05/Shruti-Shrote_HLT1.pdf-1.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 4,
+      "optional": true,
+      "pages": 20,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 20,
+      "salvaged": 0,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -6900,7 +6942,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 11,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -6914,7 +6956,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 11,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -8146,7 +8188,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 11,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -8160,7 +8202,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 12,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
       "low": true
     },
     {
@@ -8174,7 +8216,35 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 11,
       "salvaged": 0,
-      "groupMedian": 4,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2023/06/Komal-Aggarwal-Sectional-Test-7-Paper-2-Part-C1-C2-C3-C4.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 5,
+      "optional": true,
+      "pages": 11,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 11,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/kashish.pdf",
+      "topper": "Kashish Kalra",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 5,
+      "optional": true,
+      "pages": 29,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 29,
+      "salvaged": 0,
+      "groupMedian": 11.5,
       "low": true
     },
     {
@@ -10458,7 +10528,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10586,7 +10656,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10596,7 +10666,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10624,7 +10694,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": true
     },
     {
@@ -10634,7 +10704,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10644,7 +10714,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10654,7 +10724,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10682,7 +10752,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": true
     },
     {
@@ -10706,7 +10776,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 35,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": true
     },
     {
@@ -10716,7 +10786,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10730,7 +10800,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 29,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10782,7 +10852,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10792,7 +10862,7 @@
       "subject": "Sociology",
       "count": 7,
       "optional": true,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": true
     },
     {
@@ -10865,6 +10935,62 @@
       "count": 7,
       "optional": true,
       "groupMedian": 8,
+      "low": true
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2024/05/kiran_hlt2.pdf",
+      "topper": "Kiran",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 7,
+      "optional": true,
+      "pages": 21,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 21,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2020/08/Prashant-GS-IV_compressed.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 7,
+      "optional": true,
+      "pages": 42,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 42,
+      "salvaged": 2,
+      "groupMedian": 5,
+      "low": true
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/SHASHWAT.pdf",
+      "topper": "Shashwat Pandit",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 7,
+      "optional": true,
+      "pages": 30,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 30,
+      "salvaged": 0,
+      "groupMedian": 11.5,
+      "low": true
+    },
+    {
+      "url": "https://diasindia.com/pdf/Pawan-Kumar-Pandey-Ch-Ts-3-2024-152.pdf",
+      "topper": "Pawan Kumar Pandey",
+      "coaching": "DIAS India",
+      "subject": "Chemistry",
+      "count": 7,
+      "optional": true,
+      "pages": 28,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 28,
+      "salvaged": 0,
+      "groupMedian": 13,
       "low": true
     },
     {
@@ -14504,7 +14630,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -14598,7 +14724,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 27,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -14612,7 +14738,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 48,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -14622,8 +14748,8 @@
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 13,
-      "low": false
+      "groupMedian": 15,
+      "low": true
     },
     {
       "url": "https://drive.google.com/file/d/1h7BIIIHU1m5oc1N9gJdNsTO2A-db1opb/view",
@@ -14636,7 +14762,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 47,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -14646,8 +14772,8 @@
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 13,
-      "low": false
+      "groupMedian": 15,
+      "low": true
     },
     {
       "url": "https://drive.google.com/file/d/1Mez2eW3iTewPiXjGdO8tMDbFPjZwEKaW/view",
@@ -14784,7 +14910,21 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 46,
       "salvaged": 3,
-      "groupMedian": 13,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
+      "url": "https://drive.google.com/file/d/10peJDKwHm_98lazfSusLsmLdY5F7SeK-/view",
+      "topper": "Sarla Jakher",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 8,
+      "optional": true,
+      "pages": 47,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 47,
+      "salvaged": 1,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -14794,8 +14934,8 @@
       "subject": "Sociology",
       "count": 8,
       "optional": true,
-      "groupMedian": 13,
-      "low": false
+      "groupMedian": 15,
+      "low": true
     },
     {
       "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P3.pdf",
@@ -16014,7 +16154,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16028,7 +16168,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16056,7 +16196,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16070,7 +16210,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -16197,6 +16337,34 @@
       "geminiPages": 51,
       "salvaged": 6,
       "groupMedian": 7,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1twBfAUUbdcwSRmuSSKrX_xCxfYdhAN89/view",
+      "topper": "Sarla Jakher",
+      "coaching": "Level Up IAS",
+      "subject": "History",
+      "count": 9,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 10,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1S7UO36ltQXaFDh7UqwfyWE3H1WqajiiS/view",
+      "topper": "Dimple Kaushik",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 9,
+      "optional": true,
+      "pages": 47,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 47,
+      "salvaged": 0,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18002,7 +18170,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -18026,7 +18194,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18054,7 +18222,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18068,7 +18236,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18082,7 +18250,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18110,7 +18278,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18124,7 +18292,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18138,7 +18306,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18166,7 +18334,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -18222,7 +18390,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 46,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -18238,6 +18406,48 @@
       "salvaged": 9,
       "groupMedian": 7,
       "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1dhOOBNktamjiKAJVXfEE1OTvjktHrNGs/view",
+      "topper": "Vinoth AR",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 10,
+      "optional": true,
+      "pages": 47,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 47,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1DhWZFiO3g-IxlmWzaOLskeuOYAh4AUec/view",
+      "topper": "Sooraj KL",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 10,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/29/eco_test_2_vaibhav-rathore-uc.pdf",
+      "topper": "VAIBHAV RATHORE",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 10,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": true
     },
     {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/cdbe9-1126965_3345_sana_azmi_rank_764.pdf",
@@ -19538,7 +19748,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19566,7 +19776,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19580,7 +19790,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19692,7 +19902,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19734,7 +19944,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -19777,6 +19987,20 @@
       "geminiPages": 53,
       "salvaged": 0,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/Anirudh-Jain.pdf",
+      "topper": "Anirudh Jain",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 11,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 11.5,
       "low": false
     },
     {
@@ -21456,7 +21680,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -21554,7 +21778,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 45,
       "salvaged": 5,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21582,7 +21806,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -21642,6 +21866,34 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1BSD81qSJmM7nECtROgiKDM2jVe33ta4s/view",
+      "topper": "PULKIT BAJAJ",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 12,
+      "optional": true,
+      "pages": 59,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 59,
+      "salvaged": 2,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1eBdGvWlOcJce7Ix7U3OLzIsbDElaeFt3/view",
+      "topper": "SHIVRAJ GANGAWAL",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 12,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 2,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
       "url": "https://www.shankariasparliament.com/uploads/downloads/NISHANTH_T_P1.pdf",
       "topper": "Nishanth T",
       "coaching": "Shankar IAS Parliament",
@@ -21649,6 +21901,48 @@
       "count": 12,
       "optional": true,
       "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2020/08/Prashant-Sharma-GS-I_compressed.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 12,
+      "optional": true,
+      "pages": 37,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 37,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/Swarnim-Bhardwaj.pdf",
+      "topper": "Swarnim Bhardwaj",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 12,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 11.5,
+      "low": false
+    },
+    {
+      "url": "https://diasindia.com/pdf/Pawan-Kumar-Pandey-Ch-Ts-4-2024-153.pdf",
+      "topper": "Pawan Kumar Pandey",
+      "coaching": "DIAS India",
+      "subject": "Chemistry",
+      "count": 12,
+      "optional": true,
+      "pages": 33,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 33,
+      "salvaged": 1,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -23384,7 +23678,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -23440,7 +23734,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 51,
       "salvaged": 5,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23496,7 +23790,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -23580,7 +23874,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 83,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -23612,6 +23906,62 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1moQHJQHU1k-qPv5YPfO8qNMjiFv31ohp/view",
+      "topper": "Vinay Verma",
+      "coaching": "Level Up IAS",
+      "subject": "PSIR",
+      "count": 13,
+      "optional": true,
+      "pages": 43,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 43,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T4-INDRARCHITHA-P-R739-1750231759837.pdf",
+      "topper": "INDRARCHITHA P",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 13,
+      "optional": true,
+      "pages": 49,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T6-INDRARCHITHA-P-R739-1750231772048.pdf",
+      "topper": "INDRARCHITHA P",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 13,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/13/eco_test-3_rahul_hijam__-ecfc22l4187-2022-uc.pdf",
+      "topper": "RAHUL HIJAM",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 13,
+      "optional": true,
+      "pages": 47,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 47,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/7b7c5-1126965_3342_sana_azmi_rank_764.pdf",
       "topper": "Sana Azmi",
       "coaching": "VisionIAS",
@@ -23623,6 +23973,34 @@
       "geminiPages": 45,
       "salvaged": 0,
       "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://diasindia.com/pdf/Sagar-Jain-Ch-Ts-5-2024-152.pdf",
+      "topper": "Sagar Jain",
+      "coaching": "DIAS India",
+      "subject": "Chemistry",
+      "count": 13,
+      "optional": true,
+      "pages": 32,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 32,
+      "salvaged": 2,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://diasindia.com/pdf/Pawan-Kumar-Pandey-Ch-Ts-1-2024-161.pdf",
+      "topper": "Pawan Kumar Pandey",
+      "coaching": "DIAS India",
+      "subject": "Chemistry",
+      "count": 13,
+      "optional": true,
+      "pages": 26,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 26,
+      "salvaged": 0,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -25554,8 +25932,8 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 68,
       "salvaged": 0,
-      "groupMedian": 24,
-      "low": true
+      "groupMedian": 17.5,
+      "low": false
     },
     {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T1-MANISH-R356-1750226863455.pdf",
@@ -25568,7 +25946,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 15,
+      "groupMedian": 15.5,
       "low": false
     },
     {
@@ -25596,7 +25974,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 6,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25610,7 +25988,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 45,
       "salvaged": 3,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -25624,7 +26002,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -25637,6 +26015,62 @@
       "pages": 53,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ASWANI_DUBEY_P1.pdf",
+      "topper": "Ashwani Dubey",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 14,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ASWANI_DUBEY_P2.pdf",
+      "topper": "Ashwani Dubey",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 14,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/16bhGoUfEds5eLtWFjc-6FTm27Jesrnyd/view",
+      "topper": "PULKIT BAJAJ",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 14,
+      "optional": true,
+      "pages": 60,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 60,
+      "salvaged": 2,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/54/psir-1_nivedita-chandra.pdf",
+      "topper": "NIVEDITA CHANDRA",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 14,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 17,
       "low": false
@@ -27664,7 +28098,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 52,
       "salvaged": 2,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -27706,7 +28140,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 5,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -27832,7 +28266,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 53,
       "salvaged": 1,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -27874,7 +28308,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 53,
       "salvaged": 6,
-      "groupMedian": 15,
+      "groupMedian": 15.5,
       "low": false
     },
     {
@@ -27888,7 +28322,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 52,
       "salvaged": 1,
-      "groupMedian": 15,
+      "groupMedian": 15.5,
       "low": false
     },
     {
@@ -27916,7 +28350,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -27945,6 +28379,76 @@
       "geminiPages": 48,
       "salvaged": 1,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ASWANI_DUBEY_P3.pdf",
+      "topper": "Ashwani Dubey",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 15,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 46,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T1-NESRIN-P-FASIM-R703-1750226139906.pdf",
+      "topper": "Nesrin P Fasim",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 15,
+      "optional": true,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1qn5ilXyj1Rl0Qc1z9NIYL7k5dfK1ROwT/view",
+      "topper": "Suraj Nikam",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 15,
+      "optional": true,
+      "pages": 45,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 45,
+      "salvaged": 6,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2020/08/Prashant-GS-III_compressed.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 15,
+      "optional": true,
+      "pages": 38,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 38,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://diasindia.com/pdf/Navneet-Mishra-Ch-Ts-5-2024-160.pdf",
+      "topper": "Navneet Mishra",
+      "coaching": "DIAS India",
+      "subject": "Chemistry",
+      "count": 15,
+      "optional": true,
+      "pages": 51,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 51,
+      "salvaged": 1,
+      "groupMedian": 13,
       "low": false
     },
     {
@@ -30450,7 +30954,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -30464,7 +30968,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30478,7 +30982,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -30506,7 +31010,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -30520,7 +31024,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -30548,7 +31052,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30562,7 +31066,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 48,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -30576,7 +31080,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 83,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -30660,7 +31164,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 42,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -30674,7 +31178,175 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 53,
       "salvaged": 0,
+      "groupMedian": 15.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/31/test-1_vikash-yadav_-mt22cera001.pdf",
+      "topper": "VIKASH YADAV",
+      "coaching": "NextIAS",
+      "subject": "Geography",
+      "count": 16,
+      "optional": true,
+      "pages": 86,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 86,
+      "salvaged": 0,
+      "groupMedian": 15.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T2-NESRIN-P-FASIM-R703-1750226204689.pdf",
+      "topper": "Nesrin P Fasim",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 2,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/30/eco-test-1_vaibhav-rathore-uc.pdf",
+      "topper": "VAIBHAV RATHORE",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 16,
+      "optional": true,
+      "pages": 44,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 44,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/PSIR-T3-INDRARCHITHA-P-R739-1750231743279.pdf",
+      "topper": "INDRARCHITHA P",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 16,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/14/eco_test-4_rahul_hijam__-ecfc22l4187-2022-uc.pdf",
+      "topper": "RAHUL HIJAM",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 16,
+      "optional": true,
+      "pages": 49,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 49,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/15/eco_test-5_rahul_hijam__-ecfc22l4187-2022-uc.pdf",
+      "topper": "RAHUL HIJAM",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 16,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/8/eco-test-6-mohd-ashfaq-2023-uc.pdf",
+      "topper": "MOHD ASHFAQ",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 16,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1UfIMCKhpbrtvmVvLSFC3aw08ZAWkIcGz/view",
+      "topper": "Nimisha Tantuway",
+      "coaching": "Level Up IAS",
+      "subject": "Anthropology",
+      "count": 16,
+      "optional": true,
+      "pages": 83,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 83,
+      "salvaged": 1,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2024/04/Nivedita-Das-Sociology-Test-FLT2_Week-8.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 16,
+      "optional": true,
+      "pages": 41,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 41,
+      "salvaged": 0,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://sleepyclasses.com/wp-content/uploads/2020/08/Prashant-GSII_compressed.pdf",
+      "topper": "Shruti Uttam Shrote",
+      "coaching": "Sleepy Classes",
+      "subject": "PSIR",
+      "count": 16,
+      "optional": true,
+      "pages": 34,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 34,
+      "salvaged": 1,
+      "groupMedian": 5,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1_eHTNH1qG70Vb3RIJRI5dH-MT9OJmDzv/view",
+      "topper": "Rohit Sattawan",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 16,
+      "optional": true,
+      "pages": 46,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 46,
+      "salvaged": 2,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/ADITYA-ACHARYA.pdf",
+      "topper": "Aditya Acharya",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 11.5,
       "low": false
     },
     {
@@ -34044,7 +34716,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34058,7 +34730,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -34114,7 +34786,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 83,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -34156,7 +34828,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 51,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 10,
       "low": false
     },
     {
@@ -34352,7 +35024,49 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 88,
       "salvaged": 1,
-      "groupMedian": 15,
+      "groupMedian": 15.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T3-NESRIN-P-FASIM-R703-1750226448693.pdf",
+      "topper": "Nesrin P Fasim",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 17,
+      "optional": true,
+      "pages": 50,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 50,
+      "salvaged": 0,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/ECO-T5-NESRIN-P-FASIM-R703-1750226564901.pdf",
+      "topper": "Nesrin P Fasim",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 17,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 1,
+      "groupMedian": 17.5,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/55/psir-4_nivedita-chandra.pdf",
+      "topper": "NIVEDITA CHANDRA",
+      "coaching": "NextIAS",
+      "subject": "PSIR",
+      "count": 17,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -40652,7 +41366,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 46,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40666,7 +41380,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 50,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40680,7 +41394,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -40694,7 +41408,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -40736,7 +41450,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 83,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -40750,7 +41464,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 83,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -40807,6 +41521,20 @@
       "geminiPages": 58,
       "salvaged": 0,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/7/eco-paper-2-test-8_mohd-ashfaq-2023-uc.pdf",
+      "topper": "MOHD ASHFAQ",
+      "coaching": "NextIAS",
+      "subject": "Economics",
+      "count": 18,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -50194,7 +50922,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 82,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50208,7 +50936,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50250,7 +50978,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50264,7 +50992,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50292,7 +51020,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 81,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50306,7 +51034,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 83,
       "salvaged": 2,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50334,7 +51062,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -50362,7 +51090,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -50376,7 +51104,21 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 71,
       "salvaged": 0,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1V_Bf7ghxuyxA393vTRIV58XVMrBovc2M/view",
+      "topper": "Yogender Meena",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 19,
+      "optional": true,
+      "pages": 83,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 83,
+      "salvaged": 4,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -69444,7 +70186,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 2,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
       "low": false
     },
     {
@@ -69472,7 +70214,21 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 11.5,
+      "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1nPQ9JclVIjldVRTST-7MnakEHUf93fRF/view",
+      "topper": "Shyamala T",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 20,
+      "optional": true,
+      "pages": 70,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 70,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -69766,7 +70522,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 2,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -69794,7 +70550,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 8,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -69823,6 +70579,34 @@
       "geminiPages": 62,
       "salvaged": 0,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1x2j0wCOZA48AtSigGBcz5XhVtUzQBqYH/view",
+      "topper": "SHIVRAJ GANGAWAL",
+      "coaching": "IAS Delhi Institute",
+      "subject": "Medical Science",
+      "count": 21,
+      "optional": true,
+      "pages": 53,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 53,
+      "salvaged": 0,
+      "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1JN04kIkDR8Xj75YTmPHhm9TRPfLtJnl_/view",
+      "topper": "Simran Meena",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 21,
+      "optional": true,
+      "pages": 83,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 83,
+      "salvaged": 6,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70064,6 +70848,20 @@
       "low": false
     },
     {
+      "url": "https://drive.google.com/file/d/1vQ0z6FO0WOhfqgOhMpNw3VoAUTgL4Zj0/view",
+      "topper": "Pratik Nand Kishor",
+      "coaching": "Level Up IAS",
+      "subject": "Sociology",
+      "count": 22,
+      "optional": true,
+      "pages": 72,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 72,
+      "salvaged": 11,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/5/sanchit-sharma-test-1-1747824011171.pdf",
       "topper": "Sanchit Sharma",
       "coaching": "NextIAS",
@@ -70172,7 +70970,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70186,7 +70984,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70243,6 +71041,34 @@
       "geminiPages": 84,
       "salvaged": 0,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ROSHAN_P1.pdf",
+      "topper": "Roshan V",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 23,
+      "optional": true,
+      "pages": 70,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 70,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/shiksha.pdf",
+      "topper": "Shiksha Pathak",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 23,
+      "optional": true,
+      "pages": 82,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 82,
+      "salvaged": 0,
+      "groupMedian": 11.5,
       "low": false
     },
     {
@@ -70312,7 +71138,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70354,7 +71180,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70396,6 +71222,34 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 80,
       "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ROSHAN_P4.pdf",
+      "topper": "Roshan V",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 24,
+      "optional": true,
+      "pages": 70,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 70,
+      "salvaged": 1,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://drive.google.com/file/d/1CmPH5iWbR_kKTmo5qBBWD35xmAQ5RRQV/view",
+      "topper": "Vinay Verma",
+      "coaching": "Level Up IAS",
+      "subject": "PSIR",
+      "count": 24,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 2,
       "groupMedian": 15,
       "low": false
     },
@@ -70536,7 +71390,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70564,7 +71418,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70592,7 +71446,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70606,7 +71460,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 71,
       "salvaged": 10,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70620,7 +71474,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 71,
       "salvaged": 4,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70732,7 +71586,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 84,
       "salvaged": 1,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70746,7 +71600,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 1,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70788,7 +71642,7 @@
       "model": "gemini-3.1-flash-lite-preview",
       "geminiPages": 84,
       "salvaged": 2,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70802,7 +71656,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 72,
       "salvaged": 0,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -70831,6 +71685,34 @@
       "geminiPages": 84,
       "salvaged": 1,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://www.shankariasparliament.com/uploads/downloads/ROSHAN_P2.pdf",
+      "topper": "Roshan V",
+      "coaching": "Shankar IAS Parliament",
+      "subject": "Sociology",
+      "count": 26,
+      "optional": true,
+      "pages": 70,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 70,
+      "salvaged": 0,
+      "groupMedian": 8,
+      "low": false
+    },
+    {
+      "url": "https://academy.forumias.com/optional-test-series/slider%20Image/RAKHI.pdf",
+      "topper": "Rakhi",
+      "coaching": "ForumIAS",
+      "subject": "PSIR",
+      "count": 26,
+      "optional": true,
+      "pages": 84,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 84,
+      "salvaged": 0,
+      "groupMedian": 11.5,
       "low": false
     },
     {
@@ -70900,7 +71782,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 84,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -70970,7 +71852,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 77,
       "salvaged": 0,
-      "groupMedian": 24,
+      "groupMedian": 17.5,
       "low": false
     },
     {
@@ -71138,7 +72020,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 120,
       "salvaged": 6,
-      "groupMedian": 13,
+      "groupMedian": 15,
       "low": false
     },
     {
