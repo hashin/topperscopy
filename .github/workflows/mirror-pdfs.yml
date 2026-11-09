@@ -39,11 +39,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 350
     if: ${{ vars.MIRROR_ENABLED == 'true' }}
-    env:
-      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
-      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-      R2_BUCKET: ${{ secrets.R2_BUCKET }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -58,14 +53,28 @@ jobs:
           node tools/mirror-pdfs.mjs plan
 
       - name: Re-queue anything the bucket has lost
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
         run: node tools/mirror-pdfs.mjs verify --repair || true
 
       - name: Mirror
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          LIMIT: ${{ github.event.inputs.limit }}
+          ONLY_HOST: ${{ github.event.inputs.host }}
+          RETRY_GONE: ${{ github.event.inputs.retry_gone }}
         run: |
-          node tools/mirror-pdfs.mjs run --minutes 320 --concurrency 4 \
-            ${{ github.event.inputs.limit && github.event.inputs.limit != '0' && format('--limit {0}', github.event.inputs.limit) || '' }} \
-            ${{ github.event.inputs.host && format('--host {0}', github.event.inputs.host) || '' }} \
-            ${{ github.event.inputs.retry_gone == 'true' && '--retry-gone' || '' }}
+          args="--minutes 320 --concurrency 4"
+          [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ] && args="$args --limit $LIMIT"
+          [ -n "$ONLY_HOST" ] && args="$args --host $ONLY_HOST"
+          [ "$RETRY_GONE" = "true" ] && args="$args --retry-gone"
+          node tools/mirror-pdfs.mjs run $args
 
       - name: Commit the manifest and deploy
         if: always()
