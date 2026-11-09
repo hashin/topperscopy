@@ -2581,7 +2581,100 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Explain Karl Marx's conception of transition from 'class-in- itself' to 'class-for-itself'.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Examine the role of pattern variables in understanding of social systems.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "\"It is the ideal type which is explained through the verstehen approach.\" Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the relevance of Emile Durkheim's understanding of religion in contemporary society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "\"Weber's theory of 'The protestant ethic and spirit of capitalism' despite its share of criticism remains bold and illuminating\". Critically examine.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "\"Social fact plays a central role in the sociology of Emile Durkheim\". Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "\"It is only by taking the roles of others that we have been able to come back to ourselves.\" Explain this view point of G.H Mead",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "In what ways are Marx's theory of 'Alienation' and Durkheim's theory of 'anomie' different from each other and to what extent can they be seen as having similarities?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 31,
+          "question": "'No society can either be absolutely open or absolutely closed.' Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "\"The Pluralists view pressure groups as necessary elements in a democratic system\". Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "Is religious belief compatible with a scientific outlook? Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Examine the functional as well as dysfunctional aspects of religion as a social institution in the contemporary society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Discuss the implications of 'social mobility' at the 'individual' and 'societal level,' in different structures.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Yaksh Chaudhary",
@@ -7999,7 +8092,177 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 8,
+          "question": "Discuss the methodological debate between positivism and interpretivism in sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "\"Sociological imagination links personal troubles with public issues.\" Elucidate with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "What is reference-group behaviour? Discuss how it shapes consumer choices among urban youth.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "Assess the relevance of Weber's model of bureaucracy in the era of digital governance.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "\"Scientific temper and rational thinking are essential prerequisites for sociological inquiry.\" Comment on this statement with reference to the debate on value-neutrality in social research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 24,
+          "question": "Discuss the changing equations of discipline of Sociology with other social sciences.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Evaluate the contribution of historical materialism to the contemporary analysis of global capitalism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "Analyse the structural-functionalist explanation of social stratification and bring out its limitations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 34,
+          "question": "Discuss Parsons' AGIL schema as a framework for analysing social systems.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "How do mixed-method designs strengthen the validity and reliability of sociological research?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Explain how the European Enlightenment created intellectual conditions for the birth of sociology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 44,
+          "question": "Explain Weber's concept of \"Verstehen\". How does it enrich sociological inquiry?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "How does the idea of alienation manifest in contemporary white-collar workspaces?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "\"Power is diffused rather than concentrated in late-modern societies.\" Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "How do sects and cults differ from organised religion in their structure and social functions?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Discuss symbolic interactionism as a framework to understand everyday social interactions.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "Evaluate the adequacy of classical theories of social change in explaining the disruptive impact of artificial intelligence on labour markets.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "\"Family is transforming from a fixed structure to a fluid process in liquid modernity.\" Analyse this transition through the lenses of Bauman and contemporary family studies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 64,
+          "question": "Evaluate the impact of social media on primary and secondary group dynamics in modern society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 66,
+          "question": "How does the feminization of labor force participation challenge patriarchal structures while simultaneously creating new forms of gender-based exploitation? Discuss with empirical examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Discuss the sociological implications of artificial intelligence and automation on social stratification and mobility patterns.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 74,
+          "question": "Evaluate the impact of the information revolution on social change in developing societies.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "Analyze how environmental movements represent a new form of collective action that transcends traditional class-based politics. What are the implications for theories of social movements?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "Assess the claim that digital surveillance capitalism represents a new phase of commodification of social life.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Bhavika Chopra",
@@ -14875,7 +15138,135 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Anthropology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 16,
+          "question": "How does Claude Lévi-Strauss conceptualize 'bricolage'? Discuss its significance in his anthropological framework of Structuralism.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "What is 'total institution'? Explaining its characteristics, comment on how individuals attempt to preserve their sense of self within such environments.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the unique features of Neolithic culture of South India, with suitable examples of various sites.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "Critically discuss the formalist and substantivist approaches in the context of economic anthropology.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "\"Culture as extra corporal behaviour of man is dependent on the biological preconditioning.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Discuss the difference in approach of Victor Turner and Clifford Geertz to the study of performative aspects in rituals.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "Examine Harold Conklin's ethnoecological approach, and discuss the significance of 'fine description' as an ethnographic practice.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Critically examine Transgenerational Epigenetic Inheritance in humans.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "Discuss major morphotypes discovered in the central Narmada valley which reflect the process of humanization and comment on possible evolutionary scenario for South Asia.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "Discuss the antiquity of iron age in India in context of new evidences. How does it differ from other parts of the world?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "\"A single definition of marriage cannot be applied to all cultures.\" Discuss with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "Discuss, with ethnographic examples, how the principles governing production, distribution and exchange in simple societies differ based on subsistence activity.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 66,
+          "question": "Elucidate the techno-typological features characterizing the Mesolithic cultures of Europe. How does they compare and contrast with Mesolithic culture in the Indian subcontinent?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Discuss the somatotype components and the dimensions used in the Heath-Carter method and comment on its limitations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Discuss the concept of second demographic transition (SDT) in the light of biological and socio-cultural demographic theories.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "Discuss various applications of molecular anthropology with suitable examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "\"The achievement of erect posture and efficient bipedal locomotion is a critically important stage of human evolution.\" Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 83,
+          "question": "Discuss the genetic and non genetic factors in bio-cultural adaptation of human beings to cold environment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Rasneet Kaur",
@@ -15701,7 +16092,198 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — PSIR II optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 8,
+          "question": "Analyse the historical approach to studying comparative politics.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 10,
+          "question": "How does the weaponization of AI in cyber warfare challenge existing international norms and legal frameworks?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 12,
+          "question": "Explain the concept of 'Balance of Power' and discuss its relevance in contemporary international relations.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 14,
+          "question": "The New International Economic Order (NIEO) was an unfinished revolution, but its normative claims are making a comeback. Discuss in the context of post-pandemic global governance.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 16,
+          "question": "In the context of rising global divisions and the decline of multilateralism, the United Nations faces challenges to reclaim its leadership role in global governance. Analyse by using contemporary examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 20,
+          "question": "Big Tech may be stateless, but it is not powerless. Keeping this in context, evaluate the impact of transnational digital corporations on the autonomy of post-colonial states.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "Discuss the complex relationship between terrorism and human rights. How do counter-insurgency measures, while aiming to combat terrorism, often exacerbate human rights violations?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 26,
+          "question": "While realism focuses on the mechanisms of state behaviour, Marxism focuses on the underlying economic and social forces. Evaluate the statement using examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 30,
+          "question": "How has the advancement of technology reshaped the traditional concepts of 'deterrence' and 'national interest' in the context of contemporary international relations?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 33,
+          "question": "Discuss whether an active non-alignment provides a viable foreign policy option for middle powers amid great power rivalries.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 36,
+          "question": "The U.S. has maintained its hegemonic role in global politics, as demonstrated by its influence in the Iran-Israel conflict and India-Pakistan tensions. Discuss critically amid the claims of declining U.S. hegemony in the 21st century.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 40,
+          "question": "Evaluate the effectiveness of the IMF and World Bank in addressing the debt vulnerabilities of low- and middle-income countries.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "How have feminist scholars critiqued traditional security paradigms in International Relations and what alternative perspectives on security have they proposed?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 46,
+          "question": "Discuss the concept of 'Amrit Kaal' and its implications for India's foreign policy vision and strategy towards 2047.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 48,
+          "question": "How do state governments influence foreign policy under cooperative federalism? Discuss with examples.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 50,
+          "question": "Examine India's relations with Nepal and Bhutan in the context of historical treaties and aid.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 52,
+          "question": "Discuss India's integration with ASEAN and East Asian economies under the Act East Policy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 54,
+          "question": "Examine the evolution of India's role in development diplomacy.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 56,
+          "question": "NAM allowed India to maximise its autonomy without maximising confrontation. In light of this, assess India's balancing behaviour in the contemporary world order.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 60,
+          "question": "It is often argued that despite intense conflicts, nuclear parity has prevented full-scale war between India and Pakistan. Critically assess this claim.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 63,
+          "question": "How do China's increasing ties with South Asian countries affect regionalism, particularly in terms of SAARC and other sub-regional groupings?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 66,
+          "question": "While Indo-US ties have expanded in breadth, they continue to suffer from a lack of strategic depth. Critically evaluate this statement with reference to recent developments.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 70,
+          "question": "Despite shared democratic values and economic complementarities, the India-EU partnership has struggled to acquire strategic traction. Examine the impediments and the recent efforts to recalibrate.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 73,
+          "question": "Despite symbolic summits and high-level visits, India's Africa engagement lacks strategic depth. Critically analyse.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 76,
+          "question": "How has India navigated its diplomatic position on the Israel-Palestine conflict since 2020, particularly regarding its stance on terrorism and humanitarian issues in Gaza?",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 80,
+          "question": "India's nuclear doctrine is more about political signalling than operational planning. Critically examine this assertion.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 83,
+          "question": "Examine how India's growing ties with the United States and involvement in the QUAD under a broader Indo-Pacific strategy are influencing its traditional strategic relationship with Russia.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "Kiran Kamate",
@@ -29363,7 +29945,121 @@
       "source": "VisionIAS",
       "note": "VisionIAS answer booklet — Sociology optional",
       "by": "visionias.in",
-      "verified": true
+      "verified": true,
+      "questions": [
+        {
+          "page": 5,
+          "question": "Considering the impact of globalization, examine the evolving scope of sociology and how it has adapted to study and address contemporary social issues.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 7,
+          "question": "Methodology encompasses a system of rules, principles, and procedures that form the basis of scientific investigation. Comment.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 9,
+          "question": "Discuss the role of socialization and cultural transmission in shaping conformist and deviant behavior among individuals.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 11,
+          "question": "Discuss the role of reliability and validity in a sociological research.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 13,
+          "question": "People are rational and they use practical reasoning, not formal logic, in their daily life. Discuss the perspective of ethnomethodology as a study of people's life.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 17,
+          "question": "Power is the ability to control others and it may reside in individual or individual's status or position. In light of this statement, critically examine the elite theories of power.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 21,
+          "question": "Discuss how gender socialization and norms contribute to the differentiation of the \"I\" and the \"Me\" in men and women.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 23,
+          "question": "'Social mobility is often hailed as a promise of progress in India, but the reality reveals that for many, it remains a distant mirage, obscured by the weight of historical and systemic inequalities'. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 27,
+          "question": "Social movements are collective actions to bring or to resist social change. Differentiate between Old and new social movements.",
+          "marks": "",
+          "words": "",
+          "salvaged": true
+        },
+        {
+          "page": 31,
+          "question": "Sampling is a convenient tool to gather information about a population, but it can be grossly misleading as well. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 37,
+          "question": "The process of secularisation was greatly aided by transformation of human consciousness triggered by the popularisation of scientific ideas among common people. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 39,
+          "question": "\"Rising divorce rates are indicative of changing attitudes towards marriage and commitment in contemporary societies.\" In light of this, discuss the reasons behind increasing number of divorces in contemporary times.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 41,
+          "question": "Structural functionalism views social change as a gradual process of adaptation and equilibrium restoration in societies. Explain.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 43,
+          "question": "The social organization of work in slave society was characterized by extreme exploitation and dehumanization of enslaved individuals. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 47,
+          "question": "Social change is significant alteration in social structures, interactions. Discuss the cyclical theories of social change and their relevance to understand the contemporary changes in society.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        },
+        {
+          "page": 51,
+          "question": "Citizenship is a social construct that defines the rights, responsibilities, and membership of individuals within a political community. Discuss.",
+          "marks": "",
+          "words": "",
+          "salvaged": false
+        }
+      ]
     },
     {
       "topper": "SAMEER GOEL",

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-09T07:25:02.341Z",
+  "generated": "2026-11-09T19:34:43.727Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -2598,7 +2598,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 56,
       "salvaged": 0,
-      "groupMedian": 21,
+      "groupMedian": 24,
       "low": true
     },
     {
@@ -2749,6 +2749,20 @@
       "geminiPages": 54,
       "salvaged": 1,
       "groupMedian": 11.5,
+      "low": true
+    },
+    {
+      "url": "https://visionias.in/_public/assets/4046ed5ee5d7a06dd4708b57d805fad82a3ff818cac2ad38ef02391152c7221b.pdf",
+      "topper": "Rupal Jaiswal",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 2,
+      "optional": false,
+      "pages": 24,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 24,
+      "salvaged": 0,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -6960,6 +6974,20 @@
       "low": true
     },
     {
+      "url": "https://visionias.in/_public/assets/60abca86688161b0c26b1d1d88b3dc24aee05be055f1e41543ec78766bcd827c.pdf",
+      "topper": "Mansi Singh",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 5,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 2,
+      "groupMedian": 15,
+      "low": true
+    },
+    {
       "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/GHAZALPREET_KAUR_2022_IAS_Exam_Rank_529_VTS_Focussed_4_7834c60748.pdf",
       "topper": "Ghazalpreet Kaur",
       "coaching": "Vajiram & Ravi",
@@ -8248,6 +8276,20 @@
       "low": true
     },
     {
+      "url": "https://visionias.in/_public/assets/037cfab6d8a8034336ca1c08ac4af953858ae716a60c18b77e39fccee1a0595d.pdf",
+      "topper": "Simrandeep Kaur",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 6,
+      "optional": false,
+      "pages": 39,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 39,
+      "salvaged": 0,
+      "groupMedian": 4,
+      "low": true
+    },
+    {
       "url": "https://iasgyan.sgp1.digitaloceanspaces.com/pdf/Miss-Ayushi-Pradhan-AIR-36.pdf",
       "topper": "Ayushi Pradhan",
       "coaching": "IAS Gyan",
@@ -9167,6 +9209,20 @@
       "geminiPages": 16,
       "salvaged": 0,
       "groupMedian": 2,
+      "low": true
+    },
+    {
+      "url": "https://visionias.in/_public/assets/6169d6d1213653c3d5eecb7778ec85f4e7e51ab305bc6b3ae528d3891b9c7896.pdf",
+      "topper": "Zinnia Arora",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -10991,6 +11047,20 @@
       "geminiPages": 28,
       "salvaged": 0,
       "groupMedian": 13,
+      "low": true
+    },
+    {
+      "url": "https://visionias.in/_public/assets/f1b69a10bddf9e4c05a072b1cf72598f15b4a263e1848d5dbc014340fd0b692c.pdf",
+      "topper": "Gudelli Srujana",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": true
     },
     {
@@ -23640,6 +23710,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/f3e22-342734_1526_yaksh-chaudhary_rank_06.pdf",
+      "topper": "Yaksh Chaudhary",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 13,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/af2ab-sanskriti-jain_5_2014_philosophy_booklet_2.pdf",
       "topper": "Sanskriti Jain",
       "coaching": "VisionIAS",
@@ -26076,6 +26160,20 @@
       "low": false
     },
     {
+      "url": "https://visionias.in/_public/assets/bdd0864d18af5b12a8affe69f2a0e7f8161388cb33994ebe1297c906dd261e3b.pdf",
+      "topper": "Dongre Archit Parag",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 15,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
       "url": "https://s3-us-west-2.amazonaws.com/visionresources/toppersanswerbooklet/10a5f-32718_877_junaid_ahmad_rank_3.pdf",
       "topper": "Junaid Ahmad",
       "coaching": "IAS Exam Portal",
@@ -28449,6 +28547,20 @@
       "geminiPages": 51,
       "salvaged": 1,
       "groupMedian": 13,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/d8829d093535311ed3d8251daadaf54960c37b14476ae3cfa59fa3c52d16eb81.pdf",
+      "topper": "Pakshal Secretry",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 16,
+      "optional": false,
+      "pages": 62,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 62,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -31038,7 +31150,7 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 88,
       "salvaged": 0,
-      "groupMedian": 16.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -31150,6 +31262,20 @@
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
       "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/dd1db-1038135_2301_sameer_goel_rank_222.pdf",
+      "topper": "SAMEER GOEL",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 16,
+      "optional": true,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 1,
       "groupMedian": 14,
       "low": false
     },
@@ -34800,7 +34926,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 88,
       "salvaged": 0,
-      "groupMedian": 16.5,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -35067,6 +35193,90 @@
       "geminiPages": 52,
       "salvaged": 0,
       "groupMedian": 17,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/1dfb8005e8dcc88b2bf5470e9b69b374882497025d8f8c21cea854a61609cc5d.pdf",
+      "topper": "Alase Hrishikesh Rajendra",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 61,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 61,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/68baf045931e16974f8c3450169685816e568538c0928137e8ea3164a27311f4.pdf",
+      "topper": "Dongre Archit Parag",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/a1b9f0534cfa3eb38866dd063bdfd2ba7dfadd9b4fd91e02485d21fad282e700.pdf",
+      "topper": "Priyanka Choudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/e3c04448d87e7d48e9c3bab6a4be033b7d89dd692d3c725a2c3bccc00a0d9415.pdf",
+      "topper": "Alase Hrishikesh Rajendra",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/2bb4a71a466db9b87413ecc73e9ef7582d397001abce9f94f6b298a80a507786.pdf",
+      "topper": "Simrandeep Kaur",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 18,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/79563beb1d133f3de7b0ca593afbe0e4fd8fab7a7338cd201faf1e55775cb4de.pdf",
+      "topper": "Suyash Dwivedi",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 18,
+      "optional": false,
+      "pages": 58,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 58,
+      "salvaged": 0,
+      "groupMedian": 15,
       "low": false
     },
     {
@@ -41395,6 +41605,20 @@
       "geminiPages": 84,
       "salvaged": 0,
       "groupMedian": 11,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/584b6-46054445_4521_rasneet_kaur_rank_51.pdf",
+      "topper": "Rasneet Kaur",
+      "coaching": "VisionIAS",
+      "subject": "Anthropology",
+      "count": 18,
+      "optional": true,
+      "pages": 88,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 88,
+      "salvaged": 0,
+      "groupMedian": 17,
       "low": false
     },
     {
@@ -51119,6 +51343,76 @@
       "geminiPages": 83,
       "salvaged": 4,
       "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/4d67da535c44a3252d93e3b5bc8b7ff9d315cd2c07cbcaad8f70eda029ac5bd5.pdf",
+      "topper": "Simrandeep Kaur",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/cf5195e9ff48a8205270de87554b2b75ad0a12b66b31fd6df32d6c36f87540c9.pdf",
+      "topper": "Zinnia Arora",
+      "coaching": "VisionIAS",
+      "subject": "GS4",
+      "count": 20,
+      "optional": false,
+      "pages": 64,
+      "model": "gemini-3.5-flash-lite",
+      "geminiPages": 64,
+      "salvaged": 0,
+      "groupMedian": 15,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/50da3d30c71524d88f96d834b27033f5286e68c4a597a6454d920c1a2fb7f3eb.pdf",
+      "topper": "Zinnia Arora",
+      "coaching": "VisionIAS",
+      "subject": "GS2",
+      "count": 20,
+      "optional": false,
+      "pages": 56,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 56,
+      "salvaged": 0,
+      "groupMedian": 20,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/d1639196743d25340cb65c100ca8c464247b9040104bbba99b4c5d1e40355ad5.pdf",
+      "topper": "Sayali Bhika Pagar",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 63,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 63,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/38366bb2a4a51bfe913328aefb91479ccf7630ae1c2ba3328793f6fbb62b6374.pdf",
+      "topper": "Priyanka Choudhary",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 20,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
       "low": false
     },
     {
@@ -70536,7 +70830,7 @@
       "model": "gemini-flash-lite-latest",
       "geminiPages": 88,
       "salvaged": 1,
-      "groupMedian": 21,
+      "groupMedian": 24,
       "low": false
     },
     {
@@ -71150,6 +71444,20 @@
       "optional": true,
       "pages": 88,
       "model": "gemini-3.5-flash-lite",
+      "geminiPages": 88,
+      "salvaged": 0,
+      "groupMedian": 14,
+      "low": false
+    },
+    {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/eacc9-1217831_4527_bhavika_chopra_rank_25.pdf",
+      "topper": "Bhavika Chopra",
+      "coaching": "VisionIAS",
+      "subject": "Sociology",
+      "count": 24,
+      "optional": true,
+      "pages": 88,
+      "model": "gemini-flash-lite-latest",
       "geminiPages": 88,
       "salvaged": 0,
       "groupMedian": 14,
@@ -71786,6 +72094,20 @@
       "low": false
     },
     {
+      "url": "https://cdn.visionias.in/toppersanswerbooklet/bbe57-1012764_4518_kiran_kamate_rank_53.pdf",
+      "topper": "Kiran Kamate",
+      "coaching": "VisionIAS",
+      "subject": "PSIR",
+      "count": 27,
+      "optional": true,
+      "pages": 88,
+      "model": "gemini-3.1-flash-lite-preview",
+      "geminiPages": 88,
+      "salvaged": 0,
+      "groupMedian": 24,
+      "low": false
+    },
+    {
       "url": "https://cdn.visionias.in/toppersanswerbooklet/d821c-45942651_4518_rakhi_rank_65.pdf",
       "topper": "Rakhi",
       "coaching": "VisionIAS",
@@ -71796,7 +72118,7 @@
       "model": "gemini-3.5-flash-lite",
       "geminiPages": 88,
       "salvaged": 0,
-      "groupMedian": 21,
+      "groupMedian": 24,
       "low": false
     },
     {
