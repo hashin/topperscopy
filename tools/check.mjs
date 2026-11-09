@@ -129,6 +129,19 @@ check('INV-19', 'DECISION-31', 'Every VisionIAS URL move is old cdn host -> a di
   const applied = to.filter(b => urls.has(b)).length;   // fewer than the map when a source row was later removed — harmless
   return { ok: !badShape.length && !dup && !stale.length, detail: badShape.length ? `${badShape.length} malformed pairs, e.g. ${badShape[0][0]}` : dup ? `${dup} new URLs claimed twice` : stale.length ? `${stale.length} old URLs still in copies.json, e.g. ${stale[0]}` : `${to.length} pairs, ${applied} applied` };
 });
+check('INV-20', 'DECISION-32', 'The R2 manifest is well-formed: every ok file has a sha256-named key, no two origin URLs share a key', () => {
+  const m = JSON.parse(read('data/pdf-mirror.json')), es = Object.entries(m.files || {});
+  const ok = es.filter(([, e]) => e.status === 'ok'), keys = new Set(ok.map(([, e]) => e.key));
+  const bad = ok.filter(([, e]) => !/^[0-9a-f]{64}(-[0-9a-f]{8})?\.pdf$/.test(e.key || '') || !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !(e.bytes > 0) || !(e.key || '').startsWith(e.sha256 || '!'));
+  const unknown = es.filter(([, e]) => !['pending', 'ok', 'failed', 'gone', 'skip', 'dead'].includes(e.status));
+  return { ok: !bad.length && keys.size === ok.length && !unknown.length, detail: bad.length ? `${bad.length} malformed ok entries, e.g. ${bad[0][0]}` : keys.size !== ok.length ? 'two origin URLs share one key' : unknown.length ? `unknown status on ${unknown[0][0]}` : `${es.length} files recorded, ${ok.length} in R2` };
+});
+check('INV-21', 'DECISION-32', 'While copies are served from R2, no public page still says nothing is re-hosted', () => {
+  const m = JSON.parse(read('data/pdf-mirror.json')), serving = !!(m._meta && m._meta.base) && Object.values(m.files || {}).some(e => e.status === 'ok');
+  if (!serving) return { ok: true, detail: 'not serving from R2 yet — the "nothing is re-hosted" wording is still true' };
+  const stale = ['index.html', 'README.md', 'build.js'].filter(f => /nothing is re-hosted|re-hosts no PDFs|never re-hosted/i.test(read(f)));
+  return { ok: !stale.length, detail: stale.length ? `still claims nothing is re-hosted: ${stale.join(', ')}` : 'wording updated' };
+});
 check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
   const ids = new Set(copies.map(c => cid(c.u)));
   let refs = 0, bad = 0, questions = 0;

@@ -1,0 +1,83 @@
+name: Mirror PDFs to R2
+
+# Copies every answer-copy PDF we link to into a Cloudflare R2 bucket and records each one in
+# data/pdf-mirror.json (tools/mirror-pdfs.mjs, DECISION-32). Resumable: a run mirrors what is still
+# `pending`, stops before the 6 h job limit, commits the manifest, and the next run carries on. Runs daily
+# so new copies and earlier failures are picked up; the first full pass is ~5,600 files, so dispatch it
+# by hand once. Nothing reaches the site until data/pdf-mirror.json's _meta.base is set (build.js).
+#
+# One-time setup — repository secrets: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY (an R2 API token with
+# Object Read & Write on the bucket), R2_BUCKET; repository variable MIRROR_ENABLED=true.
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max files this run (0 = everything still pending)"
+        required: false
+        default: "0"
+      host:
+        description: "Only this host (e.g. forumias.com) — leave empty for all"
+        required: false
+        default: ""
+      retry_gone:
+        description: "Retry files recorded as gone (403/404/not a PDF)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write        # to dispatch "Build & deploy" — a GITHUB_TOKEN push does NOT trigger it
+
+concurrency:
+  group: mirror-pdfs
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    if: ${{ vars.MIRROR_ENABLED == 'true' }}
+    env:
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      R2_BUCKET: ${{ secrets.R2_BUCKET }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+
+      - name: Signing self-test
+        run: node tools/mirror-pdfs.mjs selftest
+
+      - name: Plan (an entry for every copy)
+        run: |
+          MIRROR=off node build.js          # origin URLs, not R2 ones
+          node tools/mirror-pdfs.mjs plan
+
+      - name: Re-queue anything the bucket has lost
+        run: node tools/mirror-pdfs.mjs verify --repair || true
+
+      - name: Mirror
+        run: |
+          node tools/mirror-pdfs.mjs run --minutes 320 --concurrency 4 \
+            ${{ github.event.inputs.limit && github.event.inputs.limit != '0' && format('--limit {0}', github.event.inputs.limit) || '' }} \
+            ${{ github.event.inputs.host && format('--host {0}', github.event.inputs.host) || '' }} \
+            ${{ github.event.inputs.retry_gone == 'true' && '--retry-gone' || '' }}
+
+      - name: Commit the manifest and deploy
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node tools/mirror-pdfs.mjs status
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/pdf-mirror.json
+          if git diff --cached --quiet; then echo "manifest unchanged"; exit 0; fi
+          git commit -m "mirror: $(node -e "const m=require('./data/pdf-mirror.json');console.log(Object.values(m.files).filter(e=>e.status==='ok').length+' files in R2')")"
+          git pull --rebase --autostash
+          git push
+          gh workflow run "Build & deploy" --ref main

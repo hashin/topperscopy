@@ -19,6 +19,8 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-4` | Every `[idIndex, page]` ref in every question shard resolves (via `cid(url)` from `assets/app.js`) to a copy in `copies.json` | DECISION-17, DECISION-25 |
 | `INV-14` | `cid(url)` — the browser's copy id — is collision-free over every copy | DECISION-25 |
 | `INV-19` | Every VisionIAS URL move (`data/visionias-urls.json`) is old `cdn.visionias.in` → a distinct `visionias.in/_public/assets/<sha256>.pdf`, and no moved old URL survives in `copies.json` | DECISION-31 |
+| `INV-20` | The R2 manifest (`data/pdf-mirror.json`) is well-formed: every `ok` file has a sha256-named key and no two origin URLs share one | DECISION-32 |
+| `INV-21` | Once copies are served from R2, no public page (`index.html`, `README.md`, `build.js`) still says nothing is re-hosted | DECISION-32, INTENT-13 |
 
 ## Credit and honesty
 

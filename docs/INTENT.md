@@ -70,8 +70,9 @@ DECISION-6, kept as one boolean in `renderBrowse()`.
 ---
 
 ## INTENT-4 — Free, static, and nothing is re-hosted
-*Credit clause (crediting upsckata.com on the live site) SUPERSEDED by INTENT-10, 2026-09-17 — the
-rest of this entry (no backend, no re-hosting) is still active.*
+*Credit clause (crediting upsckata.com on the live site) SUPERSEDED by INTENT-10, 2026-09-17. The "hosts no answer copy and
+never will" clause is SUPERSEDED by INTENT-13 (2026-11-09), taking effect when the R2 mirror starts serving (`data/pdf-mirror.json`
+`_meta.base` set). No backend / nothing in the request path that costs money is still active.*
 
 *Standing, from the project's origin.*
 
@@ -231,6 +232,18 @@ wanted unless Hashin raises them himself.
 Show only the new links where a new link exists; keep every question already OCR'd; queue any VisionIAS PDF that is live but has no
 questions for OCR. Done as DECISION-31. (He also asked for a low-cost PDF mirror run by GitHub Actions; that is **on hold** — see
 the 2026-11-09 SESSIONS entry — until he chooses private R2 or public Internet Archive.)
+
+## INTENT-13 — Mirror the PDFs in R2 and serve them from there; keep a record of every file
+*2026-11-09 · Hashin, in chat*
+
+> "i want you to upload the files to R2 so that they are accessed from there. Keep a record of all file names so that we can work on
+> them later in case some goes missing - they all should be able to be referenced. especially since we have OCRd many files already"
+
+Earlier the same day he had first answered "private backup", then asked for the files to be "accessed from there" — the later, explicit
+instruction is what is recorded. Every copy that can be fetched is copied to Cloudflare R2, the site links to the R2 copy, and a manifest
+names every file, with the old VisionIAS URL that its OCR rows still carry. Done as DECISION-32. **Consequence he accepted by asking:** the
+site now distributes publishers' PDFs itself, so the wording "nothing is re-hosted" must change at the moment serving starts (INV-21 fails
+until it does). Costs ~$1/month beyond R2's free 10 GB; no egress fees.
 
 ## Open questions Hashin has not settled
 
