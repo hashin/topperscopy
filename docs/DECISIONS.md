@@ -1588,3 +1588,14 @@ estimate from memory, operations not included) and any lost / unrecorded files t
 GitHub email — if the bucket is over the cap or a file the manifest calls `ok` is missing. INV-22 checks the manifest's own total. This caps
 **storage only**; read/operation charges and the credit card limit are Cloudflare- and bank-side and are not controlled from this repo.
 
+**Amendment 2026-11-10 — the publisher's link by default, R2 only while it is down** (Hashin: "R2 should be served only when the original link is down.
+fuse that into github actions nightly runs."). Supersedes point 3 above (build.js used to switch every `ok` file to R2 once `_meta.base` was set).
+Now: the nightly `mirror-pdfs.mjs check` probes each mirrored file's **original** URL (a Range GET that must return `%PDF-` bytes), records `origin`
+(`up`/`down`), `miss` and `checked` in the manifest, and marks an origin `down` after **two consecutive failed checks**; one success flips it back.
+`build.js` serves R2 only for `status:ok` + `origin:down`; everything else links to the publisher. Guards: if the control request (our own site) fails the
+run changes nothing; INV-23 fails if a copy is served from R2 whose origin is not `down`. A successful mirror download counts as `origin: up`. This also
+narrows the public footprint (the bucket is reached only for dead links) and keeps INTENT-4's "we link to the publisher" true by default.
+**Rejected.** *Serve R2 for everything* (the first implementation) — contradicts what Hashin asked and maximises the exposure. *Flip on one failure* — a bad
+night would swap links. *HEAD requests* — some hosts refuse HEAD and a dead link can still answer 200 with an HTML page; the first bytes are the proof.
+**Known risk.** A host that blocks GitHub's IP ranges but not visitors would be marked down and served from R2 unnecessarily; the check logs the failure reasons.
+Full runbook and lessons: `docs/MIRROR.md`.

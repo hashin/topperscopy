@@ -1187,3 +1187,17 @@ exits 1 when the cap is lowered below the contents; the cap cannot be raised abo
 **Not done.** No real upload or monthly run yet (needs the branch merged to `main`); the 80 %-warning and email-on-failure behaviour were not
 exercised on GitHub. Cost figures are estimates from memory.
 
+## 2026-11-10 — Public R2 address, "R2 only when the original is down", learnings written down
+**Asked.** (1) Hashin sent the bucket's `r2.dev` URL. (2) "R2 should be served only when the original link is down. fuse that into github actions nightly runs."
+(3) "merge, commit and push so that this changes are live … check it before doing everything." (4) "write all your learnings and future instructions into the repo."
+**Did.** `_meta.base` set; public wording rewritten (a mirror is kept, credit retained, takedown via an issue) in index.html, README, build.js (footers, FAQ, llms.txt, JSON-LD,
+dataset README); then the design changed to DECISION-32's second amendment: `mirror-pdfs.mjs check` probes every mirrored file's original (Range GET, `%PDF-` bytes), records
+`origin up|down` + `miss` + `checked`, down after two failed nights, back up on one success, no change if the control request fails; `build.js` serves R2 only for `ok` + `down`;
+the nightly workflow runs `check` first; INV-23 added; index.html/README wording changed to "publisher by default, mirror on failure". Wrote `docs/MIRROR.md` (runbook, facts,
+lessons, open items), updated CLAUDE.md, MEMORY.md, INTENT-13, DECISION-32.
+**Verified.** `check` against a local origin server over three simulated nights (404 and a 200-HTML "login" page → down on night 2; fixed link → up at once; control failure →
+nothing changes); `build.js` with one entry marked down → exactly that copy served from R2, none otherwise; `npm run check` 37/37; the public R2 URL serves a test PDF as
+application/pdf and the bucket root is 404 (no listing). Earlier today: five real files uploaded by a GitHub run and confirmed by the monthly check. GitHub Actions had a major
+outage on 2026-11-09 (runs failed with "Internal server error" and no jobs, including the untouched deploy workflow).
+**Open.** First full mirror pass not yet complete; `origin` is unchecked for the 5 files uploaded on 11-09 until the first nightly `check` (treated as up). No in-app hint when R2 is served.
+

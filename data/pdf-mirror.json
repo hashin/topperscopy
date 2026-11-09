@@ -1,5 +1,5 @@
 {
-"_meta": {"base":"","note":"base = the public URL of the R2 bucket (no trailing slash). While it is empty the site links to the original publishers; build.js switches a copy to R2 only when base is set and its entry is status ok."},
+"_meta": {"base":"https://pub-92c233dffeb04a2ebd71da6d405a33de.r2.dev","note":"base = the public URL of the R2 bucket (no trailing slash). While it is empty the site links to the original publishers; build.js switches a copy to R2 only when base is set and its entry is status ok."},
 "files": {
 "http://successclap.in/wp-content/uploads/Avinash-AIR-540-FLT1-SuccessClap.pdf": {"status":"pending","topper":"Avinash Chaudary","paper":"Mathematics","source":"SuccessClap"},
 "http://successclap.in/wp-content/uploads/Avinash-AIR-540-FLT3-SuccessClap.pdf": {"status":"pending","topper":"Avinash Chaudary","paper":"Mathematics","source":"SuccessClap"},

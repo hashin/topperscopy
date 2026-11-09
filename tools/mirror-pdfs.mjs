@@ -6,9 +6,14 @@
 //   node tools/mirror-pdfs.mjs status        # counts by status / host, bytes mirrored
 //   node tools/mirror-pdfs.mjs run [--limit N] [--host H] [--concurrency 4] [--minutes M] [--retry-gone] [--dry]
 //   node tools/mirror-pdfs.mjs verify [--repair]   # list the bucket, compare with the manifest
+//   node tools/mirror-pdfs.mjs check [--host H] [--concurrency 8] [--minutes M]   # is each mirrored file's ORIGINAL link still alive?
 //   node tools/mirror-pdfs.mjs usage         # bucket size, object count, estimated storage cost; fails over the cap (monthly check)
 //   node tools/mirror-pdfs.mjs selftest      # check the request signing against AWS's published test vector
 //
+// The site links to the publisher by default and to R2 only while the original is down (DECISION-32, amended). `check` probes every
+// mirrored file's origin URL — a 1-line Range GET that must return real PDF bytes — and records `origin` (up | down), `miss` (consecutive
+// failed checks) and `checked`. An origin is `down` after 2 failed checks in a row, so one bad night never flips a link; one good check
+// flips it straight back. build.js serves R2 only for `ok` entries whose origin is `down`.
 // Hard cap: never more than 100 GB in the bucket (R2_MAX_GB can only lower it). `run` starts from the bucket's real size, not
 // the manifest's, and stops uploading the moment one more file would cross the line; what is left stays `pending`.
 // Env (GitHub Actions secrets): R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET; R2_ENDPOINT overrides the host (tests).
@@ -79,6 +84,34 @@ async function listBucket(r2) {
   return { keys, bytes: [...keys.values()].reduce((a, b) => a + b, 0) };
 }
 
+// A request that must succeed from any working runner — if it fails, the network is broken and no verdict about any origin is trusted.
+async function probeControl() {
+  try { return (await fetch(process.env.MIRROR_CONTROL_URL || 'https://topperscopy.hashin.me/', { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(20000) })).ok; } catch { return false; }
+}
+
+// Interleave hosts so no host is hit back to back (shared by `run` and `check`).
+function roundRobin(items, limit = Infinity) {
+  const lists = {};
+  for (const it of items) (lists[hostOf(it[0])] ||= []).push(it);
+  const out = [], ls = Object.values(lists);
+  for (let i = 0; out.length < limit && ls.some(l => i < l.length); i++) for (const l of ls) if (i < l.length && out.length < limit) out.push(l[i]);
+  return out;
+}
+
+// Is this URL still serving a real PDF? Reads the first bytes only and then hangs up, so it costs almost nothing per file.
+async function probe(u) {
+  const ac = new AbortController(), timer = setTimeout(() => ac.abort(), 30000);
+  try {
+    const r = await fetch(u, { redirect: 'follow', headers: { 'user-agent': UA, range: 'bytes=0-7' }, signal: ac.signal });
+    if (r.status !== 200 && r.status !== 206) return { up: false, why: 'HTTP ' + r.status };
+    const rd = r.body.getReader();
+    let head = Buffer.alloc(0);
+    while (head.length < 5) { const { value, done } = await rd.read(); if (done) break; head = Buffer.concat([head, Buffer.from(value)]); }
+    return head.subarray(0, 5).toString('latin1') === '%PDF-' ? { up: true } : { up: false, why: 'not a PDF' };
+  } catch (e) { return { up: false, why: e.name === 'AbortError' ? 'timeout' : String(e.message || e).slice(0, 40) }; }
+  finally { clearTimeout(timer); ac.abort(); }
+}
+
 /* ---------- the manifest: one line per file, sorted, so a diff shows only what changed ---------- */
 function load() {
   return fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8'))
@@ -128,15 +161,47 @@ if (cmd === 'plan') {
 }
 
 if (cmd === 'status') {
-  const m = load(), by = {}, hosts = {};
+  const m = load(), by = {}, hosts = {}, origins = {};
   let bytes = 0;
   for (const [u, e] of Object.entries(m.files)) {
     by[e.status] = (by[e.status] || 0) + 1;
     if (e.status === 'ok') bytes += e.bytes || 0;
     if (e.status === 'pending' || e.status === 'failed') hosts[hostOf(u)] = (hosts[hostOf(u)] || 0) + 1;
+    if (e.status === 'ok') origins[e.origin || 'unchecked'] = (origins[e.origin || 'unchecked'] || 0) + 1;
   }
+  console.log('origin links of mirrored files:', origins, '(the site serves R2 only for "down")');
   console.log(by, `\n${(bytes / 1e9).toFixed(2)} GB mirrored of the ${CAP_GB} GB cap · base ${m._meta.base || '(not set — site still links to publishers)'}`);
   console.log('still to do, by host:', hosts);
+  process.exit(0);
+}
+
+/* ---------- check: is each mirrored file's original link still alive? (no R2 credentials needed) ---------- */
+if (cmd === 'check') {
+  const m = load(), only = arg('host'), conc = +arg('concurrency', 8), deadline = Date.now() + (+arg('minutes', 0) || 1e9) * 60000;
+  const control = await probeControl();
+  if (!control) { console.log((process.env.GITHUB_ACTIONS ? '::warning::' : '') + 'the control request failed — this runner has no working network, so no origin was changed'); process.exit(0); }
+  const todo = roundRobin(Object.entries(m.files).filter(([u, e]) => e.status === 'ok' && (!only || hostOf(u) === only)));
+  console.log(`${todo.length} mirrored files to check`);
+  const gate = new Map(), today = new Date().toISOString().slice(0, 10), tally = { up: 0, missed: 0, newlyDown: 0, stillDown: 0, recovered: 0, skipped: 0 };
+  const why = {};
+  let next = 0;
+  await Promise.all(Array.from({ length: conc }, async () => {
+    while (next < todo.length) {
+      if (Date.now() >= deadline) { tally.skipped += todo.length - next; next = todo.length; break; }
+      const [u, e] = todo[next++], host = hostOf(u), now = Date.now(), at = Math.max(now, gate.get(host) || 0);
+      gate.set(host, at + 500); if (at > now) await sleep(at - now);
+      const r = await probe(u), was = e.origin || 'unchecked';
+      e.checked = today;
+      if (r.up) { if (was === 'down') tally.recovered++; e.origin = 'up'; e.miss = 0; tally.up++; }
+      else {
+        e.miss = (e.miss || 0) + 1; tally.missed++; why[r.why] = (why[r.why] || 0) + 1;
+        if (e.miss >= 2) { e.origin = 'down'; was === 'down' ? tally.stillDown++ : tally.newlyDown++; } else e.origin = was === 'down' ? 'down' : 'up';
+      }
+    }
+  }));
+  save(m);
+  console.log(`checked: ${tally.up} up · ${tally.missed} failed this time (${JSON.stringify(why)}) · newly down ${tally.newlyDown} · still down ${tally.stillDown} · back up ${tally.recovered}` + (tally.skipped ? ` · ${tally.skipped} left for the next run` : ''));
+  if (tally.newlyDown) console.log((process.env.GITHUB_ACTIONS ? '::warning::' : '') + `${tally.newlyDown} original links went down — the site now serves their R2 copies`);
   process.exit(0);
 }
 
@@ -195,7 +260,7 @@ if (cmd === 'run') {
         if (etag && etag !== crypto.createHash('md5').update(buf).digest('hex')) throw new Error('R2 etag mismatch');
       }
       keyOwner.set(key, u);
-      Object.assign(e, { status: 'ok', key, sha256: h, bytes: buf.length, at: new Date().toISOString().slice(0, 10) });
+      Object.assign(e, { status: 'ok', key, sha256: h, bytes: buf.length, at: new Date().toISOString().slice(0, 10), origin: 'up', miss: 0, checked: new Date().toISOString().slice(0, 10) });
       delete e.err; delete e.tries; ok++; bytes += buf.length;
     } catch (err) { e.status = 'failed'; e.err = String(err.message || err).slice(0, 80); e.tries = (e.tries || 0) + 1; bad++; }   // a bucket error is not the file's fault
   }

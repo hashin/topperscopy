@@ -20,8 +20,10 @@ independent, non-commercial mirror. It adds:
   interview-transcript archive;
 - a **Submit** workflow so students can add missing copies and correct topper data.
 
-No answer copy is hosted here. Every "Open PDF" link points to the file on the site that published it
-(ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, …).
+Answer copies are published by the institutes and toppers named in each entry (ForumIAS, Vision IAS, NextIAS,
+Lukmaan IAS, GS SCORE, Rau's IAS, …) and remain their property. A mirror of the files we could fetch is kept in
+Cloudflare R2 so they stay available when a publisher's link dies: an "Open PDF" link goes to the publisher, and to the
+mirror only while the publisher's link is down (checked nightly). A rights holder who wants a copy removed can open an issue.
 
 ## How it's built
 
