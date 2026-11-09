@@ -1148,3 +1148,21 @@ carry no notice; `sw.js` VERSION not bumped. **Open.** Recheck the CDN later; if
 After rebasing onto the bot's 20 `ocr: gemini vision pass` commits, `npm run check` was 29/32 on `origin/main` alone (not my change). Raised in
 `tools/check.mjs` (Hashin said yes): shard optional 55 → 150 KB (78.5 measured), prefetch total 1550 → 1950 (1,763), search total 2100 → 2550
 (2,305). 32/32. The real fix for the totals is still a token index (PERF-AUDIT-2026-10-23), not more raises.
+
+## 2026-11-09 — VisionIAS new links, restored questions
+**Asked.** Use Chrome to sample VisionIAS's new links, show only those, link old↔new, restore the questions, queue leftovers for OCR
+(INTENT-12). This was asked while a "low-cost PDF mirror + GitHub Actions" task was open — **that is on hold**: Hashin must choose
+private Cloudflare R2 (keeps INTENT-4/INV-1; ~50 GB ≈ $0.60/month) or public Internet Archive (supersede INTENT-4). Reachable PDFs
+≈ 50 GB (sampled); VisionIAS and Google Drive links can't be fetched for it.
+**Found.** The "View / Download" button is a plain `<a href=visionias.in/_public/assets/<sha256>.pdf>`, and the page renders from the public
+`/_public/resources/tac.json` — so no clicking per topper was needed, only one Chrome session to find the endpoint. 1,525 of its 4,027
+rows have a file. **Did.** DECISION-31: `tools/visionias-urls.mjs` → `data/visionias-urls.json` (1,485 pairs; 287 unambiguous, 1,198 by
+order), applied in `build.js`; `ocr-pipeline.mjs` fetches moved URLs; 19 new copies added to `link-copies.json`; INV-19; deploy excludes
+the map; `DOWN` message reworded. **Result.** 9,130 copies (+19), 1,504 on the new host (947 with questions, 557 link-only → OCR list);
+2,537 stay on the dead host (VisionIAS lists no file for them). `plan` now shows 155 VisionIAS test groups / 926 booklets OCR-able.
+**Verified.** `npm run check` 33/33; local `?q=sudipa`: 3 copies, 48 of 67 PDF links on the new host, 19 old-host links with the notice
+(that one copy has no file); no console errors; one new PDF opens (HTTP 200 `application/pdf`). Ordering rule: see DECISION-31.
+**Open.** 21 files in 30 groups whose counts differ (e.g. Pakshal Secretry Ethics: 1 old, 2 new) are unpaired — `--verbose` lists them;
+3 old copies with blank topper rows (e.g. Akansh Dhull `…4512…`) are unparsed; a wrong pairing would show as a question on the wrong
+booklet — fix in the map. Nothing committed or pushed; the bot's next `plan` picks up the OCR work once pushed. `sw.js` VERSION not bumped.
+

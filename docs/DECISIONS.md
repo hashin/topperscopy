@@ -1516,3 +1516,35 @@ Referer or User-Agent to get past the block* — circumvents the publisher's acc
 *Showing the notice on the JS-free static pages* — not done; they are SEO surface and the outage may be temporary.
 **Reverse if.** VisionIAS PDFs open again (empty `DOWN`), or VisionIAS confirms the files are gone for good (then drop the link and
 mark the copy question-only).
+
+
+## DECISION-31 — VisionIAS's new URLs are substituted at build time from a map; the source files keep the old ones
+**Context.** 2026-11-09: VisionIAS re-hosted its answer booklets (DECISION-30's 403s were this). Each file now lives at
+`visionias.in/_public/assets/<sha256>.pdf` (content-hashed, `cache-control: immutable`, public, no login). The listing its own page
+loads is `https://visionias.in/_public/resources/tac.json` — 4,027 rows `{name, rank, year, subject_name, resource_id, download_available,
+public_url}`; only **1,525** have a file, the other 2,502 show "File unavailable" on VisionIAS's own page. The listing carries no old
+URL, and `resource_id` is a new id space (it does not equal the old filename's test number). We hold 4,022 VisionIAS copies, and the
+OCR bot has already read questions for most of them, keyed on the old URL.
+**Decision.**
+1. `tools/visionias-urls.mjs` pairs old to new by **(name, rank, subject)** — `PSIR I/II`, `History II`, `Mathematics II` fold into one
+   optional — and inside a group sorts the old links by the test number in the filename (`…-<student>_<TEST>_…`) and the new rows by
+   `resource_id`, pairing the i-th with the i-th. Only when the counts are equal and the years agree; every other group is reported,
+   not guessed. It writes `data/visionias-urls.json` (`{old: new}`, 1,485 pairs on 2026-11-09). Repeatable, no browser needed.
+2. `build.js` substitutes the new URL for the old one in every source (`questions.csv`, `ocr-questions.csv`, `link-copies.json`,
+   `optionals.json`) at load, after the exclude list. The sources — including everything the OCR bot writes — are not touched, so
+   there is nothing to merge with a bot commit and nothing to undo. A copy's questions follow its URL, so ~950 copies are searchable
+   again with a working PDF immediately.
+3. A copy with no live file keeps its old URL; `DOWN` in `app.js` already flags the old host, so only those get the notice (wording
+   now "no longer serves this copy").
+4. `ocr-pipeline.mjs` fetches the moved URL (`resolve()`) and prefers a member with one as the cluster's representative, so the
+   ~155 test groups (926 booklets) that were unreachable can be OCR'd; the old URL stays the key so nothing already done repeats.
+5. `--add-fresh` files live PDFs that match nothing we hold (19, e.g. 2015 toppers) as new link-only copies so they join the OCR list.
+**Evidence for the ordering rule.** One group checked by eye (old test 2931 "The end cannot justify the means" ↔ new 3957; 4513
+"Compassion" ↔ 3958), then 25 multi-booklet groups OCR'd with tesseract at the page where each old question starts: 69 decisive
+matches, **0 swapped**, 77 too faint to judge. It is an inference, not a proof.
+**Rejected.** *Rewriting URLs inside the source files* — the bot commits `optionals.json` daily and the mirror CSV is "never reflow";
+a map is one reviewable file. *Matching by content hash* — the old files are unreachable. *Clicking each topper in Chrome* — the page
+renders from one JSON, and it is public. *Dropping copies VisionIAS has withdrawn* — their questions are still valid and searchable.
+**Reverse if.** VisionIAS publishes the old URL in the listing (then pair exactly), a wrong pairing is reported (find it with the
+page/question in the card, fix the map), or the old host answers again (`DOWN`).
+

@@ -73,8 +73,12 @@ function searchableBaseUrls() {
 }
 
 /* ---------- Stage 0: resolve a link to a fetchable PDF url ---------- */
+// VisionIAS moved its booklets (DECISION-31): the source files and ocr-questions.csv keep the old cdn.visionias.in URL,
+// which now 403s, and data/visionias-urls.json says where each live one went. Fetch the new URL; the old one stays the key.
+const MOVES = (() => { try { return JSON.parse(fs.readFileSync(path.join(DATA, 'visionias-urls.json'), 'utf8')); } catch { return {}; } })();
 function resolve(url) {
   const u = url.trim();
+  if (MOVES[norm(u)] && norm(u) !== '_note') return { fetchUrl: MOVES[norm(u)], note: 'visionias-moved' };
   let m = u.match(/drive\.google\.com\/file\/d\/([^/?]+)/);
   if (m) return { fetchUrl: `https://drive.google.com/uc?export=download&id=${m[1]}`, note: 'drive-file' };
   m = u.match(/drive\.google\.com\/(?:drive\/(?:u\/\d+\/)?folders|drive\/folders)\/([^/?]+)/);
@@ -791,7 +795,8 @@ if (cmd === 'plan') {
 
   const list = [...clusters.values()].sort((a, b) => b.members.length - a.members.length);
   for (const c of list) {
-    c.members.sort((a, b) => decode(a.url).length - decode(b.url).length);
+    // a member whose PDF still exists (VisionIAS: has a moved URL) must represent the test — the others 403
+    c.members.sort((a, b) => !!MOVES[b.url] - !!MOVES[a.url] || decode(a.url).length - decode(b.url).length);
     c.representative = c.members[0].url;
     c.driveFolder = list.length && /drive\.google\.com\/(?:drive\/)?(?:u\/\d+\/)?folders\//.test(c.representative);
     if (c.members.some(m => redo.has(norm(m.url)))) c.redo = true;   // freepass + gemini honour this

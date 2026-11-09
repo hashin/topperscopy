@@ -43,6 +43,7 @@ with `node -e` / `head` / `wc`. This file is the source of truth for their shape
 | `data/optionals.json` | optional-subject copies, some with OCR'd `questions[]` | `{entries:[{topper,subject,url,air?,year?,marks?,source?,note?,verified,questions?:[{page,question,marks,words}]}]}` |
 | `data/toppers.overrides.json` | maintainer AIR/year/marks corrections | `{"<name>":{air,year,verified,marks:{},sources:[]}}` — `_`-keys ignored |
 | `data/telegram.json` | topper Telegram channels, matched by name tokens | `{entries:{"<informal name>": url}}` |
+| `data/visionias-urls.json` | old `cdn.visionias.in` booklet URL → VisionIAS's new `visionias.in/_public/assets/<sha256>.pdf`; written by `node tools/visionias-urls.mjs [--add-fresh]`, applied by `build.js` at load (DECISION-31); sources keep the old URL | `{"<old>": "<new>"}`, `_note` ignored |
 | `data/syllabus.json` | hand-authored UPSC syllabus, GS1–4 + Essay, 2 levels; `nodes[].kw` = lowercase phrases scored against each question | `{version, papers:{GS1:{name, nodes:[{id,t,kw:[]}]}, …}}` |
 | `data/syllabus-overrides.json` | pin a question to node(s); key = `qKey()` of the text | `{"<qKey>": ["gs2.federalism"]}` |
 | `data/questions.exclude.json` | denylist for junk rows in the mirror, by URL (incl. `#page=N`) or `qKey()` | `{urls:[…], keys:[…]}` — `_`-prefixed ignored |
@@ -165,7 +166,7 @@ optionals, ~69 featured toppers), Sleepy Classes (GS/Essay + Sociology/PSIR), Va
 GS/Essay + IFS), LotusArise (Geography), De Facto Law (Law), IMS4Maths + SuccessClap (Mathematics),
 VisionIAS (all 305 optionals incl. Philosophy/Psychology/Pub-Ad + all 3,720 GS/Essay 2013–25; direct
 `cdn.visionias.in` PDFs — re-fetchable via `POST /student/module/ajax/resources.php?f=resources_data`
-body `type=toppers_answers` while logged in, `d.result` = 4k rows),
+body `type=toppers_answers` while logged in, `d.result` = 4k rows). **Since 2026-11 VisionIAS serves files only at `visionias.in/_public/assets/<sha256>.pdf`; the public listing `visionias.in/_public/resources/tac.json` (no login) names them, and `tools/visionias-urls.mjs` pairs them to our old links — see DECISION-31; only ~1,500 of its 4,027 rows have a file**),
 NextIAS (`nextias.com/toppers-answers-ias`, 2,020 GS/Essay + 138 optionals incl. new **Economics** bucket,
 255 toppers 2023–25; public S3/CDN PDFs, `<article>` per topper, year `<select id=yearSelect>`=all/2025/24/23;
 299 unlabelled "Analytics/AIM" booklets stored as paper `Other`), Shankar IAS Parliament
