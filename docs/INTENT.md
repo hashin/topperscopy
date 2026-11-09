@@ -245,6 +245,10 @@ names every file, with the old VisionIAS URL that its OCR rows still carry. Done
 site now distributes publishers' PDFs itself, so the wording "nothing is re-hosted" must change at the moment serving starts (INV-21 fails
 until it does). Costs ~$1/month beyond R2's free 10 GB; no egress fees.
 
+*Refined 2026-11-10, Hashin, in chat:* "R2 should be served only when the original link is down. fuse that into github actions nightly runs."
+So the default link is the publisher's; the nightly run checks the originals and the site falls back to R2 only for dead ones (DECISION-32 amendment). He also asked that
+all learnings and future instructions be written into the repo (`docs/MIRROR.md`, `CLAUDE.md`, `docs/MEMORY.md`) and that changes be merged and pushed so they are live.
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.

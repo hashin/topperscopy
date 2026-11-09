@@ -31,6 +31,9 @@ silently; a failing check does not.
 `docs/archive/` holds the two audits and the OCR notes that shaped the code up to DECISION-17. They
 are history — useful for "why was this ever built", never needed to understand a line of today's code.
 
+`MIRROR.md` is the runbook for the R2 mirror and the VisionIAS move — how to operate it, what it cost to learn, and the lessons.
+Read it before touching `tools/mirror-pdfs.mjs`, `tools/visionias-urls.mjs`, the manifest or the `mirror-*.yml` workflows.
+
 `INVARIANTS.md` is the load-bearing one. It is the bridge between "what Hashin wants" and
 "what `npm run check` enforces" — every entry cites an `INTENT-n` or `DECISION-n`, and every entry
 is a check in `tools/check.mjs`. Intent that cannot be checked is still written down, but it is
@@ -84,3 +87,15 @@ on purpose, delete it and say why in `DECISIONS.md`; do not soften it.
 - Restating what the code does. The code says that. These files say *why*, and *what was rejected*.
 - Aspirations with no owner. If it is not intent, a decision, an invariant or a session record, it
   belongs in an audit document or an issue.
+
+---
+
+## Lessons that cost time (2026-11) — details and the rest in `docs/MIRROR.md` §4
+
+- **Report what you verified, not what you meant to verify.** "Did you walk the whole site?" — do it, then give the counts.
+- **An Actions run with no jobs and "Internal server error" is probably a GitHub incident** — check githubstatus.com before editing YAML.
+- **Never handle credentials.** Hashin sets secrets himself with `gh secret set NAME`; a key pasted in chat is rotated.
+- **Branch first, and commit / push / merge only when asked** (every push to `main` deploys). A blocked "merge without review" means ask, not work around.
+- **Long inline scripts trip the command safety check** — write them to a scratchpad file and run the file.
+- **Test a mechanism on real data and a mock before it touches production** (pairing rule → OCR of real pages; uploader → mock S3 + AWS test vector → 5 real files).
+- **Public wording is part of a behaviour change** — grep every place a claim appears; INV-21 guards the "nothing is re-hosted" one.

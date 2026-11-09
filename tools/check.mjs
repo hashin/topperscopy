@@ -133,7 +133,7 @@ check('INV-20', 'DECISION-32', 'The R2 manifest is well-formed: every ok file ha
   const m = JSON.parse(read('data/pdf-mirror.json')), es = Object.entries(m.files || {});
   const ok = es.filter(([, e]) => e.status === 'ok'), keys = new Set(ok.map(([, e]) => e.key));
   const bad = ok.filter(([, e]) => !/^[0-9a-f]{64}(-[0-9a-f]{8})?\.pdf$/.test(e.key || '') || !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !(e.bytes > 0) || !(e.key || '').startsWith(e.sha256 || '!'));
-  const unknown = es.filter(([, e]) => !['pending', 'ok', 'failed', 'gone', 'skip', 'dead'].includes(e.status));
+  const unknown = es.filter(([, e]) => !['pending', 'ok', 'failed', 'gone', 'skip', 'dead'].includes(e.status) || (e.origin !== undefined && !['up', 'down'].includes(e.origin)));
   return { ok: !bad.length && keys.size === ok.length && !unknown.length, detail: bad.length ? `${bad.length} malformed ok entries, e.g. ${bad[0][0]}` : keys.size !== ok.length ? 'two origin URLs share one key' : unknown.length ? `unknown status on ${unknown[0][0]}` : `${es.length} files recorded, ${ok.length} in R2` };
 });
 check('INV-21', 'DECISION-32', 'While copies are served from R2, no public page still says nothing is re-hosted', () => {
@@ -147,6 +147,14 @@ check('INV-22', 'DECISION-32', 'The manifest never records more than 100 GB in R
   for (const e of Object.values(m.files || {})) if (e.status === 'ok') by.set(e.key, e.bytes || 0);
   const gb = [...by.values()].reduce((a, b) => a + b, 0) / 1e9;
   return { ok: gb <= 100, detail: `${gb.toFixed(2)} GB recorded of the 100 GB cap (tools/mirror-pdfs.mjs enforces it against the bucket itself)` };
+});
+check('INV-23', 'DECISION-32', 'A copy is served from R2 only when its original link is recorded as down', () => {
+  const m = JSON.parse(read('data/pdf-mirror.json')), base = String((m._meta || {}).base || '').replace(/\/$/, '');
+  if (!base) return { ok: true, detail: 'no R2 base set — every copy links to its publisher' };
+  const byKey = new Map(Object.values(m.files || {}).filter(e => e.status === 'ok').map(e => [e.key, e]));
+  const served = copies.filter(c => String(c.u).startsWith(base + '/'));
+  const bad = served.filter(c => (byKey.get(String(c.u).slice(base.length + 1)) || {}).origin !== 'down');
+  return { ok: !bad.length, detail: bad.length ? `${bad.length} copies point at R2 though their original is not down, e.g. ${bad[0].u}` : `${served.length} of ${copies.length} copies served from R2 (original down); the rest link to the publisher` };
 });
 check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
   const ids = new Set(copies.map(c => cid(c.u)));

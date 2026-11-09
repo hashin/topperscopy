@@ -35,7 +35,7 @@ const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
 const SITE = 'https://topperscopy.hashin.me';
 const PAPERS = ['GS1', 'GS2', 'GS3', 'GS4', 'Essay', 'Other'];   // everything else is an optional subject
-const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. PDFs belong to their publishers; nothing is re-hosted. Some older GS/Essay text derives from earlier open community compilations.';
+const ATTRIBUTION = 'Community compilation of public UPSC Mains answer copies. PDFs belong to their publishers and are mirrored here so they stay available. Some older GS/Essay text derives from earlier open community compilations.';
 
 /* ======================================================================
  * 1. Helpers
@@ -200,7 +200,8 @@ function loadSources() {
   // the OCR bot and the mirror stay untouched — and the new one is substituted here, once, so a copy's
   // questions follow it. Applied after the exclude list above, which is written in old URLs.
   const moves = readJson(path.join(DATA, 'visionias-urls.json'), {});
-  // Then, for a PDF we hold a verified copy of in R2, point at the copy (DECISION-32). Keyed by the URL as it stands after the
+  // Then, for a PDF whose original link is DOWN and that we hold a verified copy of in R2, point at the copy (DECISION-32, as amended:
+  // the nightly `mirror-pdfs.mjs check` records origin up|down; a link that is alive keeps pointing at its publisher). Keyed by the URL as it stands after the
   // move above; applies only once data/pdf-mirror.json names a public base, and `MIRROR=off` skips it so tools/mirror-pdfs.mjs
   // can read the origin URLs back out of copies.json.
   const mirror = readJson(path.join(DATA, 'pdf-mirror.json'), {});
@@ -210,7 +211,7 @@ function loadSources() {
     const i = (u || '').indexOf('#'), b = i < 0 ? u : u.slice(0, i), tail = i < 0 ? '' : u.slice(i);
     const n = moves[b] && b !== '_note' ? moves[b] : b;
     const f = mbase && mfiles[n];
-    return f && f.status === 'ok' && f.key ? mbase + '/' + f.key + tail : n + tail;
+    return f && f.status === 'ok' && f.key && f.origin === 'down' ? mbase + '/' + f.key + tail : n + tail;   // the publisher's link by default; R2 only while it is dead
   };
   rows.forEach(r => { r.url = mv(r.url); });
   optionals.forEach(o => { o.url = mv(o.url); });
@@ -808,7 +809,7 @@ ${jsonLd ? `<script type="application/ld+json">${ldJson(jsonLd)}</script>` : ''}
 <main>
 ${body}
 </main>
-<footer class="f"><p>Free, open, community-built. Answer-copy PDFs are hosted by the institutes and toppers who published them — nothing is re-hosted here. <a href="/">Search the full site →</a></p></footer>
+<footer class="f"><p>Free, open, community-built. Answer-copy PDFs belong to the institutes and toppers who published them; a mirror is kept here so they stay available. <a href="/">Search the full site →</a></p></footer>
 </body>
 </html>
 `;
@@ -1168,8 +1169,8 @@ ${ldJson(itemList)}
   <h1>Every UPSC Mains topper answer copy — full index</h1>
   <p class="lead">${stats.toppers} rankers · ${stats.copies} answer copies · ${fmt(stats.questions)} indexed questions · updated ${generated}</p>
   <p class="lead">This is the static, no-JavaScript index, split into ${totalPages} pages. The <a href="/">main site</a> lets you search inside every copy.
-  A free, open, community-built index. Answer-copy PDFs are hosted by the institutes and toppers who published
-  them; nothing is re-hosted here.</p>
+  A free, open, community-built index. Answer-copy PDFs belong to the institutes and toppers who published
+  them; a mirror is kept here so they stay available.</p>
   <p class="lead"><strong>Page ${num} of ${totalPages}</strong> — ${esc(range)} (${pageNames.length} toppers)</p>
   <details><summary>Jump to a topper on this page</summary>
     <div class="toc">
@@ -1278,7 +1279,7 @@ function jsonLd(stats, generated, interviewCount) {
       '@type': 'FAQPage', '@id': SITE + '/#faq',
       mainEntity: [
         ["What is Topper's Copy by Hashin?", `A free, searchable directory of UPSC Civil Services Mains topper answer copies. It indexes ${fmt(stats.questions)} questions inside ${fmt(stats.copies)} answer copies by ${stats.toppers} rankers and links to the exact page of each source PDF.`],
-        ['Where do the answer copies come from?', "Every copy is hosted by the coaching institute or compiler that published it — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or the topper’s own Google Drive. Topper's Copy by Hashin only links to those files and never re-hosts them; it is a free, open, community-built index."],
+        ['Where do the answer copies come from?', "Every copy was published by a coaching institute or compiler — ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau’s IAS, Level Up IAS, IMS4Maths, SuccessClap, UnlockIAS, Sleepy Classes and others — or by the topper on their own Google Drive. Topper's Copy by Hashin keeps a mirror of the files it could fetch, so they stay available when a publisher's link dies; the PDFs remain their publishers' property and each copy is credited to its source. A rights holder who wants a copy removed can open an issue on GitHub. It is a free, open, community-built index."],
         ['Does it cover optional subjects?', 'Yes. Alongside GS1–GS4 and Essay, there is a community-built section for optional subjects — Sociology, Anthropology, History, PSIR, Geography, Public Administration, Philosophy, Economics, Literature and more.'],
         ...(interviewCount ? [['Can I prepare for the UPSC interview (Personality Test) here?', `Yes. The Interviews tab has ${fmt(interviewCount)} real UPSC Personality Test transcripts — board members, the questions each panellist actually asked, DAF topics discussed, and candidate hobbies and education background — searchable by board, year, optional subject or state.`]] : []),
         ['Is it free?', 'Yes, completely free and open source. No login, no ads.'],
@@ -1366,14 +1367,14 @@ Licence: MIT (code). CC BY 4.0 (this compilation).
 Credit: the question-level database (which topper answered which question, on which page of which
 PDF) was seeded from earlier open community compilations of these same public answer copies, then
 extended with per-topper AIR/marks tags, an optional-subject section and community submissions
-original to this project. No answer copy is hosted here; every link points to the site that
-published the PDF.
+original to this project. The PDFs belong to the sites that published them; a mirror of the files we
+could fetch is kept so they stay available.
 
 ## What it contains
 
 - Which UPSC Mains topper answered which question, in which paper, on which page of which PDF.
 - Per-topper All-India Rank (AIR), exam year and, where submitted, subject-wise marks.
-- Direct links to answer-copy PDFs hosted by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others.
+- Links to answer-copy PDFs published by ForumIAS, Vision IAS, NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, Level Up IAS, UnlockIAS, Sleepy Classes and others, mirrored here so they stay available.
 - Optional-subject copies: Sociology, Anthropology, History, PSIR, Geography, Public Administration,
   Philosophy, Economics, Literature and more (community-submitted).
 - ${fmt(interviewCount || 0)} UPSC Personality Test interview transcripts — board, the questions each
@@ -1425,7 +1426,7 @@ Topper's Copy by Hashin is built and maintained by **Hashin Jithu**.
 ## Notes for citation
 
 Cite as "Topper's Copy by Hashin (${SITE})", a community compilation. Answer-copy PDFs are the property of the
-institutes and toppers who published them. This site re-hosts no PDFs; it only links to them.
+institutes and toppers who published them. This site keeps a mirror of them so they stay available; a rights holder can ask for removal by opening an issue.
 Some GS & Essay question text derives from earlier open community compilations of the same public copies.
 `);
 }
@@ -1491,7 +1492,7 @@ function writeDataset(copies, toppers, generated) {
       name: "Topper's Copy by Hashin — complete dataset",
       description: "Every question from every UPSC Civil Services Mains topper answer copy indexed by the Topper's Copy by Hashin project, plus per-topper AIR / exam year / subject-wise marks. Consolidated backup — includes all accepted community submissions. No PDF files are included.",
       site: SITE, repository: 'https://github.com/hashin/topperscopy', generated,
-      attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project links to them and re-hosts nothing. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
+      attribution: 'A community compilation. Answer-copy PDFs belong to the institutes and toppers who published them (ForumIAS, Vision IAS, NextIAS, IMS4Maths, Level Up IAS and others); this project keeps a mirror so they stay available and credits each to its source. Some GS & Essay question text derives from earlier open community compilations (see dataset/README.md).',
       license: 'CC BY 4.0 for this compilation — see https://topperscopy.hashin.me/dataset/README.md',
       schema_version: 3, counts
     },
@@ -1547,7 +1548,7 @@ This directory is a reference archive — the website does not load it. Regenera
   community compilations of the same public answer copies, including upsckata.com's "Topper Copies".
 - Answer-copy PDFs are the property of the institutes and toppers who published them (ForumIAS, Vision IAS,
   NextIAS, Lukmaan IAS, GS SCORE, Rau's IAS, IMS4Maths, Level Up IAS and others). **No PDF files are in this
-  dataset** — only links to them.
+  dataset** — only links (to the publisher's file or, where we hold a mirror, to our copy).
 - Questions are extracted from PDFs heuristically and may contain misreads, duplicates or gaps.
   Always check \`pdf_page_url\` if something looks off.
 - This **compilation** is released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**:
