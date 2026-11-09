@@ -18,6 +18,7 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-3` | A PDF URL appears in exactly one copy (the URL is the copy's key) | DECISION-17 |
 | `INV-4` | Every `[idIndex, page]` ref in every question shard resolves (via `cid(url)` from `assets/app.js`) to a copy in `copies.json` | DECISION-17, DECISION-25 |
 | `INV-14` | `cid(url)` — the browser's copy id — is collision-free over every copy | DECISION-25 |
+| `INV-19` | Every VisionIAS URL move (`data/visionias-urls.json`) is old `cdn.visionias.in` → a distinct `visionias.in/_public/assets/<sha256>.pdf`, and no moved old URL survives in `copies.json` | DECISION-31 |
 
 ## Credit and honesty
 

@@ -195,6 +195,15 @@ function loadSources() {
 
   const optionals = readJson(path.join(DATA, 'optionals.json'), { entries: [] }).entries || [];
   const links = readJson(path.join(DATA, 'link-copies.json'), { entries: [] }).entries || [];
+
+  // VisionIAS re-hosted its booklets under new URLs (DECISION-31). Every source file keeps the old URL —
+  // the OCR bot and the mirror stay untouched — and the new one is substituted here, once, so a copy's
+  // questions follow it. Applied after the exclude list above, which is written in old URLs.
+  const moves = readJson(path.join(DATA, 'visionias-urls.json'), {});
+  const mv = u => { const i = (u || '').indexOf('#'), b = i < 0 ? u : u.slice(0, i); return moves[b] && b !== '_note' ? moves[b] + (i < 0 ? '' : u.slice(i)) : u; };
+  rows.forEach(r => { r.url = mv(r.url); });
+  optionals.forEach(o => { o.url = mv(o.url); });
+  links.forEach(e => { e.url = mv(e.url); });
   return { rows, optionals, links };
 }
 

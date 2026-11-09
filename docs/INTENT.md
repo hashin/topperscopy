@@ -220,6 +220,18 @@ DECISION-27's content-hashed shard URLs + cache-first service worker. The remain
 Netlify) and Cloudflare (whole-domain nameserver move, iCloud-mail risk) — are listed in the audit but are **not**
 wanted unless Hashin raises them himself.
 
+## INTENT-12 — VisionIAS copies must open again, on VisionIAS's new links
+*2026-11-09 · Hashin, in chat*
+
+> "what Vision IAS has done is that they have changed the old links and is now hosting them on new randomized links … I only want
+> you to show the new links on the website. So these copies will become again accessible. Also I want you to look at all the copies
+> that have been already indexed on Gemini … once you have a one-to-one linkage of the older links and the new links you can use
+> them to restore the questions and if there are any left out PDFs you can put them on the OCR list and get them completed."
+
+Show only the new links where a new link exists; keep every question already OCR'd; queue any VisionIAS PDF that is live but has no
+questions for OCR. Done as DECISION-31. (He also asked for a low-cost PDF mirror run by GitHub Actions; that is **on hold** — see
+the 2026-11-09 SESSIONS entry — until he chooses private R2 or public Internet Archive.)
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.

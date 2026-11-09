@@ -728,10 +728,11 @@
     }
     return out;
   }
-  // Hosts whose PDFs currently answer 403 AccessDenied to everyone (checked 2026-11-05, DECISION-30).
-  // The links stay — they are the only way to the copy — but say so. Empty this object if access returns.
+  // Hosts whose PDFs answer 403 AccessDenied to everyone (DECISION-30). VisionIAS moved the files it still serves to
+  // visionias.in/_public (DECISION-31; build.js swaps those URLs in), so a copy still on cdn.visionias.in is one it no
+  // longer lists. The link stays — the questions are still useful — but says so. Empty this if the old host answers again.
   var DOWN = { 'cdn.visionias.in': 'VisionIAS' };
-  var DOWN_MSG = ' is currently refusing access to its copies, so the PDF may show “Access Denied”. The questions below are still searchable.';
+  var DOWN_MSG = ' no longer serves this copy, so the PDF may show “Access Denied”. The questions below are still searchable.';
   function pdfLink(c, page, label, extra) {
     var down = DOWN[hostOf(c.u)];
     var a = el('a', { class: down ? 'open down' : 'open', title: down ? down + DOWN_MSG : null, href: safeHref(c.u + (page ? '#page=' + page : '')), target: '_blank', rel: 'noopener' }, [label]);

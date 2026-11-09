@@ -121,6 +121,14 @@ check('INV-3', 'DECISION-17', 'A PDF URL appears in exactly one copy', () => {
   const urls = new Set(copies.map(c => c.u));
   return { ok: urls.size === copies.length, detail: `${urls.size}/${copies.length}` };
 });
+check('INV-19', 'DECISION-31', 'Every VisionIAS URL move is old cdn host -> a distinct visionias.in/_public/assets/<sha256>.pdf, and no moved old URL survives in copies.json', () => {
+  const m = JSON.parse(read('data/visionias-urls.json')); delete m._note;
+  const to = Object.values(m), urls = new Set(copies.map(c => c.u));
+  const badShape = Object.entries(m).filter(([a, b]) => !/^https:\/\/cdn\.visionias\.in\/toppersanswerbooklet\//.test(a) || !/^https:\/\/visionias\.in\/_public\/assets\/[0-9a-f]{64}\.pdf$/.test(b));
+  const dup = to.length - new Set(to).size, stale = Object.keys(m).filter(a => urls.has(a));
+  const applied = to.filter(b => urls.has(b)).length;   // fewer than the map when a source row was later removed — harmless
+  return { ok: !badShape.length && !dup && !stale.length, detail: badShape.length ? `${badShape.length} malformed pairs, e.g. ${badShape[0][0]}` : dup ? `${dup} new URLs claimed twice` : stale.length ? `${stale.length} old URLs still in copies.json, e.g. ${stale[0]}` : `${to.length} pairs, ${applied} applied` };
+});
 check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
   const ids = new Set(copies.map(c => cid(c.u)));
   let refs = 0, bad = 0, questions = 0;
