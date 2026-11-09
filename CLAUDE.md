@@ -44,6 +44,7 @@ with `node -e` / `head` / `wc`. This file is the source of truth for their shape
 | `data/toppers.overrides.json` | maintainer AIR/year/marks corrections | `{"<name>":{air,year,verified,marks:{},sources:[]}}` — `_`-keys ignored |
 | `data/telegram.json` | topper Telegram channels, matched by name tokens | `{entries:{"<informal name>": url}}` |
 | `data/visionias-urls.json` | old `cdn.visionias.in` booklet URL → VisionIAS's new `visionias.in/_public/assets/<sha256>.pdf`; written by `node tools/visionias-urls.mjs [--add-fresh]`, applied by `build.js` at load (DECISION-31); sources keep the old URL | `{"<old>": "<new>"}`, `_note` ignored |
+| `data/pdf-mirror.json` | record of every copy URL and its R2 mirror (status, key, sha256, bytes, `was` = old VisionIAS URL); written by `tools/mirror-pdfs.mjs` / `mirror-pdfs.yml`; `_meta.base` empty = site still links to publishers (DECISION-32) | `{_meta:{base}, files:{"<origin url>":{status,key?,sha256?,bytes?,topper,paper,source,was?}}}` |
 | `data/syllabus.json` | hand-authored UPSC syllabus, GS1–4 + Essay, 2 levels; `nodes[].kw` = lowercase phrases scored against each question | `{version, papers:{GS1:{name, nodes:[{id,t,kw:[]}]}, …}}` |
 | `data/syllabus-overrides.json` | pin a question to node(s); key = `qKey()` of the text | `{"<qKey>": ["gs2.federalism"]}` |
 | `data/questions.exclude.json` | denylist for junk rows in the mirror, by URL (incl. `#page=N`) or `qKey()` | `{urls:[…], keys:[…]}` — `_`-prefixed ignored |
@@ -253,6 +254,7 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 - Vanilla ES5-ish in `app.js`, no frameworks, no bundler, no TypeScript. `build.js` has zero runtime deps.
 - Keep it free and static. No paid services in the request path. Analyser/OCR libs load from CDN, lazily.
-- Every "Open PDF/copy" link points to a third-party host — **nothing is re-hosted**. Keep credit to
+- Every "Open PDF/copy" link points to a third-party host — **nothing is re-hosted — until the R2 mirror starts serving** (`data/pdf-mirror.json`
+  `_meta.base` set; DECISION-32, INTENT-13), after which a mirrored copy links to our bucket and the public "nothing is re-hosted" wording must go (INV-21). Keep credit to
   upsckata.com where it is (`README.md`, `dataset/README.md`).
 - Comments say *why*; a reader should never need `docs/archive/` to understand a line.

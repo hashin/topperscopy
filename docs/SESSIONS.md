@@ -1166,3 +1166,24 @@ the map; `DOWN` message reworded. **Result.** 9,130 copies (+19), 1,504 on the n
 3 old copies with blank topper rows (e.g. Akansh Dhull `…4512…`) are unparsed; a wrong pairing would show as a question on the wrong
 booklet — fix in the map. Nothing committed or pushed; the bot's next `plan` picks up the OCR work once pushed. `sw.js` VERSION not bumped.
 
+## 2026-11-09 (cont.) — VisionIAS merged; R2 mirror built, not yet live
+**Asked.** "commit", "push and merge" (PR #16, deploy green, live site checked: 9,130 copies, 1,504 on the new VisionIAS host). Then: upload the
+files to R2, serve them from there, keep a record of every file name (INTENT-13). Also: confirm the extension walk — done: all 17 subject tabs
+and every page matched `tac.json` card for card (GS 1,965 cards / 689 files, Ethics 1,000 / 388, Essay 632 / 240, Sociology 253 / 153).
+**Did.** DECISION-32: `tools/mirror-pdfs.mjs` (plan / status / run / verify / selftest, own SigV4), `mirror-pdfs.yml`, `data/pdf-mirror.json`
+(9,130 entries: 5,601 pending, 2,537 dead, 992 skip), `build.js` R2 substitution gated on `_meta.base` + `MIRROR=off`, INV-20/21, deploy excludes
+the manifest. **Tested** against a local mock R2: 7 real PDFs downloaded, checked, uploaded; manifest, `x-amz-meta-src`, `was` and `verify` correct;
+`build.js` switched exactly those 7 copies to a test base with their questions intact; real manifest restored. Signing matches the AWS vector.
+**Not done — Hashin's to do.** Create the R2 bucket + API token, add secrets `R2_ACCOUNT_ID` `R2_ACCESS_KEY_ID` `R2_SECRET_ACCESS_KEY` `R2_BUCKET` and
+variable `MIRROR_ENABLED=true`, run "Mirror PDFs to R2" once by hand, then set `_meta.base` (public bucket URL) — and rewrite the public
+"nothing is re-hosted" wording first, or INV-21 fails. No real upload has happened; no credentials were used. 35/35 checks.
+
+## 2026-11-09 (cont.) — R2 secrets set, 100 GB cap, monthly check
+**Asked.** Set the R2 secrets; a monthly check; "don't store more than 100 GB at any case". **Did.** `R2_ACCOUNT_ID` and `R2_BUCKET` set as repo
+secrets and `MIRROR_ENABLED=true` as a variable by me; the access key ID and secret were set by Hashin (credentials — not entered by me; the
+secret had been pasted in chat, so he was told to rotate it; whether he did is unknown). Cap + `usage` + `mirror-usage.yml` + INV-22 per the
+DECISION-32 amendment. **Tested** on the mock bucket: 5 MB cap with three ~2 MB files → two uploaded, third refused and left pending; `usage`
+exits 1 when the cap is lowered below the contents; the cap cannot be raised above 100; an unreachable bucket aborts the run with no change.
+**Not done.** No real upload or monthly run yet (needs the branch merged to `main`); the 80 %-warning and email-on-failure behaviour were not
+exercised on GitHub. Cost figures are estimates from memory.
+
