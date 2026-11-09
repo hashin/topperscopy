@@ -1,0 +1,30 @@
+name: R2 monthly check
+
+# On the 1st of every month: how much is in the R2 bucket, what that costs, and is anything lost.
+# `node tools/mirror-pdfs.mjs usage` writes the numbers to the run summary, warns at 80 % of the 100 GB cap, and FAILS the
+# run — GitHub emails you about a failed scheduled workflow — if the bucket is over the cap or the manifest names a file
+# the bucket no longer holds (fix: run "Mirror PDFs to R2"; its first step re-queues lost files). Read-only: uploads nothing.
+on:
+  schedule:
+    - cron: "0 4 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  usage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: ${{ vars.MIRROR_ENABLED == 'true' }}
+    env:
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      R2_BUCKET: ${{ secrets.R2_BUCKET }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+      - name: Bucket size, cost estimate, lost files
+        run: node tools/mirror-pdfs.mjs usage

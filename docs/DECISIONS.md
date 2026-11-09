@@ -1579,3 +1579,12 @@ object and set its manifest entry to `gone`.
 **Reverse if.** A publisher objects, Cloudflare flags the bucket, or R2 costs exceed what he will pay — set `_meta.base` back to `""` and
 the site links to the publishers again with nothing else to undo.
 
+**Amendment 2026-11-09 — a hard 100 GB cap and a monthly check** (Hashin: "add a monthly check, also don't store more than 100 GB at any case").
+`mirror-pdfs.mjs run` lists the bucket first and starts from the larger of its real size and the manifest's; before each upload it refuses
+the file if stored + file > 100 GB (decimal, the stricter reading), stops the whole run, leaves the rest `pending` and prints a workflow
+warning. If the bucket cannot be listed the run aborts without uploading. `R2_MAX_GB` can lower the cap, never raise it. `mirror-usage.yml`
+(1st of each month, read-only) writes bucket size, object count, an estimated storage cost (about $0.015 per GB over the free 10 GB — an
+estimate from memory, operations not included) and any lost / unrecorded files to the run summary, warns at 80 %, and fails — which makes
+GitHub email — if the bucket is over the cap or a file the manifest calls `ok` is missing. INV-22 checks the manifest's own total. This caps
+**storage only**; read/operation charges and the credit card limit are Cloudflare- and bank-side and are not controlled from this repo.
+

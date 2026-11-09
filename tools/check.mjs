@@ -142,6 +142,12 @@ check('INV-21', 'DECISION-32', 'While copies are served from R2, no public page 
   const stale = ['index.html', 'README.md', 'build.js'].filter(f => /nothing is re-hosted|re-hosts no PDFs|never re-hosted/i.test(read(f)));
   return { ok: !stale.length, detail: stale.length ? `still claims nothing is re-hosted: ${stale.join(', ')}` : 'wording updated' };
 });
+check('INV-22', 'DECISION-32', 'The manifest never records more than 100 GB in R2', () => {
+  const m = JSON.parse(read('data/pdf-mirror.json')), by = new Map();
+  for (const e of Object.values(m.files || {})) if (e.status === 'ok') by.set(e.key, e.bytes || 0);
+  const gb = [...by.values()].reduce((a, b) => a + b, 0) / 1e9;
+  return { ok: gb <= 100, detail: `${gb.toFixed(2)} GB recorded of the 100 GB cap (tools/mirror-pdfs.mjs enforces it against the bucket itself)` };
+});
 check('INV-4', 'DECISION-17', 'Every question ref in every shard resolves to a copy in copies.json', () => {
   const ids = new Set(copies.map(c => cid(c.u)));
   let refs = 0, bad = 0, questions = 0;

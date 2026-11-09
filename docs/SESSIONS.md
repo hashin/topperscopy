@@ -1178,3 +1178,12 @@ the manifest. **Tested** against a local mock R2: 7 real PDFs downloaded, checke
 variable `MIRROR_ENABLED=true`, run "Mirror PDFs to R2" once by hand, then set `_meta.base` (public bucket URL) — and rewrite the public
 "nothing is re-hosted" wording first, or INV-21 fails. No real upload has happened; no credentials were used. 35/35 checks.
 
+## 2026-11-09 (cont.) — R2 secrets set, 100 GB cap, monthly check
+**Asked.** Set the R2 secrets; a monthly check; "don't store more than 100 GB at any case". **Did.** `R2_ACCOUNT_ID` and `R2_BUCKET` set as repo
+secrets and `MIRROR_ENABLED=true` as a variable by me; the access key ID and secret were set by Hashin (credentials — not entered by me; the
+secret had been pasted in chat, so he was told to rotate it; whether he did is unknown). Cap + `usage` + `mirror-usage.yml` + INV-22 per the
+DECISION-32 amendment. **Tested** on the mock bucket: 5 MB cap with three ~2 MB files → two uploaded, third refused and left pending; `usage`
+exits 1 when the cap is lowered below the contents; the cap cannot be raised above 100; an unreachable bucket aborts the run with no change.
+**Not done.** No real upload or monthly run yet (needs the branch merged to `main`); the 80 %-warning and email-on-failure behaviour were not
+exercised on GitHub. Cost figures are estimates from memory.
+

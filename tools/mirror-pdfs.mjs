@@ -6,8 +6,11 @@
 //   node tools/mirror-pdfs.mjs status        # counts by status / host, bytes mirrored
 //   node tools/mirror-pdfs.mjs run [--limit N] [--host H] [--concurrency 4] [--minutes M] [--retry-gone] [--dry]
 //   node tools/mirror-pdfs.mjs verify [--repair]   # list the bucket, compare with the manifest
+//   node tools/mirror-pdfs.mjs usage         # bucket size, object count, estimated storage cost; fails over the cap (monthly check)
 //   node tools/mirror-pdfs.mjs selftest      # check the request signing against AWS's published test vector
 //
+// Hard cap: never more than 100 GB in the bucket (R2_MAX_GB can only lower it). `run` starts from the bucket's real size, not
+// the manifest's, and stops uploading the moment one more file would cross the line; what is left stays `pending`.
 // Env (GitHub Actions secrets): R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET; R2_ENDPOINT overrides the host (tests).
 //
 // The manifest is keyed by the copy's origin URL — the URL build.js holds after DECISION-31's VisionIAS move — and records, per file:
@@ -22,6 +25,7 @@ import crypto from 'node:crypto';
 
 const MANIFEST = 'data/pdf-mirror.json';
 const MAX_BYTES = 300 * 1024 * 1024;
+const CAP_GB = Math.min(100, +process.env.R2_MAX_GB || 100), CAP = CAP_GB * 1e9;   // decimal GB, the stricter reading
 const SKIP_HOSTS = { 'drive.google.com': 'google-drive', 't.me': 'telegram' };   // no stable direct file, or not a PDF
 const DEAD_HOSTS = ['cdn.visionias.in'];                                      // VisionIAS lists no file for what is still on it (DECISION-31)
 const UA = 'topperscopy-mirror (+https://topperscopy.hashin.me)';           // honest UA — we do not pose as a browser
@@ -58,6 +62,21 @@ function r2client() {
     const authorization = signV4({ method, host, path, query, headers: hdr, payloadHash, region: 'auto', service: 's3', ak: E.R2_ACCESS_KEY_ID, sk: E.R2_SECRET_ACCESS_KEY, amzDate });
     return fetch(origin + path + (query ? '?' + query : ''), { method, headers: { ...hdr, authorization }, body, signal: AbortSignal.timeout(300000) });
   };
+}
+
+// Every object in the bucket with its size (ListObjectsV2, paged) — the truth about what we are paying to store.
+async function listBucket(r2) {
+  const keys = new Map();
+  let token = '';
+  for (;;) {
+    const r = await r2('GET', '', { query: 'list-type=2' + (token ? '&continuation-token=' + enc(token) : '') });
+    if (r.status !== 200) throw new Error('bucket list failed: HTTP ' + r.status);
+    const x = await r.text();
+    for (const c of x.matchAll(/<Contents>([\s\S]*?)<\/Contents>/g)) keys.set((c[1].match(/<Key>([^<]+)</) || [])[1], +(c[1].match(/<Size>(\d+)</) || [])[1] || 0);
+    token = x.includes('<IsTruncated>true</IsTruncated>') ? (x.match(/<NextContinuationToken>([^<]+)</) || [])[1] : '';
+    if (!token) break;
+  }
+  return { keys, bytes: [...keys.values()].reduce((a, b) => a + b, 0) };
 }
 
 /* ---------- the manifest: one line per file, sorted, so a diff shows only what changed ---------- */
@@ -116,7 +135,7 @@ if (cmd === 'status') {
     if (e.status === 'ok') bytes += e.bytes || 0;
     if (e.status === 'pending' || e.status === 'failed') hosts[hostOf(u)] = (hosts[hostOf(u)] || 0) + 1;
   }
-  console.log(by, `\n${(bytes / 1e9).toFixed(2)} GB mirrored · base ${m._meta.base || '(not set — site still links to publishers)'}`);
+  console.log(by, `\n${(bytes / 1e9).toFixed(2)} GB mirrored of the ${CAP_GB} GB cap · base ${m._meta.base || '(not set — site still links to publishers)'}`);
   console.log('still to do, by host:', hosts);
   process.exit(0);
 }
@@ -145,6 +164,10 @@ if (cmd === 'run') {
   console.log(`${todo.length} files to mirror${flag('dry') ? ' (dry run)' : ''}`);
   if (flag('dry')) process.exit(0);
 
+  const bucket = await listBucket(r2);                                    // abort, rather than guess, if the bucket cannot be read
+  const manifestBytes = [...new Map(Object.values(files).filter(e => e.status === 'ok').map(e => [e.key, e.bytes || 0])).values()].reduce((a, b) => a + b, 0);
+  let stored = Math.max(bucket.bytes, manifestBytes), capHit = false;
+  console.log(`bucket holds ${(stored / 1e9).toFixed(2)} GB of the ${CAP_GB} GB cap`);
   const gate = new Map();
   const polite = async host => { const now = Date.now(), at = Math.max(now, gate.get(host) || 0); gate.set(host, at + 500); if (at > now) await sleep(at - now); };
   let next = 0, ok = 0, bad = 0, bytes = 0;
@@ -163,9 +186,11 @@ if (cmd === 'run') {
       if (keyOwner.has(key) && keyOwner.get(key) !== u) key = h + '-' + crypto.createHash('sha1').update(u).digest('hex').slice(0, 8) + '.pdf';
       const head = await r2('HEAD', key);
       if (!(head.status === 200 && +head.headers.get('content-length') === buf.length)) {
+        if (stored + buf.length > CAP) { capHit = true; e.err = 'storage cap'; return; }   // nothing awaits between this check and the add, so workers cannot race past it
+        stored += buf.length;
         const meta = encodeURIComponent(u);
         const put = await r2('PUT', key, { body: buf, headers: { 'content-type': 'application/pdf', ...(meta.length < 1500 ? { 'x-amz-meta-src': meta } : {}) } });
-        if (put.status !== 200) throw new Error('R2 PUT ' + put.status + ' ' + (await put.text()).slice(0, 120));
+        if (put.status !== 200) { stored -= buf.length; throw new Error('R2 PUT ' + put.status + ' ' + (await put.text()).slice(0, 120)); }
         const etag = (put.headers.get('etag') || '').replace(/"/g, '');
         if (etag && etag !== crypto.createHash('md5').update(buf).digest('hex')) throw new Error('R2 etag mismatch');
       }
@@ -176,36 +201,47 @@ if (cmd === 'run') {
   }
   let sinceSave = 0;
   await Promise.all(Array.from({ length: conc }, async () => {
-    while (next < todo.length && Date.now() < deadline) {
+    while (next < todo.length && Date.now() < deadline && !capHit) {
       await one(todo[next++]);
       if (++sinceSave % 25 === 0) { save(m); console.log(`${next}/${todo.length}  ok ${ok}  not ok ${bad}  ${(bytes / 1e9).toFixed(2)} GB`); }
     }
   }));
   save(m);
-  console.log(`done: ${ok} mirrored (${(bytes / 1e9).toFixed(2)} GB), ${bad} not mirrored`);
+  console.log(`done: ${ok} mirrored (${(bytes / 1e9).toFixed(2)} GB), ${bad} not mirrored; bucket now ${(stored / 1e9).toFixed(2)} GB`);
+  if (capHit) { const msg = `storage cap of ${CAP_GB} GB reached — stopped uploading; the rest stay pending`; console.log(process.env.GITHUB_ACTIONS ? '::warning::' + msg : msg); }
   process.exit(0);
 }
 
 /* ---------- verify: is everything the manifest calls ok really in the bucket? ---------- */
 if (cmd === 'verify') {
-  const m = load(), r2 = r2client(), inBucket = new Set();
-  let token = '';
-  for (;;) {
-    const q = 'list-type=2' + (token ? '&continuation-token=' + enc(token) : '');
-    const r = await r2('GET', '', { query: q });
-    if (r.status !== 200) throw new Error('list failed ' + r.status);
-    const x = await r.text();
-    for (const k of x.matchAll(/<Key>([^<]+)<\/Key>/g)) inBucket.add(k[1]);
-    token = x.includes('<IsTruncated>true</IsTruncated>') ? (x.match(/<NextContinuationToken>([^<]+)</) || [])[1] : '';
-    if (!token) break;
-  }
+  const m = load(), b = await listBucket(r2client());
+  const inBucket = new Set(b.keys.keys());
   const okKeys = new Set(Object.values(m.files).filter(e => e.status === 'ok').map(e => e.key));
   const missing = Object.entries(m.files).filter(([, e]) => e.status === 'ok' && !inBucket.has(e.key));
   const extra = [...inBucket].filter(k => !okKeys.has(k));
-  console.log(`bucket ${inBucket.size} objects · manifest ok ${okKeys.size} · missing from bucket ${missing.length} · in bucket but not in manifest ${extra.length}`);
+  console.log(`bucket ${inBucket.size} objects (${(b.bytes / 1e9).toFixed(2)} GB) · manifest ok ${okKeys.size} · missing from bucket ${missing.length} · in bucket but not in manifest ${extra.length}`);
   for (const [u] of missing.slice(0, 10)) console.log('  missing', u);
   if (flag('repair') && missing.length) { for (const [, e] of missing) { e.status = 'pending'; delete e.key; delete e.sha256; delete e.bytes; } save(m); console.log(`re-queued ${missing.length} as pending`); }
   process.exit(missing.length ? 1 : 0);
+}
+
+/* ---------- usage: the monthly check — what is stored, what it costs, is anything lost or over the cap ---------- */
+if (cmd === 'usage') {
+  const m = load(), b = await listBucket(r2client()), gb = b.bytes / 1e9;
+  const okKeys = new Set(Object.values(m.files).filter(e => e.status === 'ok').map(e => e.key));
+  const missing = [...okKeys].filter(k => !b.keys.has(k)), extra = [...b.keys.keys()].filter(k => !okKeys.has(k));
+  const cost = Math.max(0, gb - 10) * 0.015;      // R2 Standard storage after the free 10 GB, as we understand the price — an estimate
+  const by = {}; for (const e of Object.values(m.files)) by[e.status] = (by[e.status] || 0) + 1;
+  const lines = [`Bucket: ${b.keys.size} objects, ${gb.toFixed(2)} GB of the ${CAP_GB} GB cap (${(100 * gb / CAP_GB).toFixed(0)} %)`,
+    `Estimated storage cost: about $${cost.toFixed(2)} a month after the free 10 GB (estimate; operations not included)`,
+    `Manifest: ${JSON.stringify(by)}`,
+    `Lost: ${missing.length} files the manifest calls ok are not in the bucket · Unrecorded: ${extra.length} objects are not in the manifest`];
+  console.log(lines.join('\n'));
+  if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### R2 mirror — monthly check\n\n' + lines.map(l => '- ' + l).join('\n') + '\n');
+  const gha = process.env.GITHUB_ACTIONS;
+  if (gb >= CAP_GB * 0.8) console.log((gha ? '::warning::' : '') + `bucket is at ${(100 * gb / CAP_GB).toFixed(0)} % of the cap`);
+  if (gb > CAP_GB || missing.length) { console.log((gha ? '::error::' : '') + (gb > CAP_GB ? `bucket is over the ${CAP_GB} GB cap` : `${missing.length} mirrored files are missing from the bucket — run verify --repair`)); process.exit(1); }
+  process.exit(0);
 }
 
 console.error('usage: node tools/mirror-pdfs.mjs plan | status | run | verify | selftest');
