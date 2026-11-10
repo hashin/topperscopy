@@ -7,6 +7,7 @@
 //   node tools/mirror-pdfs.mjs run [--limit N] [--host H] [--concurrency 4] [--minutes M] [--retry-gone] [--dry]
 //   node tools/mirror-pdfs.mjs verify [--repair]   # list the bucket, compare with the manifest
 //   node tools/mirror-pdfs.mjs check [--host H] [--concurrency 8] [--minutes M]   # is each mirrored file's ORIGINAL link still alive?
+//   node tools/mirror-pdfs.mjs issues [--dry] [--max-new 50]   # open a GitHub issue per unavailable VisionIAS link; close it when the link is back
 //   node tools/mirror-pdfs.mjs usage         # bucket size, object count, estimated storage cost; fails over the cap (monthly check)
 //   node tools/mirror-pdfs.mjs selftest      # check the request signing against AWS's published test vector
 //
@@ -33,6 +34,8 @@ const MAX_BYTES = 300 * 1024 * 1024;
 const CAP_GB = Math.min(100, +process.env.R2_MAX_GB || 100), CAP = CAP_GB * 1e9;   // decimal GB, the stricter reading
 const SKIP_HOSTS = { 'drive.google.com': 'google-drive', 't.me': 'telegram' };   // no stable direct file, or not a PDF
 const DEAD_HOSTS = ['cdn.visionias.in'];                                      // VisionIAS lists no file for what is still on it (DECISION-31)
+const ISSUE_HOSTS = ['visionias.in'];                                          // links whose loss opens a GitHub issue (VisionIAS moves its files without notice)
+const ISSUE_LABEL = 'link-down';
 const UA = 'topperscopy-mirror (+https://topperscopy.hashin.me)';           // honest UA — we do not pose as a browser
 
 const sha256 = b => crypto.createHash('sha256').update(b).digest('hex');
@@ -192,9 +195,10 @@ if (cmd === 'check') {
       gate.set(host, at + 500); if (at > now) await sleep(at - now);
       const r = await probe(u), was = e.origin || 'unchecked';
       e.checked = today;
-      if (r.up) { if (was === 'down') tally.recovered++; e.origin = 'up'; e.miss = 0; tally.up++; }
+      if (r.up) { if (was === 'down') tally.recovered++; e.origin = 'up'; e.miss = 0; delete e.why; delete e.since; tally.up++; }
       else {
         e.miss = (e.miss || 0) + 1; tally.missed++; why[r.why] = (why[r.why] || 0) + 1;
+        e.why = r.why; if (e.miss === 1 || !e.since) e.since = today;       // what the publisher answered, and the first night it did — an issue quotes both
         if (e.miss >= 2) { e.origin = 'down'; was === 'down' ? tally.stillDown++ : tally.newlyDown++; } else e.origin = was === 'down' ? 'down' : 'up';
       }
     }
@@ -309,5 +313,64 @@ if (cmd === 'usage') {
   process.exit(0);
 }
 
-console.error('usage: node tools/mirror-pdfs.mjs plan | status | run | verify | selftest');
+/* ---------- issues: one GitHub issue per unavailable VisionIAS link, closed again when the link comes back ---------- */
+// "Unavailable" = a mirrored file whose publisher link is recorded down (two failed nights), or a file the publisher refused when we first tried to
+// mirror it (gone / failed 3x — the worst case: no R2 copy exists). The issue carries every fact we hold about the file, so the maintainer does not
+// need the repo to act. State lives in GitHub, not the manifest: each issue holds a hidden marker with a hash of the origin URL, and every run lists
+// the open `link-down` issues first — so a run that created issues but lost its commit cannot create them twice.
+if (cmd === 'issues') {
+  const REPO = process.env.GITHUB_REPOSITORY, TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN, dry = flag('dry'), maxNew = +arg('max-new', 50);
+  if (!dry && (!REPO || !TOKEN)) { console.error('issues needs GITHUB_REPOSITORY and GITHUB_TOKEN (or --dry)'); process.exit(2); }
+  const m = load(), base = (m._meta.base || '').replace(/\/$/, ''), API = process.env.GITHUB_API_URL || 'https://api.github.com';
+  const gh = async (method, path, body) => {
+    const r = await fetch(API + path, { method, headers: { authorization: 'Bearer ' + TOKEN, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': UA, 'content-type': 'application/json' }, body: body && JSON.stringify(body), signal: AbortSignal.timeout(30000) });
+    if (!r.ok && r.status !== 422) throw new Error(`GitHub ${method} ${path} → ${r.status} ${(await r.text()).slice(0, 150)}`);
+    return r.status === 204 ? null : r.json();
+  };
+  const mark = u => '<!-- mirror:' + crypto.createHash('sha1').update(u).digest('hex').slice(0, 16) + ' -->';
+  const trouble = (u, e) => !ISSUE_HOSTS.includes(hostOf(u)) ? '' : e.status === 'ok' && e.origin === 'down' ? 'down' : e.status === 'gone' ? 'gone' : e.status === 'failed' && (e.tries || 0) >= 3 ? 'failed' : '';
+  const open = new Map();                                                // marker → issue number, for issues this tool opened and that are still open
+  if (!dry) for (let page = 1; ; page++) {
+    const rows = await gh('GET', `/repos/${REPO}/issues?labels=${ISSUE_LABEL}&state=open&per_page=100&page=${page}`);
+    for (const i of rows) if (!i.pull_request) { const k = ((i.body || '').match(/<!-- mirror:[0-9a-f]{16} -->/) || [])[0]; if (k) open.set(k, i.number); }
+    if (rows.length < 100) break;
+  }
+  const todo = Object.entries(m.files).filter(([u, e]) => trouble(u, e) && !open.has(mark(u)));
+  const back = Object.entries(m.files).filter(([u, e]) => ISSUE_HOSTS.includes(hostOf(u)) && !trouble(u, e) && open.has(mark(u)));
+  const site = t => 'https://topperscopy.hashin.me/?q=' + encodeURIComponent(t);
+  const body = (u, e, kind) => {
+    const r2 = e.status === 'ok' && base ? `${base}/${e.key}` : '';
+    const rows = [['Topper', e.topper], ['Paper', e.paper], ['Source', e.source],
+      ['Link on the site (VisionIAS)', u], ['Earlier VisionIAS link', e.was || '—'],
+      ['What happened', kind === 'down' ? `The publisher link failed ${e.miss || 2} nights in a row (first failure ${e.since || '?'}; last check ${e.checked || '?'}): **${e.why || 'unknown'}**`
+        : `The publisher refused the file when we tried to mirror it (${e.at || '?'}): **${e.err || 'unknown'}**${kind === 'failed' ? ` — failed ${e.tries} times` : ''}`],
+      ['Our copy', r2 ? `${r2} — ${e.bytes} bytes, sha256 \`${e.sha256}\`, mirrored ${e.at || '?'}${kind === 'down' ? '. **The site now serves this copy instead of the publisher\'s.**' : ''}` : '**None — this file was never mirrored, so nothing can be served if the link stays dead.**'],
+      ['On the site', site(e.topper)]];
+    return `${mark(u)}\nA VisionIAS answer-copy link is unavailable.\n\n| | |\n|---|---|\n${rows.map(([k, v]) => `| ${k} | ${String(v).replace(/\|/g, '\\|')} |`).join('\n')}\n\n` +
+      `**What to do.** VisionIAS may have moved the file again: run \`node tools/visionias-urls.mjs --add-fresh\` and see whether the booklet has a new link. ` +
+      `If it does, the map in \`data/visionias-urls.json\` takes it. If not, ${r2 ? 'the mirrored copy above keeps this answer available' : 'the copy is lost until VisionIAS restores it'}. ` +
+      `This issue closes itself when the nightly check finds the link working again.\n\n<details><summary>Manifest entry</summary>\n\n\`\`\`json\n${JSON.stringify({ [u]: e }, null, 1)}\n\`\`\`\n</details>\n`;
+  };
+  const by = {}; for (const [u, e] of todo) by[trouble(u, e)] = (by[trouble(u, e)] || 0) + 1;
+  console.log(`${todo.length} unavailable links without an issue ${JSON.stringify(by)} · ${back.length} open issues whose link is back · ${open.size} open now`);
+  if (dry) { for (const [u, e] of todo.slice(0, 3)) console.log(`\n--- would open: [link down] ${e.topper} — ${e.paper}\n${body(u, e, trouble(u, e))}`); process.exit(0); }
+  await gh('POST', `/repos/${REPO}/labels`, { name: ISSUE_LABEL, color: 'B60205', description: 'A publisher link we track is unavailable' });   // 422 = already there
+  let made = 0;
+  for (const [u, e] of todo.slice(0, maxNew)) {
+    const i = await gh('POST', `/repos/${REPO}/issues`, { title: `[link down] ${e.topper} — ${e.paper} (VisionIAS)`, body: body(u, e, trouble(u, e)), labels: [ISSUE_LABEL] });
+    if (!i.number) throw new Error('issue not created for ' + u);
+    made++; await sleep(1200);                                           // GitHub throttles bursts of content creation
+  }
+  let closed = 0;
+  for (const [u, e] of back) {
+    const n = open.get(mark(u));
+    await gh('POST', `/repos/${REPO}/issues/${n}/comments`, { body: `The link answered with a PDF again on ${e.checked || new Date().toISOString().slice(0, 10)}: ${u}\nThe site links to it once more. Closing.` });
+    await gh('PATCH', `/repos/${REPO}/issues/${n}`, { state: 'closed', state_reason: 'completed' }); closed++; await sleep(600);
+  }
+  console.log(`opened ${made}, closed ${closed}` + (todo.length > made ? ` · ${todo.length - made} more wait for the next run (--max-new ${maxNew})` : ''));
+  if (todo.length > made && process.env.GITHUB_ACTIONS) console.log(`::warning::${todo.length - made} unavailable links still have no issue — the next run opens up to ${maxNew} more`);
+  process.exit(0);
+}
+
+console.error('usage: node tools/mirror-pdfs.mjs plan | status | run | check | verify | usage | issues | selftest');
 process.exit(2);

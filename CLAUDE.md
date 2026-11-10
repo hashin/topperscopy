@@ -198,7 +198,7 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 ## R2 mirror, VisionIAS move, and how to work here (2026-11) — read `docs/MIRROR.md`
 
-- **Workflows:** `mirror-pdfs.yml` (nightly 02:30 UTC: plan → check originals → verify/repair → mirror → commit manifest → deploy) and `mirror-usage.yml`
+- **Workflows:** `mirror-pdfs.yml` (nightly 02:30 UTC: plan → check originals → verify/repair → mirror, VisionIAS first → open/close `link-down` issues for unavailable VisionIAS links (DECISION-35) → commit manifest → deploy) and `mirror-usage.yml`
   (monthly, read-only, fails over the 100 GB cap or on a lost file). Secrets `R2_*`, variable `MIRROR_ENABLED`. Commands: `node tools/mirror-pdfs.mjs status|plan|run|check|verify|usage|selftest`.
 - **VisionIAS** re-hosted its files in 2026-11 at `visionias.in/_public/assets/<sha256>.pdf`; `data/visionias-urls.json` maps our old links (DECISION-31). Only ~1,525 of
   4,027 listed copies have a file; 2,537 of ours stay on the dead host with a notice.

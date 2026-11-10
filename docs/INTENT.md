@@ -257,6 +257,16 @@ Search speed that stays flat as OCR adds questions outranks matching inside word
 accepted cost. Implemented by DECISION-33.
 
 ---
+
+## INTENT-15 — Upload every available VisionIAS copy to R2 first; open a GitHub issue whenever a VisionIAS link is unavailable
+*2026-11-10 · Hashin, in chat*
+
+> "use github actions to upload all vision ias copies presently available to R2 since they may change links later. when the links are unavailable
+> at any point, open github issues with full data of their unavailability"
+
+VisionIAS moved its files once already (DECISION-31) and may again, so its 1,504 reachable booklets are mirrored before any other host's, and a failure is
+reported where he will see it (GitHub emails issues) rather than only recorded in the manifest. Done as DECISION-34.
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.

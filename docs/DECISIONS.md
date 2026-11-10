@@ -1659,3 +1659,32 @@ until tapped, since those are the queries with no gain.
 **Enforced by.** `INV-24` rebuilds the expected word → question counts from the shard text and compares every bucket, and checks each number's refs against its row in its
 part. `BUDGET search index`, `BUDGET index bucket`, `BUDGET app.js` (raised to 29 KB). Browser behaviour (no text on browse, recovery from a stale stamp, offline, simulated deploy)
 was verified in real Chrome with throwaway scripts, not by `check.mjs`.
+
+## DECISION-34 — A unanimous `rank_N` in a file name fills a missing AIR; the rest are dumped for a human
+*2026-11-10, GitHub issue #2 ("Missing AIRs for certain toppers … create a dump of missing data points and get it rectified via a script").*
+
+603 of 1,705 toppers had no AIR because `fromFilename()` only read `AIR-N`, while VisionIAS/ForumIAS/NextIAS name files `…_aakash_om_trivedi_rank_73.pdf`.
+Measured on the 534 toppers who have both: the `rank_N` number equals the known AIR for 519 (97 %). So `fromFilename()` also returns `rank`, kept on the copy
+as `rk`, and `buildToppers()` uses it **only if no copy stated an AIR and every one of the person's copies gives the same number**. Result: 603 → 221 missing,
+0 existing AIRs changed. Overrides still win. The remaining 221 are listed by `node tools/missing-air.mjs dump`; a maintainer fills `air`/`year`/`evidence` and
+`apply` writes `verified: true` overrides (range-checked, never over an already-verified one).
+**Rejected.** *Treat `rank_N` as `AIR-N` outright* — a first-copy-wins rank could override a correct AIR stated by a later copy. *Write the ~380 inferred numbers into
+`toppers.overrides.json`* — churn in a hand-curated file, and they would be marked verified when they are not.
+**Known risk / reverse if.** Two different people with one name whose copies each carry the same rank_N, or a coaching site whose "rank" is a test rank, would show a wrong
+AIR (the 3 % of disagreements are not diagnosed). If a "Report a problem" shows that, add an override for the person; if it recurs, restrict the hint to VisionIAS.
+
+## DECISION-35 — VisionIAS is mirrored first each night, and every unavailable VisionIAS link becomes a GitHub issue
+*2026-11-10, INTENT-15. Extends DECISION-32; supersedes nothing.*
+
+`mirror-pdfs.yml` now runs the mirror twice when it is a plain nightly (no `limit`, no `host`): VisionIAS (`--host visionias.in`, up to 150 min) and then everything
+else (115 min), so VisionIAS never queues behind NextIAS/ForumIAS. A new step runs `tools/mirror-pdfs.mjs issues` (needs `issues: write`): for each VisionIAS entry that is
+`ok` with `origin: down` (two failed nights), `gone`, or `failed` three times, it opens one issue labelled `link-down` carrying every fact held (topper, paper, current and
+earlier link, what the publisher answered, first failure, our R2 copy with sha256/bytes — or "never mirrored") plus the manifest entry as JSON; when the link answers again the
+next run comments and closes it. `check` now stores `why` and `since` per failing file for this. **State is in GitHub**, not the manifest: each issue carries a hidden hash of the
+origin URL, and a run lists open `link-down` issues first, so a lost commit cannot duplicate issues. At most 50 new issues a run (`--max-new`); the rest wait for the next night.
+**Rejected.** *One issue per night listing everything* — cannot be closed per file, and "full data" per file would hit the issue size limit. *All hosts* — one flaky publisher
+could flood the tracker; `ISSUE_HOSTS` in the tool is a one-line list to widen. *Issues for the 2,537 `dead` `cdn.visionias.in` copies* — already known and permanent; they have
+no file to lose.
+**Known risk / reverse if.** A VisionIAS-wide outage or an IP block of GitHub's runners would open up to 50 issues a night until it ends; remove the `issues` step or empty
+`ISSUE_HOSTS` to stop. A one-off 403 while *first* mirroring marks a file `gone` and opens an issue — it closes itself if a later `--retry-gone` run succeeds.
+
