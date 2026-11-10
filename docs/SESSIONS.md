@@ -1250,3 +1250,11 @@ a fault in that script, not a number. The `.claude/worktrees/token-index` worktr
 before dead ones (AIR order inside each group); Practice's heading says "N copies open" when some are dead. `DOWN` is still the one list to empty if the old host returns.
 **Verified.** `npm run check` 38/38 (app.js within budget). Real browser, local server: 24 Practice draws over GS2, GS3, "Any" — 23 had no dead links; the one mixed question showed "29 toppers answered this · 8 copies open", live rows first.
 **Not done.** Not committed or pushed (branch `fix-open-issues`). Optional-subject Practice not sampled separately (no `cdn.visionias.in` copies there beyond the same rule).
+
+## 2026-11-10 — Internet Archive snapshots as a nightly workflow
+**Asked.** "I want you to run it routinely through the github actions" (the `tools/wayback-save.mjs` pilot, merged in PR #24).
+**Did.** DECISION-36 / INTENT-16. `wayback-save.mjs`: ledger moved to `data/wayback.json` (sorted, one line per URL, `at` date), failures retried only after 7 days, `--minutes` time cap, `--require-keys`,
+test overrides (`WAYBACK_BASE`, `_LEDGER`, timings); the 108 local pilot results were carried over (22 saved). `.github/workflows/wayback.yml` (nightly, dispatchable with a `limit`); `deploy.yml` excludes the ledger.
+**Verified.** Against a mock archive.org (scratch dir): busy → retried then saved; "same snapshot" → saved; 404 → failed, then skipped on the next run; `cdn.visionias.in` skipped; `--require-keys` exits 1;
+`--minutes` stops early. YAML parses; `npm run check` 38/38. **Not verified:** the workflow on GitHub, or the retry loop against the real archive.org (the earlier real runs predate the fix).
+**Needs Hashin.** `gh secret set IA_ACCESS` and `gh secret set IA_SECRET` (rotate the keys first — the old pair was visible in this session), `gh variable set WAYBACK_ENABLED --body true`, then dispatch once with `limit` 20.

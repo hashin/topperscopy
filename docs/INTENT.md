@@ -267,6 +267,13 @@ accepted cost. Implemented by DECISION-33.
 VisionIAS moved its files once already (DECISION-31) and may again, so its 1,504 reachable booklets are mirrored before any other host's, and a failure is
 reported where he will see it (GitHub emails issues) rather than only recorded in the manifest. Done as DECISION-34.
 
+## INTENT-16 — Run the Internet Archive snapshots routinely through GitHub Actions
+*2026-11-10 · Hashin, in chat*
+
+> "i want you to run it routinely through the github actions"
+
+The `tools/wayback-save.mjs` pilot (so the site can later offer an archived copy when a publisher's file disappears) should run on a schedule, not by hand. Done as DECISION-36.
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.
