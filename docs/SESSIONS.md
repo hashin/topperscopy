@@ -1211,3 +1211,13 @@ replace `prefetch total` + `search total`; `app.js` 28 → 29 KB. Built in a wor
 (5) Network-first refs + no trickle made a return search 2.75–7.8 s, so refs went back to stale-while-revalidate and the trickle was added: 0.6–2.3 s, still slower than the old 0.26–0.5 s.
 **Verified.** `npm run check` 33/33. Real Chrome against both builds behind `shaped-server.cjs`: table in DECISION-33, functional run (browse, card, modes, chips, Questions, `?syl=`, Practice, Optionals, index failure, stale stamp, offline, simulated deploy,
 words only in `-deep` tails) all pass. **Not verified:** production; a real deploy. **Open.** Common-word cold search barely improved. `gs 2`-style queries now return 0: a student meaning the paper gets nothing, worth watching in GA.
+
+## 2026-11-10 (cont.) — Search index merged and checked live
+**Asked.** "Open a PR", then "Merge it". **Did.** PR #20 merged as 9cb4dec (main had not moved since the PR); `deploy.yml` succeeded.
+**Verified on production.** The live `data/ix-refs.json` has the same build stamp as the local build (890927d3: 23,397 questions, 1,020 buckets),
+125 KB gzip as GitHub Pages serves it (budget 150; `ix/fe.json` 3 KB, the largest `ix/co.json` 38 KB). The functional run (browse with no text download,
+card open, search modes, chips, Questions view, syllabus counts, Practice incl. "Any" = one paper and the Optional chip, index failure, stale stamp, offline)
+all pass against the live site. Cold, throttled in real Chrome, 2 runs each: slow 4G `?q=federalism` 8.4–8.6 s / 1,026 KB, `?q=judicial activism`
+9.0–9.2 s; 4G 2.1–2.3 s and 2.5–2.6 s. **Slower than the local 6.2 s:** the live run is the real network plus the throttle. The old version was not
+re-timed live; the nearest live number is the 10-23 audit's 13.4 s (slow 4G, `?q=ethics`, ~15 % fewer questions). The browse-only byte count read 0 KB,
+a fault in that script, not a number. The `.claude/worktrees/token-index` worktree was removed after this entry.
