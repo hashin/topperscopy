@@ -14,7 +14,8 @@ const LEDGER = '.ocr/wayback.json';           // gitignored + excluded from depl
 const SKIP_HOSTS = ['cdn.visionias.in'];      // 403 to everyone — nothing to snapshot (DECISION-30)
 const args = process.argv.slice(2);
 const limit = +(args[args.indexOf('--limit') + 1] || 0) || Infinity;
-const CONC = 3, TIMEOUT = 180000;
+const CONC = 2, TIMEOUT = 180000;           // IA allows only a few active Save Page Now sessions per account/IP
+const sleep = ms => new Promise(f => setTimeout(f, ms));
 
 const ledger = fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : {};
 const save = () => { fs.mkdirSync('.ocr', { recursive: true }); fs.writeFileSync(LEDGER, JSON.stringify(ledger, null, 1)); };
@@ -61,14 +62,28 @@ async function snapshot(u) {
   return { ok: false, err: 'HTTP ' + r.status + (r.headers.get('x-archive-wayback-runtime-error') || '') };
 }
 
+// Two answers from IA are not failures: "too many active sessions" means wait and retry (the 100-URL pilot
+// lost ~85 URLs by recording it as an error), and "the same snapshot had been made N hours ago" means the
+// file is already archived (IA refuses a new capture for a year).
+const BUSY = /limit of active Save Page Now sessions/, HAVE = /same snapshot had been made/;
+async function attempt(u) {
+  for (let n = 0; ; n++) {
+    let r;
+    try { r = await snapshot(u); }
+    catch (e) { r = { ok: false, err: e.name === 'TimeoutError' ? 'timeout' : String(e.message || e).slice(0, 80) }; }
+    if (!r.ok && HAVE.test(r.err)) return { ok: true, already: true };
+    if (!r.ok && BUSY.test(r.err) && n < 5) { await sleep(60000); continue; }
+    return r;
+  }
+}
+
 let i = 0, done = 0;
 async function worker() {
   while (i < todo.length) {
     const u = todo[i++];
-    try { ledger[u] = await snapshot(u); }
-    catch (e) { ledger[u] = { ok: false, err: e.name === 'TimeoutError' ? 'timeout' : String(e.message || e).slice(0, 80) }; }
+    ledger[u] = await attempt(u);
     if (++done % 10 === 0) { save(); console.log(`${done}/${todo.length}`); }
-    await new Promise(f => setTimeout(f, 4000));  // stay well under IA's per-IP rate limit
+    await sleep(4000);                            // stay well under IA's per-IP rate limit
   }
 }
 await Promise.all(Array.from({ length: CONC }, worker));
