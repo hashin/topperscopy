@@ -1702,3 +1702,6 @@ nothing. The site does not link to the archived copies yet — this only builds 
 **Rejected.** *Ledger in `.ocr/` (gitignored)* — a runner starts empty each night. *Ledger as a workflow cache or artifact* — evicted or expired silently; the repo already holds `pdf-mirror.json` the same way.
 *Re-snapshotting yearly* — Internet Archive refuses a new capture within a year (`if_not_archived_within`), so there is nothing to gain from nightly re-asks.
 **Known risk / reverse if.** If Internet Archive rate-limits GitHub's runner IPs, the busy-retry loop burns the 120 minutes with few saves; set `WAYBACK_ENABLED` to anything but `true` to stop. Keys that were ever pasted in chat must be rotated.
+**Amendment (2026-11-10, same day).** Two manual dispatches queued behind a running one both checked out the commit that was `main` when they were *queued*, not when they started; the second's ledger
+lacked the first's results and its push hit a merge conflict (run 42771506417: archived fine, commit failed, results lost — IA answers "same snapshot" next time, which counts as saved). Fix: the
+checkout uses `ref: main`, fetched when the run starts. Also: a dropped connection (`fetch failed`, 8 of 20 in the first real run) is retried up to 3 times after 30 s and the cause (`network: ECONNREFUSED`) is recorded.

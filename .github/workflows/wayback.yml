@@ -32,7 +32,10 @@ jobs:
     timeout-minutes: 150
     if: ${{ vars.WAYBACK_ENABLED == 'true' }}
     steps:
+      # `ref: main`, not the default: a manual dispatch checks out the commit that was main when it was *queued*, so a run that
+      # waited behind another one started from a ledger without that run's results and then conflicted on push.
       - uses: actions/checkout@v5
+        with: { ref: main }
       - uses: actions/setup-node@v5
         with: { node-version: 20 }
 
