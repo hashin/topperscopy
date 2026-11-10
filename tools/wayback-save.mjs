@@ -87,14 +87,17 @@ async function snapshot(u) {
 // Two answers from IA are not failures: "too many active sessions" means wait and retry (the 100-URL pilot
 // lost ~85 URLs by recording it as an error), and "the same snapshot had been made N hours ago" means the
 // file is already archived (IA refuses a new capture for a year).
-const BUSY = /limit of active Save Page Now sessions/, HAVE = /same snapshot had been made/;
+// A dropped connection ("fetch failed") is retried too: the snapshot may even have gone through, in which case the
+// retry gets the "same snapshot" answer and counts as saved.
+const BUSY = /limit of active Save Page Now sessions/, HAVE = /same snapshot had been made/, NET = /^(network:|timeout$)/;
 async function attempt(u) {
   for (let n = 0; ; n++) {
     let r;
     try { r = await snapshot(u); }
-    catch (e) { r = { ok: false, err: e.name === 'TimeoutError' ? 'timeout' : String(e.message || e).slice(0, 80) }; }
+    catch (e) { r = { ok: false, err: e.name === 'TimeoutError' ? 'timeout' : 'network: ' + String(e.cause?.code || e.cause?.message || e.message || e).slice(0, 70) }; }
     if (!r.ok && HAVE.test(r.err)) return { ok: true, already: true };
     if (!r.ok && BUSY.test(r.err) && n < 5) { await sleep(WAIT); continue; }
+    if (!r.ok && NET.test(r.err) && n < 3) { await sleep(WAIT / 2); continue; }
     return r;
   }
 }
