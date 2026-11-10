@@ -72,7 +72,7 @@ the repo attachment explicit and to require a "prove you are in the right repo" 
 `PERF-UX-AUDIT-2026-09-14.md` under "Phase 1 landed". Highlights: CLS 0.193 → **0.0014**; the false
 "0 copies" is gone; "Show more" moves the reader **0 px** (was up to 785 px); a query typed before
 `app.js` boots is now adopted. `npm run check` went 14/14 enforced → **22/22**, with six tracked
-invariants promoted and two new ones added (INV-18, INV-19).
+invariants promoted and two new ones added (INV-18, INV-24).
 **Learned.** The instruments were wrong more often than the code. Four separate false measurements,
 three of them on the same item — the worst reported 4,635 px of drift on code whose real drift is
 **0 px**, because `html { scroll-behavior: smooth }` means `scrollTo` animates and everything was
@@ -1201,3 +1201,13 @@ application/pdf and the bucket root is 404 (no listing). Earlier today: five rea
 outage on 2026-11-09 (runs failed with "Internal server error" and no jobs, including the untouched deploy workflow).
 **Open.** First full mirror pass not yet complete; `origin` is unchecked for the 5 files uploaded on 11-09 until the first nightly `check` (treated as up). No in-app hint when R2 is served.
 
+## 2026-11-10 — Search index (DECISION-33; built and measured 2026-11-05, rebased onto the VisionIAS + R2 work)
+**Asked.** "Build the token index" (PERF-AUDIT-2026-10-23 step 2), knowing a word then matches only at its start. **Did.** `build.js`
+`writeSearchIndex()` → `data/ix/`, `data/ix-refs.json`. `app.js`: parts load one by one, `textHits()` reads the index, `matchedRows()` / `copyRows()` fetch only the parts
+needed, `trickle()` after the first text result; idle prefetch removed; name terms match at the start of a word. `sw.js`: rules for both files. `check.mjs`: INV-24, `search index` + `index bucket`
+replace `prefetch total` + `search total`; `app.js` 28 → 29 KB. Built in a worktree (`.claude/worktrees/token-index`), because the main checkout held another session's uncommitted hero edits and each build rewrites `index.html`.
+**Found by measuring.** (1) The audit's copy-level intersection would have been wrong; postings are per question. (2) Its "a copy sits in 1–4 parts" held (median 1, max 4). (3) `e-governance` went 175 → 863: the `e` is a substring of most topper names
+(DECISION-18's split), so name terms now match at a word start; "e.g." is also no longer a word. (4) Practice's Optional chip was only ever enabled by the prefetch; `copies.json` decides now. (4b) Practice "Any" re-picked a random paper on every re-render while the first one downloaded, so it could fetch two or three; it remembers its pick now (found after the rebase, 2026-11-10).
+(5) Network-first refs + no trickle made a return search 2.75–7.8 s, so refs went back to stale-while-revalidate and the trickle was added: 0.6–2.3 s, still slower than the old 0.26–0.5 s.
+**Verified.** `npm run check` 33/33. Real Chrome against both builds behind `shaped-server.cjs`: table in DECISION-33, functional run (browse, card, modes, chips, Questions, `?syl=`, Practice, Optionals, index failure, stale stamp, offline, simulated deploy,
+words only in `-deep` tails) all pass. **Not verified:** production; a real deploy. **Open.** Common-word cold search barely improved. `gs 2`-style queries now return 0: a student meaning the paper gets nothing, worth watching in GA.

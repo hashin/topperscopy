@@ -249,6 +249,14 @@ until it does). Costs ~$1/month beyond R2's free 10 GB; no egress fees.
 So the default link is the publisher's; the nightly run checks the originals and the site falls back to R2 only for dead ones (DECISION-32 amendment). He also asked that
 all learnings and future instructions be written into the repo (`docs/MIRROR.md`, `CLAUDE.md`, `docs/MEMORY.md`) and that changes be merged and pushed so they are live.
 
+
+## INTENT-14 — Search may match only at the start of a word, in exchange for a fast cold search
+*Hashin, 2026-11-05: chose "Build the token index" after being told "federal" would still find "federalism" but "ism" would not.*
+
+Search speed that stays flat as OCR adds questions outranks matching inside words. "water" not finding "groundwater" is an
+accepted cost. Implemented by DECISION-33.
+
+---
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.
