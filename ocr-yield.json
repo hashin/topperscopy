@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-09T19:34:43.727Z",
+  "generated": "2026-11-10T00:25:54.444Z",
   "floor": 8,
   "frac": 0.6,
   "booklets": [
@@ -6983,7 +6983,7 @@
       "pages": 52,
       "model": "gemini-3.1-flash-lite",
       "geminiPages": 52,
-      "salvaged": 2,
+      "salvaged": 1,
       "groupMedian": 15,
       "low": true
     },
@@ -9212,20 +9212,6 @@
       "low": true
     },
     {
-      "url": "https://visionias.in/_public/assets/6169d6d1213653c3d5eecb7778ec85f4e7e51ab305bc6b3ae528d3891b9c7896.pdf",
-      "topper": "Zinnia Arora",
-      "coaching": "VisionIAS",
-      "subject": "Essay",
-      "count": 7,
-      "optional": false,
-      "pages": 32,
-      "model": "gemini-flash-lite-latest",
-      "geminiPages": 32,
-      "salvaged": 0,
-      "groupMedian": 4,
-      "low": true
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2012,%20GS%20Crash%20Course.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -9237,6 +9223,20 @@
       "geminiPages": 22,
       "salvaged": 0,
       "groupMedian": 10,
+      "low": true
+    },
+    {
+      "url": "https://visionias.in/_public/assets/6169d6d1213653c3d5eecb7778ec85f4e7e51ab305bc6b3ae528d3891b9c7896.pdf",
+      "topper": "Zinnia Arora",
+      "coaching": "VisionIAS",
+      "subject": "Essay",
+      "count": 7,
+      "optional": false,
+      "pages": 32,
+      "model": "gemini-flash-lite-latest",
+      "geminiPages": 32,
+      "salvaged": 0,
+      "groupMedian": 4,
       "low": true
     },
     {
@@ -11050,20 +11050,6 @@
       "low": true
     },
     {
-      "url": "https://visionias.in/_public/assets/f1b69a10bddf9e4c05a072b1cf72598f15b4a263e1848d5dbc014340fd0b692c.pdf",
-      "topper": "Gudelli Srujana",
-      "coaching": "VisionIAS",
-      "subject": "GS1",
-      "count": 8,
-      "optional": false,
-      "pages": 52,
-      "model": "gemini-3.1-flash-lite",
-      "geminiPages": 52,
-      "salvaged": 0,
-      "groupMedian": 19,
-      "low": true
-    },
-    {
       "url": "https://admin.shubhraviraj.in/storedata/ToppersCopyPDF/AAKRITI_AIR%20_93_2025/Test%2011,%20GS%20Crash%20Course.pdf",
       "topper": "Aakriti",
       "coaching": "Shubhra Ranjan (PSIR)",
@@ -11076,6 +11062,20 @@
       "salvaged": 0,
       "groupMedian": 10,
       "low": false
+    },
+    {
+      "url": "https://visionias.in/_public/assets/f1b69a10bddf9e4c05a072b1cf72598f15b4a263e1848d5dbc014340fd0b692c.pdf",
+      "topper": "Gudelli Srujana",
+      "coaching": "VisionIAS",
+      "subject": "GS1",
+      "count": 8,
+      "optional": false,
+      "pages": 52,
+      "model": "gemini-3.1-flash-lite",
+      "geminiPages": 52,
+      "salvaged": 0,
+      "groupMedian": 19,
+      "low": true
     },
     {
       "url": "https://iasgyan.sgp1.digitaloceanspaces.com/pdf/Mr-Prajwal-Chaurasia-AIR-694-GS-34.pdf",
