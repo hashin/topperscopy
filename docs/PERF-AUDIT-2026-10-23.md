@@ -51,7 +51,7 @@ growth, not a regression, so raise the five ceilings to today's measured values 
 48, prefetch total 1,550, search total 2,100 KB) in `tools/check.mjs` + `docs/INVARIANTS.md`, each with a one-line reason.
 *Do not* re-split gs3 just to fit the old 120 KB number: it sits under the 150 KB part target by design (DECISION-23).
 
-### 2. Search from a small index, not the full text (the one structural fix; do it before the next big OCR batch)
+### 2. Search from a small index, not the full text (the one structural fix; do it before the next big OCR batch) — **done 2026-11-05, DECISION-33; it differs from this sketch: postings are per question, and real numbers are in the ADR**
 This is DECISION-17's option C, which the Oct 4 handoff named as the next step. At build time write a token index sharded by
 two-letter prefix, `data/ix/<ab>.json` = `{token: [[copyId, nMatches], …]}` over GS/Essay/Other/Optional question text.
 A query fetches one small file per term (expected 5–30 KB gzip each), intersects the posting lists, and gets **counts and

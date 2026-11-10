@@ -42,7 +42,7 @@ On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
   is **not** on Cloudflare — DNS is at Spaceship, mail is iCloud — and INTENT-11 says do not migrate nameservers unless Hashin raises it; use a
   separate domain.) `r2.dev` is Cloudflare's development URL: rate-limited, uncached.
 - **Cap:** 100 GB, enforced against the bucket's real size before every upload (`R2_MAX_GB` can only lower it). Raising it needs a code change and an ADR.
-- **Link-down issues (DECISION-34):** `node tools/mirror-pdfs.mjs issues [--dry] [--max-new 50]` — needs `GITHUB_REPOSITORY` + `GITHUB_TOKEN`; `--dry` prints what it would open, no token needed.
+- **Link-down issues (DECISION-35):** `node tools/mirror-pdfs.mjs issues [--dry] [--max-new 50]` — needs `GITHUB_REPOSITORY` + `GITHUB_TOKEN`; `--dry` prints what it would open, no token needed.
   Only hosts in `ISSUE_HOSTS` (VisionIAS). Label `link-down`; the hidden `<!-- mirror:… -->` line in each issue is how a run recognises it — don't edit it out. Closing an issue by hand while the
   link is still down makes the next night open a fresh one.
 - **VisionIAS refresh:** `node tools/visionias-urls.mjs [--add-fresh] [--verbose]` (fetches the public `tac.json`, adds new pairs, keeps old ones).

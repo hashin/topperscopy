@@ -26,7 +26,9 @@ const BUDGETS = {
   // after cutting the comments down) — feature code that took ~500 KB off the idle prefetch.
   // Raised 26 -> 28 KB 2026-10-04 at Hashin's request: DECISION-29 left it at 25.92, so any next change would have failed.
   // Headroom for planned feature code, not a licence for machinery — DECISION-2 still applies.
-  'app.js': { ceiling: 28, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
+  // Raised 28 -> 29 KB 2026-11-05 for DECISION-33: the search index reader, per-part loading and the post-search trickle
+  // (~1.3 KB net of what they replaced) — feature code that took a browse-only visit from 1,963 to 197 KB of data.
+  'app.js': { ceiling: 29, files: ['assets/app.js'], why: 'DECISION-2: no framework, no bundler; growth here means machinery crept back' },
   'shard gs1': { ceiling: 200, shard: 'gs1', why: 'the largest single download a GS1 text query waits on (INTENT-2) — split into parts once it outgrows one file, DECISION-23' },
   'shard gs2': { ceiling: 180, shard: 'gs2', why: '' },
   // gs3 120 -> 150, essay 30 -> 36, other 30 -> 48 KB 2026-10-23: the Gemini OCR pass grew the index 54k -> 76k questions
@@ -45,25 +47,17 @@ const BUDGETS = {
   // optional 55 -> 150 KB 2026-11-05: the OCR bot's 20-commit pass (54k -> 91.7k questions) took the biggest part to 78.5 KB (2 parts).
   // Same reasoning as essay/other: ceiling = SHARD_PART_TARGET_KB, past which build.js splits the file.
   'shard optional': { ceiling: 150, shard: 'optional', why: 'grows with the optional-subject OCR pass' },
-  // Everything a visitor on a fast connection downloads in the background after boot: all shard parts + syllabus.
-  // Measured 1,458 KB on 2026-10-03 (DECISION-25); 969 KB on 2026-10-04 once long questions moved to -deep files and
-  // near-duplicates merged (DECISION-28). This is the number that grows with the corpus (~12 KB/day at the 2026-10 OCR pace).
-  // Raise it deliberately, with the corpus growth that forced it, never to silence a red check.
-  // 1100 -> 1550 KB 2026-10-23: 1,380 KB measured after the OCR pass took the index 54k -> 76k questions (PERF-AUDIT-2026-10-23).
-  // 1550 -> 1950 KB 2026-11-05: 1,763 KB measured after the OCR bot's pass took the index to 91.7k questions.
-  'prefetch total': { ceiling: 1950, files: [], prefetch: true, why: 'sum of every question-shard part + syllabus.json, fetched on idle on 4G (DECISION-25)' },
-  // What a first-visit search with no paper filter waits for before its result is complete: every part, every -deep file,
-  // syllabus. 1,358 KB on 2026-10-04 (DECISION-28). On a 1.6 Mbps phone each 100 KB here is ~0.5 s (PERF-AUDIT-2026-10-04).
-  // 1500 -> 2100 KB 2026-10-23: 1,883 KB after the same OCR pass; cold slow-4G search 10.7 -> 13.4 s. The fix for this growth
-  // is a token index (PERF-AUDIT-2026-10-23 step 2), not more raises.
-  // 2100 -> 2550 KB 2026-11-05: 2,305 KB measured, same pass. Still a token index, not more raises, that fixes this.
-  'search total': { ceiling: 2550, files: [], prefetch: true, deep: true, why: 'every part + every -deep file + syllabus.json — a cold all-papers search (DECISION-28)' },
+  // DECISION-33 replaced 'prefetch total' (every part, on idle) and 'search total' (every part + -deep, per cold search): no visitor
+  // pays either any more. What a search waits for before it can count and rank every copy is the refs file + a bucket per term.
+  // 120 KB and 37 KB measured 2026-11-05. Refs grow with answers; a bucket with the words sharing its first two letters.
+  'search index': { ceiling: 150, files: ['data/ix-refs.json'], why: 'question -> copies table, fetched once when someone starts to search (DECISION-33)' },
+  'index bucket': { ceiling: 60, files: [], ixBucket: true, why: 'largest data/ix/<two letters>.json — one per query term' },
   // A -deep file is fetched on its own (two papers at a time), so the ceiling is per file, like the part budgets.
   'deep part': { ceiling: 160, files: [], deepPart: true, why: 'largest single questions-*-deep.json (GS4 case studies)' },
   'interview list': { ceiling: 220, files: ['data/interview-list.json'], why: 'lazy-loaded only when the Interviews tab opens — never part of boot (INTENT-2)' }
 };
 // Every path build.js writes. Must be gitignored and never tracked (DECISION-4).
-const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/data/interview-list.json', '/data/iv/',
+const GENERATED = ['/data/copies.json', '/data/questions-*.json', '/data/interview-list.json', '/data/iv/', '/data/ix/', '/data/ix-refs.json',
   '/toppers.html', '/toppers-*.html', '/sitemap.xml',
   '/sitemap-main.xml', '/sitemap-toppers.xml', '/sitemap-questions.xml', '/sitemap-hubs.xml', '/llms.txt', '/robots.txt',
   '/topper/', '/question/', '/paper/', '/optional/', '/dataset/'];
@@ -288,6 +282,39 @@ check('INV-13', 'DECISION-19', 'Every interview in interview-list.json has its o
   return { ok: !bad.length, detail: bad.length ? `${bad.length}/${L.interviews.length} have no matching text, e.g. ${bad[0].i}` : `${L.interviews.length}/${L.interviews.length} resolve` };
 });
 
+check('INV-24', 'DECISION-33', 'the search index holds exactly the words of every question, and each number points at that question in its part', () => {
+  const refs = JSON.parse(read('data/ix-refs.json'));
+  const toks = t => t.toLowerCase().replace(/(^|[^\p{L}\p{M}\p{N}])\p{L}\.(?=\p{L}\.|\s)/gu, '$1 ').match(/[\p{L}\p{M}\p{N}]+/gu) || [];
+  const want = new Map();   // token -> number of questions, from the shard text itself
+  let n = 0, nextPart = 0;
+  for (const [paper, i, first] of refs.parts) {
+    const files = shardFiles(paper), f = files[i];
+    if (first !== n) return { ok: false, detail: `${f} starts at ${first}, expected ${n}` };
+    const d = JSON.parse(read(f)), deep = deepFile(f);
+    const tails = new Map(deep ? JSON.parse(read(deep)).tails : []);
+    for (const row of d.questions.concat(d.fragments)) {
+      const ids = row[1].map(r => d.ids[r[0]]).sort().join(), got = (refs.rows[n] || []).map(ci => refs.ids[ci]).sort().join();
+      if (ids !== got) return { ok: false, detail: `question ${n} in ${f}: refs table disagrees with the part` };
+      for (const t of new Set(toks(row[0] + (row[5] ? tails.get(row[5]) || '' : '')))) want.set(t, (want.get(t) || 0) + 1);
+      n++;
+    }
+    nextPart++;
+  }
+  if (n !== refs.rows.length) return { ok: false, detail: `${n} questions in parts, ${refs.rows.length} in the refs table` };
+  if (refs.parts.length !== nextPart) return { ok: false, detail: 'part table mismatch' };
+  let postings = 0, nToks = 0;
+  for (const key of refs.keys) {
+    const b = JSON.parse(read(`data/ix/${key}.json`));
+    if (b.b !== refs.b) return { ok: false, detail: `ix/${key}.json is build ${b.b}, refs is ${refs.b}` };
+    for (const [t, gaps] of Object.entries(b.t)) {
+      if (want.get(t) !== gaps.length) return { ok: false, detail: `"${t}": ${gaps.length} in the index, ${want.get(t) || 0} in the text` };
+      postings += gaps.length; nToks++;
+    }
+  }
+  if (nToks !== want.size) return { ok: false, detail: `${nToks} tokens in the index, ${want.size} in the text` };
+  return { ok: true, detail: `${n} questions, ${nToks} tokens, ${postings} postings, ${refs.keys.length} buckets, build ${refs.b}` };
+});
+
 /* ---- budgets ---- */
 for (const [name, b] of Object.entries(BUDGETS)) {
   check('BUDGET ' + name, 'INTENT-2', `${name} within ${b.ceiling} KB gzip`, () => {
@@ -306,11 +333,10 @@ for (const [name, b] of Object.entries(BUDGETS)) {
       const max = sizes.reduce((m, x) => (x[1] > m[1] ? x : m), ['none', 0]);
       return { ok: max[1] <= b.ceiling, detail: `${sizes.length} files, largest ${max[0]} at ${max[1].toFixed(1)} KB` + (b.why ? ' — ' + b.why : '') };
     }
-    if (b.prefetch) {
-      const parts = SHARDS.flatMap(shardFiles);
-      const fl = parts.concat(b.deep ? parts.map(deepFile).filter(Boolean) : [], ['data/syllabus.json']);
-      const kb = fl.reduce((t, f) => t + gzKb(f), 0);
-      return { ok: kb <= b.ceiling, detail: `${kb.toFixed(1)} KB over ${fl.length} files` + (b.why ? ' — ' + b.why : '') };
+    if (b.ixBucket) {
+      const sizes = fs.readdirSync(path.join(ROOT, 'data/ix')).map(f => [f, gzKb('data/ix/' + f)]);
+      const max = sizes.reduce((m, x) => (x[1] > m[1] ? x : m), ['none', 0]);
+      return { ok: max[1] <= b.ceiling, detail: `${sizes.length} files, largest ${max[0]} at ${max[1].toFixed(1)} KB — ${b.why}` };
     }
     const missing = b.files.filter(f => !exists(f));
     if (missing.length) return { ok: false, detail: 'missing: ' + missing.join(', ') };

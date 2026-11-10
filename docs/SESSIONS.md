@@ -72,7 +72,7 @@ the repo attachment explicit and to require a "prove you are in the right repo" 
 `PERF-UX-AUDIT-2026-09-14.md` under "Phase 1 landed". Highlights: CLS 0.193 → **0.0014**; the false
 "0 copies" is gone; "Show more" moves the reader **0 px** (was up to 785 px); a query typed before
 `app.js` boots is now adopted. `npm run check` went 14/14 enforced → **22/22**, with six tracked
-invariants promoted and two new ones added (INV-18, INV-19).
+invariants promoted and two new ones added (INV-18, INV-24).
 **Learned.** The instruments were wrong more often than the code. Four separate false measurements,
 three of them on the same item — the worst reported 4,635 px of drift on code whose real drift is
 **0 px**, because `html { scroll-behavior: smooth }` means `scrollTo` animates and everything was
@@ -1205,18 +1205,39 @@ outage on 2026-11-09 (runs failed with "Internal server error" and no jobs, incl
 ## 2026-11-10 — Open GitHub issues
 **Asked.** "go through the issues in github repo and fix them." Five were open.
 **Did.** #14 (Rajeshwari Suve, AIR 2, Sociology Drive folder; folder title "AIR 02"): added to `optionals.json` as a one-entry append under the existing name "Rajeshwari" (the submit script
-re-sorts the whole file — a 2,000-line diff — so it was not used as-is). #2 (missing AIRs): DECISION-33 — `rank_N` file-name hint, 603 → 221 toppers without an AIR, 0 changed; `tools/missing-air.mjs`
+re-sorts the whole file — a 2,000-line diff — so it was not used as-is). #2 (missing AIRs): DECISION-34 — `rank_N` file-name hint, 603 → 221 toppers without an AIR, 0 changed; `tools/missing-air.mjs`
 dump/apply for the rest (round-trip tested on a scratch copy, overrides restored).
 **Not done, on purpose.** #3 (re-run OCR on papers with atypical numbering) and #4 (match PYQs to toppers — "after finishing the OCR") need the Gemini OCR run that CLAUDE.md says Hashin triggers;
 #13 (link optional questions to syllabus) needs a hand-authored syllabus per optional subject (`data/syllabus.json` covers GS1–4 + Essay only) — a design decision, not a fix.
 **Open.** Rajeshwari is three profiles' worth of spellings ("Rajeshwari" Sociology, "Rajeshwari Suve M" GS4) for one AIR-2 person — merge by renaming deliberately. Issues #14/#2 not closed on GitHub.
 
 ## 2026-11-10 — VisionIAS first into R2; issues for unavailable VisionIAS links
-**Asked.** "use github actions to upload all vision ias copies presently available to R2 since they may change links later. when the links are unavailable at any point, open github issues with full data" (INTENT-14).
-**Did.** DECISION-34: `mirror-pdfs.yml` mirrors `visionias.in` first (the 1,504 reachable booklets; the 2,537 `cdn.visionias.in` copies have no file to fetch), then the rest; new `issues` command + workflow step
+**Asked.** "use github actions to upload all vision ias copies presently available to R2 since they may change links later. when the links are unavailable at any point, open github issues with full data" (INTENT-15).
+**Did.** DECISION-35: `mirror-pdfs.yml` mirrors `visionias.in` first (the 1,504 reachable booklets; the 2,537 `cdn.visionias.in` copies have no file to fetch), then the rest; new `issues` command + workflow step
 opens one `link-down` issue per VisionIAS file that is down/gone/failed, with all manifest data, and closes it when the link answers again; `check` records `why` + `since`. `MIRROR.md`, `CLAUDE.md`, INTENT-14 updated.
 **Verified.** Real VisionIAS sample: Range probe returns `%PDF-` for the new URLs; `run --host visionias.in --limit 3` downloaded 3 real booklets into a mock R2 (all `ok`). Mock R2 + mock GitHub API, scratch dir
 (real manifest untouched): fake-hash URLs (genuine 404s from VisionIAS) → `gone` issue on the first run, `down` issues only on the second failed night, a re-run opens nothing (marker dedupe), a recovered link
 gets a comment and is closed, `--dry` needs no token. `npm run check` 37/37.
 **Not done.** Not committed or pushed (on branch `fix-open-issues`); nothing uploaded to the real bucket — that needs the workflow run on GitHub (dispatch "Mirror PDFs to R2", `host` = `visionias.in`). The
 `issues` step has never run against the real GitHub API; the `link-down` label is created by the first run.
+
+## 2026-11-10 — Search index (DECISION-33; built and measured 2026-11-05, rebased onto the VisionIAS + R2 work)
+**Asked.** "Build the token index" (PERF-AUDIT-2026-10-23 step 2), knowing a word then matches only at its start. **Did.** `build.js`
+`writeSearchIndex()` → `data/ix/`, `data/ix-refs.json`. `app.js`: parts load one by one, `textHits()` reads the index, `matchedRows()` / `copyRows()` fetch only the parts
+needed, `trickle()` after the first text result; idle prefetch removed; name terms match at the start of a word. `sw.js`: rules for both files. `check.mjs`: INV-24, `search index` + `index bucket`
+replace `prefetch total` + `search total`; `app.js` 28 → 29 KB. Built in a worktree (`.claude/worktrees/token-index`), because the main checkout held another session's uncommitted hero edits and each build rewrites `index.html`.
+**Found by measuring.** (1) The audit's copy-level intersection would have been wrong; postings are per question. (2) Its "a copy sits in 1–4 parts" held (median 1, max 4). (3) `e-governance` went 175 → 863: the `e` is a substring of most topper names
+(DECISION-18's split), so name terms now match at a word start; "e.g." is also no longer a word. (4) Practice's Optional chip was only ever enabled by the prefetch; `copies.json` decides now. (4b) Practice "Any" re-picked a random paper on every re-render while the first one downloaded, so it could fetch two or three; it remembers its pick now (found after the rebase, 2026-11-10).
+(5) Network-first refs + no trickle made a return search 2.75–7.8 s, so refs went back to stale-while-revalidate and the trickle was added: 0.6–2.3 s, still slower than the old 0.26–0.5 s.
+**Verified.** `npm run check` 33/33. Real Chrome against both builds behind `shaped-server.cjs`: table in DECISION-33, functional run (browse, card, modes, chips, Questions, `?syl=`, Practice, Optionals, index failure, stale stamp, offline, simulated deploy,
+words only in `-deep` tails) all pass. **Not verified:** production; a real deploy. **Open.** Common-word cold search barely improved. `gs 2`-style queries now return 0: a student meaning the paper gets nothing, worth watching in GA.
+
+## 2026-11-10 (cont.) — Search index merged and checked live
+**Asked.** "Open a PR", then "Merge it". **Did.** PR #20 merged as 9cb4dec (main had not moved since the PR); `deploy.yml` succeeded.
+**Verified on production.** The live `data/ix-refs.json` has the same build stamp as the local build (890927d3: 23,397 questions, 1,020 buckets),
+125 KB gzip as GitHub Pages serves it (budget 150; `ix/fe.json` 3 KB, the largest `ix/co.json` 38 KB). The functional run (browse with no text download,
+card open, search modes, chips, Questions view, syllabus counts, Practice incl. "Any" = one paper and the Optional chip, index failure, stale stamp, offline)
+all pass against the live site. Cold, throttled in real Chrome, 2 runs each: slow 4G `?q=federalism` 8.4–8.6 s / 1,026 KB, `?q=judicial activism`
+9.0–9.2 s; 4G 2.1–2.3 s and 2.5–2.6 s. **Slower than the local 6.2 s:** the live run is the real network plus the throttle. The old version was not
+re-timed live; the nearest live number is the 10-23 audit's 13.4 s (slow 4G, `?q=ethics`, ~15 % fewer questions). The browse-only byte count read 0 KB,
+a fault in that script, not a number. The `.claude/worktrees/token-index` worktree was removed after this entry.

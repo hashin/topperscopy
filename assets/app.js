@@ -94,15 +94,17 @@
   var COPYBYURL = {};
   var COPYBYID = null;    // cid(url) -> copy; built on the first shard, so visitors who never search never hash 9k URLs
   var TOPPERS = {};       // name -> { air, year, verified, marks, telegram, copies:[copy] }
-  var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], all:[q], byCopy:{url:[{q,page}]} }
+  var SHARDS = {};        // shard name -> { questions:[q], fragments:[q], byCopy:{url:[{q,page}]}, cut:{} } — the parts loaded so far
   var SHARD_ERR = {};     // shard name -> true once its download failed (reload the page to retry)
   var SHARD_PARTS = {};   // shard -> part count (absent = 1, DECISION-23)
   var SHARD_V = {};       // shard -> [content hash per part]; the ?v= that lets the service worker keep an unchanged part for good
   var SHARD_DV = {};      // shard -> [content hash of each part's -deep file, '' = none] (DECISION-28)
-  var DEEP = {};          // shard -> true once the rest of its long questions is attached (or it has none)
-  // Already controlled by our service worker when the page starts = an earlier visit installed it: a returning visitor.
-  // Read now — on a first visit the new worker claims the page a second or two later.
-  var RETURNING = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
+  var GOT = {};           // 'shard:part' and 'shard:part:deep' -> true once attached
+  var PART_P = {};        // 'shard:part' -> promise of that part being indexed; its -deep file attaches only after it
+  var IX = null;          // data/ix-refs.json: { b, ids, rows, parts, keys }, plus copies / byCopy once used (DECISION-33)
+  var IX_T = {};          // bucket key -> { token: [question numbers] }
+  var IX_ERR = false, IX_RETRIED = false;
+  var IX_REFS = 'data/ix-refs.json';
   var SYL = null;         // data/syllabus.json
   var IV = null;          // data/interview-list.json — every interview's metadata, no transcript text
   var LOADS = {};         // url -> promise; one fetch per file, ever
@@ -120,36 +122,28 @@
       .then(function () { location.reload(); });
   }
 
-  function load(url, low) {
+  function load(url, fresh, low) {
     if (!LOADS[url]) {
-      var opts = {}; if (low) opts.priority = 'low'; if (HEALED) opts.cache = 'reload';
+      var opts = {}; if (HEALED || fresh) opts.cache = 'reload'; if (low) opts.priority = 'low';
       LOADS[url] = fetch(url, opts).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); })
         .catch(function (e) { delete LOADS[url]; throw e; });
     }
     return LOADS[url];
   }
 
-  // One file, or several numbered parts (DECISION-23), merged before indexShard(). Only need() calls this — it parks
-  // requests made before copies.json (which has the part counts) arrives. Returns the promise if it starts a download.
-  var SHARD_P = {};       // shard -> promise of its parts being indexed; -deep attaches only after it
+  // A paper's parts (DECISION-23) join its shard as they arrive, so a search fetches only those its cards need. Only the queue calls these.
   function partUrl(name, i, deep) {
     var n = SHARD_PARTS[name] || 1, v = (deep ? SHARD_DV : SHARD_V)[name] || [];
     return 'data/questions-' + name + (n > 1 ? '-' + (i + 1) : '') + (deep ? '-deep' : '') + '.json' + (v[i] ? '?v=' + v[i] : '');
   }
-  function ensureShard(name, low) {
-    var urls = [];
-    for (var i = 0; i < (SHARD_PARTS[name] || 1); i++) urls.push(partUrl(name, i));
-    if (SHARDS[name] || SHARD_ERR[name] || urls.some(function (u) { return LOADS[u]; })) return;
-    return SHARD_P[name] = Promise.all(urls.map(function (u) { return load(u, low); })).then(function (parts) {
-      var u = [], qs = [], frags = [];
-      if (parts.some(function (d) { return !d.ids; })) return staleShard(name, 'format');
-      parts.forEach(function (d) {
-        d.questions.concat(d.fragments).forEach(function (r) { r[1].forEach(function (x) { x[0] += u.length; }); });
-        qs = qs.concat(d.questions); frags = frags.concat(d.fragments); u = u.concat(d.ids);
-      });
-      var sh = indexShard({ ids: u, questions: qs, fragments: frags }, name);
-      if (sh.all.length < (qs.length + frags.length) / 2) return staleShard(name, 'refs');
-      SHARDS[name] = sh; DEEP[name] = !(SHARD_DV[name] || []).some(Boolean); onShardLoaded(name);
+  function ensurePart(name, i, low) {
+    var k = name + ':' + i;
+    if (PART_P[k] || SHARD_ERR[name]) return;
+    return PART_P[k] = load(partUrl(name, i), false, low).then(function (d) {
+      if (!d.ids) return staleShard(name, 'format');
+      var sh = SHARDS[name] || (SHARDS[name] = { questions: [], fragments: [], byCopy: {}, cut: {} });
+      if (indexShard(d, name, sh) < (d.questions.length + d.fragments.length) / 2) return staleShard(name, 'refs');
+      GOT[k] = true; onShardLoaded(name, low);
     }, function (e) {
       var msg = String(e && e.message || e);
       SHARD_ERR[name] = true; track('data_error', { message: 'shard ' + name + ' ' + msg.slice(0, 100) }); rerender();
@@ -157,44 +151,111 @@
     });
   }
   function staleShard(name, why) { SHARD_ERR[name] = true; rerender(); healStale(name + ' ' + why); }
-  // The rest of a paper's long questions, keyed by question id: a stale -deep file leaves questions cut ("…"), never mixed.
-  function ensureDeep(name, low) {
-    var urls = [];
-    (SHARD_DV[name] || []).forEach(function (v, i) { if (v) urls.push(partUrl(name, i, true)); });
-    if (DEEP[name] || SHARD_ERR[name] || !SHARD_P[name] || urls.some(function (u) { return LOADS[u]; })) return;
-    return Promise.all(urls.map(function (u) { return load(u, low); }).concat([SHARD_P[name]])).then(function (parts) {
+  // The rest of a part's long questions, keyed by question id: a stale -deep file leaves questions cut ("…"), never mixed.
+  function ensureDeep(name, i) {
+    var k = name + ':' + i + ':deep', url = partUrl(name, i, true);
+    if (GOT[k] || SHARD_ERR[name] || !PART_P[name + ':' + i] || LOADS[url]) return;
+    return Promise.all([load(url), PART_P[name + ':' + i]]).then(function (r) {
       var sh = SHARDS[name]; if (!sh) return;
-      parts.pop();
-      parts.forEach(function (d) {
-        d.tails.forEach(function (t) { var q = sh.cut[t[0]]; if (q) { q.txt += t[1]; q.lc = q.txt.toLowerCase(); q.cut = false; } });
-      });
-      DEEP[name] = true; rerenderSoon();
+      r[0].tails.forEach(function (t) { var q = sh.cut[t[0]]; if (q) { q.txt += t[1]; q.lc = q.txt.toLowerCase(); q.cut = false; } });
+      GOT[k] = true; rerenderSoon();
     }, function (e) {
-      DEEP[name] = true; rerenderSoon();   // the cut questions stay searchable by their first ~250 characters
+      GOT[k] = true; rerenderSoon();   // the cut questions stay readable by their first ~250 characters
       track('data_error', { message: 'deep ' + name + ' ' + String(e && e.message || e).slice(0, 100) });
     });
   }
-  // One download queue, a few papers at a time, smallest first, so a cold search shows results after the small papers
-  // instead of after all 15 parts have shared the line (PERF-AUDIT-2026-10-04 G2). A visitor's request jumps the idle
-  // prefetch (`low`) and adds each paper's -deep file after all the parts; the idle prefetch adds them only when `deep`.
+  function hasDeep(name, i) { return !!(SHARD_DV[name] || [])[i]; }
+  function deepWaiting(parts) { return parts.some(function (p) { return hasDeep(p[0], p[1]) && !GOT[p[0] + ':' + p[1] + ':deep']; }); }
+  function eachPart(name, fn) { for (var i = 0; i < (SHARD_PARTS[name] || 1); i++) if (fn(i) === false) return false; return true; }
+  // every part of a paper is in; ready = their long questions too
+  function loaded(name) { return eachPart(name, function (i) { return !!GOT[name + ':' + i]; }); }
+  function ready(name) { return eachPart(name, function (i) { return !!GOT[name + ':' + i] && !deepWaiting([[name, i]]); }); }
+  // One download queue, 4 at a time: newest request first (the cards on screen now), -deep files after the parts,
+  // whole papers smallest first (PERF-AUDIT-2026-10-04 G2).
   var BY_SIZE = ['essay', 'other', 'optional', 'gs3', 'gs2', 'gs1', 'gs4'], QUEUE = [], ACTIVE = 0, WAITING = [];
-  function need(names, low, deep) {
+  function need(names) {
     names = names || SHARDS_ALL;
-    if (!DB) { WAITING.push([names, low, deep]); return; }
-    var order = BY_SIZE.filter(function (n) { return names.indexOf(n) >= 0; });
-    var jobs = order.map(function (n) { return { name: n, low: low }; });
-    if (!low || deep) jobs = jobs.concat(order.map(function (n) { return { name: n, deep: true, low: low }; }));
-    var same = function (a, b) { return a.name === b.name && !a.deep === !b.deep; };
-    QUEUE = QUEUE.filter(function (q) { return !jobs.some(function (j) { return same(j, q); }); });
-    QUEUE = low ? QUEUE.concat(jobs) : jobs.concat(QUEUE);
+    if (!DB) { WAITING.push(names); return; }
+    var parts = [];
+    BY_SIZE.forEach(function (n) { if (names.indexOf(n) >= 0) eachPart(n, function (i) { parts.push([n, i]); }); });
+    needParts(parts);
+  }
+  function needParts(parts, noDeep) {
+    var jobs = parts.filter(function (p) { return !GOT[p[0] + ':' + p[1]]; }).map(function (p) { return { name: p[0], i: p[1] }; });
+    if (!noDeep) parts.forEach(function (p) { if (hasDeep(p[0], p[1]) && !GOT[p[0] + ':' + p[1] + ':deep']) jobs.push({ name: p[0], i: p[1], deep: true }); });
+    var same = function (a, b) { return a.name === b.name && a.i === b.i && !a.deep === !b.deep; };
+    QUEUE = jobs.concat(QUEUE.filter(function (q) { return !jobs.some(function (j) { return same(j, q); }); }));
     pump();
   }
   function pump() {
-    while (QUEUE.length && ACTIVE < (QUEUE[0].low ? 2 : 4)) {   // 4 for a visitor (−0.4 s to a complete slow-4G search vs 2)
-      var j = QUEUE.shift(), p = j.deep ? ensureDeep(j.name, j.low) : ensureShard(j.name, j.low);
+    while (QUEUE.length && ACTIVE < (QUEUE[0].low ? 2 : 4)) {
+      var j = QUEUE.shift(), p = j.deep ? ensureDeep(j.name, j.i) : ensurePart(j.name, j.i, j.low);   // a -deep job overtaken by its part's: the next render asks again
       if (p) { ACTIVE++; p.then(done, done); }
     }
     function done() { ACTIVE--; pump(); }
+  }
+  // Someone who searched once searches again: after their first result, the rest of the text trickles in behind anything
+  // they ask for, so the next search has no text to wait for. Someone who only browses never pays for it.
+  var TRICKLED = false;
+  function trickle() {
+    var c = navigator.connection || {};
+    if (TRICKLED || c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
+    TRICKLED = true;
+    BY_SIZE.forEach(function (n) { eachPart(n, function (i) { if (!PART_P[n + ':' + i]) QUEUE.push({ name: n, i: i, low: true }); }); });
+    pump();
+  }
+
+  /* ---------- the search index (DECISION-33) ---------- */
+  function ensureIx() {
+    if (IX || IX_ERR || LOADS[IX_REFS]) return;
+    load(IX_REFS, IX_RETRIED).then(function (d) { IX = d; rerenderSoon(); }, ixFail);
+  }
+  function ixFail(e) {
+    IX_ERR = true; track('data_error', { message: 'index ' + String(e && e.message || e).slice(0, 100) }); rerender();
+  }
+  // Question numbers only mean something within one build. A bucket from another build = a deploy landed meanwhile: start over, once.
+  function ixStale(why) {
+    if (IX_RETRIED) return ixFail(why);
+    IX_RETRIED = true; IX = null; IX_T = {}; delete LOADS[IX_REFS]; ensureIx();
+  }
+  function ixKey(t) { return t.slice(0, 2).replace(/[^a-z0-9]/g, function (ch) { return '_' + ch.charCodeAt(0).toString(16); }); }
+  // A term's bucket, or null while it downloads. Refs list the buckets that exist, so an unknown word costs no 404.
+  function ixBucket(key) {
+    if (IX_T[key]) return IX_T[key];
+    if (IX.keys.indexOf(key) < 0) return IX_T[key] = {};
+    var b = IX.b, url = 'data/ix/' + key + '.json?v=' + b;
+    if (LOADS[url]) return null;
+    load(url).then(function (d) {
+      if (!IX || IX.b !== b) return;
+      if (d.b !== b) return ixStale(new Error('build ' + d.b + ' vs ' + b));
+      for (var tok in d.t) { var n = 0; d.t[tok] = d.t[tok].map(function (gap) { return n += gap; }); }
+      IX_T[key] = d.t; rerenderSoon();
+    }, function (e) { if (IX && IX.b === b) { if (/^HTTP 404/.test(e && e.message)) ixStale(e); else ixFail(e); } });
+    return null;
+  }
+  function copyById() {
+    if (!COPYBYID) { COPYBYID = {}; COPIES.forEach(function (c) { COPYBYID[cid(c.u)] = c; }); }
+    return COPYBYID;
+  }
+  function ixCopies() { return IX.copies || (IX.copies = IX.ids.map(function (id) { return copyById()[id]; })); }
+  // The parts that hold these question numbers, as [shard, part].
+  function partsOfQs(qs) {
+    var seen = {}, out = [];
+    qs.forEach(function (n) {
+      for (var i = IX.parts.length - 1; n < IX.parts[i][2]; i--);
+      if (!seen[i]) { seen[i] = 1; out.push(IX.parts[i]); }
+    });
+    return out;
+  }
+  function gotAll(parts) { return parts.every(function (p) { return GOT[p[0] + ':' + p[1]]; }); }
+  // a copy's own question numbers
+  function copyQs(c) {
+    if (!IX.byCopy) {
+      IX.byCopy = {};
+      var copies = ixCopies();
+      IX.rows.forEach(function (row, n) { row.forEach(function (ci) { var x = copies[ci]; if (x) (IX.byCopy[x.u] = IX.byCopy[x.u] || []).push(n); }); });
+    }
+    return IX.byCopy[c.u] || [];
   }
   function ensureSyllabus() {
     if (SYL || LOADS['data/syllabus.json']) return;
@@ -211,42 +272,35 @@
   function interviewText(iv, cb) {
     load('data/iv/' + iv.i + '.json').then(cb, function () { cb(null); });
   }
-  // Warm the shards once the page is idle, so a search that comes later is mostly answered — but
-  // only for visitors who can afford it. On Save-Data, 2G or 3G nothing is prefetched: the shards
-  // download when the search box is focused or typed in instead. Elsewhere it is a low-priority
-  // trickle through need()'s queue, so it never competes with the visitor's own taps, fonts or GA.
-  // The rest of the long questions (-deep, ~390 KB) only for a returning visitor — likely to search — so a first visit
-  // that only browses stays light (PERF-AUDIT-2026-10-04 §6b).
-  function scheduleShards() {
+  // On idle, only the syllabus (the filter's dropdown), and not on Save-Data, 2G or 3G.
+  function scheduleIdle() {
     var c = navigator.connection || {};
     if (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
-    var go = function () { need(SHARDS_ALL, true, RETURNING); ensureSyllabus(); };
-    (window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); })(go, { timeout: 4000 });
+    (window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); })(ensureSyllabus, { timeout: 4000 });
   }
 
   // A shard's question: { id, txt, lc, refs:[{c, page}], s, m, w, p, kind }. Refs are resolved to
   // copies here (a URL copies.json does not know is dropped) and the text is lowercased once, so
   // a keystroke never re-lowercases the corpus. byCopy is the reverse map a copy card uses.
-  function indexShard(d, name) {
-    if (!COPYBYID) { COPYBYID = {}; COPIES.forEach(function (c) { COPYBYID[cid(c.u)] = c; }); }
-    var sh = { questions: [], fragments: [], all: [], byCopy: {}, cut: {} };
+  function indexShard(d, name, sh) {
+    var byId = copyById(), added = 0;
     function add(rows, kind, into) {
       (rows || []).forEach(function (r) {
         var refs = [];
-        r[1].forEach(function (ref) { var c = COPYBYID[d.ids[ref[0]]]; if (c) refs.push({ c: c, page: ref[1] }); });
+        r[1].forEach(function (ref) { var c = byId[d.ids[ref[0]]]; if (c) refs.push({ c: c, page: ref[1] }); });
         if (!refs.length) return;
         var q = { txt: r[0], lc: r[0].toLowerCase(), refs: refs, s: r[2] || [], m: r[3] || '', w: r[4] || '', kind: kind,
           p: name === 'optional' ? refs[0].c.p : SHARD_PAPER[name] };
         // a cut question's key is fnv(paper|full text), the id it always had (practice history)
         if (r[5]) { q.id = parseInt(r[5], 36); q.cut = true; sh.cut[r[5]] = q; } else q.id = fnv(q.p + '|' + q.txt);
-        into.push(q); sh.all.push(q);
+        into.push(q); added++;
         refs.forEach(function (ref) { (sh.byCopy[ref.c.u] = sh.byCopy[ref.c.u] || []).push({ q: q, page: ref.page }); });
       });
     }
     add(d.questions, 'q', sh.questions);
     add(d.fragments, 'f', sh.fragments);
     for (var u in sh.byCopy) sh.byCopy[u].sort(function (a, b) { return a.page - b.page; });
-    return sh;
+    return added;
   }
   // the shards a paper filter needs
   function shardsFor(paper) {
@@ -254,23 +308,38 @@
     if (paper === 'Optional' || isOptional(paper)) return ['optional'];
     return [paper.toLowerCase()];
   }
-  // a copy's question rows from its shard, or null while that shard is still loading
+  // a copy's question rows, or null while the parts holding them (the index says which) download
   function copyRows(c) {
-    var name = shardOf(c.p), sh = SHARDS[name];
-    if (!sh || !DEEP[name]) need([name]);
-    return sh ? sh.byCopy[c.u] || [] : null;
+    var name = shardOf(c.p), rows = (SHARDS[name] || { byCopy: {} }).byCopy[c.u] || [];
+    if (loaded(name)) { if (rows.some(isCut)) need([name]); return rows; }
+    ensureIx();
+    if (IX_ERR) { need([name]); return null; }
+    if (!IX) return null;
+    var parts = partsOfQs(copyQs(c));
+    needParts(parts, true);
+    if (!gotAll(parts)) return null;
+    if (rows.some(isCut)) needParts(parts);
+    return rows;
   }
-  var PRACTICE_WANTED = false, practiceIntent = null;
-  function onShardLoaded(name) {
-    track('shard_loaded', { shard: name });
-    fillSyllabus();
-    if (name === 'optional') {
-      var btn = $('#practice-papers button[data-pp="Optional"]');
-      var has = SHARDS.optional.questions.length > 0;
-      if (btn) { btn.disabled = !has; btn.textContent = has ? 'Optional' : 'Optional ▸ after OCR'; }
-      if (practiceIntent) { openPracticeFor(practiceIntent); practiceIntent = null; }
-    }
-    rerenderSoon();
+  function isCut(r) { return r.q.cut; }
+  // a copy's rows matching the query; qs = its question numbers from the index
+  function matchedRows(c, qs) {
+    if (!IX) return null;
+    var parts = partsOfQs(qs);
+    needParts(parts, true);
+    if (!gotAll(parts)) return null;
+    var all = SHARDS[shardOf(c.p)].byCopy[c.u] || [];
+    var rows = all.filter(function (r) { return matches(r.q.lc, qs.ts, state.mode); });
+    // -deep only for what is on screen: a cut question, or a word only in the end of a long one
+    if (rows.length < qs.length || rows.some(isCut)) needParts(parts);
+    return rows.length || !deepWaiting(parts) ? rows : null;
+  }
+  var PRACTICE_WANTED = false, practiceIntent = null, ANY_PICK = '';   // Practice "Any": the one paper picked while none is here
+  function onShardLoaded(name, low) {
+    if (loaded(name)) track('shard_loaded', { shard: name });
+    if (name === 'optional' && practiceIntent && loaded(name)) { openPracticeFor(practiceIntent); practiceIntent = null; }
+    // a trickled part changes nothing on screen unless something there waits for it
+    if (!low || PRACTICE_WANTED || state.view !== 'browse' || state.qview === 'questions' || $('#results .q.loading')) rerenderSoon();
   }
   // Shards arriving within 150 ms share one render: from the service-worker cache all 7 land within a second, and each
   // used to re-run the search and rebuild the cards (~260 ms on a mid-range phone, PERF-AUDIT-2026-10-04 G4).
@@ -315,11 +384,14 @@
         });
         TOPPERS[name] = T;
       });
-      WAITING.splice(0).forEach(function (w) { need(w[0], w[1], w[2]); });   // requested before the part counts were known
+      WAITING.splice(0).forEach(function (w) { need(w); });   // requested before the part counts were known
+      var btn = $('#practice-papers button[data-pp="Optional"]');
+      if (btn && COPIES.some(function (c) { return c.n && isOptional(c.p); })) { btn.disabled = false; btn.textContent = 'Optional'; }
+      if (SYL) fillSyllabus();
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       onData();
       track('data_loaded', { copies: COPIES.length });
-      scheduleShards();
+      scheduleIdle();
     }).catch(function (e) {
       var sk = $('#results-skeleton'); if (sk) sk.remove();
       $('#sub').textContent = 'Could not load the database — ' + e.message;
@@ -336,14 +408,14 @@
       qp = qp.trim().slice(0, 200);
       state.q = qp; state.shown = PAGE;
       if (qi && qi.value !== qp) qi.value = qp;
-      need(); ensureSyllabus();
+      ensureIx(); ensureSyllabus();
     }
     var prc = params.get('practice');                 // ?practice=<subject-slug> from an /optional/ page
     if (prc) { practiceIntent = prc.trim().slice(0, 60); need(['optional']); }
     var pp = params.get('paper');                     // ?paper=GS1 from a /paper/ hub page
     if (pp && PAPERS.concat(['Optional']).indexOf(pp) >= 0) state.paper = pp;
     var sylp = params.get('syl');                     // ?syl=<node id> — a shared syllabus filter
-    if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; need(); ensureSyllabus(); }
+    if (sylp) { state.syl = sylp.trim().slice(0, 60); state.qview = 'questions'; ensureSyllabus(); }
     syncControls();
 
     document.addEventListener('click', function (e) {   // outbound-link tracking for static links
@@ -455,7 +527,7 @@
     state.q = u.q; state.paper = u.paper; state.syl = u.syl; state.shown = PAGE;
     if (state.syl) state.qview = 'questions';
     syncControls();
-    if (state.q || state.syl) { need(); ensureSyllabus(); }
+    if (state.q || state.syl) ensureSyllabus();
     renderBrowse();
   }
   // make the search box, paper chips, Copies/Questions toggle and syllabus select show `state`
@@ -469,10 +541,9 @@
 
   /* ---------- browse: controls ---------- */
   function wireBrowse() {
-    $('#q').addEventListener('focus', function () { need(shardsFor(state.paper)); ensureSyllabus(); }, { once: true });
+    $('#q').addEventListener('focus', function () { ensureIx(); ensureSyllabus(); }, { once: true });
     $('#q').addEventListener('input', debounce(function (e) {
       state.q = e.target.value.trim(); state.shown = PAGE;
-      if (state.q) need(shardsFor(state.paper));
       renderBrowse();
     }, 160));
     $('#q').addEventListener('input', debounce(function (e) {   // log the settled query, not every keystroke
@@ -507,7 +578,7 @@
   function setQView(v) {
     state.qview = v; state.shown = PAGE;
     $$('#qview button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.qview === v)); });
-    if (v === 'questions') { need(); ensureSyllabus(); }
+    if (v === 'questions') ensureSyllabus();
     renderBrowse();
   }
   // paper chips: every GS paper present, plus one "Optionals" chip for every optional subject
@@ -550,8 +621,7 @@
   }
   function fillSyllabus() {
     var sel = $('#syl'); if (!sel || !SYL) return;
-    var counts = {};
-    SHARDS_ALL.forEach(function (n) { if (SHARDS[n]) SHARDS[n].questions.forEach(function (q) { q.s.forEach(function (id) { counts[id] = (counts[id] || 0) + 1; }); }); });
+    var counts = DB && DB.sylN || {};
     var frag = document.createDocumentFragment();
     frag.appendChild(el('option', { value: '' }, ['Whole syllabus']));
     Object.keys(SYL.papers).forEach(function (p) {
@@ -572,34 +642,56 @@
   }
 
   /* ---------- browse: search ---------- */
-  // Quotes and list punctuation are how people type a query, not part of the words they want:
-  // '"federalism"' and 'women; empowerment' should find what 'federalism' and 'women empowerment' do.
-  function terms() { return state.q.toLowerCase().replace(/["“”‘’;,!?()\[\]{}]+/g, ' ').split(/\s+/).filter(Boolean); }
-  // "All words": every term is a substring; "Exact phrase": the joined query is a substring.
+  // The same words the index was built from (build.js ixTokens): punctuation is never part of a query.
+  var WORD = /[\p{L}\p{M}\p{N}]/u;
+  function tokens(s) { return String(s).toLowerCase().match(/[\p{L}\p{M}\p{N}]+/gu) || []; }
+  function terms() { return tokens(state.q); }
+  // A term starts a word ("federal" finds "federalism", "ism" does not); a lone letter or digit is a whole word, and not the e of "e.g.".
+  function wordAt(lc, t) {
+    for (var i = lc.indexOf(t), next; i >= 0; i = lc.indexOf(t, i + 1)) {
+      next = lc.charAt(i + t.length);
+      if ((!i || !WORD.test(lc.charAt(i - 1))) && (t.length > 1 || !WORD.test(next) && (next !== '.' || /\d/.test(t)))) return true;
+    }
+    return false;
+  }
+  // "All words": every term starts a word in the text; "Exact phrase": the terms, in order, side by side.
   function matches(lc, ts, mode) {
-    if (mode === 'exact') return lc.indexOf(ts.join(' ')) >= 0;
-    for (var i = 0; i < ts.length; i++) if (lc.indexOf(ts[i]) < 0) return false;
+    if (mode === 'exact') return lc.indexOf(ts[0]) >= 0 && (' ' + tokens(lc).join(' ')).indexOf(' ' + ts.join(' ')) >= 0;
+    for (var i = 0; i < ts.length; i++) if (!wordAt(lc, ts[i])) return false;
     return true;
   }
   var yearOf = function (c) { return c.T.year || 0; };
   var airOf = function (c) { return c.T.air || 0; };
   var paperOk = function (c) { return state.paper === 'all' || c.p === state.paper || (state.paper === 'Optional' && isOptional(c.p)); };
 
-  // Scan every loaded shard the paper filter allows. Returns copy url -> [{q, page}] for the
-  // questions that matched, plus whether a needed shard is still loading or failed.
+  // Copy url -> numbers of its questions holding every term, from the index alone. Exact phrase has to read the text,
+  // so it waits for the parts holding those questions and keeps the copies that really match.
   function textHits(ts) {
-    var hits = {}, loading = false, failed = false, missing = [];
-    shardsFor(state.paper).forEach(function (name) {
-      var sh = SHARDS[name];
-      if (!sh || !DEEP[name]) { if (SHARD_ERR[name]) failed = true; else { loading = true; missing.push(name); } }
-      if (!sh) return;
-      sh.all.forEach(function (q) {
-        if (!matches(q.lc, ts, state.mode)) return;
-        q.refs.forEach(function (ref) { (hits[ref.c.u] = hits[ref.c.u] || []).push({ q: q, page: ref.page }); });
-      });
+    ensureIx();
+    if (IX_ERR) return { hits: {}, failed: true };
+    if (!IX) return { hits: {}, loading: true };
+    var buckets = ts.map(function (t) { return ixBucket(ixKey(t)); });
+    if (buckets.indexOf(null) >= 0) return { hits: {}, loading: true };
+    var seen = new Uint8Array(IX.rows.length), hits = {}, copies = ixCopies(), all = [];
+    ts.forEach(function (t, k) {
+      var b = buckets[k];
+      for (var tok in b) if (t.length > 1 ? tok.lastIndexOf(t, 0) === 0 : tok === t) b[tok].forEach(function (n) { if (seen[n] === k) seen[n] = k + 1; });
     });
-    if (missing.length) need(missing);   // one call, so the queue keeps its smallest-first order
-    return { hits: hits, loading: loading, failed: failed };
+    IX.rows.forEach(function (row, n) {
+      if (seen[n] !== ts.length) return;
+      all.push(n);
+      row.forEach(function (ci) { var c = copies[ci]; if (c) (hits[c.u] = hits[c.u] || []).push(n); });
+    });
+    if (state.mode !== 'exact') return { hits: hits };
+    var parts = partsOfQs(all);
+    needParts(parts);
+    if (!gotAll(parts)) return { hits: {}, loading: true };
+    var kept = {};
+    for (var u in hits) {
+      var rows = (SHARDS[shardOf(COPYBYURL[u].p)].byCopy[u] || []).filter(function (r) { return matches(r.q.lc, ts, 'exact'); });
+      if (rows.length) { hits[u].length = Math.min(hits[u].length, rows.length); kept[u] = hits[u]; }
+    }
+    return { hits: kept, loading: deepWaiting(parts) };
   }
 
   // -> { list: [{ c, qs, nameHit, score }], loading, failed }. The terms a topper's name
@@ -608,7 +700,7 @@
   // questions mention ethics, and "federalism" is every copy with such a question.
   // Score for "Best match": a name hit is a huge constant (+ matched questions, so a copy that
   // satisfies both halves of a mixed query outranks a bare name hit); otherwise the number of
-  // matched questions, +0.5 when one of them contains the whole phrase.
+  // matched questions.
   function filteredCopies() {
     var ts = terms(), list = [], loading = false, failed = false;
     var hitsBy = {};   // text hits per distinct "rest of the query", scanned once each
@@ -622,16 +714,14 @@
       if (state.topper && c.t !== state.topper) return;
       if (state.source && c.c !== state.source) return;
       if (state.year && String(yearOf(c)) !== state.year) return;
-      var rest = ts.filter(function (t) { return c.tlc.indexOf(t) < 0; });   // terms the name doesn't cover
+      var rest = ts.filter(function (t) { return !wordAt(c.tlc, t); });   // terms the name doesn't cover
       var nameHit = ts.length > 0 && !rest.length, inName = rest.length < ts.length;
       var qs = [], score = nameHit ? NAME_HIT_SCORE : 0;
       if (rest.length) {
         qs = hitsFor(rest)[c.u] || [];
         if (!qs.length) return;
-        qs.sort(function (a, b) { return a.page - b.page; });
+        qs.ts = rest;
         score = (inName ? NAME_HIT_SCORE : 0) + qs.length;
-        var phrase = rest.join(' ');
-        if (rest.length > 1 && state.mode === 'all') for (var k = 0; k < qs.length; k++) if (qs[k].q.lc.indexOf(phrase) >= 0) { score += 0.5; break; }
       }
       list.push({ c: c, qs: qs, nameHit: nameHit, score: score, n: qs.length || c.n });
     });
@@ -680,6 +770,7 @@
     }
     appendCards(list, 0, state.shown, box, open, null);
     if (list.length > state.shown) box.appendChild(moreButton(list, box));
+    if (totalQ && !res.loading && !$('.q.loading', box)) trickle();
   }
   function openIds(box) { var o = {}; $$('.copy[open]', box).forEach(function (n) { o[n.getAttribute('data-i')] = 1; }); return o; }
   function emptyBox(big, small) { return el('div', { class: 'empty' }, [el('div', { class: 'big' }, [big]), el('div', {}, [small])]); }
@@ -764,7 +855,7 @@
     var filled = false;
     function fill() {
       if (filled) return;
-      var rows = qs.length ? qs : copyRows(c);
+      var rows = qs.length ? matchedRows(c, qs) : copyRows(c);
       ql.innerHTML = '';
       downNote();
       if (!rows) {   // shard still downloading — the re-render on arrival fills this in
@@ -793,12 +884,13 @@
   }
   function highlight(text, ts) {
     var h = esc(text);
-    ts.forEach(function (w) {
+    ts.forEach(function (w) {   // w is letters and digits only (tokens()), and marks what wordAt() matched: the start of a word
       if (w.length < 2) return;
-      h = h.replace(new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'), '<mark>$1</mark>');
+      h = h.replace(new RegExp('(^|[^\\p{L}\\p{M}\\p{N}])(' + w + ')', 'igu'), '$1<mark>$2</mark>');
     });
     return h;
   }
+
   // A reader who spots OCR damage is the cheapest correction signal we have: one click to a
   // pre-filled issue (the issue form prefills by field id, not &body=).
   function reportLink(paper, qtext, url, page) {
@@ -826,7 +918,7 @@
     if (SYL && state.syl && sylLabel(state.syl) === state.syl) { state.syl = ''; var ss = $('#syl'); if (ss) ss.value = ''; syncUrl(); }
     shardsFor(state.paper).forEach(function (name) {
       var sh = SHARDS[name];
-      if (!sh || !DEEP[name]) { if (SHARD_ERR[name]) failed = true; else { loading = true; missing.push(name); } }
+      if (!ready(name)) { if (SHARD_ERR[name]) failed = true; else { loading = true; missing.push(name); } }
       if (!sh) return;
       sh.questions.forEach(function (q) {
         if (state.syl && q.s.indexOf(state.syl) < 0) return;
@@ -931,7 +1023,7 @@
   function wirePractice() {
     var dlg = $('#practice');
     $('#practice-open').addEventListener('click', function () {
-      need(); ensureSyllabus();
+      ensureSyllabus();
       openPracticeDialog();
       setTimeout(function () { fillPracticeSyl(); renderPractice(); }, 0);
       track('practice_open', {});
@@ -945,6 +1037,7 @@
       b.addEventListener('click', function () {
         if (b.disabled) return;
         state.pp = b.dataset.pp; state.psyl = '';
+        if (state.pp) need([shardOf(state.pp)]);   // its topic list counts its questions
         $$('#practice-papers button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.pp === state.pp)); });
         fillPracticeSyl();
       });
@@ -1007,7 +1100,9 @@
   function nextPracticeQ() {
     var pp = state.pp || '', psyl = state.psyl || '', isOpt = pp === 'Optional';
     var names = isOpt ? ['optional'] : pp ? [shardOf(pp)] : SHARDS_ALL.filter(function (n) { return n !== 'optional'; });
-    var missing = names.filter(function (n) { return !SHARDS[n] || !DEEP[n]; });
+    // "Any" must not cost the whole corpus: a paper already here, else one at random.
+    if (!pp) { var have = names.filter(ready); names = have.length ? have : [ANY_PICK = ANY_PICK || names[Math.floor(Math.random() * names.length)]]; }
+    var missing = names.filter(function (n) { return !ready(n); });
     if (missing.length) { PRACTICE_WANTED = true; need(missing); renderPractice(); return; }
     PRACTICE_WANTED = false;
     var base = [];
@@ -1076,7 +1171,7 @@
         back.appendChild(pbtn);
       }
       body.appendChild(back);
-      var ts = state.optQ.split(/\s+/).filter(Boolean), sh = SHARDS.optional;
+      var ts = tokens(state.optQ), sh = SHARDS.optional;
       var list = opts.filter(function (c) {
         if (state.optSubject !== 'all' && c.p !== state.optSubject) return false;
         if (!ts.length) return true;

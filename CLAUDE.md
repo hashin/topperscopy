@@ -26,7 +26,7 @@ an ADR to `docs/DECISIONS.md` for any non-obvious choice, and `npm run check` mu
 
 ## Do not open these with a file reader — large, generated, gitignored
 
-`data/copies.json`, `data/questions-*.json`, `data/interview-list.json`, `data/iv/`,
+`data/copies.json`, `data/questions-*.json`, `data/ix-refs.json`, `data/ix/`, `data/interview-list.json`, `data/iv/`,
 `toppers*.html`, `topper/`, `question/`, `paper/`, `optional/`, `sitemap*.xml`, `llms.txt`, `robots.txt`,
 `dataset/` (all written by `build.js`), and the big source files `data/questions.csv` (9 MB),
 `data/link-copies.json` (2.4 MB), `data/optionals.json`, `data/interviews.json` (11.5 MB). Inspect them
@@ -79,8 +79,11 @@ fragments) are deduped separately as `fragments` (containment only). 5. **Syllab
   function, INV-14 proves they agree); a copy appears in exactly one shard. `optional` holds every optional subject.
   A paper is split into N parts by `partOf(anchor(question))` — a hash of the question's smallest copy URL — never by
   position, and a part carries no date, so one changed question changes one part (DECISION-27). `copies.json` carries
-  `shardParts` (N per paper), `shardV` (a content hash per part) and `shardDV` (per part, the `-deep` file's hash or
-  `''`): the app requests `…-N.json?v=<hash>` and the service worker serves that URL cache-first for good. `node tools/perf/sizes.mjs` prints the payload by stage.
+  `shardParts` (N per paper), `shardV` (a content hash per part), `shardDV` (per part, the `-deep` file's hash or
+  `''`) and `sylN` (questions per syllabus node, for the filter's counts): the app requests `…-N.json?v=<hash>` and the service worker serves that URL cache-first for good. `node tools/perf/sizes.mjs` prints the payload by stage.
+- `data/ix-refs.json` — `{b, ids:[copyId], rows:[[index into ids, once per answer]], parts:[[paper, part, first row]], keys:[bucket]}`; a row number is a
+  question number, running part by part in each part's file order (questions, then fragments). `data/ix/<key>.json` — `{b, t:{token:[gaps between question numbers]}}`,
+  key = the token's first two letters (non `a-z0-9` as `_hex`). `b` stamps a build: numbers only mean something between files with one stamp (DECISION-33, INV-24).
 - `stats` = GS/Essay searchable index (JSON-LD, llms.txt, noscript); `stats.all` = the homepage headline.
 
 7b. **Interviews** — `writeInterviews()` maps `data/interviews.json` straight through (facet counts for
@@ -105,29 +108,26 @@ either if Hashin asks.
 ## The app — `index.html` + `assets/app.js` + `assets/style.css` + `sw.js`, vanilla, no build step
 
 - **Boot:** `load('data/copies.json')` → `COPIES` (flat, each with its topper `T` attached), `COPYBYURL`, facets,
-  first 25 cards. Then, on 4G without Save-Data, every shard is prefetched on idle (low priority, two papers at a time);
-  on Save-Data/2G/3G nothing is prefetched and shards load when the search box is focused or typed in, limited to the
-  papers the filter needs (DECISION-25). Every download goes through `need()`'s queue — smallest first, 4 at a time for a
-  visitor (2 for the idle prefetch), a visitor's request ahead of the idle prefetch, `-deep` files after all parts — on idle only for a
-  returning visitor, i.e. a page already controlled by the service worker when it started (DECISION-28 + amendment).
+  first 25 cards. Question text is not prefetched (only `syllabus.json` on idle): browsing costs no text. Parts join their paper's shard one by one. Every download goes
+  through one queue (`need()` = whole papers, smallest first; `needParts()` = the parts on screen, ahead of everything), 4 at a time, `-deep` files after parts. After the first search with a text
+  match, `trickle()` queues the remaining parts at low priority, 2 at a time, not on Save-Data/2G/3G (DECISION-33).
   Shard arrivals within 150 ms share one re-render, and a plain browse list is not re-rendered at all. Shard requests wait for `copies.json` (it names the parts); a stale or
   404 shard heals the page once or says "Search is unavailable" (DECISION-26). `load(url)` memoises one fetch per URL.
-- **Search:** `terms = q.toLowerCase().split(/\s+/)`. A topper-name hit comes from `COPIES` (always ready). A
-  text hit is `indexOf` per term over every question in every loaded shard the paper filter allows ("Exact
-  phrase" = the joined query). If a needed shard is still loading, `#resultmeta` says "Searching inside N
-  copies…" and never prints a zero. "Best match" = name hit ≫ number of matched questions (+0.5 if one contains
-  the whole phrase). Paper chips: GS1–4, Essay, Other, **Optionals** (every optional subject).
-- **Cards:** one `copyCard()` for every kind of copy; with a text match it lists only the matched questions,
-  otherwise every question from the copy's shard (`byCopy` reverse map). Every change rebuilds the first
+- **Search (DECISION-33):** `terms()` = lowercase words, punctuation dropped; the same tokens the index was built from. A topper-name hit comes from `COPIES` (always ready). A
+  text hit: `textHits()` fetches `ix-refs.json` and one bucket per term, intersects per question, and maps to copies, with no question text. A term matches at the start of a word
+  (`wordAt()`); a lone letter or digit is a whole word. "Exact phrase" also reads the text of its candidates. If a needed file is still loading, `#resultmeta` says "Searching inside N
+  copies…" and never prints a zero. "Best match" = name hit ≫ number of matched questions. Paper chips: GS1–4, Essay, Other, **Optionals** (every optional subject).
+- **Cards:** one `copyCard()` for every kind of copy; with a text match it lists only the matched questions (`matchedRows()`: fetches the parts holding them, then re-checks with `matches()`),
+  otherwise every question from the copy's parts (`copyRows()`, `byCopy` reverse map). `-deep` loads only for a cut row on screen. Every change rebuilds the first
   `state.shown` cards and re-opens the ones that were open; "Show more" appends before its own button.
-- **Questions view** (`#qview`), **syllabus filter** (`#syl`, from `data/syllabus.json`), **Practice**
-  `<dialog>` (random question, prefers ≥3 answers; `localStorage tc-practice` = `{seen:{<paper>:[fnv(text)]},
+- **Questions view** (`#qview`) and the **syllabus filter** (`#syl`, from `data/syllabus.json`) read whole papers via `need()`. **Practice**
+  `<dialog>` (random question, prefers ≥3 answers; "Any" = a paper already here, else one at random; `localStorage tc-practice` = `{seen:{<paper>:[fnv(text)]},
   s:{d,n,t}}`), **Optionals tab** (subject grid over the same `COPIES`; its search box also matches question
   text once the `optional` shard is in), **Submit tab** (lazy `assets/extract.js` + `assets/analyse.js`; pdf.js /
   Tesseract from CDN only on click), URL sync (`?q=` `?paper=` `?syl=`; one `pushState` on empty→non-empty),
   theme toggle (`localStorage tc-theme`), GA4 `G-VTL4V9JQBH` events.
-- **`sw.js`:** stale-while-revalidate for every same-origin GET, except `data/questions-*.json?v=<hash>` which is
-  cache-first and pruned when its hash changes (DECISION-27; `-deep` files too); shell + `copies.json` precached with
+- **`sw.js`:** stale-while-revalidate for every same-origin GET, except `data/questions-*.json?v=<hash>` and `data/ix/*.json?v=<build>`, which are
+  cache-first and pruned when the hash changes (DECISION-27; `-deep` files too), and a `cache:'reload'` of `ix-refs.json`, which goes to the network (DECISION-33); shell + `copies.json` precached with
   `cache:'no-cache'` — revalidated, so a first visit gets 304s instead of downloading them twice (DECISION-28). On
   `controllerchange` app.js re-requests its loaded `?v=` files through the worker so it keeps the ones fetched before it took
   control — served from the HTTP cache, no bytes (DECISION-29).
@@ -198,7 +198,7 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 ## R2 mirror, VisionIAS move, and how to work here (2026-11) — read `docs/MIRROR.md`
 
-- **Workflows:** `mirror-pdfs.yml` (nightly 02:30 UTC: plan → check originals → verify/repair → mirror, VisionIAS first → open/close `link-down` issues for unavailable VisionIAS links (DECISION-34) → commit manifest → deploy) and `mirror-usage.yml`
+- **Workflows:** `mirror-pdfs.yml` (nightly 02:30 UTC: plan → check originals → verify/repair → mirror, VisionIAS first → open/close `link-down` issues for unavailable VisionIAS links (DECISION-35) → commit manifest → deploy) and `mirror-usage.yml`
   (monthly, read-only, fails over the 100 GB cap or on a lost file). Secrets `R2_*`, variable `MIRROR_ENABLED`. Commands: `node tools/mirror-pdfs.mjs status|plan|run|check|verify|usage|selftest`.
 - **VisionIAS** re-hosted its files in 2026-11 at `visionias.in/_public/assets/<sha256>.pdf`; `data/visionias-urls.json` maps our old links (DECISION-31). Only ~1,525 of
   4,027 listed copies have a file; 2,537 of ours stay on the dead host with a notice.
@@ -210,10 +210,9 @@ whole; there is no per-transcript scraping in this repo. See DECISION-19.
 
 ## Open items
 
-- **Performance (2026-10-04):** everything in `docs/PERF-AUDIT-2026-10-04.md` is done — read its §7 handoff first. Still true:
-  a *second* visit that lands straight on a `?q=` link downloads the long-question `-deep` files (~390 KB) at that moment (only
-  fixable by spending those bytes on every first visit); ~1,180 near-duplicate merges were sampled, not all read — a "Report a
-  problem" about two different questions shown as one means `nearSame()` in `build.js` needs tightening; `app.js` is ~25.9 / 28 KB.
+- **Performance (2026-11-05):** the search index is in (DECISION-33, with the measured before/after). A cold search for a very common word (`india`: 25 open cards span 14 parts) gained little.
+  Older, still true: ~1,180 near-duplicate merges were sampled, not all read — a "Report a
+  problem" about two different questions shown as one means `nearSame()` in `build.js` needs tightening; `app.js` is ~28.2 / 29 KB.
 
 - **Preeti Kumari name collision** (2026-09-15) — ForumIAS's PSIR toppers page lists a "Preeti Kumari,
   AIR 130, UPSC 2022"; the dataset already has a different Preeti Kumari at AIR 301/2024 (Anthropology
