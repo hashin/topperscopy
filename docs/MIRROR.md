@@ -14,7 +14,7 @@ The site links every copy to **its publisher**. A copy of each PDF we could fetc
 | `data/visionias-urls.json` | old `cdn.visionias.in` URL → VisionIAS's new `visionias.in/_public/assets/<sha256>.pdf`. Applied by `build.js` at load. Written by `node tools/visionias-urls.mjs [--add-fresh]`. |
 | `data/pdf-mirror.json` | the record: one line per copy URL — `status`, `key`, `sha256`, `bytes`, `topper`, `paper`, `source`, `was` (old VisionIAS URL, which OCR rows still carry), and for mirrored files `origin` (`up`/`down`), `miss`, `checked`. `_meta.base` = the public bucket URL. Never delete lines from it. |
 | `tools/mirror-pdfs.mjs` | `plan` `status` `run` `check` `verify [--repair]` `usage` `selftest`. Own SigV4, zero dependencies. |
-| `.github/workflows/mirror-pdfs.yml` | nightly 02:30 UTC (and manual): plan → **check originals** → verify/repair → mirror → commit manifest → trigger deploy. |
+| `.github/workflows/mirror-pdfs.yml` | nightly 02:30 UTC (and manual): plan → **check originals** → verify/repair → mirror (**VisionIAS first**, then the rest) → **open/close `link-down` issues** → commit manifest → trigger deploy. |
 | `.github/workflows/mirror-usage.yml` | 1st of each month, read-only: bucket size, estimated cost, lost files; fails (GitHub emails) over the cap or on a lost file. |
 | `build.js` | `data/visionias-urls.json` swap, then R2 swap **only** for `status:ok` + `origin:down` entries. `MIRROR=off node build.js` disables the R2 swap (the tool needs origin URLs in `copies.json`). |
 | Checks | INV-19 (VisionIAS map well-formed) · INV-20 (manifest well-formed) · INV-21 (wording must not say "nothing is re-hosted" once serving) · INV-22 (≤ 100 GB recorded) · INV-23 (R2 only where origin is down). |
@@ -42,6 +42,9 @@ On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
   is **not** on Cloudflare — DNS is at Spaceship, mail is iCloud — and INTENT-11 says do not migrate nameservers unless Hashin raises it; use a
   separate domain.) `r2.dev` is Cloudflare's development URL: rate-limited, uncached.
 - **Cap:** 100 GB, enforced against the bucket's real size before every upload (`R2_MAX_GB` can only lower it). Raising it needs a code change and an ADR.
+- **Link-down issues (DECISION-34):** `node tools/mirror-pdfs.mjs issues [--dry] [--max-new 50]` — needs `GITHUB_REPOSITORY` + `GITHUB_TOKEN`; `--dry` prints what it would open, no token needed.
+  Only hosts in `ISSUE_HOSTS` (VisionIAS). Label `link-down`; the hidden `<!-- mirror:… -->` line in each issue is how a run recognises it — don't edit it out. Closing an issue by hand while the
+  link is still down makes the next night open a fresh one.
 - **VisionIAS refresh:** `node tools/visionias-urls.mjs [--add-fresh] [--verbose]` (fetches the public `tac.json`, adds new pairs, keeps old ones).
 
 ## 3. Facts worth keeping
@@ -94,4 +97,5 @@ On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
 - Google Drive links (991) cannot be mirrored by this tool; Drive's large-file download needs an interstitial — decide before attempting.
 - The 30 unpaired VisionIAS groups and 3 blank-topper copies (see §3).
 - A custom domain instead of `r2.dev` before real traffic grows.
-- First full mirror pass has not completed yet; check `status` and the monthly report.
+- First full mirror pass has not completed yet; check `status` and the monthly report. VisionIAS goes first: dispatch "Mirror PDFs to R2" with `host` = `visionias.in` (1,504 files, ~10 GB at the 2026-11-10 count).
+- The `issues` step has been tested only against a mock GitHub API (open, dedupe, close on recovery) — watch the first real night.

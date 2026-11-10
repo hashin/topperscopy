@@ -1210,3 +1210,13 @@ dump/apply for the rest (round-trip tested on a scratch copy, overrides restored
 **Not done, on purpose.** #3 (re-run OCR on papers with atypical numbering) and #4 (match PYQs to toppers — "after finishing the OCR") need the Gemini OCR run that CLAUDE.md says Hashin triggers;
 #13 (link optional questions to syllabus) needs a hand-authored syllabus per optional subject (`data/syllabus.json` covers GS1–4 + Essay only) — a design decision, not a fix.
 **Open.** Rajeshwari is three profiles' worth of spellings ("Rajeshwari" Sociology, "Rajeshwari Suve M" GS4) for one AIR-2 person — merge by renaming deliberately. Issues #14/#2 not closed on GitHub.
+
+## 2026-11-10 — VisionIAS first into R2; issues for unavailable VisionIAS links
+**Asked.** "use github actions to upload all vision ias copies presently available to R2 since they may change links later. when the links are unavailable at any point, open github issues with full data" (INTENT-14).
+**Did.** DECISION-34: `mirror-pdfs.yml` mirrors `visionias.in` first (the 1,504 reachable booklets; the 2,537 `cdn.visionias.in` copies have no file to fetch), then the rest; new `issues` command + workflow step
+opens one `link-down` issue per VisionIAS file that is down/gone/failed, with all manifest data, and closes it when the link answers again; `check` records `why` + `since`. `MIRROR.md`, `CLAUDE.md`, INTENT-14 updated.
+**Verified.** Real VisionIAS sample: Range probe returns `%PDF-` for the new URLs; `run --host visionias.in --limit 3` downloaded 3 real booklets into a mock R2 (all `ok`). Mock R2 + mock GitHub API, scratch dir
+(real manifest untouched): fake-hash URLs (genuine 404s from VisionIAS) → `gone` issue on the first run, `down` issues only on the second failed night, a re-run opens nothing (marker dedupe), a recovered link
+gets a comment and is closed, `--dry` needs no token. `npm run check` 37/37.
+**Not done.** Not committed or pushed (on branch `fix-open-issues`); nothing uploaded to the real bucket — that needs the workflow run on GitHub (dispatch "Mirror PDFs to R2", `host` = `visionias.in`). The
+`issues` step has never run against the real GitHub API; the `link-down` label is created by the first run.

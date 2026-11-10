@@ -1612,3 +1612,19 @@ as `rk`, and `buildToppers()` uses it **only if no copy stated an AIR and every 
 `toppers.overrides.json`* — churn in a hand-curated file, and they would be marked verified when they are not.
 **Known risk / reverse if.** Two different people with one name whose copies each carry the same rank_N, or a coaching site whose "rank" is a test rank, would show a wrong
 AIR (the 3 % of disagreements are not diagnosed). If a "Report a problem" shows that, add an override for the person; if it recurs, restrict the hint to VisionIAS.
+
+## DECISION-34 — VisionIAS is mirrored first each night, and every unavailable VisionIAS link becomes a GitHub issue
+*2026-11-10, INTENT-14. Extends DECISION-32; supersedes nothing.*
+
+`mirror-pdfs.yml` now runs the mirror twice when it is a plain nightly (no `limit`, no `host`): VisionIAS (`--host visionias.in`, up to 150 min) and then everything
+else (115 min), so VisionIAS never queues behind NextIAS/ForumIAS. A new step runs `tools/mirror-pdfs.mjs issues` (needs `issues: write`): for each VisionIAS entry that is
+`ok` with `origin: down` (two failed nights), `gone`, or `failed` three times, it opens one issue labelled `link-down` carrying every fact held (topper, paper, current and
+earlier link, what the publisher answered, first failure, our R2 copy with sha256/bytes — or "never mirrored") plus the manifest entry as JSON; when the link answers again the
+next run comments and closes it. `check` now stores `why` and `since` per failing file for this. **State is in GitHub**, not the manifest: each issue carries a hidden hash of the
+origin URL, and a run lists open `link-down` issues first, so a lost commit cannot duplicate issues. At most 50 new issues a run (`--max-new`); the rest wait for the next night.
+**Rejected.** *One issue per night listing everything* — cannot be closed per file, and "full data" per file would hit the issue size limit. *All hosts* — one flaky publisher
+could flood the tracker; `ISSUE_HOSTS` in the tool is a one-line list to widen. *Issues for the 2,537 `dead` `cdn.visionias.in` copies* — already known and permanent; they have
+no file to lose.
+**Known risk / reverse if.** A VisionIAS-wide outage or an IP block of GitHub's runners would open up to 50 issues a night until it ends; remove the `issues` step or empty
+`ISSUE_HOSTS` to stop. A one-off 403 while *first* mirroring marks a file `gone` and opens an issue — it closes itself if a later `--retry-gone` run succeeds.
+
