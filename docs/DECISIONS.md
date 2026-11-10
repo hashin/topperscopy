@@ -1688,3 +1688,17 @@ no file to lose.
 **Known risk / reverse if.** A VisionIAS-wide outage or an IP block of GitHub's runners would open up to 50 issues a night until it ends; remove the `issues` step or empty
 `ISSUE_HOSTS` to stop. A one-off 403 while *first* mirroring marks a file `gone` and opens an issue — it closes itself if a later `--retry-gone` run succeeds.
 
+## DECISION-36 — Every copy is snapshotted on the Internet Archive by a nightly workflow, with the ledger committed to `data/wayback.json`
+*2026-11-10, INTENT-16. Extends DECISION-32 (a second line of defence beside the R2 mirror); supersedes nothing.*
+
+`wayback.yml` (04:15 UTC, gated by variable `WAYBACK_ENABLED`, secrets `IA_ACCESS` / `IA_SECRET`) builds with `MIRROR=off` (so `copies.json` lists the original URLs) and runs
+`tools/wayback-save.mjs --require-keys --minutes 120`, then commits `data/wayback.json` — one sorted line per URL, `{ok, ts|already|err, at}` — so each night resumes where the last
+stopped and shows a small diff. The authenticated Save Page Now API is required in CI (the anonymous endpoint allows almost no parallel sessions). Two answers are not failures:
+"too many active sessions" waits 60 s and retries (up to 5), and "the same snapshot had been made N hours ago" counts as saved. A failure is retried only after 7 days, so a file
+that is dead at the publisher is not hit every night for ever; `cdn.visionias.in` is skipped (403 to everyone). The ledger is excluded from the deploy and committing it triggers
+nothing. The site does not link to the archived copies yet — this only builds the record.
+**Found by measuring.** A 100-URL anonymous pilot saved 11; ~85 were session-limit answers recorded as failures. After the fix, against a mock archive.org: busy → retried then saved,
+"already made" → saved, 404 → failed and skipped on the next run, `--require-keys` exits 1 without keys, `--minutes` stops starting new URLs.
+**Rejected.** *Ledger in `.ocr/` (gitignored)* — a runner starts empty each night. *Ledger as a workflow cache or artifact* — evicted or expired silently; the repo already holds `pdf-mirror.json` the same way.
+*Re-snapshotting yearly* — Internet Archive refuses a new capture within a year (`if_not_archived_within`), so there is nothing to gain from nightly re-asks.
+**Known risk / reverse if.** If Internet Archive rate-limits GitHub's runner IPs, the busy-retry loop burns the 120 minutes with few saves; set `WAYBACK_ENABLED` to anything but `true` to stop. Keys that were ever pasted in chat must be rotated.

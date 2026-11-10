@@ -1,0 +1,61 @@
+name: Archive copies on the Internet Archive
+
+# Each night: ask the Wayback Machine to snapshot every copy's PDF that is not saved yet (tools/wayback-save.mjs),
+# and commit the ledger data/wayback.json. Resumable: a run stops starting new URLs after 120 minutes and the next
+# night carries on; a failure is retried only after 7 days. Once everything is saved a run takes seconds.
+# The first pass is ~9,000 URLs, so expect about a week of nights; dispatch it by hand to speed that up.
+# The ledger is not deployed (deploy.yml excludes it) and no workflow is triggered by committing it.
+#
+# One-time setup — repository secrets IA_ACCESS and IA_SECRET (archive.org > account > S3-like API keys:
+# https://archive.org/account/s3.php; set with `gh secret set IA_ACCESS`, never paste them in chat);
+# repository variable WAYBACK_ENABLED=true.
+on:
+  schedule:
+    - cron: "15 4 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max URLs this run (0 = as many as fit in the time limit)"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wayback
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    if: ${{ vars.WAYBACK_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+
+      - name: Build (copies.json lists every copy's original URL)
+        run: MIRROR=off node build.js
+
+      - name: Archive
+        env:
+          IA_ACCESS: ${{ secrets.IA_ACCESS }}
+          IA_SECRET: ${{ secrets.IA_SECRET }}
+          LIMIT: ${{ github.event.inputs.limit }}
+        run: |
+          args="--require-keys --minutes 120"
+          [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ] && args="$args --limit $LIMIT"
+          node tools/wayback-save.mjs $args
+
+      - name: Commit the ledger
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/wayback.json
+          if git diff --cached --quiet; then echo "ledger unchanged"; exit 0; fi
+          git commit -m "wayback: $(node -e "const l=require('./data/wayback.json');console.log(Object.values(l).filter(e=>e.ok).length+' copies archived')")"
+          git pull --rebase --autostash
+          git push
