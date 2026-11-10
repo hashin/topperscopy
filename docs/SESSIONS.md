@@ -1241,3 +1241,12 @@ all pass against the live site. Cold, throttled in real Chrome, 2 runs each: slo
 9.0–9.2 s; 4G 2.1–2.3 s and 2.5–2.6 s. **Slower than the local 6.2 s:** the live run is the real network plus the throttle. The old version was not
 re-timed live; the nearest live number is the 10-23 audit's 13.4 s (slow 4G, `?q=ethics`, ~15 % fewer questions). The browse-only byte count read 0 KB,
 a fault in that script, not a number. The `.claude/worktrees/token-index` worktree was removed after this entry.
+
+## 2026-11-10 — Practice prefers copies that still open
+**Asked.** "Fix the practice-a-question feature with the VisionIAS links we have updated."
+**Found.** Practice's links were already the updated ones (`build.js` swaps `visionias.in/_public` URLs in), but it chose questions by raw answer count: 3,691 of the 7,279 questions it prefers
+(≥3 answers) include a copy still on the dead `cdn.visionias.in`, and 742 have only dead copies — so students were handed questions whose PDFs show "Access Denied".
+**Did.** `app.js`: `liveRefs(q)` (refs whose host is not in `DOWN`); Practice's "≥3 / ≥2 answers" preference counts live refs only, falling back to ≥1 live, then anything; `answerRows()` lists live copies
+before dead ones (AIR order inside each group); Practice's heading says "N copies open" when some are dead. `DOWN` is still the one list to empty if the old host returns.
+**Verified.** `npm run check` 38/38 (app.js within budget). Real browser, local server: 24 Practice draws over GS2, GS3, "Any" — 23 had no dead links; the one mixed question showed "29 toppers answered this · 8 copies open", live rows first.
+**Not done.** Not committed or pushed (branch `fix-open-issues`). Optional-subject Practice not sampled separately (no `cdn.visionias.in` copies there beyond the same rule).

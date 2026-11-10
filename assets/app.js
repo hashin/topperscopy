@@ -966,8 +966,10 @@
     return tags;
   }
   // every copy that answered this question, best rank first
+  // Copies whose host no longer serves them (DOWN) go last, and don't count toward "several toppers answered this".
+  function liveRefs(q) { return q.refs.filter(function (r) { return !DOWN[hostOf(r.c.u)]; }); }
   function answerRows(q, from) {
-    return q.refs.slice().sort(function (a, b) { return (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9); })
+    return q.refs.slice().sort(function (a, b) { return (!!DOWN[hostOf(a.c.u)] - !!DOWN[hostOf(b.c.u)]) || (airOf(a.c) || 1e9) - (airOf(b.c) || 1e9); })
       .map(function (r) {
         var meta = [r.c.t];
         if (airOf(r.c)) meta.push('AIR ' + airOf(r.c));
@@ -1118,8 +1120,10 @@
       return;
     }
     // prefer questions several toppers answered — more likely a genuine repeated PYQ, more to compare
-    var pool = base.filter(function (q) { return q.refs.length >= 3; });
-    if (pool.length < 20) pool = base.filter(function (q) { return q.refs.length >= 2; });
+    // — counting only copies that still open: a Practice question should have PDFs to compare, not dead links
+    var pool = base.filter(function (q) { return liveRefs(q).length >= 3; });
+    if (pool.length < 20) pool = base.filter(function (q) { return liveRefs(q).length >= 2; });
+    if (pool.length < 10) pool = base.filter(function (q) { return liveRefs(q).length >= 1; });
     if (pool.length < 10) pool = base;
     var o = pStore(); o.seen = o.seen || {};
     var key = isOpt ? 'opt:' + (psyl || 'any') : (pp || 'any');
@@ -1134,8 +1138,8 @@
     var body = $('#practice-body'); body.dataset.has = '1'; body.innerHTML = '';
     body.appendChild(el('div', { class: 'pq' }, [dispQ(q.txt)]));
     body.appendChild(el('div', { class: 'tags' }, questionTags(q, 'asked ')));
-    var rows = answerRows(q, 'practice');
-    body.appendChild(el('div', { class: 'pans-h' }, [rows.length + (rows.length === 1 ? ' topper answered this' : ' toppers answered this')]));
+    var rows = answerRows(q, 'practice'), live = liveRefs(q).length;
+    body.appendChild(el('div', { class: 'pans-h' }, [rows.length + (rows.length === 1 ? ' topper answered this' : ' toppers answered this') + (live < rows.length ? ' · ' + live + (live === 1 ? ' copy opens' : ' copies open') : '')]));
     var list = el('div', { class: 'qlist' });
     rows.forEach(function (r) { list.appendChild(r); });
     body.appendChild(list);
