@@ -1599,3 +1599,16 @@ narrows the public footprint (the bucket is reached only for dead links) and kee
 night would swap links. *HEAD requests* — some hosts refuse HEAD and a dead link can still answer 200 with an HTML page; the first bytes are the proof.
 **Known risk.** A host that blocks GitHub's IP ranges but not visitors would be marked down and served from R2 unnecessarily; the check logs the failure reasons.
 Full runbook and lessons: `docs/MIRROR.md`.
+
+## DECISION-33 — A unanimous `rank_N` in a file name fills a missing AIR; the rest are dumped for a human
+*2026-11-10, GitHub issue #2 ("Missing AIRs for certain toppers … create a dump of missing data points and get it rectified via a script").*
+
+603 of 1,705 toppers had no AIR because `fromFilename()` only read `AIR-N`, while VisionIAS/ForumIAS/NextIAS name files `…_aakash_om_trivedi_rank_73.pdf`.
+Measured on the 534 toppers who have both: the `rank_N` number equals the known AIR for 519 (97 %). So `fromFilename()` also returns `rank`, kept on the copy
+as `rk`, and `buildToppers()` uses it **only if no copy stated an AIR and every one of the person's copies gives the same number**. Result: 603 → 221 missing,
+0 existing AIRs changed. Overrides still win. The remaining 221 are listed by `node tools/missing-air.mjs dump`; a maintainer fills `air`/`year`/`evidence` and
+`apply` writes `verified: true` overrides (range-checked, never over an already-verified one).
+**Rejected.** *Treat `rank_N` as `AIR-N` outright* — a first-copy-wins rank could override a correct AIR stated by a later copy. *Write the ~380 inferred numbers into
+`toppers.overrides.json`* — churn in a hand-curated file, and they would be marked verified when they are not.
+**Known risk / reverse if.** Two different people with one name whose copies each carry the same rank_N, or a coaching site whose "rank" is a test rank, would show a wrong
+AIR (the 3 % of disagreements are not diagnosed). If a "Report a problem" shows that, add an override for the person; if it recurs, restrict the hint to VisionIAS.

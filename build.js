@@ -145,11 +145,15 @@ function isStandalone(text, paper) {
 }
 
 // "Shakti_Dubey_AIR-1_2024_GS1.pdf" -> { air: 1, year: 2024 }
+// "…_aakash_om_trivedi_rank_73.pdf" (VisionIAS, ForumIAS…) -> rank: 73. A "rank_N" name is weaker evidence than "AIR-N" —
+// it matched the known AIR for 519 of 534 toppers who have both (2026-11-10) — so it is only a hint, used by buildToppers()
+// when no copy states an AIR and every copy of the person agrees.
 function fromFilename(url) {
   const fn = decodeURIComponent(url.split('/').pop() || '');
   const air = (fn.match(/AIR[-_ ]?(\d{1,3})\b/i) || [])[1];
+  const rank = (fn.match(/(?:^|[-_ .])rank[-_ ]?(\d{1,3})\b/i) || [])[1];
   const year = (fn.match(/\b(20(?:1[5-9]|2[0-6]))\b/) || [])[1];
-  return { air: air ? +air : null, year: year ? +year : null };
+  return { air: air ? +air : null, rank: rank ? +rank : null, year: year ? +year : null };
 }
 
 /* ======================================================================
@@ -290,11 +294,11 @@ function buildCopies({ rows, optionals, links }) {
       return [r.page || 0, r.question, marks, words];
     }).filter(([, q, m, w]) => !isAnswerFragment(q, m, w, paper))
       .sort((a, b) => a[0] - b[0]);
-    const { air, year } = fromFilename(base);
+    const { air, rank, year } = fromFilename(base);
     copies.push({
       t: rs.map(r => r.topper).find(Boolean) || 'Unknown',
       c: rs.map(r => r.coaching).find(Boolean) || '',
-      p: paper, u: base, y: year, r: air,
+      p: paper, u: base, y: year, r: air, rk: rank,
       q: qs, prov: provs.length > 1 ? 'mixed' : provs[0], link: false, optional: false, note: ''
     });
   }
@@ -356,13 +360,18 @@ const SOURCE_ALIAS = {
 function buildToppers(copies, canon) {
   const toppers = {};
   const T = name => toppers[name] || (toppers[name] = { air: null, year: null, verified: false, marks: {}, sources: [], copies: [] });
+  const hints = {};   // name -> Set of "rank_N" file-name hints (see fromFilename)
   for (const c of copies) {
     const t = T(c.t);
     t.copies.push(c);
+    if (c.rk) (hints[c.t] || (hints[c.t] = new Set())).add(c.rk);
     if (c.r && !t.air) t.air = c.r;
     if (c.y && !t.year) t.year = c.y;
     if (c.marks && t.marks[c.p] == null) t.marks[c.p] = c.marks;
   }
+  // No copy states an AIR: take the rank_N file-name hint, but only when all of the person's copies give the same number —
+  // two different people sharing a name give two numbers, and then we show none rather than the wrong one.
+  for (const [name, set] of Object.entries(hints)) if (!toppers[name].air && set.size === 1) toppers[name].air = [...set][0];
   const ov = readJson(path.join(DATA, 'toppers.overrides.json'), {});
   for (const [name, patch] of Object.entries(ov)) {
     if (name.startsWith('_')) continue;
