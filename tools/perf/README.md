@@ -6,7 +6,7 @@ budget cannot: *how long does it take*, and *does the service worker do what we 
 
 | Script | Answers | Needs |
 |---|---|---|
-| `sizes.mjs` | Bytes per stage (boot / idle prefetch / on first search / later), raw · gzip · brotli. `--json` for one line. | `node build.js` first. Nothing else. |
+| `sizes.mjs` | Bytes per stage (boot / idle / starting a search / question text / later), raw · gzip · brotli. `--json` for one line. | `node build.js` first. Nothing else. |
 | `browser.cjs` | Timings in real Chrome under phone throttling: first cards, search complete, bytes, long tasks, TBT, input delay — cold, deep-link, type-at-load and repeat visits. | `npm i --no-save playwright-core`, Google Chrome installed. |
 | `shaped-server.cjs` | A local static server that behaves like GitHub Pages (gzip, ETag/304, `max-age=600`) **and** throttles the link itself, so service-worker fetches are slowed like page fetches. `GET /__stats` = files/bytes sent since the last call; `GET /__swbump` = serve `sw.js` with a new `VERSION`. | Node only. |
 | `repeat.cjs` | DECISION-28 amendment: repeat visits with the worker live — return-then-search, return via a `?q=` link, third visit, Save-Data — time to a complete result and question files sent. | `shaped-server.cjs` running; playwright-core. |

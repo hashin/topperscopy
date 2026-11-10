@@ -555,7 +555,7 @@ function mapSyllabus(text, paper, syl, aka) {
  * ====================================================================== */
 
 function writeCopies(copies, toppers, stats, generated, shards) {
-  const { shardParts, shardV, shardDV } = shards;
+  const { shardParts, shardV, shardDV, sylN } = shards;
   const out = {};
   for (const name of Object.keys(toppers).sort((a, b) => a.localeCompare(b))) {
     const t = toppers[name], o = {};
@@ -584,7 +584,7 @@ function writeCopies(copies, toppers, stats, generated, shards) {
   const parts = {};
   for (const [name, n] of Object.entries(shardParts || {})) if (n > 1) parts[name] = n;
   const file = path.join(DATA, 'copies.json');
-  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, shardV, shardDV, toppers: out }));
+  fs.writeFileSync(file, JSON.stringify({ generated, attribution: ATTRIBUTION, stats, shardParts: parts, shardV, shardDV, sylN, toppers: out }));
   console.log(`copies.json  ${copies.length} copies · ${Object.keys(out).length} toppers · ${(fs.statSync(file).size / 1024).toFixed(0)} KB raw`);
 }
 
@@ -611,10 +611,10 @@ function copyId(u) {
 const LONG_Q = 500, LEAD_Q = 250;
 function fnv(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 // rows: [text, refs, syllabus ids, marks, words, paper]. -> { body, deep } (deep = null when no row is long)
+const byText = (a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
 function serializeShardPart(name, questions, fragments) {
   const urls = [...new Set(questions.concat(fragments).flatMap(q => q[1].map(r => r[0])))].sort();
   const at = new Map(urls.map((u, i) => [u, i]));
-  const byText = (a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
   const tails = new Map();
   const rows = list => list.slice().sort(byText).map(q => {
     const row = [q[0], q[1].map(r => [at.get(r[0]), r[1]]), q[2], q[3], q[4]];
@@ -655,15 +655,15 @@ function writeShards(byPaper, syl, generated) {
   }
   for (const f of fs.readdirSync(DATA)) if (/^questions-.*\.json$/.test(f)) fs.unlinkSync(path.join(DATA, f));
   const report = [];
-  const shardParts = {}, shardV = {}, shardDV = {};
+  const shardParts = {}, shardV = {}, shardDV = {}, ixRows = [], ixParts = [], sylN = {};
   for (const name of Object.keys(shards).sort()) {
     const S = shards[name];
     // Split into N parts by text hash, re-measuring actual gzip size each time, until every part clears the
     // target (or N hits a sane cap — a paper this lopsided needs a human look, not an ever-growing part count).
     // N=1 reproduces the old single-file behaviour exactly.
-    let n = 1, bodies;
+    let n = 1, bodies, qs, fs_;
     for (;;) {
-      const qs = Array.from({ length: n }, () => []), fs_ = Array.from({ length: n }, () => []);
+      qs = Array.from({ length: n }, () => []); fs_ = Array.from({ length: n }, () => []);
       for (const q of S.questions) qs[partOf(anchor(q), n)].push(q);
       for (const q of S.fragments) fs_[partOf(anchor(q), n)].push(q);
       bodies = qs.map((x, i) => serializeShardPart(name, x, fs_[i]));
@@ -671,6 +671,11 @@ function writeShards(byPaper, syl, generated) {
       n++;
     }
     shardParts[name] = n;
+    qs.forEach((x, i) => {
+      ixParts.push([name, i, ixRows.length]);
+      ixRows.push(...x.slice().sort(byText), ...fs_[i].slice().sort(byText));
+    });
+    for (const q of S.questions) for (const id of q[2]) sylN[id] = (sylN[id] || 0) + 1;
     const hash = b => crypto.createHash('sha1').update(b).digest('hex').slice(0, 8);
     const base = i => path.join(DATA, n === 1 ? `questions-${name}` : `questions-${name}-${i + 1}`);
     shardV[name] = bodies.map((b, i) => { fs.writeFileSync(base(i) + '.json', b.body); return hash(b.body); });
@@ -680,7 +685,39 @@ function writeShards(byPaper, syl, generated) {
     report.push(`${name}${n > 1 ? ' x' + n : ''} ${S.questions.length}+${S.fragments.length} (${kb('body')}+${kb('deep')} KB)`);
   }
   console.log(`questions-*.json  ${report.join(' · ')}   (lead + deep)`);
-  return { shardParts, shardV, shardDV };
+  writeSearchIndex(ixRows, ixParts);
+  return { shardParts, shardV, shardDV, sylN };
+}
+
+// The search index (DECISION-33): a query fetches a few small files instead of every question's text. A question is
+// numbered by its row here; rows run part by part, in each part's own file order, so a number also says which part holds
+// the text. data/ix/<first two letters>.json = { b, t:{ token: [gaps between sorted question numbers] } };
+// data/ix-refs.json = { b, ids:[copyId], rows:[[index into ids, once per answer]], parts:[[paper, part, first row]], keys }.
+// `b` stamps a build: numbers only mean something between files with the same stamp. Numbers shift on every build, so
+// the files are one set rather than byte-stable like the shard parts.
+// "e.g." and "i.e." are not words: without this, the "e" of a search for e-governance matched nearly every question.
+function ixTokens(text) { return String(text).toLowerCase().replace(/(^|[^\p{L}\p{M}\p{N}])\p{L}\.(?=\p{L}\.|\s)/gu, '$1 ').match(/[\p{L}\p{M}\p{N}]+/gu) || []; }
+function ixKey(token) { return token.slice(0, 2).replace(/[^a-z0-9]/g, ch => '_' + ch.charCodeAt(0).toString(16)); }
+function writeSearchIndex(rows, parts) {
+  const postings = new Map();
+  rows.forEach((q, n) => {
+    for (const tok of new Set(ixTokens(q[0]))) (postings.get(tok) || postings.set(tok, []).get(tok)).push(n);
+  });
+  const buckets = new Map();
+  for (const tok of [...postings.keys()].sort()) {
+    const key = ixKey(tok), list = postings.get(tok);
+    if (!buckets.has(key)) buckets.set(key, {});
+    buckets.get(key)[tok] = list.map((n, i) => (i ? n - list[i - 1] : n));
+  }
+  const urls = [...new Set(rows.flatMap(q => q[1].map(r => r[0])))].sort(), at = new Map(urls.map((u, i) => [u, i]));
+  const refs = { ids: urls.map(copyId), rows: rows.map(q => q[1].map(r => at.get(r[0])).sort((a, b) => a - b)), parts, keys: [...buckets.keys()] };
+  const b = crypto.createHash('sha1').update(JSON.stringify(refs)).update(JSON.stringify([...buckets])).digest('hex').slice(0, 8);
+  const dir = path.join(DATA, 'ix');
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir);
+  for (const [key, t] of buckets) fs.writeFileSync(path.join(dir, key + '.json'), JSON.stringify({ b, t }));
+  fs.writeFileSync(path.join(DATA, 'ix-refs.json'), JSON.stringify({ b, ...refs }));
+  console.log(`ix/          ${buckets.size} files · ${postings.size} tokens · ${rows.length} questions · build ${b}`);
 }
 
 /* ======================================================================

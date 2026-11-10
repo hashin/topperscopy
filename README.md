@@ -42,7 +42,9 @@ data/interviews.json        mirror of upsckata's Personality Test interview tran
         |
         +->  data/copies.json                 every copy, grouped by topper — the only file the app boots from
         +->  data/questions-<paper>[-N].json  one shard per paper (numbered parts once large): deduped question text + [copy id, page] refs
-        +->  data/questions-…-deep.json       the rest of each long question (>500 chars), fetched only on search / card / practice
+        +->  data/questions-…-deep.json       the rest of each long question (>500 chars), fetched only when one is on screen
+        +->  data/ix/<two letters>.json       the search index: word -> question numbers; a query fetches one per term
+        +->  data/ix-refs.json                question number -> copies, and which part holds its text
         +->  data/interview-list.json         every interview's metadata — the Interviews tab's boot file
         +->  data/iv/<id>.json                one file per interview: the transcript text, fetched when its card is opened
         +->  topper/, question/, paper/, optional/, toppers*.html, sitemap*.xml, llms.txt, robots.txt

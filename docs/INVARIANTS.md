@@ -45,6 +45,7 @@ npm run check        # ~2 seconds, plain Node, no browser
 | `INV-15` | `copies.json`'s `shardV` / `shardDV` list every shard part and `-deep` file and each hash matches the file's bytes (the `?v=` the service worker caches by) | DECISION-27, DECISION-28 |
 | `INV-16` | A shard part carries no build date — its bytes change only when one of its questions does | DECISION-27 |
 | `INV-17` | Every cut long question has exactly one rest in its `-deep` file, keyed by app.js's own `fnv(paper\|full text)` — its practice id | DECISION-28 |
+| `INV-24` | The search index holds exactly the words of every question (rebuilt from the shard text and compared bucket by bucket), every file carries one build stamp, and each question number's copies match its row in its part | DECISION-33 |
 | `INV-18` | Merging questions never loses an answer: refs across all shards = question rows counted per copy in `copies.json` | DECISION-28 |
 
 ## Gzip budgets — INTENT-2, speed is the product
@@ -52,16 +53,16 @@ npm run check        # ~2 seconds, plain Node, no browser
 The table at the top of `tools/check.mjs` is the source of truth. Each ceiling is the value measured
 on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus grows past one
 (the OCR pass adds questions), raise the ceiling deliberately in the same commit and say why. Last re-baselined 2026-10-23
-(gs3, essay, other, prefetch total, search total) after the OCR pass — see `PERF-AUDIT-2026-10-23.md`.
+(gs3, essay, other) after the OCR pass — see `PERF-AUDIT-2026-10-23.md`. The whole-corpus totals were removed 2026-11-05: no visitor pays them per search any more (DECISION-33).
 
 | Budget | Covers | Ceiling |
 |---|---|---:|
 | `boot` | `index.html` + CSS + `app.js` + both fonts + `data/copies.json` — everything before the first 25 cards paint, with every topper name searchable | 450 KB |
-| `app.js` | `assets/app.js` alone (DECISION-2) | 28 KB |
-| `prefetch total` | every question-shard part + `syllabus.json` — what a fast-connection visitor downloads in the background (DECISION-25/27/28) | 1,550 KB |
-| `search total` | every part + every `-deep` file + `syllabus.json` — what a cold all-papers search waits for (DECISION-28) | 2,100 KB |
+| `app.js` | `assets/app.js` alone (DECISION-2) | 29 KB |
+| `search index` | `data/ix-refs.json` — fetched once when someone starts to search (DECISION-33) | 150 KB |
+| `index bucket` | the largest `data/ix/<two letters>.json` — one per query term (DECISION-33) | 60 KB |
 | `deep part` | the largest single `questions-*-deep.json` | 160 KB |
-| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 150 · 690 · 150 · 150 · 55 KB |
+| `shard gs1 … optional` | each `data/questions-<paper>.json` (or, once a paper outgrows one file, each `data/questions-<paper>-<n>.json` part — DECISION-23) — the largest single download a text query in that paper waits on | 200 · 180 · 150 · 690 · 150 · 150 · 150 KB |
 
 ## Not checkable, still true
 
@@ -70,6 +71,6 @@ on 2026-09-15 plus ~10 % headroom, so nothing regresses quietly. When the corpus
 
 - Search never prints "0 copies" while a needed shard is still downloading (DECISION-6). One boolean
   in `renderBrowse()`; verify by serving with the shards delayed (see `docs/SESSIONS.md` 2026-09-15).
-- Search semantics: "All words" = every term is a substring of the question text or topper name;
-  "Exact phrase" = the joined query is a substring. Case-insensitive. Verified against
-  `dataset/questions.csv` for 210 real queries when DECISION-17 landed.
+- Search semantics (DECISION-33): "All words" = every term starts a word in one question, or in the topper's name; a lone letter or digit
+  is a whole word. "Exact phrase" = the terms side by side in order. Case-insensitive, punctuation ignored. Compared with the previous
+  build for 22 queries in real Chrome when the index landed; the differences are listed in DECISION-33.

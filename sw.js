@@ -7,6 +7,9 @@
    hash comes from copies.json. The URL changes iff the bytes do, so those are cache-first — an unchanged part is never
    fetched again, not even to revalidate (GitHub Pages' ETag changes on every deploy, so revalidating re-downloads it).
    When a part's hash changes, the superseded copy is deleted from the cache.
+   Search index (DECISION-33): data/ix/<key>.json?v=<build> follows the same cache-first rule. data/ix-refs.json, which names
+   the build, is stale-while-revalidate like the rest: old refs and old buckets still agree with each other. When a bucket
+   from a newer build shows up, the app asks for the refs with cache:'reload', and that one must reach the network.
    Bump VERSION on any shell change to force a full refresh. */
 var VERSION = 'tc-v31';
 var SHELL = [
@@ -39,7 +42,14 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(e.request.url);
   if (url.origin !== location.origin) return;              // never touch PDF / GA / CDN requests
   if (url.pathname.indexOf('/gtag/') !== -1) return;
-  if (/\/data\/questions-[a-z0-9-]+\.json$/.test(url.pathname) && /^\?v=[0-9a-f]+$/.test(url.search)) {
+  if (/\/data\/ix-refs\.json$/.test(url.pathname) && e.request.cache === 'reload') {
+    e.respondWith(fetch(e.request).then(function (res) {
+      if (res && res.ok) { var copy = res.clone(); caches.open(VERSION).then(function (c) { c.put(url.pathname, copy); }); }
+      return res;
+    }).catch(function () { return caches.match(url.pathname); }));
+    return;
+  }
+  if (/\/data\/(questions-[a-z0-9-]+|ix\/[a-z0-9_]+)\.json$/.test(url.pathname) && /^\?v=[0-9a-f]+$/.test(url.search)) {
     e.respondWith(caches.open(VERSION).then(function (c) {
       return c.match(e.request).then(function (hit) {
         if (hit) return hit;

@@ -20,9 +20,12 @@ const size = f => {
 const data = fs.readdirSync(path.join(ROOT, 'data'));
 const stages = {
   'boot (blocks the first 25 cards)': ['index.html', 'assets/style.css', 'assets/app.js', 'assets/fonts/inter-latin.woff2', 'data/copies.json'],
-  'idle prefetch (fast connections only)': data.filter(f => /^questions-.*\.json$/.test(f) && !/-deep\.json$/.test(f)).sort().map(f => 'data/' + f).concat('data/syllabus.json'),
-  // the rest of every long question (DECISION-28): only when someone searches, opens a card or practises
-  'on first search / card / practice': data.filter(f => /^questions-.*-deep\.json$/.test(f)).sort().map(f => 'data/' + f),
+  'idle (fast connections only)': ['data/syllabus.json'],
+  // DECISION-33: plus one data/ix/<two letters>.json per query term
+  'on starting a search': ['data/ix-refs.json'],
+  // fetched part by part, only those holding the cards on screen; a whole paper for the Questions view or Practice
+  'question text, part by part': data.filter(f => /^questions-.*\.json$/.test(f) && !/-deep\.json$/.test(f)).sort().map(f => 'data/' + f),
+  'long questions, per part': data.filter(f => /^questions-.*-deep\.json$/.test(f)).sort().map(f => 'data/' + f),
   'later, on demand': ['assets/fonts/fraunces-latin.woff2', 'data/interview-list.json']
 };
 const out = {};

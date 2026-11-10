@@ -49,7 +49,7 @@ async function run(browser, profName, path, opts = {}) {
       const sz = await req.sizes(); const b = sz.responseBodySize + sz.responseHeadersSize;
       bytes += b; reqs++; if (req.serviceWorker()) swBytes += b;
       net.push([req.url().replace(BASE, '').slice(0, 60), Math.round(b / 1024), req.serviceWorker() ? 'sw' : 'page', Date.now() - t0]);
-      if (/questions-|syllabus/.test(req.url())) { shardBytes += b; lastShardEnd = Date.now() - t0; }
+      if (/questions-|syllabus|\/ix/.test(req.url())) { shardBytes += b; lastShardEnd = Date.now() - t0; }
     } catch (e) {}
   };
   ctx.on('requestfinished', onFin);

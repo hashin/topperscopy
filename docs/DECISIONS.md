@@ -765,7 +765,7 @@ unchanged. `tools/perf/search-parity.mjs` (0/210 unexplained regressions) and
 
 ## DECISION-17 — Two data shapes, one search engine: the copy URL is the key, question text is
 plain per-paper shards, and search is `indexOf` over the loaded shards
-*2026-09-15 · active · supersedes DECISION-5 (mechanism), DECISION-7, DECISION-10, DECISION-11,
+*2026-09-15 · search mechanism and idle prefetch SUPERSEDED by DECISION-33; the two data shapes stand · supersedes DECISION-5 (mechanism), DECISION-7, DECISION-10, DECISION-11,
 DECISION-12, DECISION-13 (point 1), DECISION-14, DECISION-15, DECISION-16 · cites INTENT-1, INTENT-2,
 INTENT-3, INTENT-6, INTENT-8*
 
@@ -860,7 +860,7 @@ and question pages byte-identical to the `main` build apart from the timestamp.
 ---
 
 ## DECISION-18 — A query's terms are split between the topper's name and the question text
-*2026-09-15 · active · cites INTENT-8, DECISION-17*
+*2026-09-15 · active; a name term now matches at the start of a word, DECISION-33 · cites INTENT-8, DECISION-17*
 
 **Decision.** In `filteredCopies()`, the terms a copy's topper name already contains are removed
 from the query and only the *rest* has to be found inside that copy's questions. So `shakti dubey`
@@ -1268,7 +1268,7 @@ them anyway). Verified with two manual `workflow_dispatch` runs: the first commi
 ---
 
 ## DECISION-25 — Shards are fetched only when needed, name copies by hash, and interviews are one file each
-*2026-10-03 · active · cites INTENT-2, DECISION-17, DECISION-19, DECISION-23, `docs/PERF-AUDIT-2026-10-03.md`*
+*2026-10-03 · point 2 (idle prefetch) SUPERSEDED by DECISION-33; the rest active · cites INTENT-2, DECISION-17, DECISION-19, DECISION-23, `docs/PERF-AUDIT-2026-10-03.md`*
 
 **Decision.** Four changes from the 2026-10-03 performance audit (findings F1, F2, F5 and the URL-table cut):
 
@@ -1599,3 +1599,63 @@ narrows the public footprint (the bucket is reached only for dead links) and kee
 night would swap links. *HEAD requests* — some hosts refuse HEAD and a dead link can still answer 200 with an HTML page; the first bytes are the proof.
 **Known risk.** A host that blocks GitHub's IP ranges but not visitors would be marked down and served from R2 unnecessarily; the check logs the failure reasons.
 Full runbook and lessons: `docs/MIRROR.md`.
+
+---
+
+## DECISION-33 — A search reads a small word index, then only the text its cards need
+*2026-11-05 · active · supersedes DECISION-17 (search mechanism, idle prefetch), DECISION-25 point 2 · cites INTENT-2, INTENT-8, INTENT-14, `docs/PERF-AUDIT-2026-10-23.md`*
+
+**Decision.** `build.js` writes `data/ix/<first two letters>.json` (word → the numbers of the questions holding it, as gaps) and
+`data/ix-refs.json` (question number → copies, and which part holds each number). A query fetches the refs once and one bucket per
+term, and from those alone gets every count and the full ranking. It then fetches only the parts holding the open cards' questions.
+- **Postings are per question, not per copy.** "All words" means all in one question; intersecting at copy level (the audit's sketch)
+  would have matched a copy with each word in a different question.
+- **A term matches at the start of a word**, in the question text and in topper names. "Exact phrase" reads the text of its candidates.
+- **The cards re-check the text** with `matches()` instead of carrying question numbers into the part files, so a part from another build
+  can only change which rows show, never attribute a row to the wrong copy.
+- **Question numbers shift on every build**, so the index files carry a stamp `b`, sent as `?v=b`. Old refs + old buckets in the worker
+  still agree. A bucket from a newer build makes the app re-fetch the refs (`cache:'reload'`, which `sw.js` sends to the network), once.
+- **No idle text prefetch.** After someone's first search with a text match, the remaining parts trickle in at low priority (not on
+  Save-Data/2G/3G), because the next search should not wait on text. A browse-only visitor downloads none of it.
+- `-deep` files load per part and only when a visible row is cut, or a word matched only in a tail. Practice "Any" loads one random paper.
+
+**Why.** The OCR passes took the corpus from 28k to 92k answers: DECISION-17's own "reverse if" (past ~3×). Every cold search downloaded all
+question text, and the budget check went red on each OCR batch. Measured on the same data, real Chrome, 1.6 Mbps / 150 ms / 4× CPU, 3 runs each,
+"complete" = result line settled and no card still loading:
+
+| | before | after |
+|---|---:|---:|
+| `?q=federalism` complete / data until then | 15.1 s / 2,511 KB | **6.2 s / 801 KB** |
+| `?q=ethics` | 15.2 s | **9.2 s** / 1,353 KB |
+| `?q=judicial activism` | 15.1 s | **9.1 s** / 1,181 KB |
+| `?q=india` (common word: 25 cards span 14 parts) | 15.2 s | 13.4 s / 2,274 KB |
+| land, settle, type "judicial activism" | 10.5 s | **6.0 s** |
+| 4G `?q=federalism` / `?q=india` | 2.9 s / 3.05 s | **1.6 s** / 3.0 s |
+| `/`, browsing only: data | 1,963 KB | **197 KB** |
+| Return visit, link-shaped, HTTP cache cleared: same word again | 0.26 s | 0.6–0.8 s |
+| Return visit: a new word after the trickle | 0.5 s | 2.0–2.3 s |
+
+The return-visit rows are the honest cost: before, a return visitor had everything. The audit's estimate of 3–4 s for a cold slow-4G search was
+optimistic, because boot alone takes ~2.2 s of it. DECISION-17 rejected an inverted index because `qindex.bin` cost more bytes overall and only made
+the count appear sooner; here the index replaces the text download, it does not sit on top of it.
+
+**What search gives up** (Hashin chose this, INTENT-14). A word inside a word no longer matches: `water` 1,639 → 1,587 questions (no "groundwater",
+"rainwater"), `ethics` 1,901 → 1,859 (no "bioethics"), `ism` 6,205 → 33. "Best match" no longer adds +0.5 for a copy containing the whole phrase: that needs text
+the index does not have, so only ties among equal counts can order differently. Identical counts on 16 of 22 sampled queries; hyphenated queries are broader or better
+(`cooperative-federalism` 0 → 175 copies, `self-help` 103 → 283, `e-commerce` 59 → 96, `e-governance` 175 → 176). `gs 2` 1,144 → 0: its old hits were "gs" inside words.
+
+**Rejected.**
+- *Copy-level postings* — wrong results, above.
+- *Hashed, build-stable question ids in the postings* — survive skew without a stamp, but cost roughly 2× the bytes, and an OCR batch touches most buckets anyway.
+- *Network-first refs* — simple, but a repeated search took 2.75 s against 0.26 s. Measured, then replaced.
+- *Dropping the text entirely after the first search (no trickle)* — a new word on return took 7.8 s.
+- *Keeping the idle prefetch for everyone* — 1.7 MB nobody who only browses asked for, growing with each OCR batch.
+- *Raising the budgets again* — the audit's warning; search would have kept slowing with the corpus.
+
+**Reverse if.** The word-start rule costs real searches (Search Console / GA `search` events with 0 results for parts of words): add a suffix index for
+the long tokens, or fall back to scanning once the text has trickled in. If most searches are single very common words, the first 25 cards should stay closed
+until tapped, since those are the queries with no gain.
+
+**Enforced by.** `INV-24` rebuilds the expected word → question counts from the shard text and compares every bucket, and checks each number's refs against its row in its
+part. `BUDGET search index`, `BUDGET index bucket`, `BUDGET app.js` (raised to 29 KB). Browser behaviour (no text on browse, recovery from a stale stamp, offline, simulated deploy)
+was verified in real Chrome with throwaway scripts, not by `check.mjs`.
