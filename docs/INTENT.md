@@ -274,6 +274,13 @@ reported where he will see it (GitHub emails issues) rather than only recorded i
 
 The `tools/wayback-save.mjs` pilot (so the site can later offer an archived copy when a publisher's file disappears) should run on a schedule, not by hand. Done as DECISION-36.
 
+## INTENT-17 — Keep only VisionIAS in R2; drop the rest once the Internet Archive holds it, automatically
+*2026-11-11 · Hashin, in chat*
+
+> "3 and drop the mirror when internet archive ledger covers them. built it into the github actions"
+
+R2 had grown to 75.56 GB (5,508 files, none served — every original was up). He chose to keep the VisionIAS copies in R2 permanently and to release every other mirrored file as the Internet Archive ledger covers it, as a step of the nightly Actions rather than by hand. Done as DECISION-37.
+
 ## Open questions Hashin has not settled
 
 Record them here rather than guessing. Move them into an `INTENT-n` once he decides.

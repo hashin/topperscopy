@@ -21,9 +21,10 @@ independent, non-commercial mirror. It adds:
 - a **Submit** workflow so students can add missing copies and correct topper data.
 
 Answer copies are published by the institutes and toppers named in each entry (ForumIAS, Vision IAS, NextIAS,
-Lukmaan IAS, GS SCORE, Rau's IAS, …) and remain their property. A mirror of the files we could fetch is kept in
-Cloudflare R2 so they stay available when a publisher's link dies: an "Open PDF" link goes to the publisher, and to the
-mirror only while the publisher's link is down (checked nightly). A rights holder who wants a copy removed can open an issue.
+Lukmaan IAS, GS SCORE, Rau's IAS, …) and remain their property. A backup copy of the files we could fetch is kept so
+they stay available when a publisher's link dies — VisionIAS's in Cloudflare R2, the rest as Internet Archive snapshots once
+the Archive provably holds the identical file (until then also in R2): an "Open PDF" link goes to the publisher, and to the
+backup only while the publisher's link is down (checked nightly). A rights holder who wants a copy removed can open an issue.
 
 ## How it's built
 

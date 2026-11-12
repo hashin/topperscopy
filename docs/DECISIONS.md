@@ -1705,3 +1705,31 @@ nothing. The site does not link to the archived copies yet — this only builds 
 **Amendment (2026-11-10, same day).** Two manual dispatches queued behind a running one both checked out the commit that was `main` when they were *queued*, not when they started; the second's ledger
 lacked the first's results and its push hit a merge conflict (run 42771506417: archived fine, commit failed, results lost — IA answers "same snapshot" next time, which counts as saved). Fix: the
 checkout uses `ref: main`, fetched when the run starts. Also: a dropped connection (`fetch failed`, 8 of 20 in the first real run) is retried up to 3 times after 30 s and the cause (`network: ECONNREFUSED`) is recorded.
+
+## DECISION-37 — R2 keeps VisionIAS only; every other file is deleted from R2 once the Internet Archive provably holds the identical bytes
+*2026-11-11, INTENT-17. Extends DECISION-32 and DECISION-36; supersedes neither.*
+
+**Context.** The first full pass left 5,508 files / 75.56 GB in R2 (`data/pdf-mirror.json`, origin/main 2026-11-11): NextIAS 36.7 GB, VisionIAS 14.5, ForumIAS 14.2, Vajiram 5.7, the rest ~4.5.
+All 5,508 originals were up, so R2 served nothing. Only VisionIAS has shown that its links die (DECISION-30/31). Cost was ~$1/month; the reasons to shrink were the 100 GB cap and the exposure of
+hosting paid material. The Internet Archive ledger (`data/wayback.json`) is the second line of defence (DECISION-36) but a ledger `ok` only means Save Page Now answered.
+**Decision.**
+1. `node tools/mirror-pdfs.mjs release` (new). A mirrored entry is released only when **all** hold: its origin is `up`; its host is not in `KEEP_HOSTS` (`visionias.in`); the ledger has it `ok`; and a proof passes —
+   (a) the R2 object is read back and hashes to the manifest's `sha256`; (b) the Wayback **CDX index** lists a 200 capture of that URL whose payload SHA-1 (base32) equals the SHA-1 of those same bytes, so the Archive
+   holds the identical file, not a login page or an older edition; (c) `/web/<timestamp>id_/<url>` plays back with `%PDF-`. Checked by hand on one real file: the CDX digest of the 2024-09-25 capture equalled the SHA-1 of the file
+   we hold (its CDX `length` was 4.6 MB against 5.5 MB — compressed, so size is *not* a usable proof).
+2. The entry becomes `status: "archived"` (`key`, `sha256`, `bytes` kept, `wb` = capture timestamp, `released` = date); the manifest is **saved before** the object is deleted, so a crash can only leave an unneeded
+   object, never a lost file. The next run deletes any object an `archived` entry still has in the bucket — unless an `ok` entry now owns that key (identical bytes under another URL).
+3. `check` keeps probing archived entries. `build.js`: an `archived` entry whose origin is `down` serves `https://web.archive.org/web/<wb>id_/<url>` (same kill switch as R2: `_meta.base = ""` turns it off).
+   INV-23 covers both kinds of substitution; INV-20 validates archived entries. Without this, releasing a file would leave a dead button where the FAQ promises a backup.
+4. `.github/workflows/release-r2.yml`, 07:30 UTC (after `wayback.yml`), 90 minutes, shares the `mirror-pdfs` concurrency group. **Dry by default**: it deletes only when repository variable `RELEASE_ENABLED=true`; otherwise it proves
+   a sample of 60 and reports. Paced 1.5 s per Archive request (~3 s a file, ~1,500 files a night); six busy answers in a row stop the run early.
+5. Wording (INV-21's rule: update every claim): "a mirror is kept" → "a backup copy is kept" (R2 or Internet Archive) in `index.html` FAQ, `README.md`, `build.js` (FAQ, llms/about text, dataset README, JSON-LD attribution).
+**Expected effect.** Of 75.56 GB, ~61 GB is on non-kept hosts and becomes releasable as the ledger fills; ~14.5 GB (VisionIAS) stays. The ledger covered 160 URLs when this was written, so it takes weeks, and every file whose
+bytes the Archive does not hold stays in R2.
+**Rejected.** *Trust the ledger alone* — SPN `already` can mean any 200 capture, possibly another edition. *Compare sizes* — CDX length is compressed. *Download from the publisher to hash* — dead links are the case this is for.
+*Delete from R2 when the ledger covers it, then link the Archive for everything* — the Archive is not a CDN; the publisher stays the default. *Include VisionIAS* — its files move without notice, and `cdn.visionias.in` is unarchivable.
+**Known risk / reverse if.** The Archive can exclude or remove a capture later (robots exclusion, takedown); a released file would then exist nowhere. `check` still warns when an archived original goes down, and the
+Archive copy can be re-verified by `release --dry`-style proof, but there is no scheduled re-proof of already-released files. Reverse: set `RELEASE_ENABLED` to anything but `true`; to refill R2, reset an entry to `pending`.
+**Verified.** Against a mock R2 + mock Archive (scratchpad): release; a different-version capture, no capture, not in ledger, origin down, HTML playback, corrupted R2 object, kept host → all stay; a leftover object from an
+interrupted run is deleted; a key owned by an `ok` entry is not; second run deletes nothing; `--dry` changes nothing. `npm run check` 38/38, and INV-23 fails when an Archive-served copy's origin is not down. **Not verified:**
+the workflow on GitHub, `release` against the real bucket, or the CDX proof at scale against real Archive rate limits.

@@ -1258,3 +1258,14 @@ test overrides (`WAYBACK_BASE`, `_LEDGER`, timings); the 108 local pilot results
 **Verified.** Against a mock archive.org (scratch dir): busy → retried then saved; "same snapshot" → saved; 404 → failed, then skipped on the next run; `cdn.visionias.in` skipped; `--require-keys` exits 1;
 `--minutes` stops early. YAML parses; `npm run check` 38/38. **Not verified:** the workflow on GitHub, or the retry loop against the real archive.org (the earlier real runs predate the fix).
 **Needs Hashin.** `gh secret set IA_ACCESS` and `gh secret set IA_SECRET` (rotate the keys first — the old pair was visible in this session), `gh variable set WAYBACK_ENABLED --body true`, then dispatch once with `limit` 20.
+
+## 2026-11-11 — What R2 stores, and releasing it to the Internet Archive
+**Asked.** "the R2 has grown to more than 75 GB. see what it is storing and if it is actually required"; then, choosing the "keep VisionIAS only" option: "drop the mirror when internet archive ledger covers them. built it into the github actions".
+**Found** (manifest on origin/main, 2026-11-11; local main was 7 commits behind): 5,508 files, 75.56 GB — NextIAS 36.7 GB, VisionIAS 14.5, ForumIAS 14.2, Vajiram 5.7, rest ~4.5; GS papers ~57 GB; median file 11 MB, 70 files over 50 MB;
+103 byte-identical duplicates (1.65 GB). **All 5,508 origins up → R2 served nothing.** Wayback ledger covered 136 of them (1.7 GB). Could not list the bucket (no credentials), so objects outside the manifest are unchecked.
+**Did.** DECISION-37 / INTENT-17: `mirror-pdfs.mjs release` (proof by CDX SHA-1 digest + playback; manifest saved before delete), `archived` status, `check` keeps probing archived files, `build.js` Archive fallback while the origin is down, INV-20/INV-23 updated,
+`.github/workflows/release-r2.yml` (dry by default), "mirror" → "backup copy" in the public wording, docs. Branch `r2-release-to-wayback`.
+**Verified.** Mock R2 + mock Archive: all ten cases in DECISION-37; one real file — the CDX digest equals the SHA-1 of the bytes we hold; `npm run check` 38/38; INV-23 fails on a deliberately wrong entry. **Not verified:** the workflow on GitHub, a real-bucket run, rate limits at scale.
+**Needs Hashin.** Review/merge; dispatch "Release R2 copies the Internet Archive holds" (dry) and read the log; then `gh variable set RELEASE_ENABLED --body true`. The Archive ledger must grow first (160 of ~9,000 URLs) — little is releasable until it does.
+**Not committed or pushed.**
+
