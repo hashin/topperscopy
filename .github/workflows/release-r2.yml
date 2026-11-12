@@ -1,0 +1,83 @@
+name: Release R2 copies the Internet Archive holds
+
+# Each night, after wayback.yml has had time to run: for every mirrored PDF whose publisher link is up, that is not on a kept host (VisionIAS),
+# and that the ledger data/wayback.json says was saved, PROVE the Internet Archive holds the identical file — hash the R2 object, find a 200
+# capture in the Archive's CDX index whose SHA-1 equals it, check the capture plays back as a PDF — and only then delete the R2 object
+# and mark the manifest entry `archived` (tools/mirror-pdfs.mjs release, DECISION-37). A file the Archive does not hold, or holds in a different
+# version, stays in R2. If a released file's publisher link later dies, build.js points the copy at the Archive snapshot.
+#
+# SAFE BY DEFAULT: until the repository variable RELEASE_ENABLED is "true" this only runs `release --dry` (proves and reports, deletes nothing).
+# Read a dry run's log first, then:  gh variable set RELEASE_ENABLED --body true
+# Turn off again:  gh variable set RELEASE_ENABLED --body false   (released files stay released; nothing is re-uploaded unless you reset their entries to "pending").
+# Runs on the same secrets and MIRROR_ENABLED switch as mirror-pdfs.yml.
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: "Dry run: prove and report, delete nothing (always on while RELEASE_ENABLED is not true)"
+        type: boolean
+        default: true
+      max:
+        description: "Max files this run (0 = as many as fit in the time limit)"
+        required: false
+        default: "0"
+      host:
+        description: "Only this host (e.g. forumias.com) — leave empty for all"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror-pdfs          # the manifest has one writer at a time, shared with the nightly mirror
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    if: ${{ vars.MIRROR_ENABLED == 'true' }}
+    steps:
+      # `ref: main`: the ledger and manifest the earlier nightly runs committed, not the commit that was main when this run was queued.
+      - uses: actions/checkout@v5
+        with: { ref: main }
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+
+      - name: Release
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          LIVE: ${{ vars.RELEASE_ENABLED }}
+          DRY_INPUT: ${{ github.event.inputs.dry }}
+          MAX: ${{ github.event.inputs.max }}
+          ONLY_HOST: ${{ github.event.inputs.host }}
+        run: |
+          # ~3 s per file (R2 read + two Archive requests, paced); 90 minutes is ~1,500 files, so the first pass takes a few nights.
+          args="--minutes 90 --concurrency 2"
+          if [ "$LIVE" != "true" ] || [ "$DRY_INPUT" = "true" ]; then
+            args="$args --dry"
+            # a scheduled dry run only samples, so the log stays readable and quick
+            [ -z "$MAX" ] || [ "$MAX" = "0" ] && MAX=60
+            echo "::notice::dry run — nothing is deleted (set the variable RELEASE_ENABLED=true to release for real)"
+          fi
+          [ -n "$MAX" ] && [ "$MAX" != "0" ] && args="$args --max $MAX"
+          [ -n "$ONLY_HOST" ] && args="$args --host $ONLY_HOST"
+          node tools/mirror-pdfs.mjs release $args
+
+      - name: Commit the manifest
+        if: always()
+        run: |
+          node tools/mirror-pdfs.mjs status
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/pdf-mirror.json
+          if git diff --cached --quiet; then echo "manifest unchanged"; exit 0; fi
+          git commit -m "release: $(node -e "const m=require('./data/pdf-mirror.json');const v=Object.values(m.files);console.log(v.filter(e=>e.status==='archived').length+' copies now held by the Internet Archive only, '+v.filter(e=>e.status==='ok').length+' in R2')")"
+          git pull --rebase --autostash
+          git push

@@ -7,6 +7,7 @@
 //   node tools/mirror-pdfs.mjs run [--limit N] [--host H] [--concurrency 4] [--minutes M] [--retry-gone] [--dry]
 //   node tools/mirror-pdfs.mjs verify [--repair]   # list the bucket, compare with the manifest
 //   node tools/mirror-pdfs.mjs check [--host H] [--concurrency 8] [--minutes M]   # is each mirrored file's ORIGINAL link still alive?
+//   node tools/mirror-pdfs.mjs release [--dry] [--max N] [--minutes M] [--host H]   # drop an R2 copy once the Internet Archive provably holds the same bytes (DECISION-37)
 //   node tools/mirror-pdfs.mjs issues [--dry] [--max-new 50]   # open a GitHub issue per unavailable VisionIAS link; close it when the link is back
 //   node tools/mirror-pdfs.mjs usage         # bucket size, object count, estimated storage cost; fails over the cap (monthly check)
 //   node tools/mirror-pdfs.mjs selftest      # check the request signing against AWS's published test vector
@@ -36,11 +37,15 @@ const SKIP_HOSTS = { 'drive.google.com': 'google-drive', 't.me': 'telegram' };  
 const DEAD_HOSTS = ['cdn.visionias.in'];                                      // VisionIAS lists no file for what is still on it (DECISION-31)
 const ISSUE_HOSTS = ['visionias.in'];                                          // links whose loss opens a GitHub issue (VisionIAS moves its files without notice)
 const ISSUE_LABEL = 'link-down';
+const KEEP_HOSTS = ['visionias.in'];                                           // stay in R2 for good: VisionIAS moves its files without notice and the Internet Archive cannot hold the old ones (DECISION-37)
+const LEDGER = process.env.WAYBACK_LEDGER || 'data/wayback.json';             // tools/wayback-save.mjs's record of what it asked the Internet Archive to save
+const WB = process.env.WAYBACK_BASE || 'https://web.archive.org';
 const UA = 'topperscopy-mirror (+https://topperscopy.hashin.me)';           // honest UA — we do not pose as a browser
 
 const sha256 = b => crypto.createHash('sha256').update(b).digest('hex');
 const hmac = (k, s) => crypto.createHmac('sha256', k).update(s).digest();
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const b32 = buf => { const A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; let bits = 0, v = 0, out = ''; for (const b of buf) { v = (v << 8) | b; bits += 8; while (bits >= 5) { out += A[(v >>> (bits - 5)) & 31]; bits -= 5; } } if (bits) out += A[(v << (5 - bits)) & 31]; return out; };   // RFC 4648, no padding — how the CDX index writes a SHA-1
 const hostOf = u => { try { return new URL(u).host; } catch { return ''; } };
 
 /* ---------- AWS Signature V4 (what R2's S3 API speaks), no dependencies ---------- */
@@ -165,15 +170,16 @@ if (cmd === 'plan') {
 
 if (cmd === 'status') {
   const m = load(), by = {}, hosts = {}, origins = {};
-  let bytes = 0;
+  let bytes = 0, released = 0;
   for (const [u, e] of Object.entries(m.files)) {
     by[e.status] = (by[e.status] || 0) + 1;
     if (e.status === 'ok') bytes += e.bytes || 0;
+    if (e.status === 'archived') released += e.bytes || 0;
     if (e.status === 'pending' || e.status === 'failed') hosts[hostOf(u)] = (hosts[hostOf(u)] || 0) + 1;
     if (e.status === 'ok') origins[e.origin || 'unchecked'] = (origins[e.origin || 'unchecked'] || 0) + 1;
   }
   console.log('origin links of mirrored files:', origins, '(the site serves R2 only for "down")');
-  console.log(by, `\n${(bytes / 1e9).toFixed(2)} GB mirrored of the ${CAP_GB} GB cap · base ${m._meta.base || '(not set — site still links to publishers)'}`);
+  console.log(by, `\n${(bytes / 1e9).toFixed(2)} GB in R2 of the ${CAP_GB} GB cap (+ ${(released / 1e9).toFixed(2)} GB released: the Internet Archive holds those) · base ${m._meta.base || '(not set — site still links to publishers)'}`);
   console.log('still to do, by host:', hosts);
   process.exit(0);
 }
@@ -183,9 +189,9 @@ if (cmd === 'check') {
   const m = load(), only = arg('host'), conc = +arg('concurrency', 8), deadline = Date.now() + (+arg('minutes', 0) || 1e9) * 60000;
   const control = await probeControl();
   if (!control) { console.log((process.env.GITHUB_ACTIONS ? '::warning::' : '') + 'the control request failed — this runner has no working network, so no origin was changed'); process.exit(0); }
-  const todo = roundRobin(Object.entries(m.files).filter(([u, e]) => e.status === 'ok' && (!only || hostOf(u) === only)));
-  console.log(`${todo.length} mirrored files to check`);
-  const gate = new Map(), today = new Date().toISOString().slice(0, 10), tally = { up: 0, missed: 0, newlyDown: 0, stillDown: 0, recovered: 0, skipped: 0 };
+  const todo = roundRobin(Object.entries(m.files).filter(([u, e]) => (e.status === 'ok' || e.status === 'archived') && (!only || hostOf(u) === only)));
+  console.log(`${todo.length} mirrored or archived files to check`);
+  const gate = new Map(), today = new Date().toISOString().slice(0, 10), tally = { up: 0, missed: 0, newlyDown: 0, stillDown: 0, recovered: 0, skipped: 0, newlyArch: 0 };
   const why = {};
   let next = 0;
   await Promise.all(Array.from({ length: conc }, async () => {
@@ -199,13 +205,15 @@ if (cmd === 'check') {
       else {
         e.miss = (e.miss || 0) + 1; tally.missed++; why[r.why] = (why[r.why] || 0) + 1;
         e.why = r.why; if (e.miss === 1 || !e.since) e.since = today;       // what the publisher answered, and the first night it did — an issue quotes both
-        if (e.miss >= 2) { e.origin = 'down'; was === 'down' ? tally.stillDown++ : tally.newlyDown++; } else e.origin = was === 'down' ? 'down' : 'up';
+        if (e.miss >= 2) { e.origin = 'down'; if (was === 'down') tally.stillDown++; else { tally.newlyDown++; if (e.status === 'archived') tally.newlyArch++; } } else e.origin = was === 'down' ? 'down' : 'up';
       }
     }
   }));
   save(m);
   console.log(`checked: ${tally.up} up · ${tally.missed} failed this time (${JSON.stringify(why)}) · newly down ${tally.newlyDown} · still down ${tally.stillDown} · back up ${tally.recovered}` + (tally.skipped ? ` · ${tally.skipped} left for the next run` : ''));
-  if (tally.newlyDown) console.log((process.env.GITHUB_ACTIONS ? '::warning::' : '') + `${tally.newlyDown} original links went down — the site now serves their R2 copies`);
+  const warn = process.env.GITHUB_ACTIONS ? '::warning::' : '';
+  if (tally.newlyDown - tally.newlyArch) console.log(warn + `${tally.newlyDown - tally.newlyArch} original links went down — the site now serves their R2 copies`);
+  if (tally.newlyArch) console.log(warn + `${tally.newlyArch} original links went down whose R2 copy was released — the site now serves their Internet Archive snapshots`);
   process.exit(0);
 }
 
@@ -304,12 +312,95 @@ if (cmd === 'usage') {
   const lines = [`Bucket: ${b.keys.size} objects, ${gb.toFixed(2)} GB of the ${CAP_GB} GB cap (${(100 * gb / CAP_GB).toFixed(0)} %)`,
     `Estimated storage cost: about $${cost.toFixed(2)} a month after the free 10 GB (estimate; operations not included)`,
     `Manifest: ${JSON.stringify(by)}`,
+    `Released to the Internet Archive (no longer in R2): ${Object.values(m.files).filter(e => e.status === 'archived').length} files`,
     `Lost: ${missing.length} files the manifest calls ok are not in the bucket · Unrecorded: ${extra.length} objects are not in the manifest`];
   console.log(lines.join('\n'));
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### R2 mirror — monthly check\n\n' + lines.map(l => '- ' + l).join('\n') + '\n');
   const gha = process.env.GITHUB_ACTIONS;
   if (gb >= CAP_GB * 0.8) console.log((gha ? '::warning::' : '') + `bucket is at ${(100 * gb / CAP_GB).toFixed(0)} % of the cap`);
   if (gb > CAP_GB || missing.length) { console.log((gha ? '::error::' : '') + (gb > CAP_GB ? `bucket is over the ${CAP_GB} GB cap` : `${missing.length} mirrored files are missing from the bucket — run verify --repair`)); process.exit(1); }
+  process.exit(0);
+}
+
+/* ---------- release: drop an R2 copy once the Internet Archive provably holds the same bytes (DECISION-37) ---------- */
+// The ledger (data/wayback.json) only says Save Page Now answered. A copy is released only on proof, checked here each time:
+//   1. the R2 object is read back and hashes to the sha256 the manifest records (so the thing we are about to delete is the real file);
+//   2. the Wayback CDX index lists a 200 capture of that URL whose payload SHA-1 equals the SHA-1 of those very bytes — the Archive holds the identical file,
+//      not a login page, not an older edition;
+//   3. that capture plays back: the first bytes of `/web/<timestamp>id_/<url>` are `%PDF-`.
+// Only entries whose publisher link is up, not on KEEP_HOSTS, and saved in the ledger are tried. The entry becomes `archived` (key, sha256, bytes and the
+// capture's timestamp `wb` kept) and the manifest is saved BEFORE the object is deleted, so a crash can only leave an object nobody needs, never a lost
+// file; the next run deletes what an `archived` entry still has in the bucket. A key an `ok` entry owns is never deleted. `--dry` proves and reports; it changes nothing.
+if (cmd === 'release') {
+  const m = load(), files = m.files, dry = flag('dry'), only = arg('host'), max = +arg('max', 0) || Infinity, conc = +arg('concurrency', 2);
+  const deadline = Date.now() + (+arg('minutes', 0) || 1e9) * 60000, gha = process.env.GITHUB_ACTIONS ? '::warning::' : '';
+  const ledger = fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : {};
+  const r2 = r2client(), bucket = await listBucket(r2);
+  const owned = new Set(Object.values(files).filter(e => e.status === 'ok').map(e => e.key));
+  const del = async key => { const r = await r2('DELETE', key); if (r.status !== 204 && r.status !== 200 && r.status !== 404) throw new Error('R2 DELETE ' + r.status); };
+
+  // 1. finish a deletion an earlier run recorded but did not complete
+  const left = Object.values(files).filter(e => e.status === 'archived' && e.key && bucket.keys.has(e.key) && !owned.has(e.key));
+  if (left.length) console.log(`${left.length} released files are still in the bucket${dry ? ' (dry run — not deleting)' : ' — deleting'}`);
+  if (!dry) for (const e of left) { try { await del(e.key); bucket.keys.delete(e.key); } catch (err) { console.log(gha + `could not delete ${e.key}: ${err.message}`); } }
+
+  // 2. who could be released
+  const keep = u => KEEP_HOSTS.some(h => hostOf(u) === h || hostOf(u).endsWith('.' + h));
+  const eligible = Object.entries(files).filter(([u, e]) => e.status === 'ok' && !keep(u) && (!only || hostOf(u) === only));
+  const why = {}, no = r => { why[r] = (why[r] || 0) + 1; };
+  const todo = roundRobin(eligible.filter(([u, e]) => {
+    if (e.origin !== 'up') { no('publisher link not confirmed up'); return false; }   // a served R2 copy is never pulled from under the site
+    if (!(ledger[u] && ledger[u].ok)) { no('not saved on the Internet Archive yet'); return false; }
+    if (!bucket.keys.has(e.key)) { no('not in the bucket'); return false; }
+    return true;
+  }), max);
+  console.log(`${eligible.length} mirrored files are not on a kept host · ${todo.length} have a ledger entry and are tried now${dry ? ' (dry run)' : ''}`);
+
+  let iaGate = 0, busyRun = 0, stop = false;
+  const iaWait = async () => { const now = Date.now(), at = Math.max(now, iaGate); iaGate = at + (+process.env.IA_GAP_MS || 1500); if (at > now) await sleep(at - now); };   // one request at a time, politely
+  const capture = async (u, digest) => {
+    await iaWait();
+    const r = await fetch(`${WB}/cdx/search/cdx?url=${enc(u)}&output=json&fl=timestamp,digest&filter=statuscode:200`, { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(60000) });
+    if (r.status !== 200) { const e = new Error('archive.org answered HTTP ' + r.status); e.busy = true; throw e; }
+    const t = (await r.text()).trim(), rows = t ? JSON.parse(t).slice(1) : [];
+    return { any: rows.length, ts: rows.filter(x => x[1] === digest).map(x => x[0]).sort().pop() };
+  };
+  async function prove(u, e) {
+    const o = await r2('GET', e.key);
+    if (o.status !== 200) return { no: 'R2 read failed (' + o.status + ')' };
+    const buf = Buffer.from(await o.arrayBuffer());
+    if (sha256(buf) !== e.sha256) return { no: 'R2 object does not match its recorded sha256' };
+    const c = await capture(u, b32(crypto.createHash('sha1').update(buf).digest()));
+    if (!c.ts) return { no: c.any ? 'the Archive holds a different version of the file' : 'no 200 capture in the Archive index' };
+    await iaWait();
+    const p = await probe(`${WB}/web/${c.ts}id_/${u}`);
+    return p.up ? { ts: c.ts } : { no: 'capture does not play back (' + p.why + ')', busy: /HTTP (429|5\d\d)|timeout/.test(p.why) };
+  }
+
+  let next = 0, freed = 0, n = 0;
+  const batch = [];
+  const flush = async () => {                                              // manifest first, then the objects it no longer needs
+    if (!batch.length) return;
+    save(m);
+    for (const k of batch.splice(0)) { try { await del(k); } catch (err) { console.log(gha + `could not delete ${k}: ${err.message} — the next run retries`); } }
+  };
+  await Promise.all(Array.from({ length: conc }, async () => {
+    while (next < todo.length && Date.now() < deadline && !stop) {
+      const [u, e] = todo[next++];
+      let r;
+      try { r = await prove(u, e); } catch (err) { r = { no: String(err.message || err).slice(0, 70), busy: !!err.busy || err.name === 'TimeoutError' }; }
+      if (r.busy) { if (++busyRun >= 6) { stop = true; console.log(gha + 'archive.org keeps refusing — stopping early; the next run carries on'); } } else busyRun = 0;
+      if (!r.ts) { no(r.no); continue; }
+      n++; freed += e.bytes;
+      if (dry) continue;
+      Object.assign(e, { status: 'archived', wb: r.ts, released: new Date().toISOString().slice(0, 10) });
+      batch.push(e.key);
+      if (batch.length >= 20) await flush();
+    }
+  }));
+  await flush();
+  console.log(`${dry ? 'would release' : 'released'} ${n} files (${(freed / 1e9).toFixed(2)} GB)` + (next < todo.length ? ` · ${todo.length - next} left for the next run` : ''));
+  console.log('not released:', JSON.stringify(why));
   process.exit(0);
 }
 
@@ -372,5 +463,5 @@ if (cmd === 'issues') {
   process.exit(0);
 }
 
-console.error('usage: node tools/mirror-pdfs.mjs plan | status | run | check | verify | usage | issues | selftest');
+console.error('usage: node tools/mirror-pdfs.mjs plan | status | run | check | verify | usage | release | issues | selftest');
 process.exit(2);

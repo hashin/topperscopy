@@ -15,12 +15,14 @@ The site links every copy to **its publisher**. A copy of each PDF we could fetc
 | `data/pdf-mirror.json` | the record: one line per copy URL — `status`, `key`, `sha256`, `bytes`, `topper`, `paper`, `source`, `was` (old VisionIAS URL, which OCR rows still carry), and for mirrored files `origin` (`up`/`down`), `miss`, `checked`. `_meta.base` = the public bucket URL. Never delete lines from it. |
 | `tools/mirror-pdfs.mjs` | `plan` `status` `run` `check` `verify [--repair]` `usage` `selftest`. Own SigV4, zero dependencies. |
 | `.github/workflows/mirror-pdfs.yml` | nightly 02:30 UTC (and manual): plan → **check originals** → verify/repair → mirror (**VisionIAS first**, then the rest) → **open/close `link-down` issues** → commit manifest → trigger deploy. |
+| `.github/workflows/release-r2.yml` | 07:30 UTC, **dry unless variable `RELEASE_ENABLED=true`**: `release` deletes a non-VisionIAS file from R2 once the Internet Archive provably holds the identical bytes (DECISION-37). |
 | `.github/workflows/mirror-usage.yml` | 1st of each month, read-only: bucket size, estimated cost, lost files; fails (GitHub emails) over the cap or on a lost file. |
 | `build.js` | `data/visionias-urls.json` swap, then R2 swap **only** for `status:ok` + `origin:down` entries. `MIRROR=off node build.js` disables the R2 swap (the tool needs origin URLs in `copies.json`). |
 | Checks | INV-19 (VisionIAS map well-formed) · INV-20 (manifest well-formed) · INV-21 (wording must not say "nothing is re-hosted" once serving) · INV-22 (≤ 100 GB recorded) · INV-23 (R2 only where origin is down). |
 
 Manifest `status`: `pending` (to do) · `ok` (in R2) · `failed` (retried up to 3×) · `gone` (403/404/410/not a PDF at the source) ·
-`skip` (Google Drive, Telegram, too big — no stable direct file) · `dead` (a VisionIAS link VisionIAS no longer lists — nothing to fetch).
+`skip` (Google Drive, Telegram, too big — no stable direct file) · `dead` (a VisionIAS link VisionIAS no longer lists — nothing to fetch) ·
+`archived` (was `ok`; released from R2 because the Internet Archive holds the same bytes — `wb` = capture timestamp; the site falls back to `web.archive.org/web/<wb>id_/<url>` while the origin is down).
 On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
 
 ## 2. Operating it
@@ -46,6 +48,9 @@ On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
   Only hosts in `ISSUE_HOSTS` (VisionIAS). Label `link-down`; the hidden `<!-- mirror:… -->` line in each issue is how a run recognises it — don't edit it out. Closing an issue by hand while the
   link is still down makes the next night open a fresh one.
 - **VisionIAS refresh:** `node tools/visionias-urls.mjs [--add-fresh] [--verbose]` (fetches the public `tac.json`, adds new pairs, keeps old ones).
+
+- **Release to the Internet Archive (DECISION-37):** `node tools/mirror-pdfs.mjs release --dry [--max 20] [--host H]` needs the R2 secrets (it reads objects to hash them) and `data/wayback.json`; prints what it would free and why the rest stay.
+  Turn the deletions on with `gh variable set RELEASE_ENABLED --body true`, off with `false`. VisionIAS (`KEEP_HOSTS`) is never released. To put a released file back in R2: set its entry to `pending` (and drop `wb`, `released`).
 
 ## 3. Facts worth keeping
 
@@ -94,6 +99,7 @@ On 2026-11-09 the 9,130 copies were: 5,601 mirrorable, 2,537 dead, 992 skip.
 
 - No in-app hint yet when a copy is being served from R2 (a small tooltip on the link would help; `app.js` budget is tight).
 - `pin` override (force origin or R2 for one file) is not implemented.
+- Released files have no scheduled re-proof: if the Archive later drops a capture, `check` will still say the original is up/down but nobody re-hashes the Archive's copy. Consider a monthly re-prove of a sample.
 - Google Drive links (991) cannot be mirrored by this tool; Drive's large-file download needs an interstitial — decide before attempting.
 - The 30 unpaired VisionIAS groups and 3 blank-topper copies (see §3).
 - A custom domain instead of `r2.dev` before real traffic grows.
